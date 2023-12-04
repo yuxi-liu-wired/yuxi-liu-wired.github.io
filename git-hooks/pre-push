@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Check if we are pushing to the deploy branch
+if [ $1 = "refs/heads/deploy" ]; then
+  echo "Deploying to public branch..."
+
+  # Create a temporary directory
+  TMP_DIR=$(mktemp -d)
+
+  # Capture the last commit message from the deploy branch
+  LAST_COMMIT_MSG=$(git log -1 --pretty=reference)
+
+  # Copy docs content to temporary directory
+  cp -r docs/* $TMP_DIR/
+
+  # Checkout public branch
+  git checkout public
+
+  # Remove old files and copy new files from temporary directory
+  git rm -r *
+  cp -r $TMP_DIR/* .
+
+  # Commit and push changes to public branch
+  git add .
+  git commit -m "$LAST_COMMIT_MSG"
+  git push origin public
+
+  # Switch back to deploy branch
+  git checkout deploy
+fi
+
