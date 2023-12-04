@@ -3,8 +3,10 @@
 echo "Pre-push hook started"
 
 # Check if we are pushing to the deploy branch
-if [ $1 = "refs/heads/deploy" ]; then
-  echo "Deploying to public branch..."
+while read local_ref local_sha remote_ref remote_sha
+do
+  if [[ $remote_ref == "refs/heads/deploy" ]]; then
+    echo "Deploying to public branch..."
 
   # Create a temporary directory
   TMP_DIR=$(mktemp -d)
