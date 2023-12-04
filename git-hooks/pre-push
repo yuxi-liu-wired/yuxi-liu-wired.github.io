@@ -5,6 +5,11 @@ echo "Pre-push hook started"
 # Check if we are pushing to the deploy branch
 while read local_ref local_sha remote_ref remote_sha
 do
+  echo "Local Ref: $local_ref"
+  echo "Local SHA: $local_sha"
+  echo "Remote Ref: $remote_ref"
+  echo "Remote SHA: $remote_sha"
+
   if [[ $remote_ref == "refs/heads/deploy" ]]; then
     echo "Deploying to public branch..."
 
