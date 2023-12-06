@@ -13,8 +13,6 @@ do
   if [[ $remote_ref == "refs/heads/deploy" ]]; then
     echo "Deploying to public branch..."
 
-    git pull
-
     # Create a temporary directory
     TMP_DIR=$(mktemp -d)
 
@@ -26,6 +24,7 @@ do
 
     # Checkout public branch
     git checkout public
+    git pull
 
     # Remove old files and copy new files from temporary directory
     git rm -r *
