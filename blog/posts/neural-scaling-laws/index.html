@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Yuxi Liu">
-<meta name="dcterms.date" content="2023-12-01">
+<meta name="dcterms.date" content="2023-12-05">
 <meta name="description" content="The bitter lesson in bite-sized packets.">
 
 <title>Yuxi on the Wired - Fermi Estimation for Neural Networks</title>
@@ -153,6 +153,7 @@ div.csl-indent {
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">AI</div>
+                <div class="quarto-category">economics</div>
               </div>
                   </div>
   </div>
@@ -170,14 +171,14 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 1, 2023</p>
+        <p class="date">December 5, 2023</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">December 1, 2023</p>
+        <p class="date-modified">December 5, 2023</p>
       </div>
     </div>
       
@@ -221,13 +222,13 @@ div.csl-indent {
 
 <p><img src="figure/banner_6.png" class="img-fluid"></p>
 <p>Fermi estimation is a technique for estimating quantities through rough approximations and educated guesses. Named after physicist Enrico Fermi, this method involves breaking down a problem into simpler, more manageable parts, making reasonable assumptions, and using simple arithmetic to arrive at a good enough answer.</p>
-<p>This post walks you through a simple example of Fermi estimation of a deep learning model. Specifically, we will try to estimate the design parameters of a hypothetical GPT-5 with 1 trillion parameters. Along the way, we will touch upon various other items like the Landauer limit (because of coure we will).</p>
+<p>This post walks you through a simple example of Fermi estimation of a deep learning model. Specifically, we will try to estimate the design parameters of a hypothetical GPT-5 with 1 trillion parameters. Along the way, we will touch upon various other items like the Landauer limit (because of course we will).</p>
 <section id="gpt-like-agi" class="level2">
 <h2 class="anchored" data-anchor-id="gpt-like-agi">GPT-like AGI</h2>
 <p>Let’s get into the mood for Fermi estimation, by estimating the number of parameters necessary for achieving human-level Artificial General Intelligence, under two assumptions: that a GPT-like architecture is enough; that it requires only matching the human brain in the "numbers".</p>
 <p>Let’s estimate how many layers the hypothetical GPT model should have. When prompted with a question, the first answer comes to mind in about a second, and it is generally a good one, if not the best. Perhaps slow deliberation is nothing but stringing together a long chain of snap judgments, guided by snap judgments about snap judgments.</p>
 <p>The characteristic time-scale of a brain is 0.01 seconds – the fastest brain wave, gamma wave, is 100 Hz. This indicates that the brain takes on the order of 100 steps to make a snap decision. This is the "hundred-step-rule" of <a href="https://en.wikipedia.org/wiki/Jerome_A._Feldman">Jerome Feldman</a>. <span class="citation" data-cites="feldmanConnectionistModelsTheir1982">(<a href="#ref-feldmanConnectionistModelsTheir1982" role="doc-biblioref">Feldman and Ballard 1982</a>)</span></p>
-<p>This corresponds very well with the largest model of GPT-3, which has 96 layers.</p>
+<p>This is suspiciously close to the largest model of GPT-3, which has 96 layers.</p>
 <p>How many parameters would such a model require? The brain has <span class="math inline">\(10^{15}\)</span> synapses. It’s unclear how precise each synapse is, but one estimate states that the hippocampal synapse has a precision of about 5 bits <span class="citation" data-cites="bartoljrNanoconnectomicUpperBound2015">(<a href="#ref-bartoljrNanoconnectomicUpperBound2015" role="doc-biblioref">Bartol Jr et al. 2015</a>)</span>, which can be stored within a 16-bit floating point number, with room to spare.</p>
 <p>Assuming that, we expect an AGI GPT to have <span class="math inline">\(10^{15}\)</span> (1000 trillion) parameters.</p>
 </section>
@@ -421,7 +422,7 @@ So what is the limit? The memory bandwidth, which we will see in the next questi
 <summary>
 Solution
 </summary>
-<p>Since the model takes up 2 Tb of memory, it would take at least 1.3 seconds to even load the model from DRAM, during a single forward pass. That is really slow!</p>
+<p>Since the model takes up 2 Tb of memory, it would take at least 1.3 seconds to even load the model from DRAM, during a single forward pass.</p>
 <p>Autoregression means that the next token cannot be generated until the previous one is already generated, so the model can only generate one token per 1.3 seconds, or 46 tokens per minute. A Chat-GPT5 would be a very slow talker!</p>
 <p>However, it <em>can</em> run in batch mode. So for example, it might be able to run 1 million conversations in parallel, outputting one token for all conversations every 2 seconds. Latency is the hard limit, but throughput is not.</p>
 <p>GPT-3 with 175 billion parameters would run 1000/175 times faster, at 262 tokens per minute, about the speed of a fast human talker. This corresponds well with the general impression that ChatGPT types about 200 words a minute.</p>
@@ -429,10 +430,10 @@ Solution
 <p>Note: Since we are just trying to compute an order-of-magnitude estimate, let’s assume for the problem that the model fits onto a single DRAM on a single GPU. You can also ignore the need to read/write model activations and optimizer states.</p>
 <p>There are some ways to improve latency. For example, the model can be parallelized over several GPUs, which effectively increases the memory bandwidth. For example, "tensor parallelism" splits each layer into several GPUs.</p>
 <p>There is also "pipeline parallelism", which splits the model into layers. The first few layers go into one GPU, the next few go into another, and so on. This does NOT decrease latency, but it does increase throughput.</p>
-<p>The fundamental bottleneck in an autoregressive model like GPT is that, by design, they have to start a sentence without knowing how it will end. That is, they have to generate the first token before generating the next one, and so on. This can never be parallelized (except by egrageous hacks like speculative decoding).</p>
+<p>The fundamental bottleneck in an autoregressive model like GPT is that, by design, they have to start a sentence without knowing how it will end. That is, they have to generate the first token before generating the next one, and so on. This can never be parallelized (except by egregious hacks like speculative decoding).</p>
 <p>One reason Transformers dominated over RNN is that training and inferring an RNN <em>both</em> must be done one-token-at-a-time. For Transformers, training can be done in parallel over the entire string. Inferring however still cannot be parallelized.</p>
-<p>Parallization tends to be a deeply troublesome business – parallel programming is generally deeply troublesome. However, there is a very simple method to improve thoroughput: batch mode. For example, GPT-5 might be able to run 1 million conversations in parallel, outputting one token for all conversations per forward pass. This trick works until the batch size is so large that the activations due to tokens takes up about as much memory bandwidth as the model parameters.</p>
-<p>Concretely, we can estimate what is a good batch size for GPT-3 175B. It has 96 attention layers, each with 96x 128-dimension heads. It is typically run with 16-bit precision floating point numebrs. For a single token, how many megabytes would all the floating point activations cost?</p>
+<p>parallelization tends to be a deeply troublesome business – parallel programming is generally deeply troublesome. However, there is a general trick to improve throughput: batch mode. For example, GPT-5 might be able to run 1 million conversations in parallel, outputting one token for all conversations per forward pass. This trick works until the batch size is so large that the activations due to tokens takes up about as much memory bandwidth as the model parameters.</p>
+<p>Concretely, we can estimate what is a good batch size for GPT-3 175B. It has 96 attention layers, each with 96×128-dimension heads. It is typically run with 16-bit precision floating point numbers. For a single token, how many megabytes would all the floating point activations cost?</p>
 <details>
 <summary>
 Solution
@@ -445,8 +446,8 @@ Solution
 <summary>
 Solution
 </summary>
-<p>In order for the activations of tokens to occupy the same memory as the GPT-3 parameters itself, we need about 350 GB / 2.4 MB = 0.15 million tokens.</p>
-<p>If we count the optimizer states for the model during training, then GPT-3 takes up 4x350 GB = 1.4 TB, and so we need about 0.6 million tokens.</p>
+<p>In order for the activations of tokens to occupy the same memory as the GPT-3 parameters itself, we need about <span class="math inline">\(\frac{350 \mathrm{GB}}{2.4 \mathrm{MB}} = 0.15 \text{million tokens}\)</span>.</p>
+<p>If we count the optimizer states for the model during training, then GPT-3 takes up <span class="math inline">\(4 \times 350 \mathrm{GB} = 1.4 \mathrm{TB}\)</span>, and so we need about 0.6 million tokens.</p>
 This explains why during training, the batch sizes of the largest models typically are on the order of 1 million tokens. It also shows why there is a natural drive towards scale – only the largest companies can expect to regularly run 0.2 million chats simultaneously.
 </details>
 </section>
@@ -459,7 +460,7 @@ This explains why during training, the batch sizes of the largest models typical
 <li>Unit price: 15000 USD.</li>
 <li>Rental price: 2 USD/hr.</li>
 <li>Speed: 0.3 petaFLOP/s = 3e14 FLOP/s.</li>
-<li>Power: 0.3 kiloWatt.</li>
+<li>Power: 0.3 kW.</li>
 <li>Memory bandwidth: 1600 GB/s.</li>
 </ul>
 <p>In the literature about the largest AI models, the training cost is often reported in units of “petaFLOP-day”, which is equal to 1 petaFLOP/second x 1 day. How many FLOP is 1 petaFLOP-day? What is the equivalent number of A100-hour? If we were to buy 1 petaFLOP-day of compute with rented A100 GPU, how much would it cost?</p>
@@ -477,12 +478,12 @@ Solution
 </summary>
 <p>2e25 FLOP = 0.2 amount of GPT-5 = 17 million A100-hours = 33 million USD.</p>
 <p>And accounting for the utilization rate of 30%, that would give us 110 million USD.</p>
-<p>Oh, and if you want some kind of official confirmation? <a href="https://www.wired.com/story/openai-ceo-sam-altman-the-age-of-giant-ai-models-is-already-over/">OpenAI’s CEO Says the Age of Giant AI Models Is Already Over | WIRED</a></p>
+<p>Oh, and if you want some kind of official confirmation? <a href="https://web.archive.org/web/20230417111136/https://www.wired.com/story/openai-ceo-sam-altman-the-age-of-giant-ai-models-is-already-over/">OpenAI’s CEO Says the Age of Giant AI Models Is Already Over | WIRED</a></p>
 <blockquote class="blockquote">
 <p>At the MIT event, Altman was asked if training GPT-4 cost $100 million; he replied, “It’s more than that.”</p>
 </blockquote>
 </details>
-<div class="page-columns page-full"><p>In reality, the GPU cannot be worked to their full speed, and we only use about 30% of its theoretical peak FLOP/sec (so for example, for A100, we only get 0.1 petaFLOP/s, instead of 0.3 petaFLOP/s).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> For this question, we assume that the utilization rate is 100%.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;The utilization rate of 30% is <a href="https://epochai.org/blog/estimating-training-compute">according to EpochAI</a>.</p></li></div></div>
+<div class="page-columns page-full"><p>In reality, the GPU cannot be worked to their full speed, and we only use about 30% of its theoretical peak FLOP/s (so for example, for A100, we only get 0.1 petaFLOP/s, instead of 0.3 petaFLOP/s).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> For this question, we assume that the utilization rate is 100%.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;The utilization rate of 30% is <a href="https://epochai.org/blog/estimating-training-compute">according to EpochAI</a>.</p></li></div></div>
 <p>Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2x to 3x.</p>
 <div class="page-columns page-full"><p>For context, here are the costs of <em>development</em> of various items<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;Sorry, not adjusted for inflation to the same year, but they are roughly in the range of 2000 – 2020 USD.</p></li></div></div>
 <ul>
@@ -498,11 +499,11 @@ Solution
 <summary>
 Solution
 </summary>
-<p>The cost is on the order of 1 billion USD, which is roughly the largest projects undertaken by private corporations. Larger models, as those contemplated by AGI projects in Google, OpenAI, etc, have historically been undertaken by state actors only. Here is another way to estimate. Building a large AI model, according to accountancy, would be investment into a production machine, and thus part of “capital expenditure” (“Capex”). We can find out what proportion is 1 billion USD in their total capex. I looked it up <a href="https://finbox.com/NASDAQGS:GOOG.L/explorer/capex/">here</a>.</p>
+<p>The cost is on the order of 1 billion USD, which is roughly the largest projects undertaken by private corporations. Larger models, as those contemplated by AGI projects in Google, OpenAI, etc, have historically been undertaken by state actors only. Here is another way to estimate. Building a large AI model, according to accountancy, would be investment into a production machine, and thus part of “capital expenditure” (“CapEx”). We can find out what proportion is 1 billion USD in their total CapEx. I looked it up <a href="https://finbox.com/NASDAQGS:GOOG.L/explorer/capex/">here</a>.</p>
 <ul>
-<li>During the 2020–2022, Microsoft has yearly capex on average 25 billion USD. - Google has about 25 billion USD. - Meta, 20. - Amazon, 63.</li>
+<li>During the 2020–2022, Microsoft has yearly CapEx on average 25 billion USD. - Google has about 25 billion USD. - Meta, 20. - Amazon, 63.</li>
 </ul>
-<p>In short, training something like GPT-5 would cost a lot, on the order of 5% of total capex, even by the standards of the largest companies. It can probably scale up by another factor of 10x if they really push it, but not more.</p>
+<p>In short, training something like GPT-5 would cost a lot, on the order of 5% of total CapEx, even by the standards of the largest companies. It can probably scale up by another factor of 10× if they really push it, but not more.</p>
 In order to train even larger AI models, those AI models <em>must</em> enter production. They must become a productive member of society, otherwise the company wouldn’t have the money to train them.
 </details>
 <p><a href="https://news.microsoft.com/source/features/ai/openai-azure-supercomputer/">Microsoft announces new supercomputer, lays out vision for future AI work (2020)</a>:</p>
@@ -533,7 +534,7 @@ Solution
 <blockquote class="blockquote">
 <p>From experiment 11.4 onward, we saw grad norm explosions / loss explosions / nans after a couple hundred updates after each restart, along with extremely unstable loss scales that would drop to the point of massively underflowing. We started taking more and more drastic actions then, starting with increasing weight decay to 0.1, lowering Adam beta2 to 0.95, lowering LR again, until finally by experiment 11.10 we hot-swapped in ReLU and also switched to a more stable MHA calculation (noting that the x**3 term in GeLU might be a source of instability with FP16).</p>
 </blockquote>
-<p><img src="https://github.com/facebookresearch/metaseq/raw/main/projects/OPT/chronicles/images/run11.jpeg" class="img-fluid"></p>
+<p><img src="figure/run11.jpeg" class="img-fluid"></p>
 <blockquote class="blockquote">
 <p>On November 11, we started training our 12.00 experiment with all of these changes, and since then, the only restarts we’ve had to make were all related to hardware issues (missing GPUs on instances, training randomly hanging after including a new node, ECC errors, partial checkpoint upload after hardware error, CUDA errors, NCCL errors, etc.).</p>
 </blockquote>
@@ -546,10 +547,10 @@ Solution
 <blockquote class="blockquote">
 <p>We managed to hit our top three record long runs of the experiment these past two weeks, lasting 1.5, 2.8, and 2 days each! If we were to look at only the runs that have contributed to pushing training further and plot training perplexity against wall clock time, we get the following [The breaks are due to the Thanksgiving holiday]:</p>
 </blockquote>
-<p><img src="https://github.com/facebookresearch/metaseq/raw/main/projects/OPT/chronicles/images/run12_56_perc.jpeg" class="img-fluid"></p>
+<p><img src="figure/run12_56_perc.jpeg" class="img-fluid"></p>
 </section>
 </section>
-<section id="inference-cost" class="level2">
+<section id="inference-cost" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="inference-cost">Inference cost</h2>
 <p>Inference cost a lot less money than training, but it’s still a substantial cost. For Transformer language models, it costs about 2 FLOPs per parameter to infer on one token.</p>
 <p>Given that GPT-3.5 has 175 billion parameters, how many FLOPs would it take to infer on 1 million tokens? How much money would it cost if it were run with A100?</p>
@@ -558,7 +559,7 @@ Solution
 Solution
 </summary>
 <p>175 billion * 1 million * 2 = 4e17 FLOPs. Now one A100-hour is 8.64e19 FLOPs, so that is 1/200 A100-hour, or about 0.01 USD.</p>
-<p><a href="https://openai.com/pricing">The price offered by OpenAI</a> is 2 USD per 1 million tokens, so it’s a very profitable business... but see next question.</p>
+<p><a href="https://openai.com/pricing">The price offered by OpenAI</a> is 2 USD per 1 million tokens, so it’s a very profitable business… but see next question.</p>
 </details>
 <p><a href="https://openai.com/pricing">The price offered by OpenAI</a> is 2 USD per 1 million tokens. Assuming that GPT-3.5 cost 10 million USD to develop and train, how many tokens must be sold, just to recoup the cost? Assuming each English word cost about 1.4 tokens, and each essay is 1000 words, how many essays would it be equivalent to?</p>
 <details>
@@ -568,14 +569,13 @@ Solution
 <p>Since the cost is almost negligible (1/200 of the revenue), we can pretend it’s all profit. So, the profit is 2 USD per 1 million tokens. We need to recoup 10 million USD, so we need 10 million / 2 * 1 million = 5e12 tokens, or 5e12/ 1400 = 4 billion essays.</p>
 About one essay per person on earth, or 10 essays per person in America… is that too much to ask?
 </details>
-<p>Moore’s law applies to both CPU and GPU. From 2006 to 2021, GPU FLOP/sec per dollar has been doubling every 2.5 years. We can fairly well assume that the price of petaFLOP-day also decreases at the same rate.</p>
+<p>Moore’s law applies to both CPU and GPU. From 2006 to 2021, GPU FLOP/s per dollar has been doubling every 2.5 years. We can fairly well assume that the price of petaFLOP-day also decreases at the same rate.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://epochai.org/blog/trends-in-gpu-price-performance"><img src="https://epochai.org/assets/images/posts/2022/gpu-perf/banner.png" class="img-fluid figure-img"></a></p>
+<p><a href="https://epochai.org/blog/trends-in-gpu-price-performance"><img src="figure/epoch_empirical_gpu_flops_per_dollar.png" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
-<p>Assuming Moore’s law continues to hold indefinitely, and that there will be no algorithmic progress. When would GPT-3 become as cheap as a typical hobbist project, say, 1000 USD?</p>
-<p><small>Since a 2006 GPU and a 2020 GPU both have the same lifespan (1 – 4 years usually), and their cost of electricity is only a small proportion of their running expense, the price of GPU FLOP/sec per dollar at the point of purchase is roughly proportional to the rental rate of GPU.</small></p>
+<div class="page-columns page-full"><p>Assuming Moore’s law continues to hold indefinitely, and that there will be no algorithmic progress. When would GPT-3 become as cheap as a typical hobbyist project, say, 1000 USD <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;Since a 2006 GPU and a 2020 GPU both have the same lifespan (1 – 4 years usually), and their cost of electricity is only a small proportion of their running expense, the price of GPU FLOP/s per dollar at the point of purchase is roughly proportional to the rental rate of GPU.</p></li></div></div>
 <details>
 <summary>
 Solution
@@ -587,25 +587,25 @@ GPT-3 cost 6 million USD to train. For it to cost just 1000 USD, we need to drop
 <h2 class="anchored" data-anchor-id="energetic-cost">Energetic cost</h2>
 <p>The Landauer limit states that the cost of erasing one bit of information is <span class="math inline">\(E = k_B T \ln 2\)</span>, where <span class="math inline">\(k_B\)</span> is the Boltzmann constant, and <span class="math inline">\(T\)</span> is the temperature of the computing machinery. At room temperature, <span class="math inline">\(T = 300 K\)</span>, giving us <span class="math inline">\(E = 3\times 10^{-21} J\)</span>.</p>
 <p>Now, one FLOP is a floating point operation, meaning that you start with two 32-bit objects and end up with a single 32-bit object. You start with 64 bits and end up with just 32 bits, and so you lose 32 bits. So by the Landauer limit, the minimal energetic cost is <span class="math inline">\(32 k_B T \ln 2\)</span>.</p>
-<p>Given this, what is the minimal energy required for performing one FLOP? What is the minimal power (in Watts) required to perform 300 TFLOP/sec, as in A100 GPU? Compared this to the actual value of 300 Watts.</p>
+<p>Given this, what is the minimal energy required for performing one FLOP? What is the minimal power (in Watts) required to perform 300 TFLOP/s, as in A100 GPU? Compared this to the actual value of 300 Watts.</p>
 <details>
 <summary>
 Solution
 </summary>
-<p>The energy per FLOP is <span class="math inline">\(E_{FLOP} = 32 \times 3\times 10^{-21} J = 10^{-19} J\)</span>. At 300 TFLOP/sec, we need <span class="math inline">\(P_{A100} = 3\times 10^{14} E_{FLOP}/sec = 3\times 10^{-5}W\)</span>. The actual value of 300 Watts is 10 million times more than the theoretical minimum.</p>
+<p>The energy per FLOP is <span class="math inline">\(E_{FLOP} = 32 \times 3\times 10^{-21} J = 10^{-19} J\)</span>. At 300 TFLOP/s, we need <span class="math inline">\(P_{A100} = 3\times 10^{14} E_{FLOP}/s = 3\times 10^{-5}W\)</span>. The actual value of 300 Watts is 10 million times more than the theoretical minimum.</p>
 <p>There is still <a href="https://en.wikipedia.org/wiki/There's_Plenty_of_Room_at_the_Bottom">plenty of room at the bottom</a>!</p>
-For context, the equivalent FLOP/sec for the human brain is controversial, but a brief scan through <a href="https://aiimpacts.org/brain-performance-in-flops/">the review article</a> says that it should be about 1e18 FLOP/sec.&nbsp;The energetic power of the brain is well-known: about 30 Watts. This means the brain is about 30000x more energy-efficient than A100 GPU, but still 300x less efficient than the theoretical minimum.
+For context, the equivalent FLOP/s for the human brain is controversial, but a brief scan through <a href="https://aiimpacts.org/brain-performance-in-flops/">the review article</a> says that it should be about 1e18 FLOP/s.&nbsp;The energetic power of the brain is well-known: about 30 Watts. This means the brain is about 30000x more energy-efficient than A100 GPU, but still 300x less efficient than the theoretical minimum.
 </details>
 <section id="the-lowest-possible-power-for-life" class="level3">
 <h3 class="anchored" data-anchor-id="the-lowest-possible-power-for-life">The lowest possible power for life</h3>
-<p>For context, the slowest metabolism found on earth (so far) is in <a href="https://www.quantamagazine.org/zombie-microbes-redefine-lifes-energy-limits-20200812/">microbes living below deep ocean surface</a>. They had to survive on the energy of “marine snow” falling to the surface, then slowly diffusing through the subsurface mud. Their power consumption is estimated at… <span class="math inline">\(10^{-21} W\)</span>. Since their temperature is about the temperature of the ocean water, which is liquid, their temperature is still about <span class="math inline">\(T = 273 K\)</span>, and so the Landuer limit is still about <span class="math inline">\(3\times 10^{-21} J\)</span>. This shows that they can lose at most 500 bits every day.</p>
+<p>For context, the slowest metabolism found on earth (so far) is in <a href="https://www.quantamagazine.org/zombie-microbes-redefine-lifes-energy-limits-20200812/">microbes living below deep ocean surface</a>. They had to survive on the energy of “marine snow” falling to the surface, then slowly diffusing through the subsurface mud. Their power consumption is estimated at… <span class="math inline">\(10^{-21} W\)</span>. Since their temperature is about the temperature of the ocean water, which is liquid, their temperature is still about <span class="math inline">\(T = 273 K\)</span>, and so the Landauer limit is still about <span class="math inline">\(3\times 10^{-21} J\)</span>. This shows that they can lose at most 500 bits every day.</p>
 <p>Most of the operations must be spent on simply repairing biomolecules, since repairing is effectively a 1-bit-losing operation: you start with a molecule that could be “damaged” or “fine”, and end up with a molecule that is “fine”, losing 1 bit. In fact, there are usually many possible ways to be “damaged”, so you would lose several bits.</p>
-<p>For example, suppose you have a base-pair-mutation in one copy of the DNA. You want to fix it by checking with the other copies. This then means you start with 4 possible states (ATCG) and end up with just 1 state, losing 2 bits in the process.</p>
+<p>For example, suppose you have a base-pair-mutation in one copy of the DNA. You want to fix it by checking with the other copies. This then means you start with 4 possible states (ACGT) and end up with just 1 state, losing 2 bits in the process.</p>
 </section>
 </section>
 <section id="environmental-cost" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="environmental-cost">Environmental cost</h2>
-<p>According to “Carbon emissions and large neural network training” (Patterson et al, 2021), the carbon emission of training GPT-3 is 552 tCO2. According to a <a href="https://www.reuters.com/business/cop/carbon-needs-cost-least-100tonne-now-reach-net-zero-by-2050-2021-10-25/">2021 poll of climate economists</a>, 1 tCO2 emission should cost somewhere between 50 and 250 USD. Let’s take their geometric average of 112 USD.</p>
+<p>According to “Carbon emissions and large neural network training”<span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>, the carbon emission of training GPT-3 is 552 tCO2. According to a <a href="https://www.reuters.com/business/cop/carbon-needs-cost-least-100tonne-now-reach-net-zero-by-2050-2021-10-25/">2021 poll of climate economists</a>, 1 tCO2 emission should cost somewhere between 50 and 250 USD. Let’s take their geometric average of 112 USD.</p>
 <p>If we add all the tCO2 cost to the training of GPT-3, how much more expensive would it be? Compare that with its A100-GPU cost of training.</p>
 <details>
 <summary>
@@ -638,10 +638,10 @@ Solution
 </details>
 <p>I think this strongly argues against the conclusion from <span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>:</p>
 <blockquote class="blockquote">
-<p>To help reduce the carbon footprint of ML, we believe energy usage and CO2e should be a key metric in evaluating models, and we are collaborating with MLPerf developers to include energy usage during training and inference in this industry standard benchmark... We believe such new incentives could lead to a virtuous cycle where ML practitioners compete to increase accuracy while lowering energy consumption and CO2e that could bend the curve of ML carbon footprint growth for computationally intensive NLP models.</p>
+<p>To help reduce the carbon footprint of ML, we believe energy usage and CO2e should be a key metric in evaluating models, and we are collaborating with MLPerf developers to include energy usage during training and inference in this industry standard benchmark… We believe such new incentives could lead to a virtuous cycle where ML practitioners compete to increase accuracy while lowering energy consumption and CO2e that could bend the curve of ML carbon footprint growth for computationally intensive NLP models.</p>
 </blockquote>
 <p>One, the carbon footprint of ML is already minimal, compared to the cost of just making all the GPUs.</p>
-<div class="page-columns page-full"><p>Two, accounting for CO2 is a dreadfully boring business,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and should properly be done by carbon taxing by the public officials. The ML practitioners are not climate economists or accountants, and they should not be burdened by accounting for climate change. If the price is right, then they simply need to budget how much money they want to spend on the training run, and the market would optimize the rest (including optimizing the right level of climate change<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>).</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;If you don’t believe me, try reading <span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>.</p></li><li id="fn5"><p><sup>5</sup>&nbsp;The right level of climate change is not "none", but rather "when the marginal cost equals marginal benefit". This might sound controversial, but it is really just economic common sense.</p>
+<div class="page-columns page-full"><p>Two, accounting for CO2 is a dreadfully boring business,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and should properly be done by carbon taxing by the public officials. The ML practitioners are not climate economists or accountants, and they should not be burdened by accounting for climate change. If the price is right, then they simply need to budget how much money they want to spend on the training run, and the market would optimize the rest (including optimizing the right level of climate change<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>).</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;If you don’t believe me, try reading <span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>.</p></li><li id="fn6"><p><sup>6</sup>&nbsp;The right level of climate change is not "none", but rather "when the marginal cost equals marginal benefit". This might sound controversial, but it is really just economic common sense.</p>
 <blockquote class="blockquote">
 <p><span class="citation" data-cites="krugmanRicardoDifficultIdea2002">(<a href="#ref-krugmanRicardoDifficultIdea2002" role="doc-biblioref">Krugman 2002</a>)</span> Luckily, at this point the orthodoxy of the academic economists is very much a minority position among intellectuals in general; one can seem to be a courageous maverick, boldly challenging the powers that be, by reciting the contents of a standard textbook.</p>
 </blockquote>
