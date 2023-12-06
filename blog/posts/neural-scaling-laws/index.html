@@ -230,7 +230,7 @@ div.csl-indent {
 <p>The characteristic time-scale of a brain is 0.01 seconds – the fastest brain wave, gamma wave, is 100 Hz. This indicates that the brain takes on the order of 100 steps to make a snap decision. This is the "hundred-step-rule" of <a href="https://en.wikipedia.org/wiki/Jerome_A._Feldman">Jerome Feldman</a>. <span class="citation" data-cites="feldmanConnectionistModelsTheir1982">(<a href="#ref-feldmanConnectionistModelsTheir1982" role="doc-biblioref">Feldman and Ballard 1982</a>)</span></p>
 <p>This is suspiciously close to the largest model of GPT-3, which has 96 layers.</p>
 <p>How many parameters would such a model require? The brain has <span class="math inline">\(10^{15}\)</span> synapses. It’s unclear how precise each synapse is, but one estimate states that the hippocampal synapse has a precision of about 5 bits <span class="citation" data-cites="bartoljrNanoconnectomicUpperBound2015">(<a href="#ref-bartoljrNanoconnectomicUpperBound2015" role="doc-biblioref">Bartol Jr et al. 2015</a>)</span>, which can be stored within a 16-bit floating point number, with room to spare.</p>
-<p>Assuming that, we expect an AGI GPT to have <span class="math inline">\(10^{15}\)</span> (1000 trillion) parameters.</p>
+<p>Assuming that, we expect an AGI GPT to have <span class="math inline">\(10^{15}\)</span> parameters, or 1000×.</p>
 </section>
 <section id="chinchilla-scaling-law" class="level2">
 <h2 class="anchored" data-anchor-id="chinchilla-scaling-law">Chinchilla Scaling Law</h2>
@@ -247,17 +247,18 @@ div.csl-indent {
 <p><span class="math display">\[\alpha = 0.34, \beta = 0.28, A = 406.4, B = 410.7, L_0 = 1.69.\]</span></p>
 <p>They also estimated that the cost of training compute <span class="math inline">\(C\)</span> is proportional to <span class="math inline">\(ND\)</span>. This is understandable, because each token must flow through the entire model and "hit" each parameter once, incurring a fixed number of floating point operations. They estimated that it takes 6 FLOPs per parameter per token. That is,</p>
 <p><span class="math display">\[C = C_0 ND, \quad C_0 = 6\]</span></p>
-<p>Given the assumptions, for each fixed computing budget <span class="math inline">\(C\)</span>, we can solve for the optimal <span class="math inline">\(D\)</span> and <span class="math inline">\(N\)</span>, which is usually referred to as "Chinchilla optimal" training: <span class="math display">\[\begin{cases}
-        \min_{N, D} L = \frac{A}{N^\alpha} + \frac{B}{D^{\beta}} + L_0\\
-        \text{such that } C_0 ND = C
-    \end{cases}\]</span></p>
+<p>Given the assumptions, for each fixed computing budget <span class="math inline">\(C\)</span>, we can solve for the optimal <span class="math inline">\(D\)</span> and <span class="math inline">\(N\)</span>, which is usually referred to as "Chinchilla optimal" training:</p>
+<p><span class="math display">\[\begin{cases}
+        \min_{N, D} L = \frac{A}{N^\alpha} + \frac{B}{D^{\beta}} + L_0,\\
+        \text{such that } C_0 ND = C.
+\end{cases}\]</span></p>
 <p>Solve the above equations symbolically to find <span class="math inline">\(N_{opt}, D_{opt}\)</span> as a function of <span class="math inline">\(C, C_0, \alpha, \beta, A, B\)</span>. Then, plug in the numerical values of the parameters, to find a numerical expression for <span class="math inline">\(N_{opt}, D_{opt}\)</span> as a function of <span class="math inline">\(C\)</span>.</p>
 <details>
 <summary>
 Solution
 </summary>
 <p>Since <span class="math inline">\(C = C_0 ND\)</span>, we have <span class="math inline">\(N = \frac{C}{C_0 D}\)</span>. Plug it into <span class="math inline">\(\min_{N, D} L = \frac{A}{N^\alpha} + \frac{B}{D^{\beta}} + L_0\)</span>, we obtain</p>
-<p><span class="math display">\[\min_{D} L = \frac{A}{(\frac{C}{C_0 D})^\alpha} + \frac{B}{D^{\beta}} + L_0\]</span></p>
+<p><span class="math display">\[\min_{D} L = \frac{A}{(\frac{C}{C_0 D})^\alpha} + \frac{B}{D^{\beta}} + L_0.\]</span></p>
 <p>Take derivative with respect to <span class="math inline">\(D\)</span> and set it to zero. We get an expression for <span class="math inline">\(D_{opt}\)</span>. Plug it back to <span class="math inline">\(C = C_0 ND\)</span>, we get an expression for <span class="math inline">\(D_{opt}\)</span>. These simplify to:</p>
 <p><span class="math display">\[N_{o p t}(C)=G\left(\frac{C}{C_0}\right)^a, \quad D_{o p t}(C)=G^{-1}\left(\frac{C}{C_0}\right)^b, \quad \text { where } \quad G=\left(\frac{\alpha A}{\beta B}\right)^{\frac{1}{\alpha+\beta}}, a=\frac{\beta}{\alpha+\beta}, b=\frac{\alpha}{\alpha+\beta}.\]</span></p>
 <p>Plugging in the numerical values, we get</p>
@@ -268,8 +269,7 @@ Solution
     \end{cases}
     \]</span>
 </details>
-<p>In the same paper, they also performed a <em>direct</em> statistical fitting, to find the optimal <span class="math inline">\(N, D\)</span> for a given <span class="math inline">\(C\)</span>, without going through the intermediate steps above. This gives a slightly different result (only slightly different – as you would know after solving the previous problem):</p>
-<p><span class="math display">\[N_{opt}(C) = 0.1 C^{0.5}; \quad D_{opt}(C) = 1.7 C^{0.5}.\]</span></p>
+<p>In the same paper, they also performed a <em>direct</em> statistical fitting, to find the optimal <span class="math inline">\(N, D\)</span> for a given <span class="math inline">\(C\)</span>, without going through the intermediate steps above. This gives a slightly different result (only slightly different – as you would know after solving the previous problem): <span class="math display">\[N_{opt}(C) = 0.1 C^{0.5}; \quad D_{opt}(C) = 1.7 C^{0.5}.\]</span></p>
 <p>For the rest of the question, we will use these equations as the Chinchilla scaling laws. Do not use the equations you derived for the previous problem.</p>
 <p>Suppose we decide that our next AI should have 1 trillion (<span class="math inline">\(N = 10^{12}\)</span>) parameters, and we use Chinchilla scaling laws. How much compute would it cost to train, and how many tokens would its training dataset have?</p>
 <details>
@@ -286,7 +286,7 @@ Solution
 <summary>
 Solution
 </summary>
-10 trillion / 1.4 = 7 trillion words. If each book has 400 * 300 = 0.12 million words, then that is 60 million books, if they were all in English.
+<span class="math inline">\(10 / 1.4 = 7\)</span> trillion words. If each book has <span class="math inline">\(400 \times 300 = 0.12\)</span> million words, then that is 60 million books, if they were all in English.
 </details>
 <p>Since humans are kind of the same everywhere, book lengths should be kind of the same everywhere – information-dense languages would naturally have books with lower apparent word-count, but the same information (measured in bytes).</p>
 </section>
@@ -408,7 +408,7 @@ Solution
 </summary>
 <p>SSD cost 0.00015 USD/MB in 2018, or 0.15 USD/GB. 1 trillion parameters cost 2000 GB of storage, or about 300 USD. So the total cost of storage is 300 USD/year, just a rounding error.</p>
 <p>In contrast, DRAM cost 0.006 USD/MB, which is 40x that of SSD, so the total cost is 12000 USD.</p>
-<p>Now, compared with the cost of A100 GPU themselves? It takes about 50 A100 GPU to run the model, and each would cost about 20,000 USD. So the cost of long-term memory is essentially zero, and the cost of DRAM is about 12000 / (20000*50) = 1% of the total cost of GPU.</p>
+<p>Now, compared with the cost of A100 GPU themselves? It takes about 50 A100 GPU to run the model, and each would cost about 20,000 USD. So the cost of long-term memory is essentially zero, and the cost of DRAM is about <span class="math inline">\(\frac{12000}{20000\times 50} = 1\%\)</span> of the total cost of GPU.</p>
 So what is the limit? The memory bandwidth, which we will see in the next question.
 </details>
 </section>
@@ -422,7 +422,7 @@ So what is the limit? The memory bandwidth, which we will see in the next questi
 <summary>
 Solution
 </summary>
-<p>Since the model takes up 2 Tb of memory, it would take at least 1.3 seconds to even load the model from DRAM, during a single forward pass.</p>
+<p>Since the model takes up 2 TB of memory, it would take at least 1.3 seconds to even load the model from DRAM, during a single forward pass.</p>
 <p>Autoregression means that the next token cannot be generated until the previous one is already generated, so the model can only generate one token per 1.3 seconds, or 46 tokens per minute. A Chat-GPT5 would be a very slow talker!</p>
 <p>However, it <em>can</em> run in batch mode. So for example, it might be able to run 1 million conversations in parallel, outputting one token for all conversations every 2 seconds. Latency is the hard limit, but throughput is not.</p>
 <p>GPT-3 with 175 billion parameters would run 1000/175 times faster, at 262 tokens per minute, about the speed of a fast human talker. This corresponds well with the general impression that ChatGPT types about 200 words a minute.</p>
@@ -476,7 +476,7 @@ Since 1 A100 can run at 0.3 petaFLOP/s, getting 1 petaFLOP-day requires us to ru
 <summary>
 Solution
 </summary>
-<p>2e25 FLOP = 0.2 amount of GPT-5 = 17 million A100-hours = 33 million USD.</p>
+<p>2E25 FLOP = 0.2 amount of GPT-5 = 17 million A100-hours = 33 million USD.</p>
 <p>And accounting for the utilization rate of 30%, that would give us 110 million USD.</p>
 <p>Oh, and if you want some kind of official confirmation? <a href="https://web.archive.org/web/20230417111136/https://www.wired.com/story/openai-ceo-sam-altman-the-age-of-giant-ai-models-is-already-over/">OpenAI’s CEO Says the Age of Giant AI Models Is Already Over | WIRED</a></p>
 <blockquote class="blockquote">
@@ -484,7 +484,7 @@ Solution
 </blockquote>
 </details>
 <div class="page-columns page-full"><p>In reality, the GPU cannot be worked to their full speed, and we only use about 30% of its theoretical peak FLOP/s (so for example, for A100, we only get 0.1 petaFLOP/s, instead of 0.3 petaFLOP/s).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> For this question, we assume that the utilization rate is 100%.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;The utilization rate of 30% is <a href="https://epochai.org/blog/estimating-training-compute">according to EpochAI</a>.</p></li></div></div>
-<p>Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2x to 3x.</p>
+<p>Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2× to 3× .</p>
 <div class="page-columns page-full"><p>For context, here are the costs of <em>development</em> of various items<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;Sorry, not adjusted for inflation to the same year, but they are roughly in the range of 2000 – 2020 USD.</p></li></div></div>
 <ul>
 <li><a href="https://web.archive.org/web/20150213101032/http://archive.wired.com/gadgets/wireless/magazine/16-02/ff_iphone?currentPage=all">iPhone 1: 150 million USD</a>.</li>
@@ -504,7 +504,7 @@ Solution
 <li>During the 2020–2022, Microsoft has yearly CapEx on average 25 billion USD. - Google has about 25 billion USD. - Meta, 20. - Amazon, 63.</li>
 </ul>
 <p>In short, training something like GPT-5 would cost a lot, on the order of 5% of total CapEx, even by the standards of the largest companies. It can probably scale up by another factor of 10× if they really push it, but not more.</p>
-In order to train even larger AI models, those AI models <em>must</em> enter production. They must become a productive member of society, otherwise the company wouldn’t have the money to train them.
+In order to train even larger AI models, those AI models <em>must</em> enter production. They must become a productive member of society, otherwise the company would nott have the money to train them.
 </details>
 <p><a href="https://news.microsoft.com/source/features/ai/openai-azure-supercomputer/">Microsoft announces new supercomputer, lays out vision for future AI work (2020)</a>:</p>
 <blockquote class="blockquote">
@@ -524,7 +524,6 @@ Solution
 <p>All together, we should expect the failures, restarts, deadends… to triple the cost at least, to ~1 billion USD.</p>
 <p>In 2021, a team of 5 engineers from Meta trained a LLM with 175 billion parameters, in 3 months, using 1024 80GB A100 GPUs from. Excluding all the divergences, hardware failures, and other issues that caused lost progress, the final model would have taken about 33 days of continuous training.</p>
 <p>They have kept journals during their training. This is now published at <a href="https://github.com/facebookresearch/metaseq/tree/main/projects/OPT/chronicles#chronicles-of-opt-development">metaseq/projects/OPT/chronicles at main · facebookresearch/metaseq · GitHub</a>. You can see how difficult it is to train a large model. Selected quotes:</p>
-<p>In 2021, a team of researchers from Meta trained a series of LLM and kept journals during their training. This is now published at <a href="https://github.com/facebookresearch/metaseq/tree/main/projects/OPT/chronicles#chronicles-of-opt-development">metaseq/projects/OPT/chronicles at main · facebookresearch/metaseq · GitHub</a>. You can see how difficult it is to train a large model. Selected quotes:</p>
 <blockquote class="blockquote">
 <p>These notes cover ~90 restarts over the course of training the lineage of this current model (experiments 12.xx).</p>
 </blockquote>
@@ -558,7 +557,7 @@ Solution
 <summary>
 Solution
 </summary>
-<p>175 billion * 1 million * 2 = 4e17 FLOPs. Now one A100-hour is 8.64e19 FLOPs, so that is 1/200 A100-hour, or about 0.01 USD.</p>
+<p><span class="math inline">\(175 \mathrm{billion} \times 1 \mathrm{million} \times 2 = 4\times 10^{17} \mathrm{FLOPs}\)</span>. Now one A100-hour is <span class="math inline">\(8.64\times 10^{19} \mathrm{FLOPs}\)</span>, so that is 1/200 A100-hour, or about 0.01 USD.</p>
 <p><a href="https://openai.com/pricing">The price offered by OpenAI</a> is 2 USD per 1 million tokens, so it’s a very profitable business… but see next question.</p>
 </details>
 <p><a href="https://openai.com/pricing">The price offered by OpenAI</a> is 2 USD per 1 million tokens. Assuming that GPT-3.5 cost 10 million USD to develop and train, how many tokens must be sold, just to recoup the cost? Assuming each English word cost about 1.4 tokens, and each essay is 1000 words, how many essays would it be equivalent to?</p>
@@ -566,7 +565,7 @@ Solution
 <summary>
 Solution
 </summary>
-<p>Since the cost is almost negligible (1/200 of the revenue), we can pretend it’s all profit. So, the profit is 2 USD per 1 million tokens. We need to recoup 10 million USD, so we need 10 million / 2 * 1 million = 5e12 tokens, or 5e12/ 1400 = 4 billion essays.</p>
+<p>Since the cost is almost negligible (1/200 of the revenue), we can pretend it’s all profit. So, the profit is 2 USD per 1 million tokens. We need to recoup 10 million USD, so we need <span class="math inline">\(10 \mathrm{million} / 2 \times 1 \mathrm{million} = 5\times 10^{12} \mathrm{tokens}\)</span>, or 4 billion essays.</p>
 About one essay per person on earth, or 10 essays per person in America… is that too much to ask?
 </details>
 <p>Moore’s law applies to both CPU and GPU. From 2006 to 2021, GPU FLOP/s per dollar has been doubling every 2.5 years. We can fairly well assume that the price of petaFLOP-day also decreases at the same rate.</p>
