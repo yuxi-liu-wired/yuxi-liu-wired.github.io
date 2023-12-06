@@ -203,7 +203,7 @@ The fundamental bottleneck in an autoregressive model like GPT is that, by desig
 
 One reason Transformers dominated over RNN is that training and inferring an RNN *both* must be done one-token-at-a-time. For Transformers, training can be done in parallel over the entire string. Inferring however still cannot be parallelized.
 
-parallelization tends to be a deeply troublesome business -- parallel programming is generally deeply troublesome. However, there is a general trick to improve throughput: batch mode. For example, GPT-5 might be able to run 1 million conversations in parallel, outputting one token for all conversations per forward pass. This trick works until the batch size is so large that the activations due to tokens takes up about as much memory bandwidth as the model parameters.
+parallelization[D[1;5D[1;5D[1;5D[1;5D[1;5D[1;5D[D[D[D[D[D[D[P tends to be a deeply troublesome business -- parallel programming is generally deeply troublesome. However, there is a general trick to improve throughput: batch mode. For example, GPT-5 might be able to run 1 million conversations in parallel, outputting one token for all conversations per forward pass. This trick works until the batch size is so large that the activations due to tokens takes up about as much memory bandwidth as the model parameters.
 
 Concretely, we can estimate what is a good batch size for GPT-3 175B. It has 96 attention layers, each with 96×128-dimension heads. It is typically run with 16-bit precision floating point numbers. For a single token, how many megabytes would all the floating point activations cost?
 
@@ -259,9 +259,9 @@ The largest model of GPT-3 cost 3640 petaFLOP-days to train (according to [Table
 
 And accounting for the utilization rate of 30%, that would give us 110 million USD.
 
-Oh, and if you want some kind of official confirmation? [OpenAI's CEO Says the Age of Giant AI Models Is Already Over | WIRED](https://web.archive.org/web/20230417111136/https://www.wired.com/story/openai-ceo-sam-altman-the-age-of-giant-ai-models-is-already-over/)
+Oh, and if you want some kind of official confirmation? [OpenAI’s CEO Says the Age of Giant AI Models Is Already Over | WIRED](https://www.wired.com/story/openai-ceo-sam-altman-the-age-of-giant-ai-models-is-already-over/)
 
-> At the MIT event, Altman was asked if training GPT-4 cost $100 million; he replied, "It's more than that."
+> At the MIT event, Altman was asked if training GPT-4 cost $100 million; he replied, “It’s more than that.”
 
 </details>
 
@@ -287,14 +287,14 @@ Comment on the cost of our hypothetical GPT-5. Is it on the order of a large com
 <details>
   <summary>Solution</summary>
 
-    The cost is on the order of 1 billion USD, which is roughly the largest projects undertaken by private corporations. Larger models, as those contemplated by AGI projects in Google, OpenAI, etc, have historically been undertaken by state actors only. Here is another way to estimate. Building a large AI model, according to accountancy, would be investment into a production machine, and thus part of "capital expenditure" ("CapEx"). We can find out what proportion is 1 billion USD in their total CapEx. I looked it up [here](https://finbox.com/NASDAQGS:GOOG.L/explorer/capex/).
+    The cost is on the order of 1 billion USD, which is roughly the largest projects undertaken by private corporations. Larger models, as those contemplated by AGI projects in Google, OpenAI, etc, have historically been undertaken by state actors only. Here is another way to estimate. Building a large AI model, according to accountancy, would be investment into a production machine, and thus part of "capital expenditure" ("CapEx"). We can find out what proportion is 1 billion USD in their total capex. I looked it up [here](https://finbox.com/NASDAQGS:GOOG.L/explorer/capex/).
 
-    -   During the 2020--2022, Microsoft has yearly CapEx on average 25 billion USD.
+    -   During the 2020--2022, Microsoft has yearly capex on average 25 billion USD.
     -   Google has about 25 billion USD.
     -   Meta, 20.
     -   Amazon, 63.
 
-    In short, training something like GPT-5 would cost a lot, on the order of 5% of total CapEx, even by the standards of the largest companies. It can probably scale up by another factor of 10× if they really push it, but not more.
+    In short, training something like GPT-5 would cost a lot, on the order of 5% of total capex, even by the standards of the largest companies. It can probably scale up by another factor of 10x if they really push it, but not more.
 
     In order to train even larger AI models, those AI models *must* enter production. They must become a productive member of society, otherwise the company wouldn't have the money to train them.
 </details>
@@ -401,7 +401,7 @@ For context, the slowest metabolism found on earth (so far) is in [microbes livi
 
 Most of the operations must be spent on simply repairing biomolecules, since repairing is effectively a 1-bit-losing operation: you start with a molecule that could be "damaged" or "fine", and end up with a molecule that is "fine", losing 1 bit. In fact, there are usually many possible ways to be "damaged", so you would lose several bits.
 
-For example, suppose you have a base-pair-mutation in one copy of the DNA. You want to fix it by checking with the other copies. This then means you start with 4 possible states (ACGT) and end up with just 1 state, losing 2 bits in the process.
+For example, suppose you have a base-pair-mutation in one copy of the DNA. You want to fix it by checking with the other copies. This then means you start with 4 possible states (ATCG) and end up with just 1 state, losing 2 bits in the process.
 
 
 ## Environmental cost
@@ -465,3 +465,4 @@ Two, accounting for CO2 is a dreadfully boring business,[^co2-is-boring] and sho
     > [@krugmanRicardoDifficultIdea2002] Luckily, at this point the orthodoxy of the academic economists is very much a minority position among intellectuals in general; one can seem to be a courageous maverick, boldly challenging the powers that be, by reciting the contents of a standard textbook. 
 
 In one sentence: **There need be no new incentive other than the profit motive.**
+
