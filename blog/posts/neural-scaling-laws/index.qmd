@@ -106,7 +106,7 @@ Assuming each English word cost about 1.4 tokens, how many English words would 1
 Since humans are kind of the same everywhere, book lengths should be kind of the same everywhere -- information-dense languages would naturally have books with lower apparent word-count, but the same information (measured in bytes).
 
 
-### Memory requirement
+## Memory requirement
 
 Typically, a deep learning model has 16-bit floating point parameters. Modern systems sometimes use lower precision (e.g. 8-bit) floating point numbers to save space, but generally it is necessary to use at least 16-bit during training, and the model is converted to lower precision after training (\"post-training quantization\").
 
@@ -178,19 +178,14 @@ What is the minimal latency, in seconds, for the GPU to perform a single forward
 
 <details>
   <summary>Solution</summary>
-Since the model takes up 2 TB of memory, it would take at least 1.3
-    seconds to even load the model from DRAM, during a single forward pass.
-    That is really slow!
-    
-    Autoregression means that the next token cannot be generated until the
-    previous one is already generated, so the model can only generate one
-    token per 1.3 seconds, or 46 tokens per minute. A Chat-GPT5 would be a
-    very slow talker!
-    
-    GPT-3 with 175 billion parameters would run 1000/175 times faster, at
-    262 tokens per minute, about the speed of a fast human talker. This
-    corresponds well with the general impression that ChatGPT-3.5 types about
-    200 words a minute.
+    Since the model takes up 2 Tb of memory, it would take at least 1.3 seconds to even load the model from DRAM, during a single forward pass. That is really slow!
+
+    Autoregression means that the next token cannot be generated until the previous one is already generated, so the model can only generate one token per 1.3 seconds, or 46 tokens per minute. A Chat-GPT5 would be a very slow talker!
+
+    However, it *can* run in batch mode. So for example, it might be able to run 1 million conversations in parallel, outputting one token for all conversations every 2 seconds. Latency is the hard limit, but throughput is not.
+
+    GPT-3 with 175 billion parameters would run 1000/175 times faster, at 262 tokens per minute, about the speed of a fast human talker. This corresponds well with the general impression that ChatGPT types about 200 words a minute.
+
 </details>
 
 Note: Since we are just trying to compute an order-of-magnitude estimate, let's assume for the problem that the model fits onto a single DRAM on a single GPU. You can also ignore the need to read/write model activations and optimizer states.
@@ -209,17 +204,15 @@ Concretely, we can estimate what is a good batch size for GPT-3 175B. It has 96 
 
 <details>
   <summary>Solution</summary>
-
+      A single token would cost
+    \(96 \times 96 \times 128\) floating point activations, or about 2.4 MB.
 </details>
 
 The model itself has 175 billion 16-bit floating point parameters, taking up about 350 GB. How many tokens do we need to put into a batch, before the activations occupy the same amount of memory as the model parameters?
 
 <details>
   <summary>Solution</summary>
-    A single token would cost
-    \(96 \times 96 \times 128\) floating point activations, or about 2.4 MB.
-
-    So in order for the activations of tokens to occupy the same memory as the
+    In order for the activations of tokens to occupy the same memory as the
     GPT-3 parameters itself, we need about 350 GB / 2.4 MB = 0.15 million tokens.
 
     If we count the optimizer states for the model during training, then GPT-3 takes up
@@ -324,23 +317,25 @@ In 2021, a team of 5 engineers from Meta trained a LLM with 175 billion paramete
 
 They have kept journals during their training. This is now published at [metaseq/projects/OPT/chronicles at main · facebookresearch/metaseq · GitHub](https://github.com/facebookresearch/metaseq/tree/main/projects/OPT/chronicles#chronicles-of-opt-development). You can see how difficult it is to train a large model. Selected quotes:
 
-> These notes cover \~90 restarts over the course of training the lineage of this current model (experiments 12.xx).
+In 2021, a team of researchers from Meta trained a series of LLM and kept journals during their training. This is now published at [metaseq/projects/OPT/chronicles at main · facebookresearch/metaseq · GitHub](https://github.com/facebookresearch/metaseq/tree/main/projects/OPT/chronicles#chronicles-of-opt-development). You can see how difficult it is to train a large model. Selected quotes:
+
+> These notes cover ~90 restarts over the course of training the lineage of this current model (experiments 12.xx).
 
 > Found issues with the new dataset where perplexity was unreasonably low... After applying as much regex-ing as we could to salvage the dataset, we relaunched another set of experiments to test LPE (experiments 20-29) on the new dataset. We didn't have time to retrain a new BPE on the final dataset, so we fell back to using the GPT-2 BPE.
 
-> From experiment 11.4 onward, we saw grad norm explosions / loss explosions / nans after a couple hundred updates after each restart, along with extremely unstable loss scales that would drop to the point of massively underflowing. We started taking more and more drastic actions then, starting with increasing weight decay to 0.1, lowering Adam beta2 to 0.95, lowering LR again, until finally by experiment 11.10 we hot-swapped in ReLU and also switched to a more stable MHA calculation (noting that the x\*\*3 term in GeLU might be a source of instability with FP16).
+> From experiment 11.4 onward, we saw grad norm explosions / loss explosions / nans after a couple hundred updates after each restart, along with extremely unstable loss scales that would drop to the point of massively underflowing. We started taking more and more drastic actions then, starting with increasing weight decay to 0.1, lowering Adam beta2 to 0.95, lowering LR again, until finally by experiment 11.10 we hot-swapped in ReLU and also switched to a more stable MHA calculation (noting that the x**3 term in GeLU might be a source of instability with FP16).
 
-[![](figure/opt_run11.jpeg){width="80%" #fig:opt_run11 label="fig:opt_run11"}](https://github.com/facebookresearch/metaseq/raw/main/projects/OPT/chronicles/images/run11.jpeg)
+![](https://github.com/facebookresearch/metaseq/raw/main/projects/OPT/chronicles/images/run11.jpeg)
 
 > On November 11, we started training our 12.00 experiment with all of these changes, and since then, the only restarts we've had to make were all related to hardware issues (missing GPUs on instances, training randomly hanging after including a new node, ECC errors, partial checkpoint upload after hardware error, CUDA errors, NCCL errors, etc.).
 
 > Replacement through the cloud interface can take hours for a single machine, and we started finding that more often than not we would end up getting the same bad machine again.
 
-> There were also issues with blob store when downloading 1.6TB of a single model checkpoint (992 files, each \~1.7GB) on restarts, at which point the downloads themselves would start hanging nondeterministically, which then delayed training recovery even further.
+> There were also issues with blob store when downloading 1.6TB of a single model checkpoint (992 files, each ~1.7GB) on restarts, at which point the downloads themselves would start hanging nondeterministically, which then delayed training recovery even further.
 
-> We managed to hit our top three record long runs of the experiment these past two weeks, lasting 1.5, 2.8, and 2 days each! If we were to look at only the runs that have contributed to pushing training further and plot training perplexity against wall clock time, we get the following \[The breaks are due to the Thanksgiving holiday\]:
+> We managed to hit our top three record long runs of the experiment these past two weeks, lasting 1.5, 2.8, and 2 days each! If we were to look at only the runs that have contributed to pushing training further and plot training perplexity against wall clock time, we get the following [The breaks are due to the Thanksgiving holiday]:
 
-[![](figure/opt_run12_56_perc.jpeg){width="80%" #fig:opt_run12_56_perc label="fig:opt_run12_56_perc"}](https://github.com/facebookresearch/metaseq/raw/main/projects/OPT/chronicles/images/run12_56_perc.jpeg)
+![](https://github.com/facebookresearch/metaseq/raw/main/projects/OPT/chronicles/images/run12_56_perc.jpeg)
 
 ## Inference cost
 
@@ -365,6 +360,19 @@ Given that GPT-3.5 has 175 billion parameters, how many FLOPs would it take to i
     About one essay per person on earth, or 10 essays per person in America... is that too much to ask?
 </details>
 
+Moore's law applies to both CPU and GPU. From 2006 to 2021, GPU FLOP/sec per dollar has been doubling every 2.5 years. We can fairly well assume that the price of petaFLOP-day also decreases at the same rate.
+
+[![](https://epochai.org/assets/images/posts/2022/gpu-perf/banner.png)](https://epochai.org/blog/trends-in-gpu-price-performance)
+
+Assuming Moore's law continues to hold indefinitely, and that there will be no algorithmic progress. When would GPT-3 become as cheap as a typical hobbist project, say, 1000 USD?
+
+<small>Since a 2006 GPU and a 2020 GPU both have the same lifespan (1 -- 4 years usually), and their cost of electricity is only a small proportion of their running expense, the price of GPU FLOP/sec per dollar at the point of purchase is roughly proportional to the rental rate of GPU.</small>
+
+<details>
+  <summary>Solution</summary>
+  GPT-3 cost 6 million USD to train. For it to cost just 1000 USD, we need to drop its price 6000-fold. Now, $\log_2(6000) \times 2.5 yr = 30 yr$. So it would be around 2050.
+</details>
+
 ## Energetic cost
 
 The Landauer limit states that the cost of erasing one bit of information is $E = k_B T \ln 2$, where $k_B$ is the Boltzmann constant, and $T$ is the temperature of the computing machinery. At room temperature, $T = 300 K$, giving us $E = 3\times 10^{-21} J$.
@@ -381,6 +389,15 @@ Given this, what is the minimal energy required for performing one FLOP? What is
 
     For context, the equivalent FLOP/sec for the human brain is controversial, but a brief scan through [the review article](https://aiimpacts.org/brain-performance-in-flops/) says that it should be about 1e18 FLOP/sec. The energetic power of the brain is well-known: about 30 Watts. This means the brain is about 30000x more energy-efficient than A100 GPU, but still 300x less efficient than the theoretical minimum.
 </details>
+
+### The lowest possible power for life
+
+For context, the slowest metabolism found on earth (so far) is in [microbes living below deep ocean surface](https://www.quantamagazine.org/zombie-microbes-redefine-lifes-energy-limits-20200812/). They had to survive on the energy of "marine snow" falling to the surface, then slowly diffusing through the subsurface mud. Their power consumption is estimated at... $10^{-21} W$. Since their temperature is about the temperature of the ocean water, which is liquid, their temperature is still about $T = 273 K$, and so the Landuer limit is still about $3\times 10^{-21} J$. This shows that they can lose at most 500 bits every day.
+
+Most of the operations must be spent on simply repairing biomolecules, since repairing is effectively a 1-bit-losing operation: you start with a molecule that could be "damaged" or "fine", and end up with a molecule that is "fine", losing 1 bit. In fact, there are usually many possible ways to be "damaged", so you would lose several bits.
+
+For example, suppose you have a base-pair-mutation in one copy of the DNA. You want to fix it by checking with the other copies. This then means you start with 4 possible states (ATCG) and end up with just 1 state, losing 2 bits in the process.
+
 
 ## Environmental cost
 
@@ -444,7 +461,3 @@ Two, accounting for CO2 is a dreadfully boring business,[^co2-is-boring] and sho
 
 In one sentence: **There need be no new incentive other than the profit motive.**
 
-<details>
-  <summary>Solution</summary>
-
-</details>
