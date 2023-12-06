@@ -35,7 +35,7 @@ This is suspiciously close to the largest model of GPT-3, which has 96 layers.
 
 How many parameters would such a model require? The brain has $10^{15}$ synapses. It's unclear how precise each synapse is, but one estimate states that the hippocampal synapse has a precision of about 5 bits [@bartoljrNanoconnectomicUpperBound2015], which can be stored within a 16-bit floating point number, with room to spare.
 
-Assuming that, we expect an AGI GPT to have $10^{15}$ (1000 trillion) parameters.
+Assuming that, we expect an AGI GPT to have $10^{15}$ parameters, or 1000×.
 
 ## Chinchilla Scaling Law
 
@@ -58,10 +58,12 @@ They also estimated that the cost of training compute $C$ is proportional to $ND
 
 $$C = C_0 ND, \quad C_0 = 6$$
 
-Given the assumptions, for each fixed computing budget $C$, we can solve for the optimal $D$ and $N$, which is usually referred to as \"Chinchilla optimal\" training: $$\begin{cases}
-        \min_{N, D} L = \frac{A}{N^\alpha} + \frac{B}{D^{\beta}} + L_0\\
-        \text{such that } C_0 ND = C
-    \end{cases}$$
+Given the assumptions, for each fixed computing budget $C$, we can solve for the optimal $D$ and $N$, which is usually referred to as \"Chinchilla optimal\" training: 
+
+$$\begin{cases}
+        \min_{N, D} L = \frac{A}{N^\alpha} + \frac{B}{D^{\beta}} + L_0,\\
+        \text{such that } C_0 ND = C.
+\end{cases}$$
 
 Solve the above equations symbolically to find $N_{opt}, D_{opt}$ as a function of $C, C_0, \alpha, \beta, A, B$. Then, plug in the numerical values of the parameters, to find a numerical expression for $N_{opt}, D_{opt}$ as a function of $C$.
 
@@ -69,7 +71,7 @@ Solve the above equations symbolically to find $N_{opt}, D_{opt}$ as a function 
   <summary>Solution</summary>
     Since $C = C_0 ND$, we have $N = \frac{C}{C_0 D}$. Plug it into $\min_{N, D} L = \frac{A}{N^\alpha} + \frac{B}{D^{\beta}} + L_0$, we obtain
 
-    $$\min_{D} L = \frac{A}{(\frac{C}{C_0 D})^\alpha} + \frac{B}{D^{\beta}} + L_0$$
+    $$\min_{D} L = \frac{A}{(\frac{C}{C_0 D})^\alpha} + \frac{B}{D^{\beta}} + L_0.$$
 
     Take derivative with respect to $D$ and set it to zero. We get an expression for $D_{opt}$. Plug it back to $C = C_0 ND$, we get an expression for $D_{opt}$. These simplify to:
 
@@ -87,7 +89,6 @@ Solve the above equations symbolically to find $N_{opt}, D_{opt}$ as a function 
 
 
 In the same paper, they also performed a *direct* statistical fitting, to find the optimal $N, D$ for a given $C$, without going through the intermediate steps above. This gives a slightly different result (only slightly different -- as you would know after solving the previous problem):
-
 $$N_{opt}(C) = 0.1 C^{0.5}; \quad D_{opt}(C) = 1.7 C^{0.5}.$$
 
 For the rest of the question, we will use these equations as the Chinchilla scaling laws. Do not use the equations you derived for the previous problem.
@@ -105,7 +106,7 @@ Assuming each English word cost about 1.4 tokens, how many English words would 1
 
 <details>
   <summary>Solution</summary>
-  10 trillion / 1.4 = 7 trillion words. If each book has 400 * 300 = 0.12 million words, then that is 60 million books, if they were all in English.
+  $10 / 1.4 = 7$ trillion words. If each book has $400 \times 300 = 0.12$ million words, then that is 60 million books, if they were all in English.
 </details>
 
 Since humans are kind of the same everywhere, book lengths should be kind of the same everywhere -- information-dense languages would naturally have books with lower apparent word-count, but the same information (measured in bytes).
@@ -121,11 +122,8 @@ Given that each parameter is a 16-bit floating point number, how much memory doe
   <summary>Solution</summary>
   1 billion parameters is 2 billion bytes, or 2 GB. Our hypothetical GPT-5 would take up 2 TB. It would take 50 A100 to contain it.
     
-    Now, 50 A100 GPUs has a running cost of about 100 USD/hr, but not such a terrible problem, but then,
-    during training, you would have to run an optimizer like Adam, which
-    would need three floating point numbers per parameter (gradient, momentum, scale), instantly increasing the memory requirement to 200 A100
-    GPUs.
-</details>
+ Now, 50 A100 GPUs has a running cost of about 100 USD/hr, but not such a terrible problem, but then, during training, you would have to run an optimizer like Adam, which would need three floating point numbers per parameter (gradient, momentum, scale), instantly increasing the memory requirement to 200 A100 GPUs. 
+ </details>
 
 ### Memory cost
 
@@ -166,7 +164,7 @@ Suppose long-term memory storage can last 1 year before being replaced. How much
     total cost is 12000 USD. 
 
     Now, compared with the cost of A100 GPU themselves? It takes about 50 A100 GPU to run the model, and each would cost about 20,000 USD. So the cost of long-term memory is essentially zero, and the
-    cost of DRAM is about 12000 / (20000*50) = 1\% of the total cost of GPU.
+    cost of DRAM is about $\frac{12000}{20000\times 50} = 1\%$ of the total cost of GPU.
     
     So what is the limit? The memory bandwidth, which we will see in the next question.
 </details>
@@ -183,7 +181,7 @@ What is the minimal latency, in seconds, for the GPU to perform a single forward
 
 <details>
   <summary>Solution</summary>
-    Since the model takes up 2 Tb of memory, it would take at least 1.3 seconds to even load the model from DRAM, during a single forward pass.
+    Since the model takes up 2 TB of memory, it would take at least 1.3 seconds to even load the model from DRAM, during a single forward pass.
 
     Autoregression means that the next token cannot be generated until the previous one is already generated, so the model can only generate one token per 1.3 seconds, or 46 tokens per minute. A Chat-GPT5 would be a very slow talker!
 
@@ -255,7 +253,7 @@ The largest model of GPT-3 cost 3640 petaFLOP-days to train (according to [Table
 
 <details>
   <summary>Solution</summary>
-    2e25 FLOP = 0.2 amount of GPT-5 = 17 million A100-hours = 33 million USD.
+    2E25 FLOP = 0.2 amount of GPT-5 = 17 million A100-hours = 33 million USD.
 
 And accounting for the utilization rate of 30%, that would give us 110 million USD.
 
@@ -269,7 +267,7 @@ In reality, the GPU cannot be worked to their full speed, and we only use about 
 
 [^utilization-rate-30]: The utilization rate of 30% is [according to EpochAI](https://epochai.org/blog/estimating-training-compute).
 
-Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2x to 3x.
+Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2× to 3× .
 
 For context, here are the costs of *development* of various items[^no-inflation]:
 
@@ -296,7 +294,7 @@ Comment on the cost of our hypothetical GPT-5. Is it on the order of a large com
 
     In short, training something like GPT-5 would cost a lot, on the order of 5% of total CapEx, even by the standards of the largest companies. It can probably scale up by another factor of 10× if they really push it, but not more.
 
-    In order to train even larger AI models, those AI models *must* enter production. They must become a productive member of society, otherwise the company wouldn't have the money to train them.
+    In order to train even larger AI models, those AI models *must* enter production. They must become a productive member of society, otherwise the company would nott have the money to train them.
 </details>
 
 [Microsoft announces new supercomputer, lays out vision for future AI work (2020)](https://news.microsoft.com/source/features/ai/openai-azure-supercomputer/):
@@ -321,8 +319,6 @@ All together, we should expect the failures, restarts, deadends... to triple the
 In 2021, a team of 5 engineers from Meta trained a LLM with 175 billion parameters, in 3 months, using 1024 80GB A100 GPUs from. Excluding all the divergences, hardware failures, and other issues that caused lost progress, the final model would have taken about 33 days of continuous training.
 
 They have kept journals during their training. This is now published at [metaseq/projects/OPT/chronicles at main · facebookresearch/metaseq · GitHub](https://github.com/facebookresearch/metaseq/tree/main/projects/OPT/chronicles#chronicles-of-opt-development). You can see how difficult it is to train a large model. Selected quotes:
-
-In 2021, a team of researchers from Meta trained a series of LLM and kept journals during their training. This is now published at [metaseq/projects/OPT/chronicles at main · facebookresearch/metaseq · GitHub](https://github.com/facebookresearch/metaseq/tree/main/projects/OPT/chronicles#chronicles-of-opt-development). You can see how difficult it is to train a large model. Selected quotes:
 
 > These notes cover ~90 restarts over the course of training the lineage of this current model (experiments 12.xx).
 
@@ -350,7 +346,7 @@ Given that GPT-3.5 has 175 billion parameters, how many FLOPs would it take to i
 
 <details>
   <summary>Solution</summary>
-    175 billion \* 1 million \* 2 = 4e17 FLOPs. Now one A100-hour is 8.64e19 FLOPs, so that is 1/200 A100-hour, or about 0.01 USD.
+    $175 \mathrm{billion} \times 1 \mathrm{million} \times 2 = 4\times 10^{17} \mathrm{FLOPs}$. Now one A100-hour is $8.64\times 10^{19} \mathrm{FLOPs}$, so that is 1/200 A100-hour, or about 0.01 USD.
 
     [The price offered by OpenAI](https://openai.com/pricing) is 2 USD per 1 million tokens, so it's a very profitable business... but see next question.
 
@@ -360,7 +356,7 @@ Given that GPT-3.5 has 175 billion parameters, how many FLOPs would it take to i
 
 <details>
   <summary>Solution</summary>
-    Since the cost is almost negligible (1/200 of the revenue), we can pretend it's all profit. So, the profit is 2 USD per 1 million tokens. We need to recoup 10 million USD, so we need 10 million / 2 * 1 million = 5e12 tokens, or 5e12/ 1400 = 4 billion essays. 
+    Since the cost is almost negligible (1/200 of the revenue), we can pretend it's all profit. So, the profit is 2 USD per 1 million tokens. We need to recoup 10 million USD, so we need $10 \mathrm{million} / 2 \times 1 \mathrm{million} = 5\times 10^{12} \mathrm{tokens}$, or 4 billion essays. 
     
     About one essay per person on earth, or 10 essays per person in America... is that too much to ask?
 </details>
