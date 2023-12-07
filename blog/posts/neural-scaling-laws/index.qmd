@@ -208,7 +208,7 @@ Concretely, we can estimate what is a good batch size for GPT-3 175B. It has 96 
 
 <details>
   <summary>Solution</summary>
-      A single token would cost $96 \times 96 \times 128$ floating point activations, or about 2.4 MB.
+  A single token would cost $96 \times 96 \times 128$ floating point activations, or about 2.4 MB.
 </details>
 
 The model itself has 175 billion 16-bit floating point parameters, taking up about 350 GB. How many tokens do we need to put into a batch, before the activations occupy the same amount of memory as the model parameters?
@@ -233,7 +233,7 @@ The most important specifications are:
 
 -   Unit price: 15000 USD.
 -   Rental price: 2 USD/hr.
--   Speed: 0.3 petaFLOP/s = 3e14 FLOP/s.
+-   Speed: 0.3 petaFLOP/s = 3E14 FLOP/s.
 -   Power: 0.3 kW.
 -   Memory bandwidth: 1600 GB/s.
 
@@ -241,7 +241,7 @@ In the literature about the largest AI models, the training cost is often report
 
 <details>
   <summary>Solution</summary>
-    1 petaFLOP-day = 1 petaFLOP/second x 1 day = 1e15 FLOP/s x 8.64E4 s =
+    1 petaFLOP-day = 1 petaFLOP/second x 1 day = 1E15 FLOP/s x 8.64E4 s =
     8.64E19 FLOP.
 
     Since 1 A100 can run at 0.3 petaFLOP/s, getting 1 petaFLOP-day requires
@@ -267,7 +267,7 @@ In reality, the GPU cannot be worked to their full speed, and we only use about 
 
 [^utilization-rate-30]: The utilization rate of 30% is [according to EpochAI](https://epochai.org/blog/estimating-training-compute).
 
-Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2× to 3× .
+Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2× to 3×.
 
 For context, here are the costs of *development* of various items[^no-inflation]:
 
@@ -284,8 +284,7 @@ Comment on the cost of our hypothetical GPT-5. Is it on the order of a large com
 
 <details>
   <summary>Solution</summary>
-
-    The cost is on the order of 1 billion USD, which is roughly the largest projects undertaken by private corporations. Larger models, as those contemplated by AGI projects in Google, OpenAI, etc, have historically been undertaken by state actors only.
+  The cost is on the order of 1 billion USD, which is roughly the largest projects undertaken by private corporations. Larger models, as those contemplated by AGI projects in Google, OpenAI, etc, have historically been undertaken by state actors only.
 </details>
 
 Here is another way to estimate. Building a large AI model, according to accountancy, would be investment into a production machine, and thus part of "capital expenditure" ("CapEx"). We can find out what proportion is 1 billion USD in their total CapEx. I looked it up [here](https://finbox.com/NASDAQGS:GOOG.L/explorer/capex/).
@@ -364,13 +363,13 @@ Moore's law applies to both CPU and GPU. From 2006 to 2021, GPU FLOP/s per dolla
 
 [![](figure/epoch_empirical_gpu_flops_per_dollar)](https://epochai.org/blog/trends-in-gpu-price-performance)
 
-Assuming Moore's law continues to hold indefinitely, and that there will be no algorithmic progress. When would GPT-3 become as cheap as a typical hobbyist project, say, 1000 USD [^electricity-rental-rate-gpu] 
+Assuming Moore's law continues to hold indefinitely, and that there will be no algorithmic progress. When would GPT-3 become as cheap as a typical hobbyist project, say, 1000 USD?[^electricity-rental-rate-gpu] 
 
 [^electricity-rental-rate-gpu]: Since a 2006 GPU and a 2020 GPU both have the same lifespan (1 -- 4 years usually), and their cost of electricity is only a small proportion of their running expense, the price of GPU FLOP/s per dollar at the point of purchase is roughly proportional to the rental rate of GPU.
 
 <details>
   <summary>Solution</summary>
-  GPT-3 cost 6 million USD to train. For it to cost just 1000 USD, we need to drop its price 6000-fold. Now, $\log_2(6000) \times 2.5 yr = 30 yr$. So it would be around 2050.
+  GPT-3 cost 6 million USD to train. For it to cost just 1000 USD, we need to drop its price 6000-fold. Now, $\log_2(6000) \times 2.5\; \mathrm{year} = 30 \; \mathrm{year}$. So it would be around 2050.
 </details>
 
 ## Energetic cost
@@ -388,7 +387,7 @@ Given this, what is the minimal energy required for performing one FLOP? What is
     There is still [plenty of room at the bottom](https://en.wikipedia.org/wiki/There's_Plenty_of_Room_at_the_Bottom)!
 </details>
 
-For context, the equivalent FLOP/s for the human brain is controversial, but a brief scan through [the review article](https://aiimpacts.org/brain-performance-in-flops/) says that it should be about 1e18 FLOP/s. The energetic power of the brain is well-known: about 30 Watts. This means the brain is about 30000x more energy-efficient than A100 GPU, but still 300x less efficient than the theoretical minimum.
+For context, the equivalent FLOP/s for the human brain is controversial, but a brief scan through [the review article](https://aiimpacts.org/brain-performance-in-flops/) says that it should be about 1E18 FLOP/s. The energetic power of the brain is well-known: about 30 Watts. This means the brain is about 30000x more energy-efficient than A100 GPU, but still 300x less efficient than the theoretical minimum.
 
 ### The lowest possible power for life
 
@@ -401,17 +400,17 @@ For example, suppose you have a base-pair-mutation in one copy of the DNA. You w
 
 ## Environmental cost
 
-According to "Carbon emissions and large neural network training"[@pattersonCarbonEmissionsLarge2021], the carbon emission of training GPT-3 is 552 tCO2. According to a [2021 poll of climate economists](https://www.reuters.com/business/cop/carbon-needs-cost-least-100tonne-now-reach-net-zero-by-2050-2021-10-25/), 1 tCO2 emission should cost somewhere between 50 and 250 USD. Let's take their geometric average of 112 USD.
+According to "Carbon emissions and large neural network training"[@pattersonCarbonEmissionsLarge2021], the carbon emission of training GPT-3 is 552 tCO<sub>2</sub>. According to a [2021 poll of climate economists](https://www.reuters.com/business/cop/carbon-needs-cost-least-100tonne-now-reach-net-zero-by-2050-2021-10-25/), 1 tCO<sub>2</sub> emission should cost somewhere between 50 and 250 USD. Let's take their geometric average of 112 USD.
 
-If we add all the tCO2 cost to the training of GPT-3, how much more expensive would it be? Compare that with its A100-GPU cost of training.
+If we add all the tCO<sub>2</sub> cost to the training of GPT-3, how much more expensive would it be? Compare that with its A100-GPU cost of training.
 
 <details>
   <summary>Solution</summary>
-    112 * 552 = 62k USD.
+    $112 \times 552 = 62,000 \;\mathrm{USD}$.
 
-    Previously we calculated the GPU cost of training to be around 6 million USD. So fully carbon-pricing the emission would make it 1% more expensive.
+    Previously, we calculated the GPU cost of training to be around 6 million USD. So fully carbon-pricing the emission would make it 1% more expensive.
 
-    Generally, adding in the tCO2 cost of training the largest models increase the cost by about 1 to 2 % (I have computed it in several ways). Since the global GDP increases by about 2% a year, this shows that fully accounting for the carbon cost of AI would delay it by perhaps 1 year.
+    Generally, adding in the tCO<sub>2</sub> cost of training the largest models increase the cost by about 1 to 2 % (I have computed it in several ways). Since the global GDP increases by about 2% a year, this shows that fully accounting for the carbon cost of AI would delay it by perhaps 1 year.
 </details>
 
 <details>
@@ -430,32 +429,32 @@ If we add all the tCO2 cost to the training of GPT-3, how much more expensive wo
     In this regard, it's not "Green AI" that is important, but Green Corn, Green Timber, and all the other bulk commodities.
 </details>
 
-To put the number in another context, compare it with some typical American food. According to [Our World in Data](https://ourworldindata.org/carbon-footprint-food-methane), it cost about 50 kg of CO2 emission per 1 kg of beef.
+To put the number in another context, compare it with some typical American food. According to [Our World in Data](https://ourworldindata.org/carbon-footprint-food-methane), it cost about 50 kg of CO<sub>2</sub> emission per 1 kg of beef.
 
 Also, [an average American person (*not* household) consumed 38 kg of beef in 2020](https://web.archive.org/web/20231006035327/https://farmdocdaily.illinois.edu/2021/05/an-overview-of-meat-consumption-in-the-united-states.html).
 
-Compare the CO2 emission of GPT-3 and CO2 emission from beef consumption. Assuming each burger (\"quarter pounder\") contains 1/4 pound (113 grams) of beef. How many burgers would be equivalent to the CO2 emission of GPT-3?
+Compare the CO<sub>2</sub> emission of GPT-3 and CO<sub>2</sub> emission from beef consumption. Assuming each burger (\"quarter pounder\") contains 1/4 pound (113 grams) of beef. How many burgers would be equivalent to the CO<sub>2</sub> emission of GPT-3?
 
 <details>
     <summary>Solution</summary> 
 
-    113 grams of beef emits about 5.6 kg of CO2, so GPT-3 emits about (552 ton)/(5.6 kg) = 90,000 burgers. It is about the same amount as 250 people eating one burger everyday, for a whole year.
+    113 grams of beef emits about 5.6 kg of CO<sub>2</sub>, so GPT-3 emits about (552 ton)/(5.6 kg) = 90,000 burgers. It is about the same amount as 250 people eating one burger everyday, for a whole year.
 
-    38 kg of beef gives about 2 tCO2 emission. So the emission of GPT-3 is equal to the emission due to beef consumption of 276 American persons.
+    38 kg of beef gives about 2 tCO<sub>2</sub> emission. So the emission of GPT-3 is equal to the emission due to beef consumption of 276 American persons.
 </details>
 
 I think this strongly argues against the conclusion from [@pattersonCarbonEmissionsLarge2021]:
 
-> To help reduce the carbon footprint of ML, we believe energy usage and CO2e should be a key metric in evaluating models, and we are collaborating with MLPerf developers to include energy usage during training and inference in this industry standard benchmark... We believe such new incentives could lead to a virtuous cycle where ML practitioners compete to increase accuracy while lowering energy consumption and CO2e that could bend the curve of ML carbon footprint growth for computationally intensive NLP models.
+> To help reduce the carbon footprint of ML, we believe energy usage and CO<sub>2</sub>e should be a key metric in evaluating models, and we are collaborating with MLPerf developers to include energy usage during training and inference in this industry standard benchmark... We believe such new incentives could lead to a virtuous cycle where ML practitioners compete to increase accuracy while lowering energy consumption and CO<sub>2</sub>e that could bend the curve of ML carbon footprint growth for computationally intensive NLP models.
 
 One, the carbon footprint of ML is already minimal, compared to the cost of just making all the GPUs.
 
-Two, accounting for CO2 is a dreadfully boring business,[^co2-is-boring] and should properly be done by carbon taxing by the public officials. The ML practitioners are not climate economists or accountants, and they should not be burdened by accounting for climate change. If the price is right, then they simply need to budget how much money they want to spend on the training run, and the market would optimize the rest (including optimizing the right level of climate change[^right-level]).
+Two, accounting for CO<sub>2</sub> is a dreadfully boring business,[^CO<sub>2</sub>-is-boring] and should properly be done by carbon taxing by the public officials. The ML practitioners are not climate economists or accountants, and they should not be burdened by accounting for climate change. If the price is right, then they simply need to budget how much money they want to spend on the training run, and the market would optimize the rest (including optimizing the right level of climate change[^right-level]).
 
-[^co2-is-boring]: If you don't believe me, try reading [@pattersonCarbonEmissionsLarge2021].
+[^CO<sub>2</sub>-is-boring]: If you don't believe me, try reading [@pattersonCarbonEmissionsLarge2021].
 
 [^right-level]: 
-    The right level of climate change is not \"none\", but rather \"when the marginal cost equals marginal benefit\". This might sound controversial, but it is really just economic common sense.
+    The right level of climate change is not \"none\", but rather \"when the marginal cost equals marginal benefit\". This might sound controversial, but it is just introductory economics.
 
     > [@krugmanRicardoDifficultIdea2002] Luckily, at this point the orthodoxy of the academic economists is very much a minority position among intellectuals in general; one can seem to be a courageous maverick, boldly challenging the powers that be, by reciting the contents of a standard textbook. 
 
