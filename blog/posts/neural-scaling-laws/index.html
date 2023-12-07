@@ -454,7 +454,7 @@ Solution
 <summary>
 Solution
 </summary>
-<pre><code>A single token would cost $96 \times 96 \times 128$ floating point activations, or about 2.4 MB.</code></pre>
+A single token would cost <span class="math inline">\(96 \times 96 \times 128\)</span> floating point activations, or about 2.4 MB.
 </details>
 <p>The model itself has 175 billion 16-bit floating point parameters, taking up about 350 GB. How many tokens do we need to put into a batch, before the activations occupy the same amount of memory as the model parameters?</p>
 <details>
@@ -474,7 +474,7 @@ This explains why during training, the batch sizes of the largest models typical
 <ul>
 <li>Unit price: 15000 USD.</li>
 <li>Rental price: 2 USD/hr.</li>
-<li>Speed: 0.3 petaFLOP/s = 3e14 FLOP/s.</li>
+<li>Speed: 0.3 petaFLOP/s = 3E14 FLOP/s.</li>
 <li>Power: 0.3 kW.</li>
 <li>Memory bandwidth: 1600 GB/s.</li>
 </ul>
@@ -483,7 +483,7 @@ This explains why during training, the batch sizes of the largest models typical
 <summary>
 Solution
 </summary>
-<p>1 petaFLOP-day = 1 petaFLOP/second x 1 day = 1e15 FLOP/s x 8.64E4 s = 8.64E19 FLOP.</p>
+<p>1 petaFLOP-day = 1 petaFLOP/second x 1 day = 1E15 FLOP/s x 8.64E4 s = 8.64E19 FLOP.</p>
 Since 1 A100 can run at 0.3 petaFLOP/s, getting 1 petaFLOP-day requires us to run 1/0.3 A100 for 1 day, or 80 A100-hours. At the price of 2 USD/hr, it would cost 160 USD.
 </details>
 <p>The largest model of GPT-3 cost 3640 petaFLOP-days to train (according to <a href="https://arxiv.org/pdf/2005.14165v4.pdf#page=46">Table D.1 of the report</a>). How much would it cost if it were trained with A100? How much money does it cost to train our hypothetical GPT-5?</p>
@@ -499,7 +499,7 @@ Solution
 </blockquote>
 </details>
 <div class="page-columns page-full"><p>In reality, the GPU cannot be worked to their full speed, and we only use about 30% of its theoretical peak FLOP/s (so for example, for A100, we only get 0.1 petaFLOP/s, instead of 0.3 petaFLOP/s).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> For this question, we assume that the utilization rate is 100%.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;The utilization rate of 30% is <a href="https://epochai.org/blog/estimating-training-compute">according to EpochAI</a>.</p></li></div></div>
-<p>Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2× to 3× .</p>
+<p>Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2× to 3×.</p>
 <div class="page-columns page-full"><p>For context, here are the costs of <em>development</em> of various items<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;Sorry, not adjusted for inflation to the same year, but they are roughly in the range of 2000 – 2020 USD.</p></li></div></div>
 <ul>
 <li><a href="https://web.archive.org/web/20150213101032/http://archive.wired.com/gadgets/wireless/magazine/16-02/ff_iphone?currentPage=all">iPhone 1: 150 million USD</a>.</li>
@@ -591,12 +591,12 @@ About one essay per person on earth, or 10 essays per person in America… is th
 <p><a href="https://epochai.org/blog/trends-in-gpu-price-performance"><img src="figure/epoch_empirical_gpu_flops_per_dollar.png" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
-<div class="page-columns page-full"><p>Assuming Moore’s law continues to hold indefinitely, and that there will be no algorithmic progress. When would GPT-3 become as cheap as a typical hobbyist project, say, 1000 USD <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;Since a 2006 GPU and a 2020 GPU both have the same lifespan (1 – 4 years usually), and their cost of electricity is only a small proportion of their running expense, the price of GPU FLOP/s per dollar at the point of purchase is roughly proportional to the rental rate of GPU.</p></li></div></div>
+<div class="page-columns page-full"><p>Assuming Moore’s law continues to hold indefinitely, and that there will be no algorithmic progress. When would GPT-3 become as cheap as a typical hobbyist project, say, 1000 USD?<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;Since a 2006 GPU and a 2020 GPU both have the same lifespan (1 – 4 years usually), and their cost of electricity is only a small proportion of their running expense, the price of GPU FLOP/s per dollar at the point of purchase is roughly proportional to the rental rate of GPU.</p></li></div></div>
 <details>
 <summary>
 Solution
 </summary>
-GPT-3 cost 6 million USD to train. For it to cost just 1000 USD, we need to drop its price 6000-fold. Now, <span class="math inline">\(\log_2(6000) \times 2.5 yr = 30 yr\)</span>. So it would be around 2050.
+GPT-3 cost 6 million USD to train. For it to cost just 1000 USD, we need to drop its price 6000-fold. Now, <span class="math inline">\(\log_2(6000) \times 2.5\; \mathrm{year} = 30 \; \mathrm{year}\)</span>. So it would be around 2050.
 </details>
 </section>
 <section id="energetic-cost" class="level2">
@@ -611,7 +611,7 @@ Solution
 <p>The energy per FLOP is <span class="math inline">\(E_{FLOP} = 32 \times 3\times 10^{-21} J = 10^{-19} J\)</span>. At 300 TFLOP/s, we need <span class="math inline">\(P_{A100} = 3\times 10^{14} E_{FLOP}/s = 3\times 10^{-5}W\)</span>. The actual value of 300 Watts is 10 million times more than the theoretical minimum.</p>
 There is still <a href="https://en.wikipedia.org/wiki/There's_Plenty_of_Room_at_the_Bottom">plenty of room at the bottom</a>!
 </details>
-<p>For context, the equivalent FLOP/s for the human brain is controversial, but a brief scan through <a href="https://aiimpacts.org/brain-performance-in-flops/">the review article</a> says that it should be about 1e18 FLOP/s.&nbsp;The energetic power of the brain is well-known: about 30 Watts. This means the brain is about 30000x more energy-efficient than A100 GPU, but still 300x less efficient than the theoretical minimum.</p>
+<p>For context, the equivalent FLOP/s for the human brain is controversial, but a brief scan through <a href="https://aiimpacts.org/brain-performance-in-flops/">the review article</a> says that it should be about 1E18 FLOP/s.&nbsp;The energetic power of the brain is well-known: about 30 Watts. This means the brain is about 30000x more energy-efficient than A100 GPU, but still 300x less efficient than the theoretical minimum.</p>
 <section id="the-lowest-possible-power-for-life" class="level3">
 <h3 class="anchored" data-anchor-id="the-lowest-possible-power-for-life">The lowest possible power for life</h3>
 <p>The slowest metabolism found on earth (so far) is in <a href="https://www.quantamagazine.org/zombie-microbes-redefine-lifes-energy-limits-20200812/">microbes living below deep ocean surface</a>. They had to survive on the energy of “marine snow” falling to the surface, then slowly diffusing through the subsurface mud. Their power consumption is estimated at… <span class="math inline">\(10^{-21} W\)</span>. Since their temperature is about the temperature of the ocean water, which is liquid, their temperature is still about <span class="math inline">\(T = 273 K\)</span>, and so the Landauer limit is still about <span class="math inline">\(3\times 10^{-21} J\)</span>. This shows that they can lose at most 500 bits every day.</p>
@@ -621,15 +621,15 @@ There is still <a href="https://en.wikipedia.org/wiki/There's_Plenty_of_Room_at_
 </section>
 <section id="environmental-cost" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="environmental-cost">Environmental cost</h2>
-<p>According to “Carbon emissions and large neural network training”<span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>, the carbon emission of training GPT-3 is 552 tCO2. According to a <a href="https://www.reuters.com/business/cop/carbon-needs-cost-least-100tonne-now-reach-net-zero-by-2050-2021-10-25/">2021 poll of climate economists</a>, 1 tCO2 emission should cost somewhere between 50 and 250 USD. Let’s take their geometric average of 112 USD.</p>
-<p>If we add all the tCO2 cost to the training of GPT-3, how much more expensive would it be? Compare that with its A100-GPU cost of training.</p>
+<p>According to “Carbon emissions and large neural network training”<span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>, the carbon emission of training GPT-3 is 552 tCO<sub>2</sub>. According to a <a href="https://www.reuters.com/business/cop/carbon-needs-cost-least-100tonne-now-reach-net-zero-by-2050-2021-10-25/">2021 poll of climate economists</a>, 1 tCO<sub>2</sub> emission should cost somewhere between 50 and 250 USD. Let’s take their geometric average of 112 USD.</p>
+<p>If we add all the tCO<sub>2</sub> cost to the training of GPT-3, how much more expensive would it be? Compare that with its A100-GPU cost of training.</p>
 <details>
 <summary>
 Solution
 </summary>
-<p>112 * 552 = 62k USD.</p>
-<p>Previously we calculated the GPU cost of training to be around 6 million USD. So fully carbon-pricing the emission would make it 1% more expensive.</p>
-Generally, adding in the tCO2 cost of training the largest models increase the cost by about 1 to 2 % (I have computed it in several ways). Since the global GDP increases by about 2% a year, this shows that fully accounting for the carbon cost of AI would delay it by perhaps 1 year.
+<p><span class="math inline">\(112 \times 552 = 62,000 \;\mathrm{USD}\)</span>.</p>
+<p>Previously, we calculated the GPU cost of training to be around 6 million USD. So fully carbon-pricing the emission would make it 1% more expensive.</p>
+Generally, adding in the tCO<sub>2</sub> cost of training the largest models increase the cost by about 1 to 2 % (I have computed it in several ways). Since the global GDP increases by about 2% a year, this shows that fully accounting for the carbon cost of AI would delay it by perhaps 1 year.
 </details>
 <details>
 <summary>
@@ -642,22 +642,22 @@ Side note for economics students
 <p>In other words, properly pricing carbon emissions would only increase the price of AI by up to 5%, even as it doubles the price of food. AI is already green (within 5%), but food is far from green. That’s even before we get to the subsidies! We don’t have GPU subsidies, but we certainly have corn subsidies…</p>
 In this regard, it’s not “Green AI” that is important, but Green Corn, Green Timber, and all the other bulk commodities.
 </details>
-<p>To put the number in another context, compare it with some typical American food. According to <a href="https://ourworldindata.org/carbon-footprint-food-methane">Our World in Data</a>, it cost about 50 kg of CO2 emission per 1 kg of beef.</p>
+<p>To put the number in another context, compare it with some typical American food. According to <a href="https://ourworldindata.org/carbon-footprint-food-methane">Our World in Data</a>, it cost about 50 kg of CO<sub>2</sub> emission per 1 kg of beef.</p>
 <p>Also, <a href="https://web.archive.org/web/20231006035327/https://farmdocdaily.illinois.edu/2021/05/an-overview-of-meat-consumption-in-the-united-states.html">an average American person (<em>not</em> household) consumed 38 kg of beef in 2020</a>.</p>
-<p>Compare the CO2 emission of GPT-3 and CO2 emission from beef consumption. Assuming each burger ("quarter pounder") contains 1/4 pound (113 grams) of beef. How many burgers would be equivalent to the CO2 emission of GPT-3?</p>
+<p>Compare the CO<sub>2</sub> emission of GPT-3 and CO<sub>2</sub> emission from beef consumption. Assuming each burger ("quarter pounder") contains 1/4 pound (113 grams) of beef. How many burgers would be equivalent to the CO<sub>2</sub> emission of GPT-3?</p>
 <details>
 <summary>
 Solution
 </summary>
-<p>113 grams of beef emits about 5.6 kg of CO2, so GPT-3 emits about (552 ton)/(5.6 kg) = 90,000 burgers. It is about the same amount as 250 people eating one burger everyday, for a whole year.</p>
-38 kg of beef gives about 2 tCO2 emission. So the emission of GPT-3 is equal to the emission due to beef consumption of 276 American persons.
+<p>113 grams of beef emits about 5.6 kg of CO<sub>2</sub>, so GPT-3 emits about (552 ton)/(5.6 kg) = 90,000 burgers. It is about the same amount as 250 people eating one burger everyday, for a whole year.</p>
+38 kg of beef gives about 2 tCO<sub>2</sub> emission. So the emission of GPT-3 is equal to the emission due to beef consumption of 276 American persons.
 </details>
 <p>I think this strongly argues against the conclusion from <span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>:</p>
 <blockquote class="blockquote">
-<p>To help reduce the carbon footprint of ML, we believe energy usage and CO2e should be a key metric in evaluating models, and we are collaborating with MLPerf developers to include energy usage during training and inference in this industry standard benchmark… We believe such new incentives could lead to a virtuous cycle where ML practitioners compete to increase accuracy while lowering energy consumption and CO2e that could bend the curve of ML carbon footprint growth for computationally intensive NLP models.</p>
+<p>To help reduce the carbon footprint of ML, we believe energy usage and CO<sub>2</sub>e should be a key metric in evaluating models, and we are collaborating with MLPerf developers to include energy usage during training and inference in this industry standard benchmark… We believe such new incentives could lead to a virtuous cycle where ML practitioners compete to increase accuracy while lowering energy consumption and CO<sub>2</sub>e that could bend the curve of ML carbon footprint growth for computationally intensive NLP models.</p>
 </blockquote>
 <p>One, the carbon footprint of ML is already minimal, compared to the cost of just making all the GPUs.</p>
-<div class="page-columns page-full"><p>Two, accounting for CO2 is a dreadfully boring business,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and should properly be done by carbon taxing by the public officials. The ML practitioners are not climate economists or accountants, and they should not be burdened by accounting for climate change. If the price is right, then they simply need to budget how much money they want to spend on the training run, and the market would optimize the rest (including optimizing the right level of climate change<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>).</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;If you don’t believe me, try reading <span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>.</p></li><li id="fn6"><p><sup>6</sup>&nbsp;The right level of climate change is not "none", but rather "when the marginal cost equals marginal benefit". This might sound controversial, but it is really just economic common sense.</p>
+<div class="page-columns page-full"><p>Two, accounting for CO<sub>2</sub> is a dreadfully boring business,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and should properly be done by carbon taxing by the public officials. The ML practitioners are not climate economists or accountants, and they should not be burdened by accounting for climate change. If the price is right, then they simply need to budget how much money they want to spend on the training run, and the market would optimize the rest (including optimizing the right level of climate change<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>).</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;If you don’t believe me, try reading <span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>.</p></li><li id="fn6"><p><sup>6</sup>&nbsp;The right level of climate change is not "none", but rather "when the marginal cost equals marginal benefit". This might sound controversial, but it is just introductory economics.</p>
 <blockquote class="blockquote">
 <p><span class="citation" data-cites="krugmanRicardoDifficultIdea2002">(<a href="#ref-krugmanRicardoDifficultIdea2002" role="doc-biblioref">Krugman 2002</a>)</span> Luckily, at this point the orthodoxy of the academic economists is very much a minority position among intellectuals in general; one can seem to be a courageous maverick, boldly challenging the powers that be, by reciting the contents of a standard textbook.</p>
 </blockquote>
