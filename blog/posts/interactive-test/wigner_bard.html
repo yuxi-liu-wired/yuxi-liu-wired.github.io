@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Images with Interactivity</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: row;
+            margin: 0;
+            padding: 0;
+        }
+        #three-container {
+            width: 50%;
+            height: 100vh;
+        }
+        #circle-container {
+            width: 50%;
+            height: 100vh;
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            border: 1px solid black;
+        }
+        #dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: red;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+    <div id="three-container"></div>
+    <div id="circle-container">
+        <div id="circle">
+            <div id="dot"></div>
+        </div>
+    </div>
+
+    <script>
+        // Three.js scene setup
+        let scene, camera, renderer;
+
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth / 2, window.innerHeight);
+            document.getElementById('three-container').appendChild(renderer.domElement);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        init();
+        animate();
+
+        // Circle and dot interaction
+        let dot = document.getElementById('dot');
+        let vx = 0.5;
+        let vy = 0.5;
+
+        dot.addEventListener('mousedown', function(event) {
+            let startX = event.clientX;
+            let startY = event.clientY;
+
+            window.addEventListener('mousemove', function(event) {
+                let deltaX = event.clientX - startX;
+                let deltaY = event.clientY - startY;
+
+                vx += deltaX / 100;
+                vy += deltaY / 100;
+
+                vx = Math.max(-1, Math.min(1, vx));
+                vy = Math.max(-1, Math.min(1, vy));
+
+                dot.style.left = `${vx * 100}%`;
+                dot.style.top = `${vy * 100}%`;
+
+                // Update 3D scene with new vx and vy
+                // ...
+            });
+
+            window.addEventListener('mouseup', function() {
+                window.removeEventListener('mousemove', function() {});
+            });
+        });
+    </script>
+</body>
+</html>

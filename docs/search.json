@@ -56,11 +56,25 @@
     "text": "See Section 1 for additional context.\nBlack-Scholes (?@eq-black-scholes) is a mathematical model that seeks to explain the behavior of financial derivatives, most commonly options:\n\\[\\begin{equation}\n\\frac{\\partial \\mathrm C}{ \\partial \\mathrm t } + \\frac{1}{2}\\sigma^{2} \\mathrm S^{2} \\frac{\\partial^{2} \\mathrm C}{\\partial \\mathrm C^2}   + \\mathrm r \\mathrm S \\frac{\\partial \\mathrm C}{\\partial \\mathrm S}\\ = \\mathrm r \\mathrm C \\tag{Black--Scholes Equation}\n\\end{equation}\\] {#eq-black-scholes}\n\\[\nE = mc^2  \\tag{mass-energy equation}\n\\]\n\nThe Bitter Lesson (Sutton 2019)\n\nTheorem 1 (Line) The equation of any straight line, called a linear equation, can be written as:\n\\[\ny = mx + b\n\\]\n\nSee Theorem 1.\n\nSolution. The solution."
   },
   {
+    "objectID": "blog/posts/interactive-test/index.html",
+    "href": "blog/posts/interactive-test/index.html",
+    "title": "Penguins",
+    "section": "",
+    "text": "i = {\n  for (let i = 0; i &lt; 1e6; ++i) {\n    yield i;\n  }\n}\nA simple example based on Allison Horst’s Palmer Penguins dataset. Here we look at how penguin body mass varies across both sex and species (use the provided inputs to filter the dataset by bill length and island):\nviewof bill_length_min = Inputs.range(\n  [32, 50], \n  {value: 35, step: 1, label: \"Bill length (min):\"}\n)\nviewof islands = Inputs.checkbox(\n  [\"Torgersen\", \"Biscoe\", \"Dream\"], \n  { value: [\"Torgersen\", \"Biscoe\"], \n    label: \"Islands:\"\n  }\n)\ndata = FileAttachment(\"palmer-penguins.csv\").csv({ typed: true })\nfiltered = data.filter(function(penguin) {\n  return bill_length_min &lt; penguin.bill_length_mm &&\n         islands.includes(penguin.island);\n})"
+  },
+  {
+    "objectID": "blog/posts/interactive-test/index.html#python",
+    "href": "blog/posts/interactive-test/index.html#python",
+    "title": "Penguins",
+    "section": "Python",
+    "text": "Python\n\nfrom ipyleaflet import Map, Marker, basemaps, basemap_to_tiles\nm = Map(\n  basemap=basemap_to_tiles(\n    basemaps.NASAGIBS.ModisTerraTrueColorCR, \"2017-04-08\"\n  ),\n  center=(52.204793, 360.121558),\n  zoom=4\n)\nm.add_layer(Marker(location=(52.204793, 360.121558)))\nm"
+  },
+  {
     "objectID": "blog/index.html",
     "href": "blog/index.html",
     "title": "Blog",
     "section": "",
-    "text": "Penguins\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n  \n\n\n\n\nFermi Estimation for Neural Networks\n\n\n\n\n\n\n\nAI\n\n\neconomics\n\n\n\n\nThe bitter lesson in bite-sized packets.\n\n\n\n\n\n\nDec 5, 2023\n\n\nYuxi Liu\n\n\n\n\n\n\n  \n\n\n\n\nEmbedding Test\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDec 2, 2023\n\n\n\n\n\n\n  \n\n\n\n\nMath Test\n\n\n\n\n\nTesting math input\n\n\n\n\n\n\nDec 2, 2023\n\n\n\n\n\n\n  \n\n\n\n\nSerial Experiments Lain\n\n\n\n\n\n\n\nanime\n\n\npersonal\n\n\n\n\nLain is the collective subconscious as a neural network.\n\n\n\n\n\n\nNov 1, 2022\n\n\nYuxi Liu\n\n\n\n\n\n\nNo matching items"
+    "text": "Penguins\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n  \n\n\n\n\nInteractive Plots with ipywidgets\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n  \n\n\n\n\nFermi Estimation for Neural Networks\n\n\n\n\n\n\n\nAI\n\n\neconomics\n\n\n\n\nThe bitter lesson in bite-sized packets.\n\n\n\n\n\n\nDec 5, 2023\n\n\nYuxi Liu\n\n\n\n\n\n\n  \n\n\n\n\nEmbedding Test\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDec 2, 2023\n\n\n\n\n\n\n  \n\n\n\n\nMath Test\n\n\n\n\n\nTesting math input\n\n\n\n\n\n\nDec 2, 2023\n\n\n\n\n\n\n  \n\n\n\n\nSerial Experiments Lain\n\n\n\n\n\n\n\nanime\n\n\npersonal\n\n\n\n\nLain is the collective subconscious as a neural network.\n\n\n\n\n\n\nNov 1, 2022\n\n\nYuxi Liu\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -75,6 +89,13 @@
     "title": "Embedding Test",
     "section": "",
     "text": "This blog post tests embedding.\n\n\n\n\nExtrapolating the spectacular performance of GPT3 into the future suggests that the answer to life, the universe and everything is just 4.398 trillion parameters.\n\n— Geoffrey Hinton (@geoffreyhinton) June 10, 2020"
+  },
+  {
+    "objectID": "blog/posts/interactive-test/wigner.html",
+    "href": "blog/posts/interactive-test/wigner.html",
+    "title": "Interactive Plots with ipywidgets",
+    "section": "",
+    "text": "import ipywidgets as widgets\nimport matplotlib.pyplot as plt\nfrom mpl_toolkits.mplot3d import Axes3D\nimport numpy as np\n\ninitial_dot_position = (0, 0)\n\n# Function to update 3D plot based on dot's position\ndef update_3d_plot(vx, vy):\n    norm = np.sqrt(1 - vx**2 - vy**2)\n    ux, uy, ut = vx / norm, vy / norm, 1 / norm\n\n    # Clear the previous vector and plot a new one\n    ax_3d.clear()\n    ax_3d.quiver(0, 0, 0, ux, uy, ut, length=1, normalize=True)\n    ax_3d.set_xlim(-1, 1)\n    ax_3d.set_ylim(-1, 1)\n    ax_3d.set_zlim(-1, 1)\n    fig_3d.canvas.draw_idle()\n\n# Create 2D plot with draggable dot\nfig_2d, ax_2d = plt.subplots()\ncircle = plt.Circle((0, 0), 0.99, fill=False)\nax_2d.add_artist(circle)\ndot, = ax_2d.plot(*initial_dot_position, 'ro', markersize=8)\nax_2d.set_xlim(-1, 1)\nax_2d.set_ylim(-1, 1)\nax_2d.set_aspect('equal', adjustable='box')\n\n# Create 3D plot\nfig_3d = plt.figure()\nax_3d = fig_3d.add_subplot(111, projection='3d')\nvec = ax_3d.quiver(0, 0, 0, 0, 0, 1, length=1, normalize=True)\nax_3d.set_xlim(-1, 1)\nax_3d.set_ylim(-1, 1)\nax_3d.set_zlim(-1, 1)\n\n# Function to handle dot dragging\ndef on_dot_drag(change):\n    x, y = change['new']\n    if np.sqrt(x**2 + y**2) &lt;= 0.99:\n        dot.set_data([x], [y])\n        fig_2d.canvas.draw_idle()\n        update_3d_plot(x, y)\n\n# Widgets to control the dot position\nvx_slider = widgets.FloatSlider(description='vx', min=-0.99, max=0.99, value=0)\nvy_slider = widgets.FloatSlider(description='vy', min=-0.99, max=0.99, value=0)\ndef interactive_plot(vx, vy):\n    on_dot_drag({'new': (vx, vy)})\n\nwidgets.interactive(interactive_plot, vx=vx_slider, vy=vy_slider)"
   },
   {
     "objectID": "blog/posts/neural-scaling-laws/index.html",
@@ -145,26 +166,5 @@
     "title": "About",
     "section": "",
     "text": "Yuxi Liu is a PhD student in Computer Science at the Berkeley Artificial Intelligence Research Lab, researching on the scaling laws of large neural networks."
-  },
-  {
-    "objectID": "blog/posts/interactive-test/index.html",
-    "href": "blog/posts/interactive-test/index.html",
-    "title": "Penguins",
-    "section": "",
-    "text": "i = {\n  for (let i = 0; i &lt; 1e6; ++i) {\n    yield i;\n  }\n}\nA simple example based on Allison Horst’s Palmer Penguins dataset. Here we look at how penguin body mass varies across both sex and species (use the provided inputs to filter the dataset by bill length and island):\nviewof bill_length_min = Inputs.range(\n  [32, 50], \n  {value: 35, step: 1, label: \"Bill length (min):\"}\n)\nviewof islands = Inputs.checkbox(\n  [\"Torgersen\", \"Biscoe\", \"Dream\"], \n  { value: [\"Torgersen\", \"Biscoe\"], \n    label: \"Islands:\"\n  }\n)\ndata = FileAttachment(\"palmer-penguins.csv\").csv({ typed: true })\nfiltered = data.filter(function(penguin) {\n  return bill_length_min &lt; penguin.bill_length_mm &&\n         islands.includes(penguin.island);\n})"
-  },
-  {
-    "objectID": "blog/posts/interactive-test/index.html#observable-javascript",
-    "href": "blog/posts/interactive-test/index.html#observable-javascript",
-    "title": "Interactivity Test",
-    "section": "",
-    "text": "We’ll start with a simple example based on Allison Horst’s Palmer Penguins dataset. Here we look at how penguin body mass varies across both sex and species (use the provided inputs to filter the dataset by bill length and island):\n\ndata = FileAttachment(\"palmer-penguins.csv\").csv({ typed: true })\n\n\n\n\n\n\nThe example above doesn’t plot all of the data but rather a filtered subset. To create our filter we’ll need some inputs, and we’ll want to be able to use the values of these inputs in our filtering function. To do this, we use the viewof keyword and with some standard Inputs:\n\nviewof bill_length_min = Inputs.range(\n  [32, 50], \n  {value: 35, step: 1, label: \"Bill length (min):\"}\n)\nviewof islands = Inputs.checkbox(\n  [\"Torgersen\", \"Biscoe\", \"Dream\"], \n  { value: [\"Torgersen\", \"Biscoe\"], \n    label: \"Islands:\"\n  }\n)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNow we write the filtering function that will transform the data read from the CSV using the values of bill_length_min and island.\n\nfiltered = data.filter(function(penguin) {\n  return bill_length_min &lt; penguin.bill_length_mm &&\n         islands.includes(penguin.island);\n})\n\n\n\n\n\n\nHere we see reactivity in action: we don’t need any special syntax to refer to the dynamic input values, they “just work”, and the filtering code is automatically re-run when the inputs change. This works in much the same way a spreadsheet works when you update a cell and other cells that refer to it are recalculated.\nFinally, we’ll plot the filtered data using Observable Plot (an open-source JavaScript library for quick visualization of tabular data):\n\nPlot.rectY(filtered, \n  Plot.binX(\n    {y: \"count\"}, \n    {x: \"body_mass_g\", fill: \"species\", thresholds: 20}\n  ))\n  .plot({\n    facet: {\n      data: filtered,\n      x: \"sex\",\n      y: \"species\",\n      marginRight: 80\n    },\n    marks: [\n      Plot.frame(),\n    ]\n  }\n)\n\n\n\n\n\n\nNote that as with our inputs, we refer to the filtered variable with no special syntax—the plotting code will be automatically re-run whenever filtered changes (which in turn is updated whenever an input changes)."
-  },
-  {
-    "objectID": "blog/posts/interactive-test/index.html#python",
-    "href": "blog/posts/interactive-test/index.html#python",
-    "title": "Penguins",
-    "section": "Python",
-    "text": "Python\n\nfrom ipyleaflet import Map, Marker, basemaps, basemap_to_tiles\nm = Map(\n  basemap=basemap_to_tiles(\n    basemaps.NASAGIBS.ModisTerraTrueColorCR, \"2017-04-08\"\n  ),\n  center=(52.204793, 360.121558),\n  zoom=4\n)\nm.add_layer(Marker(location=(52.204793, 360.121558)))\nm"
   }
 ]
