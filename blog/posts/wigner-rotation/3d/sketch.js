@@ -1,99 +1,46 @@
-let draggablePoint;
-let diskRadius = 200;
-let pointRadius = 20;
-let canvasSize = 400;
+let dot = { x: 0, y: 0 };
+let dragging = false;
+let circleRadius = 100;
 
 function setup() {
-    createCanvas(canvasSize * 2, canvasSize);
-    draggablePoint = new Draggable(0, 0, pointRadius);
+  createCanvas(400, 400);
+  // Initialize dot position at the center of the canvas
+  dot.x = width / 2;
+  dot.y = height / 2;
 }
 
 function draw() {
-    background(255);
-    draw2DCircle();
-    draw3DSystem();
-}
+  background(255);
 
-function draw2DCircle() {
-    push();
-    translate(canvasSize / 2, canvasSize / 2);
-    ellipse(0, 0, diskRadius * 2);
-    draggablePoint.update();
-    draggablePoint.show();
-    pop();
-}
+  // Draw unit circle
+  ellipse(width / 2, height / 2, circleRadius * 2, circleRadius * 2);
 
-function draw3DSystem() {
-    push();
-    translate(3 * canvasSize / 2, canvasSize / 2, 0);
-    rotateX(QUARTER_PI);
-    rotateY(QUARTER_PI);
+  // Draw draggable dot
+  fill(255, 0, 0);
+  ellipse(dot.x, dot.y, 10, 10); // Dot size
 
-    // Parametric surface (disk)
-    for (let theta = 0; theta < TWO_PI; theta += 0.1) {
-        for (let r = 0; r < diskRadius; r += 10) {
-            let x = r * cos(theta);
-            let y = r * sin(theta);
-            stroke(0);
-            point(x, y, 1);
-        }
+  // Update dot position if dragging
+  if (dragging) {
+    dot.x = mouseX;
+    dot.y = mouseY;
+
+    // Constrain dot within the circle
+    let d = dist(width / 2, height / 2, dot.x, dot.y);
+    if (d > circleRadius) {
+      let angle = atan2(dot.y - height / 2, dot.x - width / 2);
+      dot.x = width / 2 + circleRadius * cos(angle);
+      dot.y = height / 2 + circleRadius * sin(angle);
     }
-
-    // Line
-    let {ux, uy, ut} = normalizeMinkowski(draggablePoint.x, draggablePoint.y, 1);
-    stroke(255, 0, 0);
-    line(-ux, -uy, -ut, ux, uy, ut);
-
-    pop();
-}
-
-class Draggable {
-    constructor(x, y, radius) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.dragging = false;
-    }
-
-    update() {
-        if (this.dragging) {
-            this.x = mouseX - canvasSize / 2;
-            this.y = mouseY - canvasSize / 2;
-            let vMag = sqrt(this.x * this.x + this.y * this.y);
-            if (vMag > 0.99 * diskRadius) {
-                this.x *= 0.99 * diskRadius / vMag;
-                this.y *= 0.99 * diskRadius / vMag;
-            }
-        }
-    }
-
-    show() {
-        stroke(0);
-        fill(175);
-        ellipse(this.x, this.y, this.radius * 2);
-    }
-
-    mousePressed() {
-        let d = dist(mouseX, mouseY, canvasSize / 2 + this.x, canvasSize / 2 + this.y);
-        if (d < this.radius) {
-            this.dragging = true;
-        }
-    }
-
-    mouseReleased() {
-        this.dragging = false;
-    }
-}
-
-function normalizeMinkowski(x, y, t) {
-    let norm = sqrt(abs(x * x + y * y - t * t));
-    return {ux: x / norm, uy: y / norm, ut: t / norm};
+  }
 }
 
 function mousePressed() {
-    draggablePoint.mousePressed();
+  // Check if mouse is over the dot
+  if (dist(mouseX, mouseY, dot.x, dot.y) < 10) {
+    dragging = true;
+  }
 }
 
 function mouseReleased() {
-    draggablePoint.mouseReleased();
+  dragging = false;
 }
