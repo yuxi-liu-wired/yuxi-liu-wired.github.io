@@ -24,12 +24,17 @@ let ex = [1, 0, 0];
 
 // Left Sketch: Unit circle with draggable dot
 let leftSketch = function (p) {
+  let checkboxTrail;
   let dot = { x: 0, y: 0 };
   let dragging = false;
 
   p.setup = function () {
     p.createCanvas(600, 600);
     p.noStroke();
+
+    checkboxTrail = p.createCheckbox("Show trail");
+    checkboxTrail.position(0, 100);
+  
   };
 
   p.draw = function () {
