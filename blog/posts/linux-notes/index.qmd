@@ -254,3 +254,59 @@ systemd=true
 or just use `cat "[boot]\nsystemd=true" >> /etc/wsl.conf`.
 
 
+## Input-output
+
+General references
+* [The TTY demystified](https://www.linusakesson.net/programming/tty/)
+* [command line - Why is a virtual terminal "virtual", and what/why/where is the "real" terminal? - Ask Ubuntu](https://askubuntu.com/questions/14284/why-is-a-virtual-terminal-virtual-and-what-why-where-is-the-real-terminal)
+* [What is the exact difference between a 'terminal', a 'shell', a 'tty' and a 'console'? - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/4126/what-is-the-exact-difference-between-a-terminal-a-shell-a-tty-and-a-con)
+
+There are in general three forms of input-output that a Linux system deals with: local processes, local user, remote/networked. In all cases, because everything is a file, it is a matter of designing the right kind of input-output file. For input-output, the system creates and reads/writes from device files.
+
+There are three kinds of device files: character, block, and fifo (named pipes). The character file is character-by-character, the block file is block-by-block, where the block size is variable, and the fifo does not have a fixed block size.
+
+The fifo is usually used by a program to communicate with another program. One can think of it as a message system built for programs. One program needs to send some data to another program, and the other program needs to receive it, so the first writes up some data in a long scroll of text and deposits it into a mail box. Then the other program comes along and pulls on the output end of the mail box. Out comes some of the scroll! The second program reads it and remembers it, since the scroll disintegrates into aether as soon as it touches the air...
+
+### Console, terminal, teletypes, and pseudoteletypes
+
+In the long past, a "console" was a piece of desk-like furniture. It looks like a small piano. You sit in front of it and put some small items on top of the "piano keyboard". This word was then borrowed into pipe organs, where you sit at the "console" and play the many buttons. Then this was borrowed into computer engineering, because computer consoles looked like organ consoles.
+
+[![Arles (Bouches-du-Rhône, Provence, France), in the former grand priory of the Knights of Malta, the collections of the Réattu museum. Louis XIV style console.](figure/R%C3%A9attu39_console_style_Louis_XIV.jpg)](https://commons.wikimedia.org/wiki/File:R%C3%A9attu39_console_style_Louis_XIV.jpg)
+
+[![Console of an organ built in 1912.](figure/Pipe.organ.console.arp.jpg)](https://en.wikipedia.org/wiki/File:Pipe.organ.console.arp.jpg)
+
+[![IBM 1620 Model 1 Console](figure/IBM_1620_Model_1.jpg)](https://en.wiktionary.org/wiki/File:IBM_1620_Model_1.jpg)
+
+A "terminal" is a term borrowed from electric engineering. In an electric circuit, you would break the circuit into pieces. each piece contains some internal elements, and then there are those dangling pieces that are free to be connected to other circuits. Those dangling pieces are the terminals. In analogy, the place where a computer-user was sitting at became called the "computer terminal", or just the "terminal". What are they the "terminals" of? They are the terminals of what is "internal" -- the giant computer, sitting loudly at the center of the electric engineering building.
+
+Computers used to only allow inputs via magnetic tapes, and other forms of raw binaries, and outputs via printing on a printer. This is not interactive for humans, so they were then wired to typewriters. The human sits and types on the keyboard. An electric representation of whatever is typed was stored in a local "buffer" (something like a row of flip-flops would do just fine). When the user presses "enter", the buffer is read out and sent down the electric wire to the computer. The machine whirls, computes the output, then sends it back to the electromechanical controller of the typewriter, which prints it on the paper. This is the "teletype" (tele-typewriter -- they had a thing for the prefix "tele-").
+
+There are two possible ways to deal with the user's input. What I described above is that the user sends in inputs one line at a time (block mode, or for this case, line mode). The other way is to send one character at a time (character mode). Both have their uses and ended up in modern Linux systems.
+
+With the teletype-computer setup, we are basically 90\% way to the modern setup. The remaining 10\% comes from just making this setup more user-friendly. Let's see how we can try to add little conveniences, and end up with the modern setup.
+
+The most basic convenience would be the ability to delete characters. Unfortunately, as you know, you can't rub out what is written, not on paper.
+
+> The Moving Finger writes; and, having writ, Moves on: nor all thy Piety nor Wit Shall lure it back to cancel half a Line, Nor all thy Tears wash out a Word of it. ― Omar Khayyám
+
+The obvious solution is to use an electronic monitor -- a cathode-ray tube. It is expensive, but if you can afford one, then it's trivial to delete characters. Just press the `backspace` and the character will disappear. With the adoption of the `backspace`, it is natural to use the line mode. You would do something like `login<BS><BS>off<enter>`, and the computer would receive just `logoff<enter>`.
+
+The next convenience would be autocompletion. If you type `ls /et<tab>`, you would get `ls /etc/`. Now, the terminal, dissociated from the computer, has no way to know how to autocomplete it. Only the computer knows what the file system looks like, so only the computer can know that the only directory that starts with `/et` is `/etc/`. And so, to get autocompletion, we need to have the terminal and the computer communicate with each other in the middle of a line.
+
+Now, you might suggest that we can just make `<tab>` send in the line buffer, just like `<enter>`. However, what if you want to do editing with something like `vi`? Then you would like to send every letter directly to the computer. If you have an active search, then keep pressing `n`, the screen must jump to the next search-match every time you press `n`, without waiting for you to press `<tab>` or `<enter>`. 
+
+So, the natural thing to do is to switch to character mode. The computer would run a dedicated process that listens for every character sent by the teletype, as the interface between the teletype and the operating system.
+
+As time goes on, the electronic displays are upgraded every year, but rewriting the code for displaying is too annoying. Well, nothing solves a problem like an extra layer of redirection/API. So they created a layer between the physical display device and the OS, called the "virtual terminal". Now the OS just needs to talk to the physical terminal in the language of the "virtual terminal", and the physical terminal is responsible to translate that into physically real display. The same for inputs -- the user types, the terminal translates it into virtual terminal inputs, and the OS processes those.
+
+Later, even the manufacturers of the physical terminal got tired of rewriting the hard-coded logic, and they also noticed that the digital logic chips are getting so cheap that they can afford to put a few in their "dumb" terminals, and that their users wanted to use the old model instead of the new one, so... one more layer of indirection! They added small chips inside the terminal (not so "dumb" anymore), which would run a "terminal emulator" program to allow users to use the new model as if it's the old model. For example, if the terminal is a VT240, but the user really wants to use VT100. Well, the user just has to select the `VT100 mode` on the terminal. Then, the terminal emulator would translate the virtual terminal into the pixels on the screen, VT100-style. Otherwise, the terminal emulator would do the translation, VT240-style.
+
+Our journey is almost complete. One last thing: pseudoteletypes.
+
+A pseudoteletype (pty) in some way closes the circle: if every user is a process that generates a file, then every process is... a user. So, if users can use a teletype, then processes can also use teletypes. For security reasons, Unix-like operating systems have two levels of privileges for processes. There are those that are in "user space" and there are those in "kernel space". Everything in "kernel space" has the same powers of messing things up as the actual OS, and must be carefully protected. In particular, processes in kernel space are fully capable of blanketing the hard drive with zeroes, covering the terminal screen with flashing lights, etc. So, by default, processes are run in user space.
+
+Now, recalling back to their origins, a teletype is a physical machine. A virtual terminal is an API to a physical machine. It stands to reason that `tty`, which are device files for physical machines, are read-written by processes in kernel space. So, what can processes in user space do? One more layer of indirection.
+
+Instead of running the `tty`, they use `pty`, which stands for "pseudo-teletype". They are files with similar format as `tty`, but run in user space. By using those `pty`s, programs that used to interface with the `tty` can now be just plugged to a `pty` and function as if they were connected to the `tty`.
+
+This gets up to how modern Linux systems work. At start up, they spawn several `tty`. Most of them remain unused. One of them (usually `tty7`) is plugged to a user interface (command-line or graphical). Then, like a hydra, out of the single `tty7` are spawned as many `pty` as needed, all of them funneled through the single `tty7`. If you open a new terminal window, you get a new `pty`. If you close it, that `pty` is also closed. Processes can spawn multiple `pty` to communicate with other processes.I can imagine an old process down there behind `tty7` thinking "That user types really fast...".
