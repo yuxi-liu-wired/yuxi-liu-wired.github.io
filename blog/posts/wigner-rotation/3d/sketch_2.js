@@ -8,8 +8,11 @@ let dotDiameter = 0.1;
 let circleColor = "#ffffff";
 
 let lightConeHeight = 1;
-let lightConeColor = "#938fba";
+let lightConeColor = "#938fba44";
 const scaleFactor = 100;
+
+// The two vectors defining the space circle.
+let ex = [1, 0, 0];
 
 // Left Sketch: Unit circle with draggable dot
 let leftSketch = function (p) {
@@ -46,6 +49,8 @@ let leftSketch = function (p) {
       }
       vx = dot.x;
       vy = dot.y;
+      fourVelocity = minkowskiNormalize([vx, vy, 1]);
+      ex = minkowskiProjection(ex, fourVelocity);
     }
   };
 
@@ -73,20 +78,32 @@ let rightSketch = function (p) {
     p.createCanvas(400, 400, p.WEBGL);
     p.camera(0, -600, 0, 0, 0, 0, 0, 0, 1);
   };
+  let detailX = 50;
+  let detailY = 50;
+  let timelikeHyperboloid = new p5.Geometry(detailX, detailY, function() {
+    for (let i = 0; i <= detailX; i++) {
+      let theta = p.map(i, 0, detailX, 0, p.TWO_PI);
+      for (let j = 0; j <= detailY; j++) {
+        let r = p.map(j, 0, detailY, 0, 5);
+        let x = Math.sinh(r) * Math.cos(theta);
+        let y = Math.sinh(r) * Math.sin(theta);
+        let z = Math.cosh(r);
+        this.vertices.push(new p5.Vector(x, y, z));
+      }
+    }
+    this.computeFaces();
+    this.computeNormals();
+  });
 
   p.draw = function () {
     fourVelocity = minkowskiNormalize([vx, vy, 1]);
-
-    // p.ambientLight(100);
-    let locX = p.mouseX - p.width / 2;
-    let locY = p.mouseY - p.height / 2;
-    // p.pointLight(255, 255, 255, locX, locY, 50);
 
     p.orbitControl(1, 1, 1, { freeRotation: true });
     p.scale(scaleFactor)
     p.rotateX(p.PI);
     p.background(0);
 
+    // System-wide plotting.
     // xyz axes with different colors
     p.push();
     p.stroke(255, 0, 0);
@@ -96,25 +113,54 @@ let rightSketch = function (p) {
     p.stroke(0, 0, 255);
     p.line(0, 0, -1, 0, 0, 1);
     p.pop();
+    
+    // Plot that should not be affected by the Lorentz transform.
+    // The 3-velocity vector.
+    p.push();
+    p.stroke('red');
+    p.strokeWeight(10);
+    p.point(vx, vy, 1);
+    p.pop();
 
+    // the two hyperboloids
+    p.model(timelikeHyperboloid);
 
-    // Draw the vector from (0, 0, 0) to fourVelocity
+    // The reference point on the space circle.
+    p.push();
+    p.stroke('red');
+    p.strokeWeight(20);
+    p.point(ex[0], ex[1], ex[2]);
+    p.pop();
+
+    // Plot that should be affected by the Lorentz transform.
+    let transform = velocityToLorentzTransform([vx, vy]);
+    let transformMatrix = [transform.get([0, 0]), transform.get([0, 1]), transform.get([0, 2]), 0,
+                           transform.get([1, 0]), transform.get([1, 1]), transform.get([1, 2]), 0,
+                           transform.get([2, 0]), transform.get([2, 1]), transform.get([2, 2]), 0,
+                           0, 0, 0, 1];
+    p.applyMatrix(...transformMatrix);
+
+    // Draw the vector fourVelocity
     p.push();
     p.stroke(255);
     p.strokeWeight(2);
-    p.line(0, 0, 0, fourVelocity[0], fourVelocity[1], fourVelocity[2]);
+    p.line(0, 0, 0, 0, 0, 1);
     p.pop();
 
-    // Draw the dot at [vx, vy, 1]
+    // The space circle
     p.push();
-    p.stroke(255, 0, 0);
+    p.beginShape();
+    p.stroke(circleColor);
     p.strokeWeight(4);
-    p.point(vx, vy, 1);
+    for (let theta = 0; theta < p.TWO_PI; theta += 0.01) {
+      p.vertex(Math.cos(theta), Math.sin(theta), 0);
+    }
+    p.endShape(p.CLOSE);  
     p.pop();
 
     // Draw a cone with apex at fourVelocity, pointing towards -z
     p.push();
-    p.translate(fourVelocity[0], fourVelocity[1], fourVelocity[2]);
+    p.translate(0, 0, 1);
     p.translate(0, 0, - lightConeHeight/2)
     p.rotateX(p.PI * 0.5);
     p.fill(lightConeColor)
@@ -123,19 +169,17 @@ let rightSketch = function (p) {
 
     // Draw a cone with apex at -fourVelocity, pointing towards +z
     p.push();
-    p.translate(-fourVelocity[0], -fourVelocity[1], -fourVelocity[2]);
+    p.translate(0, 0, -1);
     p.translate(0, 0, + lightConeHeight/2)
     p.rotateX(p.PI * 1.5);
     p.fill(lightConeColor)
     p.cone(lightConeHeight, lightConeHeight, 24, 1, false);
     p.pop();
   };
-
 };
 
 new p5(leftSketch, 'velocity-canvas');
 new p5(rightSketch, 'spacetime-canvas');
-
 
 function minkowskiProduct(u, v) {
   return u[0] * v[0] + u[1] * v[1] - u[2] * v[2];
@@ -149,18 +193,47 @@ function minkowskiNormalize(u) {
 }
 
 // Requires minkowskiNormSquared(u) = -1, and minkowskiProduct(e, u) = 0
-// that is, u is time-like unit vector.
-// In this special case, minkowskiProjection is very cheap.
+// that is, u is a time-like unit vector that is Minkowski-orthogonal to e.
+// In this special case, minkowskiProjection is greatly simplified.
 function minkowskiProjection(e, u_prime) {
   // e' = e + <e, u'> u'
   let eu = minkowskiProduct(e, u_prime);
-  return [e[0] + eu * u_prime[0], e[1] + eu * u_prime[1], e[2] + eu * u_prime[2]];
+  eu = [e[0] + eu * u_prime[0], e[1] + eu * u_prime[1], e[2] + eu * u_prime[2]];
+  return minkowskiNormalize(eu);
 }
 
-// r = ArcTanh(v)
-// function velocityToRapidity(v) {
-//   let speed = Math.sqrt(v[0] * v[0] + v[1] * v[1]);
-//   let rapidity Math.atanh(speed);
-//   return rapidity;
-// }
+function normalizeVector(vec) {
+  let angle = Math.atan2(vec[1], vec[0]);
+  return [Math.cos(angle), Math.sin(angle)];
+}
 
+function velocityToRapidity(v) {
+  let speed = Math.sqrt(v[0] * v[0] + v[1] * v[1]);
+  return Math.atanh(speed);
+}
+function velocityToRapidityVector(v) {
+  let direction = normalizeVector(v);
+  let rapidity = Math.atanh(v);
+  return [direction[0] * rapidity, direction[1] * rapidity];s
+}
+
+function velocityToLorentzTransform(v) {
+  let rapidity = velocityToRapidity(v);
+  let n = normalizeVector(v);
+  let cosh = Math.cosh(rapidity);
+  let sinh = Math.sinh(rapidity);
+
+  let I = math.identity(3);
+  let Kx = math.matrix([[0, 0, 1], 
+                        [0, 0, 0], 
+                        [1, 0, 0]]);
+  let Ky = math.matrix([[0, 0, 0], 
+                        [0, 0, 1], 
+                        [0, 1, 0]]);
+  let K = math.add(math.multiply(n[0], Kx), math.multiply(n[1], Ky));
+  let Ksquared = math.multiply(K, K);
+  // I + Math.sinh(rapidity) * K + (Math.cosh(rapidity) - 1) * K^2;
+  return math.add(math.add(I, 
+                                math.multiply(sinh, K)), 
+                  math.multiply(cosh - 1, Ksquared));
+}
