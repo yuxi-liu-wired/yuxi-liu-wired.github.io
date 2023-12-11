@@ -5,10 +5,18 @@ let fourVelocity = minkowskiNormalize([vx, vy, 1]);
 
 let circleDiameter = 2;
 let dotDiameter = 0.1;
-let circleColor = "#ffffff";
+let circleColor = hexToRgb("#ffffff");
 
 let lightConeHeight = 1;
-let lightConeColor = "#938fba44";
+let lightConeColor = hexToRgb("#7887ab");
+console.log(lightConeColor);
+let spaceCircleColor = hexToRgb("#7887ab");
+let spaceCircleDotColor = [255, 0, 0];
+const leftSketchBackgroundColor = [0, 0, 0];
+
+const spaceCircleDotTrail = [];
+const spaceCircleDotTrailLength = 100;
+const spaceCircleDotTrailFading = 0.99;
 const scaleFactor = 100;
 
 // The two vectors defining the space circle.
@@ -20,7 +28,7 @@ let leftSketch = function (p) {
   let dragging = false;
 
   p.setup = function () {
-    p.createCanvas(400, 400);
+    p.createCanvas(600, 600);
     p.noStroke();
   };
 
@@ -29,9 +37,43 @@ let leftSketch = function (p) {
     p.translate(p.width / 2, p.height / 2);
     p.scale(scaleFactor);
 
+    // The projection of space circle to 2D
+    p.push();
+    // Update the trail array with the new position
+    spaceCircleDotTrail.unshift({x: ex[0], y: ex[1]});
+    if (spaceCircleDotTrail.length > spaceCircleDotTrailLength) { spaceCircleDotTrail.pop(); }
+    // Draw the trail
+    let alpha = 1;
+    let size = dotDiameter;
+    for (let i = 0; i < spaceCircleDotTrail.length; i++) {
+      alpha *= spaceCircleDotTrailFading;
+      size *= spaceCircleDotTrailFading;
+      p.strokeWeight(size);
+      p.stroke(spaceCircleDotColor[0] * alpha + leftSketchBackgroundColor[0] * (1 - alpha),
+               spaceCircleDotColor[1] * alpha + leftSketchBackgroundColor[1] * (1 - alpha),
+               spaceCircleDotColor[2] * alpha + leftSketchBackgroundColor[2] * (1 - alpha));
+      if (i < spaceCircleDotTrail.length - 1) {
+        p.line(spaceCircleDotTrail[i].x, spaceCircleDotTrail[i].y, 
+               spaceCircleDotTrail[i + 1].x, spaceCircleDotTrail[i + 1].y);
+      }
+      // p.ellipse(spaceCircleDotTrail[i].x, spaceCircleDotTrail[i].y, size, size);
+    }
+    // Draw the current position
+    p.fill(spaceCircleDotColor);
+    p.ellipse(ex[0], ex[1], dotDiameter, dotDiameter);
+    p.pop();
+
+    p.push()
+    let gamma = velocityToLorentzFactor([vx, vy]);
+    let theta = Math.atan2(vy, vx);
+    p.rotate(theta);
+    p.fill(lightConeColor);
+    p.ellipse(0, 0, circleDiameter * gamma, circleDiameter);
+    p.pop();
+
     p.fill(circleColor);
     p.ellipse(0, 0, circleDiameter, circleDiameter);
-    p.fill(dot.x, dot.y, 0);
+    p.fill(0, 0, 0);
     p.ellipse(dot.x, dot.y, dotDiameter, dotDiameter);
 
     if (dragging) {
@@ -40,7 +82,7 @@ let leftSketch = function (p) {
       dot.y = mouseYTransformed;
 
       let d = p.dist(0, 0, dot.x, dot.y);
-      let epsilon = 0.05;
+      let epsilon = 0.2; // avoid extremely high velocities
       let bound = (circleDiameter/2) * (1 - epsilon);
       if (d > bound) {
         let angle = p.atan2(dot.y, dot.x);
@@ -75,7 +117,7 @@ let leftSketch = function (p) {
 // Right Sketch: 3D scene with a sphere
 let rightSketch = function (p) {
   p.setup = function () {
-    p.createCanvas(400, 400, p.WEBGL);
+    p.createCanvas(600, 600, p.WEBGL);
     p.camera(0, -600, 0, 0, 0, 0, 0, 0, 1);
   };
   let detailX = 50;
@@ -127,7 +169,7 @@ let rightSketch = function (p) {
 
     // The reference point on the space circle.
     p.push();
-    p.stroke('red');
+    p.stroke(spaceCircleDotColor);
     p.strokeWeight(20);
     p.point(ex[0], ex[1], ex[2]);
     p.pop();
@@ -150,6 +192,7 @@ let rightSketch = function (p) {
     // The space circle
     p.push();
     p.beginShape();
+    p.noFill();
     p.stroke(circleColor);
     p.strokeWeight(4);
     for (let theta = 0; theta < p.TWO_PI; theta += 0.01) {
@@ -180,6 +223,11 @@ let rightSketch = function (p) {
 
 new p5(leftSketch, 'velocity-canvas');
 new p5(rightSketch, 'spacetime-canvas');
+
+function hexToRgb(hex) {
+  let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)] : null;
+}
 
 function minkowskiProduct(u, v) {
   return u[0] * v[0] + u[1] * v[1] - u[2] * v[2];
@@ -215,6 +263,11 @@ function velocityToRapidityVector(v) {
   let direction = normalizeVector(v);
   let rapidity = Math.atanh(v);
   return [direction[0] * rapidity, direction[1] * rapidity];s
+}
+
+function velocityToLorentzFactor(v) {
+  let rapidity = velocityToRapidity(v);
+  return Math.cosh(rapidity);
 }
 
 function velocityToLorentzTransform(v) {
