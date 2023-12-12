@@ -199,7 +199,9 @@ new p5(discreteLorentz1D, 'discrete-lorentz-1d');
 
 ## Wigner rotation
 
-## Fermi--Walker transport
+### Fermi--Walker transport
+
+and here it is: the Fermi--Walker transport.
 
 ### Into the fourth dimension
 
@@ -207,17 +209,37 @@ We began our study of special relativity in 1+1 dimensions and discovered the Lo
 
 This is not a place to get into the details; suffice to say that the space of rotations in $\R^3$ is much harder to understand than the space of rotations in $\R^2$. We must be more careful here.
 
-Suppose we have four frames $0, 1, 2, 3$. We start with a tripod in frame $0$, then boost it successively to frames $1, 2, 3, 0$, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle $0120$ with the Wigner rotation around the cycle $0230$.
+Suppose we have four frames $0, 1, 2, 3$. We start with a tripod in frame $0$, then boost it successively to frames $1, 2, 3, 0$, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle $0120$ with the Wigner rotation around the cycle $0230$. The Wigner rotation coming from an arbitrary sequence of boosts can be found similarly, but it is quite hairy to handle, as combining 3-dimensional rotations is much harder than adding 2-dimensional rotation angles. My intuition says that it would involve something about [principal $G$-connections](https://en.wikipedia.org/wiki/Connection_(principal_bundle)).
 
 ## History notes
 
 ### The history of the phenomenon
 
-The history of the Wigner rotation is winding and complicated. Here is a brief summary. The details are given in [@walterNonEuclideanStyleMinkowskian1999, Section 10].
+The history of the Wigner rotation is winding and complicated. Here is a brief summary. The details are given in [@walterNonEuclideanStyleMinkowskian1999, Section 10].[^quotes-from-walter]
 
-Tevian Drey has written an entire textbook [@drayGeometrySpecialRelativity2021] treating both special and general relativity in the same geometric style. For a summary paper of the textbook, see [@drayGeometryRelativity2017].
+[^quotes-from-walter]: I do find some interesting quotes from the paper that I don't know where to put:
 
-The analogy between Foucault pendulum and Wigner rotation is presented in [@criadoThomasRotationFoucault2009].
+  > \[After 1907\] Minkowski never again referred to a manifold as both four-dimensional and non-Euclidean. Along with the problematic label, the geometric interpretation of velocity vectors likewise vanishes from view in Minkowski’s subsequent writings. Felix Klein, for one, regretted the change; in his opinion, Minkowski later hid from view his “innermost mathematical, especially invariant-theoretical thoughts” on the theory of relativity (Klein 1927, 75).
+  > 
+  >  Planck lavished praise on Einstein for his modification of the concept of time:
+  > > It need scarcely be emphasized that this new view of the concept of time makes the most serious demands upon the capacity of abstraction and the imaginative power of the physicist. It surpasses in boldness everything achieved so far in speculative investigations of nature, and even in philosophical theories of knowledge: nonEuclidean geometry is child’s play in comparison.30 (Planck 1910a, 117)
+  > 
+  > Under the new space-time view, Minkowski announced, “Three-dimensional geometry becomes a chapter of four-dimensional physics.”18 In the same triumphant spirit, Minkowski suggested that his new four-dimensional understanding of the laws of physics deserved its own label. The “Principle of the Hyperbolic World” that he had tried on Hurwitz was shelved in favor of the more ecumenical “Postulate of the Absolute World” (Minkowski 1909, 82). Although Minkowski explained this to mean that only the four-dimensional world in space and time is given by phenomena (Minkowski 1909, 82), one suspects an inside joke with Hurwitz, since in the German mathematical community, hyperbolic geometry was sometimes referred to as [absolute geometry](https://en.wikipedia.org/wiki/Absolute_geometry).
+  > 
+  > Even the watered-down version of the space-time theory presented in Minkowski’s Cologne lecture repelled some physicists. For instance, Willy Wien’s cousin Max (1866-1938), a physicist at Danzig Polytechnic, confided to his friend Arnold Sommerfeld that reading Minkowski gave him vertigo:
+  > > Sommer\[feld\] maintains that \[Minkowski's\] speech in Cologne was simply grand; when reading it, however, I always get a slight brain-shiver, now (that) space and time appear conglomerated together in a gray, miserable chaos.36 (Max Wien to Arnold Sommerfeld, February 16, 1909, Benz 1975, 71)
+
+* 1905: Einstein published special relativity. [@einsteinZurElektrodynamikBewegter1905]
+* 1908: Minkowski published the spacetime interpretation of special relativity. [@minkowskiGrundgleichungenFurElektromagnetischen1908]
+* 1910: Vladimir Varićak [@varicakApplicationLobachevskianGeometry1910] and E. T. Whittaker [@whittakerHistoryTheoriesAether1910, page 441] both introduced the hyperbolic functions and the rapidity parameter. 
+* 1911: Alfred Robb named the rapidity parameter, and found that velocities compose in hyperbolic space. [@robbOpticalGeometryMotion1911].
+* 1913: Émile Borel discovered the Wigner rotation as a part of his general study of special relativity by hyperbolic geometry. [@borelTheorieRelativiteCinematique1913]
+* 1921: Fermi discovered the Fermi--Walker transport. [@fermiSullElettrostaticaDi1921]
+* 1926: Llewellyn Thomas rediscovered the Thomas precession, a special case of the Wigner rotation. [@thomasMotionSpinningElectron1926]
+* 1932: Walker rediscovered the Fermi--Walker transport. [@walkerXXIRelativeCoordinates1932]
+* 1939: Wigner rediscovered the Wigner rotation. [@wignerUnitaryRepresentationsInhomogeneous1939]
+
+Pedagogical attempts to present the Foucault pendulum and the Wigner rotation has been many (and mysteriously, never ending up in undergrad textbooks), such as [@criadoThomasRotationFoucault2009]. Tevian Drey has written an entire textbook [@drayGeometrySpecialRelativity2021] treating both special and general relativity in the same geometric style. For a summary paper of the textbook, see [@drayGeometryRelativity2017].
 
 ### The history of this document
 
@@ -266,6 +288,10 @@ And that is merely the same idea as the fact that, if you walk from the north po
 
 Half-mad, I ran home to search online and smashed all the keywords I knew must be there: "special relativity rotation hyperbolic triangle Foucault pendulum". My disappointment was swift and certain: This was repeatedly discovered by people all over the world in the past hundred years.
 
-Bitterly I searched every undergraduate physics textbook in the school library. None included it. From that moment on I swore that I would finally present it in a way so simple and direct that it will never be forgotten. I had found the way, and it remained to publicize to the world.
+Bitterly I searched every undergraduate physics textbook in the school library. None included it. The standard textbook [@goldsteinClassicalMechanics2008, Section 7.3] went on a three-page long computation and found that, indeed, we get a rotation matrix:
+
+> The spatial rotation resulting from the successive application of two nonparallel Lorentz transformations has been declared every bit as paradoxical as the more frequently' discussed apparent violations of common sense, such as the so-calIed "twin paradox." But the present apparent paradox has important applications, especially in atomic physics, and therefore has been abundantly verified experimentally.
+
+From that moment on I swore that I would finally present it in a way so simple and direct that it will never be forgotten. I had found the way, and it remained to publicize to the world.
 
 There was little use in writing another paper about it, as despite the many papers over the century, somehow this effect did not end up in the physics textbooks. I could write a blog post about it, but mere words and figures seemed insufficient. I tried promoting this idea to various physics popularizers on YouTube, but none picked it up. What I needed was interactive animation. Javascript however defeated me, and I kept it in the backlog until now. With ChatGPT I could finally write javascript tolerably for my sanity, and so, here it is.
