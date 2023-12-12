@@ -8,9 +8,13 @@ keywords: ["special relativity", "hyperbolic geometry", "wigner rotation",
 "education", "popular physics", "undergraduate physics", "interactive",
 "p5.js", "javascript"]
 
+execute:
+  cache: true
+
 format:
   html:
     toc: true
+    code-tools: true
     include-in-header:
       text: |
         <script type="text/javascript" charset="UTF-8" src="./static/jsxgraphcore.min.js"></script>
@@ -117,31 +121,104 @@ $$\cdots, (-v \; ?, -?), (0, 0), (v \; ?, ?), \cdots$$
 
 The obvious choice is to just let $? = 1$. With this seemingly trivial step, we have in fact completely defined special relativity -- all else is derivation.
 
-```{=html}
-<div class="clearfix">
-    <div id="board1" class="board"></div>
-    <div id="board2" class="board"></div>
-</div>
-<link rel="stylesheet" href="./figure/2d/style.css">
-<script type="text/javascript" src="./figure/2d/script.js"></script>
+### Why $? = 1$
+
+By the smoothness axiom, if $v$ is infinitesimal, then the coordinate transform between the rest frame and the moving frame should be infinitesimally close to identity. Therefore, it should send $(0, 1)$ to $(\delta x, 1 + \delta t)$ for some infinitesimal $\delta x, \delta t$.
+
+Since special relativity does not distinguish left from right, if we were to make the moving frame move at velocity $-v$, then the coordinate transform should send $(0, 1)$ to $(-\delta x, 1 + \delta t)$ by mirror symmetry.
+
+Now, if we compose two boosts, first with $v$ then with $-v$, then we would send $(0, 1)$ to $(0, 1+ 2\delta t)$. But we really should get back to $(0, 1)$ since we are back to the resting frame again. Therefore $\delta t = 0$.
+
+```{python}
+#| label: three-infinitesimal-boosts
+#| echo: false
+#| fig-cap: "Three infinitesimal boosts"
+import matplotlib.pyplot as plt
+import numpy as np
+
+delta_t = 0.1
+delta_x = 0.1
+
+point_A = (0, 1)
+point_B = (delta_x, 1 + delta_t)
+point_C = (0, 1 + 2 * delta_t)
+point_D = (-delta_x, 1 + delta_t)
+origin = (0, 0)
+
+plt.figure(figsize=(6, 6))
+slope_B = (point_B[1] - origin[1]) / (point_B[0] - origin[0])
+x_inf_B = np.array([-1, 1])
+y_inf_B = slope_B * (x_inf_B - origin[0]) + origin[1]
+slope_D = (point_D[1] - origin[1]) / (point_D[0] - origin[0])
+x_inf_D = np.array([-1, 1])
+y_inf_D = slope_D * (x_inf_D - origin[0]) + origin[1]
+plt.plot(x_inf_B, y_inf_B, 'k-', label='Extended Line to $(\delta x, 1 + \delta t)$')
+plt.plot(x_inf_D, y_inf_D, 'k-', label='Extended Line to $(-\delta x, 1 + \delta t)$')
+
+plt.plot(*zip(*[point_A, point_B, point_C, point_D, point_A]), 'b-')
+
+plt.text(*point_A, '$(0, 1)$', verticalalignment='top', horizontalalignment='center')
+plt.text(*point_B, '$(\delta x, 1 + \delta t)$', verticalalignment='top', horizontalalignment='left')
+plt.text(*point_C, '$(0, 1 + 2 \delta t)$', verticalalignment='bottom', horizontalalignment='center')
+plt.text(*point_D, '$(-\delta x, 1 + \delta t)$', verticalalignment='top', horizontalalignment='right')
+plt.xticks([]),plt.yticks([])
+
+plt.xlim(-0.8, 0.8)
+plt.ylim(-0.2, 1.4)
+plt.xlabel('x')
+plt.ylabel('t')
+plt.axhline(0, color='black',linewidth=0.5)
+plt.axvline(0, color='black',linewidth=0.5)
+plt.grid(True)
+plt.show()
 ```
 
 ### The Lorentz transform
 
+In the resting frame, we constructed the meter stick by shooting out one pulse of light, then listen for the echo that arrives two ticks later. The point at which the echo got reflected is one meter stick away. Equivalently, we can shoot a forward-pointing light cone at $(0, -1)$, and shoot a backward-pointing light cone at $(0, +1)$. Their intersections are the two ends of two meter sticks: $(-1, 0), (+1, 0)$.
+
+In the boosted frame, the clock passing origin ticks at $\cdots, (-v, -1), (0, 0), (v, 1), \cdots$. Therefore, we can construct its meter stick in the same way, and we would find that the two light cones intersect at $(-1, -v), (+1, +v)$. This gives us the coordinate transform:
+
+$$\forall p \in \mathcal{M}, \quad 
+\begin{bmatrix} x(p) \\ t(p) \end{bmatrix} = 
+\begin{bmatrix} 1 & v \\ v & 1 \end{bmatrix}
+\begin{bmatrix} x'(p) \\ t'(p) \end{bmatrix}
+$$
+
+Here we find that we need to distinguish between "active" and "passive" transforms. Everything we have said so far is "passive". We assumes that there is an underlying spacetime $\mathcal{M}$, and we are to construct coordinate systems over it. The coordinate transform tells us how to turn the coordinates of *the same point* from one coordinate system to another. However, while this is often useful, it will make everything we are going to say next very awkward.
+
+Therefore, we immediately change our point of view: we are going to study "active" transforms from now on. While passive transform of a clock means that we have just one clock and measure its ticks in two coordinate systems, active transform of a clock means that we actually pick up the clock at rest frame, accelerate it on a rocket, and then let it glide at constant velocity at the moving frame, then study what the clock is doing *in the rest frame*.
+
+Since active transform is the opposite of passive transform, we have the active Lorentz transform formula:
+
+$$
+\begin{bmatrix} x' \\ t \end{bmatrix} = 
+\begin{bmatrix} 1 & v \\ v & 1 \end{bmatrix}
+\begin{bmatrix} x \\ t \end{bmatrix}
+$$
+
+This formula states that if we "pick up" the spacetime event at $(x, t)$ in the rest frame, and accelerate it infinitesimally to speed $v$, then the spacetime event ends up at $(x', t')$ *in the rest frame*.
+
+### Integrating the Lorentz boosts
+
+Since $v$ is infinitesimal, to find the Lorentz transform for non-infinitesimal $v$ (say, $v = 10^{-100}$, which while small, is really big for an infinitesimal), we need to do an integral. 
+
+Before we do so, we should play with the discrete version: what happens if we repeatedly apply the matrix $\begin{bmatrix} 1 & v \\ v & 1 \end{bmatrix}$ on the vectors $(0, 1), (1, 0)$?
+
 ```{=html}
-<div id="discrete-lorentz-1d"></div>
+<div id="discrete-lorentz-1d" style="display: flex; justify-content: center;"></div>
+<div  style="display: grid; place-items: center;">
 <div>
   <input type="range" id="rSlider" name="rSlider" value="0.2" min="0.05" max="0.2" step="0.05"
-           oninput="document.getElementById('rValue').textContent = this.value;" />
+          oninput="document.getElementById('rValue').textContent = this.value;" />
   <label for="rSlider">Rapidity = <span id="rValue">0.05</span></label>
 </div>
-
 <div>
   <input type="range" id="lineNumberSlider" name="lineNumberSlider" value="1" min="0" max="20" step="1"
-             oninput="document.getElementById('lineNumberValue').textContent = this.value;" />
+            oninput="document.getElementById('lineNumberValue').textContent = this.value;" />
   <label for="lineNumberSlider">Number of boosts = <span id="lineNumberValue">1</span></label>
 </div>
-
+  
 <script>
 const discreteLorentz1D = (p) => {
     let lineLength = 100;
@@ -186,8 +263,93 @@ new p5(discreteLorentz1D, 'discrete-lorentz-1d');
 </script>
 ```
 
+In the diagram, $v$ is "rapidity"[^rapidity-name]. We apply the Lorentz boost with the given $v$ repeatedly forwards and backwards. The resulting image is beautiful and suggestive: it looks like the unit hyperbolas!
+
+[^rapidity-name]: The reason for calling it "rapidity", instead of "velocity" would be soon clear.
+
+```{=html}
+<div style="display: flex; justify-content: center;">
+    <img src="figure/discrete_lorentz_rapidity_0.1_boosts_17.png" style="width: 400px; height: 400px;">
+</div>
+```
+
+Having guessed the answer, we proceed to the explicit integral to confirm our guess.
+
+$$
+  \begin{aligned}
+  \begin{bmatrix} 1 & dv \\ dv & 1 \end{bmatrix}^{\frac{v}{dv}} &= \left(I + \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}\right)^{\frac{v}{dv}}\\
+  &= \exp\left(\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} v\right) \\
+  &= I + \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} v + \frac{1}{2!}v^2\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}^2 + \frac{1}{3!}v^3\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}^3 + \cdots \\
+  &= I(1 + v^2/2! + v^4/4! + \cdots) + \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}(v + v^3/3! + v^5/5! + \cdots) \\
+  &= I\cosh(v) + \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \sinh(v)
+  \end{aligned}
+$${#eq-1d-lorentz}
+
+At this point, we should pause to take a careful look at $v$. While it is the same as velocity when $v$ is infinitesimal, it is not the same as velocity otherwise, because while velocity is bounded between $-1$ and $+1$, this $v$ quantity is free to vary over all real values. This is why we call it "rapidity" and relabel it to $w$, since it is like velocity, but different.
+
+The velocity $v$ for a given rapidity $w$ can be found by transforming the $t$-axis using the Lorentz transform matrix $\begin{bmatrix} \cosh(w) & \sinh(w) \\ \sinh(w) & \cosh(w) \end{bmatrix}$. The $t$-axis 
+$$\{(0, s) : s \in \R\}$$
+is boosted to the line
+$$\{(\sinh(w) s, \cosh(w) s) : s \in \R\}$$
+Therefore, the velocity of this boosted frame is 
+$$w = \sinh(w) / \cosh(w)  = \tanh(w).$$
+
+
+Now you can play with the diagram below to grow a new intuitive sense of how it all ties together. After you have grown this new intuition, you can proceed.
+
+```{=html}
+<div class="clearfix"  style="display: grid; place-items: center;">
+    <div id="board1" class="board"></div>
+    <div id="board2" class="board"></div>
+</div>
+<link rel="stylesheet" href="./figure/2d/style.css">
+<script type="text/javascript" src="./figure/2d/script.js"></script>
+```
 
 ## Relativity in 2+1 dimensions
+
+The Lorentz transform in 2+1 dimensions can be derived in the same way as that of @eq-1d-lorentz. Let the rapidity vector $\vec{w}$ be equal to $w (n_x, n_y)$, where $(n_x, n_y)$ is a unit vector (the direction of rapidity). Then the Lorentz transform is found by performing another matrix exponentiation:
+
+$$\exp\left(\begin{bmatrix} 0 & 0 & n_x \\ 0 & 0 & n_y \\ n_x & n_y & 0 \end{bmatrix} w\right)$$
+
+To be more succinct, we define the matrices 
+
+$$K_x := \begin{bmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 1 & 0 & 0 \end{bmatrix}, \quad K_y := \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 1 \\ 0 & 1 & 0 \end{bmatrix}$$
+
+then the Lorentz transform is just $e^{\vec{w} \cdot \vec{K}} = e^{w \vec{n} \cdot \vec{K}}$.
+
+Now, since $(\vec{n} \cdot \vec{K})^3 = \vec{n} \cdot \vec{K}$, we have the Lorentz transform equation
+
+$$
+I + \sinh(w) \vec{n} \cdot \vec{K} + (\cosh(w) - 1) (\vec{n} \cdot \vec{K})^2
+$${#eq-2d-lorentz}
+
+This equation generalizes in the obvious way to relativity in n+1 dimensions, but we will not need it.
+
+::: {.callout-note collapse="true"}
+## Deriving $(\vec{n} \cdot \vec{K})^3 = \vec{n} \cdot \vec{K}$
+
+Let $t$ stand for the index of the time-coordinate, and let $i, j, k$ be the indices of the space-coordinates. Then we have 
+$$(\vec{n} \cdot \vec{K})^3 = n_in_jn_k(e_{it} + e_{ti})(e_{jt} + e_{tj})(e_{kt} + e_{tk})$$
+
+where $e_{mn}$ means the matrix with entry $(m, n)$ being one and all other entries being zero. We use Einstein summation convention, so repeated indices means summing over it (except $t$, which is not an index to sum over).
+
+Since $e_{mn}e_{kl} = \delta_{nk} e_{ml}$, and $i \neq t, j \neq t, k \neq t$, the above multiplication expands to 8 terms, but only two are nonzero:
+
+$$= n_in_jn_k(e_{it}\delta_{jk} + \delta_{ij} e_{tk}) = \underbrace{\|\vec{n}\|^2}_{= 1} (n_i e_{it} + n_k e_{tk}) = n_i (e_{it} + e_{ti}) = \vec{n} \cdot \vec{K}$$
+:::
+
+### Wigner rotation
+
+Space circle, hula hoop.
+
+Equivalently, we can present it in the following form, often called the Thomas precession formula:
+
+$$
+\omega = \frac{\gamma^2}{\gamma + 1} a \times v
+$${#eq-thomas-precession}
+
+Now you are able to fully appreciate the following interactive simulation of Wigner rotation.
 
 ```{=html}
 <div id="velocity-canvas"></div>
@@ -197,37 +359,72 @@ new p5(discreteLorentz1D, 'discrete-lorentz-1d');
 <script type="text/javascript" src="./figure/3d/3d_wigner_sketch.js"></script>
 ```
 
-## Wigner rotation
-
 ### Fermi--Walker transport
 
-and here it is: the Fermi--Walker transport.
+So far, we have been boosting around clock-trajectories and meter sticks. However, a clock is parallel to the 4-velocity, and a meter stick is perpendicular to it. We can immediately generalize this.
 
-### Into the fourth dimension
+Consider a spaceship that looks like a spherical ~~cow~~ porcupine in a vacuum. Every porcupine spine is a rocket engine. The spaceship can boost in any direction, but it does not rotate. Thanks to Wigner rotation, it can rotate anyway. Now, the spaceship is performing some complicated manuever in spacetime. If we let it carry around a general vector pointing in an arbitrary direction $e$, then the question is: as the vector is boosted alongside the spaceship, how does the vector change?
+
+* Let $u$ be the 4-velocity of the spaceship.
+* Decompose the vector to a sum of the parallel and perpendicular components, $e = e_\parallel + e_\perp$, where $\braket{e_\perp, u} = 0$.
+* Boost the parallel component $e_\parallel$. Since $e_\parallel$ has length $-\braket{u, e_\parallel}$, it is boosted to $e_\parallel -\braket{u, e_\parallel} \delta u$, just like how $u$ is boosted to $u + \delta u$.
+* Boost the perpendicular component $e_\perp$. We have already derived it to be $e_\perp + \braket{e, \delta u} u$.
+
+This gives us the Fermi--Walker transport equation:
+
+$$
+\delta e = \braket{e, \delta u}u - \braket{e, u} \delta u
+$${#eq-fermi-walker}
+
+## Relativity in 3+1 dimensions
 
 We began our study of special relativity in 1+1 dimensions and discovered the Lorentz transform, then proceeded to 2+1 dimensions and discovered Wigner rotation. In 3+1 dimensions, Wigner rotation still applies, but there is something new: rotations are no longer describable by a single number.
 
 This is not a place to get into the details; suffice to say that the space of rotations in $\R^3$ is much harder to understand than the space of rotations in $\R^2$. We must be more careful here.
 
-Suppose we have four frames $0, 1, 2, 3$. We start with a tripod in frame $0$, then boost it successively to frames $1, 2, 3, 0$, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle $0120$ with the Wigner rotation around the cycle $0230$. The Wigner rotation coming from an arbitrary sequence of boosts can be found similarly, but it is quite hairy to handle, as combining 3-dimensional rotations is much harder than adding 2-dimensional rotation angles. My intuition says that it would involve something about [principal $G$-connections](https://en.wikipedia.org/wiki/Connection_(principal_bundle)).
+Suppose we have four frames $0, 1, 2, 3$. We start with a tripod in frame $0$, then boost it successively to frames $1, 2, 3, 0$, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle $0120$ with the Wigner rotation around the cycle $0230$. The full rotation is composed of two rotations, first rotation in the plane of the triangle $012$, and the second one in the plane of the triangle $023$.
+
+The Wigner rotation coming from an arbitrary sequence of boosts can be found similarly, but it is quite hairy to handle, as combining 3-dimensional rotations is much harder than adding 2-dimensional rotation angles. My intuition says that it would involve something about [principal $G$-connections](https://en.wikipedia.org/wiki/Connection_(principal_bundle)).
+
+## Two parables
+
+### The day the earth stood still
+
+One day, the earth stopped spinning. This annoyed the visitors to the science museum, who wanted to see Foucault's pendulum to rotate. To satisfy those visitors, the museum keeper put the pendulum on the top of a bus, and loaded the visitors on the bus, then they started driving around earth at the same speed as how earth used to rotate at that latitude, so that after one day, they returned to the museum. The visitors looked up at the pendulum and was satisfied to see that it indeed has turned.
+
+To find out how much the pendulum has turned, we divide up the circular trajectory into tiny segments $p_0, p_1, ..., p_n$, then draw tiny triangles $p_0 p_1 N, p_1 p_2 N, ..., p_{n-1} p_n N$, with $N$ being the North Pole. We imagine that, instead of driving around earth in a circle, we drive around the triangle $N \to p_0 \to p_1 \to N$, then the triangle $N \to p_1 \to p_2 \to N$, etc.
+
+When we drive around $N \to p_0 \to p_1 \to N$, the bus makes three turns, and each time the pendulum turns by an opposite amount relative to the bus. After three turns, the bus has turned the same angle as the sum of three external angles of the triangle. By spherical trigonometry, we know that this is equal to $2\pi - 4\pi\frac{\text{area of triangle $p_0 p_1 N$}}{\text{surface area of earth}}$. Thus, the pendulum has turned relative to the bus by $-2\pi + 4\pi\frac{\text{area of triangle $p_0 p_1 N$}}{\text{surface area of earth}}$. The $-2\pi$ part is not relevant as it is just a full cycle, leaving us with just $\frac{\text{area of triangle $p_0 p_1 N$}}{\text{surface area of earth}}$.
+
+Therefore, adding them up, we find that after driving around an arbitrary cycle on earth, the pendulum would have turned by
+
+$$\frac{\text{area of the cycle}}{\text{surface area of earth}}$$
+
+[TODO: This argument is wrong.]
+
+In particular, since the surface area of a spherical cap around latitude $\phi$ is $\frac{1 -\sin\phi}{2}$ that of the whole sphere[^archimedes-hat-box], we find that the Foucault pendulum rotates by $2\pi \sin\phi$ every day, and it takes $\frac{1}{\sin\phi}$ days to make a full rotation. At the Paris Observatory, the original place where Foucault made his experiment in 1851, we have
+
+$$\phi = \mathrm{48^\circ 52' N}, \quad \text{period} = \frac{\mathrm{23h56'}}{\sin \phi} \approx \mathrm{31\,h\,50\,min}$$
+
+
+
+[^archimedes-hat-box]: This is immediate from [Archimedes' hat-box theorem](https://mathworld.wolfram.com/ArchimedesHat-BoxTheorem.html), which is the basis of the [Lambert cylindrical equal-area projection](https://en.wikipedia.org/wiki/Lambert_cylindrical_equal-area_projection).
+
+### The star worshippers
+
+An alien race used to worship Rigel, Deneb, and Betelgeuse, and they prayed towards the three stars. In order to pray in the correct direction even without seeing them, they constructed the Sacred Tripods, which are steel tripods that are oriented, such that each leg points at one of the Sacred Stars. These Sacred Tripods are put in public places, and required to point exactly at the Sacred Stars.
+
+Then a Cosmic Dark Age began and the stars winked out of existence, including the Sacred Stars, but the aliens did not lose their faith. Instead, they intensified their prayer in the hope of resurrecting the Sacred Stars.
+
+In a region of space, there were two space stations A and B, at rest with each other. The Sacred Tripod on B was unstable and required yearly checking against the more stable Sacred Tripod at A. So station A would align its spare Sacred Tripod to its own one, put it on a gimbal-mount, and send it by rocket to station B. B would align its Tripod with the one sent, then let the Tripod go back.
+
+Years passed, and aliens on station B felt confident that its Tripod doesn’t drift more than $1''$ per year. One day, an asteroid field blocked the straight path, forcing the next shipment to make a big detour around the asteroid field. When it arrived, to their astonishment, it was found that the Tripod on B was clearly misaligned with the Tripod from A. What’s going on?
 
 ## History notes
 
 ### The history of the phenomenon
 
-The history of the Wigner rotation is winding and complicated. Here is a brief summary. The details are given in [@walterNonEuclideanStyleMinkowskian1999, Section 10].[^quotes-from-walter]
-
-[^quotes-from-walter]: I do find some interesting quotes from the paper that I don't know where to put:
-
-  > \[After 1907\] Minkowski never again referred to a manifold as both four-dimensional and non-Euclidean. Along with the problematic label, the geometric interpretation of velocity vectors likewise vanishes from view in Minkowski’s subsequent writings. Felix Klein, for one, regretted the change; in his opinion, Minkowski later hid from view his “innermost mathematical, especially invariant-theoretical thoughts” on the theory of relativity (Klein 1927, 75).
-  > 
-  >  Planck lavished praise on Einstein for his modification of the concept of time:
-  > > It need scarcely be emphasized that this new view of the concept of time makes the most serious demands upon the capacity of abstraction and the imaginative power of the physicist. It surpasses in boldness everything achieved so far in speculative investigations of nature, and even in philosophical theories of knowledge: nonEuclidean geometry is child’s play in comparison.30 (Planck 1910a, 117)
-  > 
-  > Under the new space-time view, Minkowski announced, “Three-dimensional geometry becomes a chapter of four-dimensional physics.”18 In the same triumphant spirit, Minkowski suggested that his new four-dimensional understanding of the laws of physics deserved its own label. The “Principle of the Hyperbolic World” that he had tried on Hurwitz was shelved in favor of the more ecumenical “Postulate of the Absolute World” (Minkowski 1909, 82). Although Minkowski explained this to mean that only the four-dimensional world in space and time is given by phenomena (Minkowski 1909, 82), one suspects an inside joke with Hurwitz, since in the German mathematical community, hyperbolic geometry was sometimes referred to as [absolute geometry](https://en.wikipedia.org/wiki/Absolute_geometry).
-  > 
-  > Even the watered-down version of the space-time theory presented in Minkowski’s Cologne lecture repelled some physicists. For instance, Willy Wien’s cousin Max (1866-1938), a physicist at Danzig Polytechnic, confided to his friend Arnold Sommerfeld that reading Minkowski gave him vertigo:
-  > > Sommer\[feld\] maintains that \[Minkowski's\] speech in Cologne was simply grand; when reading it, however, I always get a slight brain-shiver, now (that) space and time appear conglomerated together in a gray, miserable chaos.36 (Max Wien to Arnold Sommerfeld, February 16, 1909, Benz 1975, 71)
+The history of the Wigner rotation is winding and complicated. Here is a brief summary. The details are given in [@walterNonEuclideanStyleMinkowskian1999].
 
 * 1905: Einstein published special relativity. [@einsteinZurElektrodynamikBewegter1905]
 * 1908: Minkowski published the spacetime interpretation of special relativity. [@minkowskiGrundgleichungenFurElektromagnetischen1908]
@@ -241,6 +438,20 @@ The history of the Wigner rotation is winding and complicated. Here is a brief s
 
 Pedagogical attempts to present the Foucault pendulum and the Wigner rotation has been many (and mysteriously, never ending up in undergrad textbooks), such as [@criadoThomasRotationFoucault2009]. Tevian Drey has written an entire textbook [@drayGeometrySpecialRelativity2021] treating both special and general relativity in the same geometric style. For a summary paper of the textbook, see [@drayGeometryRelativity2017].
 
+### Amusing quotes from [@walterNonEuclideanStyleMinkowskian1999]
+
+> \[After 1907\] Minkowski never again referred to a manifold as both four-dimensional and non-Euclidean. Along with the problematic label, the geometric interpretation of velocity vectors likewise vanishes from view in Minkowski's subsequent writings. Felix Klein, for one, regretted the change; in his opinion, Minkowski later hid from view his "innermost mathematical, especially invariant-theoretical thoughts" on the theory of relativity (Klein 1927, 75).
+> 
+>  Planck lavished praise on Einstein for his modification of the concept of time:
+> 
+> > It need scarcely be emphasized that this new view of the concept of time makes the most serious demands upon the capacity of abstraction and the imaginative power of the physicist. It surpasses in boldness everything achieved so far in speculative investigations of nature, and even in philosophical theories of knowledge: nonEuclidean geometry is child’s play in comparison.30 (Planck 1910a, 117)
+> 
+> Under the new space-time view, Minkowski announced, "Three-dimensional geometry becomes a chapter of four-dimensional physics." In the same triumphant spirit, Minkowski suggested that his new four-dimensional understanding of the laws of physics deserved its own label. The “Principle of the Hyperbolic World” that he had tried on Hurwitz was shelved in favor of the more ecumenical "Postulate of the Absolute World" (Minkowski 1909, 82). Although Minkowski explained this to mean that only the four-dimensional world in space and time is given by phenomena (Minkowski 1909, 82), one suspects an inside joke with Hurwitz, since in the German mathematical community, hyperbolic geometry was sometimes referred to as [absolute geometry](https://en.wikipedia.org/wiki/Absolute_geometry).
+> 
+> Even the watered-down version of the space-time theory presented in Minkowski’s Cologne lecture repelled some physicists. For instance, Willy Wien’s cousin Max (1866-1938), a physicist at Danzig Polytechnic, confided to his friend Arnold Sommerfeld that reading Minkowski gave him vertigo:
+> 
+> > Sommer\[feld\] maintains that \[Minkowski's\] speech in Cologne was simply grand; when reading it, however, I always get a slight brain-shiver, now (that) space and time appear conglomerated together in a gray, miserable chaos.36 (Max Wien to Arnold Sommerfeld, February 16, 1909, Benz 1975, 71)
+
 ### The history of this document
 
 During high school, I was in the physics Olympiad team. One afternoon I got into an argument with someone about what happens if you take a square $[0, 1] \times [0, 1]$, boost it by $(v, 0)$, then boost it by $(0, v')$ within the boosted frame. By the [velocity addition formula](https://en.wikipedia.org/wiki/Velocity-addition_formula#Standard_configuration), the square would be moving at Velocity
@@ -252,8 +463,9 @@ $$
 Now if $v' = \frac{v}{\sqrt{1-v^2}-v^2}$, then the square would be moving at $(v, v)$. Now, the paradox. He thought that obviously, by the length contraction, the square should look like a diamond:
 
 ```{=html}
-<div id="diamond-sketch" style="text-align: center;"></div>
-
+<div style="display: flex; justify-content: center;">
+  <div id="diamond-sketch" style="text-align: center;"></div>
+</div>
 <script>
 const diamondSketch = (p) => {
     p.setup = function() {
@@ -290,7 +502,7 @@ Half-mad, I ran home to search online and smashed all the keywords I knew must b
 
 Bitterly I searched every undergraduate physics textbook in the school library. None included it. The standard textbook [@goldsteinClassicalMechanics2008, Section 7.3] went on a three-page long computation and found that, indeed, we get a rotation matrix:
 
-> The spatial rotation resulting from the successive application of two nonparallel Lorentz transformations has been declared every bit as paradoxical as the more frequently' discussed apparent violations of common sense, such as the so-calIed "twin paradox." But the present apparent paradox has important applications, especially in atomic physics, and therefore has been abundantly verified experimentally.
+> The spatial rotation resulting from the successive application of two nonparallel Lorentz transformations has been declared every bit as paradoxical as the more frequently discussed apparent violations of common sense, such as the so-calIed "twin paradox". But the present apparent paradox has important applications, especially in atomic physics, and therefore has been abundantly verified experimentally.
 
 From that moment on I swore that I would finally present it in a way so simple and direct that it will never be forgotten. I had found the way, and it remained to publicize to the world.
 
