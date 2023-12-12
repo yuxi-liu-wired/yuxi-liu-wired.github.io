@@ -1,0 +1,271 @@
+---
+title: "Special Relativity via Hyperbolic Geometry"
+author: "Yuxi Liu"
+date: "2023-12-10"
+date-modified: "2023-12-10"
+categories: ["physics", "math", "fun"]
+keywords: ["special relativity", "hyperbolic geometry", "wigner rotation",
+"education", "popular physics", "undergraduate physics", "interactive",
+"p5.js", "javascript"]
+
+format:
+  html:
+    toc: true
+    include-in-header:
+      text: |
+        <script type="text/javascript" charset="UTF-8" src="./static/jsxgraphcore.min.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="./static/p5.min.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="./static/math.min.js"></script>
+
+description: "Special Relativity and hyperbolic geometry."
+# image: "figure/?.png"
+
+status: "wip"
+confidence: "certain"
+importance: 0
+---
+
+## Relativity, in general
+
+### The Erlangen program
+
+Special relativity, axiomatically, can be based on the following, very simple axioms:
+* Spacetime is smooth like[^shaped-like] a $\R^{n+1}$, where $n$ is the number of spatial dimensions, and $1$ is the number of temporal dimensions.
+* Spacetime is symmetric under rotation, translation, and constant velocity motion.
+* There exists a fundamental speed, a "conversion factor" between the spatial and temporal dimensions, which we call $c$.
+* There are many ways to map spacetime into $\R^{n+1}$, but only some of them are physically meaningful. Those are called the "coordinate systems".
+* You can go from one coordinate system to another by a coordinate transform. Transforms can be combined one after another, and they can be reversed. That is, they make up a group, named the symmetry group of spacetime.
+* The symmetry group is smooth and connected, meaning that starting with the identity transformation (doing nothing), you can combine it with tiny transformations, and end up at any other transformation.
+
+[^shaped-like]: In jargon, it is isomorphic as a smooth manifold to $\R^{n+1}$, or diffeomorphic to $\R^{n+1}$.
+
+We will follow the spirit of Erlangen program, which states clearly what our target is [@kleinComparativeReviewRecent1893]:
+
+> Given a manifoldness [smooth space] and a group of transformations of the same; to develop the theory of invariants relating to that group. This is the general problem, and it comprehends not alone ordinary geometry, but also and in particular the more recent geometrical theories which we propose to discuss, and the different methods of treating manifoldnesses of $n$ dimensions.
+
+Considering that Felix Klein first stated it in 1872, decades before special relativity, this is prescient.
+
+Applied to special relativity, our target is to start with the axioms, find out something about what kinds of symmetries there can be, and what kinds of objects are unchanged by symmetries. In other words, we will study the geometry of spacetime.
+
+### Physics and mathematics
+
+So far, while we were talking about "spacetime", we were actually talking about mathematical objects. There is no necessary connection between the mathematical objects and whatever we observe in the real world. So why do we call those mathematical objects with physically suggestive names like "spacetime"?
+
+Well, special relativity is really a mathematical object. It is connected to the physical world like all objects in mathematical physics: by experiments. Experimental data is physical, and by studying the mathematical-object special relativity, we found that it can generate the experimental data with a minimal amount of "glue" between the physical world and the mathematical world. The "glue" looks like:
+
+* Physical events in physical spacetime are mathematical points in mathematical spacetime.
+* Physical light moves at the mathematical speed of $c$
+* Physical clocks tick at a mathematical constant rate.
+* If you move a physical clock from physical-here to physical-there, it is still ticking at the same mathematical constant rate.
+* ...
+
+Indeed, Einstein himself discussed this physical-mathematical correspondence carefully in *The Meaning of Relativity* [@einsteinMeaningRelativityFour1922], which goes into considerable details into things like clock synchronization, moving meter-sticks around, etc.
+
+> As far as the laws of mathematics refer to reality, they are not certain; and as far as they are certain, they do not refer to reality.
+
+## Relativity in 1+1 dimensions
+
+### Making one coordinate system
+
+To begin, let's consider relativity in 1+1 dimensions. We will start with a "default" coordinate system ("the rest frame").
+
+In the beginning was just a point in spacetime. We call this the origin, and write its coordinates as $x=0, t=0$. The world was yet without form. To give it form, we build a meter stick and an infinite number of light bulbs.
+
+We put a light bulb at the origin. The light bulb traces out a path in spacetime. We call this path the $t$-axis at $x=0$.
+
+We put another light bulb to the left of the light bulbs, separated by one meter stick. This light bulb traces out a line at $x=1$. And so on. Thus, we obtain an infinite number of lines: $\cdots, x = -1, x = 0, x = +1, \cdots$. By subdividing the meter stick, we obtain one line $x = r$ for each real number $r$.
+
+Now we have measured space, we will measure time. We remove all light bulbs except two: one at $x=0$, one at $x=1$. At origin, the $x=0$ light bulb flashes, and then the light bulb at $x=1$ flashes when it receives the flash. When the light bulb at $x=0$ receives the echo, this is the echo event -- and we write it down as $x=0, t=2$. Let spacetime reverberate with shining echoes, and in this way, every point in spacetime receives a unique coordinate $(x, t)$.
+
+Notice that in this construction, the fundamental speed $c$ is equal to one, and if we draw space and time as two perpendicular directions on a graph-paper, then the trajectory of every light is a 45-degree straight line on the graph-paper. These are not fundamental aspects of the theory, but are convenient outcomes given by how we constructed the coordinate system. 
+
+Abstractly speaking, a coordinate system is a function that maps a point in spacetime to two real numbers, like $(x, t): \mathcal{M} \to \R^{1+1}$. Our coordinate system constructed so far means that:
+
+* The origin-point $p_O$ has coordinates $x(p_O) = 0, t(p_O) = 0$.
+* If a beam of light is traveling to the right, and passes a certain point $p$, then the set of all points on the beam of light is of form $\{q : x(q) - x(p) = t(q) - t(p)\}$.
+* And so on.
+
+Such explicit distinction between the spacetime itself and the coordinate system is uncommon in physics, and once you are used to it, you should throw it into your subconscious like a muscle memory. However, it is good to keep it in mind for now.
+
+### The first moving frame
+
+The integrity of the coordinate system is based on the meter stick. If two light bulbs are moving relative to each other, then they cannot be always connected by a meter stick -- one of them would bump into the meter stick, or move away from it. In other words, the entire system is static.
+
+Now we allow another frame, moving at a velocity $v$ relative to the first. While there is no fundamental reason to privilege one over the other, we call one the "rest frame" and the other the "moving frame" for convenience.
+
+![](image)
+
+The moving frame constructs its own coordinate system $(x', t')$. What must it look like?
+
+Since the line $x' = 0$ is constructed by the trajectory of the light bulb that passes the origin, we know that the $x' = 0$ line is $\{p : x(p) = v t(p)\}$. However, when it comes to the $x' = 1$ line, we have a problem: How long should be the meter stick in the moving frame be? What does it even mean to compare a meter stick in a moving frame with a meter stick in the resting frame?
+
+This difficulty is not pedantic. In the resting frame, checking that two meter sticks are equal means taking one, accelerating it then decelerating it, until it overlaps exactly with the other. This does not apply if they are in relative motion.
+
+The solution is another "gluing". Like how we "glued" the mathematical world with the physical world, we also glue one frame with another frame. This is [connection](https://en.wikipedia.org/wiki/Connection_(mathematics)), a central idea in differential geometry. However we will just do this intuitively, since in special relativity, connections are done in the most straightforward way.
+
+To connect two frames, we divide their difference into tiny steps, and then do those tiny steps one after another. So, if we know how to connect two frames when $v$ is an infinitesimal, then we know how to connect two arbitrary frames by taking an integral.
+
+Let $v$ be an infinitesimal. What should be its meter stick? Its meter stick is whatever is necessary so that light speed is $1$ in the moving frame. So, if we know how to tick the moving clock, we know how to build the moving meter stick.
+
+In the resting frame, the clock passing origin makes a tick at every point:
+
+$$\cdots, (0, -1), (0, 0), (0, +1), \cdots$$
+
+In the moving frame, the clock passing origin makes a tick at every point: 
+
+$$\cdots, (-v \; ?, -?), (0, 0), (v \; ?, ?), \cdots$$
+
+The obvious choice is to just let $? = 1$. With this seemingly trivial step, we have in fact completely defined special relativity -- all else is derivation.
+
+```{=html}
+<div class="clearfix">
+    <div id="board1" class="board"></div>
+    <div id="board2" class="board"></div>
+</div>
+<link rel="stylesheet" href="./figure/2d/style.css">
+<script type="text/javascript" src="./figure/2d/script.js"></script>
+```
+
+### The Lorentz transform
+
+```{=html}
+<div id="discrete-lorentz-1d"></div>
+<div>
+  <input type="range" id="rSlider" name="rSlider" value="0.2" min="0.05" max="0.2" step="0.05"
+           oninput="document.getElementById('rValue').textContent = this.value;" />
+  <label for="rSlider">Rapidity = <span id="rValue">0.05</span></label>
+</div>
+
+<div>
+  <input type="range" id="lineNumberSlider" name="lineNumberSlider" value="1" min="0" max="20" step="1"
+             oninput="document.getElementById('lineNumberValue').textContent = this.value;" />
+  <label for="lineNumberSlider">Number of boosts = <span id="lineNumberValue">1</span></label>
+</div>
+
+<script>
+const discreteLorentz1D = (p) => {
+    let lineLength = 100;
+    let r = 0.1;
+    let lineNumber = 20;
+
+    p.setup = function() {
+        let canvas = p.createCanvas(300, 300);
+        canvas.parent("discrete-lorentz-1d");
+    };
+
+    p.draw = function() {
+        p.background(255);
+        r = parseFloat(document.getElementById('rSlider').value);
+        lineNumber = parseInt(document.getElementById('lineNumberSlider').value);
+
+        p.translate(p.width / 2, p.height / 2);
+
+        for (let i = -lineNumber; i <= lineNumber; i++) {
+            p.push();
+            if (i >= 0) {
+                for (let j = 0; j < i; j++) {
+                    p.applyMatrix(1, r, r, 1, 0, 0);
+                }
+            } else {
+                for (let j = 0; j < -i; j++) {
+                    p.applyMatrix(1, -r, -r, 1, 0, 0);
+                }
+            }
+            p.line(0, -lineLength, 0, lineLength);
+            p.line(-lineLength, 0, lineLength, 0);
+
+            p.pop();
+        }
+
+        p.line(-p.width / 2, 0, p.width / 2, 0); // x-axis
+        p.line(0, -p.height / 2, 0, p.height / 2); // y-axis
+    };
+};
+
+new p5(discreteLorentz1D, 'discrete-lorentz-1d');
+</script>
+```
+
+
+## Relativity in 2+1 dimensions
+
+```{=html}
+<div id="velocity-canvas"></div>
+
+<div id="spacetime-canvas"></div>
+
+<script type="text/javascript" src="./figure/3d/3d_wigner_sketch.js"></script>
+```
+
+## Wigner rotation
+
+## Fermi--Walker transport
+
+### Into the fourth dimension
+
+We began our study of special relativity in 1+1 dimensions and discovered the Lorentz transform, then proceeded to 2+1 dimensions and discovered Wigner rotation. In 3+1 dimensions, Wigner rotation still applies, but there is something new: rotations are no longer describable by a single number.
+
+This is not a place to get into the details; suffice to say that the space of rotations in $\R^3$ is much harder to understand than the space of rotations in $\R^2$. We must be more careful here.
+
+Suppose we have four frames $0, 1, 2, 3$. We start with a tripod in frame $0$, then boost it successively to frames $1, 2, 3, 0$, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle $0120$ with the Wigner rotation around the cycle $0230$.
+
+## History notes
+
+### The history of the phenomenon
+
+The history of the Wigner rotation is winding and complicated. Here is a brief summary. The details are given in [@walterNonEuclideanStyleMinkowskian1999, Section 10].
+
+Tevian Drey has written an entire textbook [@drayGeometrySpecialRelativity2021] treating both special and general relativity in the same geometric style. For a summary paper of the textbook, see [@drayGeometryRelativity2017].
+
+The analogy between Foucault pendulum and Wigner rotation is presented in [@criadoThomasRotationFoucault2009].
+
+### The history of this document
+
+During high school, I was in the physics Olympiad team. One afternoon I got into an argument with someone about what happens if you take a square $[0, 1] \times [0, 1]$, boost it by $(v, 0)$, then boost it by $(0, v')$ within the boosted frame. By the [velocity addition formula](https://en.wikipedia.org/wiki/Velocity-addition_formula#Standard_configuration), the square would be moving at Velocity
+
+$$
+(v, \frac{v'\sqrt{1-v^2}}{1+vv'})
+$$
+
+Now if $v' = \frac{v}{\sqrt{1-v^2}-v^2}$, then the square would be moving at $(v, v)$. Now, the paradox. He thought that obviously, by the length contraction, the square should look like a diamond:
+
+```{=html}
+<div id="diamond-sketch" style="text-align: center;"></div>
+
+<script>
+const diamondSketch = (p) => {
+    p.setup = function() {
+        p.frameRate(10);
+        p.rectMode(p.CENTER);
+        let canvas = p.createCanvas(100, 100);
+        canvas.parent("diamond-sketch");
+    };
+    p.draw = function() {
+        let step = p.frameCount % 100;
+        p.background(200);
+        // Equivalent to translate(x, y);
+        let r = (2 * Math.abs(step / 100 - 0.5)) - 0.5;
+        p.applyMatrix(1, r, r, 1, 50, 50);
+        p.rect(0, 0, 50, 50);
+    };
+};
+
+new p5(diamondSketch, 'diamond-sketch');
+</script>
+```
+
+I objected that in the boosted frame, the square looks like a rectangle moving upwards. The rectangle is made of a bunch of line-segments all parallel to the $x'$-axis. Now, each line-segment is moving in the $y'$-direction, and $y'$ is parallel to $y$ (since the perpendicular direction is preserved under boosting), we know that each moving line-segment would still be a line-segment parallel to the $x$-axis in the resting frame. Therefore, the whole square would look like a parallelogram in the resting frame.
+
+After a brief shouting match, we figured out that I was right, but also that we met something no teacher has taught us before: you can create a rotation in special relativity by pure boosting.
+
+During my third undergraduate year, I took a course in theoretical physics, which required a term paper. I first tried to write one on the Ostrogradsky instability, but could not understand it, so I quickly switched to finally solving the rotation effect in special relativity.
+
+Suffice to say that, after some hours walking and staring at the night sky, I figured out that it is nothing else than hyperbolic geometry, and nothing more paradoxical than the fact that the external angle of a hyperbolic triangle is equal to $2\pi + (\text{area of the triangle})$, which I remember from hyperbolic geometry.
+
+And that is merely the same idea as the fact that, if you walk from the north pole to the equator, then walk $1/4$ of the way around the earth, then walk back to the north pole, then you have covered a triangle with external angle $\frac 32 \pi$. In general, the external angle of a triangle on the unit sphere is $2\pi - (\text{area of the triangle})$, the perfect opposite to hyperbolic geometry.
+
+Half-mad, I ran home to search online and smashed all the keywords I knew must be there: "special relativity rotation hyperbolic triangle Foucault pendulum". My disappointment was swift and certain: This was repeatedly discovered by people all over the world in the past hundred years.
+
+Bitterly I searched every undergraduate physics textbook in the school library. None included it. From that moment on I swore that I would finally present it in a way so simple and direct that it will never be forgotten. I had found the way, and it remained to publicize to the world.
+
+There was little use in writing another paper about it, as despite the many papers over the century, somehow this effect did not end up in the physics textbooks. I could write a blog post about it, but mere words and figures seemed insufficient. I tried promoting this idea to various physics popularizers on YouTube, but none picked it up. What I needed was interactive animation. Javascript however defeated me, and I kept it in the backlog until now. With ChatGPT I could finally write javascript tolerably for my sanity, and so, here it is.
