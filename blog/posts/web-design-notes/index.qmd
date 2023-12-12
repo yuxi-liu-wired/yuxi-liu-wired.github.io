@@ -1,0 +1,62 @@
+---
+title: "Notes on Web Design"
+author: "Yuxi Liu"
+date: "2023-12-10"
+date-modified: "2023-12-10"
+categories: [programming]
+
+format:
+  html:
+    toc: true
+description: "My quick reference for designing content for the Internet."
+# image: "figure/banner_1.png"
+
+status: "wip"
+confidence: "log"
+importance: 4
+---
+
+General references:
+* [The 2022 Web Almanac](https://almanac.httparchive.org/en/2022/)
+* [MDN Web Docs](https://developer.mozilla.org/en-US/)
+* 
+
+## HTML
+
+HTML (HyperText Markup Language) is the standard markup language for creating web pages.
+
+HTML was created by Tim Berners-Lee in 1989. The key metaphor for HTML is the "editing markup", as follows: Back in the old days, authors would write or typewrite their document in the exact same font, from the first word to the last word. Then the document is sent to an editor, who would edit it by *marking up* the words, such as drawing squiggly lines, crossing things out, changing their font size, and writing other instructions for the type-setter (which back then meant someone who would take out types from a box and set them into the right ordering for the printing press).
+
+So, one should think of an HTML document as starting with a plaintext of exactly the same format, from the first to the last word, then adding marks upon it.
+
+### `<!DOCTYPE>`
+
+The `<!DOCTYPE>` tag is used to declare the document type. It is usually like `<!DOCTYPE html>`, although there are rare variants, where instead of `html`, we have `html -//w3c//dtd xhtml 1.0 transitional//en http://www.w3.org/tr/xhtml1/dtd/xhtml1-transitional.dtd`, `html -//w3c//dtd xhtml 1.0 strict//en http://www.w3.org/tr/xhtml1/dtd/xhtml1-strict.dtd`, etc.
+
+Well, if you don't care much for the details, use `<!DOCTYPE html>` is always fine. If you do care, read on.
+
+The `xhtml` thing came from early 2000s, where there was a movement to `XML`-everything. Instead of the poorly specified `HTML`, there would be `XHTML`, which can be checked for syntax, and compiled into an abstract syntax tree. Despite this, people just kept on using `HTML` and ignored `XHTML`.
+
+Despite the universal ambitions of `XML`, it is now in the land of old soldiers, who never die, but just fade away.
+* The `SVG` vector graphics format.
+* `MathML`, which is like `LaTeX` but in `XML`.
+* The `RSS` and `Atom` feeds, which... unfortunately, are also mostly legacy now. Who even use these nowadays?
+* The acronym `AJAX`, which stands for **Asynchronous JavaScript and ~~XML~~ JSON**. After looking at `XML` and `JSON`, I am quite glad this replacement happened.
+
+### `<meta>`
+
+## CSS 
+
+## JavaScript
+
+## Character encoding
+
+A **character** is an abstract letter. A **glyph** is a representation of a character. You can write the character `1` as either a stroke, or a stroke with little edges jutting out of its two ends (serifs).
+
+A **character encoding** is a bijection between a set of characters and a set of natural numbers. The ASCII code for example is a bijection between $\{a, b, c, ..., A, B, C, ...\}$ and $\{0, 1, 2, ..., 255\}$. The number of a character is usually called its **code point**.
+
+The Unicode is a bijection between a set of characters (still not fully discovered) and the set $\{0, 1, 2, ..., 1114111\}$, or in hex: $\{0, 1, 2, ..., 10FFFF\}$. In binary, the last code point is $0001 0000 1111 1111 1111 1111$.
+
+The UTF-8, UTF-16, and UTF-32 are three different bijections between the same set $\{0, 1, 2, ..., 1114111\}$ and the set of finite-length binary strings $\{\epsilon, 0, 1, 00, 01, 10, 11, ...\}$. Among those, UTF-32 is the simplest: just express it in binary, then pad it with zeros until it's 32 bits long. However, since UTF-32 would always begin with at least 11 zeros, this is inefficient.
+
+UTF-8 is the most commonly used, and it uses a variable-length prefix code. The details are on [Wikipedia](https://en.wikipedia.org/wiki/UTF-8). UTF-16 is so weird that I just never bothered to understand it, and it seems to be rarely used.

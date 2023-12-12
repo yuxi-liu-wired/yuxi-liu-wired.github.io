@@ -267,7 +267,9 @@ There are three kinds of device files: character, block, and fifo (named pipes).
 
 The fifo is usually used by a program to communicate with another program. One can think of it as a message system built for programs. One program needs to send some data to another program, and the other program needs to receive it, so the first writes up some data in a long scroll of text and deposits it into a mail box. Then the other program comes along and pulls on the output end of the mail box. Out comes some of the scroll! The second program reads it and remembers it, since the scroll disintegrates into aether as soon as it touches the air...
 
-### Console, terminal, teletypes, and pseudoteletypes
+## Console, terminal, teletypes, and pseudoteletypes
+
+### Console
 
 In the long past, a "console" was a piece of desk-like furniture. It looks like a small piano. You sit in front of it and put some small items on top of the "piano keyboard". This word was then borrowed into pipe organs, where you sit at the "console" and play the many buttons. Then this was borrowed into computer engineering, because computer consoles looked like organ consoles.
 
@@ -277,7 +279,11 @@ In the long past, a "console" was a piece of desk-like furniture. It looks like 
 
 [![IBM 1620 Model 1 Console](figure/IBM_1620_Model_1.jpg)](https://en.wiktionary.org/wiki/File:IBM_1620_Model_1.jpg)
 
+### Terminal
+
 A "terminal" is a term borrowed from electric engineering. In an electric circuit, you would break the circuit into pieces. each piece contains some internal elements, and then there are those dangling pieces that are free to be connected to other circuits. Those dangling pieces are the terminals. In analogy, the place where a computer-user was sitting at became called the "computer terminal", or just the "terminal". What are they the "terminals" of? They are the terminals of what is "internal" -- the giant computer, sitting loudly at the center of the electric engineering building.
+
+### Teletypes
 
 Computers used to only allow inputs via magnetic tapes, and other forms of raw binaries, and outputs via printing on a printer. This is not interactive for humans, so they were then wired to typewriters. The human sits and types on the keyboard. An electric representation of whatever is typed was stored in a local "buffer" (something like a row of flip-flops would do just fine). When the user presses "enter", the buffer is read out and sent down the electric wire to the computer. The machine whirls, computes the output, then sends it back to the electromechanical controller of the typewriter, which prints it on the paper. This is the "teletype" (tele-typewriter -- they had a thing for the prefix "tele-").
 
@@ -301,9 +307,56 @@ As time goes on, the electronic displays are upgraded every year, but rewriting 
 
 Later, even the manufacturers of the physical terminal got tired of rewriting the hard-coded logic, and they also noticed that the digital logic chips are getting so cheap that they can afford to put a few in their "dumb" terminals, and that their users wanted to use the old model instead of the new one, so... one more layer of indirection! They added small chips inside the terminal (not so "dumb" anymore), which would run a "terminal emulator" program to allow users to use the new model as if it's the old model. For example, if the terminal is a VT240, but the user really wants to use VT100. Well, the user just has to select the `VT100 mode` on the terminal. Then, the terminal emulator would translate the virtual terminal into the pixels on the screen, VT100-style. Otherwise, the terminal emulator would do the translation, VT240-style.
 
-Our journey is almost complete. One last thing: pseudoteletypes.
+### Echos
 
-A pseudoteletype (pty) in some way closes the circle: if every user is a process that generates a file, then every process is... a user. So, if users can use a teletype, then processes can also use teletypes. For security reasons, Unix-like operating systems have two levels of privileges for processes. There are those that are in "user space" and there are those in "kernel space". Everything in "kernel space" has the same powers of messing things up as the actual OS, and must be carefully protected. In particular, processes in kernel space are fully capable of blanketing the hard drive with zeroes, covering the terminal screen with flashing lights, etc. So, by default, processes are run in user space.
+Once we have a separation between the terminal and the main computer it is connected to, the problem of "echo" appears. In the long past, pressing a button on a typewriter immediately creates a letter on the paper. You could say that it is a "mechanical echo", but that's really stretching it. Then, with teletypes, we type on a mechanical typewriter, and whatever is typed gets "echoed" to the paper as before, and a copy is sent to the distant computer. But then, one teletype was cut in two: the keyboard half and the paper-printing half. You type on the keyboard; the key is converted to an electric signal to the computer; the computer reads it and has to make a programmable decision to `echo` what you sent in to the output printer. The computer could just echo back verbatim, or it could allow you to delete letters and retype, and echo back a full line once you press "enter".
+
+With electronic terminals replacing the mechanical ones, the echo could once again move to the terminal itself. Want to delete a character? Press backspace and it disappears from the screen! The entire line is sent to the computer once you press enter. In other words, `echo` became "local" again. What changed? What changed is that after this process of moving `echo` away, then back to the terminal, the `echo` concept has arisen to the class consciousness of the computing intelligentsia.[^marxist-consciousness]
+
+[^marxist-consciousness]: I did not set out to write something that smells like Marxist historiography, but so be it.
+
+With the rise of computer networks, the decision to echo, and where to echo, became a careful design choice. For example, `Telnet` has 5 echo modes[^telnet-echo]:
+
+[^telnet-echo]: Figure from [RFC 857: Telnet Echo Option](https://www.rfc-editor.org/rfc/rfc857.html)
+
+```
+                <----------------
+      Process 1                   Process 2
+                ---------------->
+                 Neither end echoes
+
+
+                <----------------
+                   \
+      Process 1    /              Process 2
+                ---------------->
+             One end echoes for itself
+                <----------------
+                             \
+      Process 1              /    Process 2
+                ---------------->
+          One end echoes for the other
+
+
+                <----------------
+                   \         /
+      Process 1    /         \    Process 2
+                ---------------->
+          Both ends echo for themselves
+
+
+                <----------------
+                   \ /
+      Process 1    / \            Process 2
+                ---------------->
+           One end echoes for both ends
+```
+
+### Pseudo-teletypes
+
+Our journey is almost complete. One last thing: pseudo-teletypes.
+
+A pseudo-teletype (pty) in some way closes the circle: if every user is a process that generates a file, then every process is... a user. So, if users can use a teletype, then processes can also use teletypes. For security reasons, Unix-like operating systems have two levels of privileges for processes. There are those that are in "user space" and there are those in "kernel space". Everything in "kernel space" has the same powers of messing things up as the actual OS, and must be carefully protected. In particular, processes in kernel space are fully capable of blanketing the hard drive with zeroes, covering the terminal screen with flashing lights, etc. So, by default, processes are run in user space.
 
 Now, recalling back to their origins, a teletype is a physical machine. A virtual terminal is an API to a physical machine. It stands to reason that `tty`, which are device files for physical machines, are read-written by processes in kernel space. So, what can processes in user space do? One more layer of indirection.
 
