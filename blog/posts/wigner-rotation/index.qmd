@@ -398,17 +398,37 @@ When we drive around $N \to p_0 \to p_1 \to N$, the bus makes three turns, and e
 
 Therefore, adding them up, we find that after driving around an arbitrary cycle on earth, the pendulum would have turned by
 
-$$\frac{\text{area of the cycle}}{\text{surface area of earth}}$$
+$$4\pi\frac{\text{area of the cycle}}{\text{surface area of earth}}$$
 
-[TODO: This argument is wrong.]
+We can turn this insight into a formula for Fermi--Walker transport on earth.
 
-In particular, since the surface area of a spherical cap around latitude $\phi$ is $\frac{1 -\sin\phi}{2}$ that of the whole sphere[^archimedes-hat-box], we find that the Foucault pendulum rotates by $2\pi \sin\phi$ every day, and it takes $\frac{1}{\sin\phi}$ days to make a full rotation. At the Paris Observatory, the original place where Foucault made his experiment in 1851, we have
+First, we scale the earth so that its radius is one. Now set up the coordinate system $\phi, \theta$, where $\phi$ is the latitude (zero at equator, $\pi/2$ at the North Pole) and $\theta$ the longitude. At each point on earth (except the two poles) we set up a local frame with two unit vectors $\hat\phi, \hat\theta$. One very important fact is that this local frame is not parallel-transported[^no-local-frame]. If you try to drive in a small circle around the North Pole, while always pointing in the direction of $\hat\theta$, you would feel a strong centrifugal force pushing against your steering wheel. Centrifugal forces and all other "inertial forces" are nature telling you that you are not being parallel-transported.
 
-$$\phi = \mathrm{48^\circ 52' N}, \quad \text{period} = \frac{\mathrm{23h56'}}{\sin \phi} \approx \mathrm{31\,h\,50\,min}$$
+[^no-local-frame]: Indeed, there is no way to cover the space with parallel-transported local frames, because the space is curved, and therefore if you try to transport a local frame in a cycle back to its starting point, it would have rotated against itself. To be a curved space is *equivalent* to have no system of parallel-transported local frame, and curvature measures the amount of rotation-against-itself that happens when you transport a local frame in an infinitesimal circle.
 
+Consider two points on earth $p_1 = (\phi, \theta), p_2 = (\phi + \delta \phi, \theta + \delta\phi)$, infinitesimally close. Since the surface area of a spherical cap around latitude $\theta$ is $\frac{1 -\sin\theta}{2}$ that of the whole sphere[^archimedes-hat-box], the area of a thin spherical triangle with vertices $p_1, p_2, N$ is 
 
+$$4\pi\frac{1 -\sin\theta}{2} \times \frac{\delta\phi}{2\pi} = (1-\sin\theta)\delta\theta$$
+
+Thus, if we parallel transport a vector *clockwise* in the order $p_1 \to N \to p_2 \to p_1$, then the vector would turn *counterclockwise* by $-(1 -\sin\theta) \delta\phi$.
 
 [^archimedes-hat-box]: This is immediate from [Archimedes' hat-box theorem](https://mathworld.wolfram.com/ArchimedesHat-BoxTheorem.html), which is the basis of the [Lambert cylindrical equal-area projection](https://en.wikipedia.org/wiki/Lambert_cylindrical_equal-area_projection).
+
+Now, consider two ways to move the pendulum from $p_1$ to $p_2$. We can transport it directly, or detour through the North Pole. If we detour through the North Pole like $p_1 \to N \to p_2$, then by the same argument as the "polar bear puzzle"[^polar-bear-puzzle], you see that the pendulum has rotated counterclockwise *relative to the local frame* by $-\delta\phi$. Then we complete its journey with $p_2 \to p_1$, to create an *absolute*[^relative-vs-absolute-rotation] full $-(1 -\sin\theta) \delta\phi$ rotation. Therefore, moving it $p_2 \to p_1$ have created a rotation *relative* to the local frame by $\sin\theta \delta\phi$. Since we are actually moving it $p_1 \to p_1$, we reverse the sign, and obtain our Fermi--Walker transport equation (earthbound version):
+
+$$
+\delta(\text{vector angle}) = -\sin\theta \delta\phi
+$${#eq-fermi-walker-sphere}
+
+[^polar-bear-puzzle]: You walk 1 km south, 1 km east, and 1 km north, and ended up at the same point. You see a bear. Why is the bear white?
+
+[^relative-vs-absolute-rotation]: Relative rotation means that we are measuring the orientation of the vector relative to the local frame. However, since the frames themselves are not parallel-transports of each other, relative rotation is arbitrary and not a fact of geometry, but a fact of convenience. If you move the vector back to its starting point, however, there is absolutely no dispute about how much it has rotated, and it does not depend on any system of local frames. You just have to compare the vector against itself.
+
+Applied to the Foucault pendulum problem, we find that it rotates clockwise by $2\pi \sin\theta$ every day, and it takes $\frac{1}{\sin\theta}$ days to make a full rotation. At the Paris Observatory, the original place where Foucault made his experiment in 1851, we have
+
+$$\theta = \mathrm{48^\circ 52' N}, \quad \text{period} = \frac{\mathrm{23h56'}}{\sin \theta} \approx \mathrm{31\,h\,50\,min}$$
+
+If a museum visitor can stay for 5 minutes at the pendulum, then they would see the pendulum complete $1/382$ of a cycle. Typical museums would put up about 400 wooden blocks in a cycle, to be knocked down by the pendulum. This allows each visitor to see at least one block being knocked down.
 
 ### The star worshippers
 
