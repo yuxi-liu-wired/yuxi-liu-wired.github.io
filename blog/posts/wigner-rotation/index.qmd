@@ -29,6 +29,8 @@ confidence: "certain"
 importance: 0
 ---
 
+{{< include ../../../static/_macros.tex >}}
+
 ## Relativity, in general
 
 ### The Erlangen program
@@ -192,10 +194,10 @@ Therefore, we immediately change our point of view: we are going to study "activ
 Since active transform is the opposite of passive transform, we have the active Lorentz transform formula:
 
 $$
-\begin{bmatrix} x' \\ t \end{bmatrix} = 
+\begin{bmatrix} x' \\ t' \end{bmatrix} = 
 \begin{bmatrix} 1 & v \\ v & 1 \end{bmatrix}
 \begin{bmatrix} x \\ t \end{bmatrix}
-$$
+$${#eq-1d-lorentz-infinitesimal}
 
 This formula states that if we "pick up" the spacetime event at $(x, t)$ in the rest frame, and accelerate it infinitesimally to speed $v$, then the spacetime event ends up at $(x', t')$ *in the rest frame*.
 
@@ -294,7 +296,6 @@ $$\{(\sinh(w) s, \cosh(w) s) : s \in \R\}$$
 Therefore, the velocity of this boosted frame is 
 $$w = \sinh(w) / \cosh(w)  = \tanh(w).$$
 
-
 Now you can play with the diagram below to grow a new intuitive sense of how it all ties together. After you have grown this new intuition, you can proceed.
 
 ```{=html}
@@ -306,7 +307,131 @@ Now you can play with the diagram below to grow a new intuitive sense of how it 
 <script type="text/javascript" src="./figure/2d/script.js"></script>
 ```
 
+A "spacetime square" would transform like:
+
+```{=html}
+<div style="display: flex; justify-content: center;">
+  <div class="diamond-sketch" style="text-align: center;"></div>
+</div>
+```
+
+### 3-velocity, 4-velocity, and inner product in spacetime
+
+In the diagram above, we have used the terms 3-velocity and 4-velocity. To explain those terms, we briefly go back to 3+1 dimensions.
+
+When we say "velocity" informally, we mean a vector in $\R^3$. But how is velocity really defined? It is displacement divided by time. In relativity, when we say "3-velocity", there are two possible representations: we can represent it as $(v_x, v_y, v_z)$, or we can represent it as $(v_x, v_y, v_z, 1)$. The first is close to how the rest of the world use "velocity", but the second is close to how special relativity want us to use the word "velocity". The second representation can be interpreted as follows: "The 3-velocity of an object is the spacetime displacement of the object after one tick of my clock."
+
+Neither is satisfactory, however, because 3-velocity behaves badly under Lorentz transform. The first representation $(v_x, v_y, v_z)$ does not have the time-coordinate, so it can't even be multiplied with the Lorentz transform matrix. The second representation $(v_x, v_y, v_z, 1)$ would, after Lorentz transform, have its time-coordinate $\neq 1$.
+
+Both problems are elegantly resolved if we use the 4-velocity, which means we have to divide 3-velocity by its norm... but what norm? Why, think back to the Erlangen program:
+
+> Given a manifoldness [smooth space] and a group of transformations of the same; to develop **the theory of invariants** relating to that group.
+
+In plane geometry, we know that while $x, y, x', y'$ are geometrically meaningless, the norm-squared $(x-x')^2 + (y-y')^2$ is meaningful, because that quantity is not changed (invariant) if you apply the rotation matrix $\begin{bmatrix}\cos\theta & \sin\theta \\ -\sin\theta & \cos\theta \end{bmatrix}$ to it. What would be an invariant for spacetime?
+
+Well, looking at the picture of Lorentz transform in 1+1 dimensions, we can see that it certainly looks like the intersection of the two light cones has constant area. In particular, the upper rectangle <img src="figure/sparkline_upper_square_shaded.png" style="vertical-align: middle; height: 1em;"> has constant area. That is, the quantity $(x-t)(x+t)$ is preserved.
+
+```{=html}
+<div style="display: flex; justify-content: center; width: 80%; margin: auto;">
+    <img src="figure/spacetime_diagram_1d_squeeze.gif" alt="Spacetime Diagram" style="max-width: 100%; height: auto;">
+</div>
+```
+
+Thus we define the Minkowski norm-squared: $\|(x, t)\|^2 := x^2 - t^2$. Note that this is not an actual square because it can be negative. However it is preserved under Lorentz transforms.
+
+Once we have a norm-squared, we can extend it to an inner product::
+
+$$\braket{v, w} := \frac{\|v+w\|^2 - \|v-w\|^2}{4} = v_x w_x - v_t w_t$$
+
+which is still an invariant under Lorentz transforms, and thus physically meaningful. This extends in general to n+1 dimensions. For example, in 3+1 dimensions, the inner product is $\sum_{i = x, y, z} v_i w_i - v_t w_t$.
+
+With this, the 4-velocity is at hand! We just need to normalize $(v_x, v_y, v_z, 1)$, taking care to remove the negative sign:
+
+$$
+(v_x, v_y, v_z, 1)/\sqrt{-\|(v_x, v_y, v_z, 1)\|^2} = \frac{(v_x, v_y, v_z, 1)}{\sqrt{1-(v_x^2 + v_y^2 + v_z^2)}}
+$$
+
+As an example of the power of this geometric algebra, we rederive the Lorentz transform with infinitesimal boost. In the rest frame, the unit clock-tick is the vector $(0, 1)$, and the two unit meter sticks are the vectors $(-1, 0), (1, 0)$. They are uniquely defined by the two geometric properties:
+
+$$
+\braket{s, (0, 1)} = 0; \braket{s, s} = 1
+$$
+
+Therefore, in the boosted frame, the boosted meter sticks are the two solutions to 
+
+$$
+\braket{s', (v, 1)} = 0; \braket{s', s'} = 1
+$$
+
+which are $s' = (-1, v), (1, v)$. By continuity, $(1, 0)$ cannot have been boosted to $(-1, v)$, so it must be boosted to $(1, v)$. This gives us @eq-1d-lorentz-infinitesimal.
+
 ## Relativity in 2+1 dimensions
+
+### Infinitesimal Lorentz transform
+
+In 1+1 dimensions, we only have two spatial directions: left and right. In 2+1 dimensions, there is a whole circle of directions. We call this circle the "space circle", because the alternative name "hula hoop for spacetime" sounds too silly.
+
+Just like in 1+1 dimensions, the space circle is constructed by shooting a forward light cone at $(0, 0, -1)$ and a backward light cone at $(0, 0, +1)$. Their intersection is the space circle. A space circle plus a ticking clock together allows us to define a coordinate system with three unit vectors $(1, 0, 0), (0, 1, 0), (0, 0, 1)$. Both the clock and the space circle can be boosted. We will pick the simplest possible way to transport the ticking clock and the space circle, and experiments with [Thomas precession](#sec-thomas-precession) would show that this is the right way.
+
+```{=html}
+<div style="display: flex; justify-content: center; width: 80%; margin: auto;">
+    <img src="figure/infinitesimal_boost_2+1.png" alt="Spacetime Diagram" style="max-width: 100%; height: auto;">
+</div>
+```
+
+Suppose we give an infinitesimal boost by $(v_x, 0)$, then by the same picture as the 1+1 dimension case, we know that the clock-tick $(0, 0, 1)$ is boosted to $(v_x, 0, 1)$, and the space circle is boosted to the ellipse with long semiaxis $(1, 0, v_x)$ and short semiaxis $(0, 1, 0)$. Where should each point on the space circle go to? Since the space circle is rigid, if we know where *one* point must go to, we know where *all* points must go to.
+
+The semiaxis $(0, 1, 0)$ is both on the original space circle and the boosted space circle. It stands to reason that the simplest pick would preserve it after the infinitesimal boost. That is, we should not "twist" the space circle under boosting. With this choice, we are forced to pick $(1, 0, v_x)$ as the boosted $(1, 0, 0)$, since it is the unique unit vector that is perpendicular to $(0, 1, 0), (v_x, 0, 1)$, and infinitesimally close to $(1, 0, 0)$.
+
+Alternatively, we can think of Lorentz transform in 2+1 dimensions as the same with Lorentz transform in 1+1 dimensions, just with an extra dimension. Therefore, we can minimally modify @eq-1d-lorentz-infinitesimal to:
+
+$$
+\begin{bmatrix} x' \\ y' \\ t' \end{bmatrix} = 
+\begin{bmatrix} 1 & 0 & v_x \\ 0 & 1 & 0 \\ v_x & 0 & 1 \end{bmatrix}
+\begin{bmatrix} x \\ y \\ t \end{bmatrix}
+$$
+
+the same result as our previous argument. 
+
+This extends to the case of an infinitesimal boost $(v_x, v_y)$:
+
+$$
+\begin{bmatrix} x' \\ y' \\ t' \end{bmatrix} = 
+\begin{bmatrix} 1 & 0 & v_x \\ 0 & 1 & v_y \\ v_x & v_y & 1 \end{bmatrix}
+\begin{bmatrix} x \\ y \\ t \end{bmatrix}
+$${#eq-2d-lorentz-infinitesimal}
+
+::: {.callout-note title="Four ways to derive it" collapse="true" }
+1. Just guess it.
+2. Rotate the coordinate system so that the boost is in the $x$-direction, boost using the previous result, then rotate the coordinate system back. To be pedantic: We are performing one passive, then one active, then one passive transform.
+3. Take the previous derivation, and modify it by strategically inserting $v_y$ at places.
+4. Since two infinitesimal boosts do not interact except on the second-order infinitesimal, and $O(v^2) \ll O(v) \ll 1$, we are free to throw away the second-order infinitesimal. Therefore, we can just multiply the two matrices together to get the full thing:
+
+$$\begin{bmatrix} 1 & 0 & v_x \\ 0 & 1 & 0 \\ v_x & 0 & 1 \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & v_y \\ 0 & v_y & 1 \end{bmatrix} = \begin{bmatrix} 1 & 0 & v_x \\ 0 & 1 & v_y \\ v_x & v_y & 1 \end{bmatrix} + O(v^2)$$
+:::
+
+### Fermi--Walker transport
+
+@eq-2d-lorentz-infinitesimal is correct, but it is still not geometric. We must convert it with only quantities that are invariant under Lorentz transforms -- that is, the inner product.
+
+Let's replace the 4-velocity vector $(0, 0, 1)$ with simply the letter $u$, and the infinitesimal boost $(v_x, v_y, 0)$ with $\delta u$. Then, an arbitrary vector $e$ is boosted to $e + \delta e$, Where
+
+$$
+\delta e = 
+\begin{bmatrix} 0 & 0 & v_x \\ 0 & 0 & v_y \\ v_x & v_y & 0 \end{bmatrix}
+\begin{bmatrix} e_x \\ e_y \\ e_t \end{bmatrix} = e_t (v_x, v_y, 0) + (e_x v_x + e_y v_y) (0, 0, 1)
+$$
+
+This gives us the Fermi--Walker transport equation:
+
+$$
+\delta e = - \braket{e, u} \delta u + \braket{e, \delta u}u 
+$${#eq-fermi-walker}
+
+
+If you want a more amusing mental image, here it is: Consider a spaceship that looks like a spherical ~~cow~~ porcupine in a vacuum. Every porcupine spine is a rocket engine. The spaceship can boost in any direction, but it does not rotate. Thanks to Wigner rotation, it can rotate anyway. Now, the spaceship is performing some complicated manuever in spacetime. If we let it carry around a general vector pointing in an arbitrary direction $e$, then the question is: as the vector is boosted alongside the spaceship, how does the vector change?
+
+### General Lorentz transform
 
 The Lorentz transform in 2+1 dimensions can be derived in the same way as that of @eq-1d-lorentz. Let the rapidity vector $\vec{w}$ be equal to $w (n_x, n_y)$, where $(n_x, n_y)$ is a unit vector (the direction of rapidity). Then the Lorentz transform is found by performing another matrix exponentiation:
 
@@ -326,9 +451,7 @@ $${#eq-2d-lorentz}
 
 This equation generalizes in the obvious way to relativity in n+1 dimensions, but we will not need it.
 
-::: {.callout-note collapse="true"}
-## Deriving $(\vec{n} \cdot \vec{K})^3 = \vec{n} \cdot \vec{K}$
-
+::: {.callout-note title="Deriving $(\vec{n} \cdot \vec{K})^3 = \vec{n} \cdot \vec{K}$" collapse="true" }
 Let $t$ stand for the index of the time-coordinate, and let $i, j, k$ be the indices of the space-coordinates. Then we have 
 $$(\vec{n} \cdot \vec{K})^3 = n_in_jn_k(e_{it} + e_{ti})(e_{jt} + e_{tj})(e_{kt} + e_{tk})$$
 
@@ -339,42 +462,167 @@ Since $e_{mn}e_{kl} = \delta_{nk} e_{ml}$, and $i \neq t, j \neq t, k \neq t$, t
 $$= n_in_jn_k(e_{it}\delta_{jk} + \delta_{ij} e_{tk}) = \underbrace{\|\vec{n}\|^2}_{= 1} (n_i e_{it} + n_k e_{tk}) = n_i (e_{it} + e_{ti}) = \vec{n} \cdot \vec{K}$$
 :::
 
-### Wigner rotation
+## Wigner rotation
 
-Space circle, hula hoop.
+We are ready to derive a rarely discussed effect in special relativity: the Wigner rotation. Though it is as fundamental as time dilation and space contraction, it is not even mentioned in the undergraduate textbooks I have seen. Simply stated:
 
-Equivalently, we can present it in the following form, often called the Thomas precession formula:
+::: {#thm-wigner-rotation}
+## Wigner rotation
 
-$$
-\omega = \frac{\gamma^2}{\gamma + 1} a \times v
-$${#eq-thomas-precession}
+A cycle of three non-collinear boosts creates a rotation. The amount of rotation is equal to the area of the hyperbolic triangle spanned by the three vertices, and in opposite direction as the cycle.
+:::
 
-Now you are able to fully appreciate the following interactive simulation of Wigner rotation.
+If you make three boosts around a cycle, like $p_1 \to p_2 \to p_3 \to p_1$, then you end up with a rotation. The angle of rotation is equal to the hyperbolic area of the triangle $p_1 p_2 p_3$.
+
+### Step-by-step demonstration of the Wigner rotation
+
+Consider the simplest kind of three boost cycle. We start at the rest frame, boost to the frame with 3-velocity $(v_x, 0)$, then boost to the frame with 3-velocity $(v_x, v_x d\varphi)$, then boost back to the rest frame. It is shown in the figure below:
 
 ```{=html}
-<div id="velocity-canvas"></div>
+<div style="display: flex; justify-content: center; width: 80%; margin: auto;">
+    <img src="figure/wigner_rotation_3-velocity_cycle_1.png" alt="Spacetime Diagram" style="max-width: 100%; height: auto;">
+</div>
+```
 
-<div id="spacetime-canvas"></div>
+If we trace out the trajectory of every point on the space circle, we would get the following sequence:
 
+::: {layout-ncol=3}
+![](figure/wigner_rotation_4-velocity_1.png)
+
+![](figure/wigner_rotation_4-velocity_2.png)
+
+![](figure/wigner_rotation_4-velocity_3.png)
+:::
+
+Drawn in the space of 3-velocity, it looks like:
+
+```{=html}
+<div style="display: flex; justify-content: center; width: 80%; margin: auto;">
+    <img src="figure/wigner_rotation_3-velocity_cycle_2.png" alt="Spacetime Diagram" style="max-width: 100%; height: auto;">
+</div>
+```
+
+Therefore, after three pure boosts, we somehow ended up with a rotation by $(\gamma - 1)d \varphi$ radians in the opposite direction. Here, $\gamma$ is the long semiaxis of the the boosted space circle after projecting down to the $xy$ plane. It is in fact the famed Lorentz factor 
+
+$$\gamma = \frac{1}{\sqrt{1-v^2}}$$
+
+::: {.callout-note title="Deriving the Lorentz factor" collapse="true" }
+The space circle in the rest frame is spanned by $(1, 0, 0)$ and $(0, 1, 0)$. After boosting by the 3-velocity $(v, 0)$, it is boosted to an ellipse with semiaxes $(\cosh(w), 0, \sinh(w)), (0, 1, 0)$, where $w = \arctanh(v)$ is its rapidity. Thus, its projection to the $xy$ plane is an ellipse with semiaxes $(\cosh(w), 0), (0, 1)$.
+
+$$\gamma = \cosh(w) = \cosh(\arctanh(v)) = \frac{1}{\sqrt{1-v^2}}$$
+:::
+
+If we perform boosts around a full cycle of 3-velocities, and return to our starting 3-velocity, then it is equivalent to performing an infinite number of infinitesimal triangle-circuit boosts:
+
+```{=html}
+<div style="display: flex; justify-content: center; width: 80%; margin: auto;">
+    <img src="figure/wigner_rotation_3-velocity_cycle_3.png" alt="Spacetime Diagram" style="max-width: 100%; height: auto;">
+</div>
+```
+
+Therefore, a full cycle of boosts would rotate our space circle by a full $(\gamma - 1)2\pi$ radians in the opposite direction.
+
+### Interactive app for the Wigner rotation
+
+Now you are able to fully appreciate the following interactive app demonstrating the Wigner rotation. 
+
+The left picture is the $xy$ plane, and the right picture is the $xyt$ spacetime.
+
+You can drag the black dot on the left, which stands for the 3-velocity. The 3-velocity is restricted to have maximal norm $0.8$, to keep it numerically stable. The <span style="color: #7887ab;">blue</span> ellipse is the projection of the space circle to the $xy$ plane. A fixed point on the space circle is distinguished by a big <span style="color: red;">red</span> dot, so that you can see how the space circle is Wigner-rotated as you drag the 3-velocity around.
+
+On the right, the forward and backward light cones intersect at the space circle. You can drag and scroll to adjust the camera.
+
+```{=html}
+<div class="flex-container">
+    <div id="velocity-canvas"></div>
+    <div id="spacetime-canvas"></div>
+</div>
+<style>
+.flex-container {
+    display: flex;
+    justify-content: center; /* Center the items horizontally */
+    align-items: center; /* Center the items vertically (if they have different heights) */
+}
+</style>
 <script type="text/javascript" src="./figure/3d/3d_wigner_sketch.js"></script>
 ```
 
-### Fermi--Walker transport
+Here is a "tourist's guide to the visualization".
 
-So far, we have been boosting around clock-trajectories and meter sticks. However, a clock is parallel to the 4-velocity, and a meter stick is perpendicular to it. We can immediately generalize this.
+The three boosts in animated form:
 
-Consider a spaceship that looks like a spherical ~~cow~~ porcupine in a vacuum. Every porcupine spine is a rocket engine. The spaceship can boost in any direction, but it does not rotate. Thanks to Wigner rotation, it can rotate anyway. Now, the spaceship is performing some complicated manuever in spacetime. If we let it carry around a general vector pointing in an arbitrary direction $e$, then the question is: as the vector is boosted alongside the spaceship, how does the vector change?
+```{=html}
+<div style="display: flex; justify-content: center; width: 80%; margin: auto;">
+    <img src="figure/wigner_rotation_infinitesimal_sector.gif" alt="Spacetime Diagram" style="max-width: 100%; height: auto;">
+</div>
+```
 
-* Let $u$ be the 4-velocity of the spaceship.
-* Decompose the vector to a sum of the parallel and perpendicular components, $e = e_\parallel + e_\perp$, where $\braket{e_\perp, u} = 0$.
-* Boost the parallel component $e_\parallel$. Since $e_\parallel$ has length $-\braket{u, e_\parallel}$, it is boosted to $e_\parallel -\braket{u, e_\parallel} \delta u$, just like how $u$ is boosted to $u + \delta u$.
-* Boost the perpendicular component $e_\perp$. We have already derived it to be $e_\perp + \braket{e, \delta u} u$.
+Because $\gamma - 1 = \frac 23$, if you drag the 3-velocity for 3 full cycles at maximal velocity, the space circle would go -2 full cycles. 
 
-This gives us the Fermi--Walker transport equation:
+```{=html}
+<div style="display: flex; justify-content: center; width: 80%; margin: auto;">
+    <img src="figure/wigner_rotation_3_full_cycles.gif" alt="Spacetime Diagram" style="max-width: 100%; height: auto;">
+</div>
+```
+
+Suppose we have a particle moving close to the speed of light, and the particle is shooting out photons at equal angular density in all directions *in its own frame*, then *in the rest frame* the photons it is shooting out are bunched in front of the particle. This is the [relativistic beaming effect](https://en.wikipedia.org/wiki/Relativistic_beaming), or the headlight effect.
+
+```{=html}
+<div style="display: flex; justify-content: center; width: 80%; margin: auto;">
+    <img src="figure/headlight_effect.gif" alt="Spacetime Diagram" style="max-width: 100%; height: auto;">
+</div>
+```
+
+
+### Thomas precession {#sec-thomas-precession}
+
+Equivalently, we can present the Wigner rotation formula in the following form, often called the Thomas precession formula:
 
 $$
-\delta e = \braket{e, \delta u}u - \braket{e, u} \delta u
-$${#eq-fermi-walker}
+\vec{\omega} = \frac{\gamma^2}{\gamma + 1} \vec{a} \times \vec{v}
+$${#eq-thomas-precession}
+
+Experiments with particles moving in cyclotrons have verified this, thus justifying our guess that we should transport space circles without twisting.
+
+::: {.callout-note title="Deriving the Thomas precession formula" collapse="true" }
+Consider a particle moving counterclockwise with constant speed $v$ in a circle of radius $R$. Its acceleration is $a = v^2/R$, and after one cycle period $T = 2\pi R/v$, it has undergone Wigner rotation by angle $-(\gamma - 1)2\pi$. Simplifying, we have
+
+$$\omega = \frac{-(\gamma - 1)2\pi}{T} = \cdots = -\frac{\gamma^2}{\gamma + 1} av$$
+
+By the right hand rule of cross products, we can get all the directions correct with $\vec{\omega} = \frac{\gamma^2}{\gamma + 1} \vec{a} \times \vec{v}$.
+
+For a general particle undergoing general acceleration, the 3-acceleration decomposes into a component parallel to the 3-velocity, and a component perpendicular to it. The parallel component does not change Wigner rotation, therefore the Thomas precession equation is still true.
+:::
+
+However, notice that the formula is made of 3-vectors, and we know that 3-vectors are meaningless in special relativity. This suggests that something is off here. If the rest of this section does not make much sense, come back after reading [the section on Foucault pendulum](#sec-foucault-pendulum).
+
+If the earth were flat, then we could stand at a single point, and draw two perpendicular arrows. We say, "This arrow is pointing $x$", and "This arrow is pointing $y$." Then we create an infinite number of missionaries. Each would pick up the two arrows, without rotating, and move the arrow to every point on earth. In this way, we would provide a unique direction for every point on earth.
+
+However, because the earth is a sphere, this does not work. Suppose we stand at the North Pole, and we do the same. Then all the missionaries would meet at the South Pole and start arguing about who has the right one, because they would all disagree. This problem happens because earth is curved, and transporting a vector around a cycle would rotate it.
+
+We might shrug and say, "Well, nobody lives in the South Pole, so we will just tell our missionaries to avoid it." Great idea, except then they found that Emperor of China has also sent out his own missionaries. We shrug and say, "Well, we'll just give the Emperor of China a call and ask him what angle he picked. Then we will rotate our map until all our missionaries agreed with his." After some fruitless fiddling with our maps, it has dawned to us that this plan is doomed. Why?
+
+Imagine if the North Pole is at point $N$, and the Emperor of China is at point $C$. If somehow, we could pick our $xy$ directions so that all our missionaries agree with his, then we can send one missionary around a three-part journey around the world: $N \to C \to K \to N$, where $K$ is a point off the great circle passing $N, C$. Along the path $N \to C$, the missionary is leaving the North Pole on a straight arc away from the North Pole, so the $xy$ chart he is carrying agrees with the missionaries he is passing by. Similarly for the other two parts. But when the missionary has returned to the North Pole, he must find his $xy$ chart rotated, contradiction!
+
+So we sent an ICBM to take out the Emperor of China.
+
+> The introduction of numbers as coordinates is an act of violence.
+> 
+> ---Hermann Weyl
+
+Similarly, in special relativity, we can stand at the "North Pole" (rest frame), construct the $xyz$ axes, then send out missionaries on rockets to provide directions for every inertial frame. The good news is that no two missionaries would meet each other, so they would not argue. The bad news is that we still have the Wigner rotation problem, so if some aliens had tried the same project starting at a different, then there is absolutely no possibility for our missionaries to agree in every frame.
+
+So, we are forced to only use one rest frame. It is in this context that the Thomas precession formula works.
+
+If we have an object boosted from frame $p_1$ to frame $p_2$. Their 3-velocities *in the rest frame* are $\vec{v}$ and $\vec{v} + \delta \vec{v}$. To use the Thomas precession formula, we must first -- in imagination -- boost it back to the rest frame, and take a snapshot of its orientation against our $xyz$ axes at origin. Then we boost it back to frame $p_1$, boost it to $p_2$, and boost it -- in imagination -- back to the rest frame again. By using the Wigner rotation formula *in the rest frame*, it has rotated by
+
+$$
+\frac{\gamma^2}{\gamma + 1} \delta\vec{v} \times \vec{v}
+$$
+
+To emphasize again: the Thomas precession formula only works in one frame. It is not Lorentz invariant and not geometrically meaningful. It cannot be geometrically meaningful, because it is made of 3-vectors $\vec{v}, \vec{a}, \vec{\omega}$, and 3-vectors are geometrically meaningless in special relativity.[^3-velocity-inherently-violent]
+
+[^3-velocity-inherently-violent]: Or as I like to say, 3-vectors are inherently violent in special relativity, and anything involving anything inherently violent is also inherently violent.
 
 ## Relativity in 3+1 dimensions
 
@@ -384,11 +632,11 @@ This is not a place to get into the details; suffice to say that the space of ro
 
 Suppose we have four frames $0, 1, 2, 3$. We start with a tripod in frame $0$, then boost it successively to frames $1, 2, 3, 0$, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle $0120$ with the Wigner rotation around the cycle $0230$. The full rotation is composed of two rotations, first rotation in the plane of the triangle $012$, and the second one in the plane of the triangle $023$.
 
-The Wigner rotation coming from an arbitrary sequence of boosts can be found similarly, but it is quite hairy to handle, as combining 3-dimensional rotations is much harder than adding 2-dimensional rotation angles. My intuition says that it would involve something about [principal $G$-connections](https://en.wikipedia.org/wiki/Connection_(principal_bundle)).
+The Wigner rotation coming from an arbitrary sequence of boosts can be calculated easily with the Thomas precession formula, if we are willing to use violence. Without violence, it is geometrically quite difficult to handle, since combining 3-dimensional rotations is much harder than adding 2-dimensional rotation angles. My intuition says that it would involve something about [principal $G$-connections](https://en.wikipedia.org/wiki/Connection_(principal_bundle)).
 
 ## Two parables
 
-### The day the earth stood still
+### The day the earth stood still {#sec-foucault-pendulum}
 
 One day, the earth stopped spinning. This annoyed the visitors to the science museum, who wanted to see Foucault's pendulum to rotate. To satisfy those visitors, the museum keeper put the pendulum on the top of a bus, and loaded the visitors on the bus, then they started driving around earth at the same speed as how earth used to rotate at that latitude, so that after one day, they returned to the museum. The visitors looked up at the pendulum and was satisfied to see that it indeed has turned.
 
@@ -474,37 +722,44 @@ Pedagogical attempts to present the Foucault pendulum and the Wigner rotation ha
 
 ### The history of this document
 
-During high school, I was in the physics Olympiad team. One afternoon I got into an argument with someone about what happens if you take a square $[0, 1] \times [0, 1]$, boost it by $(v, 0)$, then boost it by $(0, v')$ within the boosted frame. By the [velocity addition formula](https://en.wikipedia.org/wiki/Velocity-addition_formula#Standard_configuration), the square would be moving at Velocity
+During high school, I was in the physics Olympiad team. One afternoon I got into an argument with someone about what happens if you take a square $[0, 1] \times [0, 1]$, boost it by $(v, 0)$, then boost it by $(0, v')$ within the boosted frame. By the [velocity addition formula](https://en.wikipedia.org/wiki/Velocity-addition_formula#Standard_configuration), the square would be moving at 3-velocity
 
 $$
 (v, \frac{v'\sqrt{1-v^2}}{1+vv'})
 $$
 
-Now if $v' = \frac{v}{\sqrt{1-v^2}-v^2}$, then the square would be moving at $(v, v)$. Now, the paradox. He thought that obviously, by the length contraction, the square should look like a diamond:
+If $v' = \frac{v}{\sqrt{1-v^2}-v^2}$, then the square would be moving at $(v, v)$. 
+
+Then, the paradox. He thought that obviously, by the length contraction, the square should look like a diamond:
 
 ```{=html}
 <div style="display: flex; justify-content: center;">
-  <div id="diamond-sketch" style="text-align: center;"></div>
+  <div class="diamond-sketch" style="text-align: center;"></div>
 </div>
+
 <script>
-const diamondSketch = (p) => {
-    p.setup = function() {
-        p.frameRate(10);
-        p.rectMode(p.CENTER);
-        let canvas = p.createCanvas(100, 100);
-        canvas.parent("diamond-sketch");
-    };
-    p.draw = function() {
-        let step = p.frameCount % 100;
-        p.background(200);
-        // Equivalent to translate(x, y);
-        let r = (2 * Math.abs(step / 100 - 0.5)) - 0.5;
-        p.applyMatrix(1, r, r, 1, 50, 50);
-        p.rect(0, 0, 50, 50);
-    };
+const diamondSketch = (elem) => {
+    return (p) => {
+        p.setup = function() {
+            p.frameRate(10);
+            p.rectMode(p.CENTER);
+            let canvas = p.createCanvas(100, 100);
+            canvas.parent(elem);
+            p.background(200);
+        };
+        p.draw = function() {
+            let step = p.frameCount % 100;
+            p.background(200);
+            let r = (2 * Math.abs(step / 100 - 0.5)) - 0.5;
+            p.applyMatrix(1, r, r, 1, 50, 50);
+            p.rect(0, 0, 50, 50);
+        };
+    }
 };
 
-new p5(diamondSketch, 'diamond-sketch');
+document.querySelectorAll('.diamond-sketch').forEach((elem) => {
+    new p5(diamondSketch(elem), elem);
+});
 </script>
 ```
 

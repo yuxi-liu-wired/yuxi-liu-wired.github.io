@@ -18,6 +18,7 @@ const spaceCircleDotTrail = [];
 const spaceCircleDotTrailLength = 100;
 const spaceCircleDotTrailFading = 0.99;
 const scaleFactor = 100;
+const canvasSize = 500;
 
 // The vector defining the orientation of the space circle.
 let ex = [1, 0, 0];
@@ -29,11 +30,11 @@ let leftSketch = function (p) {
   let dragging = false;
 
   p.setup = function () {
-    p.createCanvas(600, 600);
+    p.createCanvas(canvasSize, canvasSize);
     p.noStroke();
 
-    checkboxTrail = p.createCheckbox("Show trail");
-    checkboxTrail.position(0, 100);
+    // checkboxTrail = p.createCheckbox("Show trail");
+    // checkboxTrail.position(0, 100);
   
   };
 
@@ -41,6 +42,14 @@ let leftSketch = function (p) {
     p.background(0);
     p.translate(p.width / 2, p.height / 2);
     p.scale(scaleFactor);
+
+    p.push()
+    let gamma = velocityToLorentzFactor([vx, vy]);
+    let theta = Math.atan2(vy, vx);
+    p.rotate(theta);
+    p.fill(lightConeColor);
+    p.ellipse(0, 0, circleDiameter * gamma, circleDiameter);
+    p.pop();
 
     // The projection of space circle to 2D
     p.push();
@@ -65,14 +74,6 @@ let leftSketch = function (p) {
     // Draw the current position
     p.fill(spaceCircleDotColor);
     p.ellipse(ex[0], ex[1], dotDiameter, dotDiameter);
-    p.pop();
-
-    p.push()
-    let gamma = velocityToLorentzFactor([vx, vy]);
-    let theta = Math.atan2(vy, vx);
-    p.rotate(theta);
-    p.fill(lightConeColor);
-    p.ellipse(0, 0, circleDiameter * gamma, circleDiameter);
     p.pop();
 
     p.fill(circleColor);
@@ -123,8 +124,8 @@ new p5(leftSketch, 'velocity-canvas');
 // Right Sketch: spacetime diagram
 let rightSketch = function (p) {
   p.setup = function () {
-    p.createCanvas(600, 600, p.WEBGL);
-    p.camera(0, -600, 0, 0, 0, 0, 0, 0, 1);
+    p.createCanvas(canvasSize, canvasSize, p.WEBGL);
+    p.camera(0, -canvasSize*1.2, 0, 0, 0, 0, 0, 0, 1);
   };
   let detailX = 50;
   let detailY = 50;
@@ -146,7 +147,13 @@ let rightSketch = function (p) {
   p.draw = function () {
     fourVelocity = minkowskiNormalize([vx, vy, 1]);
 
-    p.orbitControl(1, 1, 1, { freeRotation: true });
+    let mouseInCanvas = 
+      this.mouseX < this.width &&
+      this.mouseX > 0 &&
+      this.mouseY < this.height &&
+      this.mouseY > 0;
+    
+    if (mouseInCanvas) {p.orbitControl(1, 1, 1, { freeRotation: true });}
     p.scale(scaleFactor)
     p.rotateX(p.PI);
     p.background(0);
@@ -171,7 +178,7 @@ let rightSketch = function (p) {
     p.pop();
 
     // the two hyperboloids
-    p.model(timelikeHyperboloid);
+    // p.model(timelikeHyperboloid);
 
     // The reference point on the space circle.
     p.push();
