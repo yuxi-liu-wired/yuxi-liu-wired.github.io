@@ -24,7 +24,8 @@ do
 
     # Checkout public branch
     git checkout public
-    git pull
+    git fetch origin
+    git reset --hard origin/public
 
     # Remove old files and copy new files from temporary directory
     git rm -r *
@@ -33,7 +34,7 @@ do
     # Commit and push changes to public branch
     git add .
     git commit -m "$LAST_COMMIT_MSG"
-    git push origin public
+    git push origin public --force
 
     # Switch back to deploy branch
     git checkout deploy
