@@ -219,7 +219,7 @@ let rightSketch = function (p) {
     p.translate(0, 0, 1);
     p.translate(0, 0, - lightConeHeight/2)
     p.rotateX(p.PI * 0.5);
-    p.fill(lightConeColor)
+    p.fill(lightConeColor);
     p.cone(lightConeHeight, lightConeHeight, 24, 1, false);
     p.pop();
 
@@ -228,7 +228,7 @@ let rightSketch = function (p) {
     p.translate(0, 0, -1);
     p.translate(0, 0, + lightConeHeight/2)
     p.rotateX(p.PI * 1.5);
-    p.fill(lightConeColor)
+    p.fill(lightConeColor);
     p.cone(lightConeHeight, lightConeHeight, 24, 1, false);
     p.pop();
   };

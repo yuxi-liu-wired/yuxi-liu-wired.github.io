@@ -7,23 +7,22 @@ categories: ["physics", "math", "fun"]
 keywords: ["special relativity", "hyperbolic geometry", "wigner rotation",
 "education", "popular physics", "undergraduate physics", "interactive",
 "p5.js", "javascript"]
-
 execute:
-  cache: true
-
+    cache: true
 format:
   html:
+    resources:
+        - "figure/**"
     toc: true
+    toc-location: body
     code-tools: true
     include-in-header:
       text: |
         <script type="text/javascript" charset="UTF-8" src="./static/jsxgraphcore.min.js"></script>
         <script type="text/javascript" charset="UTF-8" src="./static/p5.min.js"></script>
         <script type="text/javascript" charset="UTF-8" src="./static/math.min.js"></script>
-
 description: "The *other* special relativity paradox that you have never heard of."
 image: "figure/discrete_lorentz_rapidity_0.1_boosts_17.png"
-
 status: "finished"
 confidence: "certain"
 importance: 0
@@ -429,6 +428,11 @@ $${#eq-fermi-walker}
 
 If you want a more amusing mental image, here it is: Consider a spaceship that looks like a spherical ~~cow~~ porcupine in a vacuum. Every porcupine spine is a rocket engine. The spaceship can boost in any direction, but it does not rotate. Thanks to Wigner rotation, it can rotate anyway. Now, the spaceship is performing some complicated manuever in spacetime. If we let it carry around a general vector pointing in an arbitrary direction $e$, then the question is: as the vector is boosted alongside the spaceship, how does the vector change?
 
+In general relativity, where we have a vector field over spacetime, and an accelerating observer. To calculate how quickly the vector field is changing *relative* to the observer. This must account for:
+
+* Acceleration of the observer, using the Fermi--Walker transport equation.
+* The curvature of spacetime itself, so that comparing one vector with another requires us to perform parallel transport in spacetime (thus needing the "covariant derivative").
+
 ### General Lorentz transform
 
 The Lorentz transform in 2+1 dimensions can be derived in the same way as that of @eq-1d-lorentz. Let the rapidity vector $\vec{w}$ be equal to $w (n_x, n_y)$, where $(n_x, n_y)$ is a unit vector (the direction of rapidity). Then the Lorentz transform is found by performing another matrix exponentiation:
@@ -467,7 +471,7 @@ We are ready to derive a rarely discussed effect in special relativity: the Wign
 ::: {#thm-wigner-rotation}
 ## Wigner rotation
 
-A cycle of three non-collinear boosts creates a rotation. The amount of rotation is equal to the area of the hyperbolic triangle spanned by the three vertices, and in opposite direction as the cycle.
+A cycle of three non-collinear boosts creates a rotation. The amount of rotation is equal to the area of the hyperbolic triangle spanned by the three vertices, and in opposite direction as the cycle. Equivalently, it is equal to the angle defect of the triangle.
 :::
 
 If you make three boosts around a cycle, like $p_1 \to p_2 \to p_3 \to p_1$, then you end up with a rotation. The angle of rotation is equal to the hyperbolic area of the triangle $p_1 p_2 p_3$.
@@ -571,7 +575,6 @@ Suppose we have a particle moving close to the speed of light, and the particle 
 </div>
 ```
 
-
 ### Thomas precession {#sec-thomas-precession}
 
 Equivalently, we can present the Wigner rotation formula in the following form, often called the Thomas precession formula:
@@ -631,6 +634,60 @@ This is not a place to get into the details; suffice to say that the space of ro
 Suppose we have four frames $0, 1, 2, 3$. We start with a tripod in frame $0$, then boost it successively to frames $1, 2, 3, 0$, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle $0120$ with the Wigner rotation around the cycle $0230$. The full rotation is composed of two rotations, first rotation in the plane of the triangle $012$, and the second one in the plane of the triangle $023$.
 
 The Wigner rotation coming from an arbitrary sequence of boosts can be calculated easily with the Thomas precession formula, if we are willing to use violence. Without violence, it is geometrically quite difficult to handle, since combining 3-dimensional rotations is much harder than adding 2-dimensional rotation angles. My intuition says that it would involve something about [principal $G$-connections](https://en.wikipedia.org/wiki/Connection_(principal_bundle)).
+
+## Velocity space is hyperbolic geometry
+
+It is time to make good on the promise that hyperbolic geometry is involved.
+
+Our first hint that hyperbolic geometry is relevant is that we have encountered $\cosh$ and $\sinh$ -- the hyperbolic trigonometric functions. With this hint, a quick check shows us that we are indeed dealing with hyperbolic geometry. We would do this in 2+1 dimensions, but it generalizes immediately to n+1 dimensions.
+
+### Deriving the hyperbolic metric
+
+The 4-velocity vector $(0, 0, 1)$ has Minkowski norm-squared $-1$, and under arbitrary Lorentz transforms, it can go anywhere on the upper half of the hyperbola $x^2 + y^2 - t^2 = -1$. It stands to reason that the upper hyperbola, which looks like a plane, should have some kind of planar geometry. We need only find out its metric. The most direct path goes through the disk of 3-velocities, which gives us the metric
+
+$$
+ds^2 = \frac{dv_\theta^2}{1-v_r^2} + \frac{dv_r^2}{(1-v_r^2)^2}
+$${#eq-beltrami-klein-metric}
+
+::: {.callout-note title="Deriving the metric of the 3-velocity disk" collapse="true" }
+The disk of 3-velocities $\{(v_x, v_y, 1) : v_x^2 + v_y^2 < 1\}$ is not preserved under Lorentz transforms, but we can just project it back to the circular disk. This means that we can take the metric at origin 
+
+$$ds^2 = dv_x^y + dv_y^2$$
+
+and perform a Lorentz transform, followed by a projection, to move the origin to anywhere else on disk. The metric would be transformed to the metric at that other point, too.
+
+This could be tedious, so we can use the rotational symmetry of the disk with polar coordinates. Express any point on the disk as $(r, \theta)$. Its local metric must be of form $ds^2 = f(r) dr^2 + g(r) d\theta ^2 + h(r) drd\theta$ for some functions $f, g, h$. Further, by reflection symmetry of $\theta \leftrightarrow -\theta$, we have $h(r) = 0$. This gives us just two functions to discover:
+
+$$ds^2 = f(r) dr^2 + g(r) d\theta^2$$
+
+To find $f(r)$, we construct an infinitesimal segment $(r, 0) \to (r+dr, 0)$ and do the calculation using the velocity-addition formula. Similarly we can find $g(r)$ by calculating with $(r, 0) \to (r, d\theta)$.
+:::
+
+This is the Beltrami--Klein metric, and so we have discovered that this is exactly the Beltrami--Klein model of hyperbolic geometry. We can then project this metric to the hyperboloid $x^2 + y^2 - t^2 = -1$ to obtain its metric
+
+$$
+ds^2 = dx^2 + dy^2 - dt^2 = \| (dx, dy, dt) \|^2
+$${#eq-hyperboloid-metric}
+
+This, in hindsight, is almost painfully obvious: We have already known that the Lorentz transform preserves the Minkowski norm-squared. But such is the journey of discovery: the first pass is rarely the most elegant. It is probably better to write such things first, then write up a tidied version as a summary. Better this than
+
+> [Gauss] makes his mathematics like a fox, wiping out the traces in the sand with his tail.
+>
+> ---[unnamed German student, as reported by Abel](https://web.archive.org/web/20230624170306/https://hsm.stackexchange.com/questions/3610/what-is-the-original-source-for-abels-quote-about-gausshe-is-like-the-fox-wh)
+
+### Interpreting the hyperbolic geometry
+
+Now we can connect concepts between hyperbolic geometry and special relativity.
+
+When $v$ is small, the Wigner rotation of a full cycle, $(\gamma - 1)2\pi$, is $\pi v^2 + O(v^4)$, which is the same as the area enclosed by the cycle. Therefore, since both area and Wigner rotation are additive, we have proven @thm-wigner-rotation.[^rigorous-proof]
+
+[^rigorous-proof]: This is not a handwaved proof, but fully rigorous. The Wigner rotation of a full cycle is $\pi v^2 + O(v^4)$, and the area enclosed by the cycle is also $\pi v^2 + O(v^4)$. Therefore, we can integrate integral over an arbitrary area, to find that the Wigner rotation angle is equal to the area enclosed, up to an infinitesimal term of $O(v^2) \to 0$.
+
+In rocketry, if we trace out the trajectory of the rocket's velocity on a graph paper, we obtain a [hodograph](https://en.wikipedia.org/wiki/Hodograph). Similarly, in relativistic rocketry, a path in the 3-velocity disk is a hodograph. The length of a hodograph is the total [delta-vee](https://en.wikipedia.org/wiki/Delta-v) of the rocket.
+
+A straight line in hyperbolic space is the hodograph of the most fuel-efficient way for a rocket to get from one velocity to another.
+
+If a rocket explodes spherically symmetrically, then the velocities of its debris pieces are on a hyperbolic sphere centered at the rocket's original velocity.
 
 ## Two parables
 
@@ -763,6 +820,22 @@ document.querySelectorAll('.diamond-sketch').forEach((elem) => {
 
 I objected that in the boosted frame, the square looks like a rectangle moving upwards. The rectangle is made of a bunch of line-segments all parallel to the $y'$-axis. Now, each line-segment is moving in the $y'$-direction, and $y'$ is parallel to $y$ (since the perpendicular direction is preserved under boosting), we know that each moving line-segment would still be a line-segment parallel to the $y$-axis in the resting frame, and still moving in the $y$-direction (just slower). Therefore, the whole square would look like a parallelogram in the resting frame, with one side parallel to the $y$-axis, and the other side oblique to the $x$-axis.
 
+```{=html}
+<div class="flex-container">
+    <div class="upper-canvases">
+        <div id="square-x-canvas"></div>
+        <div id="square-y-canvas"></div>
+    </div>
+    <div id="square-main-canvas"></div>
+</div>
+<style>
+</style>
+<script charset="UTF-8" type="module">
+    import { squareSketch } from './figure/3d/3d_square_sketch.js';
+    squareSketch('square-x-canvas', 'square-y-canvas', 'square-main-canvas');
+</script>
+```
+
 After a brief shouting match, we figured out that I was right, but also that we met something no teacher has taught us before: you can create a rotation in special relativity by pure boosting.
 
 During my third undergraduate year, I took a course in theoretical physics, which required a term paper. I first tried to write one on the Ostrogradsky instability, but could not understand it, so I quickly switched to finally solving the rotation effect in special relativity.
@@ -780,3 +853,27 @@ Bitterly I searched every undergraduate physics textbook in the school library. 
 From that moment on I swore that I would finally present it in a way so simple and direct that it will never be forgotten. I had found the way, and it remained to publicize to the world.
 
 There was little use in writing another paper about it, as despite the many papers over the century, somehow this effect did not end up in the physics textbooks. I could write a blog post about it, but mere words and figures seemed insufficient. I tried promoting this idea to various physics popularizers on YouTube, but none picked it up. What I needed was interactive animation. Javascript however defeated me, and I kept it in the backlog until now. With ChatGPT I could finally write javascript tolerably for my sanity, and so, here it is.
+
+## Some bonus content
+
+### Finding the Wigner rotation in one line
+
+If you know Lie algebra, then the Wigner rotation is essentially immediate. Just calculate the commutator:
+
+$$
+[K_x, K_y] := K_x K_y - K_y K_x = \begin{bmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix}
+$$
+
+which is the generator of rotation in the $xy$ plane.
+
+### Go anywhere with just five boosts
+
+Given a rocket that can only boost, but not rotate, you can still make it rotate by Wigner rotation. Now, suppose you must perform an arbitrary Lorentz transform, how many boosts do you need? In general, if you have a Lorentz-transformed rocket, you can boost it with a carefully aimed boost so that it comes to rest. Then, it remains to use Wigner rotation to rotate it back to the starting position.
+
+With a cycle of three boosts, the Wigner rotation angle is equal to the angle defect of the hyperbolic triangle, which can take any value in $(0, \pi)$ (you can't one with zero inner angle sum, but you can get arbitrarily close). With a cycle of four boosts, we can cover the $\pi$ case as well, since a hyperbolic square can have any angle defect in $(0, 2\pi)$.
+
+In summary: almost any Lorentz transform can be obtained in four boosts, except those requiring a 180-degree rotation, which need five boosts.
+
+[@lightmanProblemBookRelativity1975, pp. 153--158] shows that every Lorentz transform can be done in three boosts, except "180-degree screws", which require four. I have never found a good geometric way to demonstrate this.
+
+> Problem 1.28. What is the least number of pure boosts which generate an arbitrary Lorentz transformation? Note: This is a difficult problem!
