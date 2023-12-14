@@ -2,11 +2,11 @@
 title: "The Wigner Rotation in Special Relativity via Hyperbolic Geometry"
 author: "Yuxi Liu"
 date: "2018-05"
-date-modified: "2023-12-12"
+date-modified: "2023-12-14"
 categories: ["physics", "math", "fun"]
 keywords: ["special relativity", "hyperbolic geometry", "wigner rotation",
-"education", "popular physics", "undergraduate physics", "interactive",
-"p5.js", "javascript"]
+           "education", "popular physics", "undergraduate physics", "interactive",
+           "p5.js", "javascript"]
 execute:
     cache: true
 format:
@@ -35,7 +35,8 @@ importance: 0
 ### The Erlangen program
 
 Special relativity, axiomatically, can be based on the following, very simple axioms:
-* Spacetime is smooth like[^shaped-like] a $\R^{n+1}$, where $n$ is the number of spatial dimensions, and $1$ is the number of temporal dimensions.
+
+* Spacetime is smooth like[^shaped-like] $\R^{n+1}$, where $n$ is the number of spatial dimensions, and $1$ is the number of temporal dimensions.
 * Spacetime is symmetric under rotation, translation, and constant velocity motion.
 * There exists a fundamental speed, a "conversion factor" between the spatial and temporal dimensions, which we call $c$.
 * There are many ways to map spacetime into $\R^{n+1}$, but only some of them are physically meaningful. Those are called the "coordinate systems".
@@ -46,7 +47,7 @@ Special relativity, axiomatically, can be based on the following, very simple ax
 
 We will follow the spirit of Erlangen program, which states clearly what our target is [@kleinComparativeReviewRecent1893]:
 
-> Given a manifoldness [smooth space] and a group of transformations of the same; to develop the theory of invariants relating to that group. This is the general problem, and it comprehends not alone ordinary geometry, but also and in particular the more recent geometrical theories which we propose to discuss, and the different methods of treating manifoldnesses of $n$ dimensions.
+> Given a manifoldness [smooth space] and a group of transformations of the same; to develop theory of invariants relating to that group. This is the general problem, and it comprehends not alone ordinary geometry, but also and in particular the more recent geometrical theories which we propose to discuss, and the different methods of treating manifoldnesses of $n$ dimensions.
 
 Considering that Felix Klein first stated it in 1872, decades before special relativity, this is prescient.
 
@@ -64,7 +65,7 @@ Well, special relativity is really a mathematical object. It is connected to the
 * If you move a physical clock from physical-here to physical-there, it is still ticking at the same mathematical constant rate.
 * ...
 
-Indeed, Einstein himself discussed this physical-mathematical correspondence carefully in *The Meaning of Relativity* [@einsteinMeaningRelativityFour1922], which goes into considerable details into things like clock synchronization, moving meter-sticks around, etc.
+Einstein's The Meaning of Relativity* [@einsteinMeaningRelativityFour1922] details physical and mathematical correspondences, such as clock synchronization and the movement of meter sticks.
 
 > As far as the laws of mathematics refer to reality, they are not certain; and as far as they are certain, they do not refer to reality.
 
@@ -76,13 +77,17 @@ To begin, let's consider relativity in 1+1 dimensions. We will start with a "def
 
 In the beginning was just a point in spacetime. We call this the origin, and write its coordinates as $x=0, t=0$. The world was yet without form. To give it form, we build a meter stick and an infinite number of light bulbs.
 
-We put a light bulb at the origin. The light bulb traces out a path in spacetime. We call this path the $t$-axis at $x=0$.
+We put a light bulb at the origin. Because the bulb does not "stand still", the light bulb traces out a path in spacetime. We call this path the $t$-axis at $x=0$. Because the bulb does not stand still, we cannot properly say it is "at the origin", but rather "passing the origin".
 
-We put another light bulb to the left of the light bulbs, separated by one meter stick. This light bulb traces out a line at $x=1$. And so on. Thus, we obtain an infinite number of lines: $\cdots, x = -1, x = 0, x = +1, \cdots$. By subdividing the meter stick, we obtain one line $x = r$ for each real number $r$.
+> any real body must have extension in four directions: it must have Length, Breadth, Thickness, and—Duration. But through a natural infirmity of the flesh, which I will explain to you in a moment, we incline to overlook this fact. There are really four dimensions, three which we call the three planes of Space, and a fourth, Time. There is, however, a tendency to draw an unreal distinction between the former three dimensions and the latter, because it happens that our consciousness moves intermittently in one direction along the latter from the beginning to the end of our lives.
+>
+> ---The Time Traveller, [*The Time Machine*, Chapter 1](https://en.wikisource.org/wiki/The_Works_of_H._G._Wells_(Atlantic_Edition)/The_Time_Machine/Chapter_1)
+
+We put another light bulb to the left of the light bulb passing the origin, separated by one meter stick. This light bulb traces out a line at $x=1$. And so on. Thus, we obtain an infinite number of lines: $\cdots, x = -1, x = 0, x = +1, \cdots$. By subdividing the meter stick, we obtain one line $x = r$ for each real number $r$.
 
 Now we have measured space, we will measure time. We remove all light bulbs except two: one at $x=0$, one at $x=1$. At origin, the $x=0$ light bulb flashes, and then the light bulb at $x=1$ flashes when it receives the flash. When the light bulb at $x=0$ receives the echo, this is the echo event -- and we write it down as $x=0, t=2$. Let spacetime reverberate with shining echoes, and in this way, every point in spacetime receives a unique coordinate $(x, t)$.
 
-Notice that in this construction, the fundamental speed $c$ is equal to one, and if we draw space and time as two perpendicular directions on a graph-paper, then the trajectory of every light is a 45-degree straight line on the graph-paper. These are not fundamental aspects of the theory, but are convenient outcomes given by how we constructed the coordinate system. 
+Notice that in this construction, the fundamental speed $c$ is equal to one, and if we draw space and time as two perpendicular directions on a graph-paper, then the trajectory of every light is a 45-degree straight line on the graph-paper. These are not fundamental aspects of theory, but are convenient outcomes given by how we constructed the coordinate system. 
 
 Abstractly speaking, a coordinate system is a function that maps a point in spacetime to two real numbers, like $(x, t): \mathcal{M} \to \R^{1+1}$. Our coordinate system constructed so far means that:
 
@@ -96,7 +101,7 @@ Such explicit distinction between the spacetime itself and the coordinate system
 
 The integrity of the coordinate system is based on the meter stick. If two light bulbs are moving relative to each other, then they cannot be always connected by a meter stick -- one of them would bump into the meter stick, or move away from it. In other words, the entire system is static.
 
-Now we allow another frame, moving at a velocity $v$ relative to the first. While there is no fundamental reason to privilege one over the other, we call one the "rest frame" and the other the "moving frame" for convenience.
+Now, we introduce another frame, moving at a velocity $v$ relative to the first. While there is no fundamental reason to privilege one over the other, we call one the "rest frame" and the other the "moving frame" for convenience.
 
 The moving frame constructs its own coordinate system $(x', t')$. What must it look like?
 
@@ -108,21 +113,21 @@ The solution is another "gluing". Like how we "glued" the mathematical world wit
 
 To connect two frames, we divide their difference into tiny steps, and then do those tiny steps one after another. So, if we know how to connect two frames when $v$ is an infinitesimal, then we know how to connect two arbitrary frames by taking an integral.
 
-Let $v$ be an infinitesimal. What should be its meter stick? Its meter stick is whatever is necessary so that light speed is $1$ in the moving frame. So, if we know how to tick the moving clock, we know how to build the moving meter stick.
+So for now, let $v$ be an infinitesimal. What should be the meter stick in the moving frame? Its meter stick is whatever is necessary so that light speed is $1$ in the moving frame. So, if we know how to tick the moving clock, we know how to build the moving meter stick.
 
-In the resting frame, the clock passing origin makes a tick at every point:
+In the resting frame, the clock passing the origin makes a tick at every point:
 
 $$\cdots, (0, -1), (0, 0), (0, +1), \cdots$$
 
-In the moving frame, the clock passing origin makes a tick at every point: 
+In the moving frame, the clock passing the origin makes a tick at every point: 
 
 $$\cdots, (-v \; ?, -?), (0, 0), (v \; ?, ?), \cdots$$
 
-The obvious choice is to just let $? = 1$. With this seemingly trivial step, we have in fact completely defined special relativity -- all else is derivation.
+The naive choice is $? = 1$. With this seemingly trivial step, we have in fact completely defined special relativity -- all else is derivation.
 
 ### Why $? = 1$
 
-By the smoothness axiom, if $v$ is infinitesimal, then the coordinate transform between the rest frame and the moving frame should be infinitesimally close to identity. Therefore, it should send $(0, 1)$ to $(\delta x, 1 + \delta t)$ for some infinitesimal $\delta x, \delta t$.
+By the smoothness axiom, if $v$ is infinitesimal, the coordinate transformation between the rest frame and the moving frame should be infinitesimally close to the identity.
 
 Since special relativity does not distinguish left from right, if we were to make the moving frame move at velocity $-v$, then the coordinate transform should send $(0, 1)$ to $(-\delta x, 1 + \delta t)$ by mirror symmetry.
 
@@ -172,11 +177,11 @@ plt.grid(True)
 plt.show()
 ```
 
-### The Lorentz transform
+### The Lorentz transformations
 
-In the resting frame, we constructed the meter stick by shooting out one pulse of light, then listen for the echo that arrives two ticks later. The point at which the echo got reflected is one meter stick away. Equivalently, we can shoot a forward-pointing light cone at $(0, -1)$, and shoot a backward-pointing light cone at $(0, +1)$. Their intersections are the two ends of two meter sticks: $(-1, 0), (+1, 0)$.
+In the resting frame, we constructed the meter stick by shooting out one pulse of light, then listening for the echo that arrives two ticks later. The point at which the echo is reflected is one meter stick away. Equivalently, we can shoot a forward-pointing light cone at $(0, -1)$, and shoot a backward-pointing light cone at $(0, +1)$. Their intersections are the two ends of two meter sticks: $(-1, 0), (+1, 0)$.
 
-In the boosted frame, the clock passing origin ticks at $\cdots, (-v, -1), (0, 0), (v, 1), \cdots$. Therefore, we can construct its meter stick in the same way, and we would find that the two light cones intersect at $(-1, -v), (+1, +v)$. This gives us the coordinate transform:
+In the boosted frame, the clock passing the origin ticks at $\cdots, (-v, -1), (0, 0), (v, 1), \cdots$. Therefore, we can construct its meter stick in the same way, and we would find that the two light cones intersect at $(-1, -v), (+1, +v)$. This gives us the coordinate transform:
 
 $$\forall p \in \mathcal{M}, \quad 
 \begin{bmatrix} x(p) \\ t(p) \end{bmatrix} = 
@@ -184,11 +189,11 @@ $$\forall p \in \mathcal{M}, \quad
 \begin{bmatrix} x'(p) \\ t'(p) \end{bmatrix}
 $$
 
-Here we find that we need to distinguish between "active" and "passive" transforms. Everything we have said so far is "passive". We assumes that there is an underlying spacetime $\mathcal{M}$, and we are to construct coordinate systems over it. The coordinate transform tells us how to turn the coordinates of *the same point* from one coordinate system to another. However, while this is often useful, it will make everything we are going to say next very awkward.
+Here, we find that we need to distinguish between "active" and "passive" transforms. Everything we have said so far is "passive". We assume that there is an underlying spacetime $\mathcal{M}$, and we are to construct coordinate systems over it. The coordinate transform tells us how to turn the coordinates of *the same point* from one coordinate system to another. However, while this is often useful, it would make everything we are going to say next very awkward.
 
 Therefore, we immediately change our point of view: we are going to study "active" transforms from now on. While passive transform of a clock means that we have just one clock and measure its ticks in two coordinate systems, active transform of a clock means that we actually pick up the clock at rest frame, accelerate it on a rocket, and then let it glide at constant velocity at the moving frame, then study what the clock is doing *in the rest frame*.
 
-Since active transform is the opposite of passive transform, we have the active Lorentz transform formula:
+Since an active transform is the opposite of a passive transform, we have the active Lorentz transformation formula:
 
 $$
 \begin{bmatrix} x' \\ t' \end{bmatrix} = 
@@ -200,7 +205,7 @@ This formula states that if we "pick up" the spacetime event at $(x, t)$ in the 
 
 ### Integrating the Lorentz boosts
 
-Since $v$ is infinitesimal, to find the Lorentz transform for non-infinitesimal $v$ (say, $v = 10^{-100}$, which while small, is really big for an infinitesimal), we need to do an integral. 
+Since $v$ is infinitesimal, to find the Lorentz transformation for a non-infinitesimal $v$ (say, $v = 10^{-100}$, which, while small, is really big for an infinitesimal), we need to integrate over it.
 
 Before we do so, we should play with the discrete version: what happens if we repeatedly apply the matrix $\begin{bmatrix} 1 & v \\ v & 1 \end{bmatrix}$ on the vectors $(0, 1), (1, 0)$?
 
@@ -272,7 +277,7 @@ In the diagram, $v$ is "rapidity"[^rapidity-name]. We apply the Lorentz boost wi
 </div>
 ```
 
-Having guessed the answer, we proceed to the explicit integral to confirm our guess.
+Having guessed the answer, we proceed with the explicit integral to confirm our guess.
 
 $$
   \begin{aligned}
@@ -284,9 +289,9 @@ $$
   \end{aligned}
 $${#eq-1d-lorentz}
 
-At this point, we should pause to take a careful look at $v$. While it is the same as velocity when $v$ is infinitesimal, it is not the same as velocity otherwise, because while velocity is bounded between $-1$ and $+1$, this $v$ quantity is free to vary over all real values. This is why we call it "rapidity" and relabel it to $w$, since it is like velocity, but different.
+At this point, we should pause to take a careful look at $v$. While it is the same as velocity when $v$ is infinitesimal, it is not the same as velocity otherwise, because velocity is bounded between $-1$ and $+1$, whereas this $v$ quantity is free to vary over all real values. This is why we call it "rapidity" and relabel it as $w$, since it is like velocity, but different.
 
-The velocity $v$ for a given rapidity $w$ can be found by transforming the $t$-axis using the Lorentz transform matrix $\begin{bmatrix} \cosh(w) & \sinh(w) \\ \sinh(w) & \cosh(w) \end{bmatrix}$. The $t$-axis 
+The velocity $v$ for a given rapidity $w$ is determined by transforming the $t$-axis using the Lorentz transformation matrix $\begin{bmatrix} \cosh(w) & \sinh(w) \\ \sinh(w) & \cosh(w) \end{bmatrix}$. The $t$-axis 
 $$\{(0, s) : s \in \R\}$$
 is boosted to the line
 $$\{(\sinh(w) s, \cosh(w) s) : s \in \R\}$$
@@ -318,15 +323,15 @@ In the diagram above, we have used the terms 3-velocity and 4-velocity. To expla
 
 When we say "velocity" informally, we mean a vector in $\R^3$. But how is velocity really defined? It is displacement divided by time. In relativity, when we say "3-velocity", there are two possible representations: we can represent it as $(v_x, v_y, v_z)$, or we can represent it as $(v_x, v_y, v_z, 1)$. The first is close to how the rest of the world use "velocity", but the second is close to how special relativity want us to use the word "velocity". The second representation can be interpreted as follows: "The 3-velocity of an object is the spacetime displacement of the object after one tick of my clock."
 
-Neither is satisfactory, however, because 3-velocity behaves badly under Lorentz transform. The first representation $(v_x, v_y, v_z)$ does not have the time-coordinate, so it can't even be multiplied with the Lorentz transform matrix. The second representation $(v_x, v_y, v_z, 1)$ would, after Lorentz transform, have its time-coordinate $\neq 1$.
+Neither is satisfactory, however, because 3-velocity behaves badly under Lorentz transformations. The first representation $(v_x, v_y, v_z)$ does not have the time-coordinate, so it can't even be multiplied with the Lorentz transformation matrix. The second representation $(v_x, v_y, v_z, 1)$ would, after a Lorentz transformation, have its time-coordinate $\neq 1$.
 
 Both problems are elegantly resolved if we use the 4-velocity, which means we have to divide 3-velocity by its norm... but what norm? Why, think back to the Erlangen program:
 
-> Given a manifoldness [smooth space] and a group of transformations of the same; to develop **the theory of invariants** relating to that group.
+> Given a manifoldness [smooth space] and a group of transformations of the same; to develop **theory of invariants** relating to that group.
 
-In plane geometry, we know that while $x, y, x', y'$ are geometrically meaningless, the norm-squared $(x-x')^2 + (y-y')^2$ is meaningful, because that quantity is not changed (invariant) if you apply the rotation matrix $\begin{bmatrix}\cos\theta & \sin\theta \\ -\sin\theta & \cos\theta \end{bmatrix}$ to it. What would be an invariant for spacetime?
+In plane geometry, we know that although $x, y, x', y'$ are geometrically meaningless, the norm-squared $(x-x')^2 + (y-y')^2$ is meaningful, because that quantity is not changed (invariant) if you apply the rotation matrix $\begin{bmatrix}\cos\theta & \sin\theta \\ -\sin\theta & \cos\theta \end{bmatrix}$ to it. What would be an invariant for spacetime?
 
-Well, looking at the picture of Lorentz transform in 1+1 dimensions, we can see that it certainly looks like the intersection of the two light cones has constant area. In particular, the upper rectangle <img src="figure/sparkline_upper_square_shaded.png" style="vertical-align: middle; height: 1em;"> has constant area. That is, the quantity $(x-t)(x+t)$ is preserved.
+Looking at the picture of the Lorentz transformation in 1+1 dimensions, we can see that the intersection of the two light cones appears to have a constant area. In particular, the upper rectangle <img src="figure/sparkline_upper_square_shaded.png" style="vertical-align: middle; height: 1em;"> has constant area. That is, the quantity $(x-t)(x+t)$ is preserved.
 
 ```{=html}
 <div style="display: flex; justify-content: center; width: 80%; margin: auto;">
@@ -334,13 +339,13 @@ Well, looking at the picture of Lorentz transform in 1+1 dimensions, we can see 
 </div>
 ```
 
-Thus we define the Minkowski norm-squared: $\|(x, t)\|^2 := x^2 - t^2$. Note that this is not an actual square because it can be negative. However it is preserved under Lorentz transforms.
+Thus we define the Minkowski norm-squared: $\|(x, t)\|^2 := x^2 - t^2$. Note that this is not an actual square because it can be negative. However it is preserved under Lorentz transformations.
 
 Once we have a norm-squared, we can extend it to an inner product::
 
 $$\braket{v, w} := \frac{\|v+w\|^2 - \|v-w\|^2}{4} = v_x w_x - v_t w_t$$
 
-which is still an invariant under Lorentz transforms, and thus physically meaningful. This extends in general to n+1 dimensions. For example, in 3+1 dimensions, the inner product is $\sum_{i = x, y, z} v_i w_i - v_t w_t$.
+which is still an invariant under Lorentz transformations, and thus physically meaningful. This extends in general to n+1 dimensions. For example, in 3+1 dimensions, the inner product is $\sum_{i = x, y, z} v_i w_i - v_t w_t$.
 
 With this, the 4-velocity is at hand! We just need to normalize $(v_x, v_y, v_z, 1)$, taking care to remove the negative sign:
 
@@ -348,7 +353,7 @@ $$
 (v_x, v_y, v_z, 1)/\sqrt{-\|(v_x, v_y, v_z, 1)\|^2} = \frac{(v_x, v_y, v_z, 1)}{\sqrt{1-(v_x^2 + v_y^2 + v_z^2)}}
 $$
 
-As an example of the power of this geometric algebra, we rederive the Lorentz transform with infinitesimal boost. In the rest frame, the unit clock-tick is the vector $(0, 1)$, and the two unit meter sticks are the vectors $(-1, 0), (1, 0)$. They are uniquely defined by the two geometric properties:
+As an example of the power of this geometric algebra, we rederive the Lorentz transformation with infinitesimal boost. In the rest frame, the unit clock-tick is the vector $(0, 1)$, and the two unit meter sticks are the vectors $(-1, 0), (1, 0)$. They are uniquely defined by the two geometric properties:
 
 $$
 \braket{s, (0, 1)} = 0; \braket{s, s} = 1
@@ -364,9 +369,9 @@ which are $s' = (-1, v), (1, v)$. By continuity, $(1, 0)$ cannot have been boost
 
 ## Relativity in 2+1 dimensions
 
-### Infinitesimal Lorentz transform
+### Infinitesimal Lorentz transformations
 
-In 1+1 dimensions, we only have two spatial directions: left and right. In 2+1 dimensions, there is a whole circle of directions. We call this circle the "space circle", because the alternative name "hula hoop for spacetime" sounds too silly.
+In 1+1 dimensions, we have only two spatial directions: left and right. In 2+1 dimensions, there is a whole circle of directions. We call this circle the "space circle", because the alternative name "hula hoop for spacetime" sounds too silly.
 
 Just like in 1+1 dimensions, the space circle is constructed by shooting a forward light cone at $(0, 0, -1)$ and a backward light cone at $(0, 0, +1)$. Their intersection is the space circle. A space circle plus a ticking clock together allows us to define a coordinate system with three unit vectors $(1, 0, 0), (0, 1, 0), (0, 0, 1)$. Both the clock and the space circle can be boosted. We will pick the simplest possible way to transport the ticking clock and the space circle, and experiments with [Thomas precession](#sec-thomas-precession) would show that this is the right way.
 
@@ -376,11 +381,11 @@ Just like in 1+1 dimensions, the space circle is constructed by shooting a forwa
 </div>
 ```
 
-Suppose we give an infinitesimal boost by $(v_x, 0)$, then by the same picture as the 1+1 dimension case, we know that the clock-tick $(0, 0, 1)$ is boosted to $(v_x, 0, 1)$, and the space circle is boosted to the ellipse with long semiaxis $(1, 0, v_x)$ and short semiaxis $(0, 1, 0)$. Where should each point on the space circle go to? Since the space circle is rigid, if we know where *one* point must go to, we know where *all* points must go to.
+Suppose we perform an infinitesimal boost by $(v_x, 0)$, then, by the same picture as in the 1+1 dimension case, we know that the clock-tick $(0, 0, 1)$ is boosted to $(v_x, 0, 1)$, and the space circle is boosted to the ellipse with long semiaxis $(1, 0, v_x)$ and short semiaxis $(0, 1, 0)$. Where should each point on the space circle go to? Since the space circle is rigid, if we know where *one* point must go to, we know where *all* points must go to.
 
 The semiaxis $(0, 1, 0)$ is both on the original space circle and the boosted space circle. It stands to reason that the simplest pick would preserve it after the infinitesimal boost. That is, we should not "twist" the space circle under boosting. With this choice, we are forced to pick $(1, 0, v_x)$ as the boosted $(1, 0, 0)$, since it is the unique unit vector that is perpendicular to $(0, 1, 0), (v_x, 0, 1)$, and infinitesimally close to $(1, 0, 0)$.
 
-Alternatively, we can think of Lorentz transform in 2+1 dimensions as the same with Lorentz transform in 1+1 dimensions, just with an extra dimension. Therefore, we can minimally modify @eq-1d-lorentz-infinitesimal to:
+Alternatively, we can think of Lorentz transformation in 2+1 dimensions as the same with Lorentz transformation in 1+1 dimensions, but with an extra dimension. Therefore, we can minimally modify @eq-1d-lorentz-infinitesimal to:
 
 $$
 \begin{bmatrix} x' \\ y' \\ t' \end{bmatrix} = 
@@ -402,16 +407,17 @@ $${#eq-2d-lorentz-infinitesimal}
 1. Just guess it.
 2. Rotate the coordinate system so that the boost is in the $x$-direction, boost using the previous result, then rotate the coordinate system back. To be pedantic: We are performing one passive, then one active, then one passive transform.
 3. Take the previous derivation, and modify it by strategically inserting $v_y$ at places.
-4. Since two infinitesimal boosts do not interact except on the second-order infinitesimal, and $O(v^2) \ll O(v) \ll 1$, we are free to throw away the second-order infinitesimal. Therefore, we can just multiply the two matrices together to get the full thing:
+4. Since two infinitesimal boosts do not interact except at the second-order infinitesimal level, and $O(v^2) \ll O(v) \ll 1$, we are free to discard the second-order infinitesimal. Therefore, we can just multiply the two matrices together to get the full thing:
+
 
 $$\begin{bmatrix} 1 & 0 & v_x \\ 0 & 1 & 0 \\ v_x & 0 & 1 \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & v_y \\ 0 & v_y & 1 \end{bmatrix} = \begin{bmatrix} 1 & 0 & v_x \\ 0 & 1 & v_y \\ v_x & v_y & 1 \end{bmatrix} + O(v^2)$$
 :::
 
 ### Fermi--Walker transport
 
-@eq-2d-lorentz-infinitesimal is correct, but it is still not geometric. We must convert it with only quantities that are invariant under Lorentz transforms -- that is, the inner product.
+@eq-2d-lorentz-infinitesimal is correct, but it is still not geometric. We must convert it with only quantities that are invariant under Lorentz transformations -- that is, the inner product.
 
-Let's replace the 4-velocity vector $(0, 0, 1)$ with simply the letter $u$, and the infinitesimal boost $(v_x, v_y, 0)$ with $\delta u$. Then, an arbitrary vector $e$ is boosted to $e + \delta e$, Where
+Denote the 4-velocity vector $(0, 0, 1)$ by the letter $u$, and the infinitesimal boost $(v_x, v_y, 0)$ by $\delta u$. Then, an arbitrary vector $e$ is boosted to $e + \delta e$, Where
 
 $$
 \delta e = 
@@ -426,16 +432,16 @@ $$
 $${#eq-fermi-walker}
 
 
-If you want a more amusing mental image, here it is: Consider a spaceship that looks like a spherical ~~cow~~ porcupine in a vacuum. Every porcupine spine is a rocket engine. The spaceship can boost in any direction, but it does not rotate. Thanks to Wigner rotation, it can rotate anyway. Now, the spaceship is performing some complicated manuever in spacetime. If we let it carry around a general vector pointing in an arbitrary direction $e$, then the question is: as the vector is boosted alongside the spaceship, how does the vector change?
+If you want a more amusing mental image, here it is: Consider a spaceship that looks like a spherical ~~cow~~ porcupine in a vacuum. Every porcupine spine is a rocket engine. The spaceship can boost in any direction, but it does not rotate. Thanks to Wigner rotation, it can rotate anyway. Now, the spaceship is performing some complicated manuever in spacetime. If we allow it to carry around a general vector pointing in an arbitrary direction $e$, the question becomes: as the vector is boosted alongside the spaceship, how does the vector change?
 
-In general relativity, where we have a vector field over spacetime, and an accelerating observer. To calculate how quickly the vector field is changing *relative* to the observer. This must account for:
+Consider a problem in general relativity, where we have a vector field over spacetime, and an accelerating observer. To calculate how quickly the vector field is changing *relative* to the observer, we must account for:
 
-* Acceleration of the observer, using the Fermi--Walker transport equation.
-* The curvature of spacetime itself, so that comparing one vector with another requires us to perform parallel transport in spacetime (thus needing the "covariant derivative").
+* acceleration of the observer, using the Fermi--Walker transport equation;
+* the curvature of spacetime itself, so that comparing one vector with another requires us to perform parallel transport in spacetime (with the "covariant derivative").
 
-### General Lorentz transform
+### General Lorentz transformations
 
-The Lorentz transform in 2+1 dimensions can be derived in the same way as that of @eq-1d-lorentz. Let the rapidity vector $\vec{w}$ be equal to $w (n_x, n_y)$, where $(n_x, n_y)$ is a unit vector (the direction of rapidity). Then the Lorentz transform is found by performing another matrix exponentiation:
+The Lorentz transformation in 2+1 dimensions can be derived similarly to how @eq-1d-lorentz was derived. Let the rapidity vector $\vec{w}$ be equal to $w (n_x, n_y)$, where $(n_x, n_y)$ is a unit vector (the direction of rapidity). Then the Lorentz transformation is found by performing another matrix exponentiation:
 
 $$\exp\left(\begin{bmatrix} 0 & 0 & n_x \\ 0 & 0 & n_y \\ n_x & n_y & 0 \end{bmatrix} w\right)$$
 
@@ -443,15 +449,15 @@ To be more succinct, we define the matrices
 
 $$K_x := \begin{bmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 1 & 0 & 0 \end{bmatrix}, \quad K_y := \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 1 \\ 0 & 1 & 0 \end{bmatrix}$$
 
-then the Lorentz transform is just $e^{\vec{w} \cdot \vec{K}} = e^{w \vec{n} \cdot \vec{K}}$.
+then the Lorentz transformation is just $e^{\vec{w} \cdot \vec{K}} = e^{w \vec{n} \cdot \vec{K}}$.
 
-Now, since $(\vec{n} \cdot \vec{K})^3 = \vec{n} \cdot \vec{K}$, we have the Lorentz transform equation
+Now, since $(\vec{n} \cdot \vec{K})^3 = \vec{n} \cdot \vec{K}$, we have the Lorentz transformation equation
 
 $$
 I + \sinh(w) \vec{n} \cdot \vec{K} + (\cosh(w) - 1) (\vec{n} \cdot \vec{K})^2
 $${#eq-2d-lorentz}
 
-This equation generalizes in the obvious way to relativity in n+1 dimensions, but we will not need it.
+This equation extends naturally to relativity in n+1 dimensions, but we will not need it.
 
 ::: {.callout-note title="Deriving $(\vec{n} \cdot \vec{K})^3 = \vec{n} \cdot \vec{K}$" collapse="true" }
 Let $t$ stand for the index of the time-coordinate, and let $i, j, k$ be the indices of the space-coordinates. Then we have 
@@ -466,19 +472,19 @@ $$= n_in_jn_k(e_{it}\delta_{jk} + \delta_{ij} e_{tk}) = \underbrace{\|\vec{n}\|^
 
 ## Wigner rotation
 
-We are ready to derive a rarely discussed effect in special relativity: the Wigner rotation. Though it is as fundamental as time dilation and space contraction, it is not even mentioned in the undergraduate textbooks I have seen. Simply stated:
+We are ready to derive a rarely discussed effect in special relativity: the Wigner rotation. Although it is as fundamental as time dilation and space contraction, it often goes unmentioned in undergraduate textbooks I have encountered.
 
 ::: {#thm-wigner-rotation}
 ## Wigner rotation
 
-A cycle of three non-collinear boosts creates a rotation. The amount of rotation is equal to the area of the hyperbolic triangle spanned by the three vertices, and in opposite direction as the cycle. Equivalently, it is equal to the angle defect of the triangle.
+When three boosts are made in a cycle, such as $p_1 \to p_2 \to p_3 \to p_1$, the result is a rotation. The angle of rotation is equal to the hyperbolic area of the triangle $p_1 p_2 p_3$, but in the opposite direction. Furthermore, the hyperbolic area is equal to the angle defect of the triangle.
 :::
 
-If you make three boosts around a cycle, like $p_1 \to p_2 \to p_3 \to p_1$, then you end up with a rotation. The angle of rotation is equal to the hyperbolic area of the triangle $p_1 p_2 p_3$.
+The phrase "in the opposite direction" means that, if, looking from the $+t$-direction down at the origin, you see the three 3-velocities make a counterclockwise cycle in the disk $\{(v_x, v_y, 1) : v_x^2 + v_y^2 = 1\}$, then you would see that the Wigner rotation angle is in the clockwise direction, and *vice versa*. The phrase "angle defect" means $\pi - (\angle{p_1 p_2 p_3} + \angle{p_2 p_3 p_1} + \angle{p_3 p_1 p_2})$.
 
 ### Step-by-step demonstration of the Wigner rotation
 
-Consider the simplest kind of three boost cycle. We start at the rest frame, boost to the frame with 3-velocity $(v_x, 0)$, then boost to the frame with 3-velocity $(v_x, v_x d\varphi)$, then boost back to the rest frame. It is shown in the figure below:
+Consider the simplest type of three-boost cycle as shown in the figure below. We start at the rest frame, boost to the frame with a 3-velocity of \((v_x, 0)\), then boost to the frame with a 3-velocity of \((v_x, v_x d\varphi)\), and finally boost back to the rest frame.
 
 ```{=html}
 <div style="display: flex; justify-content: center; width: 80%; margin: auto;">
@@ -486,7 +492,7 @@ Consider the simplest kind of three boost cycle. We start at the rest frame, boo
 </div>
 ```
 
-If we trace out the trajectory of every point on the space circle, we would get the following sequence:
+Tracing out the trajectory of every point on the space circle gives the following sequence:
 
 ::: {layout-ncol=3}
 ![](figure/wigner_rotation_4-velocity_1.png)
@@ -504,17 +510,17 @@ Drawn in the space of 3-velocity, it looks like:
 </div>
 ```
 
-Therefore, after three pure boosts, we somehow ended up with a rotation by $(\gamma - 1)d \varphi$ radians in the opposite direction. Here, $\gamma$ is the long semiaxis of the the boosted space circle after projecting down to the $xy$ plane. It is in fact the famed Lorentz factor 
+Therefore, after three pure boosts, we end up with a rotation by $(\gamma - 1)d \varphi$ radians in the opposite direction. Here, $\gamma$ is the long semiradius of the boosted space circle, after projecting it down to the $xy$ plane. This is the "Lorentz factor" often used in special relativity:
 
 $$\gamma = \frac{1}{\sqrt{1-v^2}}$$
 
 ::: {.callout-note title="Deriving the Lorentz factor" collapse="true" }
-The space circle in the rest frame is spanned by $(1, 0, 0)$ and $(0, 1, 0)$. After boosting by the 3-velocity $(v, 0)$, it is boosted to an ellipse with semiaxes $(\cosh(w), 0, \sinh(w)), (0, 1, 0)$, where $w = \arctanh(v)$ is its rapidity. Thus, its projection to the $xy$ plane is an ellipse with semiaxes $(\cosh(w), 0), (0, 1)$.
+In the rest frame, the space circle is spanned by $(1, 0, 0)$ and $(0, 1, 0)$. After boosting by the 3-velocity $(v, 0)$, it is boosted to an ellipse with semiaxes $(\cosh(w), 0, \sinh(w)), (0, 1, 0)$, where $w = \arctanh(v)$ is its rapidity. Thus, its projection to the $xy$ plane is an ellipse with semiaxes $(\cosh(w), 0), (0, 1)$.
 
 $$\gamma = \cosh(w) = \cosh(\arctanh(v)) = \frac{1}{\sqrt{1-v^2}}$$
 :::
 
-If we perform boosts around a full cycle of 3-velocities, and return to our starting 3-velocity, then it is equivalent to performing an infinite number of infinitesimal triangle-circuit boosts:
+Performing boosts around a full cycle of 3-velocities and returning to our starting 3-velocity is equivalent to performing an infinite number of infinitesimal triangle-circuit boosts:
 
 ```{=html}
 <div style="display: flex; justify-content: center; width: 80%; margin: auto;">
@@ -522,17 +528,17 @@ If we perform boosts around a full cycle of 3-velocities, and return to our star
 </div>
 ```
 
-Therefore, a full cycle of boosts would rotate our space circle by a full $(\gamma - 1)2\pi$ radians in the opposite direction.
+Therefore, a full cycle of boosts rotates our space circle by a full $(\gamma - 1)2\pi$ radians in the opposite direction.
 
 ### Interactive app for the Wigner rotation
 
-Now you are able to fully appreciate the following interactive app demonstrating the Wigner rotation. 
+With this understanding, you can now fully appreciate the following interactive app demonstrating the Wigner rotation.
 
-The left picture is the $xy$ plane, and the right picture is the $xyt$ spacetime.
+The left picture represents the $xy$ plane, and the right picture represents the $xyt$ spacetime.
 
-You can drag the black dot on the left, which stands for the 3-velocity. The 3-velocity is restricted to have maximal norm $0.8$, to keep it numerically stable. The <span style="color: #7887ab;">blue</span> ellipse is the projection of the space circle to the $xy$ plane. A fixed point on the space circle is distinguished by a big <span style="color: red;">red</span> dot, so that you can see how the space circle is Wigner-rotated as you drag the 3-velocity around.
+You can drag the black dot on the left, which represents the 3-velocity. The 3-velocity is restricted to have maximal norm $0.8$, to keep the app numerically stable. The <span style="color: #7887ab;">blue</span> ellipse is the projection of the space circle to the $xy$ plane. A fixed point on the space circle is distinguished by a big <span style="color: red;">red</span> dot, so that you can see how the space circle Wigner-rotates as you drag the 3-velocity around.
 
-On the right, the forward and backward light cones intersect at the space circle. You can drag and scroll to adjust the camera.
+In the right picture, the forward and backward light cones intersect at the space circle. You can drag and scroll to adjust the camera.
 
 ```{=html}
 <div class="flex-container">
@@ -559,7 +565,7 @@ The three boosts in animated form:
 </div>
 ```
 
-Because $\gamma - 1 = \frac 23$, if you drag the 3-velocity for 3 full cycles at maximal velocity, the space circle would go -2 full cycles. 
+Because $\gamma - 1 = \frac{2}{3}$, if you drag the 3-velocity for 3 full cycles at maximal velocity, the space circle would complete -2 full cycles.
 
 ```{=html}
 <div style="display: flex; justify-content: center; width: 80%; margin: auto;">
@@ -567,7 +573,7 @@ Because $\gamma - 1 = \frac 23$, if you drag the 3-velocity for 3 full cycles at
 </div>
 ```
 
-Suppose we have a particle moving close to the speed of light, and the particle is shooting out photons at equal angular density in all directions *in its own frame*, then *in the rest frame* the photons it is shooting out are bunched in front of the particle. This is the [relativistic beaming effect](https://en.wikipedia.org/wiki/Relativistic_beaming), or the headlight effect.
+Suppose a particle is moving close to the speed of light and emitting photons at equal angular density in all directions *in its own frame*, then *in the rest frame* the photons are bunched in front of the particle. This is the [relativistic beaming effect](https://en.wikipedia.org/wiki/Relativistic_beaming), or the headlight effect.
 
 ```{=html}
 <div style="display: flex; justify-content: center; width: 80%; margin: auto;">
@@ -577,7 +583,7 @@ Suppose we have a particle moving close to the speed of light, and the particle 
 
 ### Thomas precession {#sec-thomas-precession}
 
-Equivalently, we can present the Wigner rotation formula in the following form, often called the Thomas precession formula:
+The Wigner rotation formula is equivalent to the following formula, often called the Thomas precession formula:
 
 $$
 \vec{\omega} = \frac{\gamma^2}{\gamma + 1} \vec{a} \times \vec{v}
@@ -586,32 +592,32 @@ $${#eq-thomas-precession}
 Experiments with particles moving in cyclotrons have verified this, thus justifying our guess that we should transport space circles without twisting.
 
 ::: {.callout-note title="Deriving the Thomas precession formula" collapse="true" }
-Consider a particle moving counterclockwise with constant speed $v$ in a circle of radius $R$. Its acceleration is $a = v^2/R$, and after one cycle period $T = 2\pi R/v$, it has undergone Wigner rotation by angle $-(\gamma - 1)2\pi$. Simplifying, we have
+Consider a particle moving counterclockwise at a constant speed $v$ in a circle of radius $R$. Its acceleration is $a = v^2/R$, and after completing one cycle in time $T = 2\pi R/v$, it has Wigner-rotated by $-(\gamma - 1)2\pi$ radians. Simplifying, we have
 
 $$\omega = \frac{-(\gamma - 1)2\pi}{T} = \cdots = -\frac{\gamma^2}{\gamma + 1} av$$
 
 By the right hand rule of cross products, we can get all the directions correct with $\vec{\omega} = \frac{\gamma^2}{\gamma + 1} \vec{a} \times \vec{v}$.
 
-For a general particle undergoing general acceleration, the 3-acceleration decomposes into a component parallel to the 3-velocity, and a component perpendicular to it. The parallel component does not change Wigner rotation, therefore the Thomas precession equation is still true.
+For a particle undergoing a generic acceleration, the 3-acceleration decomposes into a component parallel to the 3-velocity, and a component perpendicular to it. The parallel component does not change Wigner rotation, therefore the Thomas precession equation is still true.
 :::
 
-However, notice that the formula is made of 3-vectors, and we know that 3-vectors are meaningless in special relativity. This suggests that something is off here. If the rest of this section does not make much sense, come back after reading [the section on Foucault pendulum](#sec-foucault-pendulum).
+However, notice that the formula is made of 3-vectors, and we know that 3-vectors are meaningless in special relativity. This suggests that something is off here. If the rest of this section does not make much sense, first read [the section on Foucault pendulum](#sec-foucault-pendulum), then return here.
 
-If the earth were flat, then we could stand at a single point, and draw two perpendicular arrows. We say, "This arrow is pointing $x$", and "This arrow is pointing $y$." Then we create an infinite number of missionaries. Each would pick up the two arrows, without rotating, and move the arrow to every point on earth. In this way, we would provide a unique direction for every point on earth.
+If the Earth were flat, then we could stand at a single point, and draw two perpendicular arrows. We say, "This arrow is pointing $x$", and "This arrow is pointing $y$." Then we create an infinite number of missionaries. Each would pick up the two arrows and parallel-transport the arrows to their given station on the Earth. In this way, we would provide a unique direction-system for every point on the Earth.
 
-However, because the earth is a sphere, this does not work. Suppose we stand at the North Pole, and we do the same. Then all the missionaries would meet at the South Pole and start arguing about who has the right one, because they would all disagree. This problem happens because earth is curved, and transporting a vector around a cycle would rotate it.
+However, because the Earth is a sphere, this does not work. Suppose we stand at the North Pole, and we do the same. Then all the missionaries would meet at the South Pole and start arguing about who has the right one, because they would all disagree. This problem happens because the Earth is curved, and transporting a vector around a cycle would rotate it.
 
 We might shrug and say, "Well, nobody lives in the South Pole, so we will just tell our missionaries to avoid it." Great idea, except then they found that Emperor of China has also sent out his own missionaries. We shrug and say, "Well, we'll just give the Emperor of China a call and ask him what angle he picked. Then we will rotate our map until all our missionaries agreed with his." After some fruitless fiddling with our maps, it has dawned to us that this plan is doomed. Why?
 
 Imagine if the North Pole is at point $N$, and the Emperor of China is at point $C$. If somehow, we could pick our $xy$ directions so that all our missionaries agree with his, then we can send one missionary around a three-part journey around the world: $N \to C \to K \to N$, where $K$ is a point off the great circle passing $N, C$. Along the path $N \to C$, the missionary is leaving the North Pole on a straight arc away from the North Pole, so the $xy$ chart he is carrying agrees with the missionaries he is passing by. Similarly for the other two parts. But when the missionary has returned to the North Pole, he must find his $xy$ chart rotated, contradiction!
 
-So we sent an ICBM to take out the Emperor of China.
+There is no way to resolve this disagreement than forcing one side to give up their coordinate system. Perhaps we will have to call up a crusade to enforce our coordinate system.
 
 > The introduction of numbers as coordinates is an act of violence.
 > 
 > ---Hermann Weyl
 
-Similarly, in special relativity, we can stand at the "North Pole" (rest frame), construct the $xyz$ axes, then send out missionaries on rockets to provide directions for every inertial frame. The good news is that no two missionaries would meet each other, so they would not argue. The bad news is that we still have the Wigner rotation problem, so if some aliens had tried the same project starting at a different, then there is absolutely no possibility for our missionaries to agree in every frame.
+Similarly, in special relativity, we can stand at the "North Pole" (rest frame), construct the $xyz$ axes, then send out missionaries on rockets to provide directions for every inertial frame. The good news is that no two missionaries can meet each other, so there is no argument. The bad news is that we still have the Wigner rotation problem, so if some aliens had tried the same project starting at a different coordinate frame (perhaps because their galaxy is moving relative to ours), then there is absolutely no possibility for our missionaries to agree in every frame.
 
 So, we are forced to only use one rest frame. It is in this context that the Thomas precession formula works.
 
@@ -621,55 +627,57 @@ $$
 \frac{\gamma^2}{\gamma + 1} \delta\vec{v} \times \vec{v}
 $$
 
-To emphasize again: the Thomas precession formula only works in one frame. It is not Lorentz invariant and not geometrically meaningful. It cannot be geometrically meaningful, because it is made of 3-vectors $\vec{v}, \vec{a}, \vec{\omega}$, and 3-vectors are geometrically meaningless in special relativity.[^3-velocity-inherently-violent]
+To emphasize again: the Thomas precession formula only works in one frame. It is neither Lorentz invariant nor geometrically meaningful. It cannot be geometrically meaningful, because it is made of 3-vectors $\vec{v}, \vec{a}, \vec{\omega}$, and 3-vectors are geometrically meaningless in special relativity.[^3-velocity-inherently-violent]
 
 [^3-velocity-inherently-violent]: Or as I like to say, 3-vectors are inherently violent in special relativity, and anything involving anything inherently violent is also inherently violent.
 
 ## Relativity in 3+1 dimensions
 
-We began our study of special relativity in 1+1 dimensions and discovered the Lorentz transform, then proceeded to 2+1 dimensions and discovered Wigner rotation. In 3+1 dimensions, Wigner rotation still applies, but there is something new: rotations are no longer describable by a single number.
+We began our study of special relativity in 1+1 dimensions and discovered the Lorentz transformations, then proceeded to 2+1 dimensions and discovered Wigner rotation. In 3+1 dimensions, Wigner rotation still applies, but there is something new: rotations are no longer describable by a single number.
 
-This is not a place to get into the details; suffice to say that the space of rotations in $\R^3$ is much harder to understand than the space of rotations in $\R^2$. We must be more careful here.
+This is not a place to get into the details; suffice to say that the space of rotations in $\R^3$ is much harder to understand than the space of rotations in $\R^2$.[^so3-so2] We must be more careful here.
 
-Suppose we have four frames $0, 1, 2, 3$. We start with a tripod in frame $0$, then boost it successively to frames $1, 2, 3, 0$, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle $0120$ with the Wigner rotation around the cycle $0230$. The full rotation is composed of two rotations, first rotation in the plane of the triangle $012$, and the second one in the plane of the triangle $023$.
+[^so3-so2]: The space of rotations in $\R^3$ is $SO(3)$ and that in $\R^2$ is $SO(2)$. While $SO(2)$ is just the circle and can be easily represented by a real number or an angle, $SO(3)$ is the projective 3-space $\bb{PR}^3$ and best represented by quaternions.
 
-The Wigner rotation coming from an arbitrary sequence of boosts can be calculated easily with the Thomas precession formula, if we are willing to use violence. Without violence, it is geometrically quite difficult to handle, since combining 3-dimensional rotations is much harder than adding 2-dimensional rotation angles. My intuition says that it would involve something about [principal $G$-connections](https://en.wikipedia.org/wiki/Connection_(principal_bundle)).
+Suppose we have four frames: $0, 1, 2, 3$. We start with a tripod in frame $0$, then boost it successively to frames $1, 2, 3, and 0$, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle $0120$ with the Wigner rotation around the cycle $0230$. The full rotation is composed of two rotations, first rotation in the plane of the triangle $012$, and the second one in the plane of the triangle $023$.
+
+The Wigner rotation coming from an arbitrary sequence of boosts can be calculated easily with the Thomas precession formula, if we are willing to use violence.[^weylence] Without violence, we have to do spherical trigonometry, much harder than adding 2-dimensional rotation angles. My intuition is that it should most naturally involve the [principal $G$-connections](https://en.wikipedia.org/wiki/Connection_(principal_bundle)), where $G = SO(n, 1)$ is the group of Lorentz transformations.
+
+[^weylence]: Since this usage of "violence" comes directly from Hermann Weyl, perhaps we can call it *Weylence*? 
 
 ## Velocity space is hyperbolic geometry
 
-It is time to make good on the promise that hyperbolic geometry is involved.
+It is time to fulfill the promise in the title, that hyperbolic geometry is involved.
 
-Our first hint that hyperbolic geometry is relevant is that we have encountered $\cosh$ and $\sinh$ -- the hyperbolic trigonometric functions. With this hint, a quick check shows us that we are indeed dealing with hyperbolic geometry. We would do this in 2+1 dimensions, but it generalizes immediately to n+1 dimensions.
+Our first hint that hyperbolic geometry is relevant is that we have encountered $\cosh$ and $\sinh$ -- the hyperbolic trigonometric functions. With this hint, a quick check shows us that we are indeed dealing with hyperbolic geometry. This is easy to do in 2+1 dimensions, but it generalizes readily to n+1 dimensions after slightly cluttering the notation.
 
 ### Deriving the hyperbolic metric
 
-The 4-velocity vector $(0, 0, 1)$ has Minkowski norm-squared $-1$, and under arbitrary Lorentz transforms, it can go anywhere on the upper half of the hyperbola $x^2 + y^2 - t^2 = -1$. It stands to reason that the upper hyperbola, which looks like a plane, should have some kind of planar geometry. We need only find out its metric. The most direct path goes through the disk of 3-velocities, which gives us the metric
+Since $\|(0, 0, 1)\|^2 =-1$, under arbitrary Lorentz transformations, $(0, 0, 1)$ can, under arbitrary Lorentz transformations, reach any point on the upper half of the hyperbola $x^2 + y^2 - t^2 = -1$. It stands to reason that the upper hyperbola, which is equivalent to a plane as a smooth manifold, should have some kind of planar geometry. We need only discover its metric. The most direct path goes through the disk of 3-velocities, which gives us the metric
 
 $$
 ds^2 = \frac{dv_\theta^2}{1-v_r^2} + \frac{dv_r^2}{(1-v_r^2)^2}
 $${#eq-beltrami-klein-metric}
 
 ::: {.callout-note title="Deriving the metric of the 3-velocity disk" collapse="true" }
-The disk of 3-velocities $\{(v_x, v_y, 1) : v_x^2 + v_y^2 < 1\}$ is not preserved under Lorentz transforms, but we can just project it back to the circular disk. This means that we can take the metric at origin 
+The disk of 3-velocities $\{(v_x, v_y, 1) : v_x^2 + v_y^2 < 1\}$ is not preserved under Lorentz transformations, but we can project it back to the circular disk. This means that we can take the metric at origin 
 
 $$ds^2 = dv_x^y + dv_y^2$$
 
-and perform a Lorentz transform, followed by a projection, to move the origin to anywhere else on disk. The metric would be transformed to the metric at that other point, too.
+and perform a Lorentz transformation, followed by a projection, to move the origin to any other point on the disk. Multiplying the metric at the origin with the gradient-matrix gives the metric at that other point.
 
-This could be tedious, so we can use the rotational symmetry of the disk with polar coordinates. Express any point on the disk as $(r, \theta)$. Its local metric must be of form $ds^2 = f(r) dr^2 + g(r) d\theta ^2 + h(r) drd\theta$ for some functions $f, g, h$. Further, by reflection symmetry of $\theta \leftrightarrow -\theta$, we have $h(r) = 0$. This gives us just two functions to discover:
+We exploit the rotational symmetry of the disk using polar coordinates. Express any point on the disk as $(r, \theta)$. Its local metric must be of form $ds^2 = f(r) dr^2 + g(r) d\theta ^2 + h(r) drd\theta$ for some functions $f, g, h$. Further, by reflection symmetry of $\theta \leftrightarrow -\theta$, we have $h(r) = 0$.
 
-$$ds^2 = f(r) dr^2 + g(r) d\theta^2$$
-
-To find $f(r)$, we construct an infinitesimal segment $(r, 0) \to (r+dr, 0)$ and do the calculation using the velocity-addition formula. Similarly we can find $g(r)$ by calculating with $(r, 0) \to (r, d\theta)$.
+To find $f(r)$, we construct an infinitesimal segment $(r, 0) \to (r+dr, 0)$ and calculate with the velocity-addition formula. Similarly, we find $g(r)$ using the segment $(r, 0) \to (r, d\theta)$.
 :::
 
-This is the Beltrami--Klein metric, and so we have discovered that this is exactly the Beltrami--Klein model of hyperbolic geometry. We can then project this metric to the hyperboloid $x^2 + y^2 - t^2 = -1$ to obtain its metric
+This is the Beltrami--Klein metric, and so we have discovered that this is exactly the Beltrami--Klein model of hyperbolic geometry. We can then project this metric onto the hyperboloid $x^2 + y^2 - t^2 = -1$ to obtain its metric
 
 $$
 ds^2 = dx^2 + dy^2 - dt^2 = \| (dx, dy, dt) \|^2
 $${#eq-hyperboloid-metric}
 
-This, in hindsight, is almost painfully obvious: We have already known that the Lorentz transform preserves the Minkowski norm-squared. But such is the journey of discovery: the first pass is rarely the most elegant. It is probably better to write such things first, then write up a tidied version as a summary. Better this than
+This, in hindsight, is obvious: We have already known that the Lorentz transformation preserves the Minkowski norm-squared. But such is the journey of discovery: the first pass is rarely the most elegant. It is probably better to write down the first pass to show how to discover things, then write a second pass to show how to tidy things. Better this than what Gauss did:
 
 > [Gauss] makes his mathematics like a fox, wiping out the traces in the sand with his tail.
 >
@@ -679,55 +687,55 @@ This, in hindsight, is almost painfully obvious: We have already known that the 
 
 Now we can connect concepts between hyperbolic geometry and special relativity.
 
-When $v$ is small, the Wigner rotation of a full cycle, $(\gamma - 1)2\pi$, is $\pi v^2 + O(v^4)$, which is the same as the area enclosed by the cycle. Therefore, since both area and Wigner rotation are additive, we have proven @thm-wigner-rotation.[^rigorous-proof]
+When $v$ is small, the Wigner rotation for a full cycle, $(\gamma - 1)2\pi$, is $\pi v^2 + O(v^4)$, coinciding with the area enclosed by the cycle.Therefore, since both area and Wigner rotation are additive, we have proven @thm-wigner-rotation.[^rigorous-proof]
 
-[^rigorous-proof]: This is not a handwaved proof, but fully rigorous. The Wigner rotation of a full cycle is $\pi v^2 + O(v^4)$, and the area enclosed by the cycle is also $\pi v^2 + O(v^4)$. Therefore, we can integrate integral over an arbitrary area, to find that the Wigner rotation angle is equal to the area enclosed, up to an infinitesimal term of $O(v^2) \to 0$.
+[^rigorous-proof]: This is not a handwaved proof, but fully rigorous. The Wigner rotation of a full cycle is $\pi v^2 + O(v^4)$, and the area enclosed by the cycle is also $\pi v^2 + O(v^4)$. Therefore, we can integrate over an arbitrary area, to find that the Wigner rotation angle is equal to the area enclosed, up to an infinitesimal term of $O(v^2) \to 0$.
 
-In rocketry, if we trace out the trajectory of the rocket's velocity on a graph paper, we obtain a [hodograph](https://en.wikipedia.org/wiki/Hodograph). Similarly, in relativistic rocketry, a path in the 3-velocity disk is a hodograph. The length of a hodograph is the total [delta-vee](https://en.wikipedia.org/wiki/Delta-v) of the rocket.
+In rocketry, if we trace out the trajectory of the rocket's velocity on a graph paper, we obtain a [hodograph](https://en.wikipedia.org/wiki/Hodograph). Similarly, in relativistic rocketry, a path in the velocity space is a hodograph. The length of a hodograph is the total [delta-v](https://en.wikipedia.org/wiki/Delta-v) of the rocket.
 
-A straight line in hyperbolic space is the hodograph of the most fuel-efficient way for a rocket to get from one velocity to another.
+A straight line in hyperbolic space is the hodograph of the most fuel-efficient control-trajectory for a rocket to get from one velocity to another.
 
-If a rocket explodes spherically symmetrically, then the velocities of its debris pieces are on a hyperbolic sphere centered at the rocket's original velocity.
+If a rocket explodes with spherical symmetry, the velocities of its debris will lie on a hyperbolic sphere centered at the rocket's original velocity.
 
 ## Two parables
 
 ### The star worshippers
 
-An alien race used to worship Rigel, Deneb, and Betelgeuse, and they prayed towards the three stars. In order to pray in the correct direction even without seeing them, they constructed the Sacred Tripods, which are steel tripods that are oriented, such that each leg points at one of the Sacred Stars. These Sacred Tripods are put in public places, and required to point exactly at the Sacred Stars.
+An alien race, who worshipped Rigel, Deneb, and Betelgeuse, prayed in the direction of these three stars. In order to pray in the correct direction even without seeing them, they constructed the Sacred Tripods, which are steel tripods that are oriented such that each leg points at one of the Sacred Stars. These Sacred Tripods, placed in public spaces, were required to point precisely at the Sacred Stars.
 
-Then a Cosmic Dark Age began and the stars winked out of existence, including the Sacred Stars, but the aliens did not lose their faith. Instead, they intensified their prayer in the hope of resurrecting the Sacred Stars.
+Then a Cosmic Dark Age began and the stars winked out of existence, including the Sacred Stars, but the aliens did not lose their faith. Instead, they intensified their prayers in hopes of resurrecting the Sacred Stars.
 
-In a region of space, there were two space stations A and B, at rest with each other. The Sacred Tripod on B was unstable and required yearly checking against the more stable Sacred Tripod at A. So station A would align its spare Sacred Tripod to its own one, put it on a gimbal-mount, and send it by rocket to station B. B would align its Tripod with the one sent, then let the Tripod go back.
+In a region of space, there were two space stations A and B, at rest with each other. The Sacred Tripod on B was unstable, and required yearly calibration against the more stable Sacred Tripod at A. So station A would align its spare Sacred Tripod to its own one, put it on a gimbal-mount, and send it by rocket to station B. B would align its Tripod with the one sent, then let the Tripod go back.
 
-Years passed, and aliens on station B felt confident that its Tripod doesn’t drift more than $1''$ per year. One day, an asteroid field blocked the straight path, forcing the next shipment to make a big detour around the asteroid field. When it arrived, to their astonishment, it was found that the Tripod on B was clearly misaligned with the Tripod from A. What’s going on?
+As years passed, the aliens on station B grew confident that their Tripod did not drift more than $1''$ per year. One day, an asteroid field blocked the straight path, forcing the next shipment to make a big detour around the asteroid field. When it arrived, to their astonishment, it was found that the Tripod on B was clearly misaligned with the Tripod from A. What could be the cause of this misalignment?
 
-### The day the earth stood still {#sec-foucault-pendulum}
+### The day the Earth stood still {#sec-foucault-pendulum}
 
-One day, the earth stopped spinning. This annoyed the visitors to the science museum, who wanted to see Foucault's pendulum to rotate. To satisfy those visitors, the museum keeper put the pendulum on the top of a bus, and loaded the visitors on the bus, then they started driving around earth at the same speed as how earth used to rotate at that latitude, so that after one day, they returned to the museum. The visitors looked up at the pendulum and was satisfied to see that it indeed has turned.
+One day, the Earth stopped spinning. This annoyed the visitors to the science museum, who wanted to see Foucault's pendulum rotating. To satisfy those visitors, the museum keeper put the pendulum on the top of a bus, and loaded the visitors on the bus, then they started driving around the Earth at the same speed as how the Earth used to rotate at that latitude, so that after one day, they returned to the museum. The visitors looked up at the pendulum and were satisfied to see that it indeed has turned.
 
-To find out how much the pendulum has turned, we divide up the circular trajectory into tiny segments $p_0, p_1, ..., p_n$, then draw tiny triangles $p_0 p_1 N, p_1 p_2 N, ..., p_{n-1} p_n N$, with $N$ being the North Pole. We imagine that, instead of driving around earth in a circle, we drive around the triangle $N \to p_0 \to p_1 \to N$, then the triangle $N \to p_1 \to p_2 \to N$, etc.
+To find out how much the pendulum has turned, we divide up the circular trajectory into tiny segments $p_0, p_1, ..., p_n$, then draw tiny triangles $p_0 p_1 N, p_1 p_2 N, ..., p_{n-1} p_n N$, with $N$ being the North Pole. We imagine that, instead of driving around the Earth in a circle, we drive around the triangle $N \to p_0 \to p_1 \to N$, then the triangle $N \to p_1 \to p_2 \to N$, etc.
 
-When we drive around $N \to p_0 \to p_1 \to N$, the bus makes three turns, and each time the pendulum turns by an opposite amount relative to the bus. After three turns, the bus has turned the same angle as the sum of three external angles of the triangle. By spherical trigonometry, we know that this is equal to $2\pi - 4\pi\frac{\text{area of triangle $p_0 p_1 N$}}{\text{surface area of earth}}$. Thus, the pendulum has turned relative to the bus by $-2\pi + 4\pi\frac{\text{area of triangle $p_0 p_1 N$}}{\text{surface area of earth}}$. The $-2\pi$ part is not relevant as it is just a full cycle, leaving us with just $\frac{\text{area of triangle $p_0 p_1 N$}}{\text{surface area of earth}}$.
+When we drive around $N \to p_0 \to p_1 \to N$, the bus makes three turns, and each time the pendulum turns by an opposite amount relative to the bus. After three turns, the bus has turned the same angle as the sum of three external angles of the triangle. By spherical trigonometry, we know that this is equal to $2\pi - 4\pi\frac{\text{area of triangle $p_0 p_1 N$}}{\text{surface area of the Earth}}$. Thus, the pendulum has turned relative to the bus by $-2\pi + 4\pi\frac{\text{area of triangle $p_0 p_1 N$}}{\text{surface area of the Earth}}$. The $-2\pi$ part has no effect, as it is a full cycle, leaving us with $\frac{\text{area of triangle $p_0 p_1 N$}}{\text{surface area of the Earth}}$.
 
-Therefore, adding them up, we find that after driving around an arbitrary cycle on earth, the pendulum would have turned by
+Therefore, by adding them up, we find that after driving around an arbitrary cycle on the Earth, the pendulum would have turned by
 
-$$4\pi\frac{\text{area of the cycle}}{\text{surface area of earth}}$$
+$$4\pi\frac{\text{area of the cycle}}{\text{surface area of the Earth}}$$
 
-We can turn this insight into a formula for Fermi--Walker transport on earth.
+We can turn this insight into a formula for Fermi--Walker transport on the Earth.
 
-First, we scale the earth so that its radius is one. Now set up the coordinate system $\phi, \theta$, where $\phi$ is the latitude (zero at equator, $\pi/2$ at the North Pole) and $\theta$ the longitude. At each point on earth (except the two poles) we set up a local frame with two unit vectors $\hat\phi, \hat\theta$. One very important fact is that this local frame is not parallel-transported[^no-local-frame]. If you try to drive in a small circle around the North Pole, while always pointing in the direction of $\hat\theta$, you would feel a strong centrifugal force pushing against your steering wheel. Centrifugal forces and all other "inertial forces" are nature telling you that you are not being parallel-transported.
+First, we scale the Earth so that its radius is one. Now set up the coordinate system $\phi, \theta$, where $\phi$ is the latitude (zero at equator, $\pi/2$ at the North Pole) and $\theta$ the longitude. At each point on the Earth (except the two poles) we set up a local frame with two unit vectors $\hat\phi, \hat\theta$. One very important fact is that this local frame is not parallel-transported[^no-local-frame]. If you try to drive in a small circle around the North Pole, while always pointing in the direction of $\hat\theta$, you would feel a strong centrifugal force pushing against your steering wheel. Centrifugal forces and all other "inertial forces" are nature's way of telling you that you are not being parallel-transported.
 
 [^no-local-frame]: Indeed, there is no way to cover the space with parallel-transported local frames, because the space is curved, and therefore if you try to transport a local frame in a cycle back to its starting point, it would have rotated against itself. To be a curved space is *equivalent* to have no system of parallel-transported local frame, and curvature measures the amount of rotation-against-itself that happens when you transport a local frame in an infinitesimal circle.
 
-Consider two points on earth $p_1 = (\phi, \theta), p_2 = (\phi + \delta \phi, \theta + \delta\phi)$, infinitesimally close. Since the surface area of a spherical cap around latitude $\theta$ is $\frac{1 -\sin\theta}{2}$ that of the whole sphere[^archimedes-hat-box], the area of a thin spherical triangle with vertices $p_1, p_2, N$ is 
+Consider two infinitesimally close points on the Earth, $p_1 = (\phi, \theta)$ and $p_2 = (\phi + \delta \phi, \theta + \delta\phi)$. Since the surface area of a spherical cap around latitude $\theta$ is $\frac{1 -\sin\theta}{2}$ that of the whole sphere[^archimedes-hat-box], the area of a thin spherical triangle with vertices $p_1, p_2, N$ is 
 
-$$4\pi\frac{1 -\sin\theta}{2} \times \frac{\delta\phi}{2\pi} = (1-\sin\theta)\delta\theta$$
+$$4\pi\frac{1 -\sin\theta}{2} \times \frac{\delta\phi}{2\pi} = (1-\sin\theta)\delta\phi$$
 
 Thus, if we parallel transport a vector *clockwise* in the order $p_1 \to N \to p_2 \to p_1$, then the vector would turn *counterclockwise* by $-(1 -\sin\theta) \delta\phi$.
 
 [^archimedes-hat-box]: This is immediate from [Archimedes' hat-box theorem](https://mathworld.wolfram.com/ArchimedesHat-BoxTheorem.html), which is the basis of the [Lambert cylindrical equal-area projection](https://en.wikipedia.org/wiki/Lambert_cylindrical_equal-area_projection).
 
-Now, consider two ways to move the pendulum from $p_1$ to $p_2$. We can transport it directly, or detour through the North Pole. If we detour through the North Pole like $p_1 \to N \to p_2$, then by the same argument as the "polar bear puzzle"[^polar-bear-puzzle], you see that the pendulum has rotated counterclockwise *relative to the local frame* by $-\delta\phi$. Then we complete its journey with $p_2 \to p_1$, to create an *absolute*[^relative-vs-absolute-rotation] full $-(1 -\sin\theta) \delta\phi$ rotation. Therefore, moving it $p_2 \to p_1$ have created a rotation *relative* to the local frame by $\sin\theta \delta\phi$. Since we are actually moving it $p_1 \to p_1$, we reverse the sign, and obtain our Fermi--Walker transport equation (earthbound version):
+Now, consider two ways to move the pendulum from $p_1$ to $p_2$. We can transport it directly, or detour through the North Pole. If we detour through the North Pole like $p_1 \to N \to p_2$, then by the same argument as the "polar bear puzzle"[^polar-bear-puzzle], you see that the pendulum has rotated counterclockwise *relative to the local frame* by $-\delta\phi$. Then we complete its journey with $p_2 \to p_1$, to create an *absolute*[^relative-vs-absolute-rotation] full $-(1 -\sin\theta) \delta\phi$ rotation. Therefore, moving it $p_2 \to p_1$ has created a rotation *relative* to the local frame by $\sin\theta \delta\phi$. Since we are actually moving it $p_1 \to p_2$, we reverse the sign, and obtain our Fermi--Walker transport equation (the Earthbound version):
 
 $$
 \delta(\text{vector angle}) = -\sin\theta \delta\phi
@@ -737,11 +745,13 @@ $${#eq-fermi-walker-sphere}
 
 [^relative-vs-absolute-rotation]: Relative rotation means that we are measuring the orientation of the vector relative to the local frame. However, since the frames themselves are not parallel-transports of each other, relative rotation is arbitrary and not a fact of geometry, but a fact of convenience. If you move the vector back to its starting point, however, there is absolutely no dispute about how much it has rotated, and it does not depend on any system of local frames. You just have to compare the vector against itself.
 
-Applied to the Foucault pendulum problem, we find that it rotates clockwise by $2\pi \sin\theta$ every day, and it takes $\frac{1}{\sin\theta}$ days to make a full rotation. At the Paris Observatory, the original place where Foucault made his experiment in 1851, we have
+Applied to the Foucault pendulum problem, we find that it rotates clockwise by $2\pi \sin\theta$ every day, and it takes $\frac{1}{\sin\theta}$ days[^sidereal-days] to make a full rotation. At the Paris Observatory, the original place where Foucault made his experiment in 1851, we have
 
 $$\theta = \mathrm{48^\circ 52' N}, \quad \text{period} = \frac{\mathrm{23h56'}}{\sin \theta} \approx \mathrm{31\,h\,50\,min}$$
 
-If a museum visitor can stay for 5 minutes at the pendulum, then they would see the pendulum complete $1/382$ of a cycle. Typical museums would put up about 400 wooden blocks in a cycle, to be knocked down by the pendulum. This allows each visitor to see at least one block being knocked down.
+[^sidereal-days]: To be precise, this is a sidereal day, the time it takes for the Earth to rotate one cycle relative to distant stars. It is shorter than a solar day.
+
+If a museum visitor can stay for 5 minutes at the pendulum, then they would see the pendulum complete $\approx 1/382$ of a cycle. Typical museums would put up about 400 wooden blocks in a cycle, to be knocked down by the pendulum. This allows each visitor to see at least one block being knocked down.
 
 ## History notes
 
@@ -759,11 +769,11 @@ The history of the Wigner rotation is winding and complicated. Here is a brief s
 * 1932: Walker rediscovered the Fermi--Walker transport. [@walkerXXIRelativeCoordinates1932]
 * 1939: Wigner rediscovered the Wigner rotation. [@wignerUnitaryRepresentationsInhomogeneous1939]
 
-Pedagogical attempts to present the Foucault pendulum and the Wigner rotation has been many (and mysteriously, never ending up in undergrad textbooks), such as [@criadoThomasRotationFoucault2009]. Tevian Drey has written an entire textbook [@drayGeometrySpecialRelativity2021] treating both special and general relativity in the same geometric style. For a summary paper of the textbook, see [@drayGeometryRelativity2017].
+Pedagogical attempts to present the Foucault pendulum and the Wigner rotation have been numerous, such as [@criadoThomasRotationFoucault2009], but perhaps due to the decade-long latency in academic publishing, none has yet made it into the usual undergrad textbooks. Tevian Dray has written an entire textbook [@drayGeometrySpecialRelativity2021] treating both special and general relativity in the same geometric style. For a summary paper of the textbook, see [@drayGeometryRelativity2017].
 
 ### Amusing quotes from [@walterNonEuclideanStyleMinkowskian1999]
 
-> \[After 1907\] Minkowski never again referred to a manifold as both four-dimensional and non-Euclidean. Along with the problematic label, the geometric interpretation of velocity vectors likewise vanishes from view in Minkowski's subsequent writings. Felix Klein, for one, regretted the change; in his opinion, Minkowski later hid from view his "innermost mathematical, especially invariant-theoretical thoughts" on the theory of relativity (Klein 1927, 75).
+> \[After 1907\] Minkowski never again referred to a manifold as both four-dimensional and non-Euclidean. Along with the problematic label, the geometric interpretation of velocity vectors likewise vanishes from view in Minkowski's subsequent writings. Felix Klein, for one, regretted the change; in his opinion, Minkowski later hid from view his "innermost mathematical, especially invariant-theoretical thoughts" on theory of relativity (Klein 1927, 75).
 > 
 >  Planck lavished praise on Einstein for his modification of the concept of time:
 > 
@@ -777,7 +787,7 @@ Pedagogical attempts to present the Foucault pendulum and the Wigner rotation ha
 
 ### The history of this document
 
-During high school, I was in the physics Olympiad team. One afternoon I got into an argument with someone about what happens if you take a square $[0, 1] \times [0, 1]$, boost it by $(v, 0)$, then boost it by $(0, v')$ within the boosted frame. By the [velocity addition formula](https://en.wikipedia.org/wiki/Velocity-addition_formula#Standard_configuration), the square would be moving at 3-velocity
+During high school, I was in the physics Olympiad team. One afternoon, I got into an argument with someone about what happens if you take a square $[0, 1] \times [0, 1]$, boost it by $(v, 0)$, and then boost it by $(0, v')$ within the boosted frame. By the [velocity addition formula](https://en.wikipedia.org/wiki/Velocity-addition_formula#Standard_configuration), the square would move at 3-velocity
 
 $$
 (v, \frac{v'\sqrt{1-v^2}}{1+vv'})
@@ -785,7 +795,7 @@ $$
 
 If $v' = \frac{v}{\sqrt{1-v^2}-v^2}$, then the square would be moving at $(v, v)$. 
 
-Then, the paradox. He thought that obviously, by the length contraction, the square should look like a diamond:
+Then, the paradox. He argued that, by length contraction along the diagonal, the square should look like a diamond:
 
 ```{=html}
 <div style="display: flex; justify-content: center;">
@@ -818,7 +828,7 @@ document.querySelectorAll('.diamond-sketch').forEach((elem) => {
 </script>
 ```
 
-I objected that in the boosted frame, the square looks like a rectangle moving upwards. The rectangle is made of a bunch of line-segments all parallel to the $y'$-axis. Now, each line-segment is moving in the $y'$-direction, and $y'$ is parallel to $y$ (since the perpendicular direction is preserved under boosting), we know that each moving line-segment would still be a line-segment parallel to the $y$-axis in the resting frame, and still moving in the $y$-direction (just slower). Therefore, the whole square would look like a parallelogram in the resting frame, with one side parallel to the $y$-axis, and the other side oblique to the $x$-axis.
+I objected that in the boosted frame, the square looks like a rectangle moving upwards. Decompose the rectangle into a bundle of line-segments, all parallel to the $y'$-axis. Now, each line-segment is moving in the $y'$-direction, and $y'$ is parallel to $y$ (since the perpendicular direction is preserved under boosting), we know that each moving line-segment would still be a line-segment parallel to the $y$-axis in the resting frame, still moving in the $y$-direction -- just slower. Therefore, in the resting frame, the whole square would look like a parallelogram, with two sides parallel to the $y$-axis, and the other two sides oblique to the $x$-axis.
 
 ```{=html}
 <div class="flex-container">
@@ -840,38 +850,40 @@ During my third undergraduate year, I took a course in theoretical physics, whic
 
 Suffice to say that, after some hours walking and staring at the night sky, I figured out that it is nothing else than hyperbolic geometry, and nothing more paradoxical than the fact that the external angle of a hyperbolic triangle is equal to $2\pi + (\text{area of the triangle})$, which I remember from hyperbolic geometry.
 
-And that is merely the same idea as the fact that, if you walk from the north pole to the equator, then walk $1/4$ of the way around the earth, then walk back to the north pole, then you have covered a triangle with external angle $\frac 32 \pi$. In general, the external angle of a triangle on the unit sphere is $2\pi - (\text{area of the triangle})$, the perfect opposite to hyperbolic geometry.
+This is the old poler-bear puzzle again. If you walk from the North Pole to the equator, then walk \(1/4\) of the way around the Earth, and finally walk back to the North Pole, you will have traversed a triangle with an external angle of \(\frac 32 \pi\). In general, the external angle of a triangle on the unit sphere is $2\pi - (\text{area of the triangle})$, the perfect opposite to the case in hyperbolic geometry.
 
-Half-mad, I ran home to search online and smashed all the keywords I knew must be there: "special relativity rotation hyperbolic triangle Foucault pendulum". My disappointment was swift and certain: This was repeatedly discovered by people all over the world in the past hundred years.
+Half-mad, I ran home and smashed into the search engine all the keywords I knew must be there: "special relativity rotation hyperbolic triangle Foucault pendulum". My disappointment was swift and certain: This had been repeatedly discovered over the past hundred years.
 
-Bitterly I searched every undergraduate physics textbook in the school library. None included it. The standard textbook [@goldsteinClassicalMechanics2008, Section 7.3] went on a three-page long computation and found that, indeed, we get a rotation matrix:
+Bitterly, I searched every undergraduate physics textbook in the school library. None included it. The standard textbook [@goldsteinClassicalMechanics2008, Section 7.3] went on a three-page long computation and concluded that, indeed, we obtain a rotation matrix:
 
 > The spatial rotation resulting from the successive application of two nonparallel Lorentz transformations has been declared every bit as paradoxical as the more frequently discussed apparent violations of common sense, such as the so-calIed "twin paradox". But the present apparent paradox has important applications, especially in atomic physics, and therefore has been abundantly verified experimentally.
 
 From that moment on I swore that I would finally present it in a way so simple and direct that it will never be forgotten. I had found the way, and it remained to publicize to the world.
 
-There was little use in writing another paper about it, as despite the many papers over the century, somehow this effect did not end up in the physics textbooks. I could write a blog post about it, but mere words and figures seemed insufficient. I tried promoting this idea to various physics popularizers on YouTube, but none picked it up. What I needed was interactive animation. Javascript however defeated me, and I kept it in the backlog until now. With ChatGPT I could finally write javascript tolerably for my sanity, and so, here it is.
+There was little use in writing another paper about it, as despite the many papers over the century, somehow this effect did not end up in the physics textbooks. I considered writing a blog post about it, but mere words and figures seemed insufficient. I tried promoting this idea to various physics popularizers on YouTube, but none picked it up. What I needed was interactive animation, but JavaScript defeated me,so I kept it in the backlog until now. With ChatGPT I could finally write JavaScript without losing all my sanity, and so, here it is.
 
 ## Some bonus content
 
 ### Finding the Wigner rotation in one line
 
-If you know Lie algebra, then the Wigner rotation is essentially immediate. Just calculate the commutator:
+If you know Lie algebra, then the Wigner rotation is immediate: calculate the commutator.
 
 $$
 [K_x, K_y] := K_x K_y - K_y K_x = \begin{bmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix}
 $$
 
-which is the generator of rotation in the $xy$ plane.
+This is the generator of rotation in the $xy$ plane.
 
 ### Go anywhere with just five boosts
 
-Given a rocket that can only boost, but not rotate, you can still make it rotate by Wigner rotation. Now, suppose you must perform an arbitrary Lorentz transform, how many boosts do you need? In general, if you have a Lorentz-transformed rocket, you can boost it with a carefully aimed boost so that it comes to rest. Then, it remains to use Wigner rotation to rotate it back to the starting position.
+Given a rocket that can boost in any direction, but not rotate, you can still make it rotate by Wigner rotation. If you must perform an arbitrary Lorentz transformation, how many boosts do you need?
 
-With a cycle of three boosts, the Wigner rotation angle is equal to the angle defect of the hyperbolic triangle, which can take any value in $(0, \pi)$ (you can't one with zero inner angle sum, but you can get arbitrarily close). With a cycle of four boosts, we can cover the $\pi$ case as well, since a hyperbolic square can have any angle defect in $(0, 2\pi)$.
+In general, if you have a Lorentz-transformed rocket, you can apply a carefully aimed boost so that it comes to rest, then apply Wigner rotation to return it back to the starting position.
 
-In summary: almost any Lorentz transform can be obtained in four boosts, except those requiring a 180-degree rotation, which need five boosts.
+With a cycle of three boosts, the Wigner rotation angle is equal to the angle defect of the hyperbolic triangle, which can take any value in $(0, \pi)$ (you can't have one with zero inner angle sum, but you can get arbitrarily close). With a cycle of four boosts, we can cover the $\pi$ case as well, since a hyperbolic square can have any angle defect in $(0, 2\pi)$.
 
-[@lightmanProblemBookRelativity1975, pp. 153--158] shows that every Lorentz transform can be done in three boosts, except "180-degree screws", which require four. I have never found a good geometric way to demonstrate this.
+In summary: almost any Lorentz transformation can be obtained in four boosts, except those requiring a 180-degree rotation, which need five boosts.
+
+[@lightmanProblemBookRelativity1975, pp. 153--158] shows that every Lorentz transformation can be done in three boosts, except "180-degree screws", which require four. I have never found a satisfactory geometric method to demonstrate this, despite thinking on and off about it several times over the years.
 
 > Problem 1.28. What is the least number of pure boosts which generate an arbitrary Lorentz transformation? Note: This is a difficult problem!
