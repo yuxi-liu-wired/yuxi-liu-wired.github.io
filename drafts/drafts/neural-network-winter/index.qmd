@@ -9,16 +9,13 @@ format:
     html:
         toc: true
 
-description: "What really happened."
+description: "What really killed off the neural networks?"
 # image: "figure/"
 
-status: "finished"
-confidence: "highly likely"
+status: "wip"
+confidence: "likely"
 importance: 10
 ---
-
-The Neural Network Winter
-sections: 
 
 ## The enigma of Marvin Minsky
 
@@ -53,11 +50,89 @@ the literal lines vs what is written between the lines. Cite Papert's 1980s pape
 
 ## What does the *Perceptron* book really say? {#sec-perceptron-book}
 
-brief summary of the main theoretical structure and theorems
+### Mathematical preliminaries
 
-## The tribulations of Frank Rosenblatt
+Definitions
 
-### 
+### Some mathematical results
+
+Chapter X: topological computing
+
+### Non-mathematical arguments
+
+Nobody can dispute with the mathematical results. However, the significance of the book does not hinge on the mathematical results, but rather the purported practical implications of such results.
+
+Speaking on official record, Marvin Minsky insisted that he did not set out to kill neural networks, only putting it back to its proper place by showing what they cannot do. Restricted to the context of 1960s neural networks, it was an accurate assessment. Without backpropagation, neural network researchers could not train more than 2 layers, and most often they limited themselves to a single layer of trainable parameters, though they experimented with hand designed or random layers in front and behind the trainable layer. [Rosenblatt empirically investigated](##sec-rosenblatt) learning rules for two trainable layers in a four-layered neural network as early as 1962, but backpropagation only became known to most of neural network researchers in the 1980s.
+
+During the 1980s, as neural networks rose again into prominence, Seymour Papert and Marvin Minsky got together to get the book republished with a new chapter specifically used to address the new neural network.
+
+In the same year, Seymour Papert wrote a solo paper [@TODO One AI or many? (Papert, 1988)], which shows that his opinion is the same as that of Minsky.
+
+The Society of Mind hypothesis is the exact opposite idea as "One big net for everything" [@TODO]. Instead of one big neural network for everything (Schmidhuber's hypothesis), or $\sim 6$ neural networks for everything (my hypothesis), Marvin Minsky and Seymour Papert argued for thousands of neural networks for everything.
+
+[Insert quotes here]
+
+In short, they believed that the brain is a network of large modules, each module is a network of smaller modules, and so on, until we bottom out to the simplest modules each consisting of perhaps tens of thousands of neurons. They did not give precise numerical estimates for how many -- it would be imprudent to -- but from my impression of reading The Society of Mind, they believed it had to have at least a thousand, arranged in at least 4 levels deep.
+
+The agenda, once understood, unmasks the moral conviction behind their theoretical arguments.
+
+Why do they argue vigorously against the possibility of scaling up more than two layers? They argued without mathematical justification, because it is extremely difficult to say anything generic about deep neural networks. After all, two layers is enough for approximating any function, so to say anything interesting about such networks require carefully restricting its architecture. The mathematical difficulty was severe enough that even now we do not have a good theory of deep learning. Why then, without justification, do they still vigorously argue against deep learning?
+
+> [intuition that it's a sterile extension]
+
+They had to, because they had to argue that generic deep learning does not scale.
+
+Why?
+
+Because, if generic deep learning scales up to arbitrary sizes, then the whole basis of a society of mind collapses. The brain would become one big network, not thousands of tiny networks.
+
+Minsky and Papert admitted that neural networks are computationally universal. It is foolish to deny it, as even [@mccullochLogicalCalculusIdeas1943] argued that neural networks are universal.[^turing-complete-mcculoch-pitts] So what did they really mean by this objection?
+
+[^turing-complete-mcculoch-pitts]:
+    > every net, if furnished with a tape, scanners connected to afferents, and suitable efferents to perform the necessary motor-operations, can compute only such numbers as can a Turing machine. ... If any number can be computed by an organism, it is computable by these definitions, and conversely.
+
+> [quote about how it is trivial to say that it's computationally universal]
+
+They meant that, while any simple task that a human can do is solved by some neural network, there is no neural network that can solve every simple task that a human can do. Instead, each task has its own peculiarities, and requires a peculiar network that can learn to solve *that particular task* efficiently, but no other task. A generic network must fail -- it must fail to converge, or converge exponentially slowly, or converge to a bad local minima, or fail in some other way. It simply must fail, in order to save the society of mind.
+
+### Fellow travelers of Minsky
+
+In the field of psychology, the neural network vs Minsky divide corresponds quite well with the behaviorism vs cognitivism divide.
+
+The cognitivist revolution was led by Noam Chomsky against behaviorism. It lasted around 1950s to 1960s, ending with the victory of cognitivism in "higher psychology", such as linguistics, though behaviorism survived respectably to this day in other aspects of psychology, such as addiction studies and animal behavior.
+
+As we expect, Chomsky rejected statistical language learning right until the end.
+
+[On Chomsky and the two cultures of statistical learning]
+
+In the early 1990s, there was a bitter controversy that is all but forgotten nowadays: the past tense debate. On one side were the connectionists, and on the other side were the cognitivists. Tellingly, both Steven Pinker and Gary Marcus were on the side of cognitivists [The past and future of the past tense]. Steven Pinker is most famous for his other books like The Blank Slate, which applies Chomsky'S linguistics to general psychology.
+
+Similarly, Gary Marcus has been consistently critical of neural network language models since 1992 [Overregularization in language acquisition]. His theory of intelligence is essentially Chomsky's: neural networks can be intelligent, but only if they implement symbolic manipulation rules. Furthermore, a lot of symbolic rules must be built in at birth, as the "poverty of stimulus".[^gary-marcus-poverty-of-stimulus] This theory is described in detail in *The Algebraic Mind* [@TODO]. In view of this history, we would be unsurprised by his recent criticisms of deep learning [Deep learning: A critical appraisal] and [large language models](https://www.technologyreview.com/2020/08/22/1007539/gpt3-openai-language-generator-artificial-intelligence-ai-opinion/), [repeatedly](https://www.theatlantic.com/technology/archive/2023/03/ai-chatbots-large-language-model-misinformation/673376/).
+
+[^gary-marcus-poverty-of-stimulus]:
+    The "poverty of stimulus" is a critical argument used by Chomsky to argue that humans must have a lot of stuff at birth, because there is too little after-birth stimulus for humans to learn languages. A very similar argument is used by Gary Marcus, as seen in [Deep learning: A critical appraisal]
+
+    > Human beings can learn abstract relationships in a few trials. If I told you that a schmister was a sister over the age of 10 but under the age of 21, perhaps giving you a single example, you could immediately infer whether you had any schmisters, whether your best friend had a schmister, whether your children or parents had any schmisters, and so forth. (Odds are, your parents no longer do, if they ever did, and you could rapidly draw that inference, too.) In learning what a schmister is, in this case through explicit definition, you rely not on hundreds or thousands or millions of training examples, but on a capacity to represent abstract relationships between algebra-like variables. Humans can learn such abstractions, both through explicit definition and more implicit means (Marcus, 2001). Indeed even 7-month old infants can do so, acquiring learned abstract language-like rules from a small number of unlabeled examples, in just two minutes.
+
+## The tribulations of Frank Rosenblatt {#sec-rosenblatt}
+
+In the early days of AI, there were mainly three camps: cybernetics, symbolic system, and neural networks.
+
+The founding metaphor of the cybernetic camp was that intelligence is adaptive analog signal processing: Fourier transforms, Kalman filtering, PID control, linear predictive coding, and such. I once read [Gods and Golems Inc], in which Wiener sketched out an analog signal processing circuit that performs self-reproduction. Essentially, it was a quine in analog. The cybernetic camp was essentially the school of Norbert Wiener.
+
+The founding metaphor of the symbolic system camp was that intelligence is symbolic manipulation using preprogrammed symbolic rules: logical inference, heuristic tree search, list processing, syntactic trees, and such. The symbolic camp was not strongly centered, though it had key players like Alan Turing, John McCarthy, Herbert Simon, and Marvin Minsky.
+
+[Insert pictures here from the book by Herbert Simon on Human Problem Solving, and images from the CYC project papers]
+
+The founding metaphor of the neural network camp was that intelligence is what the brain does, and the brain is a network of units each with only a few parameters adjusted by learning. Now that neural networks are in the hopes and fear of every thinking person, such description seems trite, but it was once the astonishing hypothesis held by only a few. In the days before 1960, there were several key players in the neural network camp, but among them, the most famous and influential one is Frank Rosenblatt.
+
+### Mark I
+
+
+
+### Tobermory
+
+The last 
 
 ## The backstory of backpropagation
 
