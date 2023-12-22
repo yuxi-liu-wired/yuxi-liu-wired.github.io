@@ -1,0 +1,107 @@
+---
+title: "The Neural Network Winter"
+author: "Yuxi Liu"
+date: "2023-12-21"
+date-modified: "2023-12-21"
+
+categories: [AI, economics, history]
+format:
+    html:
+        toc: true
+
+description: "What really happened."
+# image: "figure/"
+
+status: "finished"
+confidence: "highly likely"
+importance: 10
+---
+
+The Neural Network Winter
+sections: 
+
+## The enigma of Marvin Minsky
+
+In an 1993 interview, Robert Hecht-Nielsen described how Minsky stood in relation with the neural network community [@rosenfeldTalkingNetsOral2000, pages 303-305]:
+
+> Minsky had gone to the same New York "science" high school as Frank Rosenblatt, a Cornell psychology Ph.D. whose "perceptron" neural network pattern recognition machine was receiving significant media attention. The wall-to-wall media coverage of Rosenblatt and his machine irked Minsky. One reason was that although Rosenblatt's training was in "soft science," his perceptron work was quite mathematical and quite sound—turf that Minsky, with his "hard science" Princeton mathematics Ph.D., didn't feel Rosenblatt belonged on. Perhaps an even greater problem was the fact that the heart of the perceptron machine was a clever motor-driven potentiometer adaptive element that had been pioneered in the world's first neurocomputer, the "SNARC", which had been designed and built by Minsky several years earlier! In some ways, Minsky's early career was like that of Darth Vader. He started out as one of the earliest pioneers in neural networks but was then turned to the dark side of the force (AI) and became the strongest and most effective foe of his original community. This view of his career history is not unknown to him. When he was invited to give the keynote address at a large neural network conference in the late 1980s to an absolutely rapt audience, he began with the words: "I am not the Devil!"
+
+However, it appears he had changed his mind later. As recounted by Terence Sejnowski in [@sejnowskiDeepLearningRevolution2018, pages 256--258]:
+
+> I was invited to attend the 2006 Dartmouth Artificial Intelligence Conference, “AI\@50,” a look back at the seminal 1956 Summer Research Project on artificial intelligence held at Dartmouth and a look forward to the future of artificial intelligence. ... These success stories had a common trajectory. In the past, computers were slow and only able to explore toy models with just a few parameters. But these toy models generalized poorly to real-world data. When abundant data were available and computers were much faster, it became possible to create more complex statistical models and to extract more features and relationships between the features.
+> 
+> In his summary talk at the end of the conference \[The AI\@50 conference (2006)\], Marvin Minsky started out by saying how disappointed he was both by the talks and by where AI was going. He explained why: “You’re not working on the problem of general intelligence. You’re just working on applications." ...
+> 
+> There was a banquet on the last day of AI\@50. At the end of the dinner, the five returning members of the 1956 Dartmouth Summer Research Project on Artificial Intelligence made brief remarks about the conference and the future of AI. In the question and answer period, I stood up and, turning to Minsky, said: “There is a belief in the neural network community that you are the devil who was responsible for the neural network winter in the 1970s. Are you the devil?” Minsky launched into a tirade about how we didn’t understand the mathematical limitations of our networks. I interrupted him—“Dr. Minsky, I asked you a yes or no question. Are you, or are you not, the devil?” He hesitated for a moment, then shouted out, “Yes, I am the devil!”
+
+What are we to make of the enigma of Minsky? Was he the devil, or was he not the devil? Who
+
+### The education of Minsky
+
+SNARC, PhD thesis
+
+@sec-mcculloch-pitts
+
+### Meeting Seymour Papert
+
+The book is one of those things that have passed into the stuff of legend: often quoted, rarely read. However, for its historical importance, I have actually read the book. To save you the trouble of reading the book, I will describe it in @sec-perceptron-book so you don't have to.
+
+### Reading between the lines
+
+the literal lines vs what is written between the lines. Cite Papert's 1980s paper about "alternative ways of knowing" -- a brief description of how he and others tried to bring postmodernism and social justice to hard sciences, and then describe how it all blew up in the 1990s Science Wars and the Sokal affair.
+
+
+## What does the *Perceptron* book really say? {#sec-perceptron-book}
+
+brief summary of the main theoretical structure and theorems
+
+## The tribulations of Frank Rosenblatt
+
+### 
+
+## The backstory of backpropagation
+
+### Widrow
+
+> No, no, no. We had failed to develop algorithms beyond what we now call Madaline I , the mst algorithm that we developed for the Madaline. The Madaline had an adaptive first layer and a fixed-logic second layer. What Rosenblatt had was a fixed-logic mst layer and an adaptive-logic second layer or output layer. Now, it is easy to adapt on output layer. But it's very difficult to adapt a hidden layer. We didn't call it a hidden layer; we called it the mst layer. We could adapt an adaptive mst layer with a Axed second layer as long as we knew what the second layer was. But we never succeeded in developing an algorithm for adapting both layers, so that the second layer is not fixed and both layers are adaptive. It wasn't that we didn't try. I mean we would have given our eye teeth to come up with something like backprop.
+> 
+> Backprop would not work with the kind of neurons that we were using because the neurons we were using all had quantizers that were sharp. In order to make backprop work, you have to have sigmoids; you have to have a smooth nonlinearity, a differentiable nonlinearity. Otherwise, no go. And no one knew anything about it at that time. This was long before Paul Werbos. Backprop to me is almost miraculous.
+
+If this were an individual case, then I could have dismissed it as Widrow being misled by his background. Before entering a PhD program Widrow took an internship at the military [@widrowOralHistoryBernard1997]:
+
+> ... the sky was divided up into a grid, with one mile by one mile regions, and all the computer sensed was that there was a target within that one mile by one mile square. ... The radar pulses were transmitted periodically, and then periodically you got samples of the flight path. Say you take a piece of graph paper and draw and nice, smooth flight path for an airplane, and then at uniform points in time put a mark on the actual path based on the radar sample. If you don't show anybody that nice, smooth line but only the sequence of grid squares that the airplane was in, one could still reconstruct the smooth track.
+
+The problem of reconstructing a smooth flight path from discretized radar signals got him interested in quantization, and he did his PhD thesis (1954) in the statistical theory of quantization noise. In the interview 43 years later, he called it "the best piece of work I ever did in my whole life". He is still the world expert on quantization noise, and wrote an entire textbook on quantization noise [@widrowQuantizationNoiseRoundoff2008].
+
+So regarding this background, one might be tempted to say that Widrow was misled by his infatuation with quantization, and attempted to use quantized neural networks. However, this does not explain why all the *other* pioneers went down the same wrong path.
+
+### McCulloch and Pitts {#sec-mcculloch-pitts}
+
+In the famous paper [@mccullochLogicalCalculusIdeas1943], McCulloch and Pitts proposed that
+
+> Because of the “all-or-none” character of nervous activity, neural events and the relations among them can be treated by means of propositional logic. It is found that the behavior of every net can be described in these terms, with the addition of more complicated logical means for nets containing circles; and that for any logical expression satisfying certain conditions, one can find a net behaving in the fashion it describes.
+
+The McCulloch and Pitts paper is difficult to read, and is rooted in early 20th century mathematical logic. If you have seen [*Principia Mathematica*](https://en.wikipedia.org/wiki/Principia_Mathematica), you would notice that the McCulloch and Pitts paper resembles it in its abstruse notation. This is not coincidental, as the paper directly cites *Principia Mathematica*.
+
+![The infamous proof of 1+1=2 in Principia Mathematica](figure/principia_mathematica.png)
+
+![](figure/principia_mathematica_McCulloch_and_Pitts.png)
+
+The McCulloch and Pitts paper, like the *Perceptron* book, is something often cited but rarely read. For a good introduction to the McCulloch and Pitts, one cannot do worse than read [@minskyComputationFiniteInfinite1967, Chapter 3], which explicitly designs, neuron by neuron, threshold by threshold, how to construct neural networks that perform various tasks, such as simulating arbitrary Turing machines, process signals, perform additions, etc.
+
+![](figure/minsky_1976_finite_state_machine.png)
+
+![](figure/minsky_1976_serial_binary_addition_network.png)
+
+
+
+### Werbos
+
+> I didn't find a patron. Nobody would support this crazy stuff. It was very depressing. I tried to simplify it. I said, "Look, I'll pullout the backprop part and the multilayer percept ron part." I wrote a paper that was just that -- that was, I felt, childishly obvious. I didn't even use a sigmoid [non-linearity]. I used piecewise linear. I could really rationalize that to the point where it looked obvious. 10 handed that to my thesis committee. I had really worked hard to write it up. They said, "Look, this will work, but this is too trivial and simple to be worthy of a Harvard PhiD. thesis." I might add, at that point they had discontinued support because they were not interested, so I had no money. Approximately at the same time there were scandals about welfare fraud, about how students were getting food. They cut off all that kind of nonsense, so basically I had no money. NO money. Not even money to buy food.
+
+> I spoke to Minsky. I remember I had my [Walter Rosenblith], and I said, "You know, I've got a way now to adapt multilayer perceptrons, and the key is that they're not Heaviside functions; they are differentiable. And I know that action potentials, nerve spikes, are 1 or 0, as in McCulloch-Pitts neurons, but here in this book that I had for my first course in neurophysiology are some actual tracings. If you look at these tracings in Rosenblith, they show volleys of spikes, and volleys are the unit of analysis. This is an argument for treating this activity as differentiable, at least as piecewise linear. If you look at that, I can show you how to differentiate through it." . I went to Minsky for help, but Minsky would not offer help. Minsky basically said, "Look, everybody knows a neuron is a 1-0 spike generator. That is the official model from the biologists. Now, you and I are not biologists. If you and I come out and say the biologists are wrong, and this thing is not producing Is and Os, nobody is going to believe us. It's totally crazy. I can't get involved in anything like this." He was probably right, I guess, but he was clearly very worried about his reputation and his credibility in his community.
+
+
+## Triumph of the scale
+
+
