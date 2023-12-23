@@ -8,6 +8,55 @@ tagged "graveyard of ideas"
 
 Catastrophe theory, fuzzy set theory, modern set theory, 
 
+## Different kinds of time
+
+Physical time, assembly code time, logical time, asynchronous agent time.
+
+A program in source-code form is quite different from it in assembly-code form, which is again very different from it in runtime-form.
+
+I think at least 3 kinds of time is involved here. 
+
+In source-code form (at least, without `GOTO` and `COMEFROM`), time is the line number. In assembly-code form (with so many `GOTO` and `COMEFROM`), time is less clear, perhaps assembly-code time is a bit tangled-up and hard to deal with... and when in runtime-form, time is just the clock cycle.
+
+In trying to program some Internet agents, I saw that time, for internet agents, is just a bit different than it is for humanoids. This is fascinating and a bit disturbing.
+Let me give an example.
+
+Typically, an Internet agent is run as a piece of source code running on a machine ("the server") and communicating with some other program (usually from "the client" machine).
+
+By design, Internet communication protocols are by default stateless, and so, to adapt to such protocols, Internet agents are by default also amnesiac... so how do they remember who they are and what they were doing?
+
+They use continuation-passing style! 
+
+The analogy is this: whenever they finish one piece of communication, they write down everything that has happened so far in the communication, then forget about it. Later, if they are requested to pick up where they left off, the user would tell the agent to load up the record, and suddenly memory is restored.
+
+The agent then communicates with the remote client. The client also have forgotten all about it, but no problem! The record is sent to the client, and suddenly the client remembered where they were.
+
+And just like that, the two amnesiacs reincarnated after being dead for several hours. They will die again after the conversation, only to reincarnate again if the future loads them up.
+So imagine this Memento-like scenario.
+
+```
+You are in front of a fridge. You hear a voice: "If fridge contains sandwich, eat sandwich". You open it and realize that it has no sandwich. You speak to the voice, "ASYNC-WAIT; MAKE-SANDWICH".
+You are in front of a table. You hear a voice: "Make a sandwich and put it into the fridge." You go to the fridge and grab two slices of bread and a slice of cow juice, then made a sandwich and put it into the fridge. You speak to the voice, "RETURN".
+You are showering. How did you get there?? You hear a voice, "If fridge contains sandwich, eat sandwich." You leave shower and go to the fridge. It contains a sandwich. You eat it. You speak to the voice, "RETURN".
+```
+
+Internet agents are functions, so they have arguments. The arguments are the "voices in the head", and "speaking to the voice" is basically returning values. 
+In the jargon, it's not actually "return", but "yield", meaning "returning for now, but please reincarnate me later!" 
+
+Usually, when an agent "yields", it returns not only the computation result, but also a copy of everything that's necessary to replicate its current state, so that if you need to call it up again to continue its work, you just have to send it the copy, and it will "reincarnate". 
+now, in the context, interpret the (first) death of Jesus
+
+```
+45 Now from the sixth hour there was darkness over all the land unto the ninth hour.
+46 And about the ninth hour Jesus cried with a loud voice, saying, Eli, Eli, lama sabachthani? that is to say, My God, my God, why hast thou forsaken me?
+47 Some of them that stood there, when they heard that, said, This man calleth for Elias.
+48 And straightway one of them ran, and took a spunge, and filled it with vinegar, and put it on a reed, and gave him to drink.
+49 The rest said, Let be, let us see whether Elias will come to save him.
+50 Jesus, when he had cried again with a loud voice, YIELDED up the ghost.
+```
+
+Jesus `yield` for our sins. And after that God called `Jesus()`.
+
 ## Jokes and koans
 
 ### The flip side of wisdom
