@@ -1,0 +1,358 @@
+---
+title: "The Neural Network Winter"
+author: "Yuxi Liu"
+date: "2023-12-21"
+date-modified: "2023-12-21"
+
+categories: [AI, economics, history]
+format:
+    html:
+        toc: true
+
+description: "What really killed off the neural networks?"
+# image: "figure/"
+
+status: "wip"
+confidence: "likely"
+importance: 10
+---
+
+## The enigma of Marvin Minsky
+
+In an 1993 interview, Robert Hecht-Nielsen described how Minsky stood in relation with the neural network community [@rosenfeldTalkingNetsOral2000, pages 303-305]:
+
+> Minsky had gone to the same New York "science" high school as Frank Rosenblatt, a Cornell psychology Ph.D. whose "perceptron" neural network pattern recognition machine was receiving significant media attention. The wall-to-wall media coverage of Rosenblatt and his machine irked Minsky. One reason was that although Rosenblatt's training was in "soft science," his perceptron work was quite mathematical and quite sound—turf that Minsky, with his "hard science" Princeton mathematics Ph.D., didn't feel Rosenblatt belonged on. Perhaps an even greater problem was the fact that the heart of the perceptron machine was a clever motor-driven potentiometer adaptive element that had been pioneered in the world's first neurocomputer, the "SNARC", which had been designed and built by Minsky several years earlier! In some ways, Minsky's early career was like that of Darth Vader. He started out as one of the earliest pioneers in neural networks but was then turned to the dark side of the force (AI) and became the strongest and most effective foe of his original community. This view of his career history is not unknown to him. When he was invited to give the keynote address at a large neural network conference in the late 1980s to an absolutely rapt audience, he began with the words: "I am not the Devil!"
+
+However, it appears he had changed his mind later. As recounted by Terence Sejnowski in [@sejnowskiDeepLearningRevolution2018, pages 256--258]:
+
+> I was invited to attend the 2006 Dartmouth Artificial Intelligence Conference, “AI\@50,” a look back at the seminal 1956 Summer Research Project on artificial intelligence held at Dartmouth and a look forward to the future of artificial intelligence. ... These success stories had a common trajectory. In the past, computers were slow and only able to explore toy models with just a few parameters. But these toy models generalized poorly to real-world data. When abundant data were available and computers were much faster, it became possible to create more complex statistical models and to extract more features and relationships between the features.
+> 
+> In his summary talk at the end of the conference \[The AI\@50 conference (2006)\], Marvin Minsky started out by saying how disappointed he was both by the talks and by where AI was going. He explained why: “You’re not working on the problem of general intelligence. You’re just working on applications." ...
+> 
+> There was a banquet on the last day of AI\@50. At the end of the dinner, the five returning members of the 1956 Dartmouth Summer Research Project on Artificial Intelligence made brief remarks about the conference and the future of AI. In the question and answer period, I stood up and, turning to Minsky, said: “There is a belief in the neural network community that you are the devil who was responsible for the neural network winter in the 1970s. Are you the devil?” Minsky launched into a tirade about how we didn’t understand the mathematical limitations of our networks. I interrupted him—“Dr. Minsky, I asked you a yes or no question. Are you, or are you not, the devil?” He hesitated for a moment, then shouted out, “Yes, I am the devil!”
+
+What are we to make of the enigma of Minsky? Was he the devil, or was he not the devil? Who
+
+### The education of Minsky
+
+SNARC, PhD thesis
+
+@sec-mcculloch-pitts
+
+### Meeting Seymour Papert
+
+The book is one of those things that have passed into the stuff of legend: often quoted, rarely read. However, for its historical importance, I have actually read the book. To save you the trouble of reading the book, I will describe it in @sec-perceptron-book so you don't have to.
+
+### Reading between the lines
+
+the literal lines vs what is written between the lines. Cite Papert's 1980s paper about "alternative ways of knowing" -- a brief description of how he and others tried to bring postmodernism and social justice to hard sciences, and then describe how it all blew up in the 1990s Science Wars and the Sokal affair.
+
+
+## What does the *Perceptron* book really say? {#sec-perceptron-book}
+
+### Mathematical preliminaries
+
+Definitions
+
+### Some mathematical results
+
+Chapter X: topological computing
+
+### Non-mathematical arguments
+
+Nobody can dispute with the mathematical results. However, the significance of the book does not hinge on the mathematical results, but rather the purported practical implications of such results.
+
+Speaking on official record, Marvin Minsky insisted that he did not set out to kill neural networks, only putting it back to its proper place by showing what they cannot do. Restricted to the context of 1960s neural networks, it was an accurate assessment. Without backpropagation, neural network researchers could not train more than 2 layers, and most often they limited themselves to a single layer of trainable parameters, though they experimented with hand designed or random layers in front and behind the trainable layer. [Rosenblatt empirically investigated](##sec-rosenblatt) learning rules for two trainable layers in a four-layered neural network as early as 1962, but backpropagation only became known to most of neural network researchers in the 1980s.
+
+During the 1980s, as neural networks rose again into prominence, Seymour Papert and Marvin Minsky got together to get the book republished with a new chapter specifically used to address the new neural network.
+
+In the same year, Seymour Papert wrote a solo paper [@papertOneAIMany1988], which shows that his opinion is the same as that of Minsky.
+
+The Society of Mind hypothesis is the exact opposite idea as "One big net for everything" [@schmidhuberOneBigNet2018]. Instead of one big neural network for everything (Schmidhuber's hypothesis), or $\sim 6$ neural networks for everything (my hypothesis), Marvin Minsky and Seymour Papert argued for thousands of neural networks for everything.
+
+[Insert quotes here]
+
+In short, they believed that the brain is a network of large modules, each module is a network of smaller modules, and so on, until we bottom out to the simplest modules each consisting of perhaps tens of thousands of neurons. They did not give precise numerical estimates for how many -- it would be imprudent to -- but from my impression of reading The Society of Mind, they believed it had to have at least a thousand, arranged in at least 4 levels deep.
+
+The agenda, once understood, unmasks the moral conviction behind their theoretical arguments.
+
+Why do they argue vigorously against the possibility of scaling up more than two layers? They argued without mathematical justification, because it is extremely difficult to say anything generic about deep neural networks. After all, two layers is enough for approximating any function, so to say anything interesting about such networks require carefully restricting its architecture. The mathematical difficulty was severe enough that even now we do not have a good theory of deep learning. Why then, without justification, do they still vigorously argue against deep learning?
+
+> [intuition that it's a sterile extension]
+
+They had to, because they had to argue that generic deep learning does not scale.
+
+Why?
+
+Because, if generic deep learning scales up to arbitrary sizes, then the whole basis of a society of mind collapses. The brain would become one big network, not thousands of tiny networks.
+
+Minsky and Papert admitted that neural networks are computationally universal. It is foolish to deny it, as even [@mccullochLogicalCalculusIdeas1943] argued that neural networks are universal.[^turing-complete-mcculoch-pitts] So what did they really mean by this objection?
+
+[^turing-complete-mcculoch-pitts]:
+    > every net, if furnished with a tape, scanners connected to afferents, and suitable efferents to perform the necessary motor-operations, can compute only such numbers as can a Turing machine. ... If any number can be computed by an organism, it is computable by these definitions, and conversely.
+
+> [quote about how it is trivial to say that it's computationally universal]
+
+They meant that, while any simple task that a human can do is solved by some neural network, there is no neural network that can solve every simple task that a human can do. Instead, each task has its own peculiarities, and requires a peculiar network that can learn to solve *that particular task* efficiently, but no other task. A generic network must fail -- it must fail to converge, or converge exponentially slowly, or converge to a bad local minima, or fail in some other way. It simply must fail, in order to save the society of mind.
+
+## Cognitivism
+
+In the field of psychology, the neural network vs Minsky divide corresponds quite well with the behaviorism vs cognitivism divide.
+
+Among the cognitivists, there is no consensus view about the exact role that neural networks must play. Some, like Fodor and Marr, argue that intelligence is just a hardware-independent program, and brains just happen to use neural networks to run the program due to accidents of evolution and biophysics. Others, like Gary Marcus, grant neural networks a more substantial role in constraining the possible programs -- that is, each neural network architecture is designed , and each architecture can only run a certain kind of program efficiently -- but they still insist that neural networks must have very particular architectures.
+
+Some might allow simple learning algorithms with simple environmental stimulus (the universal grammar approach of Chomsky), while others might allow complex learning algorithms with complex environmental stimulus (the society of mind approach of Minsky), but what unifies the cognitivists is that they are against simple learning algorithms applied to complex environmental stimulus. They called the this enemy many names, such as "radical behaviorism", "Skinnerism", "perceptrons", "radical connectionism" and now "deep learning".
+
+### Noam Chomsky
+
+The cognitivist revolution was led by Noam Chomsky against behaviorism around the 1950s, ending with the victory of cognitivism in "higher psychology", such as linguistics, though behaviorism survived respectably to this day in other aspects of psychology, such as addiction studies and animal behavior.
+
+In a curious parallel, just as neural networks for AI became popular again in the late 1980s, statistical methods for NLP returned during the same period. The watershed moment was the series of [IBM alignment models](https://en.wikipedia.org/wiki/IBM_alignment_models) published in 1993 [@brownMathematicsStatisticalMachine1993].
+
+In the 1950s, language production was modelled by theoretical machines: finite state automata, stack machines, Markov transition models, and variants thereof. We must understand Chomsky's two contributions to linguistics. On the first part, he constructed a [hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy) of increasingly powerful kinds of language. This hierarchy was in one-to-one correspondence with the hierarchy of theoretical machines, from finite state automata (type-3, or regular) all the way to Turing machines (type-0, or recursively enumerable). On the second part, he rejected statistical language learning and argued for inborn universal grammar.
+
+Chomsky argued, and subsequent linguists have found, that the syntax of all human languages are at type-2 level, or [context-free grammar](https://en.wikipedia.org/wiki/Context-free_grammar). None is regular and almost none is context-dependent. Regular languages are modelled by finite state machines and cannot model arbitrarily deep recursion, while context-free languages allow arbitrarily deep recursion such as [center embedding](https://en.wikipedia.org/wiki/Center_embedding). This would come into play later.
+
+With the dominance of the Chomsky approach, finite state machines were abandoned, as they are not capable of parsing context-free grammar. You might have heard of the controversy over Pirahã. It is mainly fought over the problem of recursion: does the Pirahã language have recursion or not?[^pinker-piraha]
+
+[^pinker-piraha]: 
+    Drawing the battle lines, we can predict that Chomskyans Steven Pinker would argue that it must have recursion... and it turns out the prediction went wrong on this account. Pinker went against Chomsky in this case. ["The Interpreter." NEW YORKER (2007).]
+
+    > Steven Pinker, the Harvard cognitive scientist, who wrote admiringly about some of Chomsky’s ideas in his 1994 best-seller, “The Language Instinct,” told me, “There’s a lot of strange stuff going on in the Chomskyan program. He’s a guru, he makes pronouncements that his disciples accept on faith and that he doesn’t feel compelled to defend in the conventional scientific manner. Some of them become accepted within his circle as God’s truth without really being properly evaluated, and, surprisingly for someone who talks about universal grammar, he hasn’t actually done the spadework of seeing how it works in some weird little language that they speak in New Guinea.” Pinker says that his own doubts about the “Chomskyan program” increased in 2002, when Marc Hauser, Chomsky, and Tecumseh Fitch published their paper on recursion in Science. The authors wrote that the distinctive feature of the human faculty of language, narrowly defined, is recursion. Dogs, starlings, whales, porpoises, and chimpanzees all use vocally generated sounds to communicate with other members of their species, but none do so recursively, and thus none can produce complex utterances of infinitely varied meaning. “Recursion had always been an important part of Chomsky’s theory,” Pinker said. “But in Chomsky Mark II, or Mark III, or Mark VII, he all of a sudden said that the only thing unique to language is recursion. It’s not just that it’s the universal that has to be there; it’s the magic ingredient that makes language possible.”
+
+A key principle used by Chomsky was the "poverty of stimulus" argument, which he used to argue that humans must have a universal grammar built in at birth, because there is too little after-birth stimulus for humans to learn languages. For one, true recursion can never be learned empirically, because true recursion can only be conclusively proven by seeing the infinitely many sentences.
+
+Consider a simple example of the [balanced brackets language](https://en.wikipedia.org/wiki/Dyck_language). A language learner observes sample sentences from the language and try to infer the language. Suppose the learner sees a sequence `(), (()), ((())), (((())))`, what can they conclude? That it is the balanced brackets language? So we ask them to construct another sentence, and they confidently wrote `((((()))))`, but we announce to them that they were tricked! The language is the balanced brackets language -- except that the brackets only go 4 levels deep. Why? We explained that it was produced by a finite state machine, so arbitrary levels of nested brackets would [overflow its finite states](https://en.wikipedia.org/wiki/Pumping_lemma_for_regular_languages). Only by seeing all levels of recursion can the balanced brackets language be conclusively learned.
+
+### Chomskyians against statistical learning
+
+[@chomskyPovertyStimulusUnfinished2010]
+
+> Just to illustrate, I'll take one example that was presented back in the 1950s and has become a sort of a classic case because it's so trivial. 'Can eagles that fly swim?' Okay, simple sentence. Everyone understands it. Any young child understands it. There is a question about it. We know that we associate the word 'can' with 'swim,' not with 'fly.' We're asking 'Can they swim?' We're not asking 'Can they fly?' Well, why is that? A natural answer ought to be that you associate 'can' with 'fly.' After all, 'fly' is the word that's closest to 'can,' so why don't you just take the closest word and interpret it that way? ... Well, that property is universal. It holds up in every language. Languages may do it differently, but they're going to have the same property. It holds in every construction anyone knows, and it's just a universal property of language.
+> 
+> Well, this particular example has taken on a life of its own. For one thing, it's a poverty of stimulus problem, like Descartes’ triangle. There's been a huge effort to show that it's not a problem, that if you just do a complex statistical analysis of complex data, you'll find that that's what the child will determine from the data. The approaches are odd in several respects. First, every one is not only a failure but a colossal failure. I'm not going to talk about that. I actually have a recent paper about it with a computer scientist at MIT, Bob Berwick, where we run through a lot of the current proposals but it's easy to show that they're all just wildly wrong. But they keep coming. Almost every issue of the main cognitive science journals has another proposal of this sort, so that's one odd fact. There are many efforts to show that there is nothing puzzling about it, they're all colossal failures. 
+
+Well, finally a testable hypothesis! I asked GPT-4 to `Draw a syntax tree for "Can eagles that fly swim?"`, and got this:[^gpt-4-eagle-sentence]
+
+[^gpt-4-eagle-sentence]: The code it gave failed on the first try, due to an environment variable issue of the Linux virtual machine it ran on. We fixed it after two more plies of conversation.
+
+```python
+#| code-fold: true
+
+!pip install svgling
+import nltk
+from nltk import Tree
+from IPython.display import display
+nltk.download('punkt')
+import svgling
+from IPython.display import SVG, display
+
+# Your tree definition
+tree = Tree.fromstring("""
+    (SQ 
+        (MD Can) 
+        (NP 
+            (NNS eagles) 
+            (SBAR 
+                (WHNP (WDT that)) 
+                (S 
+                    (VP (VBP fly))
+                )
+            )
+        ) 
+        (VP (VB swim))
+    )
+""")
+
+# Render the tree as an SVG
+tree_svg = svgling.draw_tree(tree)
+
+# Save the SVG to a file
+tree_svg.get_svg().save()
+
+# Display the SVG in the notebook
+display(SVG(tree_svg.get_svg()))
+```
+
+![](figure/can_eagles_that_fly_swim_tree.svg)
+
+The results speak for itself.
+
+
+As expected, Chomsky rejected statistical language learning right until the end. [@norvigChomskyTwoCultures2017]
+
+> It's true there's been a lot of work on trying to apply statistical models to various linguistic problems. I think there have been some successes, but a lot of failures. There is a notion of success ... which I think is novel in the history of science. It interprets success as approximating unanalyzed data.
+
+[Noam Chomsky: Where Artificial Intelligence Went Wrong - The Atlantic](https://web.archive.org/web/20131006121033/http://www.theatlantic.com/technology/print/2012/11/noam-chomsky-on-where-artificial-intelligence-went-wrong/261637/)
+
+### The Chomskyans
+
+[Gold's theorem about language learning in the limit](https://en.wikipedia.org/wiki/Language_identification_in_the_limit#Gold's_theorem)[@goldLanguageIdentificationLimit1967] is occasionally quoted in the same context as a justification for the "poverty of stimulus argument". It seems Chomsky did not consider it a relevant argument. [@johnsonGoldTheoremCognitive2004] I agree with Chomsky on that account, as Gold's theorem is extremely generic.
+
+During the second rise of neural networks, there was a bitter controversy that raged during the 1990s, but is essentially forgotten nowadays: the past tense debate. On one side were the connectionists, and on the other side were the cognitivists like Steven Pinker and Gary Marcus [@pinkerFutureTense2002]. Tellingly, both Steven Pinker and Gary Marcus were on the side of cognitivists. Steven Pinker is most famous for his other books like *The Blank Slate*, which applies Chomsky's linguistics to general psychology.
+
+[@sejnowskiDeepLearningRevolution2018, pages 75--78] recounts an anecdote about how Jerry Fodor, another prominent cognitivist. While Fodor is no longer a hot name in AI nowadays, this anecdote illustrates the Chomsky way of thinking.
+
+> In 1988, I served on a committee for the McDonnell and Pew Foundations that interviewed prominent cognitive scientists and neuroscientists to get their recommendations on how to jump-start a new field called "cognitive neuroscience". ... He started by throwing down the gauntlet, “Cognitive neuroscience is not a science and it never will be.” ... Fodor explained why the mind had to be thought of as a modular symbol-processing system running an intelligent computer program. Patricia Churchland, a philosopher at the University of California, San Diego, asked him whether his theory also applied to cats. “Yes,” said Fodor, “cats are running the cat program.” But when Mortimer Mishkin, an NIH neuroscientist studying vision and memory, asked him to tell us about discoveries made in his own lab, Fodor mumbled something I couldn’t follow about using event-related potentials in a language experiment. Mercifully, at that moment, a fire drill was called and we all filed outside. Standing in the courtyard, I overheard Mishkin say to Fodor: “Those are pretty small potatoes.” When the drill was over, Fodor had disappeared.
+
+Similarly, Gary Marcus has been consistently critical of neural network language models since 1992 [@marcusOverregularizationLanguageAcquisition1992]. His theory of intelligence is essentially Chomsky's: neural networks can be intelligent, but only if they implement symbolic manipulation rules.[^gary-marcus-algebraic-mind] Furthermore, a lot of symbolic rules must be built in at birth, as the poverty of stimulus precludes learning them empirically. For example, here is him saying in 1993 [@marcusNegativeEvidenceLanguage1993]:
+
+[^gary-marcus-algebraic-mind]: This brief sketch suffices. A book-length treatment is [@marcusAlgebraicMindIntegrating2003].
+
+> Whether children require “negative evidence” (i.e., information about which strings of words are not grammatical sentences) to eliminate their ungrammatical utterances is a central question in language acquisition because, lacking negative evidence, a child would require internal mechanisms to unlearn grammatical errors. ... There is no evidence that noisy feedback is required for language learning, or even that noisy feedback exists. Thus internal mechanisms are necessary to account for the unlearning of ungrammatical utterances. 
+
+And here is him saying in 2018 [@marcusDeepLearningCritical2018], just in time to miss the Transformer revolution in natural language processing:
+
+> Human beings can learn abstract relationships in a few trials. If I told you that a schmister was a sister over the age of 10 but under the age of 21, perhaps giving you a single example, you could immediately infer whether you had any schmisters, whether your best friend had a schmister, whether your children or parents had any schmisters, and so forth. (Odds are, your parents no longer do, if they ever did, and you could rapidly draw that inference, too.) In learning what a schmister is, in this case through explicit definition, you rely not on hundreds or thousands or millions of training examples, but on a capacity to represent abstract relationships between algebra-like variables. Humans can learn such abstractions, both through explicit definition and more implicit means (Marcus, 2001). Indeed even 7-month old infants can do so, acquiring learned abstract language-like rules from a small number of unlabeled examples, in just two minutes.
+
+Not one to give up, he continued the same criticisms into the age of Transformer language models. If anything, I would grant that he is conveniently predictable. beat we would be unsurprised by his recent criticisms of deep learning [Deep learning: A critical appraisal] and [large language models](https://www.technologyreview.com/2020/08/22/1007539/gpt3-openai-language-generator-artificial-intelligence-ai-opinion/), [repeatedly](https://www.theatlantic.com/technology/archive/2023/03/ai-chatbots-large-language-model-misinformation/673376/).
+
+## The three camps of AI
+
+In the early days of AI, there were mainly three camps: cybernetics, symbolic system, and neural networks. This section gives a brief history and orienting perspective of their key ideas.
+
+### Cybernetic AI
+
+The founding metaphor of the cybernetic camp was that intelligence is adaptive analog signal processing: homeostasis, Fourier transforms, Kalman filtering, PID control, linear predictive coding, and such.
+
+The origin of cybernetics was tangled with the fast control of machinery in WWII. Norbert Wiener, the mastermind of cybernetics, worked on anti-aircraft gun (AA guns) controllers. As planes flew faster and higher than ever before, AA guns needed to "[lead the target](https://en.wikipedia.org/wiki/Deflection_(ballistics))" to a greater and greater extent. This put severe strain on the operator of the AA guns. Wiener constructed electromechanical devices that performed linear prediction of future trajectory of an aircraft based on its past trajectory. As the aircraft is a human-machine system, Wiener modelled both together as a synthetic whole. After the war, Wiener continued to work on cybernetics, using the analogies he accumulated during the war. As described in [@galisonOntologyEnemyNorbert1994]:
+
+> If humans do not differ from machines from the "scientific standpoint," it is because the scientific standpoint of the 1940s was one of men machines at war. The man-airplane-radar-predictor-artillery system is closed one in which it appeared possible to replace men by machines and machines by men. To an antiaircraft operator, the enemy really does act like an autocorrelated servomechanism. ... In every piece of his writing on cybernetics, from the first technical exposition of the AA predictor before Pearl Harbor up through his essays of the 1960s on science and society, Wiener put feedback in the foreground, returning again and again to the torpedo, the guided missile, and his antiaircraft director.
+
+Cybernetics entered the realm of popular consciousness with Wiener's 1948 bestseller *Cybernetics*. In it, we find a curious description of artificial intelligence and self-reproduction, but from the analog signal processing point of view. The short version of it is that it was an analog-circuit quine, as described in [@wienerCyberneticsControlCommunication2019, page xli]:
+
+> These operations of analysis, synthesis, and automatic self-adjustment of white boxes into the likeness of black boxes ... \[by\] learning, by choosing appropriate inputs for the black and white boxes and comparing them; and in many of these processes, including the method of Professor Gabor, multiplication devices play an important role. While there are many approaches to the problem of multiplying two functions electrically, this task is not technically easy. On the one hand, a good multiplier must work over a large range of amplitudes. On the other hand, it must be so nearly instantaneous in its operation that it will be accurate up to high frequencies. Gabor claims for his multiplier a frequency range running to about 1,000 cycles.
+
+The long version must be relegated to a separate post.
+
+The cybernetic approach to AI is a strange chapter in the history of AI, filled with machines too *sui generis* to have followups. It seems to me that there is no issue with building our way to AI one nonlinear filter at a time, except technical issues, but the technical issues are insurmountable. One day I might write an essay that give justice to the cybernetic approach, but as this essay is not on cybernetics, we will only give a whirlwind tour of highlights from the cybernetic approach to AI.
+
+In 1948, Ross Ashby built a "[homeostat machine](https://en.wikipedia.org/wiki/Homeostat)", which consisted of four interacting electromechanical controllers. If one perturbs it .[^shannon-useless-machine] The other thing that Ashby is famous for is the "law of requisite variety", which is equivalent to the theorem that to solve $f(x) = y$, generically, the $x$ must have at least as many dimensions as $y$.
+
+[^shannon-useless-machine]: Perhaps [Marvin Minsky's useless machine](https://en.wikipedia.org/wiki/Useless_machine) was a gentle parody of the homeostat machine. As the homeostat was built in 1948 and the useless machine in 1952, the timing checks out.
+
+Stafford Beer started his professional life as a business consultant, and devised methods to increase steel plant production efficiency. He understood production management as a problem analogous to that of biological homeostasis, a problem solved by the nervous system, and so management should emulate the nervous system[^matrix-brain-of-the-firm]. He also investigated a wide variety of strange machines, including using an entire pond ecosystem as a computer for black-box homeostatic control [@beerProgressNoteResearch1962]:
+
+> Why not use an entire ecological system, such as a pond? The theory on which all this thinking is based does not require a knowledge of the black box employed. Accordingly, over the past year, I have been conducting experiments with a large tank or pond. The contents of the tank were randomly sampled from ponds in Derbyshire and Surrey. Currently there are a few of the usual creatures visible to the naked eye (Hydra, Cyclops, Daphnia, and a leech); microscopically there is the expected multitude of micro-organisms. In this tank are suspended four lights, the intensities of which can be varied to fine limits. At other points are suspended photocells with amplifying circuits which give them very high sensitivity. ... There is an ecological guarantee that this system stabilizes itself, and is indeed ultra-stable. But, of course, the problem of making it act as a control system is very difficult indeed. I regard the machine as a tending-to-be-stable-but-not-quite homeostat ...
+
+[^matrix-brain-of-the-firm]:
+    According to [@pickeringScienceUnknowableStafford2004], Stafford Beer meant this extremely literally:
+
+    > ... it is clear from subsequent developments that the homeostatic system Beer really had in mind was something like the human spinal cord and brain. He never mentioned this in his work on biological computers, but the image that sticks in my mind is that the brain of the cybernetic factory should really have been an unconscious human body, floating in a vat of nutrients and with electronic readouts tapping its higher and lower reflexes ...
+
+In 1971, he was asked to be the principal architect of [Project Cybersyn](https://en.wikipedia.org/wiki/Project_Cybersyn), a nervous system for the Chilean socialist economy by "algedonic control" ("algedonic" means "pain-pleasure"). The project came to an abrupt end with a military coup in 1973 that instated free market economy for Chile. After this, he lived as a hermit, though he still published a few books and did occasional business consulting.[@morozovPlanningMachineProject2014]
+
+Gordon Pask in the 1950s made electrochemical "sensory organs". He prepared an acidic solution of metal salts (such as $\text{FeSO}_4$) in a dish, then immersed electrodes into the solution. Metal tends to dissolve in the acidic solution, but applying a voltage through the electrodes pulls metal out of the solution by electrolysis. This allows him to "reward" whatever metallic structure in the dish by applying a voltage. He reported success at growing some simple sensory organs in the dish [@gordonNaturalHistoryNetworks1959; @carianiEvolveEarEpistemological1993]:
+
+> We have made an ear and we have made a magnetic receptor. The ear can discriminate two frequencies, one of the order of fifty cycles per second and the other on the order of one hundred cycles per second. The 'training' procedure takes approximately half a day and once having got the ability to recognize sound at all, the ability to recognize and discriminate two sounds comes more rapidly. ... The ear, incidentally, looks rather like an ear. It is a gap in the thread structure in which you have fibrils which resonate at the excitation frequency.
+
+The details of the electrochemical ear is lost, and this line of research had no followups.
+
+A faint echo of Pask's electrochemical ear was heard in late 1990s, when [Adrian Thompson used evolutionary algorithm](https://web.archive.org/web/20231212170749/https://www.damninteresting.com/on-the-origin-of-circuits/) to evolve circuits on [field-programmable gate arrays](https://en.wikipedia.org/wiki/Field-programmable_gate_array) to perform binary distinction between input signals $1 \mathrm{~kHz}$ and $10 \mathrm{~kHz}$. Curiously, some circuits succeeded at the task despite using no master clock signal. He traced this down to the precise details of electronic properties that digital circuit design was precisely meant to abstract away from. The circuits' performance degraded when outside the temperature range in which they evolved in. [@thompsonAnalysisUnconventionalEvolved1999; @thompsonExplorationsDesignSpace1999]
+
+> ... at $43.0^{\circ} \mathrm{C}$ the output is not steady at $+5 \mathrm{~V}$ for $\mathrm{F} 1$, but is pulsing to $0 \mathrm{~V}$ for a small fraction of the time. Conversely, at $23.5^{\circ} \mathrm{C}$ the output is not a steady $0 \mathrm{~V}$ for $\mathrm{F} 2$, but is pulsing to $+5 \mathrm{~V}$ for a small fraction of the time. This is not surprising: the only time reference that the system has is the natural dynamical behaviour of the components, and properties such as resistance, capacitance and propagation delays are temperature dependent. The circuit operates perfectly over the $10^{\circ} \mathrm{C}$ range of temperatures that the population was exposed to during evolution, and no more could reasonably be expected of it.
+
+Continuing the tradition of one-hit wonders, there was no followup work to this.[^adrian-thompson]
+
+[^adrian-thompson]: I have tried tracking down what Adrian Thompson has been doing since his late 1990s work. It turned out that the hardware evolution [was his PhD work](https://web.archive.org/web/20201015175808/https://sites.google.com/site/thompsonevolvablehardware/publications) [@thompsonHardwareEvolutionAutomatic1998]. He has almost completely dropped off the face of academia. His website at University of Sussex [did not see another update since 2002](https://web.archive.org/web/20030402181211/http://www.cogs.susx.ac.uk/users/adrianth/) and is currently dead. His [minimalistic Google Site](https://web.archive.org/web/20201015175808/https://sites.google.com/site/thompsonevolvablehardware/publications) was created around 2014, and currently only survives on the Internet Archive. There was also a single `gif` of the circuit in operation, which I decided to download and [save for posterity](./figure/gen1400_150x113_lossy25.gif).
+
+### Symbolic AI
+
+The founding metaphor of the symbolic system camp was that intelligence is symbolic manipulation using preprogrammed symbolic rules: logical inference, heuristic tree search, list processing, syntactic trees, and such. The symbolic camp was not strongly centered, though it had key players like Alan Turing, John McCarthy, Herbert Simon, and Marvin Minsky.
+
+The project of symbolic AI is a curious episode in AI history. Despite its early successes such as SHRDLU, LISP, and ELIZA, despite the support of most of AI researchers during 1960 -- 2000, and despite the support of reigning cognitivists in the adjacent field of psychology, it never achieved something as successful as neural networks.
+
+A brief sketch of the greatest project in symbolic AI might give you an impression for the difficulty involved. Have you ever heard of the Cyc doing anything useful in its 39 years of life? Compare that with something even as small as BERT.
+
+In 1984, Douglas Lenat started the Cyc project, an ambitious attempt to scale symbolic AI up to the real world. The Cyc project used a LISP-like symbolic logic language to encode common sense. Even from the vantage point of 1985, it was clear to all that there was a lot of common sense it had to incorporate [^cyc-midterm-report], although few could have predicted that Lenat doggedly kept pushing the project for over 30 years. In 2016, Lenat finally declared Cyc project "done", and set about commercializing it [@knightAI30Years2016]:
+
+> Having spent the past 31 years memorizing an astonishing collection of general knowledge, the artificial-intelligence engine created by Doug Lenat is finally ready to go to work. Lenat's creation is Cyc, a knowledge base of semantic information designed to give computers some understanding of how things work in the real world. ... “Part of the reason is the doneness of Cyc,” explains Lenat, who left his post as a professor at Stanford to start the project in late 1984. “Not that there’s nothing else to do,” he says. But he notes that most of what is left to be added is relevant to a specific area of expertise, such as finance or oncology. Among other projects, the company is developing a personal assistant equipped with Cyc’s general knowledge. This could perhaps lead to something similar to Siri but less predisposed to foolish misunderstandings. Michael Stewart, a longtime collaborator of Lenat’s and the CEO of Lucid, says the new company is in talks with various others interested in using the Cyc knowledge base. Lucid has been working with the Cleveland Clinic, for example, to help automate the process of finding patients for clinical studies.
+
+[^cyc-midterm-report]: They themselves probably underestimated the difficulty. In 1990, they confidently titled a paper "Cyc: A midterm report" [@lenatCycMidtermReport1990], suggesting that they expected to be done around 1995.
+
+That was essentially the last we have heard from Cyc.
+
+Why has the symbolic AI project failed to scale? It is hard to say, and a definitive answer would not be forthcoming until we have a human level AI as an existence proof of the necessary requirements for scalable AI. However, I can speculate. When looking at this figure from 1985, one is simultaneously filled with respect and sadness, for they were facing impossible odds, and yet they charged right into it [@lenatCycUsingCommon1985, Figure 1]:
+
+![](figure/cyc_project_ontology.png)
+
+Their "midterm report" only accentuates this sense of tragedy, of seeing them fighting impossible odds, and losing [@lenatCycMidtermReport1990]. They saw with clarity that there is no shortcut to intelligence, no "Maxwell’s equations of thought".
+
+> The majority of work in knowledge representation has dealt with the technicalities of relating predicate calculus to other formalisms and with the details of various schemes for default reasoning. There has almost been an aversion to addressing the problems that arise in actually representing large bodies of knowledge with content. However, deep, important issues must be addressed if we are to ever have a large intelligent knowledge-based program: What ontological categories would make up an adequate set for carving up the universe? How are they related? What are the important facts and heuristics most humans today know about solid objects? And so on. In short, we must bite the bullet. 
+> 
+> We don’t believe there is any shortcut to being intelligent, any yet-to-be-discovered Maxwell’s equations of thought, any AI Risc architecture that will yield vast amounts of problem-solving power. Although issues such as architecture are important, no powerful formalism can obviate the need for a lot of knowledge. 
+> 
+> By knowledge, we don’t just mean dry, almanac-like or highly domain-specific facts. Rather, most of what we need to know to get by in the real world is prescientific (knowledge that is too commonsensical to be included in reference books; for example, animals live for a single solid interval of time, nothing can be in two places at once, animals don’t like pain), dynamic (scripts and rules of thumb for solving problems) and metaknowledge (how to fill in gaps in the knowledge base, how to keep it organized, how to monitor and switch among problem-solving methods, and so on). Perhaps the hardest truth to face, one that AI has been trying to wriggle out of for 34 years, is that there is probably no elegant, effortless way to obtain this immense knowledge base. Rather, the bulk of the effort must (at least initially) be manual entry of assertion after assertion.
+
+In fact, one is struck by the same sense of ontological vertigo when looking back at the [@newellHumanProblemSolving1972, pages 533--534]:
+
+![](figure/human_problem_solving_behavior_graph.png)
+
+![](figure/human_problem_solving_transcript.png)
+
+This sense of vertigo is perhaps best described by Borges in *The analytical language of John Wilkins* [@borgesSelectedNonfictions2000, pages 229--232]:
+
+> ... we must examine a problem that is impossible or difficult to postpone: the merit of the forty-part table on which the language is based. Let us consider the eighth category: stones. Wilkins divides them into common (flint, gravel, slate); moderate (marble, amber, coral); precious (pearl, opal); transparent (amethyst, sapphire); and insoluble (coal, fuller's earth, and arsenic). The ninth category is almost as alarming as the eighth. It reveals that metals can be imperfect (vermilion, quicksilver); artificial (bronze, brass); recremental (filings, rust); and natural (gold, tin, copper). The whale appears in the sixteenth category: it is a viviparous, oblong fish. 
+> 
+> These ambiguities, redundancies, and deficiencies recall those attributed by Dr. Franz Kuhn to a certain Chinese encyclopedia called the Heavenly Emporium of Benevolent Knowledge. In its distant pages it is written that animals are divided into (a) those that belong to the emperor; (b) embalmed ones; (c) those that are trained; (d) suckling pigs; (e) mermaids; (f) fabulous ones; (g) stray dogs; (h) those that are included in this classification; (i) those that tremble as if they were mad; (j) in­ numerable ones; (k) those drawn with a very fine camel's-hair brush; (1) etcetera; (m) those that have just broken the flower vase; (n) those that at a distance resemble flies. The Bibliographical Institute of Brussels also exercises chaos: it has parceled the universe into 1,000 subdivisions, of which number 262 corresponds to the Pope, number 282 to the Roman Catholic Church, number 263 to the Lord's Day, number 268 to Sunday schools, number 298 to Mormonism, and number 294 to Brahmanism, Buddhism, Shintoism, and Taoism. Nor does it disdain the employment of heterogeneous subdivisions, for example, number 179: "Cruelty to animals. Protection of animals. Dueling and suicide from a moral point of view. Various vices and defects. Various virtues and qualities."
+
+### Neural networks
+
+The founding metaphor of the neural network camp was that intelligence is what the brain does, and the brain is a network of units each with only a few parameters adjusted by learning. Now that neural networks are in the hopes and fear of every thinking person, such description seems trite, but it was once the astonishing hypothesis held by only a few. In the days before 1960, there were several key players in the neural network camp, but among them, the most famous and influential one is Frank Rosenblatt.
+
+## The tribulations of Frank Rosenblatt {#sec-rosenblatt}
+
+### Mark I
+
+
+
+### Tobermory
+
+The last 
+
+## The backstory of backpropagation
+
+### Widrow
+
+> No, no, no. We had failed to develop algorithms beyond what we now call Madaline I , the mst algorithm that we developed for the Madaline. The Madaline had an adaptive first layer and a fixed-logic second layer. What Rosenblatt had was a fixed-logic mst layer and an adaptive-logic second layer or output layer. Now, it is easy to adapt on output layer. But it's very difficult to adapt a hidden layer. We didn't call it a hidden layer; we called it the mst layer. We could adapt an adaptive mst layer with a Axed second layer as long as we knew what the second layer was. But we never succeeded in developing an algorithm for adapting both layers, so that the second layer is not fixed and both layers are adaptive. It wasn't that we didn't try. I mean we would have given our eye teeth to come up with something like backprop.
+> 
+> Backprop would not work with the kind of neurons that we were using because the neurons we were using all had quantizers that were sharp. In order to make backprop work, you have to have sigmoids; you have to have a smooth nonlinearity, a differentiable nonlinearity. Otherwise, no go. And no one knew anything about it at that time. This was long before Paul Werbos. Backprop to me is almost miraculous.
+
+If this were an individual case, then I could have dismissed it as Widrow being misled by his background. Before entering a PhD program Widrow took an internship at the military [@widrowOralHistoryBernard1997]:
+
+> ... the sky was divided up into a grid, with one mile by one mile regions, and all the computer sensed was that there was a target within that one mile by one mile square. ... The radar pulses were transmitted periodically, and then periodically you got samples of the flight path. Say you take a piece of graph paper and draw and nice, smooth flight path for an airplane, and then at uniform points in time put a mark on the actual path based on the radar sample. If you don't show anybody that nice, smooth line but only the sequence of grid squares that the airplane was in, one could still reconstruct the smooth track.
+
+The problem of reconstructing a smooth flight path from discretized radar signals got him interested in quantization, and he did his PhD thesis (1954) in the statistical theory of quantization noise. In the interview 43 years later, he called it "the best piece of work I ever did in my whole life". He is still the world expert on quantization noise, and wrote an entire textbook on quantization noise [@widrowQuantizationNoiseRoundoff2008].
+
+So regarding this background, one might be tempted to say that Widrow was misled by his infatuation with quantization, and attempted to use quantized neural networks. However, this does not explain why all the *other* pioneers went down the same wrong path.
+
+### McCulloch and Pitts {#sec-mcculloch-pitts}
+
+In the famous paper [@mccullochLogicalCalculusIdeas1943], McCulloch and Pitts proposed that
+
+> Because of the “all-or-none” character of nervous activity, neural events and the relations among them can be treated by means of propositional logic. It is found that the behavior of every net can be described in these terms, with the addition of more complicated logical means for nets containing circles; and that for any logical expression satisfying certain conditions, one can find a net behaving in the fashion it describes.
+
+The McCulloch and Pitts paper is difficult to read, and is rooted in early 20th century mathematical logic. If you have seen [*Principia Mathematica*](https://en.wikipedia.org/wiki/Principia_Mathematica), you would notice that the McCulloch and Pitts paper resembles it in its abstruse notation. This is not coincidental, as the paper directly cites *Principia Mathematica*.
+
+![The infamous proof of 1+1=2 in Principia Mathematica](figure/principia_mathematica.png)
+
+![](figure/principia_mathematica_McCulloch_and_Pitts.png)
+
+The McCulloch and Pitts paper, like the *Perceptron* book, is something often cited but rarely read. For a good introduction to the McCulloch and Pitts, one cannot do worse than read [@minskyComputationFiniteInfinite1967, Chapter 3], which explicitly designs, neuron by neuron, threshold by threshold, how to construct neural networks that perform various tasks, such as simulating arbitrary Turing machines, process signals, perform additions, etc.
+
+![](figure/minsky_1976_finite_state_machine.png)
+
+![](figure/minsky_1976_serial_binary_addition_network.png)
+
+
+
+### Werbos
+
+> I didn't find a patron. Nobody would support this crazy stuff. It was very depressing. I tried to simplify it. I said, "Look, I'll pullout the backprop part and the multilayer percept ron part." I wrote a paper that was just that -- that was, I felt, childishly obvious. I didn't even use a sigmoid [non-linearity]. I used piecewise linear. I could really rationalize that to the point where it looked obvious. 10 handed that to my thesis committee. I had really worked hard to write it up. They said, "Look, this will work, but this is too trivial and simple to be worthy of a Harvard PhiD. thesis." I might add, at that point they had discontinued support because they were not interested, so I had no money. Approximately at the same time there were scandals about welfare fraud, about how students were getting food. They cut off all that kind of nonsense, so basically I had no money. NO money. Not even money to buy food.
+
+> I spoke to Minsky. I remember I had my [Walter Rosenblith], and I said, "You know, I've got a way now to adapt multilayer perceptrons, and the key is that they're not Heaviside functions; they are differentiable. And I know that action potentials, nerve spikes, are 1 or 0, as in McCulloch-Pitts neurons, but here in this book that I had for my first course in neurophysiology are some actual tracings. If you look at these tracings in Rosenblith, they show volleys of spikes, and volleys are the unit of analysis. This is an argument for treating this activity as differentiable, at least as piecewise linear. If you look at that, I can show you how to differentiate through it." . I went to Minsky for help, but Minsky would not offer help. Minsky basically said, "Look, everybody knows a neuron is a 1-0 spike generator. That is the official model from the biologists. Now, you and I are not biologists. If you and I come out and say the biologists are wrong, and this thing is not producing Is and Os, nobody is going to believe us. It's totally crazy. I can't get involved in anything like this." He was probably right, I guess, but he was clearly very worried about his reputation and his credibility in his community.
+
+
+## Triumph of the scale
+
+
