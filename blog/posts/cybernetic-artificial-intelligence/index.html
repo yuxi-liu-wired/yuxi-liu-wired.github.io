@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Yuxi Liu">
+<meta name="dcterms.date" content="2023-12-23">
+<meta name="description" content="Machine learning and self-reproduction according to Norbert Wiener.">
+
+<title>Yuxi on the Wired - Cybernetic artificial intelligence</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../img/favicon.ico" rel="icon">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta property="og:title" content="Yuxi on the Wired - Cybernetic artificial intelligence">
+<meta property="og:description" content="Machine learning and self-reproduction according to Norbert Wiener.">
+<meta property="og:image" content="https://yuxi-liu-wired.github.io/blog/posts/cybernetic-artificial-intelligence/figure/cybernetic_meadow.png">
+<meta property="og:site-name" content="Yuxi on the Wired">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1792">
+<meta name="twitter:title" content="Yuxi on the Wired - Cybernetic artificial intelligence">
+<meta name="twitter:description" content="Machine learning and self-reproduction according to Norbert Wiener.">
+<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/blog/posts/cybernetic-artificial-intelligence/figure/cybernetic_meadow.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1792">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Yuxi on the Wired</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog/index.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../projects/index.html" rel="" target="">
+ <span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about/index.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://bair.berkeley.edu/" rel="" target=""><i class="bi bi-folder-symlink" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Cybernetic artificial intelligence</h1>
+                  <div>
+        <div class="description">
+          Machine learning and self-reproduction according to Norbert Wiener.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">cybernetics</div>
+                <div class="quarto-category">math</div>
+                <div class="quarto-category">history</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Yuxi Liu </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 23, 2023</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">December 23, 2023</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#cybernetics" id="toc-cybernetics" class="nav-link active" data-scroll-target="#cybernetics">Cybernetics</a>
+  <ul class="collapse">
+  <li><a href="#the-nonlinear-transducer-model" id="toc-the-nonlinear-transducer-model" class="nav-link" data-scroll-target="#the-nonlinear-transducer-model">The nonlinear transducer model</a></li>
+  </ul></li>
+  <li><a href="#orthogonal-functions" id="toc-orthogonal-functions" class="nav-link" data-scroll-target="#orthogonal-functions">Orthogonal functions</a>
+  <ul class="collapse">
+  <li><a href="#laguerre-functions" id="toc-laguerre-functions" class="nav-link" data-scroll-target="#laguerre-functions">Laguerre functions</a></li>
+  <li><a href="#hermite-polynomials" id="toc-hermite-polynomials" class="nav-link" data-scroll-target="#hermite-polynomials">Hermite polynomials</a></li>
+  </ul></li>
+  <li><a href="#learning-and-reproducing-any-transducer" id="toc-learning-and-reproducing-any-transducer" class="nav-link" data-scroll-target="#learning-and-reproducing-any-transducer">Learning and reproducing any transducer</a>
+  <ul class="collapse">
+  <li><a href="#algebra-of-analog-circuitry" id="toc-algebra-of-analog-circuitry" class="nav-link" data-scroll-target="#algebra-of-analog-circuitry">Algebra of analog circuitry</a></li>
+  <li><a href="#the-laguerre-filter-bank" id="toc-the-laguerre-filter-bank" class="nav-link" data-scroll-target="#the-laguerre-filter-bank">The Laguerre filter bank</a></li>
+  <li><a href="#the-hermite-coefficients" id="toc-the-hermite-coefficients" class="nav-link" data-scroll-target="#the-hermite-coefficients">The Hermite coefficients</a></li>
+  </ul></li>
+  <li><a href="#the-science-of-control-and-communication-in-the-animal-and-the-machine" id="toc-the-science-of-control-and-communication-in-the-animal-and-the-machine" class="nav-link" data-scroll-target="#the-science-of-control-and-communication-in-the-animal-and-the-machine">The science of control and communication in the animal and the machine</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+<section id="cybernetics" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="cybernetics">Cybernetics</h2>
+<p>In the creation lore of artificial intelligence, John McCarthy invented the term “artificial intelligence” to distinguish his own style from “cybernetics”, which is dominated by Norbert Wiener. However, if that is the case, then we can infer that there was a real danger that artificial intelligence could be confused with Norbert Wiener’s cybernetics. That is, they must have some real similarity. IF the similarity is not in style or approach (as otherwise there would be no need to distinguish the two), then the similarity must be in goal.</p>
+<p>And indeed there is. I was first alerted to this by Wiener’s little book <span class="citation" data-cites="wienerGodGolemInc1964">(<a href="#ref-wienerGodGolemInc1964" role="doc-biblioref">Wiener 1964, chap. 4</a>)</span>, which briefly sketched out a machine that could purportedly imitate any machine, including another copy of itself, thus effecting both machine learning and machine reproduction. It was unfortunately attempting to be a popular science book, and explained with a minimum amount of mathematical symbols, thus giving me a minimum amount of understanding. I have figured it out nevertheless by checking his other books, and so I decided to write this post for posterity as a simple sketch of another way to think about machine intelligence and machine life. A view of another universe, perhaps, or as the theoretical basis of some hard sci-fi to be written.</p>
+<p>This cybernetic machine is a rather obscure one, and most of the references are decades-old. The main references I relied on to write this essay are <span class="citation" data-cites="wienerNonlinearProblemsRandom1958 wienerCyberneticsControlCommunication2019 ohaganPolynomialChaosTutorial2013 harrisIdentificationNonlinearSystems1967">(<a href="#ref-wienerNonlinearProblemsRandom1958" role="doc-biblioref">Wiener 1958, chaps. 10, 11</a>; <a href="#ref-wienerCyberneticsControlCommunication2019" role="doc-biblioref">2019, chap. 9</a>; <a href="#ref-ohaganPolynomialChaosTutorial2013" role="doc-biblioref">O’Hagan 2013</a>; <a href="#ref-harrisIdentificationNonlinearSystems1967" role="doc-biblioref">G. H. Harris and Lapidus 1967</a>)</span>.</p>
+<p>Wiener’s terminology is occasionally obsolete, and unfortunately the subject of cybernetic artificial intelligence is essentially never updated since Wiener, so anyone trying to study the subject must contend with his publications. So here is a list of obsolete terminology and my explanations.</p>
+<ul>
+<li>shot noise, shot effect, tube noise: white noise. It is <em>not</em> <a href="https://en.wikipedia.org/wiki/Shot_noise">Poisson noise</a>.</li>
+<li>chaos: a generic term for randomness, or random variables. It is <em>not</em> <a href="https://en.wikipedia.org/wiki/Chaos_theory">chaos theory</a>.</li>
+<li>voltage multiplier: an electronic device that multiplies two voltages together, by <span class="math inline">\((x, y) \mapsto xy\)</span>. It is <em>not</em> the <a href="https://en.wikipedia.org/wiki/Voltage_multiplier">voltage multiplier</a>.</li>
+</ul>
+<section id="the-nonlinear-transducer-model" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="the-nonlinear-transducer-model">The nonlinear transducer model</h3>
+<p>According to Wiener, cybernetics is the science of control and communication in the animal and the machine. To be more precise, he used the following model of sweeping generality: the <strong>nonlinear transducer model</strong>.</p>
+<div id="def-signal" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (signal) </strong></span>A signal is a function of time, written as <span class="math inline">\(x(t)\)</span>, where <span class="math inline">\(t \in \R\)</span>. The signal can take value in any space, but for convenience, we will only consider the case where <span class="math inline">\(x\)</span> is real-valued. That is, we only consider functions of type <span class="math inline">\(x : \R \to \R\)</span>.</p>
+</div>
+<p>A transducer transduces, meaning that it takes in a signal and outputs a signal. Antennas, filters, circuits of resistors and capacitors, and essentially electronic devices that does not require power input to run, are transducers. Wiener considered only deterministic, causal transducers, meaning that the output of a transducer at time <span class="math inline">\(t\)</span> is determined by the inputs before</p>
+<p>In large sections of electronic engineering, electronic circuits are studied as either linear and continuous, or as nonlinear and discrete. Nonlinear but continuous devices are very difficult to study in general, but Wiener took on it and constructed a theory for general nonlinear continuous transducers.</p>
+<div id="def-transducer" class="theorem definition page-columns page-full">
+<p><span class="theorem-title"><strong>Definition 2 (nonlinear transducer) </strong></span>&nbsp;</p>
+<ul>
+<li>The transducer is a function <span class="math inline">\(T\)</span>, such that given any real-valued function <span class="math inline">\(x : \R \to \R\)</span>, it returns a real-valued function <span class="math inline">\(T[x] : \R \to \R\)</span>. In other words, it sends real-valued signals to real-valued signals.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li>The transducer’s output at any time <span class="math inline">\(t\)</span> is determined by the value of <span class="math inline">\(x\)</span> on the interval <span class="math inline">\((-\infty, t]\)</span>. In other words, it is causal and deterministic.</li>
+<li>The transducer is stationary in time. That is, if <span class="math inline">\(x\)</span> is the same over the interval <span class="math inline">\((-\infty, t]\)</span> as <span class="math inline">\(x'\)</span> over the interval <span class="math inline">\((-\infty, t']\)</span>, then <span class="math inline">\(T[x](t) = T[x'](t')\)</span>.</li>
+<li>The transducer has a limited amount of memory, so that its dependence on the high-frequency details of the input signal decreases rapidly as frequency increases. We will explain the meaning of this assumption later.</li>
+<li>The transducer depends analytically on the frequencies of the input signal. We will explain the meaning of this assumption later.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;Wiener actually studied general multidimensional signals, but those involve mostly notational complications, with no new ideas.</p></li></div></div>
+</section>
+</section>
+<section id="orthogonal-functions" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="orthogonal-functions">Orthogonal functions</h2>
+<p>In order to present Wiener’s approach to nonlinear control theory, we need a small amount of theory of orthogonal polynomials. Specifically, we need the Hermite and Laguerre polynomials. Those are not as famous as the trigonometric functions, but they are used in the same way as the trigonometric functions in Fourier analysis. In Fourier analysis, every well-behaved (in the Fourier sense) function is decomposable as an infinite linear sum of trigonometric functions. Similarly, every well-behaved (in the Hermite sense) function is decomposable as an infinite linear sum of Hermite functions, and the same for Laguerre.</p>
+<section id="laguerre-functions" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="laguerre-functions">Laguerre functions</h3>
+<p>The Laguerre polynomials are defined by <span id="eq-laguerre"><span class="math display">\[
+L_n(x) := \sum_{k} \binom{n}{k}\frac{(-1)^k}{k!} x^k
+\tag{1}\]</span></span></p>
+<div id="prp-laguerre" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 1 (Laguerre polynomials are orthogonal with respect to the exponential distribution) </strong></span><span class="math display">\[
+\int_{0}^\infty e^{-x}L_m(x) L_n(x)dx = \delta_{mn}
+\]</span></p>
+</div>
+<div class="proof page-columns page-full">
+<p><span class="proof-title"><em>Proof</em>. </span>The Laguerre polynomials are generated by the following function</p>
+<p><span class="math display">\[
+g(t, x) = \sum_{n=0}^\infty t^n L_n(x)=  \frac{1}{1-t} e^{-tx/(1-t)}
+\]</span></p>
+<div class="page-columns page-full"><p>This can be verified that the definition of <span class="math inline">\(L_n\)</span> according to the generating function <span class="math inline">\(g\)</span> and according to <a href="#eq-laguerre">Equation&nbsp;1</a> both satisfy <span class="math inline">\(xL_n'' + (1-x) L_n' + nL_n = 0\)</span>, and both have the same value and first derivative at <span class="math inline">\(x=0\)</span>. Therefore they are equal for all <span class="math inline">\(x\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;Of course, this is not the most natural way to show this, but we really don’t want to go into the details of orthogonal polynomial theory.</p></li></div></div>
+</div>
+<p>We can define the Laguerre functions by <span class="math inline">\(\psi_n(t) := e^{-t/2}L_n(t)\)</span>, which makes the definition cleaner:</p>
+<p><span id="eq-laguerre-function-orthogonal"><span class="math display">\[
+\int_0^\infty \psi_n(t)\psi_m(t) dt = \delta_{mn}
+\tag{2}\]</span></span></p>
+<p>Given <a href="#prp-laguerre">Proposition&nbsp;1</a>, we can represent any well-behaved function on the <span class="math inline">\((-\infty, t]\)</span> as an infinite sum of Laguerre functions:</p>
+<p><span class="math display">\[
+f(t-\tau) = \sum_{n \geq 0} c_n \psi_n(\tau)
+\]</span></p>
+<p>by taking a convolution with the Laguerre functions:</p>
+<p><span class="math display">\[
+c_n = \int_0^\infty f(t-\tau) \psi_n(\tau) d\tau
+\]</span></p>
+</section>
+<section id="hermite-polynomials" class="level3">
+<h3 class="anchored" data-anchor-id="hermite-polynomials">Hermite polynomials</h3>
+<p>The (physicist’s) Hermite polynomials are defined by</p>
+<p><span id="eq-hermite"><span class="math display">\[
+\sum_n H_n(x) \frac{1}{n!}t^n = e^{-t^2 + 2tx} = g(t, x)
+\tag{3}\]</span></span></p>
+<div id="prp-hermite" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 2 (Hermite polynomials are orthogonal with respect to the normal distribution) </strong></span><span class="math display">\[\int e^{-x^2}H_n H_m = \sqrt\pi 2^n  n! \delta_{mn}\]</span></p>
+</div>
+<div class="proof" data-collapse="true">
+<p><span class="proof-title"><em>Proof</em>. </span><span class="math display">\[\int e^{-x^2} g(t, x)g(s, x) dx = \sum_{n, m \geq 0}\frac{1}{n!m!}t^ns^m \int e^{-x^2} H_n(x) H_m(x) dx\]</span></p>
+<p>The left side is equal to <span class="math inline">\(\sqrt\pi e^{2st}\)</span>, now expand it in powers of <span class="math inline">\(s, t\)</span>.</p>
+</div>
+</section>
+</section>
+<section id="learning-and-reproducing-any-transducer" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="learning-and-reproducing-any-transducer">Learning and reproducing any transducer</h2>
+<p>Now we are ready to perform the “Hermite–Laguerre expansion”, Wiener’s way to analyze (learn) and synthesize (reproduce) arbitrary transducer using pure analog devices.</p>
+<section id="algebra-of-analog-circuitry" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="algebra-of-analog-circuitry">Algebra of analog circuitry</h3>
+<div class="page-columns page-full"><p>In an analog electronic circuit, real numbers are represented as voltages across two points (“ports”) in the circuit. Adding is as simple as a serial connection. Negation is even simpler: just connect the ports in the opposite direction. Multiplication is significantly trickier, but it can be done. There are electronic devices with nonlinear response characteristics, meaning that it has two input ports and two output ports, and if you apply an input voltage <span class="math inline">\(x\)</span>, its output voltage would be <span class="math inline">\(f(x)\)</span> where <span class="math inline">\(f\)</span> is not a linear function. Wiener then said that, let us suppose that <span class="math inline">\(f(x) = x^2\)</span>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;From our vantage point, the <a href="https://en.wikipedia.org/wiki/Universal_approximation_theorem">universal approximation theorems</a> proven in the early 1990s show that, generically, if we have any nonlinear function <span class="math inline">\(f_0\)</span> <em>at all</em>, then we can construct <em>any</em> activation function <span class="math inline">\(f\)</span> as a neural network, by using many copies of the <span class="math inline">\(f_0\)</span> device as activation functions and linear devices as weights and biases.</p></li></div></div>
+<p>With such <span class="math inline">\(f\)</span>, we can multiply two voltages by <span class="math inline">\(xy = (f(x+y) - f(x) - f(y)) \times 0.5\)</span>, and so we can construct any polynomial function in any number of variables. That is, we can do algebra by analog devices, as long as we have a voltage multiplier.</p>
+<p>Of course, we don’t hear about voltage multipliers often, and this is no accident – it is quite difficult to get one with good performance. In the preface to the second edition of <em>Cybernetics</em><sub>1961</sub> <span class="citation" data-cites="wienerCyberneticsControlCommunication2019">(<a href="#ref-wienerCyberneticsControlCommunication2019" role="doc-biblioref">Wiener 2019, xli</a>)</span>, Wiener waxes praise about Gabor’s breakthrough circuit device that could multiply two voltages at a frequency of <span class="math inline">\(1\; \mathrm{kHz}\)</span>:</p>
+<blockquote class="blockquote page-columns page-full">
+<div class="page-columns page-full"><p>While there are many approaches to the problem of multiplying two functions electrically, this task is not technically easy. On the one hand, a good multiplier must work over a large range of amplitudes. On the other hand, it must be so nearly instantaneous in its operation that it will be accurate up to high frequencies. Gabor claims for his multiplier a frequency range running to about 1,000 cycles. … he does not state explicitly the amplitude range over which his method of multiplication is valid nor the degree of accuracy to be obtained. I am awaiting very eagerly<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> an explicit statement of these properties so that we can give a good evaluation of the multiplier for use in other pieces of apparatus dependent on it.</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;Gabor published it in the same year of 1961: <span class="citation" data-cites="gaborUniversalNonlinearFilter1961">(<a href="#ref-gaborUniversalNonlinearFilter1961" role="doc-biblioref">Gabor, Wilby, and Woodcock 1961</a>)</span>.</p></li></div></div>
+</blockquote>
+<p>To our modern ears, multiplying two voltages 1000 times a second by analog means seems simultaneously astonishing and obsolete. <a href="https://en.wikipedia.org/wiki/Intel_8086">Intel 8086</a> in 1976 already could multiply a million times a second, and whatever has come of Gabor’s universal filter? It seems to me that Wiener never accepted the future of digital computers, preferring the concrete certainty of magnetic cores and electric wires.</p>
+</section>
+<section id="the-laguerre-filter-bank" class="level3">
+<h3 class="anchored" data-anchor-id="the-laguerre-filter-bank">The Laguerre filter bank</h3>
+<p>To find the Laguerre coefficients of a signal, we need to perform a convolution. Convolutions become products after a <a href="https://en.wikipedia.org/wiki/List_of_Laplace_transforms">Laplace transform</a>, so we need to find the Laplace transform of the Laguerre functions <span class="math inline">\(\psi_n = e^{-x/2}L_n(x)\)</span>. It is fortunately easy to compute. We simply read from a standard table:</p>
+<p><span class="math display">\[
+\mathcal L [t^n e^{-\alpha t}\theta(t)] = \frac{n!}{(s+\alpha)^{n+1}}
+\]</span></p>
+<p>where <span class="math inline">\(\theta(t) = 1_{t \geq 0}\)</span> is the zero-one step function.</p>
+<p>Then, since the Laplace transform is linear, we have after simplification</p>
+<p><span class="math display">\[
+\mathcal L[\psi_n\theta] = \frac{1}{s+1/2}\left(\frac{s-1/2}{s+1/2}\right)^n
+\]</span></p>
+<p>This gives a simple <a href="https://en.wikipedia.org/wiki/Filter_bank">filter bank</a> that constructs the Laguerre coefficients for any signal. The input signal passes through a <span class="math inline">\(\frac{1}{s+1/2}\)</span> filter, to obtain the <span class="math inline">\(c_0\)</span> coefficient, it then passes through another <span class="math inline">\(\frac{s-1/2}{s+1/2}\)</span> filter, to obtain the <span class="math inline">\(c_1\)</span> coefficient, and so on. This filter bank can be constructed with standard resistors and capacitors.</p>
+<p>The following theorem finishes the last piece of the puzzle. <span class="citation" data-cites="harrisIdentificationNonlinearSystems1967">(<a href="#ref-harrisIdentificationNonlinearSystems1967" role="doc-biblioref">G. H. Harris and Lapidus 1967</a>)</span> claims that the proof is found in <span class="citation" data-cites="boseTheoryNonlinearSystems1956 harrisIdentificationNonlinearSystems1966">(<a href="#ref-boseTheoryNonlinearSystems1956" role="doc-biblioref">Bose 1956</a>; <a href="#ref-harrisIdentificationNonlinearSystems1966" role="doc-biblioref">George Henry Harris 1966</a>)</span>, but I did not check.</p>
+<div id="thm-laguerre-white-noise" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 </strong></span>Let <span class="math inline">\(x(t)\)</span> be a white noise process, and let <span class="math inline">\(c_0(t), c_1(t), ...\)</span> be its Laguerre coefficients, then:</p>
+<ul>
+<li>the joint stochastic process <span class="math inline">\((c_0(t), c_1(t), ...)\)</span> is stationary;</li>
+<li>for any fixed <span class="math inline">\(t\in \R\)</span>, the random variables <span class="math inline">\(c_0(t), c_1(t), ...\)</span> are independent samples of the standard gaussian distribution <span class="math inline">\(\mathcal N(0, 1)\)</span>.</li>
+</ul>
+</div>
+</section>
+<section id="the-hermite-coefficients" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="the-hermite-coefficients">The Hermite coefficients</h3>
+<p>For a given input signal <span class="math inline">\(x : \R \to \R\)</span>, we pass it into the Laguerre filter bank. The readouts from the filter bank are the signals <span class="math inline">\(c_0(t), c_1(t), ...\)</span>. They satisfy the equation</p>
+<p><span class="math display">\[
+x(t - \tau) = \sum_{n\geq 0} c_n(t) \psi_n(\tau), \; \forall \tau \geq 0\quad \forall t \in \R
+\]</span></p>
+<p>In words, at any cut-off time <span class="math inline">\(t \in \R\)</span>, the signal we have seen so far is <span class="math inline">\(x(t - \tau)\)</span> with <span class="math inline">\(\tau \geq 0\)</span>. This signal is then decomposable as a linear sum of Laguerre functions <span class="math inline">\(\sum_{n\geq 0} c_n(t) \psi_n(\tau)\)</span>, where <span class="math inline">\(c_n(t)\)</span> are the Laguerre coefficients. The coefficients depend on the cut-off time <span class="math inline">\(t\)</span>, but does not depend on <span class="math inline">\(\tau\)</span>, which is not “real” time, but only a kind of “relative historical time”, as we look into the past standing at time <span class="math inline">\(t\)</span>.</p>
+<p>A transducer, by our assumption, is deterministic and causal, so that <span class="math inline">\(T[x](t)\)</span> is a deterministic function of the signal we have seen so far, and so it is a deterministic function of <span class="math inline">\(c_0(t), c_1(t), c_2(t), ...\)</span>. Note carefully that it is determined by <span class="math inline">\(c_0(t), c_1(t), c_2(t), ...\)</span> <em>at this very instant</em> <span class="math inline">\(t\)</span>. It does not need to know the values of <span class="math inline">\(c_0(t'), c_1(t'), c_2(t'), ...\)</span> at any <span class="math inline">\(t' \neq t\)</span>. We write it as follows:</p>
+<p><span class="math display">\[
+T[x](t) = T(c_0(t), c_1(t), c_2(t), ...)
+\]</span></p>
+<p>By our assumption that the transducer has a limited memory, we should be able to ignore the higher frequency components of the input signal, and still recover a good approximation of <span class="math inline">\(T\)</span>. That means that <span class="math inline">\(T[x](t) = T(c_0(t), c_1(t), c_2(t), ...) \approx T(c_0(t), ..., c_n(t))\)</span>, with the approximation increasing in accuracy as <span class="math inline">\(n\)</span> increases.</p>
+<p>By our assumption that the transducer is analytic with respect to the input, <span class="math inline">\(T(c_0(t), ..., c_n(t))\)</span> has a multivariate Hermite serial expansion (the same idea as multivariate Taylor expansion):</p>
+<p><span class="math display">\[
+T(c_0(t), ..., c_n(t)) = \sum_{m_0, ..., m_n \geq 0} T_{m_0, ..., m_n} H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t))
+\]</span></p>
+<p>We are quite close to the target. We can compute the Laguerre coefficients of any input signal by the Laguerre filter bank. We can compute the value of Hermite polynomials of each Laguerre coefficient <span class="math inline">\(c_i(t)\)</span>, using the algebra of analog circuitry. The only remaining problem is discovering the coefficients <span class="math inline">\(T_{m_0, ..., m_n}\)</span>.</p>
+<p>This is where <a href="#thm-laguerre-white-noise">Theorem&nbsp;1</a> comes to finish the construction. Let <span class="math inline">\(x(t)\)</span> be a white noise process, then since</p>
+<p><span class="math display">\[
+T[x](t) \approx \sum_{m_0, ..., m_n \geq 0} T_{m_0, ..., m_n} H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t))
+\]</span></p>
+<p>and since the Laguerre coefficients are independent samples of the standard gaussian, we have</p>
+<p><span class="math display">\[
+T_{m_0, ..., m_n} \approx \mathbb{E}\lrs{T[x](t)\; H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t))}
+\]</span></p>
+<p>where the expectation is in the sense of ensemble expectation. That is, we would run this experiment once with a white noise process, freeze it exactly at the moment <span class="math inline">\(t\)</span>, then run it again with another white noise process, freeze it exactly at the moment <span class="math inline">\(t\)</span>, and so on, and average over all these experiments.</p>
+<div class="page-columns page-full"><p>However, <a href="#thm-laguerre-white-noise">Theorem&nbsp;1</a> states that the Laguerre coefficients are stationary, meaning that we have <a href="https://en.wikipedia.org/wiki/Ergodic_theory">ergodicity</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>: the ensemble average is the time average, and so</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;Wiener was <em>really</em> into ergodic theory.</p></li></div></div>
+<p><span class="math display">\[
+T_{m_0, ..., m_n} \approx \lim_{T \to \infty} \frac{1}{T} \int_0^T T[x](t)\; H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t)) dt
+\]</span></p>
+<p>The integrand is computable by the analog devices we described. The integration-and-averaging can be done with a very low-pass filter – taking the average is essentially passing only the zero-frequency signal, and so it is the lowest possible low-pass filter. Finally, since white noise is all around us, it can be obtained in many ways, such as amplifying the thermal noise in a resistor.</p>
+<p>And so we have a finished machine, where the white noise <span class="math inline">\(x\)</span> and the signal to imitate <span class="math inline">\(T[x](t)\)</span> come in, and fitted parameters <span class="math inline">\(T_{m_0, ..., m_n}\)</span> come out. The fitted parameters can be automatically read out and set by electromechanical devices, such as relays and step-motors, meaning that we could just plug the machine in parallel with the unknown transducer, let them run for a while over a white noise input, and end up with a machine that imitates the unknown transducer with high precision.</p>
+<p><img src="figure/wiener_method_machine.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="the-science-of-control-and-communication-in-the-animal-and-the-machine" class="level2">
+<h2 class="anchored" data-anchor-id="the-science-of-control-and-communication-in-the-animal-and-the-machine">The science of control and communication in the animal and the machine</h2>
+<p>We have reached the end of the road, and have found ourself facing the general purpose learning machine. This machine could be used to learn to imitate any black-box transducer, and thus is a form of machine learning. If we have two such machines, and randomly set the parameters of one machine, then the other machine would learn to imitate the same behavior. And since each parameter setting creates a different behavior, the parameters would be copied from one machine to the other, <em>purely by imitating behavior</em>. This is an explicit construction for how behaviorism can work, even if not in our universe, then in another universe where the animals really are those imitation devices.</p>
+<p>As Wiener speculated <span class="citation" data-cites="wienerCyberneticsControlCommunication2019">(<a href="#ref-wienerCyberneticsControlCommunication2019" role="doc-biblioref">Wiener 2019, 248–49</a>)</span>, biological learning and reproduction is “philosophically similar” to this machine:</p>
+<blockquote class="blockquote">
+<p>While both Professor Gabor’s methods and my own lead to the construction of nonlinear transducers, they are linear to the extent that the nonlinear transducer is represented with an output which is the sum of the outputs of a set of nonlinear transducers with the same input. These outputs are combined with varying linear coefficients. This allows us to employ the theory of linear developments in the design and specification of the nonlinear transducer. And in particular, this method allows us to obtain coefficients of the constituent elements by a least-square process. If we join this to a method of statistically averaging over the set of all inputs to our apparatus, we have essentially a branch of the theory of orthogonal development. Such a statistical basis of the theory of nonlinear transducers can be obtained from an actual study of the past statistics of the inputs used in each particular case. I ask if this is philosophically very different from what is done when a gene acts as a template to form other molecules of the same gene from an indeterminate mixture of amino and nucleic acids, or when a virus guides into its own form other molecules of the same virus out of the tissues and juices of its host. I do not in the least claim that the details of these processes are the same, but I do claim that they are philosophically very similar phenomena.</p>
+</blockquote>
+<p>It seems like this device, as it stands, would be plagued by the same issues that plague a general analog computer – error correction, bad gains, and intractable nonlinearities. Still, it stands as a vision of an alternative future in an alternative world, if not an alternative future of our world.</p>
+<p><img src="figure/cybernetic_meadow.png" class="img-fluid"></p>
+
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-boseTheoryNonlinearSystems1956" class="csl-entry" role="listitem">
+Bose, Amar Gopal. 1956. <span>“A Theory of Nonlinear Systems.”</span>
+</div>
+<div id="ref-gaborUniversalNonlinearFilter1961" class="csl-entry" role="listitem">
+Gabor, D., W. P. L. Wilby, and R. Woodcock. 1961. <span>“A Universal Non-Linear Filter, Predictor and Simulator Which Optimizes Itself by a Learning Process.”</span> <em>Proceedings of the IEE Part B: Electronic and Communication Engineering</em> 108 (40): 422. <a href="https://doi.org/10.1049/pi-b-2.1961.0070">https://doi.org/10.1049/pi-b-2.1961.0070</a>.
+</div>
+<div id="ref-harrisIdentificationNonlinearSystems1967" class="csl-entry" role="listitem">
+Harris, G. H., and Leon Lapidus. 1967. <span>“Identification of Nonlinear Systems.”</span> <em>Industrial &amp; Engineering Chemistry</em> 59 (6): 66–81. <a href="https://doi.org/10.1021/ie50690a012">https://doi.org/10.1021/ie50690a012</a>.
+</div>
+<div id="ref-harrisIdentificationNonlinearSystems1966" class="csl-entry" role="listitem">
+Harris, George Henry. 1966. <em>The Identification of Nonlinear Systems with Two-Level Inputs.</em> <span>Princeton University</span>.
+</div>
+<div id="ref-ohaganPolynomialChaosTutorial2013" class="csl-entry" role="listitem">
+O’Hagan, Anthony. 2013. <span>“Polynomial Chaos: <span>A</span> Tutorial and Critique from a Statistician’s Perspective.”</span> <em>SIAM/ASA J. Uncertainty Quantification</em> 20: 1–20.
+</div>
+<div id="ref-wienerNonlinearProblemsRandom1958" class="csl-entry" role="listitem">
+Wiener, Norbert. 1958. <em>Nonlinear <span>Problems</span> in <span>Random Theory</span></em>. <span>MIT Press</span>.
+</div>
+<div id="ref-wienerGodGolemInc1964" class="csl-entry" role="listitem">
+———. 1964. <em>God and <span>Golem</span>, <span>Inc</span>.: <span>A Comment</span> on <span>Certain Points</span> Where <span>Cybernetics Impinges</span> on <span>Religion</span></em>. 7th ed. edition. <span>Cambridge</span>: <span>MIT Press</span>.
+</div>
+<div id="ref-wienerCyberneticsControlCommunication2019" class="csl-entry" role="listitem">
+———. 2019. <em>Cybernetics: Or Control and Communication in the Animal and the Machine</em>. Edited by Doug Hill and Sanjoy K. Mitter. Reissue of the 1961 second edition. <span>Cambridge, Massachusetts London, England</span>: <span>The MIT Press</span>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left"><span class="faux-block">Everything ©<a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></div>   
+    <div class="nav-footer-center"><span class="faux-block">Yuxi on the Wired</span></div>
+    <div class="nav-footer-right"><span class="faux-block"><a href="../../../sitemap.xml">sitemap</a></span></div>
+  </div>
+</footer>
+
+
+
+</body></html>
