@@ -47,6 +47,17 @@ The book is one of those things that have passed into the stuff of legend: often
 
 the literal lines vs what is written between the lines. Cite Papert's 1980s paper about "alternative ways of knowing" -- a brief description of how he and others tried to bring postmodernism and social justice to hard sciences, and then describe how it all blew up in the 1990s Science Wars and the Sokal affair.
 
+### The infamous XOR problem
+
+Indeed, when the connectionists rose in the 1980s, one of the first things they did was to check that they could solve the XOR problem.
+
+> When I first did the X-OR problem, it took a thousand iterations to solve it. If we thought that was the way it was going to go and that we were going to scale up to a hundred thousand input patterns, my God, we wouldn't live long enough to see the results. But that's not the way it's gone. That problem turned out to be an anomaly. The scaling is about linear. We haven't hit any exponential curves yet.
+
+Among all the objections in the *Perceptron* book, I believe only one remains to be a serious criticism: the recognition of symmetry. Recognizing connectivity is hard and requires a serial program, but that's fine, because it's hard for humans too. Learning to solve logical problems is difficult and requires a thousand iterations. Well, it looks inefficient, except that neural networks is still the best we have even 30 years later, so perhaps the XOR problem is just something neural networks have to work hard for. That's fine -- worst case, we'll just let the neural network offload those logical operations to a symbolic program, much like how humans use calculators.
+
+The only legitimate remaining problem is the recognition of symmetry. It is hard for all modern neural networks, including convolutional and fully connected versions. I believe it could be solved efficiently with a Transformer -- but I need to check this. In any case, if human brains are neural networks, and they can instantly recognize symmetries, then it shows that there is *some* remaining architectural trick we don't yet know.
+
+However, out of all the results and wise words of *Perceptron, we ended up with... just one problem remaining? Minsky and Papert hoped to show that there will be thousands of different problems, each requiring a bespoke algorithm implemented by a bespoke neural network. In this regard, their project has been fully debunked.
 
 ## What does the *Perceptron* book really say? {#sec-perceptron-book}
 
@@ -307,13 +318,25 @@ The founding metaphor of the neural network camp was that intelligence is what t
 
 The last 
 
-## The backstory of backpropagation
+## The ridiculous backstory of backpropagation
 
 ### Widrow
 
-> No, no, no. We had failed to develop algorithms beyond what we now call Madaline I , the mst algorithm that we developed for the Madaline. The Madaline had an adaptive first layer and a fixed-logic second layer. What Rosenblatt had was a fixed-logic mst layer and an adaptive-logic second layer or output layer. Now, it is easy to adapt on output layer. But it's very difficult to adapt a hidden layer. We didn't call it a hidden layer; we called it the mst layer. We could adapt an adaptive mst layer with a Axed second layer as long as we knew what the second layer was. But we never succeeded in developing an algorithm for adapting both layers, so that the second layer is not fixed and both layers are adaptive. It wasn't that we didn't try. I mean we would have given our eye teeth to come up with something like backprop.
+Widrow and Hoff worked on multilayered perceptrons in early 1960s. What seemed ridiculous to me is that they trained a single-layered perceptron with essentially backpropagation with squared loss, then proceeded to *never invent backpropagation* after a year of trying to train a network with *two layers*.
+
+The Widrow--Hoff machine, which they called the ADALINE, is a function of type $\R^n \to \{0,1\}$. The function is defined by
+
+$$
+f(x) = \theta(w^T x + b)
+$$
+
+and here it is again, that dreaded Heaviside step-function that was the bane of every neural network before backpropagation. What was odd about this one is that ADALINE was *trained* by gradient descent with the squared loss function $(w^T x + b - y)^2$, which is *continuous*, not discrete! It is almost inconceivable nowadays, but they did not use a continuous activation function, but tried every other trick *except* that. You can read the [MADALINE I rule](https://en.wikipedia.org/wiki/ADALINE#MADALINE), which is both complicated, confusing, and did not actually work.
+
+Instead, they went on and on trying to train a two-layered ADALINE, which of course cannot be trained by gradient descent, because the hidden layer has a Heaviside step function! It was so hard that they gave up. Widrow never touched neural networks again until 1980s, after he heard about backpropagation.
+
+> The Madaline had an adaptive first layer and a fixed-logic second layer. What Rosenblatt had was a fixed-logic mst layer and an adaptive-logic second layer or output layer. Now, it is easy to adapt on output layer. But it's very difficult to adapt a hidden layer. ... We could adapt an adaptive mst layer with a fixed second layer as long as we knew what the second layer was. But we never succeeded in developing an algorithm for adapting both layers, so that the second layer is not fixed and both layers are adaptive. It wasn't that we didn't try. I mean we would have given our eye teeth to come up with something like backprop.
 > 
-> Backprop would not work with the kind of neurons that we were using because the neurons we were using all had quantizers that were sharp. In order to make backprop work, you have to have sigmoids; you have to have a smooth nonlinearity, a differentiable nonlinearity. Otherwise, no go. And no one knew anything about it at that time. This was long before Paul Werbos. Backprop to me is almost miraculous.
+> Backprop would not work with the kind of neurons that we were using because the neurons we were using all had quantizers that were sharp. In order to make backprop work, you have to have sigmoids; you have to have a smooth nonlinearity, a differentiable nonlinearity. Otherwise, no go. And no one knew anything about it at that time. This was long before Paul Werbos. **Backprop to me is almost miraculous**.
 
 If this were an individual case, then I could have dismissed it as Widrow being misled by his background. Before entering a PhD program Widrow took an internship at the military [@widrowOralHistoryBernard1997]:
 
@@ -331,17 +354,19 @@ In the famous paper [@mccullochLogicalCalculusIdeas1943], McCulloch and Pitts pr
 
 The McCulloch and Pitts paper is difficult to read, and is rooted in early 20th century mathematical logic. If you have seen [*Principia Mathematica*](https://en.wikipedia.org/wiki/Principia_Mathematica), you would notice that the McCulloch and Pitts paper resembles it in its abstruse notation. This is not coincidental, as the paper directly cites *Principia Mathematica*.
 
+::: { layout-ncol=2}
 ![The infamous proof of 1+1=2 in Principia Mathematica](figure/principia_mathematica.png)
 
-![](figure/principia_mathematica_McCulloch_and_Pitts.png)
+![The same notation is used by McCulloch and Pitts](figure/principia_mathematica_McCulloch_and_Pitts.png)
+:::
 
-The McCulloch and Pitts paper, like the *Perceptron* book, is something often cited but rarely read. For a good introduction to the McCulloch and Pitts, one cannot do worse than read [@minskyComputationFiniteInfinite1967, Chapter 3], which explicitly designs, neuron by neuron, threshold by threshold, how to construct neural networks that perform various tasks, such as simulating arbitrary Turing machines, process signals, perform additions, etc.
+The McCulloch and Pitts paper, like the *Perceptron* book, is something often cited but rarely read. The best introduction to the McCulloch and Pitts neural network is still [@minskyComputationFiniteInfinite1967, Chapter 3], which explicitly designs, neuron by neuron, threshold by threshold, how to construct neural networks that perform various tasks, such as simulating arbitrary Turing machines, process signals, perform additions, etc.
 
+::: { layout-ncol=2}
 ![](figure/minsky_1976_finite_state_machine.png)
 
 ![](figure/minsky_1976_serial_binary_addition_network.png)
-
-
+:::
 
 ### Werbos
 
@@ -468,9 +493,65 @@ So he went to the Department of Energy and used backpropagation to make another 
 > 
 > So at some point, they wanted sensitivity analysis. And I said, "You know, I know a little bit about calculating derivatives." ... I applied it to a natural gas model at the Department of Energy. In the course of applying it, I did indeed discover dirt. They didn't want me to publish it because it was too politically sensitive. It was a real-world application, but the problem was that it was too real. At DOE, you know, you don't have First Amendment rights. That's one of the terrible things somebody's got to fix in this country. The reality of the First Amendment has deteriorated. Nobody's breaking the law, but the spirit of the First Amendment has decayed too far for science. At any rate, they finally gave me permission to publish it around '86 and '87. I sent it to the journal Neural Nets - that is, how you do simultaneous recurrent nets and time-lag recurrent nets together. Then the editorial process messed around with it, made the paper perhaps worse, and it finally got published in '88, which makes me very sad because now I gotta worry about, 'Well, gee, didn't Pineda do this in '88?
 
+### Rumelhart and Sejnowski
+
+Rumelhart rediscovered backpropagation around 1982 and immediately set about publishing and telling others about it. Some still resisted, but others immediately grasped it and set about using it. Among them were Widrow, as we saw previous, and Sejnowski. In the interview, he was rather unbothered by the priority dispute [@rosenfeldTalkingNetsOral2000, Chapter 12]:
+
+> as far as I know it's been discovered at least three times, maybe more. ... I had no idea that Paul Werbos had done work on it. ... There are other examples of work in the control literature in the '60s \[the [adjoint method](https://en.wikipedia.org/wiki/Adjoint_state_method)\]. ... it's just no one had really done anything with them. My view is that we not only discovered them, but we realized what we could do with them and did a lot of different things. I consider them independent discoveries, at least three and maybe more. \[Shun'ichi\] Amari, I think, suggests that he had another discovery, and you know, I believe that. You can look at his paper. He had, but he didn't do anything with it. I think that was in the late '60s. I don't feel any problem. You know, maybe we should have done better scholarship and searched out all of the precursors to it, but we didn't know there were any.
+
+In 1983, Rumelhart showed Sejnowski backpropagation, who immediately tried it, and found that it was much faster than Boltzmann machine. What a refreshing change from all those others who stubbornly refused to try it. [@rosenfeldTalkingNetsOral2000, Chapter 14]
+
+> ... I was still working on the Boltzmann machine and was beginning to do simulations using backprop. I discovered very rapidly that backprop was about an order of magnitude faster than anything you could do with the Boltzmann machine. And if you let it run longer, it was more accurate, so you could get better solutions.
+
+This was vitally important later, when Sejnowski used backpropagation to train [NETtalk](https://en.wikipedia.org/wiki/NETtalk_(artificial_neural_network)), a *huge* network with 20k parameters.[^nettalk-scaling] The model was a popular hit and appeared on prime-time television.[@sejnowskiDeepLearningRevolution2018, TODO page number]
+
+[^nettalk-scaling]: People told him that it had too many parameters and would hopelessly overfit, but the network just needed enough data and it generalized uncannily well.[@sejnowskiDeepLearningRevolution2018, TODO page number] It really seems like scaling skepticism is never going to leave.
+
 ### Geoffrey Hinton
 
-The interview with Geoffrey Hinton is hilarious, mostly about how he spent an entire year refusing to use backpropagation despite Rumelhart's incessant prodding. Like the last section, this is mostly made of quotations from [@rosenfeldTalkingNetsOral2000, Chapter 16].
+The interview with Geoffrey Hinton is hilarious, mostly about how he *spent an entire year refusing to use backpropagation* despite Rumelhart's incessant prodding. Like the last section, this is mostly made of quotations from [@rosenfeldTalkingNetsOral2000, Chapter 16].
+
+After hearing about Hopfield networks and simulated annealing in 1982, he tried combining them, and discovered the Boltzmann learning algorithm in 1983, and published in 1985 [@TODO that paper].
+
+> I remember I had to give a talk, a sort of research seminar, at Carnegie Mellon in either February or March of '83 ... I wanted to talk about this simulated annealing in Hopfield nets, but I figured I had to have a learning algorithm. I was terrified that I didn't have a learning algorithm.
+> 
+> Then we got very excited because now there was this very simple local-learning rule. On paper it looked just great. I mean, you could take this great big network, and you could train up all the weights to do just the right thing, just with a simple local learning rule. It felt like we'd solved the problem. That must be how the brain works.
+> 
+> I guess if it hadn't been for computer simulations, I'd still believe that, but the problem was the noise. It was just a very, very slow learning rule. It got swamped by the noise because in the learning rule, you take the difference between two noisy variables, two sampled correlations, both of which have sampling noise. The noise in the difference is terrible.
+> 
+> I still think that's the nicest piece of theory I'll ever do. It worked out like a question in an exam where you put it all together and a beautiful answer pops out.
+
+And now, the hilarity we have been waiting for. When Rumelhart told him in 1982 about backpropagation,
+
+> I first of all explained to him why it wouldn't work, based on an argument in Rosenblatt's book, which showed that essentially it was an algorithm that couldn't break symmetry. ... the standard way of doing learning is to have random initial weights, or you could just put a little bit of noise in the learning rule ...
+> 
+> The next argument I gave him was that it would get stuck in local minima. There was no guarantee you'd find a global optimum. Since you're bound to get stuck in local minima, it wasn't really worth investigating.
+> 
+> Then I tried to use it to get a very obscure effect. I couldn't get this very obscure effect with it, so I lost interest in backpropagation. I managed to get this very obscure effect later with a Boltzmann machine. I'd realized that if you've got a net to learn something, and then you add noise to the weights by making it learn something else, it should be much faster at relearning what it had previously learned. You should get very fast relearning of stuff that it previously knew, as compared to the initial learning. We programmed a backpropagation net, and we tried to get this fast relearning. **It didn't give fast relearning, so I made one of these crazy inferences that people make -- which was, that backpropagation is not very interesting**.
+
+After one year of failing to get Boltzmann machines to train, he discovered that Boltzmann machines *also* got stuck in local minima. Desperate times call for desperate measures, and he finally resorted to gradient descent.
+
+> After initially getting them to work, I dedicated over a year to refining their performance. I experimented with various techniques, including weight decay, which helped in preventing large energy barriers. We attempted several other approaches, but none of them yielded satisfactory results. I distinctly recall a point where we observed that training a Boltzmann machine could model certain functions effectively, but prolonged training caused its performance to deteriorate, a phenomenon we referred to as "going sour." We couldn't initially comprehend why this was happening. I generated extensive reports, filling stacks of paper about three inches thick, as I couldn't believe that these networks would degrade as you acquired more knowledge.
+> 
+> It took me several weeks to realize the root of the problem. The learning algorithm operated under the assumption that it could reach thermal equilibrium. However, as the weights grew larger, the annealing process failed to achieve thermal equilibrium, trapping the system in local minima. Consequently, the learning algorithm started behaving incorrectly. This realization led us to introduce weight decay as a solution to prevent this issue.
+> 
+> **After investing over a year** in attempting to optimize these methods, I ultimately concluded that they were unlikely to deliver the desired results. In a moment of desperation, I considered revisiting \[backpropagation\]. 
+
+Then he asked the research group for volunteers. None of the ten students took up the offer (and thus giving up a place as the coauthor of the backpropagation paper??):
+
+> They'd all been thoroughly indoctrinated by then into Boltzmann machines. ... They all said, "You know, why would you want to program that?" We had all the arguments: It's assuming that neurons can send real numbers to each other; of course, they can only send bits to each other; you have to have stochastic binary neurons; these real-valued neurons are totally unrealistic. It's ridiculous." So they just refused to work on it, not even to write a program, so I had to do it myself.
+> 
+> I went off and I spent a weekend. I wrote a LISP program to do it. 
+
+Hinton almost had one last chance at giving up on backpropagation. 
+
+> I almost blew it because the first thing I tried it on was an 8-3-8 encoder; that is, you have eight input units, three hidden units, and eight output units. You want to turn on one of the input units and get the same output unit to be on. 
+>
+> In a Boltzmann machine, since the units are binary, the states of the three hidden units have to be the eight different binary codes, so you know what the hidden units will look like when they've solved the problem. So I ran backpropagation on this problem and looked at the weights of the hidden units. They didn't have the right structure of weights. ... I thought, "Oh well, it turns out backpropagation's not that good after all." Then I looked at the error, and the error was zero. I was amazed.
+
+And so one year of excuses later, Hinton finally surrendered to backpropagation. They published the algorithm along with several examples, which became widely cited.
+
+> That was at the stage when we were just completing the PDP books, so we'd already agreed on what was going to be in the books. The final chapters were being edited. We decided we'd just slip in an extra chapter on backpropagation, so it was a late addition to the book. But I was always a bit disappointed. I mean, intellectually, backpropagation wasn't nearly as satisfying as Boltzmann machines. ... it didn't have the nice probabilistic interpretation.
 
 ## Triumph of the scale
 
