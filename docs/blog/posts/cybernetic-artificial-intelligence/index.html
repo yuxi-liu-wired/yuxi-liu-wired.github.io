@@ -273,7 +273,8 @@ div.csl-indent {
 <section id="laguerre-functions" class="level3">
 <h3 class="anchored" data-anchor-id="laguerre-functions">Laguerre functions</h3>
 <p>The Laguerre polynomials have many equivalent definitions. We will use three of those.</p>
-<p>Direct definition:</p>
+<div id="def-laguerre" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Laguerre polynomials) </strong></span>Direct definition:</p>
 <p><span id="eq-laguerre"><span class="math display">\[
 L_n(x) := \sum_{k} \binom{n}{k}\frac{(-1)^k}{k!} x^k
 \tag{1}\]</span></span></p>
@@ -289,11 +290,12 @@ L_n(0) &amp;= 1 \\
 L_n'(0) &amp;= -n
 \end{cases}
 \tag{3}\]</span></span></p>
+</div>
 <div id="prp-laguerre-equivalence" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposition 1 </strong></span>The three definitions are equivalent.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>The direct definition of <span class="math inline">\(L_n\)</span> satisfy <span class="math inline">\(xL_n'' + (1-x) L_n' + nL_n = 0\)</span>, and has the same value and first derivative at <span class="math inline">\(x=0\)</span>. By the uniqueness theorem of ordinary differential equations, the two definitions are equal.</p>
+<p><span class="proof-title"><em>Proof</em>. </span>The direct definition of <span class="math inline">\(L_n\)</span> satisfies <span class="math inline">\(xL_n'' + (1-x) L_n' + nL_n = 0\)</span>, and has the same value and first derivative at <span class="math inline">\(x=0\)</span>. By the uniqueness theorem of ordinary differential equations, the two definitions are equal.</p>
 <p>By taking the first partial derivatives <span class="math inline">\(\partial_x g, \partial_t g\)</span>, and simplifying, we obtain some recurrence relations of <span class="math inline">\(L_n\)</span>, including <span class="math inline">\(xL_n'' + (1-x) L_n' + nL_n = 0\)</span>. Plugging in the case where <span class="math inline">\(x=0\)</span>, we obtain <span class="math inline">\(L_n(0) = 1\)</span> and <span class="math inline">\(L_n'(0) = -n\)</span>.</p>
 </div>
 <div id="prp-laguerre" class="theorem proposition">
@@ -306,11 +308,16 @@ L_n'(0) &amp;= -n
 <p><span class="math display">\[\int_{0}^\infty e^{-x} g(t, x)  g(s, x) dx\]</span></p>
 <p>then expand the Taylor series of both sides in powers of <span class="math inline">\(s, t\)</span>.</p>
 </div>
-<p>We can define the Laguerre functions by <span class="math inline">\(\psi_n(t) := e^{-t/2}L_n(t)\)</span>, which makes the definition cleaner:</p>
+<div id="def-laguerre-function" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Laguerre functions) </strong></span><span class="math display">\[
+\psi_n(t) := e^{-t/2}L_n(t)
+\]</span></p>
+</div>
+<p>The Laguerre functions makes the orthogonality cleaner:</p>
 <p><span id="eq-laguerre-function-orthogonal"><span class="math display">\[
 \int_0^\infty \psi_n(t)\psi_m(t) dt = \delta_{mn}
 \tag{4}\]</span></span></p>
-<p>Given <a href="#prp-laguerre">Proposition&nbsp;2</a>, we can represent any well-behaved function on the <span class="math inline">\((-\infty, t]\)</span> as an infinite sum of Laguerre functions</p>
+<p>Just like in Fourier analysis, by virtue of orthogonality, we can represent any well-behaved function on the <span class="math inline">\((-\infty, t]\)</span> as an infinite sum of Laguerre functions</p>
 <p><span class="math display">\[
 f(t-\tau) = \sum_{n \geq 0} c_n \psi_n(\tau)
 \]</span></p>
@@ -322,7 +329,7 @@ c_n = \int_0^\infty f(t-\tau) \psi_n(\tau) d\tau.
 <section id="hermite-polynomials" class="level3">
 <h3 class="anchored" data-anchor-id="hermite-polynomials">Hermite polynomials</h3>
 <div id="def-hermite-polynomial" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (physicist’s Hermite polynomials) </strong></span><span id="eq-hermite"><span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 5 (physicist’s Hermite polynomials) </strong></span><span id="eq-hermite"><span class="math display">\[
 \sum_n H_n(x) \frac{1}{n!}t^n = e^{-t^2 + 2tx} = g(t, x)
 \tag{5}\]</span></span></p>
 </div>

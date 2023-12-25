@@ -69,6 +69,9 @@ In order to present Wiener's approach to nonlinear control theory, we need a sma
 
 The Laguerre polynomials have many equivalent definitions. We will use three of those.
 
+::: {#def-laguerre}
+## Laguerre polynomials
+
 Direct definition:
 
 $$
@@ -90,6 +93,7 @@ L_n(0) &= 1 \\
 L_n'(0) &= -n 
 \end{cases}
 $${#eq-laguerre-ode}
+:::
 
 ::: {#prp-laguerre-equivalence}
 
@@ -98,7 +102,7 @@ The three definitions are equivalent.
 :::
 
 ::: {.proof}
-The direct definition of $L_n$ satisfy $xL_n'' + (1-x) L_n' + nL_n = 0$, and has the same value and first derivative at $x=0$. By the uniqueness theorem of ordinary differential equations, the two definitions are equal.
+The direct definition of $L_n$ satisfies $xL_n'' + (1-x) L_n' + nL_n = 0$, and has the same value and first derivative at $x=0$. By the uniqueness theorem of ordinary differential equations, the two definitions are equal.
 
 By taking the first partial derivatives $\partial_x g, \partial_t g$, and simplifying, we obtain some recurrence relations of $L_n$, including $xL_n'' + (1-x) L_n' + nL_n = 0$. Plugging in the case where $x=0$, we obtain $L_n(0) = 1$ and $L_n'(0) = -n$.
 :::
@@ -122,13 +126,22 @@ then expand the Taylor series of both sides in powers of $s, t$.
 
 :::
 
-We can define the Laguerre functions by $\psi_n(t) := e^{-t/2}L_n(t)$, which makes the definition cleaner:
+::: {#def-laguerre-function}
+## Laguerre functions
+
+$$
+\psi_n(t) := e^{-t/2}L_n(t)
+$$
+
+:::
+
+The Laguerre functions makes the orthogonality cleaner:
 
 $$
 \int_0^\infty \psi_n(t)\psi_m(t) dt = \delta_{mn}
 $${#eq-laguerre-function-orthogonal}
 
-Given @prp-laguerre, we can represent any well-behaved function on the $(-\infty, t]$ as an infinite sum of Laguerre functions
+Just like in Fourier analysis, by virtue of orthogonality, we can represent any well-behaved function on the $(-\infty, t]$ as an infinite sum of Laguerre functions
 
 $$
 f(t-\tau) = \sum_{n \geq 0} c_n \psi_n(\tau)
