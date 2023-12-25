@@ -31,11 +31,11 @@ However, it appears he had changed his mind later. As recounted by Terence Sejno
 > 
 > There was a banquet on the last day of AI\@50. At the end of the dinner, the five returning members of the 1956 Dartmouth Summer Research Project on Artificial Intelligence made brief remarks about the conference and the future of AI. In the question and answer period, I stood up and, turning to Minsky, said: “There is a belief in the neural network community that you are the devil who was responsible for the neural network winter in the 1970s. Are you the devil?” Minsky launched into a tirade about how we didn’t understand the mathematical limitations of our networks. I interrupted him—“Dr. Minsky, I asked you a yes or no question. Are you, or are you not, the devil?” He hesitated for a moment, then shouted out, “Yes, I am the devil!”
 
-What are we to make of the enigma of Minsky? Was he the devil, or was he not the devil? Who
+What are we to make of the enigma of Minsky? Was he the devil, or was he not the devil?
 
 ### The education of Minsky
 
-SNARC, PhD thesis
+The story of Minsky 
 
 @sec-mcculloch-pitts
 
@@ -178,12 +178,11 @@ display(SVG(tree_svg.get_svg()))
 
 The results speak for itself.
 
-
-As expected, Chomsky rejected statistical language learning right until the end. [@norvigChomskyTwoCultures2017]
+As expected, Chomsky rejected statistical language learning right until the end.
 
 > It's true there's been a lot of work on trying to apply statistical models to various linguistic problems. I think there have been some successes, but a lot of failures. There is a notion of success ... which I think is novel in the history of science. It interprets success as approximating unanalyzed data.
 
-[Noam Chomsky: Where Artificial Intelligence Went Wrong - The Atlantic](https://web.archive.org/web/20131006121033/http://www.theatlantic.com/technology/print/2012/11/noam-chomsky-on-where-artificial-intelligence-went-wrong/261637/)
+See [@norvigChomskyTwoCultures2017] for a detailed analysis and rebuttal.
 
 ### The Chomskyans
 
@@ -219,11 +218,9 @@ The origin of cybernetics was tangled with the fast control of machinery in WWII
 
 > If humans do not differ from machines from the "scientific standpoint," it is because the scientific standpoint of the 1940s was one of men machines at war. The man-airplane-radar-predictor-artillery system is closed one in which it appeared possible to replace men by machines and machines by men. To an antiaircraft operator, the enemy really does act like an autocorrelated servomechanism. ... In every piece of his writing on cybernetics, from the first technical exposition of the AA predictor before Pearl Harbor up through his essays of the 1960s on science and society, Wiener put feedback in the foreground, returning again and again to the torpedo, the guided missile, and his antiaircraft director.
 
-Cybernetics entered the realm of popular consciousness with Wiener's 1948 bestseller *Cybernetics*. In it, we find a curious description of artificial intelligence and self-reproduction, but from the analog signal processing point of view. The short version of it is that it was an analog-circuit quine, as described in [@wienerCyberneticsControlCommunication2019, page xli]:
+Cybernetics entered the realm of popular consciousness with Wiener's 1948 bestseller *Cybernetics*. In it, we find a curious description of artificial intelligence and self-reproduction, but from the analog signal processing point of view. I wrote [an entire essay](https://yuxi-liu-wired.github.io/blog/posts/cybernetic-artificial-intelligence/) on it. The short version of it is that it was an analog-circuit quine, as described in [@wienerCyberneticsControlCommunication2019, page xli]:
 
 > These operations of analysis, synthesis, and automatic self-adjustment of white boxes into the likeness of black boxes ... \[by\] learning, by choosing appropriate inputs for the black and white boxes and comparing them; and in many of these processes, including the method of Professor Gabor, multiplication devices play an important role. While there are many approaches to the problem of multiplying two functions electrically, this task is not technically easy. On the one hand, a good multiplier must work over a large range of amplitudes. On the other hand, it must be so nearly instantaneous in its operation that it will be accurate up to high frequencies. Gabor claims for his multiplier a frequency range running to about 1,000 cycles.
-
-The long version must be relegated to a separate post.
 
 The cybernetic approach to AI is a strange chapter in the history of AI, filled with machines too *sui generis* to have followups. It seems to me that there is no issue with building our way to AI one nonlinear filter at a time, except technical issues, but the technical issues are insurmountable. One day I might write an essay that give justice to the cybernetic approach, but as this essay is not on cybernetics, we will only give a whirlwind tour of highlights from the cybernetic approach to AI.
 
@@ -348,10 +345,132 @@ The McCulloch and Pitts paper, like the *Perceptron* book, is something often ci
 
 ### Werbos
 
-> I didn't find a patron. Nobody would support this crazy stuff. It was very depressing. I tried to simplify it. I said, "Look, I'll pullout the backprop part and the multilayer percept ron part." I wrote a paper that was just that -- that was, I felt, childishly obvious. I didn't even use a sigmoid [non-linearity]. I used piecewise linear. I could really rationalize that to the point where it looked obvious. 10 handed that to my thesis committee. I had really worked hard to write it up. They said, "Look, this will work, but this is too trivial and simple to be worthy of a Harvard PhiD. thesis." I might add, at that point they had discontinued support because they were not interested, so I had no money. Approximately at the same time there were scandals about welfare fraud, about how students were getting food. They cut off all that kind of nonsense, so basically I had no money. NO money. Not even money to buy food.
+In 1993, Paul Werbos gave an interview, where he described the backstory of his invention of backpropagation [@rosenfeldTalkingNetsOral2000, Chapter 15]. I will let him speak, only interjecting with brief comments.
 
-> I spoke to Minsky. I remember I had my [Walter Rosenblith], and I said, "You know, I've got a way now to adapt multilayer perceptrons, and the key is that they're not Heaviside functions; they are differentiable. And I know that action potentials, nerve spikes, are 1 or 0, as in McCulloch-Pitts neurons, but here in this book that I had for my first course in neurophysiology are some actual tracings. If you look at these tracings in Rosenblith, they show volleys of spikes, and volleys are the unit of analysis. This is an argument for treating this activity as differentiable, at least as piecewise linear. If you look at that, I can show you how to differentiate through it." . I went to Minsky for help, but Minsky would not offer help. Minsky basically said, "Look, everybody knows a neuron is a 1-0 spike generator. That is the official model from the biologists. Now, you and I are not biologists. If you and I come out and say the biologists are wrong, and this thing is not producing Is and Os, nobody is going to believe us. It's totally crazy. I can't get involved in anything like this." He was probably right, I guess, but he was clearly very worried about his reputation and his credibility in his community.
+Before entering Harvard, he tried implementing Hebbian learning, but noticed it wouldn't work. 
 
+> It was obvious to me from a statistical point of view that Hebbian learning was going to be measuring correlation coefficients, and for multivariate problems it would not work. I never gave the talk. I said, "Now I'm going to figure out something with the same flavor that does work."
+>
+> \[Understanding human learning\] will help us understand the human mind; it will help human beings understand themselves. Therefore, they will make better political decisions, and better political decisions are vital for the future of humanity.
+>
+> Minsky was one of my major influences. Well, Minsky and Hebb and Asimov and Freud.
+
+Sometime before 1968, he was inspired to do backpropagation from reading Freud.
+
+> I talk in there about the concept of translating Freud into mathematics. This is what took me to backpropagation, so the basic ideas that took me to backpropagation were in this journal article in '68 [@werbosElementsIntelligence1968]. I talked a lot about what was wrong with the existing \[two state\] McCulloch-Pitts neuron model, and how it was only "1" and "0." I wanted to make that neuron probabilistic. I was going to apply Freudian notions to an upper-level, associative drive reinforcement system. When 
+
+For his masters (1969), he majored in mathematical physics, and minored in decision and control. During his PhD at Harvard, he had to take some compulsory courses, which he didn't want to. To salvage the situation, he took computer courses which would provide him with some computer hours, a scarce resource at the time. I would guess the following event happened early 1971.
+
+> Initially, I was going to do something on quantum physics. I learned something about partial differential equations, but not enough. I couldn't produce a really useful product at the end of $x$ number of months.
+> 
+> So I went back to the committee, and I said, "Gee, I can't do that, **but I have this little method for adapting multilayer perceptrons. It's really pretty trivial.** It's just a by-product of this model of intelligence I developed. And I'd like to do it for my paper for this computer course."
+> 
+> \[Larry\] Ho's position was, "I understand you had this idea, and we were kind of open-minded. But look, at this point, you've worked in this course for three months, admittedly on something else. I'm sorry, you're just going to have to take an incomplete in the course."
+> 
+> And I said, "You mean I can't do it?"
+> 
+> "No, no, you'll have to take an incomplete because, basically, the first thing didn't work. We're very skeptical this new thing is going to work."
+> 
+> "But look, the mathematics is straightforward."
+> 
+> "Yeah, yeah, but you know, **we're not convinced it's so straightforward**. You've got to prove some theorems first."
+> 
+> So they wouldn't let me do it. One of the reasons that is amusing to me is that there are now some people who are saying backprop was invented by Bryson and Ho. They don't realize it was the same Larry Ho, who was on my committee and who said this wasn't going to work.
+
+I am not sure if this is sarcastic or not. It reminds me of the "summer vision project" [@papertSummerVisionProject1966] that expected some undergraduate students to construct "a significant part of a visual system" in a single summer.
+
+> By the time my orals came around, it was clear to me that the nature of reality is a hard problem, that I'd better work on that one later and finish my Ph.D. thesis on something small -- something I can finish by the end of a few years, like a complete mathematical model of human intelligence.
+
+The oral was amusing, and touched on the still-hot issue of [recent human evolution](https://en.wikipedia.org/wiki/Recent_human_evolution).
+
+> ... I made a statement that there might be parameters affecting utility functions in the brain, parameters that vary from person to person. You could actually get a significant amount of adaptation in ten generations' time. I was speculating that maybe the rise and fall of human civilizations, as per Toynbee and Spengler, might correlate with these kinds of things. The political scientist on the committee, [Karl Deutsch](https://en.wikipedia.org/wiki/Karl_Deutsch), raised his hand. ... His book, *The Nerves of Government*, which compares governments to neural networks, is one of the classic, accepted, authoritative books in political science.
+> 
+> He raised his hand and he said, "Wait a minute, you can't get significant genetic change in ten generations. That cannot be a factor in the rise and fall of civilizations. That's crazy."
+> 
+> Next to him was a mathematical biologist by the name of [Bossert](https://en.wikipedia.org/wiki/William_H._Bossert), who was one of the world's authorities on population biology. He raised his hand and said, "What do you mean? In our experiments, we get it in seven generations. This guy is understating it. Let me show you the experiments."
+> 
+> And Deutsch said, "What do you mean, it's common knowledge? All of our political theories are based on the assumption this cannot happen." And Bossert said, "Well, it happens. Here's the data."
+> 
+> ... I passed the orals having said about two sentences and not having discussed models of intelligence.
+
+It turns out Werbos interpreted backpropagation as the mathematical interpretation of Freudian psychic energy flow. The thesis committee was not amused.
+
+> But the backpropagation was not used to adapt a supervised learning system; it was to translate Freud's ideas into mathematics, to implement a flow of what Freud called "psychic energy" through the system. I translated that into derivative equations, and I had an adaptive critic backpropagated to a critic, the whole thing, in '71 or '72. ... The thesis committee said, "We were skeptical before, but this is just unacceptable ... You have to find a patron. You must find a patron anyway to get a Ph.D. That's the way Ph.D.s work.
+
+The committee gave him three acceptable patrons. He first went to Steve Grossberg.
+
+> he said, 'Well, you're going to have to sit down. Academia is a tough business, and you have to develop a tough stomach to survive in it. I'm sure you can pull through in the end, but you're going to have to do some adaptation. So I want you to sit down and hold your stomach, maybe have an antacid. The bottom line is, this stuff you've done, it's already been done before. Or else it's wrong. I'm not sure which of the two, but I know it's one of the two."
+
+Thanks, Grossberg, for using the law of excluded middle to crush Werbos' dream.
+
+He then went to Marvin Minsky, who gave us some new clues about why backpropagation took so long to discover: "everybody knows a neuron is a 1-0 spike generator"!
+
+> "I've got a way now to adapt multilayer perceptrons, and the key is that they're not Heaviside functions; they are differentiable. And I know that action potentials, nerve spikes, are 1 or 0, as in McCulloch-Pitts neurons, but here in this book that I had for my first course in neurophysiology are some actual tracings. If you look at these tracings in Rosenblith, they show volleys of spikes, and volleys are the unit of analysis. This is an argument for treating this activity as differentiable, at least as piecewise linear. If you look at that, I can show you how to differentiate through it."
+> 
+> Minsky basically said, "Look, **everybody knows a neuron is a 1-0 spike generator. That is the official model from the biologists**. Now, you and I are not biologists. If you and I come out and say the biologists are wrong, and this thing is not producing 1s and 0s, nobody is going to believe us. It's totally crazy. I can't get involved in anything like this."
+> 
+> He was probably right, I guess, but he was clearly very worried about his reputation and his credibility in his community.
+
+Out of curiosity, I looked up the "Rosenblith" book [@rosenblithSensoryCommunicationContributions2012], and indeed there were a few tracings that show continuously varying neural activation.
+
+::: {#fig-rosenblith layout-ncol=2}
+
+![Page 146 of the book. *Mechanisms of gustatory and olfactory receptor stimulation*, Figure 2.](figure/no_bg_beidler_2.png)
+
+![Page 366 of the book. *The physiological basis of wavelength discrimination in the eye of the honeybee*, Figure 4.](figure/no_bg_goldsmith_4.png)
+:::
+
+Then Minsky dunked on reinforcement learning as well, because he had an unpublished "jitters machine" that failed to optimize its reward. Presumably the name "jitters machine" refers to how it would jitter in place, not able to move towards the goal.
+
+> Minsky also said, "You know, I used to believe in all this kind of stuff with reinforcement learning because I knew reinforcement learning would work. I knew how to implement it. I had a nice guy named Oliver Selfridge who came in and acted as my patron and gave me permission to do it. We coauthored a paper, but it was really my idea, and he was just acting as patron on the Jitters machine. I'll hand you the tech report, which we have deliberately never published."
+> 
+> It was his bad experience with the Jitters machine that turned him off on reinforcement learning and all the neural net ideas. It just didn't work. I later looked at that paper ... He had a system that was highly multivariate with a single reinforcement signal. The system can't learn efficiently with that. At any rate, he was totally turned off.
+
+The brief description of the unpublished jitters machine was not making sense to me, so I looked around the literature. It was *so* unpublished that I found only two more references in the entire literature [@werbosApplicationsAdvancesNonlinear1982; @werbosBuildingUnderstandingAdaptive1987], both by Werbos. [@werbosBuildingUnderstandingAdaptive1987] described it as:
+
+> There are also some technical reasons to expect better results with the new approach. Almost all of the old perceptron work was based on the McCulloch-Pitts model of the neuron, which was both discontinuous and nondifferentiable. It was felt, in the 1950's, that the output of a brain cell had to be 1 or 0, because the output consisted of sharp discrete "spikes." More recent work in neurology has shown that higher brain cells output "bursts" or "volleys" of spikes, and that the strength of a volley may vary continuously in intensity. This suggests the CLU model to be discussed in the Appendix. In any event, to exploit basic numerical methods, one must use differentiable processing units. Minsky once experimented with a "jitters" machine, which estimated one derivative per time cycle by making brute-force changes in selected variables; however, the methods to be discussed in the Appendix yield derivatives of all variables and parameters in one major time cycle and thereby multiply efficiency in proportion to the number of parameters $(N)$, which may be huge.
+
+This makes things perfectly clear. Minsky's jitters machine was an RL agent with multiple continuously adjustable parameters running a very primitive form of policy gradient. During every episode, it would would estimate $\partial_{\theta_i} R(\theta)$ using finite difference, but since it used finite difference, they could only estimate the partial derivative for *only one* of the parameters $\theta_i$! No wonder it never managed to learn. It is almost comical how much they failed to just use gradient descent. It sometimes feels as if did everything to *avoid* just taking the gradient. In the case of Minsky, he made it very clear, in his new chapter to the 1988 version of *Perceptrons*, that he did not believe in gradient descent, period. But what explains the gradient-phobia of all the others...?
+
+Anyway, back to the interview. Werbos went to [Jerome Lettvin](https://en.wikipedia.org/wiki/Jerome_Lettvin), the neuroscientist famous for *What the Frog's Eye Tells the Frog's Brain*. Turns out he was a proto-[eliminativist](https://en.wikipedia.org/wiki/Eliminativism). While I'm an eliminativist too, Werbos was a Freudian, which can only collide badly with eliminativism.
+
+> "Oh yeah, well, you're saying that there's motive and purpose in the human brain." He said, "That 's not a good way to look at brains. I've been telling people, 'You cannot take an anthropomorphic view of the human brain.' In fact, people have screwed up the frog because they're taking bachtriomorphic views of the frog. If you really want to understand the frog, you must learn to be objective and scientific."
+
+Without patrons, he faced the committee again.
+
+> I tried to simplify it. I said, "Look, I'll pull out the backprop part and the multilayer perceptron part." I wrote a paper that was just that - that was, I felt, childishly obvious. I didn't even use a sigmoid \[non-linearity\]. I used piecewise linear. I could really rationalize that to the point where it looked obvious. I handed that to my thesis committee. I had really worked hard to write it up. They said, "Look, this will work, **but this is too trivial** and simple to be worthy of a Harvard Ph.D. thesis."
+
+Oh, now it's too trivial?? I swear the backstory of backpropagation gets more and more ridiculous by the day.
+
+> ... they had discontinued support because they were not interested, so I had no money. ... Not even money to buy food. A generous guy, who was sort of a Seventh Day Adventist and a Harvard Ph.D. candidate in ethnobotany, had a slum apartment that rented for about $40 a month in Roxbury in the ghetto. He let me share a room in his suite, in his suite with the plaster falling off, and didn't ask for rent in advance. I had no money at that time for food. There was a period of three months when I was living there in the slums. To conserve the little bit of money I had, I remember eating soybean soup and chicken neck soup. I remember getting the shakes from inadequate nutrition.
+> 
+> Finally, they said, "Look, you know, we're not going to allow this." There was this meeting where we sat around the table. The chairman of the applied math department at that time was a numerical analyst D. G. M. Anderson. He said, "We can't even allow you to stay as a student unless you do something. You've got to come up with a thesis, and it can't be in this area."
+
+Karl Deutsch, who believed in Werbos, sponsored his PhD thesis on a "respectable" problem: fitting an ARMA model to a time-series data of political regimes, and use it to forecast nationalism and political assimilation. [Box–Jenkins method](https://en.wikipedia.org/wiki/Box%E2%80%93Jenkins_method) ran too slowly, so Werbos programmed in the backpropagation which worked, and he finally obtained his PhD in 1974. This is the original reference point for modern neural network backpropagation algorithm.
+
+> Deutsch said, "You 're saying we need an application to believe this stuff? I have an application that we could believe. I have apolitical forecasting problem. I have this model, this theory of nationalism and social communications? What causes war and peace between nations? I have used up ten graduate students who've tried to implement this model on real-world data I've collected, and they've never been able to make it work. Now, do you think your model of intelligence could solve this problem and help us predict war and peace?"
+>
+> The first application of backpropagation in the world in a generalized sense was a command that was put into the [TSP](https://en.wikipedia.org/wiki/TSP_(econometrics_software)) at MIT , available to the whole MIT community as part of their standard software. It was published as part of MIT 's report to the DOD [the Department of Defense] and part of the DOD's report to the world . It was part of the computer manual, so the first publication of backpropagation was in a computer manual from MIT for a working command for people to use in statistical analysis. I was a second author of that manual. It was Brode, Werbos, and Dunn.
+>
+> ... Once I started doing software for them, they discovered I was pretty good at it. Once I had put backpropagation into a TSP command, they offered me a full-time job at the Harvard Cambridge Project, so I did the Ph.D. thesis while having a full-time job. While I was doing these things at MIT, I remember going to one party. ... one of the people there said, 'We have heard through the grapevine that somebody has developed this thing called continuous feedback that allows you to calculate all the derivatives in a single pass."
+
+But the saga is not over. after the Ph.D., Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.
+
+> I found out that DARPA had spent a lot of effort building a worldwide conflict forecasting model for the Joint Chiefs of Staff that was used in the long-range strategy division of the Joint Chiefs. ... I wound up sending a couple of graduate students to create a really good database of Latin America. I said, "You want variance, high variance. Something hard to predict." I thought conflict in Latin America would be the most beautiful case. I figured there were enough cultural homogeneities that it would be a single stochastic process, but with lots and lots of variance in that process. So we got truly annual data going back, I don't know, twenty or thirty years for all the countries in Latin America and then reestimated the Joint Chief's model on it. It had an r2 of about .0016 at forecasting conflict. By jiggling and jiggling we could raise it to about .05. It could predict GNP and economic things decently. Conflict prediction we couldn't improve, though; it was hopeless.
+> 
+> DARPA wasn't happy when I published that result. They wanted me to do something real and practical and useful for the United States. This was useful, but it was an expose. They didn't like that. Therefore, the report, which included backpropagation in detail and other advanced methods, was not even entered into DOCSUB. Every time I tried to enter it into DOCSUB, somebody jiggled influence to say, "No, no, no, we can't publish this. This is too hot."
+> 
+> It was published in [@werbosEmpiricalTestNew1978] anyway because they couldn't block the journals, but it didn't include the appendices. So that paper in 1978 said, "We've got this great thing called dynamic feedback, which lets you estimate these things. It calculates derivatives in a single swoop, and you can use it for lots of things, like AI." ... **the appendix on how to do it was not there because of page limits** ... At that point, DARPA was no longer happy.
+
+So he went to the Department of Energy and used backpropagation to make another model, and managed to get silenced again, unable to publish that report until 1988 [@werbosGeneralizationBackpropagationApplication1988].
+
+> They had a million-dollar contract at Oak Ridge National Laboratory to study that model. They wanted me for several things. One, they wanted me to be a translator between engineering and economics. Two, they wanted a critique. They wanted exposés. They wanted me to rip apart the models of the Department of Energy in a very scientific, objective way that didn't look like I was trying to rip them apart but was anyway. That's exactly what they wanted to hire me for, and I didn't really know that was the motive. These particular people didn't like modeling very much.
+> 
+> So at some point, they wanted sensitivity analysis. And I said, "You know, I know a little bit about calculating derivatives." ... I applied it to a natural gas model at the Department of Energy. In the course of applying it, I did indeed discover dirt. They didn't want me to publish it because it was too politically sensitive. It was a real-world application, but the problem was that it was too real. At DOE, you know, you don't have First Amendment rights. That's one of the terrible things somebody's got to fix in this country. The reality of the First Amendment has deteriorated. Nobody's breaking the law, but the spirit of the First Amendment has decayed too far for science. At any rate, they finally gave me permission to publish it around '86 and '87. I sent it to the journal Neural Nets - that is, how you do simultaneous recurrent nets and time-lag recurrent nets together. Then the editorial process messed around with it, made the paper perhaps worse, and it finally got published in '88, which makes me very sad because now I gotta worry about, 'Well, gee, didn't Pineda do this in '88?
+
+### Geoffrey Hinton
+
+The interview with Geoffrey Hinton is hilarious, mostly about how he spent an entire year refusing to use backpropagation despite Rumelhart's incessant prodding. Like the last section, this is mostly made of quotations from [@rosenfeldTalkingNetsOral2000, Chapter 16].
 
 ## Triumph of the scale
 
