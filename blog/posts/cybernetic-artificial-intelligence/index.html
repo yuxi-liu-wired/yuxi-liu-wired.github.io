@@ -282,13 +282,13 @@ L_n(x) := \sum_{k} \binom{n}{k}\frac{(-1)^k}{k!} x^k
 g(t, x) = \sum_{n=0}^\infty t^n L_n(x)=  \frac{1}{1-t} e^{-tx/(1-t)}
 \tag{2}\]</span></span></p>
 <p>Definition by ordinary differential equation:</p>
-<p><span class="math display">\[
+<p><span id="eq-laguerre-ode"><span class="math display">\[
 \begin{cases}
 xL_n'' + (1-x) L_n' + nL_n &amp;= 0 \\
 L_n(0) &amp;= 1 \\
 L_n'(0) &amp;= -n
 \end{cases}
-\]</span></p>
+\tag{3}\]</span></span></p>
 <div id="prp-laguerre-equivalence" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposition 1 </strong></span>The three definitions are equivalent.</p>
 </div>
@@ -309,7 +309,7 @@ L_n'(0) &amp;= -n
 <p>We can define the Laguerre functions by <span class="math inline">\(\psi_n(t) := e^{-t/2}L_n(t)\)</span>, which makes the definition cleaner:</p>
 <p><span id="eq-laguerre-function-orthogonal"><span class="math display">\[
 \int_0^\infty \psi_n(t)\psi_m(t) dt = \delta_{mn}
-\tag{3}\]</span></span></p>
+\tag{4}\]</span></span></p>
 <p>Given <a href="#prp-laguerre">Proposition&nbsp;2</a>, we can represent any well-behaved function on the <span class="math inline">\((-\infty, t]\)</span> as an infinite sum of Laguerre functions</p>
 <p><span class="math display">\[
 f(t-\tau) = \sum_{n \geq 0} c_n \psi_n(\tau)
@@ -324,7 +324,7 @@ c_n = \int_0^\infty f(t-\tau) \psi_n(\tau) d\tau.
 <div id="def-hermite-polynomial" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 3 (physicist’s Hermite polynomials) </strong></span><span id="eq-hermite"><span class="math display">\[
 \sum_n H_n(x) \frac{1}{n!}t^n = e^{-t^2 + 2tx} = g(t, x)
-\tag{4}\]</span></span></p>
+\tag{5}\]</span></span></p>
 </div>
 <div id="prp-hermite" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposition 3 (Hermite polynomials are orthogonal with respect to the normal distribution with variance 1/2) </strong></span><span class="math display">\[\int e^{-x^2}H_n(x) H_m(x) dx = \sqrt\pi 2^n  n! \delta_{mn}\]</span></p>
