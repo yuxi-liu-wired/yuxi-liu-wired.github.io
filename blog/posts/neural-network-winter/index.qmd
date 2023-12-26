@@ -33,19 +33,169 @@ However, it appears he had changed his mind later. As recounted by Terence Sejno
 
 What are we to make of the enigma of Minsky? Was he the devil, or was he not the devil?
 
-### The education of Minsky
+### The intellectual history of Minsky
 
-The story of Minsky 
+During his undergrad years, Minsky was deeply impressed by Andrew Gleason,[^andrew-gleason] and decided to work on pure mathematics, resulting in his 1951 undergraduate thesis *A Generalization of Kakutani's Fixed-Point Theorem*, which extended an obscure fixed point theorem of Kakutani -- not [the famous version](https://en.wikipedia.org/wiki/Kakutani_fixed-point_theorem), as Kakutani proved more than one fixed point theorems.
 
-@sec-mcculloch-pitts
+[^andrew-gleason]:
+    [@bernsteinMarvinMinskyVision1981]
 
-### Meeting Seymour Papert
+    > I asked Gleason how he was going to solve it. Gleason said he had a plan that consisted of three steps, each of which he thought would take him three years to work out. Our conversation must have taken place in 1947, when I was a sophomore. Well, the solution took him only about five more years ... Gleason made me realize for the first time that mathematics was a landscape with discernible canyons and mountain passes, and things like that. In high school, I had seen mathematics simply as a bunch of skills that were fun to master—but I had never thought of it as a journey and a universe to explore. No one else I knew at that time had that vision, either.”
 
-The book is one of those things that have passed into the stuff of legend: often quoted, rarely read. However, for its historical importance, I have actually read the book. To save you the trouble of reading the book, I will describe it in @sec-perceptron-book so you don't have to.
+::: {#thm-kakutani}
+## Kakutani's fixed point theorem on the sphere
 
-### Reading between the lines
+If $f$ is a $\R^2$-valued continuous function on the unit sphere in $\R^3$, then for any side length $r \in (0, \sqrt 3)$, there exists $x_1, x_2, x_n$ on the sphere forming an equilateral triangle with side length $r$, such that $f(x_1) = f(x_2) = f(x_3)$.
 
-the literal lines vs what is written between the lines. Cite Papert's 1980s paper about "alternative ways of knowing" -- a brief description of how he and others tried to bring postmodernism and social justice to hard sciences, and then describe how it all blew up in the 1990s Science Wars and the Sokal affair.
+Equivalently, if $x_1, x_2, x_3$ form an equilateral triangle on the unit sphere, then there exists a rotation $T$ such that $f(T(x_1)) = f(T(x_2)) = f(T(x_3))$.
+:::
+
+Using knot theory, Minsky proved an extension where $x_1, x_2, x_3$ are three points of a square or a regular pentagon [@minskyMyUndergraduateThesis2011]. The manuscript has "disappeared" [@SelectedPublicationsMarvin].
+
+> I wrote it up and gave it to Gleason. He read it and said, ‘You are a mathematician.’ Later, I showed the proof to Freeman Dyson, at the Institute for Advanced Study, and he amazed me with a proof [@dysonContinuousFunctionsDefined1951] that there must be at least one square that has the same temperature at all four vertices. He had found somewhere in my proof a final remnant of unused logic. [@bernsteinMarvinMinskyVision1981]
+
+He then got interested in neural networks and reinforcement learning, and constructed a very simple electromechanical machine called SNARC.[^snarc] The SNARC machine is a recurrent neural network, performing reinforcement learning by Hebbian learning rule. It simulates a mouse running around a maze, and the operator watches an indicator light showing the mouse. The operator can press a button as a reward signal, and this would cause an electric motor to turn a chain. The chain is clutched to rheostats that connect the neurons, and the stretch of the clutch is proportional to the charge in a capacitor. During the operation of the neural network, the capacitor charges up if there is neural co-activation on the connection, and decays naturally, thus serving as a short-term memory. When the reward button is pressed, the clutches turn by an amount proportional to the co-activation of neural connections, thus completing the Hebbian learning.
+
+[^snarc]: It was published as [@minskyNeuralanalogueCalculatorBased1952], but the document is not available online, and I could only piece together a possible reconstruction from the fragments of information.
+
+Minsky was impressed by how well it worked. The machine was designed to simulate one mouse, but by some kind of error it simulated multiple mice, and yet it still worked.
+
+> The rats actually interacted with one another. If one of them found a good path, the others would tend to follow it. We sort of quit science for a while to watch the machine. ... In those days, even a radio set with twenty tubes tended to fail a lot. I don’t think we ever debugged our machine completely, but that didn’t matter. By having this crazy random design, it was almost sure to work, no matter how you built it. [@bernsteinMarvinMinskyVision1981]
+
+This was the last we see Minsky's work with random neural networks. He has crossed the Rubicon, away from the land of brute reason and into the land of genuine insight.
+
+> I had the naïve idea that if one could build a big enough network, with enough memory loops, it might get lucky and acquire the ability to envision things in its head. ... Even today, I still get letters from young students who say, ‘Why are you people trying to program intelligence? Why don’t you try to find a way to build a nervous system that will just spontaneously create it?’ Finally, I decided that either this was a bad idea or it would take thousands or millions of neurons to make it work, and I couldn’t afford to try to build a machine like that. [@bernsteinMarvinMinskyVision1981]
+
+For his PhD thesis, Minsky worked on the mathematical theory of McCulloch--Pitts neural networks. In style, it was a fine piece of classical mathematics [@minskyTheoryNeuralanalogReinforcement1954]. Minsky would go on to write [@minskyComputationFiniteInfinite1967, Chapter 3], still the best introduction to McCulloch--Pitts neural networks.
+
+> Minsky’s doctoral dissertation in mathematics from Princeton in 1954 was a theoretical and experimental study of computing with neural networks. He had even built small networks from electronic parts to see how they behaved. The story I heard when I was a graduate student at Princeton in physics was that there wasn’t anyone in the Mathematics Department who was qualified to assess his dissertation, so they sent it to the mathematicians at the Institute for Advanced Study in Princeton who, it was said, talked to God. The reply that came back was, “If this isn’t mathematics today, someday it will be,” which was good enough to earn Minsky his PhD.[@sejnowskiDeepLearningRevolution2018, page 259]
+
+Reading the story, I was reminded of [the hacker koan](https://simple.wikipedia.org/wiki/Hacker_koan) about Minsky and his student Sussman:
+
+> In the days when Sussman was a novice, Minsky once came to him as he sat hacking at the PDP-6. “What are you doing?”, asked Minsky. “I am training a randomly wired neural net to play Tic-Tac-Toe” Sussman replied. “Why is the net wired randomly?”, asked Minsky. “I do not want it to have any preconceptions of how to play”, Sussman said. Minsky then shut his eyes. “Why do you close your eyes?”, Sussman asked his teacher. “So that the room will be empty.” At that moment, Sussman was enlightened.
+
+This is based on a true story. [@levyHackersHeroesComputer2010, pages 110-111]:
+
+> ... Sussman told Minsky that he was using a certain randomizing technique in his program because he didn't want the machine to have any preconceived notions. Minsky said, "Well, it has them, it's just that you don't know what they are." It was the most profound thing Gerry Sussman had ever heard. And Minsky continued, telling him that the world is built a certain way, and the most important thing we can do with the world is avoid randomness, and figure out ways by which things can be planned.
+
+As for Sussman, I knew him for two things: writing the [*SICP*](https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs) book, and being the coordinator of the infamous *summer vision project* that was to construct "a significant part of a visual system" in a single summer, using only undergraduate student researchers. A brief read of his "[reading list](https://web.archive.org/web/20231007210930/http://aurellem.org/thoughts/html/sussman-reading-list.html)" shows where his loyalties lie: firmly in [the school of neats](https://en.wikipedia.org/wiki/Neats_and_scruffies).
+
+[@sejnowskiDeepLearningRevolution2018, page 28] recounts the background of the summer vision project:
+
+> In the 1960s, the MIT AI Lab received a large grant from a military research agency to build a robot that could play Ping-Pong. I once heard a story that the principal investigator forgot to ask for money in the grant proposal to build a vision system for the robot, so he assigned the problem to a graduate student as a summer project. I once asked Marvin Minsky whether the story was true. He snapped back that I had it wrong: “We assigned the problem to undergraduate students.”
+
+During the 1960s, Minsky became collaborators with Seymour Papert, resulting in the fateful book of *Perceptron*, and some other projects. After rejecting neural networks, Minsky became a leading researcher in AI. His style of AI is typically described as "symbolic AI", although a more accurate description would be *The Society of Mind* (SoM). Minsky developed the SoM in the 1970s with Papert, and published the definitive account in [@minskySocietyMind1988]. As he described in the postscript:
+
+> This book assumes that any brain, machine, or other thing that has a mind must be composed of smaller things that cannot think at all. The structure of the book itself reflects this view: each page explores a theory or idea that exploits what other pages do. Some readers might prefer a more usual form of story plot. I tried to do that several times, but it never seemed to work; each way I tried to line things up left too many thoughts that would not fit. A mind is too complex to fit the mold of narratives that start out here and end up there; a human intellect depends upon the connections in a tangled web—which simply wouldn’t work at all if it were neatly straightened out.
+>
+> ... One of our projects was to build a machine that could see well enough to use mechanical hands for solving real-world problems; this was the origin of Builder and the insights that emerged from it. In trying to make that robot see, we found that no single method ever worked well by itself. For example, the robot could rarely discern an object s shape by using vision alone; it also had to exploit other types of knowledge about which kinds of objects were likely to be seen. This experience impressed on us the idea that only a society of different kinds of processes could possibly suffice.
+
+
+
+### Seymour Papert
+
+Seymour Papert, the long-time collaborator of Minsky, was the second author of *Perceptron*. To unlock the enigma of Minsky, we must look into Papert's past as well.
+
+In 1958, after a doctorate in mathematics, he met Jean Piaget and became his pupil for four years. This had a formative effect on Papert. Piaget was and an important influence on the [constructivism school in education](https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_education)). Papert would go on to make serious work in applying constructivism to actual education. For Papert, computers realize the dream of unlocking the kaleidoscopic variety of possible constructions.
+
+Jean Piaget studied how children develop their understanding of the world. What goes on in their mind as they progressively understand that things fall down, what dogs are, and solid steel sinks but hollow steel might float? Piaget discovered that children did not simply start with a blank sheet of paper and gradually fill in sketchy details of the true model, instead they constructed naive models of small aspects the world that, as it encounters phenomena it cannot explain, would be modified or completely replaced. In this way, Piaget claimed that children are "little scientists".
+
+A small example would illustrate the idea. For example, when children see that leaves fall on the water and floats, but a stone sinks, so they might add a rule that "Soft things float, while hard things sink." Then they see that a hard plastic boat floats too, so they might add a rule that "Except hard and light things also float." Then they see that a large boat also float, so they rewrite the entire model to "Flat-bottomed things float, while small-bottomed things sink." And so on.
+
+There are conservative and radical ways of using Piaget's research for pedagogy. The conservative way is to study how children tend to construct their scientific theories, and discover a sequence of evidences to present to the little scientists so that they reach the scientific orthodoxy as fast as possible. For example, we might present children with videos of curling and air hockey, and then let them play with an air hockey table, then guide them through exercises, so that they arrive as quickly as possible at the Newton's laws of motion.
+
+The radical way is to decenter the orthodoxy and let a thousand heterodoxies bloom. Why go for the orthodoxy, when the [Duhem–Quine thesis](https://en.wikipedia.org/wiki/Duhem%E2%80%93Quine_thesis) tells us that evidence is never enough to constrain us to only one orthodoxy? And given that objectively no theory deserves the name of "orthodoxy", how come the scientific "orthodoxy" became dominant? A critical analysis of the history shows that its dominance over aboriginal and woman ways of knowing is merely a historical accident due to an alliance with the hegemonic reason of the center over the periphery.
+
+Papert went with the radical way.
+
+After four years of study under Piaget, he arrived in MIT in 1963, and began working with Minsky on various topics, including the Logo Turtle robot, and the *Perceptron* book. The computer revolution was starting, and Papert saw computers as a way to bring radical constructivism to children.
+
+In the real world, phenomena are limited by nature, and aspiring little heterodoxy-builders are limited by their ability to construct theories and checking their consequences. In the computer world, every children could program and construct "microworlds" from their own theories. Thus, computers would bring constructivism to the classroom. Furthermore, the constructed world inside computers could then flow out to the physical world via robots. This is why Papert worked on both *Logo* the programming language and *Logo* the turtle robots. In his words, he intended to fight "instructionism" with "constructionism" by bringing the power of computers to every child, so that they would grow up to be "[bricoleurs](https://en.wikipedia.org/wiki/The_Savage_Mind)", working with whatever little tool they have available doing whatever is necessary to accomplish little things. This is a vital piece in his overarching project of epistemological pluralism, to liberate heterodoxical ways of knowing [@papertChildrenMachineRethinking1994, Chapter 7]:
+
+> Traditional education codifies what it thinks citizens need to know and sets out to feed children this "fish." Constructionism is built on the assumption that children will do best by finding ("fishing") for themselves the specific knowledge they need ... it is as well to have good fishing lines, which is why we need computers, and to know the location of rich waters, which is why we need to develop a large range of mathetically rich activities or "microworlds."
+> 
+> ... School math, like the ideology, though not necessarily the practice, of modern science, is based on the ideal of generality -- the single, universally correct method that will work for all problems and for all people. Bricolage is a metaphor for the ways of che old-fashioned traveling tinker, the jack-of-all-trades who knocks on the door offering to fix whatever is broken. Faced with a job, the tinker rummages in his bag of assorted tools to find one that will fit the problem at hand and, if one tool does nor work for the job, simply tries another without ever being upset in the slightest by the lack of generality. The basic tenets of bricolage as a methodology for intellectual activity are: Use what you've got, improvise, make do. And for the true bricoleur, the tools in the bag will have been selected over a long time by a process determined by more than pragmatic utility. These mental tools will be as well worn and comfortable as the physical tools of the traveling tinker; they will give a sense of the familiar, of being at ease with oneself ...
+> 
+> Kitchen math provides a clear demonstration of bricolage in its seamless connection with a surrounding ongoing activity that provides the tinker's bag of tricks and tools. The opposite of bricolage would be to leave the "cooking microworld" for a "math world," to work the fractions problem using a calculator or, more likely in this case, mental arithmetic. But the practitioner of kitchen math, as a good bricoleur, does not stop cooking and turn to math; on the contrary, the mathematical manipulations of ingredients would be indistinguishable to an outside observer from the culinary manipulations.
+> 
+> ... The traditional epistemology is based on the proposition, so closely linked to the medium of text-written and especially printed. Bricolage and concrete thinking always existed but were marginalized in scholarly contexts by the privileged position of text. As we move into the computer age and new and more dynamic media emerge, this will change.
+
+According to Papert, his project is **epistemological pluralism**, or promoting different ways of knowing [@turkleEpistemologicalPluralismStyles1990]:
+
+> The diversity of approaches to programming suggests that equal access to even the most basic elements of computation requires accepting the validity of multiple ways of knowing and thinking, an epistemological pluralism. Here we use the word epistemology in a sense closer to Piaget's than to the philosopher's. In the traditional usage, the goal of epistemology is to inquire into the nature of knowledge and the conditions of its validity; and only one form of knowledge, the propositional, is taken to be valid. The step taken by Piaget in his definition of *epistemologie genetique* was to eschew inquiry into the "true" nature of knowledge in favor of a comparative study of the diverse nature of different kinds of knowledge, in his case the kinds encountered in children of different ages. We differ from Piaget on an important point, however. Where he saw diverse forms of knowledge in terms of stages to a finite end point of formal reason, we see different approaches to knowledge as styles, **each equally valid on its own terms**. 
+> 
+> ... The development of a new computer culture would require more than environments where there is permission to work with highly personal approaches. It would require a new social construction of the computer, with a new set of intellectual and emotional values more like those applied to harpsichords than hammers. Since, increasingly, computers are the tools people use to write, to design, to play with ideas and shapes and images, they should be addressed with a language that reflects the full range of human experiences and abilities. Changes in this direction would necessitate the reconstruction of our cultural assumptions about formal logic as the "law of thought." This point brings us full circle to where we began, with the assertion that **epistemological pluralism is a necessary condition for a more inclusive computer culture**.
+
+The project of epistemological pluralism erupted into public consciousness during the "[Science Wars](https://en.wikipedia.org/wiki/Science_wars)" of 1990s. After that, it had stayed rather quiet.
+
+### The fateful book
+
+Minsky described how they came to write the book as such:
+
+> In the middle nineteen-sixties, Papert and Minsky set out to kill the Perceptron, or, at least, to establish its limitations -- a task that Minsky felt was a sort of social service they could perform for the artificial-intelligence community. [@bernsteinMarvinMinskyVision1981]
+
+The book is one of those things that have passed into the stuff of legend: often quoted, rarely read. However, for its historical importance, I have actually read the book. The content of the book can be cleanly separated into two parts. Most of the book is a mathematical monograph on what functions can be implemented by a single perceptron with fixed featurizers, and the rest is a commentary on the wider implications of the mathematical monograph. The impact of the work is exactly reversed: most of the impact is done by the commentary, and essentially no impact is done by the mathematical monograph.
+
+Despite this lopsidedness, the mathematical work is solid, and the Perceptron controversy turns critically on interpretation of the mathematical work, so I will describe it in @sec-perceptron-book.
+
+### Minsky struck back
+
+In the 1980s, neural networks rose again to prominence, this time termed "connectionism", prompting an eventual response from Minsky and Papert. The *Perceptron* book was reissued in 1988, with a new chapter dedicated to rejecting connectionism.
+
+[@bernsteinMarvinMinskyVision1981]
+
+> for certain purposes the Perceptron was actually very good. ... it is such a simple machine that it would be astonishing if nature did not make use of it somewhere. It may be that one of the best things a neuron can have is a tiny Perceptron, since you get so much from it for so little. You can’t get one big Perceptron to do very much, but for some things it remains one of the most elegant and simple learning devices I know of.”
+
+### Papert struck back
+
+While Minsky wrote the new chapter of *Perceptron*, Papert solo-authored an essay giving it a uniquely Papert-styled spin. It is an extensive reframing of the perceptron controversy into a social and philosophical issue, with the prediction of ultimate victory for epistemological pluralism: 
+
+> The field of artificial intelligence is currently divided into what seem to be several competing paradigms ... for mechanisms with a universal application. I do not foresee the future in terms of an ultimate victory for any of the present contenders. What I do foresee is a change of frame, away from the search for universal mechanisms. I believe that we have much more to learn from studying the differences, rather than the sameness, of kinds of knowing.
+
+He diagnosed the source of the philosophical error as a "category error".
+
+> There is the same mistake on both sides: the category error of supposing that the existence of a common mechanism provides both an explanation and a unification of all systems, however complex, in which this mechanism might play a central role.
+> 
+> Artificial intelligence, like any other scientific enterprise, had built a scientific culture... more than half of our book is devoted to "pro-perceptron" findings about some very surprising and hitherto unknown things that perceptrons can do. But in a culture set up for global judgment of mechanisms, being understood can be a fate as bad as death. A real understanding of what a mechanism can do carries too much implication about what it cannot do... The same trait of universalism leads the new generation of connectionists to assess their own microlevel experiments, such as Exor, as a projective screen for looking at the largest macroissues in the philosophy of mind. The category error analogous to seeking explanations of the tiger's stripes in the structure of DNA is not an isolated error. It is solidly rooted in AI's culture.
+
+<details>
+  <summary>Opinion</summary>
+[TODO: remove the opinion into something more palatable]
+
+    Their category error is to confuse the project for **building** general intelligence and the project for writing little programs that **reproduces** facets of intelligence. People do not understand one giant program for general intelligence, but only little programs for facets of intelligence. That's a fact about how people think (their brains are too small), not a fact about how people are built. You only like perceptrons with a single layer of learnable parameters. That's the only sense in which they are pro-perceptron. They think more than one layer is "sterile extension". They are only *pro-useless-perceptron*.
+
+    > There is no reason to suppose that any of these virtues carry over to the many-layered version. Nevertheless, we consider it to be an important research problem to elucidate (or reject) our intuitive judgment that the extension is sterile. Per­haps some powerful convergence theorem will be discovered, or some profound reason for the failure to produce an interesting “learning theorem” for the multilayered machine will be found. [@minskyPerceptronsIntroductionComputational1988, page 232]
+</details>
+
+He then discussed the compute-first interpretation, "The Bitter Lesson" for the 1980s, before rejecting it.
+
+> In the olden days of Minsky and Papert, neural networking models were hopelessly limited by the puniness of the computers available at the time and by the lack of ideas about how to make any but the simplest networks learn. Now things have changed. Powerful, massively parallel computers can implement very large nets, and new learning algorithms can make them learn. ...
+> 
+> I don't believe it. The influential recent demonstrations of new networks all run on small computers and could have been done in 1970 with ease. Exor is a "toy problem" run for study and demonstration, but the examples discussed in the literature are still very small. Indeed, Minsky and I, in a more technical discussion of this history (added as a new chapter to a reissue of Perceptrons), suggest that the entire structure of recent connectionist theories might be built on quicksand: it is all based on toy-sized problems with no theoretical analysis to show that performance will be maintained when the models are scaled up to realistic size. The connectionist authors fail to read our work as a warning that networks, like "brute force" programs based on search procedures, scale very badly.
+
+He did go into specific technical discussion about neural networks. As an example, he described how Exor, a small neural network, learned to do the infamous XOR task, but only after 2232 examples. Was it slow, or fast? Papert claimed that a proper judgment requires a mathematical understanding of the fit between the algorithm and the task. By extension, to properly judge whether neural networks were good for any specific task, one must first mathematically understand the fit between the algorithm and the task. He insinuated that the connectionists who were confident that their neural networks were more than a sterile extension of the perceptron did not do their math, unlike he and Minsky.
+
+> instead of asking whether nets are good, we asked what they are good for. The focus of enquiry shifted from generalities about kinds of machines to specifics about kinds of tasks. From this point of view, Exor raises such questions as: Which tasks would be learned faster and which would be learned even more slowly by this machine? Can we make a theory of tasks that will explain why 2,232 repetitions were needed in this particular act of learning?
+> 
+> ... Minsky and I both knew perceptrons extremely well. We had worked on them for many years before our joint project of under standing their limits was conceived... I was left with a deep respect for the extraordinary difficulty of being sure of what a computational system can or cannot do. I wonder at people who seem so secure in their intuitive convictions, or their less-than-rigorous rhetorical arguments, about computers, neural nets, or human minds.
+
+<details>
+  <summary>Opinion</summary>
+    I wonder at people who seem so secure in their intuitive convictions, or their less-than-rigorous rhetorical arguments, about computers, neural nets, or human minds:
+
+    > There is no reason to suppose that any of these virtues carry over to the many-layered version. Nevertheless, we consider it to be an important research problem to elucidate (or reject) our intuitive judgment that the extension is sterile. Per­haps some powerful convergence theorem will be discovered, or some profound reason for the failure to produce an interesting “learning theorem” for the multilayered machine will be found. [@minskyPerceptronsIntroductionComputational1988, page 232]
+</details>
+
+What, then, explains the rise of connectionism? Since Papert reframed the fall of perceptron socially, it only stands to reason he would reframe the rise of connectionism as the rise of a social myth, not caused by the increase in computing power or new algorithms like backpropagation, convolutional networks, and such. For one, the computing powers used by the breakthrough connectionist models like NETtalk were already within reach even in the 1960s. For two, he and Minsky were firm in their convictions that any uniform architecture must scale very badly, and no amount of compute or algorithmic advance could be more than a sterile extension.
+
+> Massively parallel supercomputers do play an important role in the connectionist revival. But I see it as a cultural rather than a technical role, another example of a sustaining myth. Connectionism does not use the new computers as physical machines; it derives strength from the "computer in the mind," from its public's largely nontechnical awareness of supercomputers. I see connectionism's relationship to biology in similar terms. Although its models use biological metaphors, they do not depend on technical findings in biology any more than they do on modern supercomputers.
+
+<details>
+  <summary>Opinion</summary>
+    Task-specific analysis, ways of knowing, respect for individual problems... everything you love scales very badly! Human cognitive psychology scales very badly. Philosophy doesn't scale at all (the more philosophers there are, the more noise we got). Social science actually has reverse scaling (the more social scientists there are, the more stupid controversies like the science wars). Connectionist models are the only things that scale well. The more data and the more compute you put into them, the better they perform.
+
+    Apologies for breaking the scholarly neutrality, but here I cannot suppress my anger at people who use their prescientific commitments to ground their scientific discourse, as if "using Ted Bundy's testimony to convict Mother Theresa" [@bakkerOutingItThat2011].
+</details>
 
 ### The infamous XOR problem
 
@@ -57,13 +207,41 @@ Among all the objections in the *Perceptron* book, I believe only one remains to
 
 The only legitimate remaining problem is the recognition of symmetry. It is hard for all modern neural networks, including convolutional and fully connected versions. I believe it could be solved efficiently with a Transformer -- but I need to check this. In any case, if human brains are neural networks, and they can instantly recognize symmetries, then it shows that there is *some* remaining architectural trick we don't yet know.
 
-However, out of all the results and wise words of *Perceptron, we ended up with... just one problem remaining? Minsky and Papert hoped to show that there will be thousands of different problems, each requiring a bespoke algorithm implemented by a bespoke neural network. In this regard, their project has been fully debunked.
+However, out of all the results and wise words of *Perceptron*, we ended up with... just one problem remaining? Minsky and Papert hoped to show that there will be thousands of different problems, each requiring a bespoke algorithm implemented by a bespoke neural network. In this regard, their project has been fully debunked.
 
-## What does the *Perceptron* book really say? {#sec-perceptron-book}
+## The mathematical content of *Perceptron* {#sec-perceptron-book}
 
-### Mathematical preliminaries
+In one sentence, the mathematical portion of the *Perceptron* book is a mathematical monograph on two-layered perceptrons, where the first layer connections are fixed, and the second layer of connections are adjustable.
 
-Definitions
+::: {#def-perceptron}
+## Perceptron
+
+A perceptron is a function of type $\R^n \to \R$, defined by a weight vector $w$ and a threshold number $b$:
+
+$$
+f(x) := \theta(w^T x + b)
+$$
+
+where $\theta(t) := 1_{t \geq 0}$ is the 0-1 step function.
+:::
+
+::: {#def-perceptron-machine}
+## Perceptron machine
+
+A perceptron machine with $k$ hidden neurons is a function of type $\R^n \to \R$, defined by
+
+$$
+f(x) := f_{k+1}(f_1(x), f_2(x), \cdots, f_k(x))
+$$
+
+where $f_1, ..., f_k$ are (hidden) perceptrons in the hidden layer, and $f_{k+1}$ is the single output perceptron.
+:::
+
+::: {#def-perceptron-learning}
+## Perceptron learning
+
+To train a perceptron machine is to *fix* its hidden perceptrons, and adjust the weights and threshold of *only* the single output perceptron.
+:::
 
 ### Some mathematical results
 
@@ -105,6 +283,10 @@ Minsky and Papert admitted that neural networks are computationally universal. I
 > [quote about how it is trivial to say that it's computationally universal]
 
 They meant that, while any simple task that a human can do is solved by some neural network, there is no neural network that can solve every simple task that a human can do. Instead, each task has its own peculiarities, and requires a peculiar network that can learn to solve *that particular task* efficiently, but no other task. A generic network must fail -- it must fail to converge, or converge exponentially slowly, or converge to a bad local minima, or fail in some other way. It simply must fail, in order to save the society of mind.
+
+## What really killed off neural networks?
+
+
 
 ## Cognitivism
 
@@ -197,13 +379,17 @@ See [@norvigChomskyTwoCultures2017] for a detailed analysis and rebuttal.
 
 ### The Chomskyans
 
-[Gold's theorem about language learning in the limit](https://en.wikipedia.org/wiki/Language_identification_in_the_limit#Gold's_theorem)[@goldLanguageIdentificationLimit1967] is occasionally quoted in the same context as a justification for the "poverty of stimulus argument". It seems Chomsky did not consider it a relevant argument. [@johnsonGoldTheoremCognitive2004] I agree with Chomsky on that account, as Gold's theorem is extremely generic.
+[Gold's theorem about language learning in the limit](https://en.wikipedia.org/wiki/Language_identification_in_the_limit#Gold's_theorem)[@goldLanguageIdentificationLimit1967] is occasionally quoted in the same context as a justification for the "poverty of stimulus argument". It seems Chomsky did not consider it a relevant argument [@johnsonGoldTheoremCognitive2004], and I agree with Chomsky on that account, as Gold's theorem is extremely generic.
 
 During the second rise of neural networks, there was a bitter controversy that raged during the 1990s, but is essentially forgotten nowadays: the past tense debate. On one side were the connectionists, and on the other side were the cognitivists like Steven Pinker and Gary Marcus [@pinkerFutureTense2002]. Tellingly, both Steven Pinker and Gary Marcus were on the side of cognitivists. Steven Pinker is most famous for his other books like *The Blank Slate*, which applies Chomsky's linguistics to general psychology.
 
+Human language has the distinctive fractal-like structure: for every rule, there are exceptions, and for every exception, there are exceptional exceptions, and so on. This is called "quasi-regularity". Sejnowski in an interview described how quasi-regularity shows up in phonology, and offered a perfect demonstration project for the power of neural networks against the Chomskyans [@rosenfeldTalkingNetsOral2000, pages 324-325]:
+
+> I went to the library and found a book on text-to-speech that had probably one thousand rules in it. It was just lists of rules and exceptions. After I went to the library and found a book on text-to-speech that had probably one thousand rules in it. It was just lists of rules and exceptions. After every rule, there were dozens of exceptions. I figured that either they're doing it the wrong way, or this is a really tough problem. We considered finding something that was simpler after consulting the experts in linguistics. They said, "Chomsky worked on the problem, and it is well beyond the capability of anything that you could imagine trying to do."
+
 [@sejnowskiDeepLearningRevolution2018, pages 75--78] recounts an anecdote about how Jerry Fodor, another prominent cognitivist. While Fodor is no longer a hot name in AI nowadays, this anecdote illustrates the Chomsky way of thinking.
 
-> In 1988, I served on a committee for the McDonnell and Pew Foundations that interviewed prominent cognitive scientists and neuroscientists to get their recommendations on how to jump-start a new field called "cognitive neuroscience". ... He started by throwing down the gauntlet, “Cognitive neuroscience is not a science and it never will be.” ... Fodor explained why the mind had to be thought of as a modular symbol-processing system running an intelligent computer program. Patricia Churchland, a philosopher at the University of California, San Diego, asked him whether his theory also applied to cats. “Yes,” said Fodor, “cats are running the cat program.” But when Mortimer Mishkin, an NIH neuroscientist studying vision and memory, asked him to tell us about discoveries made in his own lab, Fodor mumbled something I couldn’t follow about using event-related potentials in a language experiment. Mercifully, at that moment, a fire drill was called and we all filed outside. Standing in the courtyard, I overheard Mishkin say to Fodor: “Those are pretty small potatoes.” When the drill was over, Fodor had disappeared.
+> In 1988, I served on a committee for the McDonnell and Pew Foundations that interviewed prominent cognitive scientists and neuroscientists to get their recommendations on how to jump-start a new field called "cognitive neuroscience". ... \[Fodor\] started by throwing down the gauntlet, “Cognitive neuroscience is not a science and it never will be.” ... Fodor explained why the mind had to be thought of as a modular symbol-processing system running an intelligent computer program. \[Patricia Churchland\] asked him whether his theory also applied to cats. “Yes,” said Fodor, “cats are running the cat program.” But when Mortimer Mishkin, an NIH neuroscientist studying vision and memory, asked him to tell us about discoveries made in his own lab, Fodor mumbled something I couldn’t follow about using event-related potentials in a language experiment. Mercifully, at that moment, a fire drill was called and we all filed outside. Standing in the courtyard, I overheard Mishkin say to Fodor: “Those are pretty small potatoes.” When the drill was over, Fodor had disappeared.
 
 Similarly, Gary Marcus has been consistently critical of neural network language models since 1992 [@marcusOverregularizationLanguageAcquisition1992]. His theory of intelligence is essentially Chomsky's: neural networks can be intelligent, but only if they implement symbolic manipulation rules.[^gary-marcus-algebraic-mind] Furthermore, a lot of symbolic rules must be built in at birth, as the poverty of stimulus precludes learning them empirically. For example, here is him saying in 1993 [@marcusNegativeEvidenceLanguage1993]:
 
@@ -370,7 +556,7 @@ The McCulloch and Pitts paper, like the *Perceptron* book, is something often ci
 
 ### Werbos
 
-In 1993, Paul Werbos gave an interview, where he described the backstory of his invention of backpropagation [@rosenfeldTalkingNetsOral2000, Chapter 15]. I will let him speak, only interjecting with brief comments.
+After reviewing the story of multiple people, my personal opinion is that Paul Werbos most deserves the title of "originator of backpropagation". In 1993, Paul Werbos gave an interview, where he described the backstory of his invention of backpropagation [@rosenfeldTalkingNetsOral2000, Chapter 15]. I will let him speak, only interjecting with brief comments.
 
 Before entering Harvard, he tried implementing Hebbian learning, but noticed it wouldn't work. 
 
@@ -483,7 +669,7 @@ But the saga is not over. after the Ph.D., Werbos was hired by the DoD, and prom
 
 > I found out that DARPA had spent a lot of effort building a worldwide conflict forecasting model for the Joint Chiefs of Staff that was used in the long-range strategy division of the Joint Chiefs. ... I wound up sending a couple of graduate students to create a really good database of Latin America. I said, "You want variance, high variance. Something hard to predict." I thought conflict in Latin America would be the most beautiful case. I figured there were enough cultural homogeneities that it would be a single stochastic process, but with lots and lots of variance in that process. So we got truly annual data going back, I don't know, twenty or thirty years for all the countries in Latin America and then reestimated the Joint Chief's model on it. It had an r2 of about .0016 at forecasting conflict. By jiggling and jiggling we could raise it to about .05. It could predict GNP and economic things decently. Conflict prediction we couldn't improve, though; it was hopeless.
 > 
-> DARPA wasn't happy when I published that result. They wanted me to do something real and practical and useful for the United States. This was useful, but it was an expose. They didn't like that. Therefore, the report, which included backpropagation in detail and other advanced methods, was not even entered into DOCSUB. Every time I tried to enter it into DOCSUB, somebody jiggled influence to say, "No, no, no, we can't publish this. This is too hot."
+> DARPA wasn't happy when I published that result. They wanted me to do something real and practical and useful for the United States. This was useful, but it was an exposé. They didn't like that. Therefore, the report, which included backpropagation in detail and other advanced methods, was not even entered into DOCSUB. Every time I tried to enter it into DOCSUB, somebody jiggled influence to say, "No, no, no, we can't publish this. This is too hot."
 > 
 > It was published in [@werbosEmpiricalTestNew1978] anyway because they couldn't block the journals, but it didn't include the appendices. So that paper in 1978 said, "We've got this great thing called dynamic feedback, which lets you estimate these things. It calculates derivatives in a single swoop, and you can use it for lots of things, like AI." ... **the appendix on how to do it was not there because of page limits** ... At that point, DARPA was no longer happy.
 
@@ -492,6 +678,10 @@ So he went to the Department of Energy and used backpropagation to make another 
 > They had a million-dollar contract at Oak Ridge National Laboratory to study that model. They wanted me for several things. One, they wanted me to be a translator between engineering and economics. Two, they wanted a critique. They wanted exposés. They wanted me to rip apart the models of the Department of Energy in a very scientific, objective way that didn't look like I was trying to rip them apart but was anyway. That's exactly what they wanted to hire me for, and I didn't really know that was the motive. These particular people didn't like modeling very much.
 > 
 > So at some point, they wanted sensitivity analysis. And I said, "You know, I know a little bit about calculating derivatives." ... I applied it to a natural gas model at the Department of Energy. In the course of applying it, I did indeed discover dirt. They didn't want me to publish it because it was too politically sensitive. It was a real-world application, but the problem was that it was too real. At DOE, you know, you don't have First Amendment rights. That's one of the terrible things somebody's got to fix in this country. The reality of the First Amendment has deteriorated. Nobody's breaking the law, but the spirit of the First Amendment has decayed too far for science. At any rate, they finally gave me permission to publish it around '86 and '87. I sent it to the journal Neural Nets - that is, how you do simultaneous recurrent nets and time-lag recurrent nets together. Then the editorial process messed around with it, made the paper perhaps worse, and it finally got published in '88, which makes me very sad because now I gotta worry about, 'Well, gee, didn't Pineda do this in '88?
+
+As a side note, one might have felt that Werbos' "turning Freud into mathematics" seem rather strange. This feeling is completely justified. I found a recent paper by him [@werbosIntelligenceBrainTheory2009] with this crackpot illustration:
+
+![The text at the end of the arrow says "quantum and collective intelligence (Jung, Dao, Atman...)?"](figure/werbos_2009.jpg)
 
 ### Rumelhart and Sejnowski
 
