@@ -515,11 +515,9 @@ They made similar constructions for perceptron machines that decide whether two 
 
 Chapter 8 studies diameter-limited perceptron machines, meaning that not only are the hidden perceptrons assumed to be masks of bounded size, those masks are assumed to be contained in a circle of radius $M$ for some finite $M$. It is intended to be a formalization of the intuition that the perceptron machines should model a real pair of eyes scanning a plane, and each retina is a circular disk with finite radius. No results in chapter 8 were used further in the book, and they resemble the case of finite-order perceptron machines, so we do not discuss the results in detail.
 
-Chapter 9 extends the stratification idea of chapter 7 to an arbitrary level.  [TODO]
+Chapter 9 shows that the connectedness problem is easy to solve using small serial programs, a contrast to the case of perceptron machines. They designed a robot that moves around the plane, and can solve the connectedness problem, with a memory size of just two. Namely, it only need to store up to two locations $(x, y), (x', y')$ in its memory during its operation, and it eventually halts in one of three states "empty", "connected", and "disconnected". They then described a few other more exotic computational models. The whole thing is in the same style of solving interesting puzzles in computational complexity, similar to [@minskyComputationFiniteInfinite1967]. The overarching goal is to demonstrate that connectedness is "inherently serial".
 
-Chapter 10 is essentially made by "finitizing" the construction of chapter 7. Whereas chapter 7 concerns machines operating over infinite planes, chapter 10 concerns sequences of machines operating over a sequence of squares growing towards infinity. For example, instead of testing for reflection symmetries on $\Z$, it considers testing for reflection symmetries on $\{-n, -n+1, \cdots, n-1, n\}$ for $n \to \infty$. Whereas in the construction @exm-line-symmetry, we saw coefficients growing exponentially, chapter 10 shows that this phenomenon of exponentially growing coefficients is common.
-
-A single example illustrates the general point.
+Whereas in the construction @exm-line-symmetry, we saw coefficients growing exponentially on an infinite plane, chapter 10 finitizes that this.
 
 :::{#exm-parity-order}
 ## Theorem 10.1
@@ -554,18 +552,51 @@ By manipulating the binomial coefficients, the right side simplifies to $(-1)^M 
 
 Section 10.2 and 10.3 constructs two pathological examples. By restricting the shapes of hidden perceptron masks, they proved that certain predicates required superexponential weights. Section 10.4 purports to extend the group invariance theorem to the infinite case.[^theorem-10-4-1] None of these are used elsewhere in the book. They are virtuoso performances.
 
-[^theorem-10-4-1]: They purported in Theorem 10.4.1 that, if the weights are bounded, then the group invariance theorem applies again, but the proof is false, with a counterexample $\sum_{n \in \Z}e^{-n^2}x_n - e^{-n^4}x_nx_{n+1}$. The theorem *might* still be correct, but I cannot prove it.
-
+[^theorem-10-4-1]: They purported to show in Theorem 10.4.1 that, if the weights are bounded, then the group invariance theorem applies again, but the proof is false, with a counterexample being $\sum_{n \in \Z}e^{-n^2}x_n - e^{-n^4}x_nx_{n+1}$. The theorem *might* still be correct with another proof, but I cannot find one.
 
 ### Perceptron learning theory
 
-In Chapter 11, they revisited the computational reduction, and suggested that real-valued perceptrons are not better than binary perceptrons, because ...
+In Chapter 11, they *finally* start discussing perceptron learning, which is of a very restrictive form.
 
 ::: {#def-perceptron-learning}
 ## Perceptron learning
 
-To train a perceptron machine is to *fix* its hidden perceptrons, and adjust the weights and threshold of *only* the single output perceptron.
+To train a perceptron machine is to *fix* its hidden perceptrons, and adjust the weights and threshold of *only* the single output perceptron by the perceptron learning rule. For this chapter, it is cleaner to change the convention, so that each perceptron outputs $-1, +1$, instead of $0, 1$.
+
+Since only the output perceptron is adapted, it suffices to discuss the case where there are *no* hidden perceptrons, and we only need to adapt the weights of a single perceptron. That is, we have a dataset $D$, and we sample some $(x, y) \in D$, and verify that $y = \theta(\braket{w, x})$.
+
+If this is true for all $(x, y) \in D$, then the perceptron learning has converged. Otherwise, we update $w$ by $w \leftarrow w + \alpha y x$, where $\alpha > 0$ is the learning rate.
+
 :::
+
+::: {#def-perceptron-learning}
+## Perceptron learning theorem
+
+Let $D$ be a dataset, with radius $R = \max_{(x, y) \in D} \|x\|$. If there exists some unit $w^*$ such that $\gamma = \min_{(x, y) \in D} y\braket{w^*, x}$, then the perceptron learning algorithm converges after making at most $(R/\gamma)^2$ updates.
+
+:::
+
+::: {.proof}
+
+By linearity of the learning rule, we can deal only with the case where $\alpha = 1$.
+
+By multiplying each $x$ with its $y$, we can deal only with the case where all $y = +1$. 
+
+By rotating and scaling the space, we can deal only with the case where $w^* = (1, 0, \cdots, 0)$, and $\gamma = 1$.
+
+Now, each weight update increases the first coordinate of $w$ by at least $1$, so after $n$ updates, $\|w\| \geq n$. However, each weight update of $w \leftarrow w + x$ uses a vector $x$ that is pointing at a direction perpendicular to $w$, or worse, pointing against $w$. Therefore, by Pythagorean theorem, $\|w\|^2$ increases by at most $\|x\|^2 \leq R^2$. So after $n$ updates, $\|w\|^2 \leq nR^2$.
+
+Combining the two results we have $n \leq R^2$.
+
+:::
+
+Modifying the proof slightly, and applying the conclusion of @exm-parity-order, we find that starting with the zero weight vector, it takes at least $2^{|R|}/|R|$ steps steps to learn the parity function.
+
+They then gestured that gradient descent is just a somewhat more efficient perceptron learning rule, and cannot escape local optima. No "local learning rule" can escape local optima, unlike symbolic programs that are provably capable of finding global optima.
+
+If the dataset is not linearly separable, then the perceptron weight would not converge. However, the perceptron cycling theorem shows that if the dataset is finite, then the perceptron weight would still be trapped within a large but finite disk, no matter how the dataset is sampled.
+
+Chapter 12 sketches other algorithms for learning (approximate) binary classification algorithms, including naive Bayes, nearest neighbor, ISODATA, a hack used by Arthur Samuel's checker program, etc. Section 12.6 and 12.7 study the time-space tradeoff using variations on a toy problem: given a subset of $\{0, 1\}^n$, decide whether a $n$-bit word is in it or not.
 
 ## What really killed off neural networks?
 
