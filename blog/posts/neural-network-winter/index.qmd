@@ -507,7 +507,26 @@ $$
 
 We have that $f_{m, n}(x) = 0$ if the figure is symmetric, and $f_{m, n}(x) \leq -1$ otherwise.
 
-Now we define the entire perceptron machine by $\sum_{m \leq n} M_{n - m} x_m x_n (f_{m, n}(x) - 1/2)$. If the sequence of $M_0, M_1, ...$ grows fast enough, then the largest bracket $(m, n)$ would swamp every smaller bracket contained within, and so the entire perceptron machine is effectively first testing for the smallest interval containing the figure, before testing the symmetry within that interval.
+Now we define the entire perceptron machine by $\sum_{m \leq n} M_{n - m} x_m x_n (f_{m, n}(x) - 1/2)$. If the sequence of $M_0, M_1, ...$ grows as $(d!)^2$ roughly [^exm-line-symmetry-factorial-growth], then the largest bracket $(m, n)$ would "veto" every smaller bracket contained within, and so the entire perceptron machine is effectively first testing for the smallest interval containing the figure, before testing the symmetry within that interval.
+
+[^exm-line-symmetry-factorial-growth]:
+    Expanding term by term, we have $|(f_{m, n}(x) - 1/2)| \leq 2(n-m) + \frac 12$. Therefore, in order for $M_d$ to "veto" every other bracket within, we need
+
+    $$
+    M_d \frac 12 > \sum_{d' = 1}^{d-1} \lrb{M_{d'}(\frac 12 + 2d')(d-d' + 1)}
+    $$
+
+    Here $d$ should be read as "distance between two ends of a bracket".
+
+    To bound the growth rate, we bound the recurrence relation $M_d = \sum_{d' = 1}^{d-1} \lrb{M_{d'}(4d' + 1)(d-d' + 1)}$. The sum on the right is bounded by
+
+    $$
+    \sum_{d' = 1}^{d-1} \lrb{M_{d'}(4d' + 1)(d-d' + 1)} \in \Theta{\lrs{
+        \sum_{d' = 1}^{d-1} \lrb{M_{d'}d'},
+        d^2\sum_{d' = 1}^{d-1} \lrb{M_{d'}}}}
+    $$
+
+    The lower bound implies $M_d = \Omega((d!)^2 \times d^{-1})$ and upper bound implies $M_d = O((d!)^2 \times (d+1)^2)$.
 
 :::
 
@@ -550,7 +569,9 @@ By manipulating the binomial coefficients, the right side simplifies to $(-1)^M 
 
 :::
 
-Section 10.2 and 10.3 constructs two pathological examples. By restricting the shapes of hidden perceptron masks, they proved that certain predicates required superexponential weights. Section 10.4 purports to extend the group invariance theorem to the infinite case.[^theorem-10-4-1] None of these are used elsewhere in the book. They are virtuoso performances.
+Section 10.2 and 10.3 constructs two pathological examples. By restricting the shapes of hidden perceptron masks, they proved that certain predicates required superexponential weights. Section 10.4 purports to extend the group invariance theorem to the infinite case.[^theorem-10-4-1] None of these are used elsewhere in the book. They are virtuoso performances. However, they interpreted this as a serious problem:
+
+> A proof, in Chapter 10, that coefficients can grow much faster than exponentially with $|R|$ has serious consequences both practically and conceptually: the use of more memory capacity to store the coefficients than to list all the figures strains the idea that the machine is making some kind of abstraction
 
 [^theorem-10-4-1]: They purported to show in Theorem 10.4.1 that, if the weights are bounded, then the group invariance theorem applies again, but the proof is false, with a counterexample being $\sum_{n \in \Z}e^{-n^2}x_n - e^{-n^4}x_nx_{n+1}$. The theorem *might* still be correct with another proof, but I cannot find one.
 
