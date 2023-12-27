@@ -142,17 +142,42 @@ The book is one of those things that have passed into the stuff of legend: often
 
 Despite this lopsidedness, the mathematical work is solid, and the Perceptron controversy turns critically on interpretation of the mathematical work, so I will describe it in @sec-perceptron-book.
 
-### Minsky struck back
+### Minsky--Papert struck back
 
-In the 1980s, neural networks rose again to prominence, this time termed "connectionism", prompting an eventual response from Minsky and Papert. The *Perceptron* book was reissued in 1988, with a new chapter dedicated to rejecting connectionism.
+In the 1980s, neural networks rose again to prominence, this time termed "connectionism", prompting a response from Minsky and Papert. The *Perceptron* book was reissued in 1988, with new chapters dedicated to rejecting connectionism. Their rejection for the connectionist hype was clear in the prolog:
 
-[@bernsteinMarvinMinskyVision1981]
+> ... when we found that little of significance had changed since 1969, when the book was first published, we concluded that it would be more useful to keep the original text (with its corrections of 1972) and add an epilogue, so that the book could still be read in its original form. One reason why progress has been so slow in this field is that researchers unfamiliar with its history have continued to make many of the same mistakes that others have made before them. ... there has been little clear-cut change in the conceptual basis of the field. The issues that give rise to excitement today seem much the same as those that were responsible for previous rounds of excitement. ... many contemporary experimenters assume that, because the perceptron networks discussed in this book are not exactly the same as those in use today, these theorems no longer apply. Yet, as we will show in our epilogue, most of the *lessons* of the theorems still apply.
 
-> for certain purposes the Perceptron was actually very good. ... it is such a simple machine that it would be astonishing if nature did not make use of it somewhere. It may be that one of the best things a neuron can have is a tiny Perceptron, since you get so much from it for so little. You can’t get one big Perceptron to do very much, but for some things it remains one of the most elegant and simple learning devices I know of.”
+To back up the claim, they made specific technical and philosophical objections. On the technical front, their central point is that homogeneous neural networks cannot scale, and argued for the point with several specific arguments.
 
-### Papert struck back
+Arthur Samuel's checker learning algorithm encountered two fundamental problems: credit assignment and inventing novel features. Both problems have *no* practical and universal solutions. There could be universal but impractical solutions, such as backpropagation on homogeneous neural networks, Solomonoff induction, trying every Turing machine, etc. There could be practical but not universal solutions, which is precisely what populates the society of mind in human brains.
 
-While Minsky wrote the new chapter of *Perceptron*, Papert solo-authored an essay giving it a uniquely Papert-styled spin. It is an extensive reframing of the perceptron controversy into a social and philosophical issue, with the prediction of ultimate victory for epistemological pluralism: 
+[TODO]
+
+On the social front, they requested all AI researchers to convert to the society of mind hypothesis, or else face the charge of being un-thoughtful or drawing lines where none exists. It seems to me that Minsky wrote most of the prolog and epilog, because in [Papert's solo paper](#sec-papert-struck-back), he went considerably further in applying social analysis.
+
+> This broad division makes no sense to us, because these attributes are largely independent of one another; for example, the very same system could combine symbolic, analogical, serial, continuous, and localized aspects. Nor do many of those pairs imply clear opposites; at best they merely indicate some possible extremes among some wider range of possibilities. And although many good theories begin by making distinctions, we feel that in subjects as broad as these there is less to be gained from sharpening bound­ aries than from seeking useful intermediates.
+> 
+> ... Are there inherent incompatibilities between those connectionist and symbolist views? The answer to that depends on the extent to which one regards each separate connectionist scheme as a self-standing system. If one were to ask whether any particular, homogeneous network could serve as a model for a brain, the answer (we claim) would be, clearly. No. But if we consider each such network as a possible model for a part of a brain, then those two overviews are complementary. This is why we see no reason to choose sides.
+> 
+> ... Most researchers tried to bypass \[the technical objections\], either by ignoring them or by using brute force or by trying to discover powerful and generally applicable methods. Few researchers tried to use them as guides to thoughtful research. We do not believe that any completely general solution to them can exist, and we argue in our epilogue that awareness of these issues should lead to a model of mind that can accumulate a multiplicity of specialized methods.
+
+
+
+> for certain purposes the Perceptron was actually very good. ... it is such a simple machine that it would be astonishing if nature did not make use of it somewhere. It may be that one of the best things a neuron can have is a tiny Perceptron, since you get so much from it for so little. You can’t get one big Perceptron to do very much, but for some things it remains one of the most elegant and simple learning devices I know of.” [@bernsteinMarvinMinskyVision1981]
+
+> [TODO quote about how it is trivial to say that it's computationally universal]
+
+Minsky and Papert admitted that neural networks are computationally universal. It is foolish to deny it, as even [@mccullochLogicalCalculusIdeas1943] argued that neural networks are universal.[^turing-complete-mcculoch-pitts] So what did they really mean by this objection?
+
+[^turing-complete-mcculoch-pitts]:
+    > every net, if furnished with a tape, scanners connected to afferents, and suitable efferents to perform the necessary motor-operations, can compute only such numbers as can a Turing machine. ... If any number can be computed by an organism, it is computable by these definitions, and conversely. [@mccullochLogicalCalculusIdeas1943]
+
+They meant that, while any simple task that a human can do is solved by some neural network, there is no neural network that can solve every simple task that a human can do. Instead, each task has its own peculiarities, and requires a peculiar network that can learn to solve *that particular task* efficiently, but no other task. A generic network must fail -- it must fail to converge, or converge exponentially slowly, or converge to a bad local minima, or fail in some other way. It simply must fail, in order to save the society of mind.
+
+### Papert struck back {#sec-papert-struck-back}
+
+While Minsky wrote the new prolog and epilog of *Perceptron*, Papert solo-authored an essay giving it a uniquely Papert-styled spin. It is an extensive reframing of the perceptron controversy into a social and philosophical issue, with the prediction of ultimate victory for epistemological pluralism: 
 
 > The field of artificial intelligence is currently divided into what seem to be several competing paradigms ... for mechanisms with a universal application. I do not foresee the future in terms of an ultimate victory for any of the present contenders. What I do foresee is a change of frame, away from the search for universal mechanisms. I believe that we have much more to learn from studying the differences, rather than the sameness, of kinds of knowing.
 
@@ -166,7 +191,7 @@ He then discussed the compute-first interpretation, "The Bitter Lesson" for the 
 
 > In the olden days of Minsky and Papert, neural networking models were hopelessly limited by the puniness of the computers available at the time and by the lack of ideas about how to make any but the simplest networks learn. Now things have changed. Powerful, massively parallel computers can implement very large nets, and new learning algorithms can make them learn. ...
 > 
-> I don't believe it. The influential recent demonstrations of new networks all run on small computers and could have been done in 1970 with ease. Exor is a "toy problem" run for study and demonstration, but the examples discussed in the literature are still very small. Indeed, Minsky and I, in a more technical discussion of this history (added as a new chapter to a reissue of Perceptrons), suggest that the entire structure of recent connectionist theories might be built on quicksand: it is all based on toy-sized problems with no theoretical analysis to show that performance will be maintained when the models are scaled up to realistic size. The connectionist authors fail to read our work as a warning that networks, like "brute force" programs based on search procedures, scale very badly.
+> I don't believe it. The influential recent demonstrations of new networks all run on small computers and could have been done in 1970 with ease. Exor is a "toy problem" run for study and demonstration, but the examples discussed in the literature are still very small. Indeed, Minsky and I, in a more technical discussion of this history (added as a new prolog and epilog to a reissue of Perceptrons), suggest that the entire structure of recent connectionist theories might be built on quicksand: it is all based on toy-sized problems with no theoretical analysis to show that performance will be maintained when the models are scaled up to realistic size. The connectionist authors fail to read our work as a warning that networks, like "brute force" programs based on search procedures, scale very badly.
 
 He did go into specific technical discussion about neural networks. As an example, he described how Exor, a small neural network, learned to do the infamous XOR task, but only after 2232 examples. Was it slow, or fast? Papert claimed that a proper judgment requires a mathematical understanding of the fit between the algorithm and the task. By extension, to properly judge whether neural networks were good for any specific task, one must first mathematically understand the fit between the algorithm and the task. He insinuated that the connectionists who were confident that their neural networks were more than a sterile extension of the perceptron did not do their math, unlike he and Minsky.
 
@@ -193,7 +218,7 @@ The abstract of a key anti-connectionist paper [@fodorConnectionismCognitiveArch
 
 What did they really mean? They concretely reject "Parallel Distributed Processing", and claim that trained neural networks work if and only if they implement approximations to symbolic programs, where each symbolic variable is represented locally by a small group of neurons (thus not "distributed"), and the variables are processed serially layer by layer through the network (thus not "parallel"). Further, the symbolic programs they approximate are not any kind of symbolic programs (otherwise we fall back to the trivial claim), but symbolic programs that people tend to write, things that on the small scale resemble subroutines and command line scripts, and on the large scale resemble operating systems and the Cyc project.
 
-At this level, it is quantifiable and thus scientifically testable. However, scientific hypotheses become political disputes when large amounts of money or social justice is on the line. We can consider an alternative history with an alternative Minsky--Papert. In this history, they put this in the final chapter:
+At this level, it is quantifiable and thus scientifically testable. However, scientific hypotheses become political disputes when large amounts of money or social justice is on the line. We can consider an alternative history with an alternative Minsky--Papert. In this history, they put this in the epilog:
 
 > Our mathematical results indicate that we need multilayered perceptrons as well as efficient methods for training them. Furthermore, simple estimates show that brain-level intelligence likely require computing power up to 10 orders of magnitude larger than currently available, suggesting the need for special hardware boards.
 >
@@ -223,80 +248,324 @@ The only legitimate remaining problem is the recognition of symmetry. It is hard
 
 However, out of all the results and wise words of *Perceptron*, we ended up with... just one problem remaining? Minsky and Papert hoped to show that there will be thousands of different problems, each requiring a bespoke algorithm implemented by a bespoke neural network. In this regard, their project has been fully debunked.
 
-## The mathematical content of *Perceptron* {#sec-perceptron-book}
+[TODO]
 
-In one sentence, the mathematical portion of the *Perceptron* book is a mathematical monograph on two-layered perceptrons, where the first layer connections are fixed, and the second layer of connections are adjustable.
+## Reading *Perceptron* {#sec-perceptron-book}
+
+> It would seem that Perceptrons has much the same role as The Necronomicon -- that is, often cited but never read.
+>
+> Marvin Minsky, 1994. Quoted in [@berkeleyRevisionistHistoryConnectionism1997]
+
+In one sentence, the mathematical portion of the *Perceptron* book is a theory of two-layered perceptrons, mostly by discrete mathematics. Perceptron representation occupies chapters 0--10, and learning is only studied in chapters 11 and 12.
+
+Let $R$ be a finite set, where "R" could be read as "region", or "rectangle".
 
 ::: {#def-perceptron}
 ## Perceptron
 
-A perceptron is a function of type $\R^n \to \R$, defined by a weight vector $w$ and a threshold number $b$:
+A perceptron is a binary function of type $\{0, 1\}^R \to \{0, 1\}$, defined by a weight vector $w$ and a threshold number $b$:
 
 $$
-f(x) := \theta(w^T x + b)
+\Phi(x) := \theta(w^T x + b)
 $$
 
 where $\theta(t) := 1_{t \geq 0}$ is the 0-1 step function.
 :::
 
 ::: {#def-perceptron-machine}
-## Perceptron machine
+## perceptron machine
 
-A perceptron machine with $k$ hidden neurons is a function of type $\R^n \to \R$, defined by
+A perceptron machine with $k$ hidden neurons is a function of type $\{0, 1\}^R \to \{0, 1\}$, defined by
 
 $$
-f(x) := f_{k+1}(f_1(x), f_2(x), \cdots, f_k(x))
+\Phi(x) := \psi_{k+1}(\psi_1(x), \psi_2(x), \cdots, \psi_k(x))
 $$
 
-where $f_1, ..., f_k$ are (hidden) perceptrons in the hidden layer, and $f_{k+1}$ is the single output perceptron.
+where $\psi_1, ..., \psi_k$ are (hidden) perceptrons in the hidden layer, and $\psi_{k+1}$ is the single output perceptron.
 :::
+
+::: {#def-predicate-order}
+## perceptron orders
+
+The order of a hidden perceptron is the number of nonzero weights.
+
+The order of a perceptron machine is the maximum order of its hidden perceptrons.
+
+The order of a boolean function is the minimum order necessary for a perceptron machine that implements it.
+
+:::
+
+For example, the constant-0 and constant-1 boolean functions are both of order 0.
+
+A key focus of the perceptron controversy is the concept of "conjunctively local".
+
+::: {#def-predicate-order}
+## conjunctively local
+
+A family of boolean functions is conjunctively local iff their orders are upper bounded.
+
+:::
+
+### Perceptron representation theory
+
+While their definition allows perceptron machines of any real-valued weights and biases, they immediately performed a [computational reduction](https://en.wikipedia.org/wiki/Reduction_(complexity)) to the special case of mask perceptron machines. Most of the book considers the problem of classifying subsets of families of planar square grids, such as $\{1, 2, 3\} \times \{1, 2, 3, 4\}$. A subset is inputted to the perceptron machine by setting inputs in the subset to $1$, and the rest to $0$. Consequently, it is natural to consider a special case of perceptron machines.
+
+::: {#def-predicate-order}
+## mask perceptron machine
+
+A mask for $A\subset R$ is a function of type $\{0, 1\}^R \to \R$, such that $\psi(x) = 1$ if $x_i =1$ for all $i \in A$, and else $\psi(x) = 0$.
+
+A mask perceptron machine is a perceptron machine where each hidden perceptron is a mask, and the threshold of the output perceptron is zero. In other words, it is of form
+
+$$
+\Phi(x) = \theta\lrb{\sum_{i=1}^k a_i \psi_{A_i}(x)}
+$$
+
+where each $\psi_{A_i}$ is a mask, each $a_i\in \R$, and $k$ is the number of hidden perceptrons.
+
+![Figure 0.2](figure/perceptron_fig_0_2.png)
+
+:::
+
+::: {#thm-predicate-order}
+## Theorem 1.5.1
+
+Restricting to mask perceptron machines does not change perceptron orders. That is, any boolean function implemented by a perceptron machine of order $k$ can be implemented by a mask perceptron machine of order at most $k$.
+
+:::
+
+::: {.proof}
+
+Take one such perceptron machine. The threshold of the output perceptron can be removed by adding a hidden perceptron that always outputs $1$ -- in other words, $\psi_\emptyset$, the mask of the empty set. Now it remains to decompose each hidden perceptron into masks with the same order, or less.
+
+Let $\psi$ be a hidden perceptron with nonzero weights on the input points $x_{i_1}, ..., x_{i_k}$, then its output is determined by the values of $x_{i_1}, ..., x_{i_k}$. Therefore, we can partition the binary set $\{0, 1\}^{i_1, ..., i_k}$ into two subsets $A_0, A_1$, such that for any input $x\in\{0, 1\}^R$, we have $\psi(x) = 1$ iff $(x_{i_1}, ..., x_{i_k}) \in A_1$.
+
+In other words, we only need to look at the binary values $x_{i_1}, ..., x_{i_k}$ to know the binary output $\psi(x)$.
+
+Therefore, we can replace $\psi$ with a boolean formula on $x_{i_1}, ..., x_{i_k}$, then expand it to obtain up to $2^k$ masks, each of order at most $k$.
+
+For example, suppose $\psi$ has nonzero weights on $x_1, x_2$, and is 1 on all odd-sized subsets, then we can write it as a boolean formula:
+
+$$
+\left(x_1 \wedge \neg x_2\right) \vee\left(\neg x_1 \wedge x_2\right) = x_1\left(1-x_2\right)+\left(1-x_1\right) x_2 = x_1 + x_2 - 2 x_1 x_2
+$$
+
+:::
+
+The next tool they used is symmetry, formulated in the language of [finite group actions](https://en.wikipedia.org/wiki/Group_action).
+
+Let $S_R$ be the permutation group on the elements of $R$, and $G$ be a subgroup of $S_R$. We say that a boolean function $\psi$ is $G$-invariant iff $\psi \circ g=\psi$ for any $g \in G$. That is, any $X \subset R$, we have $\psi(X)=\psi(g(X))$. For example, the parity function is $S_R$-invariant, since any permutation of the set preserves the size, and thus the parity, of any of its subsets.
+
+::: {#thm-group-invariance}
+## group invariance theorem
+
+If a boolean function is $G$-invariant, where $G$ is a finite group, then any perceptron machine computing it can be converted to a perceptron machine $\theta(\sum_i a_i \psi_i)$, such that if $\psi_i=\psi_j \circ g$ for some $g \in G$, then $a_i=a_j$.
+
+:::
+
+::: {.proof}
+
+Take the group-action average: any mask $\psi$ is equal to $\frac{1}{|G|} \sum_{g\in G} \psi\circ g$.
+
+:::
+
+Once the groundwork is laid, they proceeded to prove a wide variety of theorems on the order of particular boolean functions.
+
+Consider the parity function. It is $1$ iff exactly an odd number of inputs are $1$ and the rest are $0$.
+
+::: {#thm-parity-order}
+## Theorem 3.1
+
+The parity function has order $|R|$.
+
+:::
+
+::: {.proof}
+
+Since the parity function is $S_R$-invariant, if it is implemented by a perceptron machine of order $k$, it is implemented by some mask perceptron machine $\theta(\sum_{A_i \subset R} a_{A_i} \psi_{A_i})$, where each mask is of size $\leq k$, and each weight $a_{A_i}$ depends only on the size of $A_i$. Let $b_{|A_i|} = a_{A_i}$ be those coefficients. It remains to show $b_{|R|} \neq 0$.
+
+For each $X \subset R$, we have by explicit computation 
+
+$$
+\theta\lrb{\sum_{A_i \subset R} a_{A_i} \psi_{A_i}} = 1\lrs{f(|X|) \geq 0}
+$$
+
+where $f(t) := \sum_{i=0}^{|R|}b_i \binom{t}{i}$ is a polynomial in $t$. Since this perceptron machine implements the parity function, as $t$ increases from $0$ to $|R|$, the function $f(t) + \epsilon$ must intersect the $x$-axis at least $|R|$ times for some real value $\epsilon$. Since $f$ is a polynomial, it must have at least order $|R|$, thus $b_{|R|} \neq 0$.
+
+:::
+
+::: {#thm-one-in-a-box}
+## Theorem 3.2, one-in-a-box
+
+Let $A_1, A_2, ..., A_m$ be disjoint subsets of $R$ each of size $4 m^2$, and define the predicate $\psi(X) = \forall i, \left|X \cap A_i\right|>0$, that is, there is at least one point of $X$ in each $A_i$. The order of $\psi$ is $\geq m$.
+
+:::
+
+::: {.proof}
+
+Let the order of $\psi$ be $k$.
+
+The predicate $\psi$ is invariant with respect to the group $S_{A_1} \times \cdots \times S_{A_m}$, so by the same construction as the proof of @thm-group-invariance, there exists a polynomial $P(t_1, ..., t_m)$, where $P$ has order $k$, and
+
+$$
+\forall t_1, ..., t_m \in \{0, 1, ..., 4m^2\}, P(t_1, ..., t_m) < 0 \iff t_1 = 0 \vee \cdots \vee t_m = 0
+$$
+
+Now define $Q(t) := P((t-1)^2, (t-3)^2, \cdots, (t-2m+1)^2)$. By the above equation, $Q < 0$ at $t=1, 3, \cdots, 2m - 1$ and $Q \geq 0$ at $t = 0, 2, \cdots, 2m$. Thus, $Q$ has order $\geq 2m$. Thus, $2k \geq 2m$.
+
+:::
+
+::: {#thm-and-or}
+## Theorem 4.0
+
+There exist predicates $\psi_1$ and $\psi_2$ of order 1 such that $\psi_1 \wedge \psi_2$ and $\psi_1 \vee \psi_2$ are not of finite order. Specifically, if we partition $R$ into three equal subsets $A, B, C$, then the boolean function does not have bounded order:
+
+$$
+(|X \cap A| > |X \cap C|) \wedge (|X \cap B| > |X \cap C|) 
+$$
+
+even though both $|X \cap A| > |X \cap C|$ and $|X \cap B| > |X \cap C|$ are of order $1$.
+
+:::
+
+::: {.proof}
+
+$|X \cap A| > |X \cap C|$ is computed by the order-$1$ perceptron machine $\theta\lrb{\sum_{i\in A} x_i - \sum_{i \in C}x_i}$, and similarly for the other one.
+
+To show the composite boolean function is not of bounded order, suppose otherwise, then by the same argument as the previous proof, we can construct a sequence of polynomials $P_1(a, b, c), P_2(a, b, c), P_3(a, b, c), ...$, such that each $P_n$ is the polynomial corresponding to the perceptron machine for the case where $|A| = |B| = |C| = n$, and each of them has order at most $M$, for some fixed $M$.
+
+Being the polynomial corresponding to the perceptron machine for the case where $|A| = |B| = |C| = n$ means precisely that 
+
+$$
+a > c \wedge b > c \implies P_n(a, b, c) \geq 0; \neg (a > c \wedge b > c) \implies P_n(a, b, c) < 0; 
+$$
+
+for all $a, b, c \in \{0, 1, ..., n\}$. This implies that each $P_1, P_2, ... \neq 0$. Now, divide each polynomial by the root-sum-square of its coefficients, so that if we interpret the coefficients of each $P_n$ as a point in a high-dimensional space, the point falls on the unit sphere in that space. Since the unit sphere is compact, there exists a limit point, which we write as $P(a, b, c)$.
+
+By the limit construction, we have
+
+$$
+\forall a, b, c \in \N, \quad a > c \wedge b > c \implies P(a, b, c) \geq 0; \neg (a > c \wedge b > c) \implies P(a, b, c) \leq 0; 
+$$
+
+If we color the points $\N^3$ with black for $P < 0$ and white for $P \geq 0$, then we can see the dusty outlines of a pyramid. We can construct a solid pyramid by zooming.
+
+Let $M'$ be the order of $P$, then we can "zoom out" by taking the [projective limit](https://en.wikipedia.org/wiki/Homogeneous_function) $Q(a, b, c) := \lim_{t \to \infty} t^{-M'} P(ta, tb, tc)$. This $Q$ is a homogeneous polynomial, and by continuity,
+
+$$
+\forall a, b, c \geq 0, \quad a > c \wedge b > c \implies P(a, b, c) \geq 0; a < c \vee b < c \implies P(a, b, c) \leq 0; 
+$$
+
+This implies that $P$ is identically zero on the "creased curve" $\{ a, b, c \geq 0, a = c \vee b = c\}$ in the projective plane, which is not an algebraic curve, therefore it is identically zero, contradiction.
+
+:::
+
+::: {#thm-connectedness-order}
+## Theorem 5.1
+
+The connectedness function has order $\Omega(|R|^{1/3})$.
+
+:::
+
+::: {.proof}
+
+If we have a mask perceptron machine that can solve the connectedness problem, then it can be repurposed[^the-collapsing-theorem] to solve the one-in-a-box problem of the following kind:
+
+![Figure 5.2](figure/perceptron_fig_5_2.png)
+
+In the picture, the rectangle $R$ has width $4m^2$ and height $2m+1$. We fill in all the odd-numbered rows, and use the machine to solve the one-in-a-box problem for the even-numbered rows. By @thm-one-in-a-box, the machine has order $\geq m = \Omega(|R|^{1/3})$.
+
+[^the-collapsing-theorem]: Repurposing one machine to solve another problem is a common trick in computational complexity, called "[reduction](https://en.wikipedia.org/wiki/Reduction_(complexity))". For perceptron machines, they called it "Theorem 5.4.1: The Collapsing Theorem".
+
+:::
+
+More generally, the only locally conjunctive topological invariant is the Euler number $E$ (Theorem 5.9). That is, if $\psi$ is a boolean function, and it depends only on the topology of the input figure, and its order is upper-bounded by some number $k$ that does not grow even as $R$ grows into a larger and larger rectangle, then $\psi$ is of form $f \circ E$, for some function $f: \N \to 2$.
+
+The Euler number itself is $E(X) = \sum_{i \in R} x_i - \sum_{i,j \in R} x_ix_j + \sum_{i,j,k, l  \in R} x_ix_jx_kx_l$, where the $i,j\in R$ ranges only over adjacent points, and $i,j,k, l  \in R$ ranges only over quadruples that form a square. Thus the Euler number itself has order $4$ (Theorem 5.8.1).
+
+Chapters 6--9 continue in the same style, but moves to the case where the input space is made of one or two copies of the infinite line $\Z$, or the infinite plane $\Z^2$, and the predicate to recognize is still translation-invariant. In order to avoid blowing up the perceptron machine with infinities, they restricted to the case where the input figure is of finite size, meaning that $\sum_i x_i$ is finite.
+
+Chapter 6 develops the idea of "spectra" of images. For example, the following picture shows that if we were to design a perceptron machine using only masks of size up to 2, and translation-invariant weights, then it cannot possibly distinguish between the two tetris-like pieces, because both figures contain exactly 4 instances of single-square, 1 instance of two squares side by side, and so on.
+
+![page 100](figure/perceptron_chap_6.png)
+
+Sections 6.1--6.5 of the chapter studies the same idea for masks of size up to 4. For example, Section 6.4 shows that "$X$ is the perimeter of a complete circle" is of order $4$.
+
+Section 6.6 claims that "recognizing figures in context" is generally not locally conjunctive, although they gave only two examples. Specifically, they showed that the predicate "$X$ is a horizontal line across the rectangle" is order 2, the predicate "$X$$ contains one horizontal line across plane" is not locally conjunctive. The same is true for the case with "a hollow square" instead of "a horizontal line".
+
+Chapter 7 uses the "stratification" construction to explicitly demonstrate that several binocular predicates are of finite order, but requires exponentially growing weights. It is essentially the same idea as [Gödel numbering](https://en.wikipedia.org/wiki/G%C3%B6del_numbering). A single illustrative example suffices to demonstrate the general point.
+
+::: {#exm-line-symmetry}
+
+Given a line $\Z$, how to construct a perceptron machine that detects that input figure is symmetric?
+
+Suppose we know for certain that the input figure has leftmost point $m$ and rightmost point $n$, then we can test for symmetry by computing the value of:
+
+$$
+f_{m, n}(x) := \sum_{i = 0}^{n-m} x_{m+i}(x_{n-i} - 1)
+$$
+
+We have that $f_{m, n}(x) = 0$ if the figure is symmetric, and $f_{m, n}(x) \leq -1$ otherwise.
+
+Now we define the entire perceptron machine by $\sum_{m \leq n} M_{n - m} x_m x_n (f_{m, n}(x) - 1/2)$. If the sequence of $M_0, M_1, ...$ grows fast enough, then the largest bracket $(m, n)$ would swamp every smaller bracket contained within, and so the entire perceptron machine is effectively first testing for the smallest interval containing the figure, before testing the symmetry within that interval.
+
+:::
+
+They made similar constructions for perceptron machines that decide whether two infinite lines or planes are translates of each other, whether two planes are translation and approximate dilations of each other, and whether a line or a plane is the translation of a fixed figure.
+
+Chapter 8 studies diameter-limited perceptron machines, meaning that not only are the hidden perceptrons assumed to be masks of bounded size, those masks are assumed to be contained in a circle of radius $M$ for some finite $M$. It is intended to be a formalization of the intuition that the perceptron machines should model a real pair of eyes scanning a plane, and each retina is a circular disk with finite radius. No results in chapter 8 were used further in the book, and they resemble the case of finite-order perceptron machines, so we do not discuss the results in detail.
+
+Chapter 9 extends the stratification idea of chapter 7 to an arbitrary level.  [TODO]
+
+Chapter 10 is essentially made by "finitizing" the construction of chapter 7. Whereas chapter 7 concerns machines operating over infinite planes, chapter 10 concerns sequences of machines operating over a sequence of squares growing towards infinity. For example, instead of testing for reflection symmetries on $\Z$, it considers testing for reflection symmetries on $\{-n, -n+1, \cdots, n-1, n\}$ for $n \to \infty$. Whereas in the construction @exm-line-symmetry, we saw coefficients growing exponentially, chapter 10 shows that this phenomenon of exponentially growing coefficients is common.
+
+A single example illustrates the general point.
+
+:::{#exm-parity-order}
+## Theorem 10.1
+
+Suppose we have a perceptron machine that tests for parity, then by @thm-parity-order, it must have order $|R|$. As in the construction given in the proof, we use the group invariance theorem to obtain a group-symmetric machine with form $\theta(\sum_{i=0}^{|R|}\binom{|X|}{i} b_i)$, where $b_0, b_1, ..., b_{|R|}$ are real numbers. Then, assuming the machine is "reliable", we can prove that $(-1)^{M} b_{M+1 \geq 2^{M}$ for any $M \in \{0, 1, \cdots, |R|-1\}$.
+
+Since the group-symmetric construction can only average out the most extreme values, this implies that before the group-symmetric construction, our perceptron machine had even more extreme coefficients.
+
+A "reliable" machine is a [support vector machine](https://en.wikipedia.org/wiki/Support_vector_machine) with margin $\geq 1/2$. That is, it is a machine such that 
+$$
+\sum_{i=0}^{|R|}\binom{|X|}{i} b_i \begin{cases}
+\geq 1 & \text{ if $|X|$ is odd}
+\leq 0 & \text{ if $|X|$ is even}
+\end{cases}
+$$
+
+:::
+
+::: {.proof}
+
+Define $A_n = \sum_{i=0}^n \binom{n}{i}b_i$. Since the machine is reliable, we have that $(-1)^{n}(A_{n+1} - A_n) \geq 1$ for each $n = 0, 1, ..., |R|-1$. Simplifying the binomial coefficients, we have $A_{n+1} - A_n = \sum_i \binom{n}{i} b_{i+1}$. Note that we use the convenient convention that $\binom{x}{y} = 0$ if $x < y$.
+
+Now fix any $M \in \{0, 1, \cdots, |R|-1\}$, and evaluate the following inequality:
+
+$$
+2^{M} = \sum_n \binom{M}{n} \cdot 1 \leq \sum_n \binom{M}{n} (-1)^{n}(A_{n+1} - A_n)
+$$
+
+By manipulating the binomial coefficients, the right side simplifies to $(-1)^M b_{M+1}$.
+
+:::
+
+Section 10.2 and 10.3 constructs two pathological examples. By restricting the shapes of hidden perceptron masks, they proved that certain predicates required superexponential weights. Section 10.4 purports to extend the group invariance theorem to the infinite case.[^theorem-10-4-1] None of these are used elsewhere in the book. They are virtuoso performances.
+
+[^theorem-10-4-1]: They purported in Theorem 10.4.1 that, if the weights are bounded, then the group invariance theorem applies again, but the proof is false, with a counterexample $\sum_{n \in \Z}e^{-n^2}x_n - e^{-n^4}x_nx_{n+1}$. The theorem *might* still be correct, but I cannot prove it.
+
+
+### Perceptron learning theory
+
+In Chapter 11, they revisited the computational reduction, and suggested that real-valued perceptrons are not better than binary perceptrons, because ...
 
 ::: {#def-perceptron-learning}
 ## Perceptron learning
 
 To train a perceptron machine is to *fix* its hidden perceptrons, and adjust the weights and threshold of *only* the single output perceptron.
 :::
-
-### Some mathematical results
-
-Chapter X: topological computing
-
-### Non-mathematical arguments
-
-Nobody can dispute with the mathematical results. However, the significance of the book does not hinge on the mathematical results, but rather the purported practical implications of such results.
-
-Speaking on official record, Marvin Minsky insisted that he did not set out to kill neural networks, only putting it back to its proper place by showing what they cannot do. Restricted to the context of 1960s neural networks, it was an accurate assessment. Without backpropagation, neural network researchers could not train more than 2 layers, and most often they limited themselves to a single layer of trainable parameters, though they experimented with hand designed or random layers in front and behind the trainable layer. [Rosenblatt empirically investigated](##sec-rosenblatt) learning rules for two trainable layers in a four-layered neural network as early as 1962, but backpropagation only became known to most of neural network researchers in the 1980s.
-
-During the 1980s, as neural networks rose again into prominence, Seymour Papert and Marvin Minsky got together to get the book republished with a new chapter specifically used to address the new neural network.
-
-In the same year, Seymour Papert wrote a solo paper [@papertOneAIMany1988], which shows that his opinion is the same as that of Minsky.
-
-The Society of Mind hypothesis is the exact opposite idea as "One big net for everything" [@schmidhuberOneBigNet2018]. Instead of one big neural network for everything (Schmidhuber's hypothesis), or $\sim 6$ neural networks for everything (my hypothesis), Marvin Minsky and Seymour Papert argued for thousands of neural networks for everything.
-
-[Insert quotes here]
-
-In short, they believed that the brain is a network of large modules, each module is a network of smaller modules, and so on, until we bottom out to the simplest modules each consisting of perhaps tens of thousands of neurons. They did not give precise numerical estimates for how many -- it would be imprudent to -- but from my impression of reading The Society of Mind, they believed it had to have at least a thousand, arranged in at least 4 levels deep.
-
-The agenda, once understood, unmasks the moral conviction behind their theoretical arguments.
-
-Why do they argue vigorously against the possibility of scaling up more than two layers? They argued without mathematical justification, because it is extremely difficult to say anything generic about deep neural networks. After all, two layers is enough for approximating any function, so to say anything interesting about such networks require carefully restricting its architecture. The mathematical difficulty was severe enough that even now we do not have a good theory of deep learning. Why then, without justification, do they still vigorously argue against deep learning?
-
-> [intuition that it's a sterile extension]
-
-They had to, because they had to argue that generic deep learning does not scale.
-
-Why?
-
-Because, if generic deep learning scales up to arbitrary sizes, then the whole basis of a society of mind collapses. The brain would become one big network, not thousands of tiny networks.
-
-Minsky and Papert admitted that neural networks are computationally universal. It is foolish to deny it, as even [@mccullochLogicalCalculusIdeas1943] argued that neural networks are universal.[^turing-complete-mcculoch-pitts] So what did they really mean by this objection?
-
-[^turing-complete-mcculoch-pitts]:
-    > every net, if furnished with a tape, scanners connected to afferents, and suitable efferents to perform the necessary motor-operations, can compute only such numbers as can a Turing machine. ... If any number can be computed by an organism, it is computable by these definitions, and conversely.
-
-> [quote about how it is trivial to say that it's computationally universal]
-
-They meant that, while any simple task that a human can do is solved by some neural network, there is no neural network that can solve every simple task that a human can do. Instead, each task has its own peculiarities, and requires a peculiar network that can learn to solve *that particular task* efficiently, but no other task. A generic network must fail -- it must fail to converge, or converge exponentially slowly, or converge to a bad local minima, or fail in some other way. It simply must fail, in order to save the society of mind.
 
 ## What really killed off neural networks?
 
@@ -655,7 +924,7 @@ The brief description of the unpublished jitters machine was not making sense to
 
 > There are also some technical reasons to expect better results with the new approach. Almost all of the old perceptron work was based on the McCulloch-Pitts model of the neuron, which was both discontinuous and nondifferentiable. It was felt, in the 1950's, that the output of a brain cell had to be 1 or 0, because the output consisted of sharp discrete "spikes." More recent work in neurology has shown that higher brain cells output "bursts" or "volleys" of spikes, and that the strength of a volley may vary continuously in intensity. This suggests the CLU model to be discussed in the Appendix. In any event, to exploit basic numerical methods, one must use differentiable processing units. Minsky once experimented with a "jitters" machine, which estimated one derivative per time cycle by making brute-force changes in selected variables; however, the methods to be discussed in the Appendix yield derivatives of all variables and parameters in one major time cycle and thereby multiply efficiency in proportion to the number of parameters $(N)$, which may be huge.
 
-This makes things perfectly clear. Minsky's jitters machine was an RL agent with multiple continuously adjustable parameters running a very primitive form of policy gradient. During every episode, it would would estimate $\partial_{\theta_i} R(\theta)$ using finite difference, but since it used finite difference, they could only estimate the partial derivative for *only one* of the parameters $\theta_i$! No wonder it never managed to learn. It is almost comical how much they failed to just use gradient descent. It sometimes feels as if did everything to *avoid* just taking the gradient. In the case of Minsky, he made it very clear, in his new chapter to the 1988 version of *Perceptrons*, that he did not believe in gradient descent, period. But what explains the gradient-phobia of all the others...?
+This makes things perfectly clear. Minsky's jitters machine was an RL agent with multiple continuously adjustable parameters running a very primitive form of policy gradient. During every episode, it would would estimate $\partial_{\theta_i} R(\theta)$ using finite difference, but since it used finite difference, they could only estimate the partial derivative for *only one* of the parameters $\theta_i$! No wonder it never managed to learn. It is almost comical how much they failed to just use gradient descent. It sometimes feels as if did everything to *avoid* just taking the gradient. In the case of Minsky, he made it very clear, in the new additions to the 1988 version of *Perceptrons*, that he did not believe in gradient descent, period. But what explains the gradient-phobia of all the others...?
 
 Anyway, back to the interview. Werbos went to [Jerome Lettvin](https://en.wikipedia.org/wiki/Jerome_Lettvin), the neuroscientist famous for *What the Frog's Eye Tells the Frog's Brain*. Turns out he was a proto-[eliminativist](https://en.wikipedia.org/wiki/Eliminativism). While I'm an eliminativist too, Werbos was a Freudian, which can only collide badly with eliminativism.
 
