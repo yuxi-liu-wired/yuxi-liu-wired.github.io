@@ -140,7 +140,7 @@ Minsky described how they came to write the book as such:
 
 The book is one of those things that have passed into the stuff of legend: often quoted, rarely read. However, for its historical importance, I have actually read the book. The content of the book can be cleanly separated into two parts. Most of the book is a mathematical monograph on what functions can be implemented by a single perceptron with fixed featurizers, and the rest is a commentary on the wider implications of the mathematical monograph. The impact of the work is exactly reversed: most of the impact is done by the commentary, and essentially no impact is done by the mathematical monograph.
 
-Despite this lopsidedness, the mathematical work is solid, and the Perceptron controversy turns critically on interpretation of the mathematical work, so I will describe it in a separate essay.
+Despite this lopsidedness, the mathematical work is solid, and the Perceptron controversy turns critically on interpretation of the mathematical work, so I will describe it in a separate essay .
 
 ### Minsky--Papert struck back
 
@@ -150,7 +150,7 @@ In the 1980s, neural networks rose again to prominence, this time termed "connec
 
 To back up the claim, they made specific technical and philosophical objections. On the technical front, their central point is that homogeneous neural networks cannot scale, and argued for the point with several specific arguments.
 
-Arthur Samuel's checker learning algorithm encountered two fundamental problems: credit assignment and inventing novel features. Both problems have *no* practical and universal solutions. There could be universal but impractical solutions, such as backpropagation on homogeneous neural networks, Solomonoff induction, trying every Turing machine, etc. There could be practical but not universal solutions, which is precisely what populates the society of mind in human brains.
+Arthur Samuel's checker learning algorithm encountered two fundamental problems: credit assignment and inventing novel features. They claimed that both problems have *no* practical and universal solutions. There could be universal but impractical solutions, such as backpropagation on homogeneous neural networks, Solomonoff induction, trying every Turing machine, etc. There could be practical but not universal solutions, which is precisely what populates the society of mind in human brains.
 
 [TODO]
 
@@ -163,8 +163,6 @@ On the social front, they requested all AI researchers to convert to the society
 > ... Most researchers tried to bypass \[the technical objections\], either by ignoring them or by using brute force or by trying to discover powerful and generally applicable methods. Few researchers tried to use them as guides to thoughtful research. We do not believe that any completely general solution to them can exist, and we argue in our epilogue that awareness of these issues should lead to a model of mind that can accumulate a multiplicity of specialized methods.
 
 > for certain purposes the Perceptron was actually very good. ... it is such a simple machine that it would be astonishing if nature did not make use of it somewhere. It may be that one of the best things a neuron can have is a tiny Perceptron, since you get so much from it for so little. You can’t get one big Perceptron to do very much, but for some things it remains one of the most elegant and simple learning devices I know of.” [@bernsteinMarvinMinskyVision1981]
-
-> [TODO quote about how it is trivial to say that it's computationally universal]
 
 Minsky and Papert admitted that neural networks are computationally universal. It is foolish to deny it, as even [@mccullochLogicalCalculusIdeas1943] argued that neural networks are universal.[^turing-complete-mcculoch-pitts] So what did they really mean by this objection?
 
@@ -234,11 +232,52 @@ Why must we take such a large detour? My guess is twofold. One, the resemblance 
 
 [^classical-statistical]: More precisely, classical-statistical AI, with fixed parameters, handcrafted features, and solvable models. A classical-statistical model is constructed as some form of $p_\theta(y|x)$, where $\theta$ are the parameters, $x$ are the inputs, and $y$ are the outputs. The difference from neural networks is that for classical-statistical models, $p_\theta$ allows solvable inference from a dataset, such as by taking the average, derivative, variance, and such. Many of them were straight up linear regressions on handcrafted features (and thus subject to exactly the criticism of Minsky and Papert). A good example is the [IBM alignment model 1](https://en.wikipedia.org/wiki/IBM_alignment_models#Model_1), which can be trained by expectation-maximization with *closed form solution* (!). To see the difference, compare it with [@bahdanauNeuralMachineTranslation2014], which also learns to align from a corpus, but does not have any closed form solution.
 
-### The infamous XOR problem
+## Interpreting the XOR problem
 
-Indeed, when the connectionists rose in the 1980s, one of the first things they did was to check that they could solve the XOR problem.
+When I first heard about the first neural network winter and the *Perceptron* book, I was deeply confused by the story. The story went that "*Perceptron* proved that the XOR problem is unsolvable by a single perceptron, a result that caused researchers to abandon neural networks". How could it possibly *cause* researchers to abandon the field, unless it was news to them? But anyone could see that a single perceptron could only separate linearly separable points, and therefore the XOR problem is unsolvable by a single perceptron. When I first heard the story, I immediately saw why XOR was unsolvable by one perceptron, then took a few minutes to design a two-layered perceptron network that solved the XOR problem. I then noted that the NAND problem is solvable by a single perceptron, after which I immediately knew that perceptron networks are universal [since the NAND gate is](https://en.wikipedia.org/wiki/Functional_completeness).
 
-> When I first did the X-OR problem, it took a thousand iterations to solve it. If we thought that was the way it was going to go and that we were going to scale up to a hundred thousand input patterns, my God, we wouldn't live long enough to see the results. But that's not the way it's gone. That problem turned out to be an anomaly. The scaling is about linear. We haven't hit any exponential curves yet.
+If a high school student could bypass the XOR problem in a few minutes, how could it have possibly been news to the researchers in 1969?
+
+When I started researching neural networks properly, the standard story about the XOR problem became more nonsensical the more I learned. The 1943 paper by McCulloch and Pitts [@mccullochLogicalCalculusIdeas1943] *already* said that their neural networks were equivalent in power to Turing machines. Marvin Minsky's 1954 PhD thesis [@minskyTheoryNeuralanalogReinforcement1954] develops an entire computer theory out of McCulloch--Pitts neural networks.
+
+On the electric engineering side, perceptron networks were studied under another name of "linear threshold logic" by electric engineers since 1950s, who clearly would not have bothered if they could not even make an XOR gate out of it. In fact, in a standard reference from 1965, there are chapters on "Single-Threshold-Element Synthesis by Iteration" -- learning a single perceptron by the perceptron learning algorithm -- and "Network Synthesis" -- which does not mean machine learning, but rather hand-designing perceptron networks.[@dertouzosThresholdLogicSynthesis1965]
+
+What is going on?
+
+I believe the story got completely garbled during the teaching process. I am all for changing history for the sake of understanding -- history is made for the winners, not the winners made for history -- but the standard story about the XOR problem is nonsensical, as I have shown. So how did the story come about?
+
+I believe it is because the *Perceptron* book contained a host of problems that their restricted form of perceptron machines could not do. The simplest one is the XOR problem. Teachers, who just wanted to spend two minutes on the first neural network winter, and move on, grabbed this XOR problem and pretended it is supposed to be the actual cause of it.[^mantis-chariot]
+
+[^mantis-chariot]:
+    There is a Chinese legend about a mantis crawling on the wheel of a slowly moving train. It proudly said, "I am the prime mover of the train!" When the caterpillar asked it to prove so, it jumped down and waved its arms in front of the train, which promptly crushed it.
+    
+    This is my retelling of the Taoist story of [螳臂當車](https://en.wiktionary.org/wiki/%E8%9E%B3%E8%87%82%E7%95%B6%E8%BB%8A#Chinese).
+
+There is one thing left to explain: what is the significance of the XOR problem to the neural network researchers back in the days? It was clearly significant for something, as when the connectionists rose in the 1980s, one of the first things they did was to check that they could solve the XOR problem. Rumelhart read the *Perceptron* book very carefully in 1970, and it inspired him to go into neural network research, entirely missing its intended message. After he developed backpropagation around 1982, he immediately tried training an MLP on the XOR problem:
+
+> When I first did the XOR problem, it took a thousand iterations to solve it. If we thought that was the way it was going to go and that we were going to scale up to a hundred thousand input patterns, my God, we wouldn't live long enough to see the results. But that's not the way it's gone. That problem turned out to be an anomaly. The scaling is about linear. We haven't hit any exponential curves yet. [@rosenfeldTalkingNetsOral2000]
+
+What is the significance of the XOR problem? In the context of the neural network research in the 1960s, the significance becomes clear. Nobody knew how to simultaneously adapt two or more layers well.
+
+Before 1962, Rosenblatt had studied both theoretically and experimentally "four-layer perceptron with adaptive preterminal network", meaning a perceptron network with three layers, the first layer being random and fixed, and the second and third layers being learned [@rosenblattPrinciplesNeurodynamicsPerceptrons1962, Chapter 16]. However, it had not a single derivative in it. The second layer was learned by the Hebb rule, and the third layer was by the perceptron learning rule.
+
+Meanwhile during the early 1960s, Widrow and Hoff trained a single perceptron with gradient descent, then proceeded to try every trick *except* gradient descent to train a two-layered perceptron network. They gave up and parted ways. Hoff went on to coinvent the microprocessor at Intel, while Widrow applied a single perceptron to adaptive filter design, revolutionizing electric engineering in the process. These and more of the ridiculous backstory can be read in [*The Backstory of Backpropagation*](https://yuxi-liu-wired.github.io/blog/posts/backstory-of-backpropagation/).
+
+In short, due to a variety of unfortunate developments, people spent about twenty years (1950 -- 1970) failing to find an effective algorithm for training the pre-final layers of neural networks. They can train the final layer either by the perceptron learning rule of Rosenblatt, or the Widrow--Hoff rule of gradient descent on the squared error, but that is the extent of learning they could get the neural networks to do.
+
+Consider a two-layered neural network. The second layer is easy to learn. What should happen to the first layer? Rosenblatt's solution is to just randomize it, because he mistakenly believed that the retina was randomly wired to the visual cortex, and he believed in emulating nature. Rosenblatt was working with the standard knowledge of neuroscience in his time, as the first of the Hubel and Wiesel series of cat-vision paper only appeared in 1959. However, it seems Rosenblatt simply had a strong attachment to randomization, as the book [@rosenblattPrinciplesNeurodynamicsPerceptrons1962] cites [@hubelReceptiveFieldsSingle1959] a few times, yet he kept randomizing the first layer.
+
+Widrow's solution is the MADALINE I rule, which is a complicated hack and a deadend. Most people simply said, if the first layer cannot be learned, then it should either be randomized, or designed by hand. Both choices played right into the hands of Minsky and Papert.
+
+Seen from the viewpoint of the second layer, the first layer is the featurizer for the raw input. It is intuitively clear that if the raw input is featurized, then unless the features are adapted to the problem, the second layer would not be able to solve the problem.
+
+The XOR problem requires two layers. Furthermore, if the first layer is not wired right, then the second layer would not be able to solve it either. Put yourself in the place of a 1960s connectionist. How do you solve the XOR problem by a perceptron network? Well, not a single perceptron, as it's impossible. Not with three layers, because two layers are sufficient, and you have enough problem with two layers already. So, two layers. How to train it? You know only how to fix the first layer and train the second. How do you fix the first layer? Do you randomize it? Unless you use many hidden perceptrons, this will fail with high probability. Do you design it? But then, Minsky and Papert would jump in and say, "You see, you cannot substitute thinking by tabula-rasa learning! You need some intelligent design to get it to work!"
+
+Not to give up, you try one of the hacks like the MADALINE I learning rules, or Hebbian learning rule, but they are extremely fiddly and unable to learn most of the time unless you tune them just right, and it seems to require a different turning for problems even slightly more complex than the XOR problem. Minsky and Papert interjects again, "You see, there is no universal learning algorithm! You need a bespoke learning algorithm for each problem!"
+
+And so we stand at the impasse of 1960s. If only we had tried an activation function, any activation function, other than the dreaded 0-1 activation function...
+
+### What is left of the XOR problem?
 
 Among all the objections in the *Perceptron* book, I believe only one remains to be a serious criticism: the recognition of symmetry. Recognizing connectivity is hard and requires a serial program, but that's fine, because it's hard for humans too. Learning to solve logical problems is difficult and requires a thousand iterations. Well, it looks inefficient, except that neural networks is still the best we have even 30 years later, so perhaps the XOR problem is just something neural networks have to work hard for. That's fine -- worst case, we'll just let the neural network offload those logical operations to a symbolic program, much like how humans use calculators.
 
@@ -246,12 +285,7 @@ The only legitimate remaining problem is the recognition of symmetry. It is hard
 
 However, out of all the results and wise words of *Perceptron*, we ended up with... just one problem remaining? Minsky and Papert hoped to show that there will be thousands of different problems, each requiring a bespoke algorithm implemented by a bespoke neural network. In this regard, their project has been fully debunked.
 
-[TODO]
-
 ## How *Perceptron* was received
-
-
-### Retrospective thoughts by the connectionists
 
 [@rosenfeldTalkingNetsOral2000] is a book of interviews with the leading neural network researchers, and *Perceptron* comes up several times. As expected, connectionists were unhappy with the book, but they had different things to say about it. Reading the interviews gives one a distinct feeling of *Rashomon*. The same events become recounted in multiple perspectives. I will excerpt some of the most important ones for the essay.
 
@@ -293,11 +327,7 @@ James A. Anderson reminds us that during the "winter" neural networks were still
 
 Rumelhart had nice things to say about Minsky, with no trace of bitterness. It is understandable as he only started working in neural networks years after the controversy died down.
 
-> I always had one course that was like a free course in which I would choose a book of the year and teach out of that. In 1969, I think it was, or maybe '70, I chose Perceptrons by Minsky and Papert as the book of the year. We then carefully went through it and read it in a group. There were some people from the math department, the graduate students, and me. This, by the way, was something I learned from Bill McGill. He always liked this idea of reading a particular book and going through it with a group. This was my most in-depth experience with things related to neural networks, or what were later called neural networks. I was quite interested in Minsky in those days because he also had another book which was called, I think, Semantic Information Processing. That book was a collection, including an article by Ross Quillian. It was a collection of dissertations from his graduate students. In a way, it was Minsky who led me to read about the perceptron more than anybody else.
-
-He also had this to say about the infamous XOR problem:
-
-> Minsky and others talked about the scaling problem, scaled by a factor of a hundred thousand, and the scaling has not been bad. When I first did the X-OR problem, it took a thousand iterations to solve it. If we thought that was the way it was going to go and that we were going to scale up to a hundred thousand input patterns, my God, we wouldn't live long enough to see the results. But that's not the way it's gone. That problem turned out to be an anomaly. The scaling is about linear. We haven't hit any exponential curves yet. If you make a bigger problem, it's about a linear increase in training time. So OK, we get bigger and bigger problems, but hey, we're not going to beat linearity.
+> I always had one course that was like a free course in which I would choose a book of the year and teach out of that. In 1969, I think it was, or maybe '70, I chose Perceptrons by Minsky and Papert as the book of the year. We then carefully went through it and read it in a group. ... This was my most in-depth experience with things related to neural networks, or what were later called neural networks. I was quite interested in Minsky in those days because he also had another book which was called, I think, Semantic Information Processing. That book was a collection, including an article by Ross Quillian. It was a collection of dissertations from his graduate students. In a way, it was Minsky who led me to read about the perceptron more than anybody else.
 
 As for Robert Hecht-Nielsen, he already spoke before, on how Minsky was purportedly "Darth Vader". He is the bitterest of all here:
 
@@ -524,7 +554,4 @@ The founding metaphor of the neural network camp was that intelligence is what t
 ### Tobermory
 
 The last 
-
-## Triumph of the scale
-
 
