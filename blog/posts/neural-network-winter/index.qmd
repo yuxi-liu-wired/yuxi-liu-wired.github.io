@@ -140,7 +140,7 @@ Minsky described how they came to write the book as such:
 
 The book is one of those things that have passed into the stuff of legend: often quoted, rarely read. However, for its historical importance, I have actually read the book. The content of the book can be cleanly separated into two parts. Most of the book is a mathematical monograph on what functions can be implemented by a single perceptron with fixed featurizers, and the rest is a commentary on the wider implications of the mathematical monograph. The impact of the work is exactly reversed: most of the impact is done by the commentary, and essentially no impact is done by the mathematical monograph.
 
-Despite this lopsidedness, the mathematical work is solid, and the Perceptron controversy turns critically on interpretation of the mathematical work, so I will describe it in @sec-perceptron-book.
+Despite this lopsidedness, the mathematical work is solid, and the Perceptron controversy turns critically on interpretation of the mathematical work, so I will describe it in a separate essay.
 
 ### Minsky--Papert struck back
 
@@ -161,8 +161,6 @@ On the social front, they requested all AI researchers to convert to the society
 > ... Are there inherent incompatibilities between those connectionist and symbolist views? The answer to that depends on the extent to which one regards each separate connectionist scheme as a self-standing system. If one were to ask whether any particular, homogeneous network could serve as a model for a brain, the answer (we claim) would be, clearly. No. But if we consider each such network as a possible model for a part of a brain, then those two overviews are complementary. This is why we see no reason to choose sides.
 > 
 > ... Most researchers tried to bypass \[the technical objections\], either by ignoring them or by using brute force or by trying to discover powerful and generally applicable methods. Few researchers tried to use them as guides to thoughtful research. We do not believe that any completely general solution to them can exist, and we argue in our epilogue that awareness of these issues should lead to a model of mind that can accumulate a multiplicity of specialized methods.
-
-
 
 > for certain purposes the Perceptron was actually very good. ... it is such a simple machine that it would be astonishing if nature did not make use of it somewhere. It may be that one of the best things a neuron can have is a tiny Perceptron, since you get so much from it for so little. You can’t get one big Perceptron to do very much, but for some things it remains one of the most elegant and simple learning devices I know of.” [@bernsteinMarvinMinskyVision1981]
 
@@ -250,378 +248,66 @@ However, out of all the results and wise words of *Perceptron*, we ended up with
 
 [TODO]
 
-## Reading *Perceptron* {#sec-perceptron-book}
+## How *Perceptron* was received
 
-> It would seem that Perceptrons has much the same role as The Necronomicon -- that is, often cited but never read.
->
-> Marvin Minsky, 1994. Quoted in [@berkeleyRevisionistHistoryConnectionism1997]
 
-In one sentence, the mathematical portion of the *Perceptron* book is a theory of two-layered perceptrons, mostly by discrete mathematics. Perceptron representation occupies chapters 0--10, and learning is only studied in chapters 11 and 12.
+### Retrospective thoughts by the connectionists
 
-Let $R$ be a finite set, where "R" could be read as "region", or "rectangle".
+[@rosenfeldTalkingNetsOral2000] is a book of interviews with the leading neural network researchers, and *Perceptron* comes up several times. As expected, connectionists were unhappy with the book, but they had different things to say about it. Reading the interviews gives one a distinct feeling of *Rashomon*. The same events become recounted in multiple perspectives. I will excerpt some of the most important ones for the essay.
 
-::: {#def-perceptron}
-## Perceptron
+Jack Cowen
 
-A perceptron is a binary function of type $\{0, 1\}^R \to \{0, 1\}$, defined by a weight vector $w$ and a threshold number $b$:
+> ER: I'm curious about one thing. You said that Minsky and Papert first presented their notions about exclusive-OR in the Perceptron work [in a 1965 conference].
+> 
+> JC: Well, they first presented their notions about the limitations of perceptrons and what they could and couldn't do.
+> 
+> ER: They hadn't gotten to exclusive-OR yet?
+> 
+> JC: They had, but that wasn't a central issue for them. The essential issue was, suppose you had diameter-limited receptive fields in a perceptron, what could it compute?
+> 
+> ER: How was that received at that first conference?
+> 
+> JC: Both of them were quite persuasive speakers, and it was well received. What came across was the fact that you had to put some structure into the perceptron to get it to do anything, but there weren't a lot of things it could do. The reason was that it didn't have hidden units. It was clear that without hidden units, nothing important could be done, and they claimed that the problem of programming the hidden units was not solvable. They discouraged a lot of research and that was wrong. ... Everywhere there were people working on perceptrons, but they weren't working hard on them. Then along came Minsky and Papert's preprints that they sent out long before they published their book. There were preprints circulating in which they demolished Rosenblatt's claims for the early perceptrons. In those days, things really did damp down. There's no question that after '62 there was a quiet period in the field. 
+> 
+> ER: Robert Hecht-Nielsen has told me stories that long before Minsky and Papert ever committed anything to a paper that they delivered at a conference or published anywhere, they were going down to ARPA and saying, "You know, this is the wrong way to go. It shouldn't be a biological model; it should be a logical model." 
+> 
+> JC: I think that's probably right. In those days they were really quite hostile to neural networks. I can remember having a discussion with Seymour ... in the '60s. We were talking about visual illusions. He felt that they were all higher-level effects that had nothing to do with neural networks as such. They needed a different, a top-down approach to understand. By then he had become a real, a true opponent of neural networks. I think Marvin had the same feelings as well. To some extent, David Marr had those feelings too. After he got to the AI lab, I think he got converted to that way of thinking. Then Tommy Poggio essentially persuaded him otherwise. 
 
-$$
-\Phi(x) := \theta(w^T x + b)
-$$
+Teuvo Kohonen seemed also angry at the Chomskyans, for reasons that should be clear now.
 
-where $\theta(t) := 1_{t \geq 0}$ is the 0-1 step function.
-:::
+> I was one of the people suffering from Minsky and Papert's book [Perceptrons] because it went roughly this way: you start telling somebody about your work, and this visitor or whoever you talk to says, "Don't you know that this area is dead?" It is something like what we experienced in the pattern recognition society when everything started to be structural and grammatical and semantic and so on. If somebody said, "I'm doing research on the statistical pattern recognition," then came this remark, "Hey, don't you know that is a dead idea already?"
 
-::: {#def-perceptron-machine}
-## perceptron machine
+Michael A. Arbib thought the book did not cause the neural network winter, but rather caused funding change it.
 
-A perceptron machine with $k$ hidden neurons is a function of type $\{0, 1\}^R \to \{0, 1\}$, defined by
+> Minsky and Papert basically said that if you limit your networks to one layer in depth, then, unless you have very complicated individual neurons, you can't do very much. This is not too surprising. ... Many people see the book as what killed neural nets, but I really don't think that's true. I think that the funding priorities, the fashions in computer science departments, had shifted the emphasis away from neural nets to the more symbolic methods of AI by the time the book came out. I think it was more that a younger generation of computer scientists who didn't know the earlier work may have used the book as justification for sticking with "straight AI" and ignoring neural nets.
 
-$$
-\Phi(x) := \psi_{k+1}(\psi_1(x), \psi_2(x), \cdots, \psi_k(x))
-$$
+Bernard Widrow concurred.
 
-where $\psi_1, ..., \psi_k$ are (hidden) perceptrons in the hidden layer, and $\psi_{k+1}$ is the single output perceptron.
-:::
+> I looked at that book, and I saw that they'd done some serious work here, and there was some good mathematics in this book, but I said, "My God, what a hatchet job." I was so relieved that they called this thing the percept ron rather than the Adaline because actually what they were mostly talking about was the Adaline, not the percept ron. I felt that they had sufficiently narrowly defined what the percept ron was, that they were able to prove that it could do practically nothing. Long, long, long before that book, I was already success fully adapting Madaline \[Madaline = many Adalines\], which is a whole bunch of neural elements. All this worry and agony over the limitations of linear separability, which is the main theme of the book, was long overcome.
+> 
+> We had already stopped working on neural nets. As far as I knew, there wasn't anybody working on neural nets when that book came out. I couldn't understand what the point of it was, why the hell they did it. But I know how long it takes to write a book. I figured that they must have gotten inspired to write that book really early on to squelch the field, to do what they could to stick pins in the balloon. But by the time the book came out, the field was already gone. There was just about nobody doing it.
 
-::: {#def-predicate-order}
-## perceptron orders
+James A. Anderson reminds us that during the "winter" neural networks were still used in neuro-psychology.
 
-The order of a hidden perceptron is the number of nonzero weights.
+> This was during the period sometimes called the neural network dark ages, after the Minsky and Papert book on perceptrons had dried up most of the funding for neural networks in engineering and computer science. Neural networks continued to be developed by psychologists, however, because they turned out to be effective models in psychology ... What happened during the dark ages was that the ideas had moved away from the highly visible areas of big science and technology into areas of science that did not appear in the newspapers.
 
-The order of a perceptron machine is the maximum order of its hidden perceptrons.
+Rumelhart had nice things to say about Minsky, with no trace of bitterness. It is understandable as he only started working in neural networks years after the controversy died down.
 
-The order of a boolean function is the minimum order necessary for a perceptron machine that implements it.
+> I always had one course that was like a free course in which I would choose a book of the year and teach out of that. In 1969, I think it was, or maybe '70, I chose Perceptrons by Minsky and Papert as the book of the year. We then carefully went through it and read it in a group. There were some people from the math department, the graduate students, and me. This, by the way, was something I learned from Bill McGill. He always liked this idea of reading a particular book and going through it with a group. This was my most in-depth experience with things related to neural networks, or what were later called neural networks. I was quite interested in Minsky in those days because he also had another book which was called, I think, Semantic Information Processing. That book was a collection, including an article by Ross Quillian. It was a collection of dissertations from his graduate students. In a way, it was Minsky who led me to read about the perceptron more than anybody else.
 
-:::
+He also had this to say about the infamous XOR problem:
 
-For example, the constant-0 and constant-1 boolean functions are both of order 0.
+> Minsky and others talked about the scaling problem, scaled by a factor of a hundred thousand, and the scaling has not been bad. When I first did the X-OR problem, it took a thousand iterations to solve it. If we thought that was the way it was going to go and that we were going to scale up to a hundred thousand input patterns, my God, we wouldn't live long enough to see the results. But that's not the way it's gone. That problem turned out to be an anomaly. The scaling is about linear. We haven't hit any exponential curves yet. If you make a bigger problem, it's about a linear increase in training time. So OK, we get bigger and bigger problems, but hey, we're not going to beat linearity.
 
-A key focus of the perceptron controversy is the concept of "conjunctively local".
+As for Robert Hecht-Nielsen, he already spoke before, on how Minsky was purportedly "Darth Vader". He is the bitterest of all here:
 
-::: {#def-predicate-order}
-## conjunctively local
-
-A family of boolean functions is conjunctively local iff their orders are upper bounded.
-
-:::
-
-### Perceptron representation theory
-
-While their definition allows perceptron machines of any real-valued weights and biases, they immediately performed a [computational reduction](https://en.wikipedia.org/wiki/Reduction_(complexity)) to the special case of mask perceptron machines. Most of the book considers the problem of classifying subsets of families of planar square grids, such as $\{1, 2, 3\} \times \{1, 2, 3, 4\}$. A subset is inputted to the perceptron machine by setting inputs in the subset to $1$, and the rest to $0$. Consequently, it is natural to consider a special case of perceptron machines.
-
-::: {#def-predicate-order}
-## mask perceptron machine
-
-A mask for $A\subset R$ is a function of type $\{0, 1\}^R \to \R$, such that $\psi(x) = 1$ if $x_i =1$ for all $i \in A$, and else $\psi(x) = 0$.
-
-A mask perceptron machine is a perceptron machine where each hidden perceptron is a mask, and the threshold of the output perceptron is zero. In other words, it is of form
-
-$$
-\Phi(x) = \theta\lrb{\sum_{i=1}^k a_i \psi_{A_i}(x)}
-$$
-
-where each $\psi_{A_i}$ is a mask, each $a_i\in \R$, and $k$ is the number of hidden perceptrons.
-
-![Figure 0.2](figure/perceptron_fig_0_2.png)
-
-:::
-
-::: {#thm-predicate-order}
-## Theorem 1.5.1
-
-Restricting to mask perceptron machines does not change perceptron orders. That is, any boolean function implemented by a perceptron machine of order $k$ can be implemented by a mask perceptron machine of order at most $k$.
-
-:::
-
-::: {.proof}
-
-Take one such perceptron machine. The threshold of the output perceptron can be removed by adding a hidden perceptron that always outputs $1$ -- in other words, $\psi_\emptyset$, the mask of the empty set. Now it remains to decompose each hidden perceptron into masks with the same order, or less.
-
-Let $\psi$ be a hidden perceptron with nonzero weights on the input points $x_{i_1}, ..., x_{i_k}$, then its output is determined by the values of $x_{i_1}, ..., x_{i_k}$. Therefore, we can partition the binary set $\{0, 1\}^{i_1, ..., i_k}$ into two subsets $A_0, A_1$, such that for any input $x\in\{0, 1\}^R$, we have $\psi(x) = 1$ iff $(x_{i_1}, ..., x_{i_k}) \in A_1$.
-
-In other words, we only need to look at the binary values $x_{i_1}, ..., x_{i_k}$ to know the binary output $\psi(x)$.
-
-Therefore, we can replace $\psi$ with a boolean formula on $x_{i_1}, ..., x_{i_k}$, then expand it to obtain up to $2^k$ masks, each of order at most $k$.
-
-For example, suppose $\psi$ has nonzero weights on $x_1, x_2$, and is 1 on all odd-sized subsets, then we can write it as a boolean formula:
-
-$$
-\left(x_1 \wedge \neg x_2\right) \vee\left(\neg x_1 \wedge x_2\right) = x_1\left(1-x_2\right)+\left(1-x_1\right) x_2 = x_1 + x_2 - 2 x_1 x_2
-$$
-
-:::
-
-The next tool they used is symmetry, formulated in the language of [finite group actions](https://en.wikipedia.org/wiki/Group_action).
-
-Let $S_R$ be the permutation group on the elements of $R$, and $G$ be a subgroup of $S_R$. We say that a boolean function $\psi$ is $G$-invariant iff $\psi \circ g=\psi$ for any $g \in G$. That is, any $X \subset R$, we have $\psi(X)=\psi(g(X))$. For example, the parity function is $S_R$-invariant, since any permutation of the set preserves the size, and thus the parity, of any of its subsets.
-
-::: {#thm-group-invariance}
-## group invariance theorem
-
-If a boolean function is $G$-invariant, where $G$ is a finite group, then any perceptron machine computing it can be converted to a perceptron machine $\theta(\sum_i a_i \psi_i)$, such that if $\psi_i=\psi_j \circ g$ for some $g \in G$, then $a_i=a_j$.
-
-:::
-
-::: {.proof}
-
-Take the group-action average: any mask $\psi$ is equal to $\frac{1}{|G|} \sum_{g\in G} \psi\circ g$.
-
-:::
-
-Once the groundwork is laid, they proceeded to prove a wide variety of theorems on the order of particular boolean functions.
-
-Consider the parity function. It is $1$ iff exactly an odd number of inputs are $1$ and the rest are $0$.
-
-::: {#thm-parity-order}
-## Theorem 3.1
-
-The parity function has order $|R|$.
-
-:::
-
-::: {.proof}
-
-Since the parity function is $S_R$-invariant, if it is implemented by a perceptron machine of order $k$, it is implemented by some mask perceptron machine $\theta(\sum_{A_i \subset R} a_{A_i} \psi_{A_i})$, where each mask is of size $\leq k$, and each weight $a_{A_i}$ depends only on the size of $A_i$. Let $b_{|A_i|} = a_{A_i}$ be those coefficients. It remains to show $b_{|R|} \neq 0$.
-
-For each $X \subset R$, we have by explicit computation 
-
-$$
-\theta\lrb{\sum_{A_i \subset R} a_{A_i} \psi_{A_i}} = 1\lrs{f(|X|) \geq 0}
-$$
-
-where $f(t) := \sum_{i=0}^{|R|}b_i \binom{t}{i}$ is a polynomial in $t$. Since this perceptron machine implements the parity function, as $t$ increases from $0$ to $|R|$, the function $f(t) + \epsilon$ must intersect the $x$-axis at least $|R|$ times for some real value $\epsilon$. Since $f$ is a polynomial, it must have at least order $|R|$, thus $b_{|R|} \neq 0$.
-
-:::
-
-::: {#thm-one-in-a-box}
-## Theorem 3.2, one-in-a-box
-
-Let $A_1, A_2, ..., A_m$ be disjoint subsets of $R$ each of size $4 m^2$, and define the predicate $\psi(X) = \forall i, \left|X \cap A_i\right|>0$, that is, there is at least one point of $X$ in each $A_i$. The order of $\psi$ is $\geq m$.
-
-:::
-
-::: {.proof}
-
-Let the order of $\psi$ be $k$.
-
-The predicate $\psi$ is invariant with respect to the group $S_{A_1} \times \cdots \times S_{A_m}$, so by the same construction as the proof of @thm-group-invariance, there exists a polynomial $P(t_1, ..., t_m)$, where $P$ has order $k$, and
-
-$$
-\forall t_1, ..., t_m \in \{0, 1, ..., 4m^2\}, P(t_1, ..., t_m) < 0 \iff t_1 = 0 \vee \cdots \vee t_m = 0
-$$
-
-Now define $Q(t) := P((t-1)^2, (t-3)^2, \cdots, (t-2m+1)^2)$. By the above equation, $Q < 0$ at $t=1, 3, \cdots, 2m - 1$ and $Q \geq 0$ at $t = 0, 2, \cdots, 2m$. Thus, $Q$ has order $\geq 2m$. Thus, $2k \geq 2m$.
-
-:::
-
-::: {#thm-and-or}
-## Theorem 4.0
-
-There exist predicates $\psi_1$ and $\psi_2$ of order 1 such that $\psi_1 \wedge \psi_2$ and $\psi_1 \vee \psi_2$ are not of finite order. Specifically, if we partition $R$ into three equal subsets $A, B, C$, then the boolean function does not have bounded order:
-
-$$
-(|X \cap A| > |X \cap C|) \wedge (|X \cap B| > |X \cap C|) 
-$$
-
-even though both $|X \cap A| > |X \cap C|$ and $|X \cap B| > |X \cap C|$ are of order $1$.
-
-:::
-
-::: {.proof}
-
-$|X \cap A| > |X \cap C|$ is computed by the order-$1$ perceptron machine $\theta\lrb{\sum_{i\in A} x_i - \sum_{i \in C}x_i}$, and similarly for the other one.
-
-To show the composite boolean function is not of bounded order, suppose otherwise, then by the same argument as the previous proof, we can construct a sequence of polynomials $P_1(a, b, c), P_2(a, b, c), P_3(a, b, c), ...$, such that each $P_n$ is the polynomial corresponding to the perceptron machine for the case where $|A| = |B| = |C| = n$, and each of them has order at most $M$, for some fixed $M$.
-
-Being the polynomial corresponding to the perceptron machine for the case where $|A| = |B| = |C| = n$ means precisely that 
-
-$$
-a > c \wedge b > c \implies P_n(a, b, c) \geq 0; \neg (a > c \wedge b > c) \implies P_n(a, b, c) < 0; 
-$$
-
-for all $a, b, c \in \{0, 1, ..., n\}$. This implies that each $P_1, P_2, ... \neq 0$. Now, divide each polynomial by the root-sum-square of its coefficients, so that if we interpret the coefficients of each $P_n$ as a point in a high-dimensional space, the point falls on the unit sphere in that space. Since the unit sphere is compact, there exists a limit point, which we write as $P(a, b, c)$.
-
-By the limit construction, we have
-
-$$
-\forall a, b, c \in \N, \quad a > c \wedge b > c \implies P(a, b, c) \geq 0; \neg (a > c \wedge b > c) \implies P(a, b, c) \leq 0; 
-$$
-
-If we color the points $\N^3$ with black for $P < 0$ and white for $P \geq 0$, then we can see the dusty outlines of a pyramid. We can construct a solid pyramid by zooming.
-
-Let $M'$ be the order of $P$, then we can "zoom out" by taking the [projective limit](https://en.wikipedia.org/wiki/Homogeneous_function) $Q(a, b, c) := \lim_{t \to \infty} t^{-M'} P(ta, tb, tc)$. This $Q$ is a homogeneous polynomial, and by continuity,
-
-$$
-\forall a, b, c \geq 0, \quad a > c \wedge b > c \implies P(a, b, c) \geq 0; a < c \vee b < c \implies P(a, b, c) \leq 0; 
-$$
-
-This implies that $P$ is identically zero on the "creased curve" $\{ a, b, c \geq 0, a = c \vee b = c\}$ in the projective plane, which is not an algebraic curve, therefore it is identically zero, contradiction.
-
-:::
-
-::: {#thm-connectedness-order}
-## Theorem 5.1
-
-The connectedness function has order $\Omega(|R|^{1/3})$.
-
-:::
-
-::: {.proof}
-
-If we have a mask perceptron machine that can solve the connectedness problem, then it can be repurposed[^the-collapsing-theorem] to solve the one-in-a-box problem of the following kind:
-
-![Figure 5.2](figure/perceptron_fig_5_2.png)
-
-In the picture, the rectangle $R$ has width $4m^2$ and height $2m+1$. We fill in all the odd-numbered rows, and use the machine to solve the one-in-a-box problem for the even-numbered rows. By @thm-one-in-a-box, the machine has order $\geq m = \Omega(|R|^{1/3})$.
-
-[^the-collapsing-theorem]: Repurposing one machine to solve another problem is a common trick in computational complexity, called "[reduction](https://en.wikipedia.org/wiki/Reduction_(complexity))". For perceptron machines, they called it "Theorem 5.4.1: The Collapsing Theorem".
-
-:::
-
-More generally, the only locally conjunctive topological invariant is the Euler number $E$ (Theorem 5.9). That is, if $\psi$ is a boolean function, and it depends only on the topology of the input figure, and its order is upper-bounded by some number $k$ that does not grow even as $R$ grows into a larger and larger rectangle, then $\psi$ is of form $f \circ E$, for some function $f: \N \to 2$.
-
-The Euler number itself is $E(X) = \sum_{i \in R} x_i - \sum_{i,j \in R} x_ix_j + \sum_{i,j,k, l  \in R} x_ix_jx_kx_l$, where the $i,j\in R$ ranges only over adjacent points, and $i,j,k, l  \in R$ ranges only over quadruples that form a square. Thus the Euler number itself has order $4$ (Theorem 5.8.1).
-
-Chapters 6--9 continue in the same style, but moves to the case where the input space is made of one or two copies of the infinite line $\Z$, or the infinite plane $\Z^2$, and the predicate to recognize is still translation-invariant. In order to avoid blowing up the perceptron machine with infinities, they restricted to the case where the input figure is of finite size, meaning that $\sum_i x_i$ is finite.
-
-Chapter 6 develops the idea of "spectra" of images. For example, the following picture shows that if we were to design a perceptron machine using only masks of size up to 2, and translation-invariant weights, then it cannot possibly distinguish between the two tetris-like pieces, because both figures contain exactly 4 instances of single-square, 1 instance of two squares side by side, and so on.
-
-![page 100](figure/perceptron_chap_6.png)
-
-Sections 6.1--6.5 of the chapter studies the same idea for masks of size up to 4. For example, Section 6.4 shows that "$X$ is the perimeter of a complete circle" is of order $4$.
-
-Section 6.6 claims that "recognizing figures in context" is generally not locally conjunctive, although they gave only two examples. Specifically, they showed that the predicate "$X$ is a horizontal line across the rectangle" is order 2, the predicate "$X$$ contains one horizontal line across plane" is not locally conjunctive. The same is true for the case with "a hollow square" instead of "a horizontal line".
-
-Chapter 7 uses the "stratification" construction to explicitly demonstrate that several binocular predicates are of finite order, but requires exponentially growing weights. It is essentially the same idea as [Gödel numbering](https://en.wikipedia.org/wiki/G%C3%B6del_numbering). A single illustrative example suffices to demonstrate the general point.
-
-::: {#exm-line-symmetry}
-
-Given a line $\Z$, how to construct a perceptron machine that detects that input figure is symmetric?
-
-Suppose we know for certain that the input figure has leftmost point $m$ and rightmost point $n$, then we can test for symmetry by computing the value of:
-
-$$
-f_{m, n}(x) := \sum_{i = 0}^{n-m} x_{m+i}(x_{n-i} - 1)
-$$
-
-We have that $f_{m, n}(x) = 0$ if the figure is symmetric, and $f_{m, n}(x) \leq -1$ otherwise.
-
-Now we define the entire perceptron machine by $\sum_{m \leq n} M_{n - m} x_m x_n (f_{m, n}(x) - 1/2)$. If the sequence of $M_0, M_1, ...$ grows as $(d!)^2$ roughly [^exm-line-symmetry-factorial-growth], then the largest bracket $(m, n)$ would "veto" every smaller bracket contained within, and so the entire perceptron machine is effectively first testing for the smallest interval containing the figure, before testing the symmetry within that interval.
-
-[^exm-line-symmetry-factorial-growth]:
-    Expanding term by term, we have $|(f_{m, n}(x) - 1/2)| \leq 2(n-m) + \frac 12$. Therefore, in order for $M_d$ to "veto" every other bracket within, we need
-
-    $$
-    M_d \frac 12 > \sum_{d' = 1}^{d-1} \lrb{M_{d'}(\frac 12 + 2d')(d-d' + 1)}
-    $$
-
-    Here $d$ should be read as "distance between two ends of a bracket".
-
-    To bound the growth rate, we bound the recurrence relation $M_d = \sum_{d' = 1}^{d-1} \lrb{M_{d'}(4d' + 1)(d-d' + 1)}$. The sum on the right is bounded by
-
-    $$
-    \sum_{d' = 1}^{d-1} \lrb{M_{d'}(4d' + 1)(d-d' + 1)} \in \Theta{\lrs{
-        \sum_{d' = 1}^{d-1} \lrb{M_{d'}d'},
-        d^2\sum_{d' = 1}^{d-1} \lrb{M_{d'}}}}
-    $$
-
-    The lower bound implies $M_d = \Omega((d!)^2 \times d^{-1})$ and upper bound implies $M_d = O((d!)^2 \times (d+1)^2)$.
-
-:::
-
-They made similar constructions for perceptron machines that decide whether two infinite lines or planes are translates of each other, whether two planes are translation and approximate dilations of each other, and whether a line or a plane is the translation of a fixed figure.
-
-Chapter 8 studies diameter-limited perceptron machines, meaning that not only are the hidden perceptrons assumed to be masks of bounded size, those masks are assumed to be contained in a circle of radius $M$ for some finite $M$. It is intended to be a formalization of the intuition that the perceptron machines should model a real pair of eyes scanning a plane, and each retina is a circular disk with finite radius. No results in chapter 8 were used further in the book, and they resemble the case of finite-order perceptron machines, so we do not discuss the results in detail.
-
-Chapter 9 shows that the connectedness problem is easy to solve using small serial programs, a contrast to the case of perceptron machines. They designed a robot that moves around the plane, and can solve the connectedness problem, with a memory size of just two. Namely, it only need to store up to two locations $(x, y), (x', y')$ in its memory during its operation, and it eventually halts in one of three states "empty", "connected", and "disconnected". They then described a few other more exotic computational models. The whole thing is in the same style of solving interesting puzzles in computational complexity, similar to [@minskyComputationFiniteInfinite1967]. The overarching goal is to demonstrate that connectedness is "inherently serial".
-
-Whereas in the construction @exm-line-symmetry, we saw coefficients growing exponentially on an infinite plane, chapter 10 finitizes that this.
-
-:::{#exm-parity-order}
-## Theorem 10.1
-
-Suppose we have a perceptron machine that tests for parity, then by @thm-parity-order, it must have order $|R|$. As in the construction given in the proof, we use the group invariance theorem to obtain a group-symmetric machine with form $\theta(\sum_{i=0}^{|R|}\binom{|X|}{i} b_i)$, where $b_0, b_1, ..., b_{|R|}$ are real numbers. Then, assuming the machine is "reliable", we can prove that $(-1)^{M} b_{M+1 \geq 2^{M}$ for any $M \in \{0, 1, \cdots, |R|-1\}$.
-
-Since the group-symmetric construction can only average out the most extreme values, this implies that before the group-symmetric construction, our perceptron machine had even more extreme coefficients.
-
-A "reliable" machine is a [support vector machine](https://en.wikipedia.org/wiki/Support_vector_machine) with margin $\geq 1/2$. That is, it is a machine such that 
-$$
-\sum_{i=0}^{|R|}\binom{|X|}{i} b_i \begin{cases}
-\geq 1 & \text{ if $|X|$ is odd}
-\leq 0 & \text{ if $|X|$ is even}
-\end{cases}
-$$
-
-:::
-
-::: {.proof}
-
-Define $A_n = \sum_{i=0}^n \binom{n}{i}b_i$. Since the machine is reliable, we have that $(-1)^{n}(A_{n+1} - A_n) \geq 1$ for each $n = 0, 1, ..., |R|-1$. Simplifying the binomial coefficients, we have $A_{n+1} - A_n = \sum_i \binom{n}{i} b_{i+1}$. Note that we use the convenient convention that $\binom{x}{y} = 0$ if $x < y$.
-
-Now fix any $M \in \{0, 1, \cdots, |R|-1\}$, and evaluate the following inequality:
-
-$$
-2^{M} = \sum_n \binom{M}{n} \cdot 1 \leq \sum_n \binom{M}{n} (-1)^{n}(A_{n+1} - A_n)
-$$
-
-By manipulating the binomial coefficients, the right side simplifies to $(-1)^M b_{M+1}$.
-
-:::
-
-Section 10.2 and 10.3 constructs two pathological examples. By restricting the shapes of hidden perceptron masks, they proved that certain predicates required superexponential weights. Section 10.4 purports to extend the group invariance theorem to the infinite case.[^theorem-10-4-1] None of these are used elsewhere in the book. They are virtuoso performances. However, they interpreted this as a serious problem:
-
-> A proof, in Chapter 10, that coefficients can grow much faster than exponentially with $|R|$ has serious consequences both practically and conceptually: the use of more memory capacity to store the coefficients than to list all the figures strains the idea that the machine is making some kind of abstraction
-
-[^theorem-10-4-1]: They purported to show in Theorem 10.4.1 that, if the weights are bounded, then the group invariance theorem applies again, but the proof is false, with a counterexample being $\sum_{n \in \Z}e^{-n^2}x_n - e^{-n^4}x_nx_{n+1}$. The theorem *might* still be correct with another proof, but I cannot find one.
-
-### Perceptron learning theory
-
-In Chapter 11, they *finally* start discussing perceptron learning, which is of a very restrictive form.
-
-::: {#def-perceptron-learning}
-## Perceptron learning
-
-To train a perceptron machine is to *fix* its hidden perceptrons, and adjust the weights and threshold of *only* the single output perceptron by the perceptron learning rule. For this chapter, it is cleaner to change the convention, so that each perceptron outputs $-1, +1$, instead of $0, 1$.
-
-Since only the output perceptron is adapted, it suffices to discuss the case where there are *no* hidden perceptrons, and we only need to adapt the weights of a single perceptron. That is, we have a dataset $D$, and we sample some $(x, y) \in D$, and verify that $y = \theta(\braket{w, x})$.
-
-If this is true for all $(x, y) \in D$, then the perceptron learning has converged. Otherwise, we update $w$ by $w \leftarrow w + \alpha y x$, where $\alpha > 0$ is the learning rate.
-
-:::
-
-::: {#def-perceptron-learning}
-## Perceptron learning theorem
-
-Let $D$ be a dataset, with radius $R = \max_{(x, y) \in D} \|x\|$. If there exists some unit $w^*$ such that $\gamma = \min_{(x, y) \in D} y\braket{w^*, x}$, then the perceptron learning algorithm converges after making at most $(R/\gamma)^2$ updates.
-
-:::
-
-::: {.proof}
-
-By linearity of the learning rule, we can deal only with the case where $\alpha = 1$.
-
-By multiplying each $x$ with its $y$, we can deal only with the case where all $y = +1$. 
-
-By rotating and scaling the space, we can deal only with the case where $w^* = (1, 0, \cdots, 0)$, and $\gamma = 1$.
-
-Now, each weight update increases the first coordinate of $w$ by at least $1$, so after $n$ updates, $\|w\| \geq n$. However, each weight update of $w \leftarrow w + x$ uses a vector $x$ that is pointing at a direction perpendicular to $w$, or worse, pointing against $w$. Therefore, by Pythagorean theorem, $\|w\|^2$ increases by at most $\|x\|^2 \leq R^2$. So after $n$ updates, $\|w\|^2 \leq nR^2$.
-
-Combining the two results we have $n \leq R^2$.
-
-:::
-
-Modifying the proof slightly, and applying the conclusion of @exm-parity-order, we find that starting with the zero weight vector, it takes at least $2^{|R|}/|R|$ steps steps to learn the parity function.
-
-They then gestured that gradient descent is just a somewhat more efficient perceptron learning rule, and cannot escape local optima. No "local learning rule" can escape local optima, unlike symbolic programs that are provably capable of finding global optima.
-
-If the dataset is not linearly separable, then the perceptron weight would not converge. However, the perceptron cycling theorem shows that if the dataset is finite, then the perceptron weight would still be trapped within a large but finite disk, no matter how the dataset is sampled.
-
-Chapter 12 sketches other algorithms for learning (approximate) binary classification algorithms, including naive Bayes, nearest neighbor, ISODATA, a hack used by Arthur Samuel's checker program, etc. Section 12.6 and 12.7 study the time-space tradeoff using variations on a toy problem: given a subset of $\{0, 1\}^n$, decide whether a $n$-bit word is in it or not.
-
-## What really killed off neural networks?
-
-
+> By the mid-1970s, Minsky and his colleagues (notably Seymour Papert) began to take actions designed to root out neural networks and ensure large and, in their view, richly deserved funding for AI research by getting the money currently being "wasted" on neural networks, and more to boot, redirected. They did two things. First, Minsky and Papert began work on a manuscript designed to discredit neural network research. Second, they attended neural network and "bionics" conferences and presented their ever-growing body of mathematical results being compiled in their manuscript to what they later referred to as "the doleful responses" of members of their audiences.
+> 
+> At the heart of this effort was Minsky and Papert's growing manuscript, which they privately circulated for comments. The technical approach they took in the manuscript was based on a mathematical theorem discovered and proven some years earlier—ironically, by a strong supporter of Rosenblatt—that the perceptron was incapable of ever implementing the "exclusive-OR" [X-OR] logic function. What Minsky and Papert and their colleagues did was elaborate and bulk up this idea to book length by devising many variants of this theorem. Some, such as a theorem showing that single-layer perceptrons, of many varied types, cannot compute topological connectedness, are quite clever. To this technical fabric, they wove in what amounted to a personal attack on Rosenblatt. This was the early form of their crusade manifesto.
+> 
+> Later, on the strong and wise advice of colleagues, they expunged the vitriol. They didn't quite get it all, as a careful reading will show. They did a complete flip-flop, dedicating the book to Rosenblatt! As their colleagues sensed it would, this apparently "objective" evaluation of perceptrons had a much more powerful impact than the original manuscript with its unseemly personal attack would have. Of course, in reality, the whole thing was intended, from the outset, as a book-length damnation of Rosenblatt's work and many of its variants in particular, and, by implication, all other neural network research in general.
+> 
+> Minsky and Papert's book, Perceptrons, worked. The field of neural networks was discredited and destroyed. The book and the associated conference presentations created a new conventional wisdom at DARPA and almost all other research sponsorship organizations that some MIT professors have proven mathematically that neural networks cannot ever do anything interesting. The chilling effect of this episode on neural network research lasted almost twenty years.
 
 ## Cognitivism
 
@@ -838,245 +524,6 @@ The founding metaphor of the neural network camp was that intelligence is what t
 ### Tobermory
 
 The last 
-
-## The ridiculous backstory of backpropagation
-
-### Widrow
-
-Widrow and Hoff worked on multilayered perceptrons in early 1960s. What seemed ridiculous to me is that they trained a single-layered perceptron with essentially backpropagation with squared loss, then proceeded to *never invent backpropagation* after a year of trying to train a network with *two layers*.
-
-The Widrow--Hoff machine, which they called the ADALINE, is a function of type $\R^n \to \{0,1\}$. The function is defined by
-
-$$
-f(x) = \theta(w^T x + b)
-$$
-
-and here it is again, that dreaded Heaviside step-function that was the bane of every neural network before backpropagation. What was odd about this one is that ADALINE was *trained* by gradient descent with the squared loss function $(w^T x + b - y)^2$, which is *continuous*, not discrete! It is almost inconceivable nowadays, but they did not use a continuous activation function, but tried every other trick *except* that. You can read the [MADALINE I rule](https://en.wikipedia.org/wiki/ADALINE#MADALINE), which is both complicated, confusing, and did not actually work.
-
-Instead, they went on and on trying to train a two-layered ADALINE, which of course cannot be trained by gradient descent, because the hidden layer has a Heaviside step function! It was so hard that they gave up. Widrow never touched neural networks again until 1980s, after he heard about backpropagation.
-
-> The Madaline had an adaptive first layer and a fixed-logic second layer. What Rosenblatt had was a fixed-logic mst layer and an adaptive-logic second layer or output layer. Now, it is easy to adapt on output layer. But it's very difficult to adapt a hidden layer. ... We could adapt an adaptive mst layer with a fixed second layer as long as we knew what the second layer was. But we never succeeded in developing an algorithm for adapting both layers, so that the second layer is not fixed and both layers are adaptive. It wasn't that we didn't try. I mean we would have given our eye teeth to come up with something like backprop.
-> 
-> Backprop would not work with the kind of neurons that we were using because the neurons we were using all had quantizers that were sharp. In order to make backprop work, you have to have sigmoids; you have to have a smooth nonlinearity, a differentiable nonlinearity. Otherwise, no go. And no one knew anything about it at that time. This was long before Paul Werbos. **Backprop to me is almost miraculous**.
-
-If this were an individual case, then I could have dismissed it as Widrow being misled by his background. Before entering a PhD program Widrow took an internship at the military [@widrowOralHistoryBernard1997]:
-
-> ... the sky was divided up into a grid, with one mile by one mile regions, and all the computer sensed was that there was a target within that one mile by one mile square. ... The radar pulses were transmitted periodically, and then periodically you got samples of the flight path. Say you take a piece of graph paper and draw and nice, smooth flight path for an airplane, and then at uniform points in time put a mark on the actual path based on the radar sample. If you don't show anybody that nice, smooth line but only the sequence of grid squares that the airplane was in, one could still reconstruct the smooth track.
-
-The problem of reconstructing a smooth flight path from discretized radar signals got him interested in quantization, and he did his PhD thesis (1954) in the statistical theory of quantization noise. In the interview 43 years later, he called it "the best piece of work I ever did in my whole life". He is still the world expert on quantization noise, and wrote an entire textbook on quantization noise [@widrowQuantizationNoiseRoundoff2008].
-
-So regarding this background, one might be tempted to say that Widrow was misled by his infatuation with quantization, and attempted to use quantized neural networks. However, this does not explain why all the *other* pioneers went down the same wrong path.
-
-### McCulloch and Pitts {#sec-mcculloch-pitts}
-
-In the famous paper [@mccullochLogicalCalculusIdeas1943], McCulloch and Pitts proposed that
-
-> Because of the “all-or-none” character of nervous activity, neural events and the relations among them can be treated by means of propositional logic. It is found that the behavior of every net can be described in these terms, with the addition of more complicated logical means for nets containing circles; and that for any logical expression satisfying certain conditions, one can find a net behaving in the fashion it describes.
-
-The McCulloch and Pitts paper is difficult to read, and is rooted in early 20th century mathematical logic. If you have seen [*Principia Mathematica*](https://en.wikipedia.org/wiki/Principia_Mathematica), you would notice that the McCulloch and Pitts paper resembles it in its abstruse notation. This is not coincidental, as the paper directly cites *Principia Mathematica*.
-
-::: { layout-ncol=2}
-![The infamous proof of 1+1=2 in Principia Mathematica](figure/principia_mathematica.png)
-
-![The same notation is used by McCulloch and Pitts](figure/principia_mathematica_McCulloch_and_Pitts.png)
-:::
-
-The McCulloch and Pitts paper, like the *Perceptron* book, is something often cited but rarely read. The best introduction to the McCulloch and Pitts neural network is still [@minskyComputationFiniteInfinite1967, Chapter 3], which explicitly designs, neuron by neuron, threshold by threshold, how to construct neural networks that perform various tasks, such as simulating arbitrary Turing machines, process signals, perform additions, etc.
-
-::: { layout-ncol=2}
-![](figure/minsky_1976_finite_state_machine.png)
-
-![](figure/minsky_1976_serial_binary_addition_network.png)
-:::
-
-### Werbos
-
-After reviewing the story of multiple people, my personal opinion is that Paul Werbos most deserves the title of "originator of backpropagation". In 1993, Paul Werbos gave an interview, where he described the backstory of his invention of backpropagation [@rosenfeldTalkingNetsOral2000, Chapter 15]. I will let him speak, only interjecting with brief comments.
-
-Before entering Harvard, he tried implementing Hebbian learning, but noticed it wouldn't work. 
-
-> It was obvious to me from a statistical point of view that Hebbian learning was going to be measuring correlation coefficients, and for multivariate problems it would not work. I never gave the talk. I said, "Now I'm going to figure out something with the same flavor that does work."
->
-> \[Understanding human learning\] will help us understand the human mind; it will help human beings understand themselves. Therefore, they will make better political decisions, and better political decisions are vital for the future of humanity.
->
-> Minsky was one of my major influences. Well, Minsky and Hebb and Asimov and Freud.
-
-Sometime before 1968, he was inspired to do backpropagation from reading Freud.
-
-> I talk in there about the concept of translating Freud into mathematics. This is what took me to backpropagation, so the basic ideas that took me to backpropagation were in this journal article in '68 [@werbosElementsIntelligence1968]. I talked a lot about what was wrong with the existing \[two state\] McCulloch-Pitts neuron model, and how it was only "1" and "0." I wanted to make that neuron probabilistic. I was going to apply Freudian notions to an upper-level, associative drive reinforcement system. When 
-
-For his masters (1969), he majored in mathematical physics, and minored in decision and control. During his PhD at Harvard, he had to take some compulsory courses, which he didn't want to. To salvage the situation, he took computer courses which would provide him with some computer hours, a scarce resource at the time. I would guess the following event happened early 1971.
-
-> Initially, I was going to do something on quantum physics. I learned something about partial differential equations, but not enough. I couldn't produce a really useful product at the end of $x$ number of months.
-> 
-> So I went back to the committee, and I said, "Gee, I can't do that, **but I have this little method for adapting multilayer perceptrons. It's really pretty trivial.** It's just a by-product of this model of intelligence I developed. And I'd like to do it for my paper for this computer course."
-> 
-> \[Larry\] Ho's position was, "I understand you had this idea, and we were kind of open-minded. But look, at this point, you've worked in this course for three months, admittedly on something else. I'm sorry, you're just going to have to take an incomplete in the course."
-> 
-> And I said, "You mean I can't do it?"
-> 
-> "No, no, you'll have to take an incomplete because, basically, the first thing didn't work. We're very skeptical this new thing is going to work."
-> 
-> "But look, the mathematics is straightforward."
-> 
-> "Yeah, yeah, but you know, **we're not convinced it's so straightforward**. You've got to prove some theorems first."
-> 
-> So they wouldn't let me do it. One of the reasons that is amusing to me is that there are now some people who are saying backprop was invented by Bryson and Ho. They don't realize it was the same Larry Ho, who was on my committee and who said this wasn't going to work.
-
-I am not sure if this is sarcastic or not. It reminds me of the "summer vision project" [@papertSummerVisionProject1966] that expected some undergraduate students to construct "a significant part of a visual system" in a single summer.
-
-> By the time my orals came around, it was clear to me that the nature of reality is a hard problem, that I'd better work on that one later and finish my Ph.D. thesis on something small -- something I can finish by the end of a few years, like a complete mathematical model of human intelligence.
-
-The oral was amusing, and touched on the still-hot issue of [recent human evolution](https://en.wikipedia.org/wiki/Recent_human_evolution).
-
-> ... I made a statement that there might be parameters affecting utility functions in the brain, parameters that vary from person to person. You could actually get a significant amount of adaptation in ten generations' time. I was speculating that maybe the rise and fall of human civilizations, as per Toynbee and Spengler, might correlate with these kinds of things. The political scientist on the committee, [Karl Deutsch](https://en.wikipedia.org/wiki/Karl_Deutsch), raised his hand. ... His book, *The Nerves of Government*, which compares governments to neural networks, is one of the classic, accepted, authoritative books in political science.
-> 
-> He raised his hand and he said, "Wait a minute, you can't get significant genetic change in ten generations. That cannot be a factor in the rise and fall of civilizations. That's crazy."
-> 
-> Next to him was a mathematical biologist by the name of [Bossert](https://en.wikipedia.org/wiki/William_H._Bossert), who was one of the world's authorities on population biology. He raised his hand and said, "What do you mean? In our experiments, we get it in seven generations. This guy is understating it. Let me show you the experiments."
-> 
-> And Deutsch said, "What do you mean, it's common knowledge? All of our political theories are based on the assumption this cannot happen." And Bossert said, "Well, it happens. Here's the data."
-> 
-> ... I passed the orals having said about two sentences and not having discussed models of intelligence.
-
-It turns out Werbos interpreted backpropagation as the mathematical interpretation of Freudian psychic energy flow. The thesis committee was not amused.
-
-> But the backpropagation was not used to adapt a supervised learning system; it was to translate Freud's ideas into mathematics, to implement a flow of what Freud called "psychic energy" through the system. I translated that into derivative equations, and I had an adaptive critic backpropagated to a critic, the whole thing, in '71 or '72. ... The thesis committee said, "We were skeptical before, but this is just unacceptable ... You have to find a patron. You must find a patron anyway to get a Ph.D. That's the way Ph.D.s work.
-
-The committee gave him three acceptable patrons. He first went to Steve Grossberg.
-
-> he said, 'Well, you're going to have to sit down. Academia is a tough business, and you have to develop a tough stomach to survive in it. I'm sure you can pull through in the end, but you're going to have to do some adaptation. So I want you to sit down and hold your stomach, maybe have an antacid. The bottom line is, this stuff you've done, it's already been done before. Or else it's wrong. I'm not sure which of the two, but I know it's one of the two."
-
-Thanks, Grossberg, for using the law of excluded middle to crush Werbos' dream.
-
-He then went to Marvin Minsky, who gave us some new clues about why backpropagation took so long to discover: "everybody knows a neuron is a 1-0 spike generator"!
-
-> "I've got a way now to adapt multilayer perceptrons, and the key is that they're not Heaviside functions; they are differentiable. And I know that action potentials, nerve spikes, are 1 or 0, as in McCulloch-Pitts neurons, but here in this book that I had for my first course in neurophysiology are some actual tracings. If you look at these tracings in Rosenblith, they show volleys of spikes, and volleys are the unit of analysis. This is an argument for treating this activity as differentiable, at least as piecewise linear. If you look at that, I can show you how to differentiate through it."
-> 
-> Minsky basically said, "Look, **everybody knows a neuron is a 1-0 spike generator. That is the official model from the biologists**. Now, you and I are not biologists. If you and I come out and say the biologists are wrong, and this thing is not producing 1s and 0s, nobody is going to believe us. It's totally crazy. I can't get involved in anything like this."
-> 
-> He was probably right, I guess, but he was clearly very worried about his reputation and his credibility in his community.
-
-Out of curiosity, I looked up the "Rosenblith" book [@rosenblithSensoryCommunicationContributions2012], and indeed there were a few tracings that show continuously varying neural activation.
-
-::: {#fig-rosenblith layout-ncol=2}
-
-![Page 146 of the book. *Mechanisms of gustatory and olfactory receptor stimulation*, Figure 2.](figure/no_bg_beidler_2.png)
-
-![Page 366 of the book. *The physiological basis of wavelength discrimination in the eye of the honeybee*, Figure 4.](figure/no_bg_goldsmith_4.png)
-:::
-
-Then Minsky dunked on reinforcement learning as well, because he had an unpublished "jitters machine" that failed to optimize its reward. Presumably the name "jitters machine" refers to how it would jitter in place, not able to move towards the goal.
-
-> Minsky also said, "You know, I used to believe in all this kind of stuff with reinforcement learning because I knew reinforcement learning would work. I knew how to implement it. I had a nice guy named Oliver Selfridge who came in and acted as my patron and gave me permission to do it. We coauthored a paper, but it was really my idea, and he was just acting as patron on the Jitters machine. I'll hand you the tech report, which we have deliberately never published."
-> 
-> It was his bad experience with the Jitters machine that turned him off on reinforcement learning and all the neural net ideas. It just didn't work. I later looked at that paper ... He had a system that was highly multivariate with a single reinforcement signal. The system can't learn efficiently with that. At any rate, he was totally turned off.
-
-The brief description of the unpublished jitters machine was not making sense to me, so I looked around the literature. It was *so* unpublished that I found only two more references in the entire literature [@werbosApplicationsAdvancesNonlinear1982; @werbosBuildingUnderstandingAdaptive1987], both by Werbos. [@werbosBuildingUnderstandingAdaptive1987] described it as:
-
-> There are also some technical reasons to expect better results with the new approach. Almost all of the old perceptron work was based on the McCulloch-Pitts model of the neuron, which was both discontinuous and nondifferentiable. It was felt, in the 1950's, that the output of a brain cell had to be 1 or 0, because the output consisted of sharp discrete "spikes." More recent work in neurology has shown that higher brain cells output "bursts" or "volleys" of spikes, and that the strength of a volley may vary continuously in intensity. This suggests the CLU model to be discussed in the Appendix. In any event, to exploit basic numerical methods, one must use differentiable processing units. Minsky once experimented with a "jitters" machine, which estimated one derivative per time cycle by making brute-force changes in selected variables; however, the methods to be discussed in the Appendix yield derivatives of all variables and parameters in one major time cycle and thereby multiply efficiency in proportion to the number of parameters $(N)$, which may be huge.
-
-This makes things perfectly clear. Minsky's jitters machine was an RL agent with multiple continuously adjustable parameters running a very primitive form of policy gradient. During every episode, it would would estimate $\partial_{\theta_i} R(\theta)$ using finite difference, but since it used finite difference, they could only estimate the partial derivative for *only one* of the parameters $\theta_i$! No wonder it never managed to learn. It is almost comical how much they failed to just use gradient descent. It sometimes feels as if did everything to *avoid* just taking the gradient. In the case of Minsky, he made it very clear, in the new additions to the 1988 version of *Perceptrons*, that he did not believe in gradient descent, period. But what explains the gradient-phobia of all the others...?
-
-Anyway, back to the interview. Werbos went to [Jerome Lettvin](https://en.wikipedia.org/wiki/Jerome_Lettvin), the neuroscientist famous for *What the Frog's Eye Tells the Frog's Brain*. Turns out he was a proto-[eliminativist](https://en.wikipedia.org/wiki/Eliminativism). While I'm an eliminativist too, Werbos was a Freudian, which can only collide badly with eliminativism.
-
-> "Oh yeah, well, you're saying that there's motive and purpose in the human brain." He said, "That 's not a good way to look at brains. I've been telling people, 'You cannot take an anthropomorphic view of the human brain.' In fact, people have screwed up the frog because they're taking bachtriomorphic views of the frog. If you really want to understand the frog, you must learn to be objective and scientific."
-
-Without patrons, he faced the committee again.
-
-> I tried to simplify it. I said, "Look, I'll pull out the backprop part and the multilayer perceptron part." I wrote a paper that was just that - that was, I felt, childishly obvious. I didn't even use a sigmoid \[non-linearity\]. I used piecewise linear. I could really rationalize that to the point where it looked obvious. I handed that to my thesis committee. I had really worked hard to write it up. They said, "Look, this will work, **but this is too trivial** and simple to be worthy of a Harvard Ph.D. thesis."
-
-Oh, now it's too trivial?? I swear the backstory of backpropagation gets more and more ridiculous by the day.
-
-> ... they had discontinued support because they were not interested, so I had no money. ... Not even money to buy food. A generous guy, who was sort of a Seventh Day Adventist and a Harvard Ph.D. candidate in ethnobotany, had a slum apartment that rented for about $40 a month in Roxbury in the ghetto. He let me share a room in his suite, in his suite with the plaster falling off, and didn't ask for rent in advance. I had no money at that time for food. There was a period of three months when I was living there in the slums. To conserve the little bit of money I had, I remember eating soybean soup and chicken neck soup. I remember getting the shakes from inadequate nutrition.
-> 
-> Finally, they said, "Look, you know, we're not going to allow this." There was this meeting where we sat around the table. The chairman of the applied math department at that time was a numerical analyst D. G. M. Anderson. He said, "We can't even allow you to stay as a student unless you do something. You've got to come up with a thesis, and it can't be in this area."
-
-Karl Deutsch, who believed in Werbos, sponsored his PhD thesis on a "respectable" problem: fitting an ARMA model to a time-series data of political regimes, and use it to forecast nationalism and political assimilation. [Box–Jenkins method](https://en.wikipedia.org/wiki/Box%E2%80%93Jenkins_method) ran too slowly, so Werbos programmed in the backpropagation which worked, and he finally obtained his PhD in 1974. This is the original reference point for modern neural network backpropagation algorithm.
-
-> Deutsch said, "You 're saying we need an application to believe this stuff? I have an application that we could believe. I have apolitical forecasting problem. I have this model, this theory of nationalism and social communications? What causes war and peace between nations? I have used up ten graduate students who've tried to implement this model on real-world data I've collected, and they've never been able to make it work. Now, do you think your model of intelligence could solve this problem and help us predict war and peace?"
->
-> The first application of backpropagation in the world in a generalized sense was a command that was put into the [TSP](https://en.wikipedia.org/wiki/TSP_(econometrics_software)) at MIT , available to the whole MIT community as part of their standard software. It was published as part of MIT 's report to the DOD [the Department of Defense] and part of the DOD's report to the world . It was part of the computer manual, so the first publication of backpropagation was in a computer manual from MIT for a working command for people to use in statistical analysis. I was a second author of that manual. It was Brode, Werbos, and Dunn.
->
-> ... Once I started doing software for them, they discovered I was pretty good at it. Once I had put backpropagation into a TSP command, they offered me a full-time job at the Harvard Cambridge Project, so I did the Ph.D. thesis while having a full-time job. While I was doing these things at MIT, I remember going to one party. ... one of the people there said, 'We have heard through the grapevine that somebody has developed this thing called continuous feedback that allows you to calculate all the derivatives in a single pass."
-
-But the saga is not over. after the Ph.D., Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.
-
-> I found out that DARPA had spent a lot of effort building a worldwide conflict forecasting model for the Joint Chiefs of Staff that was used in the long-range strategy division of the Joint Chiefs. ... I wound up sending a couple of graduate students to create a really good database of Latin America. I said, "You want variance, high variance. Something hard to predict." I thought conflict in Latin America would be the most beautiful case. I figured there were enough cultural homogeneities that it would be a single stochastic process, but with lots and lots of variance in that process. So we got truly annual data going back, I don't know, twenty or thirty years for all the countries in Latin America and then reestimated the Joint Chief's model on it. It had an r2 of about .0016 at forecasting conflict. By jiggling and jiggling we could raise it to about .05. It could predict GNP and economic things decently. Conflict prediction we couldn't improve, though; it was hopeless.
-> 
-> DARPA wasn't happy when I published that result. They wanted me to do something real and practical and useful for the United States. This was useful, but it was an exposé. They didn't like that. Therefore, the report, which included backpropagation in detail and other advanced methods, was not even entered into DOCSUB. Every time I tried to enter it into DOCSUB, somebody jiggled influence to say, "No, no, no, we can't publish this. This is too hot."
-> 
-> It was published in [@werbosEmpiricalTestNew1978] anyway because they couldn't block the journals, but it didn't include the appendices. So that paper in 1978 said, "We've got this great thing called dynamic feedback, which lets you estimate these things. It calculates derivatives in a single swoop, and you can use it for lots of things, like AI." ... **the appendix on how to do it was not there because of page limits** ... At that point, DARPA was no longer happy.
-
-So he went to the Department of Energy and used backpropagation to make another model, and managed to get silenced again, unable to publish that report until 1988 [@werbosGeneralizationBackpropagationApplication1988].
-
-> They had a million-dollar contract at Oak Ridge National Laboratory to study that model. They wanted me for several things. One, they wanted me to be a translator between engineering and economics. Two, they wanted a critique. They wanted exposés. They wanted me to rip apart the models of the Department of Energy in a very scientific, objective way that didn't look like I was trying to rip them apart but was anyway. That's exactly what they wanted to hire me for, and I didn't really know that was the motive. These particular people didn't like modeling very much.
-> 
-> So at some point, they wanted sensitivity analysis. And I said, "You know, I know a little bit about calculating derivatives." ... I applied it to a natural gas model at the Department of Energy. In the course of applying it, I did indeed discover dirt. They didn't want me to publish it because it was too politically sensitive. It was a real-world application, but the problem was that it was too real. At DOE, you know, you don't have First Amendment rights. That's one of the terrible things somebody's got to fix in this country. The reality of the First Amendment has deteriorated. Nobody's breaking the law, but the spirit of the First Amendment has decayed too far for science. At any rate, they finally gave me permission to publish it around '86 and '87. I sent it to the journal Neural Nets - that is, how you do simultaneous recurrent nets and time-lag recurrent nets together. Then the editorial process messed around with it, made the paper perhaps worse, and it finally got published in '88, which makes me very sad because now I gotta worry about, 'Well, gee, didn't Pineda do this in '88?
-
-As a side note, one might have felt that Werbos' "turning Freud into mathematics" seem rather strange. This feeling is completely justified. I found a recent paper by him [@werbosIntelligenceBrainTheory2009] with this crackpot illustration:
-
-![The text at the end of the arrow says "quantum and collective intelligence (Jung, Dao, Atman...)?"](figure/werbos_2009.jpg)
-
-### Rumelhart and Sejnowski
-
-Rumelhart rediscovered backpropagation around 1982 and immediately set about publishing and telling others about it. Some still resisted, but others immediately grasped it and set about using it. Among them were Widrow, as we saw previous, and Sejnowski. In the interview, he was rather unbothered by the priority dispute [@rosenfeldTalkingNetsOral2000, Chapter 12]:
-
-> as far as I know it's been discovered at least three times, maybe more. ... I had no idea that Paul Werbos had done work on it. ... There are other examples of work in the control literature in the '60s \[the [adjoint method](https://en.wikipedia.org/wiki/Adjoint_state_method)\]. ... it's just no one had really done anything with them. My view is that we not only discovered them, but we realized what we could do with them and did a lot of different things. I consider them independent discoveries, at least three and maybe more. \[Shun'ichi\] Amari, I think, suggests that he had another discovery, and you know, I believe that. You can look at his paper. He had, but he didn't do anything with it. I think that was in the late '60s. I don't feel any problem. You know, maybe we should have done better scholarship and searched out all of the precursors to it, but we didn't know there were any.
-
-In 1983, Rumelhart showed Sejnowski backpropagation, who immediately tried it, and found that it was much faster than Boltzmann machine. What a refreshing change from all those others who stubbornly refused to try it. [@rosenfeldTalkingNetsOral2000, Chapter 14]
-
-> ... I was still working on the Boltzmann machine and was beginning to do simulations using backprop. I discovered very rapidly that backprop was about an order of magnitude faster than anything you could do with the Boltzmann machine. And if you let it run longer, it was more accurate, so you could get better solutions.
-
-This was vitally important later, when Sejnowski used backpropagation to train [NETtalk](https://en.wikipedia.org/wiki/NETtalk_(artificial_neural_network)), a *huge* network with 20k parameters.[^nettalk-scaling] The model was a popular hit and appeared on prime-time television.[@sejnowskiDeepLearningRevolution2018, TODO page number]
-
-[^nettalk-scaling]: People told him that it had too many parameters and would hopelessly overfit, but the network just needed enough data and it generalized uncannily well.[@sejnowskiDeepLearningRevolution2018, TODO page number] It really seems like scaling skepticism is never going to leave.
-
-### Geoffrey Hinton
-
-The interview with Geoffrey Hinton is hilarious, mostly about how he *spent an entire year refusing to use backpropagation* despite Rumelhart's incessant prodding. Like the last section, this is mostly made of quotations from [@rosenfeldTalkingNetsOral2000, Chapter 16].
-
-After hearing about Hopfield networks and simulated annealing in 1982, he tried combining them, and discovered the Boltzmann learning algorithm in 1983, and published in 1985 [@TODO that paper].
-
-> I remember I had to give a talk, a sort of research seminar, at Carnegie Mellon in either February or March of '83 ... I wanted to talk about this simulated annealing in Hopfield nets, but I figured I had to have a learning algorithm. I was terrified that I didn't have a learning algorithm.
-> 
-> Then we got very excited because now there was this very simple local-learning rule. On paper it looked just great. I mean, you could take this great big network, and you could train up all the weights to do just the right thing, just with a simple local learning rule. It felt like we'd solved the problem. That must be how the brain works.
-> 
-> I guess if it hadn't been for computer simulations, I'd still believe that, but the problem was the noise. It was just a very, very slow learning rule. It got swamped by the noise because in the learning rule, you take the difference between two noisy variables, two sampled correlations, both of which have sampling noise. The noise in the difference is terrible.
-> 
-> I still think that's the nicest piece of theory I'll ever do. It worked out like a question in an exam where you put it all together and a beautiful answer pops out.
-
-And now, the hilarity we have been waiting for. When Rumelhart told him in 1982 about backpropagation,
-
-> I first of all explained to him why it wouldn't work, based on an argument in Rosenblatt's book, which showed that essentially it was an algorithm that couldn't break symmetry. ... the standard way of doing learning is to have random initial weights, or you could just put a little bit of noise in the learning rule ...
-> 
-> The next argument I gave him was that it would get stuck in local minima. There was no guarantee you'd find a global optimum. Since you're bound to get stuck in local minima, it wasn't really worth investigating.
-> 
-> Then I tried to use it to get a very obscure effect. I couldn't get this very obscure effect with it, so I lost interest in backpropagation. I managed to get this very obscure effect later with a Boltzmann machine. I'd realized that if you've got a net to learn something, and then you add noise to the weights by making it learn something else, it should be much faster at relearning what it had previously learned. You should get very fast relearning of stuff that it previously knew, as compared to the initial learning. We programmed a backpropagation net, and we tried to get this fast relearning. **It didn't give fast relearning, so I made one of these crazy inferences that people make -- which was, that backpropagation is not very interesting**.
-
-After one year of failing to get Boltzmann machines to train, he discovered that Boltzmann machines *also* got stuck in local minima. Desperate times call for desperate measures, and he finally resorted to gradient descent.
-
-> After initially getting them to work, I dedicated over a year to refining their performance. I experimented with various techniques, including weight decay, which helped in preventing large energy barriers. We attempted several other approaches, but none of them yielded satisfactory results. I distinctly recall a point where we observed that training a Boltzmann machine could model certain functions effectively, but prolonged training caused its performance to deteriorate, a phenomenon we referred to as "going sour." We couldn't initially comprehend why this was happening. I generated extensive reports, filling stacks of paper about three inches thick, as I couldn't believe that these networks would degrade as you acquired more knowledge.
-> 
-> It took me several weeks to realize the root of the problem. The learning algorithm operated under the assumption that it could reach thermal equilibrium. However, as the weights grew larger, the annealing process failed to achieve thermal equilibrium, trapping the system in local minima. Consequently, the learning algorithm started behaving incorrectly. This realization led us to introduce weight decay as a solution to prevent this issue.
-> 
-> **After investing over a year** in attempting to optimize these methods, I ultimately concluded that they were unlikely to deliver the desired results. In a moment of desperation, I considered revisiting \[backpropagation\]. 
-
-Then he asked the research group for volunteers. None of the ten students took up the offer (and thus giving up a place as the coauthor of the backpropagation paper??):
-
-> They'd all been thoroughly indoctrinated by then into Boltzmann machines. ... They all said, "You know, why would you want to program that?" We had all the arguments: It's assuming that neurons can send real numbers to each other; of course, they can only send bits to each other; you have to have stochastic binary neurons; these real-valued neurons are totally unrealistic. It's ridiculous." So they just refused to work on it, not even to write a program, so I had to do it myself.
-> 
-> I went off and I spent a weekend. I wrote a LISP program to do it. 
-
-Hinton almost had one last chance at giving up on backpropagation. 
-
-> I almost blew it because the first thing I tried it on was an 8-3-8 encoder; that is, you have eight input units, three hidden units, and eight output units. You want to turn on one of the input units and get the same output unit to be on. 
->
-> In a Boltzmann machine, since the units are binary, the states of the three hidden units have to be the eight different binary codes, so you know what the hidden units will look like when they've solved the problem. So I ran backpropagation on this problem and looked at the weights of the hidden units. They didn't have the right structure of weights. ... I thought, "Oh well, it turns out backpropagation's not that good after all." Then I looked at the error, and the error was zero. I was amazed.
-
-And so one year of excuses later, Hinton finally surrendered to backpropagation. They published the algorithm along with several examples, which became widely cited.
-
-> That was at the stage when we were just completing the PDP books, so we'd already agreed on what was going to be in the books. The final chapters were being edited. We decided we'd just slip in an extra chapter on backpropagation, so it was a late addition to the book. But I was always a bit disappointed. I mean, intellectually, backpropagation wasn't nearly as satisfying as Boltzmann machines. ... it didn't have the nice probabilistic interpretation.
 
 ## Triumph of the scale
 
