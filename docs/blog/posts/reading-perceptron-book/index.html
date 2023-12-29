@@ -8,8 +8,9 @@
 
 <meta name="author" content="Yuxi Liu">
 <meta name="dcterms.date" content="2023-12-21">
+<meta name="description" content="A long, hard, stare into the mythical neural network killer.">
 
-<title>Yuxi on the Wired - The Neural Network Winter</title>
+<title>Yuxi on the Wired - Reading Perceptrons</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,17 +87,17 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta property="og:title" content="Yuxi on the Wired - The Neural Network Winter">
-<meta property="og:description" content="">
-<meta property="og:image" content="https://yuxi-liu-wired.github.io/blog/posts/reading-perceptron-book/figure/perceptron_fig_0_2.png">
+<meta property="og:title" content="Yuxi on the Wired - Reading Perceptrons">
+<meta property="og:description" content="A long, hard, stare into the mythical neural network killer.">
+<meta property="og:image" content="https://yuxi-liu-wired.github.io/blog/posts/reading-perceptron-book/figure/banner_cropped.jpg">
 <meta property="og:site-name" content="Yuxi on the Wired">
-<meta name="twitter:title" content="Yuxi on the Wired - The Neural Network Winter">
-<meta name="twitter:description" content="">
-<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/blog/posts/reading-perceptron-book/figure/perceptron_fig_0_2.png">
+<meta name="twitter:title" content="Yuxi on the Wired - Reading Perceptrons">
+<meta name="twitter:description" content="A long, hard, stare into the mythical neural network killer.">
+<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/blog/posts/reading-perceptron-book/figure/banner_cropped.jpg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed">
+<body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -149,13 +150,18 @@ div.csl-indent {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">The Neural Network Winter</h1>
-                                <div class="quarto-categories">
+      <h1 class="title">Reading <em>Perceptrons</em></h1>
+                  <div>
+        <div class="description">
+          A long, hard, stare into the mythical neural network killer.
+        </div>
+      </div>
+                          <div class="quarto-categories">
                 <div class="quarto-category">AI</div>
-                <div class="quarto-category">history</div>
+                <div class="quarto-category">math</div>
               </div>
                   </div>
   </div>
@@ -180,7 +186,7 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">December 21, 2023</p>
+        <p class="date-modified">December 29, 2023</p>
       </div>
     </div>
       
@@ -189,17 +195,22 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
   <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a></li>
-  <li><a href="#perceptron-representation-theory" id="toc-perceptron-representation-theory" class="nav-link" data-scroll-target="#perceptron-representation-theory">Perceptron representation theory</a></li>
-  <li><a href="#perceptron-learning-theory" id="toc-perceptron-learning-theory" class="nav-link" data-scroll-target="#perceptron-learning-theory">Perceptron learning theory</a></li>
+  <li><a href="#over-finite-sets" id="toc-over-finite-sets" class="nav-link" data-scroll-target="#over-finite-sets">Over finite sets</a></li>
+  <li><a href="#over-infinite-spaces" id="toc-over-infinite-spaces" class="nav-link" data-scroll-target="#over-infinite-spaces">Over infinite spaces</a></li>
+  <li><a href="#learning-theory" id="toc-learning-theory" class="nav-link" data-scroll-target="#learning-theory">Learning theory</a></li>
+  <li><a href="#chapter-13" id="toc-chapter-13" class="nav-link" data-scroll-target="#chapter-13">Chapter 13</a></li>
   </ul>
 </nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
@@ -208,11 +219,17 @@ div.csl-indent {
 
 
 <blockquote class="blockquote">
-<p>It would seem that Perceptrons has much the same role as The Necronomicon – that is, often cited but never read.</p>
+<p>It would seem that <em>Perceptrons</em> has much the same role as The Necronomicon – that is, often cited but never read.</p>
 <p>Marvin Minsky, 1994. Quoted in <span class="citation" data-cites="berkeleyRevisionistHistoryConnectionism1997">(<a href="#ref-berkeleyRevisionistHistoryConnectionism1997" role="doc-biblioref">Berkeley 1997</a>)</span></p>
 </blockquote>
-<p>Well, you too can read the <em>Necronomicon</em>.</p>
-<p>In one sentence, the mathematical portion of the <em>Perceptron</em> book is a theory of two-layered perceptrons, mostly by discrete mathematics. Perceptron representation occupies chapters 0–10, and learning is only studied in chapters 11 and 12.</p>
+<div class="page-columns page-full"><p>During my early forays into AI, perhaps ten years ago, I heard rumors of how in the 1960s, there was a bitter controversy between the symbolic AI and the neural network AI schools. Further, it was said that a certain book, <em>Perceptron</em>, was the center of the controversy, a deadly weapon that killed neural networks, until its rise again in the 1980s.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> What, then, is in the mythical book? Recently, I have returned to this alleged episode, and in my research into the bottom of the perceptron controversy, I ended up actually reading the book. Now that I have done so, I proclaim:</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;The story would continue with the Japanese Fifth Generation Project and expert systems, both of which would never come to anything, and that was where the story ended – deep learning was only a glimmer in 2013, not rising above the periodic tide of news stories of yet another miracle cancer drug that would never amount to anything.</p></li></div></div>
+<blockquote class="blockquote">
+<p>You, too, can read the <em>Necronomicon</em>.</p>
+</blockquote>
+<p>In one sentence, the mathematical portion of <em>Perceptrons</em> is a theory of two-layered perceptrons, mostly by methods typical of discrete mathematics and computational complexity theory, and no empirical results. One should forget about the modern theory and practice of neural networks, read the book in the same frame of mind as one would read a textbook on Turing machines, stack machines, Post tag systems, and other various theoretical objects in computational complexity theory. Indeed, this book is written in the same spirit and style as <span class="citation" data-cites="minskyComputationFiniteInfinite1967">(<a href="#ref-minskyComputationFiniteInfinite1967" role="doc-biblioref">Minsky 1967</a>)</span> and <span class="citation" data-cites="sipserIntroductionTheoryComputation2006">(<a href="#ref-sipserIntroductionTheoryComputation2006" role="doc-biblioref">Sipser 2006</a>)</span>.</p>
+<p>Perceptron representation occupies chapters 0–10, and learning is only studied in chapters 11 and 12. The book also contained a chapter 13, but it contains mostly interpretations and brief “lessons” that they wanted the readers to take away from the exact mathematical results. They added some handwritten corrections and updates for a 1972 printing run.</p>
+<p>During the 1980s rise of connectionism, Minsky and Papert came out with a new edition in 1988. This is the same as the 1972 printing, except that they added a prologue and an epilogue, where they expounded at length the intended lesson of the book, as they felt that people have failed to learn it, and history was repeating itself.</p>
+<!-- For those interpretations, see [*The Neural Network Winter*](TODO link after finishing the essay) -->
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>Let <span class="math inline">\(R\)</span> be a finite set, where “R” could be read as “region”, or “rectangle”.</p>
@@ -241,16 +258,16 @@ div.csl-indent {
 <p><span class="theorem-title"><strong>Definition 4 (conjunctively local) </strong></span>A family of boolean functions is conjunctively local iff their orders are upper bounded.</p>
 </div>
 </section>
-<section id="perceptron-representation-theory" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="perceptron-representation-theory">Perceptron representation theory</h2>
+<section id="over-finite-sets" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="over-finite-sets">Over finite sets</h2>
 <p>While their definition allows perceptron machines of any real-valued weights and biases, they immediately performed a <a href="https://en.wikipedia.org/wiki/Reduction_(complexity)">computational reduction</a> to the special case of mask perceptron machines. Most of the book considers the problem of classifying subsets of families of planar square grids, such as <span class="math inline">\(\{1, 2, 3\} \times \{1, 2, 3, 4\}\)</span>. A subset is inputted to the perceptron machine by setting inputs in the subset to <span class="math inline">\(1\)</span>, and the rest to <span class="math inline">\(0\)</span>. Consequently, it is natural to consider a special case of perceptron machines.</p>
 <div id="def-predicate-order" class="theorem definition page-columns page-full">
-<p><span class="theorem-title"><strong>Definition 5 (mask perceptron machine) </strong></span>A mask for <span class="math inline">\(A\subset R\)</span> is a function of type <span class="math inline">\(\{0, 1\}^R \to \R\)</span>, such that <span class="math inline">\(\psi(x) = 1\)</span> if <span class="math inline">\(x_i =1\)</span> for all <span class="math inline">\(i \in A\)</span>, and else <span class="math inline">\(\psi(x) = 0\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 5 (mask perceptron machine) </strong></span>A mask for <span class="math inline">\(A\subset R\)</span> is a function of type <span class="math inline">\(\{0, 1\}^R \to \mathbb{R}\)</span>, such that <span class="math inline">\(\psi(x) = 1\)</span> if <span class="math inline">\(x_i =1\)</span> for all <span class="math inline">\(i \in A\)</span>, and else <span class="math inline">\(\psi(x) = 0\)</span>.</p>
 <p>A mask perceptron machine is a perceptron machine where each hidden perceptron is a mask, and the threshold of the output perceptron is zero. In other words, it is of form</p>
 <p><span class="math display">\[
-\Phi(x) = \theta\lrb{\sum_{i=1}^k a_i \psi_{A_i}(x)}
+\Phi(x) = \theta\left(\sum_{i=1}^k a_i \psi_{A_i}(x)\right)
 \]</span></p>
-<p>where each <span class="math inline">\(\psi_{A_i}\)</span> is a mask, each <span class="math inline">\(a_i\in \R\)</span>, and <span class="math inline">\(k\)</span> is the number of hidden perceptrons.</p>
+<p>where each <span class="math inline">\(\psi_{A_i}\)</span> is a mask, each <span class="math inline">\(a_i\in \mathbb{R}\)</span>, and <span class="math inline">\(k\)</span> is the number of hidden perceptrons.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/perceptron_fig_0_2.png" class="img-fluid figure-img"></p>
@@ -288,7 +305,7 @@ div.csl-indent {
 <p><span class="proof-title"><em>Proof</em>. </span>Since the parity function is <span class="math inline">\(S_R\)</span>-invariant, if it is implemented by a perceptron machine of order <span class="math inline">\(k\)</span>, it is implemented by some mask perceptron machine <span class="math inline">\(\theta(\sum_{A_i \subset R} a_{A_i} \psi_{A_i})\)</span>, where each mask is of size <span class="math inline">\(\leq k\)</span>, and each weight <span class="math inline">\(a_{A_i}\)</span> depends only on the size of <span class="math inline">\(A_i\)</span>. Let <span class="math inline">\(b_{|A_i|} = a_{A_i}\)</span> be those coefficients. It remains to show <span class="math inline">\(b_{|R|} \neq 0\)</span>.</p>
 <p>For each <span class="math inline">\(X \subset R\)</span>, we have by explicit computation</p>
 <p><span class="math display">\[
-\theta\lrb{\sum_{A_i \subset R} a_{A_i} \psi_{A_i}} = 1\lrs{f(|X|) \geq 0}
+\theta\left(\sum_{A_i \subset R} a_{A_i} \psi_{A_i}\right) = 1\left[f(|X|) \geq 0\right]
 \]</span></p>
 <p>where <span class="math inline">\(f(t) := \sum_{i=0}^{|R|}b_i \binom{t}{i}\)</span> is a polynomial in <span class="math inline">\(t\)</span>. Since this perceptron machine implements the parity function, as <span class="math inline">\(t\)</span> increases from <span class="math inline">\(0\)</span> to <span class="math inline">\(|R|\)</span>, the function <span class="math inline">\(f(t) + \epsilon\)</span> must intersect the <span class="math inline">\(x\)</span>-axis at least <span class="math inline">\(|R|\)</span> times for some real value <span class="math inline">\(\epsilon\)</span>. Since <span class="math inline">\(f\)</span> is a polynomial, it must have at least order <span class="math inline">\(|R|\)</span>, thus <span class="math inline">\(b_{|R|} \neq 0\)</span>.</p>
 </div>
@@ -311,7 +328,7 @@ div.csl-indent {
 <p>even though both <span class="math inline">\(|X \cap A| &gt; |X \cap C|\)</span> and <span class="math inline">\(|X \cap B| &gt; |X \cap C|\)</span> are of order <span class="math inline">\(1\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span><span class="math inline">\(|X \cap A| &gt; |X \cap C|\)</span> is computed by the order-<span class="math inline">\(1\)</span> perceptron machine <span class="math inline">\(\theta\lrb{\sum_{i\in A} x_i - \sum_{i \in C}x_i}\)</span>, and similarly for the other one.</p>
+<p><span class="proof-title"><em>Proof</em>. </span><span class="math inline">\(|X \cap A| &gt; |X \cap C|\)</span> is computed by the order-<span class="math inline">\(1\)</span> perceptron machine <span class="math inline">\(\theta\left(\sum_{i\in A} x_i - \sum_{i \in C}x_i\right)\)</span>, and similarly for the other one.</p>
 <p>To show the composite boolean function is not of bounded order, suppose otherwise, then by the same argument as the previous proof, we can construct a sequence of polynomials <span class="math inline">\(P_1(a, b, c), P_2(a, b, c), P_3(a, b, c), ...\)</span>, such that each <span class="math inline">\(P_n\)</span> is the polynomial corresponding to the perceptron machine for the case where <span class="math inline">\(|A| = |B| = |C| = n\)</span>, and each of them has order at most <span class="math inline">\(M\)</span>, for some fixed <span class="math inline">\(M\)</span>.</p>
 <p>Being the polynomial corresponding to the perceptron machine for the case where <span class="math inline">\(|A| = |B| = |C| = n\)</span> means precisely that</p>
 <p><span class="math display">\[
@@ -320,9 +337,9 @@ a &gt; c \wedge b &gt; c \implies P_n(a, b, c) \geq 0; \neg (a &gt; c \wedge b &
 <p>for all <span class="math inline">\(a, b, c \in \{0, 1, ..., n\}\)</span>. This implies that each <span class="math inline">\(P_1, P_2, ... \neq 0\)</span>. Now, divide each polynomial by the root-sum-square of its coefficients, so that if we interpret the coefficients of each <span class="math inline">\(P_n\)</span> as a point in a high-dimensional space, the point falls on the unit sphere in that space. Since the unit sphere is compact, there exists a limit point, which we write as <span class="math inline">\(P(a, b, c)\)</span>.</p>
 <p>By the limit construction, we have</p>
 <p><span class="math display">\[
-\forall a, b, c \in \N, \quad a &gt; c \wedge b &gt; c \implies P(a, b, c) \geq 0; \neg (a &gt; c \wedge b &gt; c) \implies P(a, b, c) \leq 0;
+\forall a, b, c \in \mathbb{N}, \quad a &gt; c \wedge b &gt; c \implies P(a, b, c) \geq 0; \neg (a &gt; c \wedge b &gt; c) \implies P(a, b, c) \leq 0;
 \]</span></p>
-<p>If we color the points <span class="math inline">\(\N^3\)</span> with black for <span class="math inline">\(P &lt; 0\)</span> and white for <span class="math inline">\(P \geq 0\)</span>, then we can see the dusty outlines of a pyramid. We can construct a solid pyramid by zooming.</p>
+<p>If we color the points <span class="math inline">\(\mathbb{N}^3\)</span> with black for <span class="math inline">\(P &lt; 0\)</span> and white for <span class="math inline">\(P \geq 0\)</span>, then we can see the dusty outlines of a pyramid. We can construct a solid pyramid by zooming.</p>
 <p>Let <span class="math inline">\(M'\)</span> be the order of <span class="math inline">\(P\)</span>, then we can “zoom out” by taking the <a href="https://en.wikipedia.org/wiki/Homogeneous_function">projective limit</a> <span class="math inline">\(Q(a, b, c) := \lim_{t \to \infty} t^{-M'} P(ta, tb, tc)\)</span>. This <span class="math inline">\(Q\)</span> is a homogeneous polynomial, and by continuity,</p>
 <p><span class="math display">\[
 \forall a, b, c \geq 0, \quad a &gt; c \wedge b &gt; c \implies P(a, b, c) \geq 0; a &lt; c \vee b &lt; c \implies P(a, b, c) \leq 0;
@@ -333,7 +350,7 @@ a &gt; c \wedge b &gt; c \implies P_n(a, b, c) \geq 0; \neg (a &gt; c \wedge b &
 <p><span class="theorem-title"><strong>Theorem 6 (Theorem 5.1) </strong></span>The connectedness function has order <span class="math inline">\(\Omega(|R|^{1/3})\)</span>.</p>
 </div>
 <div class="proof page-columns page-full">
-<div class="page-columns page-full"><p><span class="proof-title"><em>Proof</em>. </span>If we have a mask perceptron machine that can solve the connectedness problem, then it can be repurposed<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to solve the one-in-a-box problem of the following kind:</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;Repurposing one machine to solve another problem is a common trick in computational complexity, called “<a href="https://en.wikipedia.org/wiki/Reduction_(complexity)">reduction</a>”. For perceptron machines, they called it “Theorem 5.4.1: The Collapsing Theorem”.</p></li></div></div>
+<div class="page-columns page-full"><p><span class="proof-title"><em>Proof</em>. </span>If we have a mask perceptron machine that can solve the connectedness problem, then it can be repurposed<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> to solve the one-in-a-box problem of the following kind:</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;Repurposing one machine to solve another problem is a common trick in computational complexity, called “<a href="https://en.wikipedia.org/wiki/Reduction_(complexity)">reduction</a>”. For perceptron machines, they called it “Theorem 5.4.1: The Collapsing Theorem”.</p></li></div></div>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/perceptron_fig_5_2.png" class="img-fluid figure-img"></p>
@@ -342,9 +359,17 @@ a &gt; c \wedge b &gt; c \implies P_n(a, b, c) \geq 0; \neg (a &gt; c \wedge b &
 </div>
 <p>In the picture, the rectangle <span class="math inline">\(R\)</span> has width <span class="math inline">\(4m^2\)</span> and height <span class="math inline">\(2m+1\)</span>. We fill in all the odd-numbered rows, and use the machine to solve the one-in-a-box problem for the even-numbered rows. By <a href="#thm-one-in-a-box">Theorem&nbsp;4</a>, the machine has order <span class="math inline">\(\geq m = \Omega(|R|^{1/3})\)</span>.</p>
 </div>
-<p>More generally, the only locally conjunctive topological invariant is the Euler number <span class="math inline">\(E\)</span> (Theorem 5.9). That is, if <span class="math inline">\(\psi\)</span> is a boolean function, and it depends only on the topology of the input figure, and its order is upper-bounded by some number <span class="math inline">\(k\)</span> that does not grow even as <span class="math inline">\(R\)</span> grows into a larger and larger rectangle, then <span class="math inline">\(\psi\)</span> is of form <span class="math inline">\(f \circ E\)</span>, for some function <span class="math inline">\(f: \N \to 2\)</span>.</p>
-<p>The Euler number itself is <span class="math inline">\(E(X) = \sum_{i \in R} x_i - \sum_{i,j \in R} x_ix_j + \sum_{i,j,k, l \in R} x_ix_jx_kx_l\)</span>, where the <span class="math inline">\(i,j\in R\)</span> ranges only over adjacent points, and <span class="math inline">\(i,j,k, l \in R\)</span> ranges only over quadruples that form a square. Thus the Euler number itself has order <span class="math inline">\(4\)</span> (Theorem 5.8.1).</p>
-<p>Chapters 6–9 continue in the same style, but moves to the case where the input space is made of one or two copies of the infinite line <span class="math inline">\(\Z\)</span>, or the infinite plane <span class="math inline">\(\Z^2\)</span>, and the predicate to recognize is still translation-invariant. In order to avoid blowing up the perceptron machine with infinities, they restricted to the case where the input figure is of finite size, meaning that <span class="math inline">\(\sum_i x_i\)</span> is finite.</p>
+<p>In fact, it turns out that essentially the only locally conjunctive topological invariant is the Euler number.</p>
+<div id="thm-euler-number" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 7 (Theorem 5.8.1) </strong></span>The Euler number itself is <span class="math inline">\(E(X) = \sum_{i \in R} x_i - \sum_{i,j \in R} x_ix_j + \sum_{i,j,k, l \in R} x_ix_jx_kx_l\)</span>, where the <span class="math inline">\(i,j\in R\)</span> ranges only over adjacent points, and <span class="math inline">\(i,j,k, l \in R\)</span> ranges only over quadruples that form a square. Thus the Euler number itself has order <span class="math inline">\(4\)</span>.</p>
+</div>
+<div id="thm-euler-number" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 8 (Theorem 5.9) </strong></span>If <span class="math inline">\(\psi\)</span> is a boolean function, and it depends only on the topology of the input figure, and its order is upper-bounded by some number <span class="math inline">\(k\)</span> that does not grow even as <span class="math inline">\(R\)</span> grows into a larger and larger rectangle, then <span class="math inline">\(\psi\)</span> is of form <span class="math inline">\(f \circ E\)</span>, for some function <span class="math inline">\(f: \mathbb{N}\to 2\)</span>.</p>
+</div>
+</section>
+<section id="over-infinite-spaces" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="over-infinite-spaces">Over infinite spaces</h2>
+<p>Chapters 6–9 continue in the same style, but moves to the case where the input space is made of one or two copies of the infinite line <span class="math inline">\(\mathbb{Z}\)</span>, or the infinite plane <span class="math inline">\(\mathbb{Z}^2\)</span>, and the predicate to recognize is still translation-invariant. In order to avoid blowing up the perceptron machine with infinities, they restricted to the case where the input figure is of finite size, meaning that <span class="math inline">\(\sum_i x_i\)</span> is finite.</p>
 <p>Chapter 6 develops the idea of “spectra” of images. For example, the following picture shows that if we were to design a perceptron machine using only masks of size up to 2, and translation-invariant weights, then it cannot possibly distinguish between the two tetris-like pieces, because both figures contain exactly 4 instances of single-square, 1 instance of two squares side by side, and so on.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -356,29 +381,34 @@ a &gt; c \wedge b &gt; c \implies P_n(a, b, c) \geq 0; \neg (a &gt; c \wedge b &
 <p>Section 6.6 claims that “recognizing figures in context” is generally not locally conjunctive, although they gave only two examples. Specifically, they showed that the predicate “<span class="math inline">\(X\)</span> is a horizontal line across the rectangle” is order 2, the predicate “<span class="math inline">\(X\)</span>$ contains one horizontal line across plane” is not locally conjunctive. The same is true for the case with “a hollow square” instead of “a horizontal line”.</p>
 <p>Chapter 7 uses the “stratification” construction to explicitly demonstrate that several binocular predicates are of finite order, but requires exponentially growing weights. It is essentially the same idea as <a href="https://en.wikipedia.org/wiki/G%C3%B6del_numbering">Gödel numbering</a>. A single illustrative example suffices to demonstrate the general point.</p>
 <div id="exm-line-symmetry" class="theorem example page-columns page-full">
-<p><span class="theorem-title"><strong>Example 1 </strong></span>Given a line <span class="math inline">\(\Z\)</span>, how to construct a perceptron machine that detects that input figure is symmetric?</p>
+<p><span class="theorem-title"><strong>Example 1 </strong></span>Given a line <span class="math inline">\(\mathbb{Z}\)</span>, how to construct a perceptron machine that detects that input figure is symmetric?</p>
 <p>Suppose we know for certain that the input figure has leftmost point <span class="math inline">\(m\)</span> and rightmost point <span class="math inline">\(n\)</span>, then we can test for symmetry by computing the value of:</p>
 <p><span class="math display">\[
 f_{m, n}(x) := \sum_{i = 0}^{n-m} x_{m+i}(x_{n-i} - 1)
 \]</span></p>
 <p>We have that <span class="math inline">\(f_{m, n}(x) = 0\)</span> if the figure is symmetric, and <span class="math inline">\(f_{m, n}(x) \leq -1\)</span> otherwise.</p>
-<div class="page-columns page-full"><p>Now we define the entire perceptron machine by <span class="math inline">\(\sum_{m \leq n} M_{n - m} x_m x_n (f_{m, n}(x) - 1/2)\)</span>. If the sequence of <span class="math inline">\(M_0, M_1, ...\)</span> grows as <span class="math inline">\((d!)^2\)</span> roughly <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, then the largest bracket <span class="math inline">\((m, n)\)</span> would “veto” every smaller bracket contained within, and so the entire perceptron machine is effectively first testing for the smallest interval containing the figure, before testing the symmetry within that interval.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;Expanding term by term, we have <span class="math inline">\(|(f_{m, n}(x) - 1/2)| \leq 2(n-m) + \frac 12\)</span>. Therefore, in order for <span class="math inline">\(M_d\)</span> to “veto” every other bracket within, we need</p>
+<div class="page-columns page-full"><p>Now we define the entire perceptron machine by <span class="math inline">\(\sum_{m \leq n} M_{n - m} x_m x_n (f_{m, n}(x) - 1/2)\)</span>. If the sequence of <span class="math inline">\(M_0, M_1, ...\)</span> grows as <span class="math inline">\((d!)^2\)</span> roughly <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, then the largest bracket <span class="math inline">\((m, n)\)</span> would “veto” every smaller bracket contained within, and so the entire perceptron machine is effectively first testing for the smallest interval containing the figure, before testing the symmetry within that interval.</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;Expanding term by term, we have <span class="math inline">\(|(f_{m, n}(x) - 1/2)| \leq 2(n-m) + \frac 12\)</span>. Therefore, in order for <span class="math inline">\(M_d\)</span> to “veto” every other bracket within, we need</p>
 <p><span class="math display">\[
-M_d \frac 12 &gt; \sum_{d' = 1}^{d-1} \lrb{M_{d'}(\frac 12 + 2d')(d-d' + 1)}
+M_d \frac 12 &gt; \sum_{d' = 1}^{d-1} \left(M_{d'}(\frac 12 + 2d')(d-d' + 1)\right)
 \]</span></p>
 <p>Here <span class="math inline">\(d\)</span> should be read as “distance between two ends of a bracket”.</p>
-<p>To bound the growth rate, we bound the recurrence relation <span class="math inline">\(M_d = \sum_{d' = 1}^{d-1} \lrb{M_{d'}(4d' + 1)(d-d' + 1)}\)</span>. The sum on the right is bounded by</p>
+<p>To bound the growth rate, we bound the recurrence relation <span class="math inline">\(M_d = \sum_{d' = 1}^{d-1} \left(M_{d'}(4d' + 1)(d-d' + 1)\right)\)</span>. The sum on the right is bounded by</p>
 <p><span class="math display">\[
-\sum_{d' = 1}^{d-1} \lrb{M_{d'}(4d' + 1)(d-d' + 1)} \in \Theta{\lrs{
-    \sum_{d' = 1}^{d-1} \lrb{M_{d'}d'},
-    d^2\sum_{d' = 1}^{d-1} \lrb{M_{d'}}}}
+\sum_{d' = 1}^{d-1} \left(M_{d'}(4d' + 1)(d-d' + 1)\right) \in \Theta{\left[
+    \sum_{d' = 1}^{d-1} \left(M_{d'}d'\right),
+    d^2\sum_{d' = 1}^{d-1} \left(M_{d'}\right)\right]}
 \]</span></p>
 <p>The lower bound implies <span class="math inline">\(M_d = \Omega((d!)^2 \times d^{-1})\)</span> and upper bound implies <span class="math inline">\(M_d = O((d!)^2 \times (d+1)^2)\)</span>.</p></li></div></div>
 </div>
 <p>They made similar constructions for perceptron machines that decide whether two infinite lines or planes are translates of each other, whether two planes are translation and approximate dilations of each other, and whether a line or a plane is the translation of a fixed figure.</p>
 <p>Chapter 8 studies diameter-limited perceptron machines, meaning that not only are the hidden perceptrons assumed to be masks of bounded size, those masks are assumed to be contained in a circle of radius <span class="math inline">\(M\)</span> for some finite <span class="math inline">\(M\)</span>. It is intended to be a formalization of the intuition that the perceptron machines should model a real pair of eyes scanning a plane, and each retina is a circular disk with finite radius. No results in chapter 8 were used further in the book, and they resemble the case of finite-order perceptron machines, so we do not discuss the results in detail.</p>
-<p>Chapter 9 shows that the connectedness problem is easy to solve using small serial programs, a contrast to the case of perceptron machines. They designed a robot that moves around the plane, and can solve the connectedness problem, with a memory size of just two. Namely, it only need to store up to two locations <span class="math inline">\((x, y), (x', y')\)</span> in its memory during its operation, and it eventually halts in one of three states “empty”, “connected”, and “disconnected”. They then described a few other more exotic computational models. The whole thing is in the same style of solving interesting puzzles in computational complexity, similar to <span class="citation" data-cites="minskyComputationFiniteInfinite1967">(<a href="#ref-minskyComputationFiniteInfinite1967" role="doc-biblioref">Minsky 1967</a>)</span>. The overarching goal is to demonstrate that connectedness is “inherently serial”.</p>
-<p>Whereas in the construction <a href="#exm-line-symmetry">Example&nbsp;1</a>, we saw coefficients growing exponentially on an infinite plane, chapter 10 finitizes that this.</p>
+<p>Chapter 9 shows that the connectedness problem is easy to solve using small serial programs, a contrast to the case of perceptron machines. The overarching lesson is that connectedness is an “inherently serial” decision problem. The whole chapter is beautiful computational complexity theory, in the same style of solving fun mathematical puzzles, similar to <span class="citation" data-cites="minskyComputationFiniteInfinite1967">(<a href="#ref-minskyComputationFiniteInfinite1967" role="doc-biblioref">Minsky 1967</a>)</span>.</p>
+<p>They designed a robot (a finite state machine) that moves around the plane, and can solve the connectedness problem, with a memory size of just two. Namely, it only need to store up to two locations <span class="math inline">\((x, y), (x', y')\)</span> in its memory during its operation, and it eventually halts in one of three states “empty”, “connected”, and “disconnected”. Notice that, a robot with no memory can still remember a finite number of memories. It is simply that those memory slots are its finite states which does not scale with the size of the problem. The little robot with a “memory size of two” really had a memory size of <span class="math inline">\(2 \log_2|R|\)</span> bits, because it can remember two coordinates from the square <span class="math inline">\(R\)</span>, no matter how large the square grows.</p>
+<p>They then described a few other more exotic computational models, such as a “pebble machine”, meaning a robot that has no memory, but provided with a single pebble. It can drop the pebble anywhere, and it can pick it up again. One can think of this as an intermediate level between pure finite state machines, which cannot write at all, and a Turing machine, which can write as much as it wants. They left as an exercise to the reader about translating the previous robot with two memory slots to this robot with one pebble. They conjectured that a finite state machine (a robot with no pebbles) would be unable to solve the task, but they could not prove it. I did a brief literature search and it seemed to be still unsolved.</p>
+</section>
+<section id="learning-theory" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="learning-theory">Learning theory</h2>
+<p>They claim Chapter 10 is part of the learning theory. However, it does not actually involve learning. Whereas in the construction <a href="#exm-line-symmetry">Example&nbsp;1</a>, we saw coefficients growing exponentially on an infinite plane, chapter 10 proves similar results on a finite plane.</p>
 <div id="exm-parity-order" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Theorem 10.1) </strong></span>Suppose we have a perceptron machine that tests for parity, then by <a href="#thm-parity-order">Theorem&nbsp;3</a>, it must have order <span class="math inline">\(|R|\)</span>. As in the construction given in the proof, we use the group invariance theorem to obtain a group-symmetric machine with form <span class="math inline">\(\theta(\sum_{i=0}^{|R|}\binom{|X|}{i} b_i)\)</span>, where <span class="math inline">\(b_0, b_1, ..., b_{|R|}\)</span> are real numbers. Then, assuming the machine is “reliable”, we can prove that <span class="math inline">\((-1)^{M} b_{M+1 \geq 2^{M}\)</span> for any <span class="math inline">\(M \in \{0, 1, \cdots, |R|-1\}\)</span>.</p>
 <p>Since the group-symmetric construction can only average out the most extreme values, this implies that before the group-symmetric construction, our perceptron machine had even more extreme coefficients.</p>
@@ -397,13 +427,10 @@ M_d \frac 12 &gt; \sum_{d' = 1}^{d-1} \lrb{M_{d'}(\frac 12 + 2d')(d-d' + 1)}
 \]</span></p>
 <p>By manipulating the binomial coefficients, the right side simplifies to <span class="math inline">\((-1)^M b_{M+1}\)</span>.</p>
 </div>
-<div class="page-columns page-full"><p>Section 10.2 and 10.3 constructs two pathological examples. By restricting the shapes of hidden perceptron masks, they proved that certain predicates required superexponential weights. Section 10.4 purports to extend the group invariance theorem to the infinite case.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> None of these are used elsewhere in the book. They are virtuoso performances. However, they interpreted this as a serious problem:</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;They purported to show in Theorem 10.4.1 that, if the weights are bounded, then the group invariance theorem applies again, but the proof is false, with a counterexample being <span class="math inline">\(\sum_{n \in \Z}e^{-n^2}x_n - e^{-n^4}x_nx_{n+1}\)</span>. The theorem <em>might</em> still be correct with another proof, but I cannot find one.</p></li></div></div>
+<div class="page-columns page-full"><p>Section 10.2 and 10.3 constructs two pathological examples. By restricting the shapes of hidden perceptron masks, they proved that certain predicates required superexponential weights. Section 10.4 purports to extend the group invariance theorem to the infinite case.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> None of these are used elsewhere in the book. They are virtuoso performances. However, they interpreted this as a serious problem:</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;They purported to show in Theorem 10.4.1 that, if the weights are bounded, then the group invariance theorem applies again, but the proof is false, with a counterexample being <span class="math inline">\(\sum_{n \in \mathbb{Z}}e^{-n^2}x_n - e^{-n^4}x_nx_{n+1}\)</span>. The theorem <em>might</em> still be correct with another proof, but I cannot find one.</p></li></div></div>
 <blockquote class="blockquote">
 <p>A proof, in Chapter 10, that coefficients can grow much faster than exponentially with <span class="math inline">\(|R|\)</span> has serious consequences both practically and conceptually: the use of more memory capacity to store the coefficients than to list all the figures strains the idea that the machine is making some kind of abstraction</p>
 </blockquote>
-</section>
-<section id="perceptron-learning-theory" class="level2">
-<h2 class="anchored" data-anchor-id="perceptron-learning-theory">Perceptron learning theory</h2>
 <p>In Chapter 11, they <em>finally</em> start discussing perceptron learning, which is of a very restrictive form.</p>
 <div id="def-perceptron-learning" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 6 (Perceptron learning) </strong></span>To train a perceptron machine is to <em>fix</em> its hidden perceptrons, and adjust the weights and threshold of <em>only</em> the single output perceptron by the perceptron learning rule. For this chapter, it is cleaner to change the convention, so that each perceptron outputs <span class="math inline">\(-1, +1\)</span>, instead of <span class="math inline">\(0, 1\)</span>.</p>
@@ -423,7 +450,47 @@ M_d \frac 12 &gt; \sum_{d' = 1}^{d-1} \lrb{M_{d'}(\frac 12 + 2d')(d-d' + 1)}
 <p>Modifying the proof slightly, and applying the conclusion of <a href="#exm-parity-order">Example&nbsp;2</a>, we find that starting with the zero weight vector, it takes at least <span class="math inline">\(2^{|R|}/|R|\)</span> steps steps to learn the parity function.</p>
 <p>They then gestured that gradient descent is just a somewhat more efficient perceptron learning rule, and cannot escape local optima. No “local learning rule” can escape local optima, unlike symbolic programs that are provably capable of finding global optima.</p>
 <p>If the dataset is not linearly separable, then the perceptron weight would not converge. However, the perceptron cycling theorem shows that if the dataset is finite, then the perceptron weight would still be trapped within a large but finite disk, no matter how the dataset is sampled.</p>
-<p>Chapter 12 sketches other algorithms for learning (approximate) binary classification algorithms, including naive Bayes, nearest neighbor, ISODATA, a hack used by Arthur Samuel’s checker program, etc. Section 12.6 and 12.7 study the time-space tradeoff using variations on a toy problem: given a subset of <span class="math inline">\(\{0, 1\}^n\)</span>, decide whether a <span class="math inline">\(n\)</span>-bit word is in it or not.</p>
+<div class="page-columns page-full"><p>Chapter 12 is not very mathematical, and consists mainly of quick sketches<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> of other algorithms for learning. Those included: lookup table, nearest neighbor, k-means, ISODATA, maximum likelihood, Bayes, naive Bayes, etc. Section 12.6 and 12.7 study variations on a toy problem: given a subset of <span class="math inline">\(\{0, 1\}^n\)</span>, decide whether a <span class="math inline">\(n\)</span>-bit word is in it or not. This had relevance to the time-space tradeoff, a perennial topic in computational complexity.</p><div class="no-row-height column-margin column-container"><li id="fn5"><blockquote class="blockquote"><sup>5</sup>&nbsp;
+<p>In this chapter we will study a few of these to indicate points of contact with the perceptron and to reveal deep differences. … The chapter is written more in the spirit of inciting students to research than of offering solutions to problems.</p>
+</blockquote>
+</li></div></div>
+</section>
+<section id="chapter-13" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="chapter-13">Chapter 13</h2>
+<p>Chapter 13 is a summary of the “take-home lessons” for the readers. As the intended lessons were expounded in great length in the epilogue added in 1988, I would not analyze the chapter in detail.</p>
+<p>They discussed “Gamba perceptrons”, which is just another name for two-layered perceptrons where the hidden layer consists of perceptrons, instead of merely masks. They made the infamous prediction that not only Gamba perceptrons, but arbitrary multilayer perceptrons, would be a “sterile extension”.</p>
+<blockquote class="blockquote">
+<p>Well, we have considered Gamba machines, which could be described as “two layers of perceptron.” We have not found (by thinking or by studying the literature) any other really interesting class of multilayered machine, at least none whose principles seem to have a significant relation to those of the perceptron. To see the force of this qualification it is worth pondering the fact, trivial in itself, that a universal computer could be built entirely out of linear threshold modules. This does not in any sense reduce the theory of computation and programming to the theory of perceptrons. Some philosophers might like to express the relevant general principle by saying that the computer is so much more than the sum of its parts that the computer scientist can afford to ignore the nature of the components and consider only their connectivity. More concretely, we would call the student’s attention to the following considerations:</p>
+<ol type="1">
+<li><p>Multilayer machines with loops clearly open all the questions of the general theory of automata.</p></li>
+<li><p>A system with no loops but with an order restriction at each layer can compute only predicates of finite order.</p></li>
+<li><p>On the other hand, if there is no restriction except for the absence of loops, the monster of vacuous generality once more raises its head.</p></li>
+</ol>
+<p>The perceptron has shown itself worthy of study despite (and even because of!) its severe limitations. It has many features to attract attention: its linearity; its intriguing learning theorem; its clear paradigmatic simplicity as a kind of parallel computation. There is no reason to suppose that any of these virtues carry over to the many-layered version. Nevertheless, we consider it to be an important research problem to elucidate (or reject) <strong>our intuitive judgment that the extension is sterile</strong>.</p>
+</blockquote>
+<div class="page-columns page-full"><p>In short, their objection to multilayered perceptrons is that they suffer from Turing completeness, and so it is hard to prove anything concrete about them, except the trivial claim that they are Turing complete.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> A single perceptron is just a linear classifier, so it is possible to study mathematically. Experimental evidence is no justification, because:</p><div class="no-row-height column-margin column-container"><li id="fn6"><blockquote class="blockquote"><sup>6</sup>&nbsp;
+<p>Beware of the <a href="https://en.wikipedia.org/wiki/Turing_tarpit">Turing tar-pit</a> in which everything is possible but nothing of interest is easy.</p>
+</blockquote>
+</li></div></div>
+<blockquote class="blockquote">
+<p>13.5 Why Prove Theorems?</p>
+<p><em>Why did you prove all these complicated theorems? Couldn’t you just take a perceptron and see if it can recognize <span class="math inline">\(\psi_{\text {CONNECTED}}\)</span>?</em></p>
+<p>No.</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/perceptron_page_239.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">page 239</figcaption>
+</figure>
+</div>
+<p>Since a perceptron-only architecture is the wrong way, they illustrated what the “right” way to do computer vision should be like, by describing in detail the scene analysis algorithm. In short, it starts by discovering edges, then perform some computational geometry on it to recover outlines of basic shapes, such as cubes, then fill in the faces, then fill in the bodies between the faces. The algorithm had to do something clever to deal with occlusions. In the end, a complete 3D scene populated with 3D objects is recovered.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/guzman_1968.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">Scene analysis. Figure from <span class="citation" data-cites="guzmanDecompositionVisualScene1968">(<a href="#ref-guzmanDecompositionVisualScene1968" role="doc-biblioref">Guzmán 1968</a>)</span></figcaption>
+</figure>
+</div>
+<p>They ended the book with a brief discussion of how they discovered the various results, as well as a list of people they thanked.</p>
 
 
 
@@ -434,8 +501,14 @@ M_d \frac 12 &gt; \sum_{d' = 1}^{d-1} \lrb{M_{d'}(\frac 12 + 2d')(d-d' + 1)}
 <div id="ref-berkeleyRevisionistHistoryConnectionism1997" class="csl-entry" role="listitem">
 Berkeley, Istvan SN. 1997. <span>“A Revisionist History of Connectionism.”</span> <em>Unpublished Manuscript</em>.
 </div>
+<div id="ref-guzmanDecompositionVisualScene1968" class="csl-entry" role="listitem">
+Guzmán, Adolfo. 1968. <span>“Decomposition of a Visual Scene into Three-Dimensional Bodies.”</span> In <em>Proceedings of the <span>December</span> 9-11, 1968, Fall Joint Computer Conference, Part <span>I</span> on - <span>AFIPS</span> ’68 (<span>Fall</span>, Part <span>I</span>)</em>, 291. <span>San Francisco, California</span>: <span>ACM Press</span>. <a href="https://doi.org/10.1145/1476589.1476631">https://doi.org/10.1145/1476589.1476631</a>.
+</div>
 <div id="ref-minskyComputationFiniteInfinite1967" class="csl-entry" role="listitem">
 Minsky, Marvin. 1967. <em>Computation: Finite and Infinite Machines</em>. <span>Englewood Cliffs, NJ</span>: <span>Prentice-Hall</span>.
+</div>
+<div id="ref-sipserIntroductionTheoryComputation2006" class="csl-entry" role="listitem">
+Sipser, Michael. 2006. <em>Introduction to the Theory of Computation</em>. 2nd ed. <span>Boston</span>: <span>Thomson Course Technology</span>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
