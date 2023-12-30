@@ -1,0 +1,131 @@
+---
+title: "Connectionism and Cognitivism"
+author: "Yuxi Liu"
+date: "2023-12-29"
+date-modified: "2023-12-29"
+
+categories: [AI, history]
+format:
+    html:
+        toc: true
+
+description: "The forgotten 1980s controversy over whether neural networks could really understand."
+# image: "figure/"
+
+status: "wip"
+confidence: "likely"
+importance: 5
+---
+
+In the field of psychology, the neural network vs Minsky divide corresponds quite well with the behaviorism vs cognitivism divide.
+
+Among the cognitivists, there is no consensus view about the exact role that neural networks must play. Some, like Fodor and Marr, argue that intelligence is just a hardware-independent program, and brains just happen to use neural networks to run the program due to accidents of evolution and biophysics. Others, like Gary Marcus, grant neural networks a more substantial role in constraining the possible programs -- that is, each neural network architecture is designed , and each architecture can only run a certain kind of program efficiently -- but they still insist that neural networks must have very particular architectures.
+
+Some might allow simple learning algorithms with simple environmental stimulus (the universal grammar approach of Chomsky), while others might allow complex learning algorithms with complex environmental stimulus (the society of mind approach of Minsky), but what unifies the cognitivists is that they are against simple learning algorithms applied to complex environmental stimulus. They called the this enemy many names, such as "radical behaviorism", "Skinnerism", "perceptrons", "radical connectionism" and now "deep learning".
+
+## Noam Chomsky
+
+The cognitivist revolution was led by Noam Chomsky against behaviorism around the 1950s, ending with the victory of cognitivism in "higher psychology", such as linguistics, though behaviorism survived respectably to this day in other aspects of psychology, such as addiction studies and animal behavior.
+
+In a curious parallel, just as neural networks for AI became popular again in the late 1980s, statistical methods for NLP returned during the same period. The watershed moment was the series of [IBM alignment models](https://en.wikipedia.org/wiki/IBM_alignment_models) published in 1993 [@brownMathematicsStatisticalMachine1993].
+
+In the 1950s, language production was modelled by theoretical machines: finite state automata, stack machines, Markov transition models, and variants thereof. We must understand Chomsky's two contributions to linguistics. On the first part, he constructed a [hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy) of increasingly powerful kinds of language. This hierarchy was in one-to-one correspondence with the hierarchy of theoretical machines, from finite state automata (type-3, or regular) all the way to Turing machines (type-0, or recursively enumerable). On the second part, he rejected statistical language learning and argued for inborn universal grammar.
+
+Chomsky argued, and subsequent linguists have found, that the syntax of all human languages are at type-2 level, or [context-free grammar](https://en.wikipedia.org/wiki/Context-free_grammar). None is regular and almost none is context-dependent. Regular languages are modelled by finite state machines and cannot model arbitrarily deep recursion, while context-free languages allow arbitrarily deep recursion such as [center embedding](https://en.wikipedia.org/wiki/Center_embedding). This would come into play later.
+
+With the dominance of the Chomsky approach, finite state machines were abandoned, as they are not capable of parsing context-free grammar. You might have heard of the controversy over Pirahã. It is mainly fought over the problem of recursion: does the Pirahã language have recursion or not?[^pinker-piraha]
+
+[^pinker-piraha]: 
+    Drawing the battle lines, we can predict that Chomskyans Steven Pinker would argue that it must have recursion... and it turns out the prediction went wrong on this account. Pinker went against Chomsky in this case. ["The Interpreter." NEW YORKER (2007).]
+
+    > Steven Pinker, the Harvard cognitive scientist, who wrote admiringly about some of Chomsky’s ideas in his 1994 best-seller, “The Language Instinct,” told me, “There’s a lot of strange stuff going on in the Chomskyan program. He’s a guru, he makes pronouncements that his disciples accept on faith and that he doesn’t feel compelled to defend in the conventional scientific manner. Some of them become accepted within his circle as God’s truth without really being properly evaluated, and, surprisingly for someone who talks about universal grammar, he hasn’t actually done the spadework of seeing how it works in some weird little language that they speak in New Guinea.” Pinker says that his own doubts about the “Chomskyan program” increased in 2002, when Marc Hauser, Chomsky, and Tecumseh Fitch published their paper on recursion in Science. The authors wrote that the distinctive feature of the human faculty of language, narrowly defined, is recursion. Dogs, starlings, whales, porpoises, and chimpanzees all use vocally generated sounds to communicate with other members of their species, but none do so recursively, and thus none can produce complex utterances of infinitely varied meaning. “Recursion had always been an important part of Chomsky’s theory,” Pinker said. “But in Chomsky Mark II, or Mark III, or Mark VII, he all of a sudden said that the only thing unique to language is recursion. It’s not just that it’s the universal that has to be there; it’s the magic ingredient that makes language possible.”
+
+A key principle used by Chomsky was the "poverty of stimulus" argument, which he used to argue that humans must have a universal grammar built in at birth, because there is too little after-birth stimulus for humans to learn languages. For one, true recursion can never be learned empirically, because true recursion can only be conclusively proven by seeing the infinitely many sentences.
+
+Consider a simple example of the [balanced brackets language](https://en.wikipedia.org/wiki/Dyck_language). A language learner observes sample sentences from the language and try to infer the language. Suppose the learner sees a sequence `(), (()), ((())), (((())))`, what can they conclude? That it is the balanced brackets language? So we ask them to construct another sentence, and they confidently wrote `((((()))))`, but we announce to them that they were tricked! The language is the balanced brackets language -- except that the brackets only go 4 levels deep. Why? We explained that it was produced by a finite state machine, so arbitrary levels of nested brackets would [overflow its finite states](https://en.wikipedia.org/wiki/Pumping_lemma_for_regular_languages). Only by seeing all levels of recursion can the balanced brackets language be conclusively learned.
+
+## Chomskyans against statistical learning
+
+[@chomskyPovertyStimulusUnfinished2010]
+
+> Just to illustrate, I'll take one example that was presented back in the 1950s and has become a sort of a classic case because it's so trivial. 'Can eagles that fly swim?' Okay, simple sentence. Everyone understands it. Any young child understands it. There is a question about it. We know that we associate the word 'can' with 'swim,' not with 'fly.' We're asking 'Can they swim?' We're not asking 'Can they fly?' Well, why is that? A natural answer ought to be that you associate 'can' with 'fly.' After all, 'fly' is the word that's closest to 'can,' so why don't you just take the closest word and interpret it that way? ... Well, that property is universal. It holds up in every language. Languages may do it differently, but they're going to have the same property. It holds in every construction anyone knows, and it's just a universal property of language.
+> 
+> Well, this particular example has taken on a life of its own. For one thing, it's a poverty of stimulus problem, like Descartes’ triangle. There's been a huge effort to show that it's not a problem, that if you just do a complex statistical analysis of complex data, you'll find that that's what the child will determine from the data. The approaches are odd in several respects. First, every one is not only a failure but a colossal failure. I'm not going to talk about that. I actually have a recent paper about it with a computer scientist at MIT, Bob Berwick, where we run through a lot of the current proposals but it's easy to show that they're all just wildly wrong. But they keep coming. Almost every issue of the main cognitive science journals has another proposal of this sort, so that's one odd fact. There are many efforts to show that there is nothing puzzling about it, they're all colossal failures. 
+
+Well, finally a testable hypothesis! I asked GPT-4 to `Draw a syntax tree for "Can eagles that fly swim?"`, and got this:[^gpt-4-eagle-sentence]
+
+[^gpt-4-eagle-sentence]: The code it gave failed on the first try, due to an environment variable issue of the Linux virtual machine it ran on. We fixed it after two more plies of conversation.
+
+```python
+#| code-fold: true
+
+!pip install svgling
+import nltk
+from nltk import Tree
+from IPython.display import display
+nltk.download('punkt')
+import svgling
+from IPython.display import SVG, display
+
+# Your tree definition
+tree = Tree.fromstring("""
+    (SQ 
+        (MD Can) 
+        (NP 
+            (NNS eagles) 
+            (SBAR 
+                (WHNP (WDT that)) 
+                (S 
+                    (VP (VBP fly))
+                )
+            )
+        ) 
+        (VP (VB swim))
+    )
+""")
+
+# Render the tree as an SVG
+tree_svg = svgling.draw_tree(tree)
+
+# Save the SVG to a file
+tree_svg.get_svg().save()
+
+# Display the SVG in the notebook
+display(SVG(tree_svg.get_svg()))
+```
+
+![](figure/can_eagles_that_fly_swim_tree.svg)
+
+The results speak for itself.
+
+As expected, Chomsky rejected statistical language learning right until the end.
+
+> It's true there's been a lot of work on trying to apply statistical models to various linguistic problems. I think there have been some successes, but a lot of failures. There is a notion of success ... which I think is novel in the history of science. It interprets success as approximating unanalyzed data.
+
+See [@norvigChomskyTwoCultures2017] for a detailed analysis and rebuttal.
+
+## The Chomskyans
+
+[Gold's theorem about language learning in the limit](https://en.wikipedia.org/wiki/Language_identification_in_the_limit#Gold's_theorem)[@goldLanguageIdentificationLimit1967] is occasionally quoted in the same context as a justification for the "poverty of stimulus argument". It seems Chomsky did not consider it a relevant argument [@johnsonGoldTheoremCognitive2004], and I agree with Chomsky on that account, as Gold's theorem is extremely generic.
+
+During the second rise of neural networks, there was a bitter controversy that raged during the 1990s, but is essentially forgotten nowadays: the past tense debate. On one side were the connectionists, and on the other side were the cognitivists like Steven Pinker and Gary Marcus [@pinkerFutureTense2002]. Tellingly, both Steven Pinker and Gary Marcus were on the side of cognitivists. Steven Pinker is most famous for his other books like *The Blank Slate*, which applies Chomsky's linguistics to general psychology.
+
+Human language has the distinctive fractal-like structure: for every rule, there are exceptions, and for every exception, there are exceptional exceptions, and so on. This is called "quasi-regularity". Sejnowski in an interview described how quasi-regularity shows up in phonology, and offered a perfect demonstration project for the power of neural networks against the Chomskyans [@rosenfeldTalkingNetsOral2000, pages 324-325]:
+
+> I went to the library and found a book on text-to-speech that had probably one thousand rules in it. It was just lists of rules and exceptions. After I went to the library and found a book on text-to-speech that had probably one thousand rules in it. It was just lists of rules and exceptions. After every rule, there were dozens of exceptions. I figured that either they're doing it the wrong way, or this is a really tough problem. We considered finding something that was simpler after consulting the experts in linguistics. They said, "Chomsky worked on the problem, and it is well beyond the capability of anything that you could imagine trying to do."
+
+[@sejnowskiDeepLearningRevolution2018, pages 75--78] recounts an anecdote about how Jerry Fodor, another prominent cognitivist. While Fodor is no longer a hot name in AI nowadays, this anecdote illustrates the Chomsky way of thinking.
+
+> In 1988, I served on a committee for the McDonnell and Pew Foundations that interviewed prominent cognitive scientists and neuroscientists to get their recommendations on how to jump-start a new field called "cognitive neuroscience". ... \[Fodor\] started by throwing down the gauntlet, “Cognitive neuroscience is not a science and it never will be.” ... Fodor explained why the mind had to be thought of as a modular symbol-processing system running an intelligent computer program. \[Patricia Churchland\] asked him whether his theory also applied to cats. “Yes,” said Fodor, “cats are running the cat program.” But when Mortimer Mishkin, an NIH neuroscientist studying vision and memory, asked him to tell us about discoveries made in his own lab, Fodor mumbled something I couldn’t follow about using event-related potentials in a language experiment. Mercifully, at that moment, a fire drill was called and we all filed outside. Standing in the courtyard, I overheard Mishkin say to Fodor: “Those are pretty small potatoes.” When the drill was over, Fodor had disappeared.
+
+Similarly, Gary Marcus has been consistently critical of neural network language models since 1992 [@marcusOverregularizationLanguageAcquisition1992]. His theory of intelligence is essentially Chomsky's: neural networks can be intelligent, but only if they implement symbolic manipulation rules.[^gary-marcus-algebraic-mind] Furthermore, a lot of symbolic rules must be built in at birth, as the poverty of stimulus precludes learning them empirically. For example, here is him saying in 1993 [@marcusNegativeEvidenceLanguage1993]:
+
+[^gary-marcus-algebraic-mind]: This brief sketch suffices. A book-length treatment is [@marcusAlgebraicMindIntegrating2003].
+
+> Whether children require “negative evidence” (i.e., information about which strings of words are not grammatical sentences) to eliminate their ungrammatical utterances is a central question in language acquisition because, lacking negative evidence, a child would require internal mechanisms to unlearn grammatical errors. ... There is no evidence that noisy feedback is required for language learning, or even that noisy feedback exists. Thus internal mechanisms are necessary to account for the unlearning of ungrammatical utterances. 
+
+And here is him saying in 2018 [@marcusDeepLearningCritical2018], just in time to miss the Transformer revolution in natural language processing:
+
+> Human beings can learn abstract relationships in a few trials. If I told you that a schmister was a sister over the age of 10 but under the age of 21, perhaps giving you a single example, you could immediately infer whether you had any schmisters, whether your best friend had a schmister, whether your children or parents had any schmisters, and so forth. (Odds are, your parents no longer do, if they ever did, and you could rapidly draw that inference, too.) In learning what a schmister is, in this case through explicit definition, you rely not on hundreds or thousands or millions of training examples, but on a capacity to represent abstract relationships between algebra-like variables. Humans can learn such abstractions, both through explicit definition and more implicit means (Marcus, 2001). Indeed even 7-month old infants can do so, acquiring learned abstract language-like rules from a small number of unlabeled examples, in just two minutes.
+
+Not one to give up, he continued the same criticisms into the age of Transformer language models. If anything, I would grant that he is conveniently predictable. beat we would be unsurprised by his recent criticisms of deep learning [Deep learning: A critical appraisal] and [large language models](https://www.technologyreview.com/2020/08/22/1007539/gpt3-openai-language-generator-artificial-intelligence-ai-opinion/), [repeatedly](https://www.theatlantic.com/technology/archive/2023/03/ai-chatbots-large-language-model-misinformation/673376/).
