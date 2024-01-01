@@ -128,7 +128,57 @@ Resolved the monodromy overflow bug: for $\ln{z}$, rotating around the origin fo
 
 Philosophical foundations of Artificial Intelligence
 
-## Thermo-economics
+## Classical thermodynamics
+
+### Chemical equilibrium
+
+Standard chemistry textbooks are utter nonsense when it comes to the condition for equilibrium. You usually see things like $\Delta G = 0$ for chemical reactions in open atmosphere, or $\Delta H = 0$ for chemical reactions in a sealed container in a heat bath. When I took the chemistry courses, I was terribly confused because I felt they did not make sense. I passed the exams, but only by learning to speak the right kind of nonsense. During my study of classical thermodynamics, I rederived everything for myself, and in the process finally made everything come out the right way.
+
+To set the scene, consider a few problems in typical books on chemistry that does not make sense. For concreteness, consider a typical chemical demonstration, the dimerization reaction of 
+
+$$2 NO_2 \to N_2 O_4$$
+
+Now seal a certain amount of the gas inside a glass tube. Since $NO_2$ is brown, but $N_2 O_4$ is transparent, if we heat it up, the pressure would rise, forcing the reaction to go towards the $N_2O_4$ side by Le Chatelier's principle, and the glass tube would turn transparent. Putting the tube inside an ice bath would turn it brown again.
+
+The equilibrium for reaction is typically described as follows.
+
+Define the reaction quotient for this reaction as $Q = \frac{[N_2 O_4]}{[NO_2]^2}$. According to the standard textbook, it states that the reaction reaches equilibrium when $\Delta H = 0$, where
+
+$$
+\Delta H = \Delta H^\circ + RT \ln Q
+$$
+
+and $\Delta H^\circ$ is the change in Helmholtz energy for the reaction at the standard state. This description is nonsense.
+
+* $Q$ is always used inside a logarithm, like $RT\ln Q$. Logarithms can *never* have a unit, even though here $Q$ has units of molar density.
+* The reaction quotient's unit depends on the reaction itself. How could this possibly be true? Imagine a physical quantity $X$ that has units of meters in one problem, but units of meters$^{-3}$ in another.
+* Why can't I rewrite the equation as $4 NO_2 \to 2 N_2 O_4$? This would instantly change $Q$ to $Q' = Q^2$. How could the physics of the situation depend on our convention for describing it?
+* The unit for $\Delta H$ is $J/mol$, but the units for $H$ is $J$, so somehow there is an extra $mol$ appearing out of nowhere.
+
+The real answer is as follows: 
+
+The state of a chemical reaction system in a closed container depends on not just its temperature, but also its chemical composition. Thus, the standard state of a chemical reaction system must specify its temperature, and the concentration of all its molecules.
+
+Consider a chemical system
+$$
+\sum_i x_i X_i \leftrightarrow \sum_j y_i Y_j
+$$
+
+We must *arbitrarily* fix some standard concentrations $\left[X_i\right]^o,\left[Y_j\right]^o$, then the reaction quotient **with respect to these arbitrary conventions** is
+
+$$
+\ln Q:=\sum_j \ln y_j \frac{\left[Y_j\right]}{\left[Y_j\right]^o}-\sum_i x_i \ln \frac{\left[X_i\right]}{\left[X_i\right]^o}
+$$
+
+Then, if we immerse the system in an energy and volume bath (i.e. the open air, or maybe we throw it in a plastic bag and throw it under the sea), then
+
+$$
+\frac{d G}{d \xi}=\frac{d G^{\circ}}{d \xi}+R T \ln Q
+$$
+
+is independent of our choice of standard concentrations.
+
+## Classical statistical mechanics
 
 Let there be an amusement park that you are going, with many amusements i. You have exactly 1 day to spend there, so you need to spend p_i of a day on amusement i.
 Now your total utility at the end of the day is equal to -\sum_i p_i \ln p_i. 
