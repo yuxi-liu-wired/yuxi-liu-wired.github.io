@@ -2,26 +2,41 @@
 title: "The Perceptron Controversy"
 author: "Yuxi Liu"
 date: "2023-12-21"
-date-modified: "2023-12-30"
+date-modified: "2024-01-01"
 
 categories: [AI, history]
 format:
     html:
         toc: true
 
-description: "The forgotten controversy over whether neural networks could scale."
-# image: "figure/"
+description: "Connectionism died in the 60s from technical limits to scaling, then resurrected in the 80s after backprop allowed scaling. The Minsky--Papert anti-scaling hypothesis explained, psychoanalyzed, and buried."
 
-status: "wip"
+image: "figure/banner_2_cropped.png"
+
+status: "finished"
 confidence: "likely"
-importance: 6
+importance: 7
 ---
 
 {{< include ../../../static/_macros.tex >}}
 
 ## Abstract
 
+During the 1950s and 1960s, the connectionist and the symbolic schools of artificial intelligence competed for researcher allegiance and funding, with the symbolic school winning by 1970. This "first neural network winter" lasted until the rise of connectionist school in the 1980s.
 
+It is often stated that neural networks were killed off by the 1969 publication of *Perceptrons* by Marvin Minsky and Seymour Papert. This story is wrong on multiple accounts:
+
+* Minsky and Papert had been working towards killing off neural networks since around 1965 by speaking at conferences and circulating preprints. 
+* The mathematical content studies only the behavior of a single perceptron. It does not study multilayer perceptrons.
+* By 1969, most researchers had already left connectionism, frustrated by the lack of progress, as they did not develop backpropagation or deep learning. The last holdout, Frank Rosenblatt, died in 1971.
+
+The book achieved its mythical status as the "neural network killer" by its opportune timing, appearing just as the symbolic school achieved dominance. Since the connectionist school was almost empty, it faced little objection at its publication, creating the illusion that it caused the closure of the perceptron controversy.
+
+In the 1980s, the perceptron controversy reopened with the rise of connectionism. This time the controversy was bypassed without closure. Connectionists demonstrated that backpropagation with MLP bypassed most of the objections from *Perceptrons*. Minsky and Papert objected that the *lessons* of *Perceptrons* still applied, but their objections and lessons had by then become irrelevant.
+
+Minsky and Papert were possibly the most consistent critics of the scaling hypothesis, arguing over decades that neural networks cannot scale beyond mere toy problems. Minsky was motivated by mathematical certainty, as backpropagation--MLP cannot provably find global optima or accomplish any task efficiently, unlike a single perceptron. He rejected all experimental data with large MLP as theory-less data that cannot be extrapolated. Papert was motivated by social justice and epistemological equality. He rejected all scalable uniform architectures like backpropagation--MLP, as threats to his vision of a society with different but equally valid ways of knowing.
+
+As of 2019, essentially all predictions by Minsky and Papert, concerning the non-scalability of neural networks, had been disproven.
 
 ## The enigma of Marvin Minsky
 
@@ -50,7 +65,6 @@ During his undergrad years, Minsky was deeply impressed by [Andrew Gleason](http
 
 [^andrew-gleason]:
     > I asked Gleason how he was going to solve it. Gleason said he had a plan that consisted of three steps, each of which he thought would take him three years to work out. Our conversation must have taken place in 1947, when I was a sophomore. Well, the solution took him only about five more years ... Gleason made me realize for the first time that mathematics was a landscape with discernible canyons and mountain passes, and things like that. In high school, I had seen mathematics simply as a bunch of skills that were fun to master -- but I had never thought of it as a journey and a universe to explore. No one else I knew at that time had that vision, either. [@bernsteinMarvinMinskyVision1981]
-
 
 ::: {#thm-kakutani}
 ## Kakutani's fixed point theorem on the sphere
@@ -342,11 +356,11 @@ Fully connected networks, or indeed any neural network without a strong constrai
 
 Gradient descent, backpropagation, and all other hill-climbing algorithms are all vulnerable to getting trapped in local optima, and therefore they cannot work -- except in problem-architecture pairs where the loss landscape of this *particular* problem, for this *particular* architecture, using this *particular* loss function, is a single bump whose width is shorter than this *particular* learning rate.
 
-Gradient descent is just a form of hill-climbing, when the hill is differentiable. The perceptron learning algorithm can be interpreted as a hill-climbing algorithm too, as it makes localized decision to make one step in this direction or that, one error-signal at a time (Section 11.7). Therefore, the generic ineffectiveness of perceptron learning suggests that gradient descent is also generically ineffective and **cannot scale**. It does not even have a convergence theorem, so in that sense it's *worse* than perceptron learning algorithm.[^wores-than-perceptron]
+Gradient descent is just a form of hill-climbing, when the hill is differentiable. The perceptron learning algorithm can be interpreted as a hill-climbing algorithm too, as it makes localized decision to make one step in this direction or that, one error-signal at a time (Section 11.7). Therefore, the generic ineffectiveness of perceptron learning suggests that gradient descent is also generically ineffective and **cannot scale**. It does not even have a convergence theorem, so in that sense it's *worse* than perceptron learning algorithm.[^worse-than-perceptron]
 
 > We were very pleased to discover (see section 11.6) that PC could be represented as hill-climbing; however, that very fact led us to wonder whether such procedures could dependably be generalized, even to the limited class of multilayer machines that we named Gamba perceptrons. The situation seems not to have changed much -- we have seen no contemporary connectionist publication that casts much new theoretical light on the situation. Then why has GD become so popular in recent years? ... we fear that its reputation also stems from unfamiliarity with the manner in which hill-climbing methods deteriorate when confronted with larger-scale problems. ... Indeed, GD can fail to find a solution when one exists, so in that narrow sense it could be considered *less* powerful than PC.
 
-[^wores-than-perceptron]:
+[^worse-than-perceptron]:
     This claim is astonishing, now that we see how powerful backpropagation works, and how the perceptron learning rule had crippled neural network research for 30 years. We can understand their sentiments by remembering that they, like most of the academic community in computer science, favored the certainty of mathematical theorems over mere empirical success. [Leo Breiman](https://en.wikipedia.org/wiki/Leo_Breiman) observed that academic statistics had been hamstrung by the same grasp over mathematical certainty, and thus over 95\% of its publications were useless. [@breimanReflectionsRefereeingPapers1995]
 
 #### Stochastic gradient descent cannot see through the noise
