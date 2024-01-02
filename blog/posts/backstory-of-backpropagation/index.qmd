@@ -3,15 +3,11 @@ title: "The Backstory of Backpropagation"
 author: "Yuxi Liu"
 date: "2023-12-26"
 date-modified: "2023-12-27"
-keywords: ["backpropagation", "control theory", "history", "history of neural networks", "history of AI",
-            "1960s", "1950s", "Frank Rosenblatt", "Bernard Widrow", "Paul Werbos", "deep learning", "perceptron",
-            "machine learning", "artificial intelligence", "Hamiltonian", "Jacobian", "Lagrangian", "optimal control theory", 
-            "Marvin Minsky", "Seymour Papert"]
 categories: [AI, math, physics, history]
 format:
     html:
         toc: true
-description: "What took them so long to just use the chain rule?"
+description: "Why backprop was resisted for 20 years: assumption of discretely spiking neurons, goal of synthesizing Boolean logic, fear of local optimum, & a lot of bad luck. Werbos has the best claim for invention."
 image: "figure/banner_cropped.png"
 
 status: "finished"
@@ -23,7 +19,7 @@ importance: 4
 
 ## Abstract
 
-The backpropagation algorithm could have been invented by a slight generalization of the adjoint method, or the costate method, known widely among control theorists in the 1950s. Hybrid control theory leads almost inexorably to the backpropagation algorithm.
+The backpropagation algorithm could have been invented by a slight generalization of the adjoint method, or the costate method, which was known widely among control theorists in the 1950s. Hybrid control theory leads almost inexorably to the backpropagation algorithm.
 
 The backpropagation algorithm was reinvented multiple times during the 1970 -- 1986. It was finally no longer being reinvented after the popularity of connectionism finally taught everyone how backpropagation works.
 
@@ -33,7 +29,14 @@ Paul Werbos' claim of priority is that he developed the backpropagation algorith
 
 David Rumelhart freely admits that he was not the first to develop it, but he did develop it independently in 1982 and taught others in his research circle. The 1986 paper he coauthored [@rumelhartLearningRepresentationsBackpropagating1986] became popular enough that nobody would need to reinvent it again. He has no priority, but paternity.
 
-I am unable to explain why none of the first wave of neural network researchers developed backpropagation. The best hypothesis is that everyone was misled by the then current understanding of real neurons. Back in the days, everyone "knew" that real neurons operated by discrete spikes. Possibly they were also misled by the McCulloch--Pitts neuron model, as well as a mistaken attempt to achieve parity with digital computers, which were discrete.
+I am unable to explain why none of the first wave of neural network researchers developed backpropagation. My hypotheses are, in order of likelihood:
+
+* Bad luck.
+* Researchers were misled by the then current understanding of real neurons, and the the McCulloch--Pitts model. Back then everyone "knew" that real neurons operated by discrete spikes.
+* They distrusted gradient descent for being stuck at local minima.
+* They aimed to learn boolean functions.
+* They attempted to achieve parity with digital computers, which were discrete.
+* They attempted to distance themselves from cybernetics, which included avoiding optimal control theory.
 
 ## The backpropagation algorithm
 
