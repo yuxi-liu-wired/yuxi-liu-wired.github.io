@@ -43,9 +43,125 @@ Despite the universal ambitions of `XML`, it is now in the land of old soldiers,
 * The `RSS` and `Atom` feeds, which... unfortunately, are also mostly legacy now. Who even use these nowadays?
 * The acronym `AJAX`, which stands for **Asynchronous JavaScript and ~~XML~~ JSON**. After looking at `XML` and `JSON`, I am quite glad this replacement happened.
 
+### Semantic markup
+
+Use `<article>` to surround a block of article. There can be any number of articles in a single `HTML` file.
+
+The `id` of tags must be unique within each `HTML` file.
+
+### Tips for fast loading
+
+Use `<img decoding="async" loading="lazy" ...>` for images, to allow the rest of the page to load before the images are loaded. To avoid [Cumulative Layout Shift (CLS)](https://web.dev/articles/cls), I think something like 
+
+```css
+img {
+  max-width: 100%;
+  height: auto;
+}
+```
+
 <!-- ### `<meta>`
 
 ## CSS 
 
 ## JavaScript -->
+
+## Punctuation
+
+### Quotation
+
+English quotation standards are extremely annoying, because while theoretically, quotation is meant to be verbatim, it is anything but. I recommend verbatim quotation. It is consistent with usage in computer programming and formal logic. In particular, the English quotation method would be a syntax error in computer programming, and would also break the proof of Godel's incompleteness, which uses the [Quine quotation](https://en.wikipedia.org/wiki/Quasi-quotation).
+
+For nested quotations, alternate between double `"` and single `'` quotation marks. In other words, inside a level-$n$ writing, use `"` if $n \equiv 0\mod 2$, and `'` otherwise. It is context-free, and its quotient by `{" ~ '}` is the [Dyck language](https://en.wikipedia.org/wiki/Dyck_language).
+
+However, if you need to pass the Turing test, then study carefully the following edge cases:
+
+```
+* Did Hal say "Good morning, Dave."?
+  Did Hal say, "Good morning, Dave"?
+
+* No, he said "Where are you, Dave?".
+  No, he said, "Where are you, Dave?"
+
+  To be perfectly exact, I heard "Wh--- are you, Da---".
+
+* "cat" is in lowercase.
+* "Cat" is in lowercase.
+* "Cat" is in uppercase.
+  "Cat" is capitalized.
+* In lowercase "cat" is.
+* "cat" is in lowercase, while "CAT" is in uppercase.
+  "CAT" is in uppercase, while "cat" is in lowercase.
+  What we cannot speak about we must pass over in silence.
+
+* "sed" ("stream editor") is a Unix utility that parses and transforms text.
+* "Sed" ("stream editor") is a Unix utility that parses and transforms text.
+  The Unix utility "sed" parses and transforms text.
+```
+
+The two senses of verbatim (verbatim verbal speech, verbatim written text) are inconsistent with the capitalization constraint:
+
+```
+This violates "first letter capitalization".
+* "... 'Vim' stands for 'vi improved'. 'sed' stands for 'stream editor'. ..." 
+
+This violates "verbatim written text".
+* "... 'Vim' stands for 'vi improved'. 'Sed' stands for 'stream editor'. ..."
+
+This violates "verbatim verbal speech".
+* "... 'Vim' stands for 'vi improved', whereas 'sed' stands for 'stream editor'. ..."
+
+This violates the constraint of grammar.
+* "... 'Vim' stands for 'vi improved', 'sed' stands for 'stream editor'. ..."
+
+This works, but only by a dubious insertion.
+  "... 'Vim' stands for 'vi improved'[, whereas] 'sed' stands for 'stream editor'. ..."
+
+This works, but just barely.
+  "... 'Vim' stands for 'vi improved'; 'sed' stands for 'stream editor'. ..."
+
+It would not work if the two sentences are not "closely related".
+* "... The Unix coreutils were written mostly in the 1970s; 'sed',
+       which stands for 'stream editor', was written by Lee McMahon in 1973. ..."
+```
+
+### Whitespace
+
+For most cases, the single whitespace works.
+
+` ` (U+00A0 [no-break space]{.smallcaps}) says: "Do not break line here.". Similarly for `&NoBreak;` (U+2060 [word joiner]{.smallcaps}). The opposite is `<wbr>` (U+200B [zero width space]{.smallcaps}), which says: "You can break line here.".
+
+` ` (U+2007 [figure space]{.smallcaps}), ` ` (U+2008 [punctuation space]{.smallcaps}), are only for numerical tabulations, to ensure alignment across rows.
+
+The thin space and hair space are not used except by fastidious typographers.
+
+### Connecting words
+
+Use `-` to connect two non-equal parts into a compound noun-phrase, except when one of the parts is an open compound, in which case, use `--`.
+
+Use `--` to connect two equal parts into a compound noun-phrase.
+
+> `pre-WWII, pre--World War Two, ex--Prime Minister, water-based solution, non--water-based solution, the anti-choice--anti-life debate`
+
+### Interruptions
+
+Use em-dash `---` without spacing.
+
+> `I---no, YOU son of a---`
+>
+> `---and as I was saying---`
+
+### Deletions
+
+To cut out letters or words by redaction, use the em-dash `---`. Imagine that you wrote out the text normally, then you replace the section to be redacted with a single `---`, and in this way you will find the right spacing. However, I recommend the black block character `█`, which looks just like real redactions on secret documents.
+
+> `That f--- son of a b███!`
+
+The ellipsis symbol can be done either with `...` or with a single `…` (U+2026 [horizontal ellipsis]{.smallcaps}). It is used with spacing on both ends, except that there is no space between it and the quotation mark.
+
+> `"Consider this ... , and no more ... be said. ... and so on and so forth ...", said Mr. ---.`
+
+### Arithmetics
+
+If you cannot use LaTeX, then you could use the hyphen `-` for minus sign, though it's more correct to use `−`. Similarly, the letter `x` can work, though `×` is better.
 
