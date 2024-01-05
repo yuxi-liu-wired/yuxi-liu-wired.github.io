@@ -44,7 +44,10 @@ To set the stage, we should at least quickly derive the backpropagation algorith
 
 The graph can be finite or infinite, but in all cases, the acyclic directedness allows us to assign a "logical time" to each node of the graph.[^existence-of-logical-time] Some nodes are independent variables: they point at other nodes, but no nodes point at *them*. Other nodes are dependent. If we know the independent variables, we can propagate their values *forward* in logical time and obtain the values of every node. This is the "forward pass". Backpropagation goes backwards in logical time.
 
-[^existence-of-logical-time]: Because anything that happens, happens in the real world, and the real world has a single direction in time, any computation that can happen must have a logical time that is identical with physical time, even though logical time does not have to coincide with physical time. This is an existence proof only. 
+[^existence-of-logical-time]:
+    An existence proof that anything we might care about must have a logical time: Anything that happens, happens in the real world. The real world has a single direction in time. Therefore, any computation that can happen, must have a logical time that is identical with physical time.
+    
+    Note that logical time does not have to coincide with physical time. For example, to model goal-directed behavior, it might be better to put the physical future into the logical past.
 
 We use the convention of putting the derivative on the rows. So for example, for $f: \R^2\to\R^2$, we have
 
@@ -632,4 +635,4 @@ So he went to the Department of Energy and used backpropagation to make another 
 
 As a side note, one might have felt that Werbos' "turning Freud into mathematics" seem rather strange. This feeling is completely justified. I found a recent paper by him [@werbosIntelligenceBrainTheory2009] with this crackpot illustration:
 
-![The text at the end of the arrow says "quantum and collective intelligence (Jung, Dao, Atman...)?"](figure/werbos_2009.jpg)
+![The text at the end of the arrow says "quantum and collective intelligence (Jung, Dao, Atman...)?".](figure/werbos_2009.jpg)
