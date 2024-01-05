@@ -305,7 +305,7 @@ div.csl-indent {
 <p>This convention simplifies a lot of equations, and completely avoids transposing any matrix.</p>
 <section id="discrete-logical-time" class="level3">
 <h3 class="anchored" data-anchor-id="discrete-logical-time">Discrete logical time</h3>
-<p>Consider an acyclic directed graph with a finite number of nodes. Each graph node is a finite-dimensional real vector, though they may have different dimensions We order the acyclic graph on the number line, so that each node depends only on the earlier nodes. Now denote the graph nodes as <span class="math inline">\(x_0, x_1, ..., x_T\)</span>. By our ordering, <span class="math inline">\(x_1\)</span> depends on only <span class="math inline">\(x_0\)</span>, and <span class="math inline">\(x_2\)</span> depends on only <span class="math inline">\(x_1, x_2\)</span>, and so on:</p>
+<p>Consider an acyclic directed graph with a finite number of nodes. Each graph node is a finite-dimensional real vector, though they may have different dimensions We order the acyclic graph on the number line, so that each node depends only on the earlier nodes. Now denote the graph nodes as <span class="math inline">\(x_0, x_1, \dots, x_T\)</span>. By our ordering, <span class="math inline">\(x_1\)</span> depends on only <span class="math inline">\(x_0\)</span>, and <span class="math inline">\(x_2\)</span> depends on only <span class="math inline">\(x_1, x_2\)</span>, and so on:</p>
 <p><span class="math display">\[
 \begin{aligned}
 x_0 &amp;= x_0 \\
@@ -314,7 +314,7 @@ x_1 &amp;= f_1(x_0) \\
 x_T &amp;= f_T(x_0, x_1, ..., x_{T-1})
 \end{aligned}
 \]</span></p>
-<p>Now we perform an infinitesimal perturbation on every of its independent variables. A forward propagation then causes an infinitesimal perturbation on every variable, independent or dependent. Denote these as <span class="math inline">\(dx_0, dx_1, ..., dx_T\)</span>. We can now compute the derivative of <span class="math inline">\(dx_T\)</span> with respect to every other variable by backpropagating the perturbation. Suppose we can see only <span class="math inline">\(dx_T\)</span>, then the change in <span class="math inline">\(x_T\)</span> due to <span class="math inline">\(dx_T\)</span> is the identity. That is,</p>
+<p>Now we perform an infinitesimal perturbation on every of its independent variables. A forward propagation then causes an infinitesimal perturbation on every variable, independent or dependent. Denote these as <span class="math inline">\(dx_0, dx_1, \dots, dx_T\)</span>. We can now compute the derivative of <span class="math inline">\(dx_T\)</span> with respect to every other variable by backpropagating the perturbation. Suppose we can see only <span class="math inline">\(dx_T\)</span>, then the change in <span class="math inline">\(x_T\)</span> due to <span class="math inline">\(dx_T\)</span> is the identity. That is,</p>
 <p><span class="math display">\[
 \frac{dx_T}{dx_T} = I
 \]</span></p>
@@ -388,7 +388,7 @@ J = \underbrace{(x_{T, 0} - x_{goal})^2}_{\text{location should be at the goal l
 J = A(x_T) + \int_0^T L(x_t, u_t)dt
 \]</span></p>
 <p>for some real-valued functions <span class="math inline">\(A, L\)</span>.</p>
-<p>We can of course care about more than the state at the last time-step. We can care about multiple time-steps <span class="math inline">\(t_0, t_1, ..., t_n\)</span> by writing down a cost function <span class="math inline">\(J = \sum_{i=0}^n A_i(x_{t_i}) + \int_0^T L(x_T, u_T)dt\)</span>, but this merely creates complications without introducing new ideas. Even more ornate computation graphs, weaving together multiple strands of continuous and discrete logical times, can be backpropagated in the same way without involving new ideas.</p>
+<p>We can of course care about more than the state at the last time-step. We can care about multiple time-steps <span class="math inline">\(t_0, t_1, \dots, t_n\)</span> by writing down a cost function <span class="math inline">\(J = \sum_{i=0}^n A_i(x_{t_i}) + \int_0^T L(x_T, u_T)dt\)</span>, but this merely creates complications without introducing new ideas. Even more ornate computation graphs, weaving together multiple strands of continuous and discrete logical times, can be backpropagated in the same way without involving new ideas.</p>
 <p>Define the costate <span class="math inline">\(\lambda_t := \nabla_{x_t} J\)</span>, then the costate backpropagates as:</p>
 <p><span class="math display">\[
 \lambda_t = L(x_t, u_t) dt + \lambda_{t+dt}(I + \nabla_{x_t}f(x_t, u_t)dt)
@@ -1349,7 +1349,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="fu">### Discrete logical time</span></span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>Consider an acyclic directed graph with a finite number of nodes. Each graph node is a finite-dimensional real vector, though they may have different dimensions We order the acyclic graph on the number line, so that each node depends only on the earlier nodes. Now denote the graph nodes as $x_0, x_1, ..., x_T$. By our ordering, $x_1$ depends on only $x_0$, and $x_2$ depends on only $x_1, x_2$, and so on:</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>Consider an acyclic directed graph with a finite number of nodes. Each graph node is a finite-dimensional real vector, though they may have different dimensions We order the acyclic graph on the number line, so that each node depends only on the earlier nodes. Now denote the graph nodes as $x_0, x_1, \dots, x_T$. By our ordering, $x_1$ depends on only $x_0$, and $x_2$ depends on only $x_1, x_2$, and so on:</span>
 <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
@@ -1360,7 +1360,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>Now we perform an infinitesimal perturbation on every of its independent variables. A forward propagation then causes an infinitesimal perturbation on every variable, independent or dependent. Denote these as $dx_0, dx_1, ..., dx_T$. We can now compute the derivative of $dx_T$ with respect to every other variable by backpropagating the perturbation. Suppose we can see only $dx_T$, then the change in $x_T$ due to $dx_T$ is the identity. That is,</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>Now we perform an infinitesimal perturbation on every of its independent variables. A forward propagation then causes an infinitesimal perturbation on every variable, independent or dependent. Denote these as $dx_0, dx_1, \dots, dx_T$. We can now compute the derivative of $dx_T$ with respect to every other variable by backpropagating the perturbation. Suppose we can see only $dx_T$, then the change in $x_T$ due to $dx_T$ is the identity. That is,</span>
 <span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>\frac{dx_T}{dx_T} = I</span>
@@ -1469,7 +1469,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>for some real-valued functions $A, L$.</span>
 <span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>We can of course care about more than the state at the last time-step. We can care about multiple time-steps $t_0, t_1, ..., t_n$ by writing down a cost function $J = \sum_{i=0}^n A_i(x_{t_i}) + \int_0^T L(x_T, u_T)dt$, but this merely creates complications without introducing new ideas. Even more ornate computation graphs, weaving together multiple strands of continuous and discrete logical times, can be backpropagated in the same way without involving new ideas.</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>We can of course care about more than the state at the last time-step. We can care about multiple time-steps $t_0, t_1, \dots, t_n$ by writing down a cost function $J = \sum_{i=0}^n A_i(x_{t_i}) + \int_0^T L(x_T, u_T)dt$, but this merely creates complications without introducing new ideas. Even more ornate computation graphs, weaving together multiple strands of continuous and discrete logical times, can be backpropagated in the same way without involving new ideas.</span>
 <span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>Define the costate $\lambda_t := \nabla_{x_t} J$, then the costate backpropagates as: </span>
 <span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a></span>
