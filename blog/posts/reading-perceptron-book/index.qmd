@@ -62,7 +62,7 @@ $$
 \Phi(x) := \psi_{k+1}(\psi_1(x), \psi_2(x), ..., \psi_k(x))
 $$
 
-where $\psi_1, ..., \psi_k$ are (hidden) perceptrons in the hidden layer, and $\psi_{k+1}$ is the single output perceptron.
+where $\psi_1, \dots, \psi_k$ are (hidden) perceptrons in the hidden layer, and $\psi_{k+1}$ is the single output perceptron.
 :::
 
 ::: {#def-predicate-order}
@@ -121,11 +121,11 @@ Restricting to mask perceptron machines does not change perceptron orders. That 
 
 Take one such perceptron machine. The threshold of the output perceptron can be removed by adding a hidden perceptron that always outputs $1$ -- in other words, $\psi_\emptyset$, the mask of the empty set. Now it remains to decompose each hidden perceptron into masks with the same order, or less.
 
-Let $\psi$ be a hidden perceptron with nonzero weights on the input points $x_{i_1}, ..., x_{i_k}$; then, its output is determined by the values of $x_{i_1}, ..., x_{i_k}$. Therefore, we can partition the binary set $\{0, 1\}^{i_1, ..., i_k}$ into two subsets $A_0, A_1$, such that for any input $x\in\{0, 1\}^R$, we have $\psi(x) = 1$ iff $(x_{i_1}, ..., x_{i_k}) \in A_1$.
+Let $\psi$ be a hidden perceptron with nonzero weights on the input points $x_{i_1}, \dots, x_{i_k}$; then, its output is determined by the values of $x_{i_1}, \dots, x_{i_k}$. Therefore, we can partition the binary set $\{0, 1\}^{i_1, \dots, i_k}$ into two subsets $A_0, A_1$, such that for any input $x\in\{0, 1\}^R$, we have $\psi(x) = 1$ iff $(x_{i_1}, \dots, x_{i_k}) \in A_1$.
 
-In other words, we only need to look at the binary values $x_{i_1}, ..., x_{i_k}$ to determine the binary output $\psi(x)$.
+In other words, we only need to look at the binary values $x_{i_1}, \dots, x_{i_k}$ to determine the binary output $\psi(x)$.
 
-Therefore, we can replace $\psi$ with a boolean formula on $x_{i_1}, ..., x_{i_k}$, then expand it to obtain up to $2^k$ masks, each of order at most $k$.
+Therefore, we can replace $\psi$ with a boolean formula on $x_{i_1}, \dots, x_{i_k}$, then expand it to obtain up to $2^k$ masks, each of order at most $k$.
 
 For example, suppose $\psi$ has nonzero weights on $x_1, x_2$, and is 1 on all odd-sized subsets, then we can write it as a boolean formula:
 
@@ -180,7 +180,7 @@ where $f(t) := \sum_{i=0}^{|R|}b_i \binom{t}{i}$ is a polynomial in $t$. Since t
 ::: {#thm-one-in-a-box}
 ## Theorem 3.2, one-in-a-box
 
-Let $A_1, A_2, ..., A_m$ be disjoint subsets of $R$, each of size $4 m^2$, and define the predicate $\psi(X) = \forall i, \left|X \cap A_i\right|>0$; that is, there is at least one point of $X$ in each $A_i$. The order of $\psi$ is $\geq m$.
+Let $A_1, A_2, \dots, A_m$ be disjoint subsets of $R$, each of size $4 m^2$, and define the predicate $\psi(X) = \forall i, \left|X \cap A_i\right|>0$; that is, there is at least one point of $X$ in each $A_i$. The order of $\psi$ is $\geq m$.
 
 :::
 
@@ -188,13 +188,13 @@ Let $A_1, A_2, ..., A_m$ be disjoint subsets of $R$, each of size $4 m^2$, and d
 
 Let the order of $\psi$ be $k$.
 
-The predicate $\psi$ is invariant with respect to the group $S_{A_1} \times \cdots \times S_{A_m}$, so by the same construction as the proof of @thm-group-invariance, there exists a polynomial $P(t_1, ..., t_m)$, where $P$ has order $k$, and
+The predicate $\psi$ is invariant with respect to the group $S_{A_1} \times \cdots \times S_{A_m}$, so by the same construction as the proof of @thm-group-invariance, there exists a polynomial $P(t_1, \dots, t_m)$, where $P$ has order $k$, and
 
 $$
 \forall t_1, ..., t_m \in \{0, 1, ..., 4m^2\}, P(t_1, ..., t_m) < 0 \iff t_1 = 0 \vee \cdots \vee t_m = 0
 $$
 
-Now define $Q(t) := P((t-1)^2, (t-3)^2, ..., (t-2m+1)^2)$. By the above equation, $Q < 0$ at $t=1, 3, ..., 2m - 1$ and $Q \geq 0$ at $t = 0, 2, ..., 2m$. Thus, $Q$ has order $\geq 2m$. Thus, $2k \geq 2m$.
+Now define $Q(t) := P((t-1)^2, (t-3)^2, \dots, (t-2m+1)^2)$. By the above equation, $Q < 0$ at $t=1, 3, \dots, 2m - 1$ and $Q \geq 0$ at $t = 0, 2, \dots, 2m$. Thus, $Q$ has order $\geq 2m$. Thus, $2k \geq 2m$.
 
 :::
 
@@ -215,7 +215,7 @@ even though both $|X \cap A| > |X \cap C|$ and $|X \cap B| > |X \cap C|$ are of 
 
 $|X \cap A| > |X \cap C|$ is computed by the order-$1$ perceptron machine $\theta\lrb{\sum_{i\in A} x_i - \sum_{i \in C}x_i}$, and similarly for the other one.
 
-To show the composite boolean function is not of bounded order, suppose otherwise, then by the same argument as the previous proof, we can construct a sequence of polynomials $P_1(a, b, c), P_2(a, b, c), P_3(a, b, c), ...$, such that each $P_n$ is the polynomial corresponding to the perceptron machine for the case where $|A| = |B| = |C| = n$, and each of them has order at most $M$, for some fixed $M$.
+To show the composite boolean function is not of bounded order, suppose otherwise, then by the same argument as the previous proof, we can construct a sequence of polynomials $P_1(a, b, c), P_2(a, b, c), P_3(a, b, c), \dots$, such that each $P_n$ is the polynomial corresponding to the perceptron machine for the case where $|A| = |B| = |C| = n$, and each of them has order at most $M$, for some fixed $M$.
 
 Being the polynomial corresponding to the perceptron machine for the case where $|A| = |B| = |C| = n$ means precisely that
 
@@ -223,7 +223,7 @@ $$
 a > c \wedge b > c \implies P_n(a, b, c) \geq 0; \neg (a > c \wedge b > c) \implies P_n(a, b, c) < 0;
 $$
 
-for all $a, b, c \in \{0, 1, ..., n\}$. This implies that each $P_1, P_2, ... \neq 0$. Now, divide each polynomial by the root-sum-square of its coefficients, so that if we interpret the coefficients of each $P_n$ as a point in a high-dimensional space, the point falls on the unit sphere in that space. Since the unit sphere is compact, there exists a limit point, which we write as $P(a, b, c)$.
+for all $a, b, c \in \{0, 1, \dots, n\}$. This implies that each $P_1, P_2, \dots \neq 0$. Now, divide each polynomial by the root-sum-square of its coefficients, so that if we interpret the coefficients of each $P_n$ as a point in a high-dimensional space, the point falls on the unit sphere in that space. Since the unit sphere is compact, there exists a limit point, which we write as $P(a, b, c)$.
 
 By the limit construction, we have
 
@@ -304,7 +304,7 @@ $$
 
 We have that $f_{m, n}(x) = 0$ if the figure is symmetric, and $f_{m, n}(x) \leq -1$ otherwise.
 
-Now we define the entire perceptron machine by $\sum_{m \leq n} M_{n - m} x_m x_n (f_{m, n}(x) - 1/2)$. If the sequence of $M_0, M_1, ...$ grows as $(d!)^2$ roughly [^exm-line-symmetry-factorial-growth], then the largest bracket $(m, n)$ would "veto" every smaller bracket contained within, and so the entire perceptron machine is effectively first testing for the smallest interval containing the figure, before testing the symmetry within that interval.
+Now we define the entire perceptron machine by $\sum_{m \leq n} M_{n - m} x_m x_n (f_{m, n}(x) - 1/2)$. If the sequence of $M_0, M_1, \dots$ grows as $(d!)^2$ roughly [^exm-line-symmetry-factorial-growth], then the largest bracket $(m, n)$ would "veto" every smaller bracket contained within, and so the entire perceptron machine is effectively first testing for the smallest interval containing the figure, before testing the symmetry within that interval.
 
 [^exm-line-symmetry-factorial-growth]:
     Expanding term by term, we have $|f_{m, n}(x) - 1/2| \leq 2(n-m) + \frac{1}{2}$. Therefore, in order for $M_d$ to "veto" every other bracket within, we need
@@ -345,7 +345,7 @@ They claimed that Chapter 10 is part of the learning theory. However, it does no
 :::{#exm-parity-order}
 ## Theorem 10.1
 
-Suppose we have a perceptron machine that tests for parity; then, by @thm-parity-order, it must have order $|R|$. As in the construction given in the proof, we use the group invariance theorem to obtain a group-symmetric machine with the form $\theta(\sum_{i=0}^{|R|}\binom{|X|}{i} b_i)$, where $b_0, b_1, ..., b_{|R|}$ are real numbers. Then, assuming the machine is "reliable", we can prove that $(-1)^{M} b_{M+1} \geq 2^{M}$ for any $M \in \{0, 1, ..., |R|-1\}$.
+Suppose we have a perceptron machine that tests for parity; then, by @thm-parity-order, it must have order $|R|$. As in the construction given in the proof, we use the group invariance theorem to obtain a group-symmetric machine with the form $\theta(\sum_{i=0}^{|R|}\binom{|X|}{i} b_i)$, where $b_0, b_1, \dots, b_{|R|}$ are real numbers. Then, assuming the machine is "reliable", we can prove that $(-1)^{M} b_{M+1} \geq 2^{M}$ for any $M \in \{0, 1, \dots, |R|-1\}$.
 
 Since the group-symmetric construction can only average out the most extreme values, this implies that, before the group-symmetric construction, our perceptron machine had even more extreme coefficients.
 
@@ -361,9 +361,9 @@ $$
 
 ::: {.proof}
 
-Define $A_n = \sum_{i=0}^n \binom{n}{i}b_i$. Since the machine is reliable, we have that $(-1)^{n}(A_{n+1} - A_n) \geq 1$ for each $n = 0, 1, ..., |R|-1$. Simplifying the binomial coefficients, we have $A_{n+1} - A_n = \sum_i \binom{n}{i} b_{i+1}$. Note that we use the convenient convention that $\binom{x}{y} = 0$ if $x < y$.
+Define $A_n = \sum_{i=0}^n \binom{n}{i}b_i$. Since the machine is reliable, we have that $(-1)^{n}(A_{n+1} - A_n) \geq 1$ for each $n = 0, 1, \dots, |R|-1$. Simplifying the binomial coefficients, we have $A_{n+1} - A_n = \sum_i \binom{n}{i} b_{i+1}$. Note that we use the convenient convention that $\binom{x}{y} = 0$ if $x < y$.
 
-Now fix any $M \in \{0, 1, ..., |R|-1\}$, and evaluate the following inequality:
+Now fix any $M \in \{0, 1, \dots, |R|-1\}$, and evaluate the following inequality:
 
 $$
 2^{M} = \sum_n \binom{M}{n} \cdot 1 \leq \sum_n \binom{M}{n} (-1)^{n}(A_{n+1} - A_n)
@@ -405,7 +405,7 @@ By linearity of the learning rule, we can deal only with the case where $\alpha 
 
 By multiplying each $x$ with its $y$, we can deal only with the case where all $y = +1$.
 
-By rotating and scaling the space, we can deal only with the case where $w^* = (1, 0, ..., 0)$, and $\gamma = 1$.
+By rotating and scaling the space, we can deal only with the case where $w^* = (1, 0, \dots, 0)$, and $\gamma = 1$.
 
 Now, each weight update increases the first coordinate of $w$ by at least $1$, so after $n$ updates, $\|w\| \geq n$. However, each weight update of $w \leftarrow w + x$ uses a vector $x$ that is pointing in a direction perpendicular to $w$, or worse, pointing against $w$. Therefore, by Pythagorean theorem, $\|w\|^2$ increases by at most $\|x\|^2 \leq R^2$. So after $n$ updates, $\|w\|^2 \leq nR^2$.
 

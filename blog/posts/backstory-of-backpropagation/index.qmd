@@ -62,7 +62,7 @@ This convention simplifies a lot of equations, and completely avoids transposing
 
 ### Discrete logical time
 
-Consider an acyclic directed graph with a finite number of nodes. Each graph node is a finite-dimensional real vector, though they may have different dimensions We order the acyclic graph on the number line, so that each node depends only on the earlier nodes. Now denote the graph nodes as $x_0, x_1, ..., x_T$. By our ordering, $x_1$ depends on only $x_0$, and $x_2$ depends on only $x_1, x_2$, and so on:
+Consider an acyclic directed graph with a finite number of nodes. Each graph node is a finite-dimensional real vector, though they may have different dimensions We order the acyclic graph on the number line, so that each node depends only on the earlier nodes. Now denote the graph nodes as $x_0, x_1, \dots, x_T$. By our ordering, $x_1$ depends on only $x_0$, and $x_2$ depends on only $x_1, x_2$, and so on:
 
 $$
 \begin{aligned}
@@ -73,7 +73,7 @@ x_T &= f_T(x_0, x_1, ..., x_{T-1})
 \end{aligned}
 $$
 
-Now we perform an infinitesimal perturbation on every of its independent variables. A forward propagation then causes an infinitesimal perturbation on every variable, independent or dependent. Denote these as $dx_0, dx_1, ..., dx_T$. We can now compute the derivative of $dx_T$ with respect to every other variable by backpropagating the perturbation. Suppose we can see only $dx_T$, then the change in $x_T$ due to $dx_T$ is the identity. That is,
+Now we perform an infinitesimal perturbation on every of its independent variables. A forward propagation then causes an infinitesimal perturbation on every variable, independent or dependent. Denote these as $dx_0, dx_1, \dots, dx_T$. We can now compute the derivative of $dx_T$ with respect to every other variable by backpropagating the perturbation. Suppose we can see only $dx_T$, then the change in $x_T$ due to $dx_T$ is the identity. That is,
 
 $$
 \frac{dx_T}{dx_T} = I
@@ -182,7 +182,7 @@ $$
 
 for some real-valued functions $A, L$.
 
-We can of course care about more than the state at the last time-step. We can care about multiple time-steps $t_0, t_1, ..., t_n$ by writing down a cost function $J = \sum_{i=0}^n A_i(x_{t_i}) + \int_0^T L(x_T, u_T)dt$, but this merely creates complications without introducing new ideas. Even more ornate computation graphs, weaving together multiple strands of continuous and discrete logical times, can be backpropagated in the same way without involving new ideas.
+We can of course care about more than the state at the last time-step. We can care about multiple time-steps $t_0, t_1, \dots, t_n$ by writing down a cost function $J = \sum_{i=0}^n A_i(x_{t_i}) + \int_0^T L(x_T, u_T)dt$, but this merely creates complications without introducing new ideas. Even more ornate computation graphs, weaving together multiple strands of continuous and discrete logical times, can be backpropagated in the same way without involving new ideas.
 
 Define the costate $\lambda_t := \nabla_{x_t} J$, then the costate backpropagates as: 
 
