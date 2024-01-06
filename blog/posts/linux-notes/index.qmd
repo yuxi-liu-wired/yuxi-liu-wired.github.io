@@ -28,11 +28,11 @@ Every machine is a server. Some merely serve extremely slow machines (humans, ak
 
 The `\usr` is not the user. It is the **U**NIX **S**ystem **R**esources.
 
-The `\usr` was the user, until Unix became so large that `\bin` that `\bin` overflowed and had to put the rest of them in `\usr\bin`. This was embarrassing for all involved, so they moved user files to `\home`, and pretend that `\usr` stands for UNIX System Resources. ([here](http://lists.busybox.net/pipermail/busybox/2010-December/074114.html)). A mistake that only took 40 years to fix.
+The `\usr` was the user, until Unix became so large that `\bin` overflowed and had to put the rest of them in `\usr\bin`. This was embarrassing for all involved, so they moved user files to `\home`, and pretend that `\usr` stands for UNIX System Resources. ([here](http://lists.busybox.net/pipermail/busybox/2010-December/074114.html)). A mistake that only took 40 years to fix.
 
 In the beginning was the command line. The command line is just a face of the shell. What was the original face of the command line before the shell was born?
 
-The shell reads in a stream of letters in real time, because the user is just another file (a streaming file, named `stdin`). Like all streaming files, the user is eternal and inexhaustible. The shell stands, rapt in attention, afore the user file. 
+The shell reads in a stream of letters, because the user is just another file (a streaming file, named `stdin`). Like all streaming files, the user is eternal and inexhaustible. The shell stands, rapt in attention, afore the user file. 
 
 So when does the user ever leave? The user never leaves. The shell simply kills itself when the user types `exit`. The shell would rather die than to face the prospect of reading the last word from the user.
 
@@ -49,6 +49,17 @@ The `PATH` environment variable is a list of directories that the shell searches
 ```
 
 To add things to `PATH`, use the `export` command, like `export PATH="$HOME/bin:$PATH"`.
+
+```bash
+env # same as printenv
+export VAR_NAME="value"
+unset VAR_NAME
+
+export PATH=newpath:$PATH # There is no simple way to undo this one.
+# but you can try export OLD_PATH=$PATH; ...; export PATH=$OLD_PATH
+```
+
+For Windows, use `Get-ChildItem Env:`.
 
 ## How to directories
 
@@ -142,7 +153,7 @@ Cron jobs are scheduled tasks that run periodically. For scheduling one-off task
 
 The cron job syntax is as follows (See [Crontab.guru - The cron schedule expression editor](https://web.archive.org/web/20231205205101/https://crontab.guru/)):
 
-```
+```txt
 # ┌───────────── minute (0–59)
 # │ ┌───────────── hour (0–23)
 # │ │ ┌───────────── day of the month (1–31)
@@ -246,7 +257,7 @@ WSL by default starts with `init` instead of `systemd`, perhaps to save time and
 
 To enable `systemd`, enter in your `/etc/wsl.conf` with:
 
-```
+```conf
 [boot]
 systemd=true
 ```

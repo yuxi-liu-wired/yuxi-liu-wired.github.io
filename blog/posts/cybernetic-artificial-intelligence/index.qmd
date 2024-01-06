@@ -170,7 +170,7 @@ $$\int e^{-x^2}H_n(x) H_m(x) dx = \sqrt\pi 2^n  n! \delta_{mn}$$
 :::
 
 ::: {.proof collapse="true"}
-$$\int e^{-x^2} g(t, x)g(s, x) dx = \sum_{n, m \geq 0}\frac{1}{n!m!}t^ns^m \int e^{-x^2} H_n(x) H_m(x) dx$$
+$$\int e^{-x^2} g(t, x)g(s, x) dx = \sum_{n, m \geq 0}\frac{1}{n! m!}t^ns^m \int e^{-x^2} H_n(x) H_m(x) dx$$
 
 Directly compute the left-hand side and find that it equals $\sqrt\pi e^{2st}$. Now expand it in powers of $s$ and $t$.
 :::
@@ -243,7 +243,7 @@ By our assumption that the transducer has a limited memory, we should be able to
 By our assumption that the transducer is analytic with respect to the input, $T(c_0(t), \dots, c_n(t))$ has a multivariate Hermite serial expansion (the same idea as multivariate Taylor expansion):
 
 $$
-T(c_0(t), ..., c_n(t)) = \sum_{m_0, ..., m_n \geq 0} T_{m_0, ..., m_n} H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t))
+T(c_0(t), \dots , c_n(t)) = \sum_{m_0, \dots , m_n \geq 0} T_{m_0, \dots , m_n} H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t))
 $$
 
 We are quite close to the target. We can compute the Laguerre coefficients $c_n(t)$ of any input signal by the Laguerre filter bank. We can construct analog circuits that compute $H_m(c_n(t))$, the Hermite polynomial values of the Laguerre coefficients. The remaining challenge is to determine the coefficients $T_{m_0, \dots, m_n}$.
@@ -251,13 +251,13 @@ We are quite close to the target. We can compute the Laguerre coefficients $c_n(
 This is where @thm-laguerre-white-noise comes to finish the construction. Let $x(t)$ be a white noise process, then since
 
 $$
-T[x](t) \approx \sum_{m_0, ..., m_n \geq 0} T_{m_0, ..., m_n} H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t))
+T[x](t) \approx \sum_{m_0, \dots , m_n \geq 0} T_{m_0, \dots , m_n} H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t))
 $$
 
 and since the Laguerre coefficients are independent samples of the standard gaussian, we have
 
 $$
-T_{m_0, ..., m_n} \approx \mathbb{E}\lrs{T[x](t)\; H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t))}
+T_{m_0, \dots , m_n} \approx \mathbb{E}\lrs{T[x](t)\; H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t))}
 $$
 
 where the expectation is in the sense of ensemble expectation. That is, we would run this experiment once with a white noise process, freeze it exactly at the moment $t$, then run it again with another white noise process, freeze it exactly at the moment $t$, and so on. Then we average over all these experiments.
@@ -267,7 +267,7 @@ However, @thm-laguerre-white-noise states that the Laguerre coefficients are sta
 [^ergodic-hypothesis]: Wiener was *really* into ergodic theory.
 
 $$
-T_{m_0, ..., m_n} \approx \lim_{T \to \infty} \frac{1}{T} \int_0^T T[x](t)\; H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t)) dt
+T_{m_0, \dots , m_n} \approx \lim_{T \to \infty} \frac{1}{T} \int_0^T T[x](t)\; H_{m_0}(c_0(t)) \cdots H_{m_n}(c_n(t)) dt
 $$
 
 The integrand is computable by the analog devices we described. The integration-and-averaging can be done with a very-low-pass filter -- taking the average is essentially passing only the zero-frequency signal, thus it is the low-pass filter with the lowest possible passband. Finally, since white noise is all around us, it can be obtained in many ways, such as by amplifying the thermal noise in a resistor.

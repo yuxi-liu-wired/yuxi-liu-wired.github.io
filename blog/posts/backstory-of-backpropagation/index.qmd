@@ -69,7 +69,7 @@ $$
 x_0 &= x_0 \\
 x_1 &= f_1(x_0) \\
 &\cdots \\
-x_T &= f_T(x_0, x_1, ..., x_{T-1})
+x_T &= f_T(x_0, x_1, \dots , x_{T-1})
 \end{aligned}
 $$
 
@@ -82,15 +82,15 @@ $$
 Now suppose we can see only $dx_{T-1}$, then the change in $x_T$ due to $dx_{T-1}$ can only come from the final step in the forward propagation. Therefore
 
 $$
-\frac{dx_T}{dx_{T-1}} = \nabla_{x_{T-1}} f_T(x_0, x_1, ..., x_{T-1})
+\frac{dx_T}{dx_{T-1}} = \nabla_{x_{T-1}} f_T(x_0, x_1, \dots , x_{T-1})
 $$
 
 Similarly, the change in $x_T$ due to $dx_{T-2}$ can come from either directly changing $x_T$, or changing $x_{T-1}$ and thereby changing $x_T$. Therefore,
 
 $$
 \frac{dx_T}{dx_{T-2}} = 
-    \nabla_{x_{T-1}} f_{T}(x_0, x_1, ..., x_{T-2}) + 
-    \ub{\frac{dx_T}{dx_{T-1}}\nabla_{x_{T-2}} f_{T-1}(x_0, x_1, ..., x_{T-2})}{the chain rule}
+    \nabla_{x_{T-1}} f_{T}(x_0, x_1, \dots , x_{T-2}) + 
+    \ub{\frac{dx_T}{dx_{T-1}}\nabla_{x_{T-2}} f_{T-1}(x_0, x_1, \dots , x_{T-2})}{the chain rule}
 $$
 
 This generalizes to the rest of the steps.
@@ -364,7 +364,7 @@ One last thing about his backpropagation rule: he also discovered the per-layer 
 
 ## Bernard Widrow and Marcian Hoff
 
-Widrow and Hoff worked on multilayered perceptrons in the early 1960s. They trained a single-layered perceptron with gradient descent on the squared loss, then proceeded to not try gradient descent after a year of trying to train a network with *two layers*.
+Widrow and Hoff worked on multilayer perceptrons in the early 1960s. They trained a single-layered perceptron with gradient descent on the squared loss, then proceeded to not try gradient descent after a year of trying to train a network with *two layers*.
 
 The Widrow--Hoff machine, which they called the ADALINE ("ADAptive Linear NEuron"), is a function of type $\R^n \to \{0,1\}$ defined by
 
@@ -619,7 +619,7 @@ Karl Deutsch, who believed in Werbos, sponsored his PhD thesis on a "respectable
 >
 > ... Once I started doing software for them, they discovered I was pretty good at it. Once I had put backpropagation into a TSP command, they offered me a full-time job at the Harvard Cambridge Project, so I did the Ph.D. thesis while having a full-time job. While I was doing these things at MIT, I remember going to one party. ... one of the people there said, 'We have heard through the grapevine that somebody has developed this thing called continuous feedback that allows you to calculate all the derivatives in a single pass."
 
-But the saga is not over. after the Ph.D., Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.
+But the saga is not over. after the PhD, Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.
 
 > I found out that DARPA had spent a lot of effort building a worldwide conflict forecasting model for the Joint Chiefs of Staff that was used in the long-range strategy division of the Joint Chiefs. ... I wound up sending a couple of graduate students to create a really good database of Latin America. I said, "You want variance, high variance. Something hard to predict." I thought conflict in Latin America would be the most beautiful case. I figured there were enough cultural homogeneities that it would be a single stochastic process, but with lots and lots of variance in that process. So we got truly annual data going back, I don't know, twenty or thirty years for all the countries in Latin America and then reestimated the Joint Chief's model on it. It had an r2 of about .0016 at forecasting conflict. By jiggling and jiggling we could raise it to about .05. It could predict GNP and economic things decently. Conflict prediction we couldn't improve, though; it was hopeless.
 > 

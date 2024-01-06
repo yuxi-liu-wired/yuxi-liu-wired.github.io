@@ -369,7 +369,7 @@ Gradient descent is just a form of hill-climbing, when the hill is differentiabl
 
 #### Differentiable activation is just a hack
 
-Using differentiable activations for neural networks is an artificial trick of questionable future. It makes the learned boolean functions imprecise, and only appears to redeem itself by allowing backpropagation. However, backpropagation is a dead-end because it will not scale. It is better to look for a method that can directly train multilayered perceptron networks with discrete activation functions.
+Using differentiable activations for neural networks is an artificial trick of questionable future. It makes the learned boolean functions imprecise, and only appears to redeem itself by allowing backpropagation. However, backpropagation is a dead-end because it will not scale. It is better to look for a method that can directly train multilayer perceptron networks with discrete activation functions.
 
 > The trick is to replace the threshold function for each unit with a monotonic and differentiable function ... However, we suspect that this smoothing trick may entail a large (and avoidable) cost when the predicate to be learned is actually a composition of linear threshold functions. There ought to be a more efficient alternative based on how much each weight must be changed, for each stimulus, to make the local input sum cross the threshold.
 
@@ -387,7 +387,7 @@ Without a mathematical theory, experimental data cannot be extrapolated. If neur
 
 #### Connectionist experiments can be extrapolated to show that they do not scale
 
-Though lacking a theory of their own on the operation of multilayered perceptrons, Minsky and Papert then proceeded to interpret the connectionist experiment data as showing that neural networks will fail to scale.[^extrapolation-bias]
+Though lacking a theory of their own on the operation of multilayer perceptrons, Minsky and Papert then proceeded to interpret the connectionist experiment data as showing that neural networks will fail to scale.[^extrapolation-bias]
 
 [^extrapolation-bias]: Without a mathematical theory of what neural networks can do, extrapolating from their behavior at small scales to the large scale is impossible and only reflect the bias behind those who make the extrapolation.
 
@@ -481,9 +481,9 @@ The XOR problem requires two layers. Furthermore, if the first layer is not wire
 
 Put yourself in the place of a 1960s connectionist. How do you solve the XOR problem by a perceptron network? Well, not a single perceptron, as it's impossible. Not with three layers, because two layers are sufficient, and you have enough problem with two layers already. So, two layers.
 
-How to train it? You know only how to fix the first layer and train the second. How do you fix the first layer? Do you randomize it? Unless you use many hidden perceptrons, this will fail with high probability. Do you design it by hand? But then, Minsky and Papert would jump in and say, "You see, you cannot substitute thinking by tabula-rasa learning! You need some intelligent design to get it to work! You have to design it by hand, which means you must understand the problem itself, and the efficient method for representing the problem, because you cannot expect it to learn the problem unless it has built-in capacity for representing the problem, and you cannot expect it to learn the representation from a vacuous generality like the fully connected multilayer perceptron, unless you did not get the lesson from our book."
+How to train it? You know only how to fix the first layer and train the second. How do you fix the first layer? Do you randomize it? Unless you use many hidden perceptrons, this will fail with high probability. Do you design it by hand? But then, Minsky and Papert would interject, "You see, you cannot substitute thinking by tabula-rasa learning! You need some intelligent design to get it to work! You have to design it by hand, which means you must understand the problem itself, and the efficient method for representing the problem, because you cannot expect it to learn the problem unless it has built-in capacity for representing the problem, and you cannot expect it to learn the representation from a vacuous generality like the fully connected multilayer perceptron, unless you did not get the lesson from our book.".
 
-Not to give up, you try one of the hacks like the MADALINE I learning rule, or the Hebbian learning rule, but they are extremely fiddly and unable to learn most of the time unless you tune them just right, and it seems to require a different turning for problems even slightly more complex than the XOR problem. Minsky and Papert interjects again, "You see, there is no universal learning algorithm! You need a bespoke learning algorithm for each problem!"
+Not to give up, you try one of the hacks like the MADALINE I learning rule, or the Hebbian learning rule, but they are extremely fiddly and unable to learn most of the time unless you tune them just right, and it seems to require a different turning for problems even slightly more complex than the XOR problem. Minsky and Papert interjects again, "You see, there is no universal learning algorithm! You need a bespoke learning algorithm for each problem!".
 
 And so we stand at the impasse of 1960s. If only we had tried an activation function, any activation function, other than the dreaded 0-1 activation function...
 
@@ -497,7 +497,7 @@ What did they really mean? They concretely rejected "Parallel Distributed Proces
 
 At this level, it is quantifiable and thus scientifically testable. However, scientific hypotheses become political disputes when large amounts of money or social justice is on the line. We can consider an alternative history with an alternative Minsky and Papert. In this history, they put this in the epilogue:
 
-> Our mathematical results indicate that we need multilayered perceptrons as well as efficient methods for training them. Furthermore, simple estimates show that brain-level intelligence likely require computing power up to 10 orders of magnitude larger than currently available, suggesting the need for special hardware boards.
+> Our mathematical results indicate that we need multilayer perceptrons as well as efficient methods for training them. Furthermore, simple estimates show that brain-level intelligence likely require computing power up to 10 orders of magnitude larger than currently available, suggesting the need for special hardware boards.
 >
 > We also need to explore alternative architectures capable of correlating global information without using all-to-all connections. Perhaps they should have a two-level structure, with a meta-network generating weights for the network, or perhaps more generic mechanisms for multiplicative interactions. Certain inherently serial operations, such as the connectivity predicate, suggest that there must be 'serial mode interfaces' allowing neural networks to call external subroutines. It is a live scientific question whether the number of external subroutines can be kept small. Perhaps a hundred or so would suffice, or perhaps it would turn out that even large neural networks are incapable of most commonsense tasks, in which case the *Society of Mind* hypothesis would be more viable. However, we consider this an empirical question that can only be answered by attempting to scale up neural networks and seeing what they might do, as *a priori* estimates of computational difficulty is close to impossible.
 

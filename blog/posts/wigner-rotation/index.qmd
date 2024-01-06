@@ -4,9 +4,6 @@ author: "Yuxi Liu"
 date: "2018-05"
 date-modified: "2023-12-14"
 categories: ["physics", "math", "fun"]
-keywords: ["special relativity", "hyperbolic geometry", "wigner rotation",
-           "education", "popular physics", "undergraduate physics", "interactive",
-           "p5.js", "javascript"]
 execute:
     cache: true
 format:
@@ -34,14 +31,17 @@ importance: 0
 
 ### The Erlangen program
 
-Special relativity, axiomatically, can be based on the following, very simple axioms:
+In the eyes of a geometer, special relativity is not mysterious, but it is simply another geometry that resembles our familiar Euclidean geometry of the plane, and the spherical geometry of the earth. Just like how Euclid compressed the geometry of the plane into around 20 axioms, we can compress the geometry of spacetime into the following axioms:
 
-* Spacetime is smooth like[^shaped-like] $\R^{n+1}$, where $n$ is the number of spatial dimensions, and $1$ is the number of temporal dimensions.
+* Spacetime is a smooth structure, shaped like[^shaped-like] the real vector space $\R^{n+1}$, where $n$ is the number of spatial dimensions, and $1$ is the number of temporal dimensions.
 * Spacetime is symmetric under rotation, translation, and constant velocity motion.
 * There exists a fundamental speed, a "conversion factor" between the spatial and temporal dimensions, which we call $c$.
-* There are many ways to map spacetime into $\R^{n+1}$, but only some of them are physically meaningful. Those are called the "coordinate systems".
-* You can go from one coordinate system to another by a coordinate transform. Transforms can be combined one after another, and they can be reversed. That is, they make up a group, named the symmetry group of spacetime.
-* The symmetry group is smooth and connected, meaning that starting with the identity transformation (doing nothing), you can combine it with tiny transformations, and end up at any other transformation.
+* There are many ways to map spacetime into $\R^{n+1}$, but only some of them are physically meaningful. Those are called the **(inertial) coordinate systems**.
+* You can go from any one coordinate system to any other by a **coordinate transformation**.
+* Transformations can be combined one after another, and they can be reversed. That is, they make up a group, named the **symmetry group of spacetime**.
+* The symmetry group is smooth and connected, meaning that starting with the "do-nothing" identity transformation, you can combine it with tiny transformations, and end up at any other transformation.
+
+Do not worry if some terms were used without a precise definition. You can start with your best intuitive guess, and sculpt them as we go.
 
 [^shaped-like]: In jargon, it is isomorphic as a smooth manifold to $\R^{n+1}$, or diffeomorphic to $\R^{n+1}$.
 
@@ -129,15 +129,15 @@ The naive choice is $? = 1$. With this seemingly trivial step, we have in fact c
 
 By the smoothness axiom, if $v$ is infinitesimal, the coordinate transformation between the rest frame and the moving frame should be infinitesimally close to the identity.
 
-Since special relativity does not distinguish left from right, if we were to make the moving frame move at velocity $-v$, then the coordinate transform should send $(0, 1)$ to $(-\delta x, 1 + \delta t)$ by mirror symmetry.
+Since special relativity does not distinguish left from right, if we were to make the moving frame move at velocity $-v$, then the coordinate transformation should send $(0, 1)$ to $(-\delta x, 1 + \delta t)$ by mirror symmetry.
 
 Now, if we compose two boosts, first with $v$ then with $-v$, then we would send $(0, 1)$ to $(0, 1+ 2\delta t)$. But we really should get back to $(0, 1)$ since we are back to the resting frame again. Therefore $\delta t = 0$.
 
 ![Three infinitesimal boosts](figure/three-infinitesimal-boosts-output-1.png){width=60%}
 
-<!-- 
 ```{python}
 #| label: three-infinitesimal-boosts
+#| eval: false
 #| echo: false
 #| fig-cap: "Three infinitesimal boosts"
 import matplotlib.pyplot as plt
@@ -159,33 +159,47 @@ y_inf_B = slope_B * (x_inf_B - origin[0]) + origin[1]
 slope_D = (point_D[1] - origin[1]) / (point_D[0] - origin[0])
 x_inf_D = np.array([-1, 1])
 y_inf_D = slope_D * (x_inf_D - origin[0]) + origin[1]
-plt.plot(x_inf_B, y_inf_B, 'k-', label='Extended Line to $(\delta x, 1 + \delta t)$')
-plt.plot(x_inf_D, y_inf_D, 'k-', label='Extended Line to $(-\delta x, 1 + \delta t)$')
+plt.plot(x_inf_B, y_inf_B, "k-", label="Extended Line to $(\delta x, 1 + \delta t)$")
+plt.plot(x_inf_D, y_inf_D, "k-", label="Extended Line to $(-\delta x, 1 + \delta t)$")
 
-plt.plot(*zip(*[point_A, point_B, point_C, point_D, point_A]), 'b-')
+plt.plot(*zip(*[point_A, point_B, point_C, point_D, point_A]), "b-")
 
-plt.text(*point_A, '$(0, 1)$', verticalalignment='top', horizontalalignment='center')
-plt.text(*point_B, '$(\delta x, 1 + \delta t)$', verticalalignment='top', horizontalalignment='left')
-plt.text(*point_C, '$(0, 1 + 2 \delta t)$', verticalalignment='bottom', horizontalalignment='center')
-plt.text(*point_D, '$(-\delta x, 1 + \delta t)$', verticalalignment='top', horizontalalignment='right')
-plt.xticks([]),plt.yticks([])
+plt.text(*point_A, "$(0, 1)$", verticalalignment="top", horizontalalignment="center")
+plt.text(
+    *point_B,
+    "$(\delta x, 1 + \delta t)$",
+    verticalalignment="top",
+    horizontalalignment="left"
+)
+plt.text(
+    *point_C,
+    "$(0, 1 + 2 \delta t)$",
+    verticalalignment="bottom",
+    horizontalalignment="center"
+)
+plt.text(
+    *point_D,
+    "$(-\delta x, 1 + \delta t)$",
+    verticalalignment="top",
+    horizontalalignment="right"
+)
+plt.xticks([]), plt.yticks([])
 
 plt.xlim(-0.8, 0.8)
 plt.ylim(-0.2, 1.4)
-plt.xlabel('x')
-plt.ylabel('t')
-plt.axhline(0, color='black',linewidth=0.5)
-plt.axvline(0, color='black',linewidth=0.5)
+plt.xlabel("x")
+plt.ylabel("t")
+plt.axhline(0, color="black", linewidth=0.5)
+plt.axvline(0, color="black", linewidth=0.5)
 plt.grid(True)
 plt.show()
 ```
--->
 
 ### The Lorentz transformations
 
 In the resting frame, we constructed the meter stick by shooting out one pulse of light, then listening for the echo that arrives two ticks later. The point at which the echo is reflected is one meter stick away. Equivalently, we can shoot a forward-pointing light cone at $(0, -1)$, and shoot a backward-pointing light cone at $(0, +1)$. Their intersections are the two ends of two meter sticks: $(-1, 0), (+1, 0)$.
 
-In the boosted frame, the clock passing the origin ticks at $\dots, (-v, -1), (0, 0), (v, 1), \dots$. Therefore, we can construct its meter stick in the same way, and we would find that the two light cones intersect at $(-1, -v), (+1, +v)$. This gives us the coordinate transform:
+In the boosted frame, the clock passing the origin ticks at $\dots, (-v, -1), (0, 0), (v, 1), \dots$. Therefore, we can construct its meter stick in the same way, and we would find that the two light cones intersect at $(-1, -v), (+1, +v)$. This gives us the coordinate transformation:
 
 $$\forall p \in \mathcal{M}, \quad 
 \begin{bmatrix} x(p) \\ t(p) \end{bmatrix} = 
@@ -193,11 +207,11 @@ $$\forall p \in \mathcal{M}, \quad
 \begin{bmatrix} x'(p) \\ t'(p) \end{bmatrix}
 $$
 
-Here, we find that we need to distinguish between "active" and "passive" transforms. Everything we have said so far is "passive". We assume that there is an underlying spacetime $\mathcal{M}$, and we are to construct coordinate systems over it. The coordinate transform tells us how to turn the coordinates of *the same point* from one coordinate system to another. However, while this is often useful, it would make everything we are going to say next very awkward.
+Here, we find that we need to distinguish between "active" and "passive" transformations. Everything we have said so far is "passive". We assume that there is an underlying spacetime $\mathcal{M}$, and we are to construct coordinate systems over it. The coordinate transformation tells us how to turn the coordinates of *the same point* from one coordinate system to another. However, while this is often useful, it would make everything we are going to say next very awkward.
 
-Therefore, we immediately change our point of view: we are going to study "active" transforms from now on. While passive transform of a clock means that we have just one clock and measure its ticks in two coordinate systems, active transform of a clock means that we actually pick up the clock at rest frame, accelerate it on a rocket, and then let it glide at constant velocity at the moving frame, then study what the clock is doing *in the rest frame*.
+Therefore, we immediately change our point of view: we are going to study "active" transformations from now on. While passive transformation of a clock means that we have just one clock and measure its ticks in two coordinate systems, active transformation of a clock means that we actually pick up the clock at rest frame, accelerate it on a rocket, and then let it glide at constant velocity at the moving frame, then study what the clock is doing *in the rest frame*.
 
-Since an active transform is the opposite of a passive transform, we have the active Lorentz transformation formula:
+Since an active transformation is the opposite of a passive transform, we have the active Lorentz transformation formula:
 
 $$
 \begin{bmatrix} x' \\ t' \end{bmatrix} = 
@@ -325,7 +339,7 @@ A "spacetime square" would transform like:
 
 In the diagram above, we have used the terms 3-velocity and 4-velocity. To explain those terms, we briefly go back to 3+1 dimensions.
 
-When we say "velocity" informally, we mean a vector in $\R^3$. But how is velocity really defined? It is displacement divided by time. In relativity, when we say "3-velocity", there are two possible representations: we can represent it as $(v_x, v_y, v_z)$, or we can represent it as $(v_x, v_y, v_z, 1)$. The first is close to how the rest of the world use "velocity", but the second is close to how special relativity want us to use the word "velocity". The second representation can be interpreted as follows: "The 3-velocity of an object is the spacetime displacement of the object after one tick of my clock."
+When we say "velocity" informally, we mean a vector in $\R^3$. But how is velocity really defined? It is displacement divided by time. In relativity, when we say "3-velocity", there are two possible representations: we can represent it as $(v_x, v_y, v_z)$, or we can represent it as $(v_x, v_y, v_z, 1)$. The first is close to how the rest of the world use "velocity", but the second is close to how special relativity want us to use the word "velocity". The second representation can be interpreted as follows: "The 3-velocity of an object is the spacetime displacement of the object after one tick of my clock.".
 
 Neither is satisfactory, however, because 3-velocity behaves badly under Lorentz transformations. The first representation $(v_x, v_y, v_z)$ does not have the time-coordinate, so it can't even be multiplied with the Lorentz transformation matrix. The second representation $(v_x, v_y, v_z, 1)$ would, after a Lorentz transformation, have its time-coordinate $\neq 1$.
 
@@ -409,7 +423,7 @@ $${#eq-2d-lorentz-infinitesimal}
 
 ::: {.callout-note title="Four ways to derive it" collapse="true" }
 1. Just guess it.
-2. Rotate the coordinate system so that the boost is in the $x$-direction, boost using the previous result, then rotate the coordinate system back. To be pedantic: We are performing one passive, then one active, then one passive transform.
+2. Rotate the coordinate system so that the boost is in the $x$-direction, boost using the previous result, then rotate the coordinate system back. To be pedantic: We are performing one passive, then one active, then one passive transformation.
 3. Take the previous derivation, and modify it by strategically inserting $v_y$ at places.
 4. Since two infinitesimal boosts do not interact except at the second-order infinitesimal level, and $O(v^2) \ll O(v) \ll 1$, we are free to discard the second-order infinitesimal. Therefore, we can just multiply the two matrices together to get the full thing:
 
@@ -488,7 +502,7 @@ The phrase "in the opposite direction" means that, if, looking from the $+t$-dir
 
 ### Step-by-step demonstration of the Wigner rotation
 
-Consider the simplest type of three-boost cycle as shown in the figure below. We start at the rest frame, boost to the frame with a 3-velocity of \((v_x, 0)\), then boost to the frame with a 3-velocity of \((v_x, v_x d\varphi)\), and finally boost back to the rest frame.
+Consider the simplest type of three-boost cycle as shown in the figure below. We start at the rest frame, boost to the frame with a 3-velocity of $(v_x, 0)$, then boost to the frame with a 3-velocity of $(v_x, v_x d\varphi)$, and finally boost back to the rest frame.
 
 ```{=html}
 <div style="display: flex; justify-content: center; width: 80%; margin: auto;">
@@ -691,7 +705,7 @@ This, in hindsight, is obvious: We have already known that the Lorentz transform
 
 Now we can connect concepts between hyperbolic geometry and special relativity.
 
-When $v$ is small, the Wigner rotation for a full cycle, $(\gamma - 1)2\pi$, is $\pi v^2 + O(v^4)$, coinciding with the area enclosed by the cycle.Therefore, since both area and Wigner rotation are additive, we have proven @thm-wigner-rotation.[^rigorous-proof]
+When $v$ is small, the Wigner rotation for a full cycle, $(\gamma - 1)2\pi$, is $\pi v^2 + O(v^4)$, coinciding with the area enclosed by the cycle. Therefore, since both area and Wigner rotation are additive, we have proven @thm-wigner-rotation.[^rigorous-proof]
 
 [^rigorous-proof]: This is not a handwaved proof, but fully rigorous. The Wigner rotation of a full cycle is $\pi v^2 + O(v^4)$, and the area enclosed by the cycle is also $\pi v^2 + O(v^4)$. Therefore, we can integrate over an arbitrary area, to find that the Wigner rotation angle is equal to the area enclosed, up to an infinitesimal term of $O(v^2) \to 0$.
 
@@ -854,7 +868,7 @@ During my third undergraduate year, I took a course in theoretical physics, whic
 
 Suffice to say that, after some hours walking and staring at the night sky, I figured out that it is nothing else than hyperbolic geometry, and nothing more paradoxical than the fact that the external angle of a hyperbolic triangle is equal to $2\pi + (\text{area of the triangle})$, which I remember from hyperbolic geometry.
 
-This is the old poler-bear puzzle again. If you walk from the North Pole to the equator, then walk \(1/4\) of the way around the Earth, and finally walk back to the North Pole, you will have traversed a triangle with an external angle of \(\frac 32 \pi\). In general, the external angle of a triangle on the unit sphere is $2\pi - (\text{area of the triangle})$, the perfect opposite to the case in hyperbolic geometry.
+This is the old poler-bear puzzle again. If you walk from the North Pole to the equator, then walk $1/4$ of the way around the Earth, and finally walk back to the North Pole, you will have traversed a triangle with an external angle of $\frac 32 \pi$. In general, the external angle of a triangle on the unit sphere is $2\pi - (\text{area of the triangle})$, the perfect opposite to the case in hyperbolic geometry.
 
 Half-mad, I ran home and smashed into the search engine all the keywords I knew must be there: "special relativity rotation hyperbolic triangle Foucault pendulum". My disappointment was swift and certain: This had been repeatedly discovered over the past hundred years.
 
@@ -864,7 +878,7 @@ Bitterly, I searched every undergraduate physics textbook in the school library.
 
 From that moment on I swore that I would finally present it in a way so simple and direct that it will never be forgotten. I had found the way, and it remained to publicize to the world.
 
-There was little use in writing another paper about it, as despite the many papers over the century, somehow this effect did not end up in the physics textbooks. I considered writing a blog post about it, but mere words and figures seemed insufficient. I tried promoting this idea to various physics popularizers on YouTube, but none picked it up. What I needed was interactive animation, but JavaScript defeated me,so I kept it in the backlog until now. With ChatGPT I could finally write JavaScript without losing all my sanity, and so, here it is.
+There was little use in writing another paper about it, as despite the many papers over the century, somehow this effect did not end up in the physics textbooks. I considered writing a blog post about it, but mere words and figures seemed insufficient. I tried promoting this idea to various physics popularizers on YouTube, but none picked it up. What I needed was interactive animation, but JavaScript defeated me, so I kept it in the backlog until now. With ChatGPT I could finally write JavaScript without losing all my sanity, and so, here it is.
 
 ## Some bonus content
 
@@ -888,6 +902,11 @@ With a cycle of three boosts, the Wigner rotation angle is equal to the angle de
 
 In summary: almost any Lorentz transformation can be obtained in four boosts, except those requiring a 180-degree rotation, which need five boosts.
 
-[@lightmanProblemBookRelativity1975, pp. 153--158] shows that every Lorentz transformation can be done in three boosts, except "180-degree screws", which require four. I have never found a satisfactory geometric method to demonstrate this, despite thinking on and off about it several times over the years.
+In fact, the result can be improved by one boost: every Lorentz transformation can be done in three boosts, except "180-degree screws", which require four. The solution given in [@lightmanProblemBookRelativity1975, pp. 153--158] uses matrix algebra in $\C^{2\times 2}$, which is too algebraic for me[^angel-devil-geometry]. However, I have never found a satisfactory geometric method to demonstrate this, despite thinking on and off about it several times over the years.
 
-> Problem 1.28. What is the least number of pure boosts which generate an arbitrary Lorentz transformation? Note: This is a difficult problem!
+> Problem 1.28. What is the least number of pure boosts which generate an arbitrary Lorentz transformation? Note: This is a difficult problem! [@lightmanProblemBookRelativity1975]
+
+[^angel-devil-geometry]:
+    > In these days the angel of topology and the devil of abstract algebra fight for the soul of each individual mathematical domain. 
+    > 
+    > --- Hermann Weyl
