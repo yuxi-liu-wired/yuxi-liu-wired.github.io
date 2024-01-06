@@ -19,37 +19,35 @@ importance: 4
 
 ## Abstract
 
-The backpropagation algorithm could have been invented by a slight generalization of the adjoint method, or the costate method, which was known widely among control theorists in the 1950s. Hybrid control theory leads almost inexorably to the backpropagation algorithm.
+The backpropagation algorithm could have been invented by a slight generalization of the adjoint method, or the costate method, which was widely known among control theorists in the 1950s. Hybrid control theory leads almost inexorably to the backpropagation algorithm.
 
-The backpropagation algorithm was reinvented multiple times during the 1970--1986. It was finally no longer being reinvented after the popularity of connectionism finally taught everyone how backpropagation works.
-
-Seppo Linnainmaa's claim of priority is his 1970 master thesis -- in Finnish, and never published. An English paper in 1976 was published that may have been relevant to automatic differentiation research, but not to neural network research. He has priority, but no paternity.
+Seppo Linnainmaa's claim of priority is his 1970 master thesis -- in Finnish, and never published. An English paper in 1976 was published that may have been relevant to automatic differentiation research, but not to neural network research. He has priority but no paternity.
 
 Paul Werbos' claim of priority is that he developed the backpropagation algorithm in 1971, but was frustrated at every turn whenever he tried publishing it, not managing until around 1982. After that, it was taken up by many neural network researchers. He has priority and paternity.
 
-David Rumelhart freely admits that he was not the first to develop it, but he did develop it independently in 1982 and taught others in his research circle. The 1986 paper he coauthored [@rumelhartLearningRepresentationsBackpropagating1986] became popular enough that nobody would need to reinvent it again. He has no priority, but paternity.
+As he freely admits, David Rumelhart reinvented it in 1982, as he did not know the previous work. The 1986 paper he coauthored [@rumelhartLearningRepresentationsBackpropagating1986] became popular enough that nobody would need to reinvent it again. He has no priority, but paternity. As usual in science, it is not the first inventor who gets the credit, but the last re-inventor.
 
-I am unable to explain why none of the first wave of neural network researchers developed backpropagation. My hypotheses are, in order of likelihood:
+I was puzzled by how none of the first wave of neural network researchers developed backpropagation. I still am. My guesses are, from most to least likely:
 
 * Bad luck.
-* Researchers were misled by the then current understanding of real neurons, and the the McCulloch--Pitts model. Back then everyone "knew" that real neurons operated by discrete spikes.
-* They distrusted gradient descent for being stuck at local minima.
-* They aimed to learn boolean functions.
+* They were misled by the contemporary understanding of real neurons, and the McCulloch--Pitts model. Back then everyone "knew" that real neurons are 0-1 spike generators.
+* They thought of machine learning as just another way to construct boolean functions, rather than smooth functions, so they kept using the 0-1 activation function.
+* They distrusted gradient descent, because it would get stuck at local optima. If only they had had cheap compute and data to experiment with, they would have discovered the "blessing of scale": local optima are almost as good as the global optimum.
 * They attempted to achieve parity with digital computers, which were discrete.
-* They attempted to distance themselves from cybernetics, which included avoiding optimal control theory.
+* They attempted to distance themselves from cybernetics, which included optimal control theory.
 
 ## The backpropagation algorithm
 
 To set the stage, we should at least quickly derive the backpropagation algorithm. In one sentence, backpropagation is an algorithm that calculates the gradient of every parameter in an acyclic directed graph with respect to a single final parameter.
 
-The graph can be finite or infinite, but in all cases, the acyclic directedness allows us to assign a "logical time" to each node of the graph.[^existence-of-logical-time] Some nodes are independent variables: they point at other nodes, but no nodes point at *them*. Other nodes are dependent. If we know the independent variables, we can propagate their values *forward* in logical time and obtain the values of every node. This is the "forward pass". Backpropagation goes backwards in logical time.
+The graph can be finite or infinite, but in all cases, its acyclic directedness allows us to assign a "logical time" to each node.[^existence-of-logical-time] Some nodes are independent variables: they point to other nodes, but no nodes point to *them*. Other nodes are dependent. If we know the independent variables, we can propagate their values *forward* in logical time and determine the values of every node. This is the "forward pass". Backpropagation goes backwards in logical time.
 
 [^existence-of-logical-time]:
     An existence proof that anything we might care about must have a logical time: Anything that happens, happens in the real world. The real world has a single direction in time. Therefore, any computation that can happen, must have a logical time that is identical with physical time.
     
     Note that logical time does not have to coincide with physical time. For example, to model goal-directed behavior, it might be better to put the physical future into the logical past.
 
-We use the convention of putting the derivative on the rows. So for example, for $f: \R^2\to\R^2$, we have
+We use the convention of putting derivatives on the rows. So for example, for $f: \R^2\to\R^2$, we have
 
 $$
 \nabla_x f = \frac{df}{dx} = \begin{bmatrix} 
@@ -62,7 +60,7 @@ This convention simplifies a lot of equations, and completely avoids transposing
 
 ### Discrete logical time
 
-Consider an acyclic directed graph with a finite number of nodes. Each graph node is a finite-dimensional real vector, though they may have different dimensions We order the acyclic graph on the number line, so that each node depends only on the earlier nodes. Now denote the graph nodes as $x_0, x_1, \dots, x_T$. By our ordering, $x_1$ depends on only $x_0$, and $x_2$ depends on only $x_1, x_2$, and so on:
+Consider an acyclic directed graph with a finite number of nodes. Each graph node is a finite-dimensional real vector, though they may have different dimensions. We order the acyclic graph on the number line, so that each node depends only on the earlier nodes. Now denote the graph nodes as $x_0, x_1, \dots, x_T$. By our ordering, $x_1$ depends on only $x_0$, and $x_2$ depends on only $x_1, x_2$, and so on:
 
 $$
 \begin{aligned}
@@ -73,7 +71,7 @@ x_T &= f_T(x_0, x_1, \dots , x_{T-1})
 \end{aligned}
 $$
 
-Now we perform an infinitesimal perturbation on every of its independent variables. A forward propagation then causes an infinitesimal perturbation on every variable, independent or dependent. Denote these as $dx_0, dx_1, \dots, dx_T$. We can now compute the derivative of $dx_T$ with respect to every other variable by backpropagating the perturbation. Suppose we can see only $dx_T$, then the change in $x_T$ due to $dx_T$ is the identity. That is,
+Now we perform an infinitesimal perturbation on every one of its independent variables. A forward propagation then causes an infinitesimal perturbation on every variable, independent or dependent. Denote these as $dx_0, dx_1, \dots, dx_T$. We can now compute the derivative of $dx_T$ with respect to every other variable by backpropagating the perturbation. Suppose we can see only $dx_T$, then the change in $x_T$ due to $dx_T$ is the identity. That is,
 
 $$
 \frac{dx_T}{dx_T} = I
@@ -85,7 +83,7 @@ $$
 \frac{dx_T}{dx_{T-1}} = \nabla_{x_{T-1}} f_T(x_0, x_1, \dots , x_{T-1})
 $$
 
-Similarly, the change in $x_T$ due to $dx_{T-2}$ can come from either directly changing $x_T$, or changing $x_{T-1}$ and thereby changing $x_T$. Therefore,
+Similarly, the change in $x_T$ due to $dx_{T-2}$ can come from either directly changing $x_T$ or from changing $x_{T-1}$ and thereby changing $x_T$. Therefore,
 
 $$
 \frac{dx_T}{dx_{T-2}} = 
@@ -95,9 +93,9 @@ $$
 
 This generalizes to the rest of the steps.
 
-The above computation is fully general, but this makes it inefficient. In practical applications of backpropagation, the computation graph is usually very sparse, meaning that each $x_t$ only directly influence a few more nodes down the line. In standard neural networks, typically $x_{t}$ only directly influences $x_{t+1}, x_{t+2}$. Thus sparsity is vital for backpropagation to be relevant.
+The above computation is fully general, but this makes it inefficient. In practical applications of backpropagation, the computation graph is usually very sparse, meaning that each $x_t$ only directly influence a few more nodes down the line. In standard neural networks, typically $x_{t}$ only directly influences $x_{t+1}, x_{t+2}$. Thus, sparsity is vital for backpropagation to be relevant.
 
-As a side note, we could in fact compute *all* derivatives, not just the first, in one single backward pass. Other than the second derivatives $\nabla^2_{x_t}x_T$, there are rarely any use for the other derivatives, such as $\nabla_{x_t}\nabla_{x_s}x_T, \nabla^3_{x_t}x_T$, etc. The second derivative was occasionally used for neural networks circa 1990, with the further simplification that they only  keep the positive diagonal entries of $\nabla^2_{x_t}x_T$ and set all other entries to zero.[@lecunGeneralizationNetworkDesign1989]
+As a side note, we could in fact compute *all* derivatives, not just the first, in one single backward pass. Other than the second derivatives $\nabla^2_{x_t}x_T$, there is rarely any use for the other derivatives, such as $\nabla_{x_t}\nabla_{x_s}x_T, \nabla^3_{x_t}x_T$, etc. The second derivative was occasionally used for neural networks circa 1990, with the further simplification that they only  keep the positive diagonal entries of $\nabla^2_{x_t}x_T$ and set all other entries to zero.[@lecunGeneralizationNetworkDesign1989]
 
 ### Continuous logical time
 
@@ -107,9 +105,9 @@ $$
 x_t = (\text{location at time }t, \text{velocity at time }t)
 $$
 
-It might be confusing to use $x_t$ for the state at time $t$, instead of location, but it makes the notation consistent.
+It might be confusing to use $x_t$ for the state at time $t$, instead of for location, but it makes the notation consistent.
 
-Suppose the only thing we can influence is how much we press the pedal. Write $u_t$ to be the resulting acceleration we inflict on the car by pressing on the pedal. Further, assume the car is slowed down by friction that is proportional to velocity. We then have:
+Suppose the only thing we can influence is how much we press the pedal. Write $u_t$ to be the resulting acceleration we inflict on the car by pressing on the pedal. Further, assume that the car is slowed down by friction that is proportional to velocity. We then have:
 
 $$
 \dot x_t = f(x_t, u_t)
@@ -132,16 +130,16 @@ x_{T} &= x_{T-dt} + f(x_{T-dt}, u_{T-dt}) dt \\
 \end{aligned}
 $$
 
-The backpropagation is similarly obtained. By inspecting the computation graph, we can see that each $u_t$ only directly influences $x_{t+dt}$, thus
+The backpropagation is similarly obtained. By inspecting the computation graph, we can see that each $u_t$ only directly influences $x_{t+dt}$, giving
 
 $$
-\frac{dx_T}{du_t} = \frac{dx_T}{dx_{t+dt}} \nabla_{u_t}f(x_t, u_t) dt 
+\frac{dx_T}{du_t} = \frac{dx_T}{dx_{t+dt}} \nabla_{u_t}f(x_t, u_t) dt.
 $$
 
-It remains to compute $\frac{dx_T}{dx_t}$. This can be found by backpropagation too, since each $x_t$ only directly influences $x_{t+dt}$, thus
+It remains to compute $\frac{dx_T}{dx_t}$. This can be found by backpropagation too, since each $x_t$ only directly influences $x_{t+dt}$, we have
 
 $$
-\frac{dx_T}{dx_t} = \frac{dx_T}{dx_{t+dt}} \lrs{I + \nabla_{x_t} f(x_t, u_t) dt}
+\frac{dx_T}{dx_t} = \frac{dx_T}{dx_{t+dt}} \lrs{I + \nabla_{x_t} f(x_t, u_t) dt}.
 $$
 
 If we denote the gradient as $g_t := \frac{dx_T}{dx_t}$, then we find an equation for $g_t$:
@@ -163,7 +161,7 @@ which must, as you can see, be integrated *backwards in time* -- backpropagation
 
 ### Hybrid logical time
 
-When the computation graph has both nodes with discrete logical times, and nodes with continuous logical times, we call such a system as having hybrid logical time.[^hybrid-control-theory]
+When the computation graph has both nodes with discrete logical times and nodes with continuous logical times, we call such a system as having hybrid logical time.[^hybrid-control-theory]
 
 [^hybrid-control-theory]: The name "hybrid" comes from "[hybrid control theory](https://en.wikipedia.org/wiki/Hybrid_system)", which are systems with both discrete changes, or jumps, and continuous changes, or flow. They appear whenever a digital device is used to control a continuous system, such as a computer piloting an airplane.
 
@@ -182,7 +180,7 @@ $$
 
 for some real-valued functions $A, L$.
 
-We can of course care about more than the state at the last time-step. We can care about multiple time-steps $t_0, t_1, \dots, t_n$ by writing down a cost function $J = \sum_{i=0}^n A_i(x_{t_i}) + \int_0^T L(x_T, u_T)dt$, but this merely creates complications without introducing new ideas. Even more ornate computation graphs, weaving together multiple strands of continuous and discrete logical times, can be backpropagated in the same way without involving new ideas.
+Of course, we can care about more than the state at the last time-step. We can care about multiple time-steps $t_0, t_1, \dots, t_n$ by writing down a cost function $J = \sum_{i=0}^n A_i(x_{t_i}) + \int_0^T L(x_T, u_T)dt$, but this merely creates complications without introducing new ideas. Even more ornate computation graphs, weaving together multiple strands of continuous and discrete logical times, can be backpropagated in the same way without involving new ideas.
 
 Define the costate $\lambda_t := \nabla_{x_t} J$, then the costate backpropagates as: 
 
@@ -190,7 +188,7 @@ $$
 \lambda_t = L(x_t, u_t) dt + \lambda_{t+dt}(I + \nabla_{x_t}f(x_t, u_t)dt)
 $$
 
-and simplifying, we have the costate equation:
+and by simplifying, we have the costate equation:
 
 $$
 \begin{cases}
@@ -199,7 +197,7 @@ $$
 \end{cases}
 $$
 
-which can be solved by integrating backwards in time.
+which can be solved by integrating backward in time.
 
 Once we have obtained all the costates, we can compute $\nabla_{u_t} J$. Since $u_t$ can only influence $J$ either directly via $L(x_t, u_t)$ or indirectly via $x_t$, we have
 
@@ -207,19 +205,19 @@ $$
 \nabla_{u_t} J = \lrs{\nabla_{u_t}f(x_t, u_t) \lambda_t + \nabla_{u_t}L(x_t, u_t)}dt
 $$
 
-Here we note that $\nabla_{u_t} J$ is an infinitesimal in $dt$, which is qualitatively different from $\nabla_{x_t}J = g_t$, which is not an infinitesimal, but a mere matrix. Why is it so? The simplest example suffices to illustrate.
+Note that $\nabla_{u_t} J$ is an infinitesimal in $dt$. This is qualitatively different from $\nabla_{x_t}J = g_t$, which is not an infinitesimal, but a mere matrix. Why is it so? The simplest example suffices to illustrate.
 
-Consider a mass point sliding on a frictionless plane. When we perturb $x_t$, we would push it to the side by $\delta x_{t, 0}$ and also change its velocity by $\delta x_{t, 1}$, and so at the end time $T$, we would have changed $x_T$ by $(\delta x_{t, 0} + (T-t)\delta x_{t, 1}, \delta x_{t, 1})$, which is the same order of infinitesimal. Now, we can control the mass point by applying a force $u_t$, which gives us the dynamics equation
+Consider a mass point sliding on a frictionless plane. When we perturb $x_t$, we push it to the side by $\delta x_{t, 0}$ and also change its velocity by $\delta x_{t, 1}$, and so at the end time $T$, we would have changed $x_T$ by $(\delta x_{t, 0} + (T-t)\delta x_{t, 1}, \delta x_{t, 1})$, which is the same order of infinitesimal. Now, we can control the mass point by applying a force $u_t$, which gives us the dynamics equation
 
 $$
 \dot x_t = (x_{t, 1}, u_t)
 $$
 
-To "perturb" $u_t$ by $\delta u_t$ does not make sense on its own, as a "spike" of $\delta u_t$ that lasts for zero amount of time does not show up in the system trajectory. One can apply a durationless jump in state, but one cannot apply a durationless force. Therefore, it only makes sense to perturb $u_t$ by $\delta u_t$ and persist the perturbation for $dt$ time. This then perturbs the state at the end time by $((T-t)\delta u_t dt , \delta u_t dt)$, which gives $\nabla_{u_t}x_T \propto dt$.
+To "perturb" $u_t$ by $\delta u_t$ does not make sense on its own, as a "spike" of $\delta u_t$ that lasts for zero amount of time does not show up in the system trajectory. One can apply a durationless jump in state, but one cannot apply a durationless force. Therefore, it only makes sense to perturb $u_t$ by $\delta u_t$ and persist the perturbation for $dt$ time. This perturbs the state at the end time by $((T-t)\delta u_t dt , \delta u_t dt)$, which means that $\nabla_{u_t}x_T$ is proportional to $dt$.
 
 ### Optimal control theory
 
-An optimal trajectory must have $\nabla_{u_t} J = 0$, since otherwise we can shave off a little piece of cost by giving $u_t$ a little boost in the other direction (infinitesimal gradient descent!). This gives us two equations that any optimal trajectory must satisfy
+An optimal trajectory must have $\nabla_{u_t} J = 0$, since otherwise, we could shave off a little piece of cost by giving $u_t$ a little boost in the opposite direction (infinitesimal gradient descent!). This gives us two equations that any optimal trajectory must satisfy
 
 $$
 \begin{cases}
@@ -243,17 +241,19 @@ $$
 \end{cases}
 $$
 
-Unfortunately, the first equation cannot be simplified similarly, because $\nabla_{x_t}\lambda_t \neq 0$. Still, it seems $L(x_t, u_t) + \lambda_t f(x_t, u_t)$ should be an important quantity:
+Unfortunately, we cannot simplify the first equation similarly because $\nabla_{x_t}\lambda_t \neq 0$. Still, it seems $L(x_t, u_t) + \lambda_t f(x_t, u_t)$ should be an important quantity:
 
 $$
 H(x_t, u_t, \lambda_t) := L(x_t, u_t) + \lambda_t f(x_t, u_t)
 $$
 
-The letters are meaningful. $L$ is the "Lagrangian", and $H$ is the "Hamiltonian". Indeed, classical Hamiltonian mechanics is a special case of (first order) optimal control theory.
+The letters are meaningful. $L$ is the "Lagrangian", and $H$ is the "Hamiltonian". Indeed, classical Hamiltonian mechanics is a special case of optimal[^first-order-optimal] control theory.
+
+[^first-order-optimal]: To be completely precise, it is a necessary but insufficient condition for optimality. Just like how a function can have zero derivatives on the peaks, valleys and shoulders, a trajectory can have zero functional derivative, even if it is the best, the worst, and the ... shouldered? In jargon, we say that those conditions are **first order optimality conditions**, since they use only the derivative, not the second-derivative.
 
 If we interpret economically the quantities, then $J$ is the cost of the entire trajectory, $\lambda_t$ is the marginal cost of the point $x_t$ in the trajectory, and $L(x_t, u_t)$ is the cost-rate at time $t$. The second equation of optimality $\nabla_{u_t} H(x_t, u_t, \lambda_t) = 0$ states that when the trajectory is optimal, the marginal cost of control is zero: there is no saving in perturbing the control in any direction.
 
-Therefore, define the "optimized" Hamiltonian and optimized control relative to it:
+Therefore, define the "optimized" Hamiltonian and the optimized control relative to it:
 
 $$
 \begin{cases}
@@ -262,7 +262,7 @@ u^*(x_t, \lambda_t) &:= \argmin_{u_t}H(x_t, u_t, \lambda_t)
 \end{cases}
 $$
 
-Then, by [Hotelling's lemma](https://en.wikipedia.org/wiki/Hotelling's_lemma), we obtain the [Hamiltonian equations of motion](https://en.wikipedia.org/wiki/Hamiltonian_mechanics):
+Then, by [Hotelling's lemma](https://en.wikipedia.org/wiki/Hotelling%27s_lemma), we derive the [Hamiltonian equations of motion](https://en.wikipedia.org/wiki/Hamiltonian_mechanics):
 
 $$
 \begin{cases}
@@ -273,7 +273,7 @@ $$
 
 This is often called the [Pontryagin's maximum principle](https://en.wikipedia.org/wiki/Pontryagin%27s_maximum_principle), as Pontryagin's school of optimal control theory is based on this principle and its extensions. Control theory was a national security issue during the Cold War, as it was used from the [space race](https://en.wikipedia.org/wiki/Space_Race) to the [missile race](https://en.wikipedia.org/wiki/Nuclear_arms_race).
 
-In classical control theory, the equation is sometimes solved in closed form, as in the case of [linear quadratic control](https://en.wikipedia.org/wiki/Linear%E2%80%93quadratic_regulator). When it cannot be solved in closed form, it can still be numerically solved using a continuous form of the Bellman equation. Similar to how the Hamiltonian equations have the alternative form of the [Hamilton--Jacobi equation](https://en.wikipedia.org/wiki/Hamilton-Jacobi_equation), the Pontryagin equations have an alternative form of the of the [Hamilton--Jacobi--Bellman equation](https://en.wikipedia.org/wiki/Hamilton-Jacobi_equation). Possibly, the name "dynamic programming" appears later in Paul Werbos' invention of backpropagation, which he named "dynamic feedback".
+In classical control theory, the equation is sometimes solved in closed form, as in the case of [linear quadratic control](https://en.wikipedia.org/wiki/Linear%E2%80%93quadratic_regulator). When it cannot be solved in closed form, it can still be numerically solved using a continuous form of the Bellman equation. Similar to how the Hamiltonian equations have the alternative form of the [Hamilton--Jacobi equation](https://en.wikipedia.org/wiki/Hamilton-Jacobi_equation), the Pontryagin equations have an alternative form in the [Hamilton--Jacobi--Bellman equation](https://en.wikipedia.org/wiki/Hamilton-Jacobi_equation). Possibly, the name "dynamic programming" appears later in Paul Werbos' invention of backpropagation, which he named "dynamic feedback".
 
 In economics, one can modify this framework slightly to allow discounting cost over time, yielding theories about "optimal investment" such as the [Ramsey optimal growth theory](https://en.wikipedia.org/wiki/Ramsey%E2%80%93Cass%E2%80%93Koopmans_model).
 
@@ -285,7 +285,7 @@ The chain rule dates back to *Calculus Tangentium differentialis* \[Differential
 
 In mathematical notation, he found that $dy = dx \frac{dy}{dx}$, or in his notation, $\overline{dy} = \overline{dx} \frac{dy}{dx}$, where the overbar denotes the thing to be differentiated. You can read it as a bracket: $d(y) = d(x) \frac{dy}{dx}$.
 
-He then gave the following examples (Yes, there is a sign error. No, I'm not going to fix it. He just have to live with his mistakes.):
+He then gave the following examples[^live-with-his-mistakes]:
 
 $$
 \begin{aligned}
@@ -295,6 +295,8 @@ $$
 &
 \end{aligned}
 $$
+
+[^live-with-his-mistakes]: Yes, there is a sign error. No, I'm not going to fix it. He just has to live with his mistakes.
 
 ## McCulloch and Pitts
 
@@ -322,9 +324,9 @@ The McCulloch and Pitts paper, like the *Perceptrons* book, is something often c
 
 Frank Rosenblatt is the originator of the term "backpropagation", or more precisely, "back-propagating error-correction procedure"  [@rosenblattPrinciplesNeurodynamicsPerceptrons1962, Chapter 13], although it was quite far from our current use of backpropagation. He is the originator of many concepts in neural networks, and he was even popularly famous during his own time. During 1957--1962, he did a lot of the theory and experiments with perceptron networks. Some experiments ran on digital computer simulations, and others on the Mark I Perceptron, a bespoke machine that takes up a whole room.
 
-A perceptron is a function of form $\theta(w^T x + b)$, where $\theta$ is the 0-1 step function, and $w \in \R^n, b \in \R$ are its learnable parameters. A perceptron network was a network of perceptrons. Rosenblatt experimented with a large number of perceptron network architectures, but most often, he experimented with a certain 2-layered feedforward architecture, which is sometimes called "*the* perceptron machine".
+A perceptron is a function of the form $\theta(w^T x + b)$, where $\theta$ is the 0-1 step function, and $w \in \R^n, b \in \R$ are its learnable parameters. A perceptron network is a network of perceptrons. Rosenblatt experimented with a large number of perceptron network architectures, but most often, he experimented with a certain 2-layered feedforward architecture, which is sometimes called "*the* perceptron machine".
 
-*The* perceptron machine is a machine that computes a function of type $\{0, 1\}^n \to \{0, 1\}$. Its input layer is composed of units named "Stimulus units" or "S units". The S units do not perform any computation, but merely pass on binary outputs to the hidden layer. In the Mark I perceptron, the S units were 20×20 cadmium sulfide photocells, making a 400-pixel image. The hidden layer is composed of perceptrons named "Association units" or "A units". Their outputs pass on to the output layer, composed of perceptrons named "Response units" or "R units". 
+*The* perceptron machine is a machine that computes a function of type $\{0, 1\}^n \to \{0, 1\}$. Its input layer is composed of units named "Stimulus units" or "S units". The S units do not perform any computation, but merely pass binary outputs to the hidden layer. In the Mark I perceptron, the S units were 20×20 cadmium sulfide photocells, making a 400-pixel image. The hidden layer is composed of perceptrons named "Association units" or "A units". Their outputs pass on to the output layer, composed of perceptrons named "Response units" or "R units". 
 
 We can describe *the* perceptron machine in one equation:
 
@@ -348,15 +350,15 @@ His theorems and experiments were exhaustively documented in his book [@rosenbla
 * program-learning perceptrons (chapter 22);
 * perceptron networks that analyze videos and audios (chapter 23).
 
-From our vantage point, we can fairly say that he has invented randomization, residual connections, weight initiation schemes, neural Turing machines, recurrent neural networks, vision models, time delay neural networks, multimodal neural networks...
+From our vantage point, we can fairly say that he invented randomization, residual connections, weight initiation schemes, neural Turing machines, recurrent neural networks, vision models, time delay neural networks, multimodal neural networks...
 
 ![Figure 58. The first multimodal neural network?](figure/rosenblatt_figure_58.png){width=60%}
 
 ![Figure 42. The dashed lines denote variable weights, and the solid lines denote fixed weights. This is the residual connection.](figure/rosenblatt_figure_42.png){width=60%}
 
-What is even more astonishing is that as far as I can see, he did not make use of gradient descent learning at all, not even on a single layer like Widrow and Hoff. The perceptron learning rule converges, but only for a single-layered perceptron network on linearly separable data. Thus, when it came to two-layered perceptron networks, he fixed the wiring in the first layer randomly, then adapted the second layer. This would prove to be a turning point in the "[perceptron controversy](https://yuxi-liu-wired.github.io/blog/posts/backstory-of-backpropagation/neural-network-winter)".
+What is even more astonishing is that, as far as I can see, he did not make use of gradient descent learning at all, not even on a single layer like Widrow and Hoff. The perceptron learning rule converges, but only for a single-layered perceptron network on linearly separable data. Thus, when it came to two-layered perceptron networks, he randomly wired the first layer, then froze it, and only adapted the second layer. This would prove to be a turning point in the "[perceptron controversy](https://yuxi-liu-wired.github.io/blog/posts/backstory-of-backpropagation/neural-network-winter)".
 
-In the chapter where he talked about backpropagation [@rosenblattPrinciplesNeurodynamicsPerceptrons1962, Chapter 13], he was trying to train both layers in the two-layered perceptron network by extending the perceptron learning algorithm. The algorithm works on each individual perceptron unit, but only if the desired output is known. The desired outputs for the output units are supplied by the experimenter, but the desired outputs for the hidden units could not be known, so Rosenblatt tried some hacks. Essentially, he took the error signals at the output units, and used heuristic rules to "backpropagate the error" to synthesize error signals at the hidden units. The precise details are hacky, and no longer of any relevance.
+In the chapter where he talked about backpropagation [@rosenblattPrinciplesNeurodynamicsPerceptrons1962, Chapter 13], he tried to train both layers in the two-layered perceptron network by extending the perceptron learning algorithm. The algorithm works on each individual perceptron unit, but only if the desired output is known. The desired outputs for the output units are supplied by the experimenter, but the desired outputs for the hidden units could not be known, so Rosenblatt tried some hacks. Essentially, he took the error signals at the output units, and used heuristic rules to "backpropagate the error" to synthesize error signals at the hidden units. The precise details are hacky, and no longer of any relevance.
 
 One last thing about his backpropagation rule: he also discovered the per-layer learning rate trick. Because his backpropagation algorithm was so hacky, he found that he had to stabilize it by making the first layer learn at a much lower rate than the second.
 
@@ -364,7 +366,7 @@ One last thing about his backpropagation rule: he also discovered the per-layer 
 
 ## Bernard Widrow and Marcian Hoff
 
-Widrow and Hoff worked on multilayer perceptrons in the early 1960s. They trained a single-layered perceptron with gradient descent on the squared loss, then proceeded to not try gradient descent after a year of trying to train a network with *two layers*.
+Widrow and Hoff worked on neural networks in the early 1960s. They started with training a single perceptron with gradient descent on the squared loss, then proceeded to spend years trying to train a two-layered network *without* gradient descent. I know -- I cannot make this sound any less puzzling.
 
 The Widrow--Hoff machine, which they called the ADALINE ("ADAptive Linear NEuron"), is a function of type $\R^n \to \{0,1\}$ defined by
 
@@ -378,7 +380,7 @@ $$
 w \leftarrow w - \alpha (w^T x + b - y) w, \quad b \leftarrow b - \alpha (w^T x + b - y) b
 $$
 
-The first ADALINE machine was a box that learned to classify binary patterns on a $4 \times 4$ grid. It was pretty amusing, as everything was manual. The patterns were inputted by flipping 16 switches by hand. The error $w^T x + b - y$ was read from a voltmeter, and the parameters $w, b$ were individually adjusted by turning knobs that controlled rheostats inside the box. They then automated the knob-turning process using electrochemical devices called memistors, though the pattern input $x$ and the desired output $y$ were still entered by manual switches.
+The first ADALINE machine was a box that learned to classify binary patterns on a $4 \times 4$ grid. It was pretty amusing, as everything was done manually. The patterns were inputted by flipping 16 switches by hand. The error $w^T x + b - y$ was read from a voltmeter, and the parameters $w, b$ were individually adjusted by turning knobs controlling rheostats inside the box. They then automated the knob-turning process using electrochemical devices called memistors, though the pattern input $x$ and the desired output $y$ were still entered by manual switches.
 
 ::: {layout-nrow=1 layout-ncol=2 width=80%}
 
@@ -394,11 +396,11 @@ Widrow recounts an amusing encounter with Rosenblatt:
 >
 > They're in the Adaline. In the perceptron, they're all gone. I don't know whether the machine was temperamental or what, but it was difficult to train. I argued with Rosenblatt about that first random layer. I said, "You'd be so much better off if you just took the signal from the pixels and ran them straight into the weights of the second layer." He insisted that a perceptron had to be built this way because the human retina is built that way. That is, there's a first layer that's randomly connected to the retina. He said the reason why you can get something to interpret and make sense of random connections is because it's adaptive. You can unravel all this random scrambling. What I was trying to do was to not model nature. I was trying to do some engineering.
 
-After the ADALINE showed good behavior, they went on and on trying to train a two-layered ADALINE ("MADALINE", or "many ADALINE"), which of course cannot be trained by gradient descent, because the hidden layer ADALINE units used the Heaviside step function! It is almost inconceivable nowadays, but they simply refused to use a continuous activation function, but tried every other trick *except* that. They ended up with the [MADALINE I rule](https://en.wikipedia.org/wiki/ADALINE#MADALINE). In short, it was a heuristic rule to synthesize supervision signals for the hidden layer, much like [Rosenblatt's heuristic rule](#frank-rosenblatt).[^madaline-rule]
+After the ADALINE showed good behavior, they went on and on trying to train a two-layered ADALINE ("MADALINE", or "many ADALINE"), which of course could not be trained by gradient descent, because the hidden layer ADALINE units used the Heaviside step function! It is almost inconceivable nowadays, but they simply refused to use a continuous activation function and tried every other trick *except* that. They ended up with the [MADALINE I rule](https://en.wikipedia.org/wiki/ADALINE#MADALINE). In short, it was a heuristic rule for synthesizing supervision signals for the hidden layer, much like [Rosenblatt's heuristic rule](#frank-rosenblatt).[^madaline-rule]
 
 [^madaline-rule]: The MADALINE I machine consists of multiple hidden ADALINE units, and a single output layer consisting of a single unit. The output unit merely takes the majority vote from the hidden units. If the desired output is $+1$, but the actual output is $-1$, then the machine picks those ADALINE units that are negative, but closest to being positive, and make them update their weights, according to the ADALINE learning rule. It was thought of as a form of "minimal disturbance principle".
 
-Frustrated by the difficulty, they left neural network research. Hoff went to Intel to coinvent the microprocessor, and Widrow set about applying the ADALINE to small problems that it can solve well[^marvin-minsky-approves], such as adaptive antennas, adaptive noise filtering in telephone lines, adaptive filtering in medical scanning, etc. Even with just a single ADALINE, he brought breakthroughs to those fields.
+Frustrated by the difficulty, they left neural network research. Hoff went to Intel to coinvent the microprocessor, and Widrow set about applying the ADALINE to small problems that it could solve well[^marvin-minsky-approves], such as adaptive antennas, adaptive noise filtering in telephone lines, adaptive filtering in medical scanning, etc. Even with just a single ADALINE, he brought breakthroughs to those fields.
 
 > Apple have told me that every iPhone, since the iPhone 5, uses the LMS algorithm all over the device. They could not tell me where because, if they did, they would have to shoot me. Apple keeps secrets. [@widrowCyberneticsGeneralTheory2022, preface, page xix]
 
@@ -425,7 +427,7 @@ So regarding this background, one might be tempted to say that Widrow was misled
 
 ## Seppo Linnainmaa
 
-It's said that Seppo Linnainmaa's masters thesis in 1970 contains the backpropagation algorithm, but it is in Finnish, and not available online either. A bibliography search shows that his thesis were basically never cited before the 2010s. It is one of those papers that people cite for ritual completion only. I think we can safely say that his thesis has priority but no paternity. [@griewankWhoInventedReverse2012] describes in detail what is in the thesis, according to which he developed it to analyze the cumulative effect of round-off error in long chains of computer computations.
+It's said that Seppo Linnainmaa's master's thesis in 1970 contains the backpropagation algorithm, but it is in Finnish and not available online either. A bibliography search shows that his thesis were basically never cited before the 2010s. It is one of those papers that people cite for ritual completion only. I think we can safely say that his thesis has priority but no paternity. [@griewankWhoInventedReverse2012] describes in detail what is in the thesis, according to which he developed it to analyze the cumulative effect of round-off error in long chains of computer computations.
 
 I checked all his English papers during the 1970s, and it seems only [@linnainmaaTaylorExpansionAccumulated1976] has been cited non-negligibly before 2000, and may have had some impact on automatic differentiation, but I cannot tell by how much. It contains two algorithms, one for computing the first derivative, one for computing the first two. Both were special cases of the general backpropagation algorithm for computing arbitrary orders of derivatives.
 
@@ -435,7 +437,7 @@ Rumelhart rediscovered backpropagation around 1982 and immediately set about pub
 
 > I had no idea that Paul Werbos had done work on it. ... There are other examples of work in the control literature in the '60s \[the [adjoint method](https://en.wikipedia.org/wiki/Adjoint_state_method)\]. ... it's just no one had really done anything with them. My view is that we not only discovered them, but we realized what we could do with them and did a lot of different things. I consider them independent discoveries, at least three and maybe more. \[Shun'ichi\] Amari, I think, suggests that he had another discovery, and you know, I believe that. You can look at his paper. He had, but he didn't do anything with it. I think that was in the late '60s. I don't feel any problem. You know, maybe we should have done better scholarship and searched out all of the precursors to it, but we didn't know there were any.
 
-In 1983, Rumelhart showed Sejnowski backpropagation, who immediately tried it, and found that it was much faster than Boltzmann machine. What a refreshing change from all those others who stubbornly refused to try it.
+In 1983, Rumelhart showed backpropagation to Sejnowski, who immediately tried it and found that it was much faster than the Boltzmann machine learning rule. What a refreshing change from all those others who stubbornly refused to try it.
 
 > ... I was still working on the Boltzmann machine and was beginning to do simulations using backprop. I discovered very rapidly that backprop was about an order of magnitude faster than anything you could do with the Boltzmann machine. And if you let it run longer, it was more accurate, so you could get better solutions. [@rosenfeldTalkingNetsOral2000, Chapter 14]
 
@@ -560,11 +562,11 @@ He then went to [Marvin Minsky](https://en.wikipedia.org/wiki/Marvin_Minsky), wh
 > 
 > He was probably right, I guess, but he was clearly very worried about his reputation and his credibility in his community.
 
-Although I believe Minsky would have disapproved the idea of backpropagation even if he thought neurons are not strictly 1-0 spike generators. In the epilogue to [@minskyPerceptronsIntroductionComputational1988], he claimed that gradient descent does not scale, and using differentiable activation functions is just a hack intended to make backpropagation work, a pointless hack, as backpropagation would not scale.
+Although I believe Minsky would have disapproved of the idea of backpropagation even if he had thought that neurons are not strictly 1-0 spike generators. In the epilogue to [@minskyPerceptronsIntroductionComputational1988], he claimed that gradient descent does not scale, and using differentiable activation functions is just a hack intended to make backpropagation work, a pointless hack, as backpropagation would not scale.
 
 > However, we suspect that this smoothing trick may entail a large (and avoidable) cost when the predicate to be learned is actually a composition of linear threshold functions. There ought to be a more efficient alternative based on how much each weight must be changed, for each stimulus, to make the local input sum cross the threshold. ... We have the impression that many people in the connectionist community do not understand that this is merely a particular way to compute a gradient and have assumed instead that back-propagation is a new learning scheme that somehow gets around the basic limitations of hill-climbing.
 
-Further, in an 1991 interview, Minsky made the same kind of statement:
+Further, in a 1991 interview, Minsky made the same kind of statement:
 
 > I don't know what they would have done with the money. The story of DARPA and all that is just a myth. The problem is that there were no good ideas. The modern idea of backpropagation could be an old idea. There was someone . . . [trying to remember]. 
 > 
@@ -591,13 +593,13 @@ Then Minsky dunked on reinforcement learning as well, because he had an unpublis
 > 
 > It was his bad experience with the Jitters machine that turned him off on reinforcement learning and all the neural net ideas. It just didn't work. I later looked at that paper ... He had a system that was highly multivariate with a single reinforcement signal. The system can't learn efficiently with that. At any rate, he was totally turned off.
 
-The brief description of the unpublished jitters machine was not making sense to me, so I looked around the literature. It was *so* unpublished that I found only two more references in the entire literature [@werbosApplicationsAdvancesNonlinear1982; @werbosBuildingUnderstandingAdaptive1987], both by Werbos. [@werbosBuildingUnderstandingAdaptive1987] described it as:
+The brief description of the unpublished jitters machine was not making sense to me, so I looked around the literature. It was *so* unpublished that I found only two other references in the entire literature [@werbosApplicationsAdvancesNonlinear1982; @werbosBuildingUnderstandingAdaptive1987], both by Werbos. [@werbosBuildingUnderstandingAdaptive1987] described it as:
 
 > There are also some technical reasons to expect better results with the new approach. Almost all of the old perceptron work was based on the McCulloch--Pitts model of the neuron, which was both discontinuous and non-differentiable. It was felt, in the 1950's, that the output of a brain cell had to be 1 or 0, because the output consisted of sharp discrete "spikes." More recent work in neurology has shown that higher brain cells output "bursts" or "volleys" of spikes, and that the strength of a volley may vary continuously in intensity. This suggests the CLU model to be discussed in the Appendix. In any event, to exploit basic numerical methods, one must use differentiable processing units. Minsky once experimented with a "jitters" machine, which estimated one derivative per time cycle by making brute-force changes in selected variables; however, the methods to be discussed in the Appendix yield derivatives of all variables and parameters in one major time cycle and thereby multiply efficiency in proportion to the number of parameters $(N)$, which may be huge.
 
-This makes things perfectly clear. Minsky's jitters machine was an RL agent with multiple continuously adjustable parameters running a very primitive form of policy gradient. During every episode, it would would estimate $\partial_{\theta_i} R(\theta)$ using finite difference, but since it used finite difference, they could only estimate the partial derivative for *only one* of the parameters $\theta_i$! No wonder it never managed to learn. It is almost comical how much they failed to just use gradient descent. It sometimes feels as if did everything to *avoid* just taking the gradient. In the case of Minsky, he made it very clear, in the new additions to the 1988 version of *Perceptrons*, that he did not believe in gradient descent, period. But what explains the gradient-phobia of all the others...?
+This makes things perfectly clear. Minsky's jitters machine was an RL agent with multiple continuously adjustable parameters running a very primitive form of policy gradient. During every episode, it would estimate $\partial_{\theta_i} R(\theta)$ using finite difference, but since it used finite difference, they could only estimate the partial derivative for *only one* of the parameters $\theta_i$! No wonder it never managed to learn. It is almost comical how much they failed to just use gradient descent. It sometimes feels as if they did everything to *avoid* just taking the gradient. In the case of Minsky, he made it very clear, in the epilogue of *Perceptrons* (1988), that he did not believe in gradient descent, period. But what explains the gradient-phobia of the others...?
 
-Anyway, back to the interview. Werbos went to [Jerome Lettvin](https://en.wikipedia.org/wiki/Jerome_Lettvin), the neuroscientist famous for *What the Frog's Eye Tells the Frog's Brain*. Turns out he was a proto-[eliminativist](https://en.wikipedia.org/wiki/Eliminativism). While I'm an eliminativist too, Werbos was a Freudian, which can only collide badly with eliminativism.
+Anyway, back to the interview. Werbos went to [Jerome Lettvin](https://en.wikipedia.org/wiki/Jerome_Lettvin), the neuroscientist famous for *What the Frog's Eye Tells the Frog's Brain*. Turns out he was a proto-[eliminativist](https://en.wikipedia.org/wiki/Eliminativism). While I am an eliminativist too, Werbos was a Freudian, which could only collide badly with eliminativism.
 
 > "Oh yeah, well, you're saying that there's motive and purpose in the human brain." He said, "That 's not a good way to look at brains. I've been telling people, 'You cannot take an anthropomorphic view of the human brain.' In fact, people have screwed up the frog because they're taking bachtriomorphic views of the frog. If you really want to understand the frog, you must learn to be objective and scientific."
 
@@ -619,7 +621,7 @@ Karl Deutsch, who believed in Werbos, sponsored his PhD thesis on a "respectable
 >
 > ... Once I started doing software for them, they discovered I was pretty good at it. Once I had put backpropagation into a TSP command, they offered me a full-time job at the Harvard Cambridge Project, so I did the Ph.D. thesis while having a full-time job. While I was doing these things at MIT, I remember going to one party. ... one of the people there said, 'We have heard through the grapevine that somebody has developed this thing called continuous feedback that allows you to calculate all the derivatives in a single pass."
 
-But the saga is not over. after the PhD, Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.
+But the saga is not over. After the PhD, Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.
 
 > I found out that DARPA had spent a lot of effort building a worldwide conflict forecasting model for the Joint Chiefs of Staff that was used in the long-range strategy division of the Joint Chiefs. ... I wound up sending a couple of graduate students to create a really good database of Latin America. I said, "You want variance, high variance. Something hard to predict." I thought conflict in Latin America would be the most beautiful case. I figured there were enough cultural homogeneities that it would be a single stochastic process, but with lots and lots of variance in that process. So we got truly annual data going back, I don't know, twenty or thirty years for all the countries in Latin America and then reestimated the Joint Chief's model on it. It had an r2 of about .0016 at forecasting conflict. By jiggling and jiggling we could raise it to about .05. It could predict GNP and economic things decently. Conflict prediction we couldn't improve, though; it was hopeless.
 > 
@@ -627,12 +629,12 @@ But the saga is not over. after the PhD, Werbos was hired by the DoD, and prompt
 > 
 > It was published in [@werbosEmpiricalTestNew1978] anyway because they couldn't block the journals, but it didn't include the appendices. So that paper in 1978 said, "We've got this great thing called dynamic feedback, which lets you estimate these things. It calculates derivatives in a single swoop, and you can use it for lots of things, like AI." ... **the appendix on how to do it was not there because of page limits** ... At that point, DARPA was no longer happy.
 
-So he went to the Department of Energy and used backpropagation to make another model, and managed to get silenced again, unable to publish that report until 1988 [@werbosGeneralizationBackpropagationApplication1988].
+So he went to the Department of Energy, used backpropagation to create another model, and was silenced once again, unable to publish that report until 1988 [@werbosGeneralizationBackpropagationApplication1988].
 
 > They had a million-dollar contract at Oak Ridge National Laboratory to study that model. They wanted me for several things. One, they wanted me to be a translator between engineering and economics. Two, they wanted a critique. They wanted exposés. They wanted me to rip apart the models of the Department of Energy in a very scientific, objective way that didn't look like I was trying to rip them apart but was anyway. That's exactly what they wanted to hire me for, and I didn't really know that was the motive. These particular people didn't like modeling very much.
 > 
 > So at some point, they wanted sensitivity analysis. And I said, "You know, I know a little bit about calculating derivatives." ... I applied it to a natural gas model at the Department of Energy. In the course of applying it, I did indeed discover dirt. They didn't want me to publish it because it was too politically sensitive. It was a real-world application, but the problem was that it was too real. At DOE, you know, you don't have First Amendment rights. That's one of the terrible things somebody's got to fix in this country. The reality of the First Amendment has deteriorated. Nobody's breaking the law, but the spirit of the First Amendment has decayed too far for science. At any rate, they finally gave me permission to publish it around '86 and '87. I sent it to the journal Neural Nets - that is, how you do simultaneous recurrent nets and time-lag recurrent nets together. Then the editorial process messed around with it, made the paper perhaps worse, and it finally got published in '88, which makes me very sad because now I gotta worry about, 'Well, gee, didn't Pineda do this in '88?
 
-As a side note, one might have felt that Werbos' "turning Freud into mathematics" seem rather strange. This feeling is completely justified. I found a recent paper by him [@werbosIntelligenceBrainTheory2009] with this crackpot illustration:
+As a side note, one might feel that Werbos' "turning Freud into mathematics" seems rather strange. This feeling is completely justified. I found a recent paper by him [@werbosIntelligenceBrainTheory2009] with this crackpot illustration:
 
 ![The text at the end of the arrow says "quantum and collective intelligence (Jung, Dao, Atman...)?".](figure/werbos_2009.jpg)
