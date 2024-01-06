@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="twitter:card" content="summary">
 </head>
 
-<body class="floating nav-fixed">
+<body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -224,6 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#punctuation" id="toc-punctuation" class="nav-link" data-scroll-target="#punctuation">Punctuation</a>
   <ul class="collapse">
+  <li><a href="#comma" id="toc-comma" class="nav-link" data-scroll-target="#comma">Comma</a></li>
   <li><a href="#quotation" id="toc-quotation" class="nav-link" data-scroll-target="#quotation">Quotation</a></li>
   <li><a href="#whitespace" id="toc-whitespace" class="nav-link" data-scroll-target="#whitespace">Whitespace</a></li>
   <li><a href="#connecting-words" id="toc-connecting-words" class="nav-link" data-scroll-target="#connecting-words">Connecting words</a></li>
@@ -239,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
@@ -280,8 +281,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ## JavaScript -->
 </section>
 </section>
-<section id="punctuation" class="level2">
+<section id="punctuation" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="punctuation">Punctuation</h2>
+<section id="comma" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="comma">Comma</h3>
+<p>The comma separates parts with equal syntax roles.</p>
+<pre class="text"><code>Equal noun-phrases.
+  I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.
+
+Equal adjectives.
+  He is a strong, healthy man.
+
+Adjectives at unequal levels.
+* We stayed at an expensive, summer resort.
+  We stayed at an {expensive {summer resort}}.</code></pre>
+<p>They denote typed multisets.</p>
+<pre class="text"><code>They are typed multisets, as in:
+I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.
+=&gt;
+I have {(jujube tree, 2), (peach tree, 1)} in my backyard.
+
+They are not typed sets, because:
+I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.
+=/=&gt;
+I have {jujube tree, peach tree} in my backyard.
+
+They are not typed lists, because:
+I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.
+=
+I have 3 trees in my backyard: a jujube tree, a peach tree, and a jujube tree.
+but
+(jujube tree, jujube tree, peach tree) =/= (jujube tree, peach tree, jujube tree)
+
+They are not untyped multisets, because:
+* I have in my backyard a jujube tree and sing.
+  Backyard = {(jujube tree, 1), (sing, 1)}</code></pre>
+<p>The “and” before the last item on the list seems to be necessary in speech, as in “Heads up! The list is about to be over!”, even though it is not necessary in writing.</p>
+<div class="page-columns page-full"><p>The “Oxford comma” is a rather odd hack that allows a tiny amount of nesting. In fact, English does not have recursion, and 2 seems to be the deepest nesting we can get. <a href="https://en.wikipedia.org/wiki/Serial_comma#Arguments_for_and_against">According to Wikipedia</a>, the most common arguments for/against the Oxford comma are: convention, disambiguation. As for convention, it cannot be argued with, only dealt with. As for disambiguation, I recommend using brackets.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;It seems like a lot of weird English syntax is centered around an abhorrence of brackets. Like, I understand why brackets can get annoying (as anyone can see by looking at LISP code), but there is no reason to avoid brackets when you really need to disambiguate something. For example, instead of requiring the Oxford comma, why not just put in a freaking bracket? Don’t say that “oh you can’t speak brackets” like damn you you can’t speak commas either!</p></li></div></div>
+<pre class="text"><code>No Oxford comma:
+To my parents, Ayn Rand and God.
+To my mother, Ayn Rand, and God.
+
+Oxford comma:
+To my parents, Ayn Rand, and God.
+To my mother, Ayn Rand and God.
+
+Mathematics:
+To {my parents, Ayn Rand, God}.
+To {my mother Ayn Rand, God}.
+To {my mother, Ayn Rand, God}.</code></pre>
+<p>For clauses, commas are weird. There is no clear rule.</p>
+<pre class="text"><code>Equal clauses.
+  He walked all the way home, and he shut the door.
+
+Equal clauses, though the second lost the pronoun.
+  I saw that she was busy, and [I] prepared to leave.
+
+Dependent clause (except that-clause).
+  Because I could not stop for Death, He kindly stopped for me.
+
+No comma between that-clause and main-clause, or vice versa.
+* We paused before a House, that seemed a swelling of the Ground
+  We paused before a House that seemed a swelling of the Ground
+* That is not dead, which can eternal lie.
+  That is not dead which can eternal lie.</code></pre>
+<p>A pair of commas can replace a pair of parentheses, though there is no benefit, other than avoiding the wrath of English teachers.</p>
+<p>A comma, like an em-dash <code>---</code>, can indicate pauses and stutters in quotations, such as “Daisy, Daisy… give me—e— your, ans, ser, do…”. This is an edge case and there are no fixed rules here. If you ever have to write something like this, use your imagination.</p>
+</section>
 <section id="quotation" class="level3">
 <h3 class="anchored" data-anchor-id="quotation">Quotation</h3>
 <p>English quotation standards are extremely annoying, because while theoretically quotation is meant to be verbatim, it is anything but. I recommend verbatim quotation. It is consistent with usage in computer programming and formal logic. In particular, the English quotation method would be a syntax error in computer programming, and would also break the proofs of Gödel’s incompleteness theorems, which use the <a href="https://en.wikipedia.org/wiki/Quasi-quotation">Quine quotation</a>.</p>
@@ -373,6 +439,7 @@ It would not work if the two sentences are not "closely related".
 
 </section>
 </section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -774,172 +841,258 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Notes on Web Design"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Yuxi Liu"</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2023-12-10"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> "2023-12-10"</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [programming]</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "My quick reference for designing content for the Internet."</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># image: "figure/banner_1.png"</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="an">status:</span><span class="co"> "wip"</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="an">confidence:</span><span class="co"> "log"</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="an">importance:</span><span class="co"> 4</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>General references:</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">The 2022 Web Almanac</span><span class="co">](https://almanac.httparchive.org/en/2022/)</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">MDN Web Docs</span><span class="co">](https://developer.mozilla.org/en-US/)</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## HTML</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>HTML (HyperText Markup Language) is the standard markup language for creating web pages.</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>HTML was created by Tim Berners-Lee in 1989. The key metaphor for HTML is the "editing markup", as follows: Back in the old days, authors would write or typewrite their document in the exact same font, from the first word to the last word. Then the document is sent to an editor, who would edit it by *marking up* the words, such as drawing squiggly lines, crossing things out, changing their font size, and writing other instructions for the type-setter (which back then meant someone who would take out types from a box and set them into the right ordering for the printing press).</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>So, one should think of an HTML document as starting with a plaintext of exactly the same format, from the first to the last word, then adding marks upon it.</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="fu">### `&lt;!DOCTYPE&gt;`</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>The <span class="in">`&lt;!DOCTYPE&gt;`</span> tag is used to declare the document type. It is usually like <span class="in">`&lt;!DOCTYPE html&gt;`</span>, although there are rare variants, where instead of <span class="in">`html`</span>, we have <span class="in">`html -//w3c//dtd xhtml 1.0 transitional//en http://www.w3.org/tr/xhtml1/dtd/xhtml1-transitional.dtd`</span>, <span class="in">`html -//w3c//dtd xhtml 1.0 strict//en http://www.w3.org/tr/xhtml1/dtd/xhtml1-strict.dtd`</span>, etc.</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>Well, if you don't care much for the details, use <span class="in">`&lt;!DOCTYPE html&gt;`</span> is always fine. If you do care, read on.</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>The <span class="in">`xhtml`</span> thing came from early 2000s, where there was a movement to <span class="in">`XML`</span>-everything. Instead of the poorly specified <span class="in">`HTML`</span>, there would be <span class="in">`XHTML`</span>, which can be checked for syntax, and compiled into an abstract syntax tree. Despite this, people just kept on using <span class="in">`HTML`</span> and ignored <span class="in">`XHTML`</span>.</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>Despite the universal ambitions of <span class="in">`XML`</span>, it is now in the land of old soldiers, who never die, but just fade away.</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The <span class="in">`SVG`</span> vector graphics format.</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`MathML`</span>, which is like <span class="in">`LaTeX`</span> but in <span class="in">`XML`</span>.</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The <span class="in">`RSS`</span> and <span class="in">`Atom`</span> feeds, which... unfortunately, are also mostly legacy now. Who even use these nowadays?</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The acronym <span class="in">`AJAX`</span>, which stands for **Asynchronous JavaScript and ~~XML~~ JSON**. After looking at <span class="in">`XML`</span> and <span class="in">`JSON`</span>, I am quite glad this replacement happened.</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### Semantic markup</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`&lt;article&gt;`</span> to surround a block of article. There can be any number of articles in a single <span class="in">`HTML`</span> file.</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>The <span class="in">`id`</span> of tags must be unique within each <span class="in">`HTML`</span> file.</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tips for fast loading</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`&lt;img decoding="async" loading="lazy" ...&gt;`</span> for images, to allow the rest of the page to load before the images are loaded. To avoid <span class="co">[</span><span class="ot">Cumulative Layout Shift (CLS)</span><span class="co">](https://web.dev/articles/cls)</span>, I think something like </span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="in">```css</span></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>img <span class="op">{</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>  max<span class="op">-</span>width<span class="op">:</span> <span class="dv">100</span><span class="op">%;</span></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  height<span class="op">:</span> auto<span class="op">;</span></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- </span><span class="al">###</span><span class="co"> `&lt;meta&gt;`</span></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="co">## CSS </span></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="co">## JavaScript --&gt;</span></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## Punctuation</span></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="fu">### Quotation</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>English quotation standards are extremely annoying, because while theoretically quotation is meant to be verbatim, it is anything but. I recommend verbatim quotation. It is consistent with usage in computer programming and formal logic. In particular, the English quotation method would be a syntax error in computer programming, and would also break the proofs of Gödel's incompleteness theorems, which use the <span class="co">[</span><span class="ot">Quine quotation</span><span class="co">](https://en.wikipedia.org/wiki/Quasi-quotation)</span>.</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>For nested quotations, alternate between double <span class="in">`"`</span> and single <span class="in">`'`</span> quotation marks. In other words, inside a level-$n$ writing, use <span class="in">`"`</span> if $n \equiv 0\mod 2$, and <span class="in">`'`</span> otherwise. It is context-free, and its quotient by <span class="in">`{" ~ '}`</span> is the <span class="co">[</span><span class="ot">Dyck language</span><span class="co">](https://en.wikipedia.org/wiki/Dyck_language)</span>.</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>However, if you need to pass the Turing test, then study carefully the following edge cases:</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="in">* Did Hal say "Good morning, Dave."?</span></span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="in">  Did Hal say, "Good morning, Dave"?</span></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="in">* No, he said "Where are you, Dave?".</span></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="in">  No, he said, "Where are you, Dave?"</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="in">  To be perfectly exact, I heard "Wh--- are you, Da---".</span></span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="in">* "cat" is in lowercase.</span></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="in">* "Cat" is in lowercase.</span></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="in">* "Cat" is in uppercase.</span></span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="in">  "Cat" is capitalized.</span></span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="in">* In lowercase "cat" is.</span></span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="in">* "cat" is in lowercase, while "CAT" is in uppercase.</span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="in">  "CAT" is in uppercase, while "cat" is in lowercase.</span></span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a><span class="in">  What we cannot speak about we must pass over in silence.</span></span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a><span class="in">* "sed" ("stream editor") is a Unix utility that parses and transforms text.</span></span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="in">* "Sed" ("stream editor") is a Unix utility that parses and transforms text.</span></span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="in">  The Unix utility "sed" parses and transforms text.</span></span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>The two senses of verbatim (verbatim verbal speech, verbatim written text) are inconsistent with the capitalization constraint:</span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a><span class="in">This violates "first letter capitalization".</span></span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved'. 'sed' stands for 'stream editor'. ..." </span></span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a><span class="in">This violates "verbatim written text".</span></span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved'. 'Sed' stands for 'stream editor'. ..."</span></span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a><span class="in">This violates "verbatim verbal speech".</span></span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved', whereas 'sed' stands for 'stream editor'. ..."</span></span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a><span class="in">This violates the constraint of grammar.</span></span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved', 'sed' stands for 'stream editor'. ..."</span></span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a><span class="in">This works, but only by a dubious insertion.</span></span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a><span class="in">  "... 'Vim' stands for 'vi improved'[, whereas] 'sed' stands for 'stream editor'. ..."</span></span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a><span class="in">This works, but just barely.</span></span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a><span class="in">  "... 'Vim' stands for 'vi improved'; 'sed' stands for 'stream editor'. ..."</span></span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a><span class="in">It would not work if the two sentences are not "closely related".</span></span>
-<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a><span class="in">* "... The Unix coreutils were written mostly in the 1970s; 'sed',</span></span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a><span class="in">       which stands for 'stream editor', was written by Lee McMahon in 1973. ..."</span></span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### Whitespace</span></span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>For most cases, the single whitespace works.</span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a><span class="in">` `</span> (U+00A0 <span class="co">[</span><span class="ot">no-break space</span><span class="co">]</span>{.smallcaps}) says: "Do not break line here.". Similarly for <span class="in">`&amp;NoBreak;`</span> (U+2060 <span class="co">[</span><span class="ot">word joiner</span><span class="co">]</span>{.smallcaps}). The opposite is <span class="in">`&lt;wbr&gt;`</span> (U+200B <span class="co">[</span><span class="ot">zero width space</span><span class="co">]</span>{.smallcaps}), which says: "You can break line here.".</span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a><span class="in">` `</span> (U+2007 <span class="co">[</span><span class="ot">figure space</span><span class="co">]</span>{.smallcaps}), <span class="in">` `</span> (U+2008 <span class="co">[</span><span class="ot">punctuation space</span><span class="co">]</span>{.smallcaps}), are only for numerical tabulations, to ensure alignment across rows.</span>
-<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a>The thin space and hair space are not used except by fastidious typographers.</span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a><span class="fu">### Connecting words</span></span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`-`</span> to connect two non-equal parts into a compound noun-phrase, except when one of the parts is an open compound, in which case, use <span class="in">`--`</span>.</span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`--`</span> to connect two equal parts into a compound noun-phrase.</span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`pre-WWII, pre--World War Two, ex--Prime Minister, water-based solution, non--water-based solution, the anti-choice--anti-life debate`</span></span>
-<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a><span class="fu">### Interruptions</span></span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a>Use em-dash <span class="in">`---`</span> without spacing.</span>
-<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`I---no, YOU son of a---`</span></span>
-<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`---and as I was saying---`</span></span>
-<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a><span class="fu">### Deletions</span></span>
-<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a>To cut out letters or words by redaction, use the em-dash <span class="in">`---`</span>. Imagine that you wrote out the text normally, then you replace the section to be redacted with a single <span class="in">`---`</span>, and in this way you will find the right spacing. However, I recommend the black block character <span class="in">`█`</span>, which looks just like real redactions on secret documents.</span>
-<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`That f--- son of a b███!`</span></span>
-<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>The ellipsis symbol can be done either with <span class="in">`...`</span> or with a single <span class="in">`…`</span> (U+2026 <span class="co">[</span><span class="ot">horizontal ellipsis</span><span class="co">]</span>{.smallcaps}). It is used with spacing on both ends, except that there is no space between it and the quotation mark.</span>
-<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`"Consider this ... , and no more ... be said. ... and so on and so forth ...", said Mr. ---.`</span></span>
-<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a><span class="fu">### Arithmetics</span></span>
-<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>If you cannot use LaTeX, then you could use the hyphen <span class="in">`-`</span> for minus sign, though it's more correct to use <span class="in">`−`</span>. Similarly, the letter <span class="in">`x`</span> can work, though <span class="in">`×`</span> is better.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Notes on Web Design"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Yuxi Liu"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2023-12-10"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> "2023-12-10"</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [programming]</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "My quick reference for designing content for the Internet."</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># image: "figure/banner_1.png"</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="an">status:</span><span class="co"> "wip"</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="an">confidence:</span><span class="co"> "log"</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="an">importance:</span><span class="co"> 4</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>General references:</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">The 2022 Web Almanac</span><span class="co">](https://almanac.httparchive.org/en/2022/)</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">MDN Web Docs</span><span class="co">](https://developer.mozilla.org/en-US/)</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## HTML</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>HTML (HyperText Markup Language) is the standard markup language for creating web pages.</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>HTML was created by Tim Berners-Lee in 1989. The key metaphor for HTML is the "editing markup", as follows: Back in the old days, authors would write or typewrite their document in the exact same font, from the first word to the last word. Then the document is sent to an editor, who would edit it by *marking up* the words, such as drawing squiggly lines, crossing things out, changing their font size, and writing other instructions for the type-setter (which back then meant someone who would take out types from a box and set them into the right ordering for the printing press).</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>So, one should think of an HTML document as starting with a plaintext of exactly the same format, from the first to the last word, then adding marks upon it.</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="fu">### `&lt;!DOCTYPE&gt;`</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>The <span class="in">`&lt;!DOCTYPE&gt;`</span> tag is used to declare the document type. It is usually like <span class="in">`&lt;!DOCTYPE html&gt;`</span>, although there are rare variants, where instead of <span class="in">`html`</span>, we have <span class="in">`html -//w3c//dtd xhtml 1.0 transitional//en http://www.w3.org/tr/xhtml1/dtd/xhtml1-transitional.dtd`</span>, <span class="in">`html -//w3c//dtd xhtml 1.0 strict//en http://www.w3.org/tr/xhtml1/dtd/xhtml1-strict.dtd`</span>, etc.</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>Well, if you don't care much for the details, use <span class="in">`&lt;!DOCTYPE html&gt;`</span> is always fine. If you do care, read on.</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>The <span class="in">`xhtml`</span> thing came from early 2000s, where there was a movement to <span class="in">`XML`</span>-everything. Instead of the poorly specified <span class="in">`HTML`</span>, there would be <span class="in">`XHTML`</span>, which can be checked for syntax, and compiled into an abstract syntax tree. Despite this, people just kept on using <span class="in">`HTML`</span> and ignored <span class="in">`XHTML`</span>.</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>Despite the universal ambitions of <span class="in">`XML`</span>, it is now in the land of old soldiers, who never die, but just fade away.</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The <span class="in">`SVG`</span> vector graphics format.</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`MathML`</span>, which is like <span class="in">`LaTeX`</span> but in <span class="in">`XML`</span>.</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The <span class="in">`RSS`</span> and <span class="in">`Atom`</span> feeds, which... unfortunately, are also mostly legacy now. Who even use these nowadays?</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The acronym <span class="in">`AJAX`</span>, which stands for **Asynchronous JavaScript and ~~XML~~ JSON**. After looking at <span class="in">`XML`</span> and <span class="in">`JSON`</span>, I am quite glad this replacement happened.</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### Semantic markup</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`&lt;article&gt;`</span> to surround a block of article. There can be any number of articles in a single <span class="in">`HTML`</span> file.</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>The <span class="in">`id`</span> of tags must be unique within each <span class="in">`HTML`</span> file.</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tips for fast loading</span></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`&lt;img decoding="async" loading="lazy" ...&gt;`</span> for images, to allow the rest of the page to load before the images are loaded. To avoid <span class="co">[</span><span class="ot">Cumulative Layout Shift (CLS)</span><span class="co">](https://web.dev/articles/cls)</span>, I think something like </span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="in">```css</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>img <span class="op">{</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>  max<span class="op">-</span>width<span class="op">:</span> <span class="dv">100</span><span class="op">%;</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  height<span class="op">:</span> auto<span class="op">;</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- </span><span class="al">###</span><span class="co"> `&lt;meta&gt;`</span></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="co">## CSS </span></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="co">## JavaScript --&gt;</span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## Punctuation</span></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comma</span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>The comma separates parts with equal syntax roles.</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="in">Equal noun-phrases.</span></span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="in">  I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.</span></span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="in">Equal adjectives.</span></span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="in">  He is a strong, healthy man.</span></span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="in">Adjectives at unequal levels.</span></span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="in">* We stayed at an expensive, summer resort.</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="in">  We stayed at an {expensive {summer resort}}.</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>They denote typed multisets.</span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="in">They are typed multisets, as in:</span></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="in">I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.</span></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="in">=&gt;</span></span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="in">I have {(jujube tree, 2), (peach tree, 1)} in my backyard.</span></span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="in">They are not typed sets, because:</span></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a><span class="in">I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.</span></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="in">=/=&gt;</span></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a><span class="in">I have {jujube tree, peach tree} in my backyard.</span></span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a><span class="in">They are not typed lists, because:</span></span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="in">I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.</span></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="in">=</span></span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a><span class="in">I have 3 trees in my backyard: a jujube tree, a peach tree, and a jujube tree.</span></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a><span class="in">but</span></span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a><span class="in">(jujube tree, jujube tree, peach tree) =/= (jujube tree, peach tree, jujube tree)</span></span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a><span class="in">They are not untyped multisets, because:</span></span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="in">* I have in my backyard a jujube tree and sing.</span></span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="in">  Backyard = {(jujube tree, 1), (sing, 1)}</span></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>The "and" before the last item on the list seems to be necessary in speech, as in "Heads up! The list is about to be over!", even though it is not necessary in writing.</span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>The "Oxford comma" is a rather odd hack that allows a tiny amount of nesting. In fact, English does not have recursion, and 2 seems to be the deepest nesting we can get. <span class="co">[</span><span class="ot">According to Wikipedia</span><span class="co">](https://en.wikipedia.org/wiki/Serial_comma#Arguments_for_and_against)</span>, the most common arguments for/against the Oxford comma are: convention, disambiguation. As for convention, it cannot be argued with, only dealt with. As for disambiguation, I recommend using brackets.<span class="ot">[^oxford-comma-rant]</span></span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a><span class="ot">[^oxford-comma-rant]: </span>It seems like a lot of weird English syntax is centered around an abhorrence of brackets. Like, I understand why brackets can get annoying (as anyone can see by looking at LISP code), but there is no reason to avoid brackets when you really need to disambiguate something. For example, instead of requiring the Oxford comma, why not just put in a freaking bracket? Don't say that "oh you can't speak brackets" like damn you you can't speak commas either!</span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="in">No Oxford comma:</span></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a><span class="in">To my parents, Ayn Rand and God.</span></span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a><span class="in">To my mother, Ayn Rand, and God.</span></span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a><span class="in">Oxford comma:</span></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a><span class="in">To my parents, Ayn Rand, and God.</span></span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a><span class="in">To my mother, Ayn Rand and God.</span></span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="in">Mathematics:</span></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a><span class="in">To {my parents, Ayn Rand, God}.</span></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a><span class="in">To {my mother Ayn Rand, God}.</span></span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a><span class="in">To {my mother, Ayn Rand, God}.</span></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>For clauses, commas are weird. There is no clear rule.</span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a><span class="in">Equal clauses.</span></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a><span class="in">  He walked all the way home, and he shut the door.</span></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a><span class="in">Equal clauses, though the second lost the pronoun.</span></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="in">  I saw that she was busy, and [I] prepared to leave.</span></span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a><span class="in">Dependent clause (except that-clause).</span></span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="in">  Because I could not stop for Death, He kindly stopped for me.</span></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="in">No comma between that-clause and main-clause, or vice versa.</span></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="in">* We paused before a House, that seemed a swelling of the Ground</span></span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a><span class="in">  We paused before a House that seemed a swelling of the Ground</span></span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="in">* That is not dead, which can eternal lie.</span></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="in">  That is not dead which can eternal lie.</span></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>A pair of commas can replace a pair of parentheses, though there is no benefit, other than avoiding the wrath of English teachers.</span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>A comma, like an em-dash <span class="in">`---`</span>, can indicate pauses and stutters in quotations, such as "Daisy, Daisy... give me---e--- your, ans, ser, do...". This is an edge case and there are no fixed rules here. If you ever have to write something like this, use your imagination.</span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="fu">### Quotation</span></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>English quotation standards are extremely annoying, because while theoretically quotation is meant to be verbatim, it is anything but. I recommend verbatim quotation. It is consistent with usage in computer programming and formal logic. In particular, the English quotation method would be a syntax error in computer programming, and would also break the proofs of Gödel's incompleteness theorems, which use the <span class="co">[</span><span class="ot">Quine quotation</span><span class="co">](https://en.wikipedia.org/wiki/Quasi-quotation)</span>.</span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>For nested quotations, alternate between double <span class="in">`"`</span> and single <span class="in">`'`</span> quotation marks. In other words, inside a level-$n$ writing, use <span class="in">`"`</span> if $n \equiv 0\mod 2$, and <span class="in">`'`</span> otherwise. It is context-free, and its quotient by <span class="in">`{" ~ '}`</span> is the <span class="co">[</span><span class="ot">Dyck language</span><span class="co">](https://en.wikipedia.org/wiki/Dyck_language)</span>.</span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>However, if you need to pass the Turing test, then study carefully the following edge cases:</span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a><span class="in">* Did Hal say "Good morning, Dave."?</span></span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a><span class="in">  Did Hal say, "Good morning, Dave"?</span></span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a><span class="in">* No, he said "Where are you, Dave?".</span></span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a><span class="in">  No, he said, "Where are you, Dave?"</span></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="in">  To be perfectly exact, I heard "Wh--- are you, Da---".</span></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a><span class="in">* "cat" is in lowercase.</span></span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a><span class="in">* "Cat" is in lowercase.</span></span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a><span class="in">* "Cat" is in uppercase.</span></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a><span class="in">  "Cat" is capitalized.</span></span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a><span class="in">* In lowercase "cat" is.</span></span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="in">* "cat" is in lowercase, while "CAT" is in uppercase.</span></span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a><span class="in">  "CAT" is in uppercase, while "cat" is in lowercase.</span></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="in">  What we cannot speak about we must pass over in silence.</span></span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a><span class="in">* "sed" ("stream editor") is a Unix utility that parses and transforms text.</span></span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a><span class="in">* "Sed" ("stream editor") is a Unix utility that parses and transforms text.</span></span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a><span class="in">  The Unix utility "sed" parses and transforms text.</span></span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a>The two senses of verbatim (verbatim verbal speech, verbatim written text) are inconsistent with the capitalization constraint:</span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="in">This violates "first letter capitalization".</span></span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved'. 'sed' stands for 'stream editor'. ..." </span></span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a><span class="in">This violates "verbatim written text".</span></span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved'. 'Sed' stands for 'stream editor'. ..."</span></span>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="in">This violates "verbatim verbal speech".</span></span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved', whereas 'sed' stands for 'stream editor'. ..."</span></span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a><span class="in">This violates the constraint of grammar.</span></span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved', 'sed' stands for 'stream editor'. ..."</span></span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a><span class="in">This works, but only by a dubious insertion.</span></span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a><span class="in">  "... 'Vim' stands for 'vi improved'[, whereas] 'sed' stands for 'stream editor'. ..."</span></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="in">This works, but just barely.</span></span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a><span class="in">  "... 'Vim' stands for 'vi improved'; 'sed' stands for 'stream editor'. ..."</span></span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="in">It would not work if the two sentences are not "closely related".</span></span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a><span class="in">* "... The Unix coreutils were written mostly in the 1970s; 'sed',</span></span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a><span class="in">       which stands for 'stream editor', was written by Lee McMahon in 1973. ..."</span></span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a><span class="fu">### Whitespace</span></span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a>For most cases, the single whitespace works.</span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a><span class="in">` `</span> (U+00A0 <span class="co">[</span><span class="ot">no-break space</span><span class="co">]</span>{.smallcaps}) says: "Do not break line here.". Similarly for <span class="in">`&amp;NoBreak;`</span> (U+2060 <span class="co">[</span><span class="ot">word joiner</span><span class="co">]</span>{.smallcaps}). The opposite is <span class="in">`&lt;wbr&gt;`</span> (U+200B <span class="co">[</span><span class="ot">zero width space</span><span class="co">]</span>{.smallcaps}), which says: "You can break line here.".</span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="in">` `</span> (U+2007 <span class="co">[</span><span class="ot">figure space</span><span class="co">]</span>{.smallcaps}), <span class="in">` `</span> (U+2008 <span class="co">[</span><span class="ot">punctuation space</span><span class="co">]</span>{.smallcaps}), are only for numerical tabulations, to ensure alignment across rows.</span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>The thin space and hair space are not used except by fastidious typographers.</span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a><span class="fu">### Connecting words</span></span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`-`</span> to connect two non-equal parts into a compound noun-phrase, except when one of the parts is an open compound, in which case, use <span class="in">`--`</span>.</span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`--`</span> to connect two equal parts into a compound noun-phrase.</span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`pre-WWII, pre--World War Two, ex--Prime Minister, water-based solution, non--water-based solution, the anti-choice--anti-life debate`</span></span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="fu">### Interruptions</span></span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a>Use em-dash <span class="in">`---`</span> without spacing.</span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`I---no, YOU son of a---`</span></span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`---and as I was saying---`</span></span>
+<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a><span class="fu">### Deletions</span></span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>To cut out letters or words by redaction, use the em-dash <span class="in">`---`</span>. Imagine that you wrote out the text normally, then you replace the section to be redacted with a single <span class="in">`---`</span>, and in this way you will find the right spacing. However, I recommend the black block character <span class="in">`█`</span>, which looks just like real redactions on secret documents.</span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`That f--- son of a b███!`</span></span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>The ellipsis symbol can be done either with <span class="in">`...`</span> or with a single <span class="in">`…`</span> (U+2026 <span class="co">[</span><span class="ot">horizontal ellipsis</span><span class="co">]</span>{.smallcaps}). It is used with spacing on both ends, except that there is no space between it and the quotation mark.</span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`"Consider this ... , and no more ... be said. ... and so on and so forth ...", said Mr. ---.`</span></span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a><span class="fu">### Arithmetics</span></span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>If you cannot use LaTeX, then you could use the hyphen <span class="in">`-`</span> for minus sign, though it's more correct to use <span class="in">`−`</span>. Similarly, the letter <span class="in">`x`</span> can work, though <span class="in">`×`</span> is better.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
