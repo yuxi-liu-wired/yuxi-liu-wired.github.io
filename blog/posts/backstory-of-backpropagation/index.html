@@ -311,7 +311,7 @@ div.csl-indent {
 x_0 &amp;= x_0 \\
 x_1 &amp;= f_1(x_0) \\
 &amp;\cdots \\
-x_T &amp;= f_T(x_0, x_1, ..., x_{T-1})
+x_T &amp;= f_T(x_0, x_1, \dots , x_{T-1})
 \end{aligned}
 \]</span></p>
 <p>Now we perform an infinitesimal perturbation on every of its independent variables. A forward propagation then causes an infinitesimal perturbation on every variable, independent or dependent. Denote these as <span class="math inline">\(dx_0, dx_1, \dots, dx_T\)</span>. We can now compute the derivative of <span class="math inline">\(dx_T\)</span> with respect to every other variable by backpropagating the perturbation. Suppose we can see only <span class="math inline">\(dx_T\)</span>, then the change in <span class="math inline">\(x_T\)</span> due to <span class="math inline">\(dx_T\)</span> is the identity. That is,</p>
@@ -320,13 +320,13 @@ x_T &amp;= f_T(x_0, x_1, ..., x_{T-1})
 \]</span></p>
 <p>Now suppose we can see only <span class="math inline">\(dx_{T-1}\)</span>, then the change in <span class="math inline">\(x_T\)</span> due to <span class="math inline">\(dx_{T-1}\)</span> can only come from the final step in the forward propagation. Therefore</p>
 <p><span class="math display">\[
-\frac{dx_T}{dx_{T-1}} = \nabla_{x_{T-1}} f_T(x_0, x_1, ..., x_{T-1})
+\frac{dx_T}{dx_{T-1}} = \nabla_{x_{T-1}} f_T(x_0, x_1, \dots , x_{T-1})
 \]</span></p>
 <p>Similarly, the change in <span class="math inline">\(x_T\)</span> due to <span class="math inline">\(dx_{T-2}\)</span> can come from either directly changing <span class="math inline">\(x_T\)</span>, or changing <span class="math inline">\(x_{T-1}\)</span> and thereby changing <span class="math inline">\(x_T\)</span>. Therefore,</p>
 <p><span class="math display">\[
 \frac{dx_T}{dx_{T-2}} =
-    \nabla_{x_{T-1}} f_{T}(x_0, x_1, ..., x_{T-2}) +
-    \underbrace{\frac{dx_T}{dx_{T-1}}\nabla_{x_{T-2}} f_{T-1}(x_0, x_1, ..., x_{T-2})}_{\text{the chain rule}}
+    \nabla_{x_{T-1}} f_{T}(x_0, x_1, \dots , x_{T-2}) +
+    \underbrace{\frac{dx_T}{dx_{T-1}}\nabla_{x_{T-2}} f_{T-1}(x_0, x_1, \dots , x_{T-2})}_{\text{the chain rule}}
 \]</span></p>
 <p>This generalizes to the rest of the steps.</p>
 <p>The above computation is fully general, but this makes it inefficient. In practical applications of backpropagation, the computation graph is usually very sparse, meaning that each <span class="math inline">\(x_t\)</span> only directly influence a few more nodes down the line. In standard neural networks, typically <span class="math inline">\(x_{t}\)</span> only directly influences <span class="math inline">\(x_{t+1}, x_{t+2}\)</span>. Thus sparsity is vital for backpropagation to be relevant.</p>
@@ -557,7 +557,7 @@ f(x) = \theta\left(b^{R} + \sum_i w^{AR}_i \theta\left((w^{SA, i})^T x + b^{A}_i
 </section>
 <section id="bernard-widrow-and-marcian-hoff" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="bernard-widrow-and-marcian-hoff">Bernard Widrow and Marcian Hoff</h2>
-<p>Widrow and Hoff worked on multilayered perceptrons in the early 1960s. They trained a single-layered perceptron with gradient descent on the squared loss, then proceeded to not try gradient descent after a year of trying to train a network with <em>two layers</em>.</p>
+<p>Widrow and Hoff worked on multilayer perceptrons in the early 1960s. They trained a single-layered perceptron with gradient descent on the squared loss, then proceeded to not try gradient descent after a year of trying to train a network with <em>two layers</em>.</p>
 <p>The Widrow–Hoff machine, which they called the ADALINE (“ADAptive Linear NEuron”), is a function of type <span class="math inline">\(\mathbb{R}^n \to \{0,1\}\)</span> defined by</p>
 <p><span class="math display">\[
 f(x) = \theta(w^T x + b)
@@ -780,7 +780,7 @@ w \leftarrow w - \alpha (w^T x + b - y) w, \quad b \leftarrow b - \alpha (w^T x 
 <p>The first application of backpropagation in the world in a generalized sense was a command that was put into the <a href="https://en.wikipedia.org/wiki/TSP_(econometrics_software)">TSP</a> at MIT , available to the whole MIT community as part of their standard software. It was published as part of MIT ’s report to the DOD [the Department of Defense] and part of the DOD’s report to the world . It was part of the computer manual, so the first publication of backpropagation was in a computer manual from MIT for a working command for people to use in statistical analysis. I was a second author of that manual. It was Brode, Werbos, and Dunn.</p>
 <p>… Once I started doing software for them, they discovered I was pretty good at it. Once I had put backpropagation into a TSP command, they offered me a full-time job at the Harvard Cambridge Project, so I did the Ph.D.&nbsp;thesis while having a full-time job. While I was doing these things at MIT, I remember going to one party. … one of the people there said, ’We have heard through the grapevine that somebody has developed this thing called continuous feedback that allows you to calculate all the derivatives in a single pass.”</p>
 </blockquote>
-<p>But the saga is not over. after the Ph.D., Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 – and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.</p>
+<p>But the saga is not over. after the PhD, Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 – and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.</p>
 <blockquote class="blockquote">
 <p>I found out that DARPA had spent a lot of effort building a worldwide conflict forecasting model for the Joint Chiefs of Staff that was used in the long-range strategy division of the Joint Chiefs. … I wound up sending a couple of graduate students to create a really good database of Latin America. I said, “You want variance, high variance. Something hard to predict.” I thought conflict in Latin America would be the most beautiful case. I figured there were enough cultural homogeneities that it would be a single stochastic process, but with lots and lots of variance in that process. So we got truly annual data going back, I don’t know, twenty or thirty years for all the countries in Latin America and then reestimated the Joint Chief’s model on it. It had an r2 of about .0016 at forecasting conflict. By jiggling and jiggling we could raise it to about .05. It could predict GNP and economic things decently. Conflict prediction we couldn’t improve, though; it was hopeless.</p>
 <p>DARPA wasn’t happy when I published that result. They wanted me to do something real and practical and useful for the United States. This was useful, but it was an exposé. They didn’t like that. Therefore, the report, which included backpropagation in detail and other advanced methods, was not even entered into DOCSUB. Every time I tried to enter it into DOCSUB, somebody jiggled influence to say, “No, no, no, we can’t publish this. This is too hot.”</p>
@@ -1356,7 +1356,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>x_0 &amp;= x_0 <span class="sc">\\</span></span>
 <span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>x_1 &amp;= f_1(x_0) <span class="sc">\\</span></span>
 <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>&amp;\cdots <span class="sc">\\</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>x_T &amp;= f_T(x_0, x_1, ..., x_{T-1})</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>x_T &amp;= f_T(x_0, x_1, \dots , x_{T-1})</span>
 <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
@@ -1369,15 +1369,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>Now suppose we can see only $dx_{T-1}$, then the change in $x_T$ due to $dx_{T-1}$ can only come from the final step in the forward propagation. Therefore</span>
 <span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>\frac{dx_T}{dx_{T-1}} = \nabla_{x_{T-1}} f_T(x_0, x_1, ..., x_{T-1})</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>\frac{dx_T}{dx_{T-1}} = \nabla_{x_{T-1}} f_T(x_0, x_1, \dots , x_{T-1})</span>
 <span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>Similarly, the change in $x_T$ due to $dx_{T-2}$ can come from either directly changing $x_T$, or changing $x_{T-1}$ and thereby changing $x_T$. Therefore,</span>
 <span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>\frac{dx_T}{dx_{T-2}} = </span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>    \nabla_{x_{T-1}} f_{T}(x_0, x_1, ..., x_{T-2}) + </span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>    \ub{\frac{dx_T}{dx_{T-1}}\nabla_{x_{T-2}} f_{T-1}(x_0, x_1, ..., x_{T-2})}{the chain rule}</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>    \nabla_{x_{T-1}} f_{T}(x_0, x_1, \dots , x_{T-2}) + </span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>    \ub{\frac{dx_T}{dx_{T-1}}\nabla_{x_{T-2}} f_{T-1}(x_0, x_1, \dots , x_{T-2})}{the chain rule}</span>
 <span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>This generalizes to the rest of the steps.</span>
@@ -1651,7 +1651,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bernard Widrow and Marcian Hoff</span></span>
 <span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a>Widrow and Hoff worked on multilayered perceptrons in the early 1960s. They trained a single-layered perceptron with gradient descent on the squared loss, then proceeded to not try gradient descent after a year of trying to train a network with *two layers*.</span>
+<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a>Widrow and Hoff worked on multilayer perceptrons in the early 1960s. They trained a single-layered perceptron with gradient descent on the squared loss, then proceeded to not try gradient descent after a year of trying to train a network with *two layers*.</span>
 <span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a>The Widrow--Hoff machine, which they called the ADALINE ("ADAptive Linear NEuron"), is a function of type $\R^n \to <span class="sc">\{</span>0,1<span class="sc">\}</span>$ defined by</span>
 <span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a></span>
@@ -1906,7 +1906,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-619"><a href="#cb1-619" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
 <span id="cb1-620"><a href="#cb1-620" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ... Once I started doing software for them, they discovered I was pretty good at it. Once I had put backpropagation into a TSP command, they offered me a full-time job at the Harvard Cambridge Project, so I did the Ph.D. thesis while having a full-time job. While I was doing these things at MIT, I remember going to one party. ... one of the people there said, 'We have heard through the grapevine that somebody has developed this thing called continuous feedback that allows you to calculate all the derivatives in a single pass."</span></span>
 <span id="cb1-621"><a href="#cb1-621" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-622"><a href="#cb1-622" aria-hidden="true" tabindex="-1"></a>But the saga is not over. after the Ph.D., Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.</span>
+<span id="cb1-622"><a href="#cb1-622" aria-hidden="true" tabindex="-1"></a>But the saga is not over. after the PhD, Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.</span>
 <span id="cb1-623"><a href="#cb1-623" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-624"><a href="#cb1-624" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; I found out that DARPA had spent a lot of effort building a worldwide conflict forecasting model for the Joint Chiefs of Staff that was used in the long-range strategy division of the Joint Chiefs. ... I wound up sending a couple of graduate students to create a really good database of Latin America. I said, "You want variance, high variance. Something hard to predict." I thought conflict in Latin America would be the most beautiful case. I figured there were enough cultural homogeneities that it would be a single stochastic process, but with lots and lots of variance in that process. So we got truly annual data going back, I don't know, twenty or thirty years for all the countries in Latin America and then reestimated the Joint Chief's model on it. It had an r2 of about .0016 at forecasting conflict. By jiggling and jiggling we could raise it to about .05. It could predict GNP and economic things decently. Conflict prediction we couldn't improve, though; it was hopeless.</span></span>
 <span id="cb1-625"><a href="#cb1-625" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
