@@ -44,15 +44,15 @@ The graph can be finite or infinite, but in all cases, its acyclic directedness 
 
 [^existence-of-logical-time]:
     An existence proof that anything we might care about must have a logical time: Anything that happens, happens in the real world. The real world has a single direction in time. Therefore, any computation that can happen, must have a logical time that is identical with physical time.
-    
+
     Note that logical time does not have to coincide with physical time. For example, to model goal-directed behavior, it might be better to put the physical future into the logical past.
 
 We use the convention of putting derivatives on the rows. So for example, for $f: \R^2\to\R^2$, we have
 
 $$
-\nabla_x f = \frac{df}{dx} = \begin{bmatrix} 
+\nabla_x f = \frac{df}{dx} = \begin{bmatrix}
  \frac{df_1}{dx_1} & \frac{df_1}{dx_2} \\
- \frac{df_2}{dx_1} & \frac{df_2}{dx_2} 
+ \frac{df_2}{dx_1} & \frac{df_2}{dx_2}
  \end{bmatrix}
 $$
 
@@ -86,8 +86,8 @@ $$
 Similarly, the change in $x_T$ due to $dx_{T-2}$ can come from either directly changing $x_T$ or from changing $x_{T-1}$ and thereby changing $x_T$. Therefore,
 
 $$
-\frac{dx_T}{dx_{T-2}} = 
-    \nabla_{x_{T-1}} f_{T}(x_0, x_1, \dots , x_{T-2}) + 
+\frac{dx_T}{dx_{T-2}} =
+    \nabla_{x_{T-1}} f_{T}(x_0, x_1, \dots , x_{T-2}) +
     \ub{\frac{dx_T}{dx_{T-1}}\nabla_{x_{T-2}} f_{T-1}(x_0, x_1, \dots , x_{T-2})}{the chain rule}
 $$
 
@@ -153,7 +153,7 @@ This equation bottoms out at the end time, $t=T$, for which $g_T = \frac{dx_T}{d
 $$
 \begin{cases}
 g_T &= I \\
-\dot g_t &= - g_t \nabla_{x_t} f(x_t, u_t) 
+\dot g_t &= - g_t \nabla_{x_t} f(x_t, u_t)
 \end{cases}
 $$
 
@@ -182,7 +182,7 @@ for some real-valued functions $A, L$.
 
 Of course, we can care about more than the state at the last time-step. We can care about multiple time-steps $t_0, t_1, \dots, t_n$ by writing down a cost function $J = \sum_{i=0}^n A_i(x_{t_i}) + \int_0^T L(x_T, u_T)dt$, but this merely creates complications without introducing new ideas. Even more ornate computation graphs, weaving together multiple strands of continuous and discrete logical times, can be backpropagated in the same way without involving new ideas.
 
-Define the costate $\lambda_t := \nabla_{x_t} J$, then the costate backpropagates as: 
+Define the costate $\lambda_t := \nabla_{x_t} J$, then the costate backpropagates as:
 
 $$
 \lambda_t = L(x_t, u_t) dt + \lambda_{t+dt}(I + \nabla_{x_t}f(x_t, u_t)dt)
@@ -193,7 +193,7 @@ and by simplifying, we have the costate equation:
 $$
 \begin{cases}
 \lambda_T &= \nabla_{x_T} A(x_T) \\
-\dot \lambda_t &= - \nabla_{x_t} L(x_t, u_t) - \lambda_t \nabla_{x_t} f(x_t, u_t) 
+\dot \lambda_t &= - \nabla_{x_t} L(x_t, u_t) - \lambda_t \nabla_{x_t} f(x_t, u_t)
 \end{cases}
 $$
 
@@ -326,7 +326,7 @@ Frank Rosenblatt is the originator of the term "backpropagation", or more precis
 
 A perceptron is a function of the form $\theta(w^T x + b)$, where $\theta$ is the 0-1 step function, and $w \in \R^n, b \in \R$ are its learnable parameters. A perceptron network is a network of perceptrons. Rosenblatt experimented with a large number of perceptron network architectures, but most often, he experimented with a certain 2-layered feedforward architecture, which is sometimes called "*the* perceptron machine".
 
-*The* perceptron machine is a machine that computes a function of type $\{0, 1\}^n \to \{0, 1\}$. Its input layer is composed of units named "Stimulus units" or "S units". The S units do not perform any computation, but merely pass binary outputs to the hidden layer. In the Mark I perceptron, the S units were 20×20 cadmium sulfide photocells, making a 400-pixel image. The hidden layer is composed of perceptrons named "Association units" or "A units". Their outputs pass on to the output layer, composed of perceptrons named "Response units" or "R units". 
+*The* perceptron machine is a machine that computes a function of type $\{0, 1\}^n \to \{0, 1\}$. Its input layer is composed of units named "Stimulus units" or "S units". The S units do not perform any computation, but merely pass binary outputs to the hidden layer. In the Mark I perceptron, the S units were 20×20 cadmium sulfide photocells, making a 400-pixel image. The hidden layer is composed of perceptrons named "Association units" or "A units". Their outputs pass on to the output layer, composed of perceptrons named "Response units" or "R units".
 
 We can describe *the* perceptron machine in one equation:
 
@@ -400,26 +400,26 @@ After the ADALINE showed good behavior, they went on and on trying to train a tw
 
 [^madaline-rule]: The MADALINE I machine consists of multiple hidden ADALINE units, and a single output layer consisting of a single unit. The output unit merely takes the majority vote from the hidden units. If the desired output is $+1$, but the actual output is $-1$, then the machine picks those ADALINE units that are negative, but closest to being positive, and make them update their weights, according to the ADALINE learning rule. It was thought of as a form of "minimal disturbance principle".
 
-Frustrated by the difficulty, they left neural network research. Hoff went to Intel to coinvent the microprocessor, and Widrow set about applying the ADALINE to small problems that it could solve well[^marvin-minsky-approves], such as adaptive antennas, adaptive noise filtering in telephone lines, adaptive filtering in medical scanning, etc. Even with just a single ADALINE, he brought breakthroughs to those fields.
+Frustrated by the difficulty, they left neural network research. Hoff went to Intel to co-invent the microprocessor, and Widrow set about applying the ADALINE to small problems that it could solve well[^marvin-minsky-approves], such as adaptive antennas, adaptive noise filtering in telephone lines, adaptive filtering in medical scanning, etc. Even with just a single ADALINE, he brought breakthroughs to those fields.
 
-> Apple have told me that every iPhone, since the iPhone 5, uses the LMS algorithm all over the device. They could not tell me where because, if they did, they would have to shoot me. Apple keeps secrets. [@widrowCyberneticsGeneralTheory2022, preface, page xix]
+> Engineers at Apple have told me that every iPhone, since the iPhone 5, uses the LMS algorithm all over the device. They could not tell me where because, if they did, they would have to shoot me. Apple keeps secrets. [@widrowCyberneticsGeneralTheory2022, preface, page xix]
 
-[^marvin-minsky-approves]: 
-    Marvin Minsky would approve
+[^marvin-minsky-approves]:
+    Marvin Minsky would approve.
 
     > \[The perceptron\] is such a simple machine that it would be astonishing if nature did not make use of it somewhere. It may be that one of the best things a neuron can have is a tiny Perceptron, since you get so much from it for so little. You can’t get one big Perceptron to do very much, but for some things it remains one of the most elegant and simple learning devices I know of.” [@bernsteinMarvinMinskyVision1981]
 
 Perhaps Widrow and Hoff were limited to considering only learning rules they could implement electrochemically? But it does not seem so, in the words of Widrow himself, it was a blind spot for all researchers:
 
 > The Madaline had an adaptive first layer and a fixed-logic second layer. What Rosenblatt had was a fixed-logic mst layer and an adaptive-logic second layer or output layer. Now, it is easy to adapt on output layer. But it's very difficult to adapt a hidden layer. ... We could adapt an adaptive first layer with a fixed second layer as long as we knew what the second layer was. But we never succeeded in developing an algorithm for adapting both layers, so that the second layer is not fixed and both layers are adaptive. It wasn't that we didn't try. I mean we would have given our eye teeth to come up with something like backprop.
-> 
+>
 > Backprop would not work with the kind of neurons that we were using because the neurons we were using all had quantizers that were sharp. In order to make backprop work, you have to have sigmoids; **you have to have a smooth nonlinearity ... no one knew anything about it at that time.** This was long before Paul Werbos. **Backprop to me is almost miraculous**. [@rosenfeldTalkingNetsOral2000]
 
 When he heard about the "miraculous" backpropagation in the 1980s, he immediately started writing papers in neural networks again.
 
-If this was an individual case, then I might have dismissed it as Widrow being misled by his background. Before entering a PhD program Widrow took an internship at the military [@widrowOralHistoryBernard1997]:
+If this was an individual case, then I might have dismissed it as Widrow being misled by his background. Before entering a PhD program Widrow took an internship at the military:
 
-> ... the sky was divided up into a grid, with one mile by one mile regions, and all the computer sensed was that there was a target within that one mile by one mile square. ... The radar pulses were transmitted periodically, and then periodically you got samples of the flight path. Say you take a piece of graph paper and draw and nice, smooth flight path for an airplane, and then at uniform points in time put a mark on the actual path based on the radar sample. If you don't show anybody that nice, smooth line but only the sequence of grid squares that the airplane was in, one could still reconstruct the smooth track.
+> ... the sky was divided up into a grid, with one mile by one mile regions, and all the computer sensed was that there was a target within that one mile by one mile square. ... The radar pulses were transmitted periodically, and then periodically you got samples of the flight path. Say you take a piece of graph paper and draw and nice, smooth flight path for an airplane, and then at uniform points in time put a mark on the actual path based on the radar sample. If you don't show anybody that nice, smooth line but only the sequence of grid squares that the airplane was in, one could still reconstruct the smooth track. [@widrowOralHistoryBernard1997]
 
 The problem of reconstructing a smooth flight path from discretized radar signals got him interested in quantization, and he did his PhD thesis (1954) in the statistical theory of quantization noise. In the interview 43 years later, he called it "the best piece of work I ever did in my whole life". He is still the world expert on quantization noise, and wrote an entire textbook on quantization noise [@widrowQuantizationNoiseRoundoff2008].
 
@@ -455,38 +455,38 @@ The interview with Geoffrey Hinton is hilarious, mostly about how he *spent an e
 After learning about Hopfield networks and simulated annealing both in 1982, he tried combining them, and discovered the Boltzmann learning algorithm in 1983, which he published in 1985 [@ackleyLearningAlgorithmBoltzmann1985].
 
 > I remember I had to give a talk, a sort of research seminar, at Carnegie Mellon in either February or March of '83 ... I wanted to talk about this simulated annealing in Hopfield nets, but I figured I had to have a learning algorithm. I was terrified that I didn't have a learning algorithm.
-> 
+>
 > Then we got very excited because now there was this very simple local-learning rule. On paper it looked just great. I mean, you could take this great big network, and you could train up all the weights to do just the right thing, just with a simple local learning rule. It felt like we'd solved the problem. That must be how the brain works.
-> 
+>
 > I guess if it hadn't been for computer simulations, I'd still believe that, but the problem was the noise. It was just a very, very slow learning rule. It got swamped by the noise because in the learning rule, you take the difference between two noisy variables, two sampled correlations, both of which have sampling noise. The noise in the difference is terrible.
-> 
+>
 > I still think that's the nicest piece of theory I'll ever do. It worked out like a question in an exam where you put it all together and a beautiful answer pops out.
 
 And now, the hilarity we have been waiting for. When Rumelhart told him in 1982 about backpropagation,
 
 > I first of all explained to him why it wouldn't work, based on an argument in Rosenblatt's book, which showed that essentially it was an algorithm that couldn't break symmetry. ... the standard way of doing learning is to have random initial weights, or you could just put a little bit of noise in the learning rule ...
-> 
+>
 > The next argument I gave him was that it would get stuck in local minima. There was no guarantee you'd find a global optimum. Since you're bound to get stuck in local minima, it wasn't really worth investigating.
-> 
+>
 > Then I tried to use it to get a very obscure effect. I couldn't get this very obscure effect with it, so I lost interest in backpropagation. I managed to get this very obscure effect later with a Boltzmann machine. I'd realized that if you've got a net to learn something, and then you add noise to the weights by making it learn something else, it should be much faster at relearning what it had previously learned. You should get very fast relearning of stuff that it previously knew, as compared to the initial learning. We programmed a backpropagation net, and we tried to get this fast relearning. **It didn't give fast relearning, so I made one of these crazy inferences that people make -- which was, that backpropagation is not very interesting**.
 
 After one year of failing to get Boltzmann machines to train, he discovered that Boltzmann machines *also* got stuck in local minima. Desperate times call for desperate measures, and he finally resorted to gradient descent.
 
 > After initially getting them to work, I dedicated over a year to refining their performance. I experimented with various techniques, including weight decay, which helped in preventing large energy barriers. We attempted several other approaches, but none of them yielded satisfactory results. I distinctly recall a point where we observed that training a Boltzmann machine could model certain functions effectively, but prolonged training caused its performance to deteriorate, a phenomenon we referred to as "going sour." We couldn't initially comprehend why this was happening. I generated extensive reports, filling stacks of paper about three inches thick, as I couldn't believe that these networks would degrade as you acquired more knowledge.
-> 
+>
 > It took me several weeks to realize the root of the problem. The learning algorithm operated under the assumption that it could reach thermal equilibrium. However, as the weights grew larger, the annealing process failed to achieve thermal equilibrium, trapping the system in local minima. Consequently, the learning algorithm started behaving incorrectly. This realization led us to introduce weight decay as a solution to prevent this issue.
-> 
-> **After investing over a year** in attempting to optimize these methods, I ultimately concluded that they were unlikely to deliver the desired results. In a moment of desperation, I considered revisiting \[backpropagation\]. 
+>
+> **After investing over a year** in attempting to optimize these methods, I ultimately concluded that they were unlikely to deliver the desired results. In a moment of desperation, I considered revisiting \[backpropagation\].
 
 Then he asked the research group for volunteers. None of the ten students took up the offer (and thus giving up a place as the coauthor of the backpropagation paper??):
 
 > They'd all been thoroughly indoctrinated by then into Boltzmann machines. ... They all said, "You know, why would you want to program that?" We had all the arguments: It's assuming that neurons can send real numbers to each other; of course, they can only send bits to each other; you have to have stochastic binary neurons; these real-valued neurons are totally unrealistic. It's ridiculous." So they just refused to work on it, not even to write a program, so I had to do it myself.
-> 
-> I went off and I spent a weekend. I wrote a LISP program to do it. 
+>
+> I went off and I spent a weekend. I wrote a LISP program to do it.
 
-Hinton almost had one last chance at giving up on backpropagation. 
+Hinton almost had one last chance at giving up on backpropagation.
 
-> I almost blew it because the first thing I tried it on was an 8-3-8 encoder; that is, you have eight input units, three hidden units, and eight output units. You want to turn on one of the input units and get the same output unit to be on. 
+> I almost blew it because the first thing I tried it on was an 8-3-8 encoder; that is, you have eight input units, three hidden units, and eight output units. You want to turn on one of the input units and get the same output unit to be on.
 >
 > In a Boltzmann machine, since the units are binary, the states of the three hidden units have to be the eight different binary codes, so you know what the hidden units will look like when they've solved the problem. So I ran backpropagation on this problem and looked at the weights of the hidden units. They didn't have the right structure of weights. ... I thought, "Oh well, it turns out backpropagation's not that good after all." Then I looked at the error, and the error was zero. I was amazed.
 
@@ -494,11 +494,13 @@ And so one year of excuses later, Hinton finally surrendered to backpropagation.
 
 > That was at the stage when we were just completing the PDP books, so we'd already agreed on what was going to be in the books. The final chapters were being edited. We decided we'd just slip in an extra chapter on backpropagation, so it was a late addition to the book. But I was always a bit disappointed. I mean, intellectually, backpropagation wasn't nearly as satisfying as Boltzmann machines. ... it didn't have the nice probabilistic interpretation.
 
-## Werbos
+## Paul Werbos
 
-After reviewing the story of multiple people, my personal opinion is that Paul Werbos most deserves the title of "originator of the backpropagation algorithm", as he both has the priority and paternity of the algorithm. In 1993, Paul Werbos gave an interview, where he described the backstory of his invention of backpropagation [@rosenfeldTalkingNetsOral2000, Chapter 15]. I will let him speak, only interjecting with brief comments.
+After reviewing the story of multiple people, my personal opinion is that Paul Werbos most deserves the title of "originator of the backpropagation algorithm". He independently developed the algorithm around 1971, but was frustrated at every turn when he tried to publish it, not managing until 1982. After that, it was quickly picked up by connectionists. In this sense, he has both priority and paternity.
 
-Before entering Harvard, he tried implementing Hebbian learning, but noticed it wouldn't work. 
+In 1993, Paul Werbos gave an interview, where he described the backstory of his invention of backpropagation [@rosenfeldTalkingNetsOral2000, Chapter 15]. I will let him speak, only interjecting with brief comments.
+
+Before entering Harvard, he tried implementing Hebbian learning, but noticed it wouldn't work.
 
 > It was obvious to me from a statistical point of view that Hebbian learning was going to be measuring correlation coefficients, and for multivariate problems it would not work. I never gave the talk. I said, "Now I'm going to figure out something with the same flavor that does work."
 >
@@ -508,24 +510,24 @@ Before entering Harvard, he tried implementing Hebbian learning, but noticed it 
 
 Sometime before 1968, he was inspired to do backpropagation from reading Freud.
 
-> I talk in there about the concept of translating Freud into mathematics. This is what took me to backpropagation, so the basic ideas that took me to backpropagation were in this journal article in '68 [@werbosElementsIntelligence1968]. I talked a lot about what was wrong with the existing \[two state\] McCulloch-Pitts neuron model, and how it was only "1" and "0." I wanted to make that neuron probabilistic. I was going to apply Freudian notions to an upper-level, associative drive reinforcement system. When 
+> I talk in there about the concept of translating Freud into mathematics. This is what took me to backpropagation, so the basic ideas that took me to backpropagation were in this journal article in '68 [@werbosElementsIntelligence1968]. I talked a lot about what was wrong with the existing \[two state\] McCulloch-Pitts neuron model, and how it was only "1" and "0." I wanted to make that neuron probabilistic. I was going to apply Freudian notions to an upper-level, associative drive reinforcement system. When
 
 For his masters (1969), he majored in mathematical physics, and minored in decision and control. During his PhD at Harvard, he had to take some compulsory courses, which he didn't want to. To salvage the situation, he took computer courses which would provide him with some computer hours, a scarce resource at the time. I would guess the following event happened early 1971.
 
 > Initially, I was going to do something on quantum physics. I learned something about partial differential equations, but not enough. I couldn't produce a really useful product at the end of $x$ number of months.
-> 
+>
 > So I went back to the committee, and I said, "Gee, I can't do that, **but I have this little method for adapting multilayer perceptrons. It's really pretty trivial.** It's just a by-product of this model of intelligence I developed. And I'd like to do it for my paper for this computer course."
-> 
+>
 > \[Larry\] Ho's position was, "I understand you had this idea, and we were kind of open-minded. But look, at this point, you've worked in this course for three months, admittedly on something else. I'm sorry, you're just going to have to take an incomplete in the course."
-> 
+>
 > And I said, "You mean I can't do it?"
-> 
+>
 > "No, no, you'll have to take an incomplete because, basically, the first thing didn't work. We're very skeptical this new thing is going to work."
-> 
+>
 > "But look, the mathematics is straightforward."
-> 
+>
 > "Yeah, yeah, but you know, **we're not convinced it's so straightforward**. You've got to prove some theorems first."
-> 
+>
 > So they wouldn't let me do it. One of the reasons that is amusing to me is that there are now some people who are saying backprop was invented by Bryson and Ho. They don't realize it was the same Larry Ho, who was on my committee and who said this wasn't going to work.
 
 I am not sure if this is sarcastic or not. It reminds me of the "summer vision project" [@papertSummerVisionProject1966] that expected some undergraduate students to construct "a significant part of a visual system" in a single summer.
@@ -535,13 +537,13 @@ I am not sure if this is sarcastic or not. It reminds me of the "summer vision p
 The oral was amusing, and touched on the still-hot issue of [recent human evolution](https://en.wikipedia.org/wiki/Recent_human_evolution).
 
 > ... I made a statement that there might be parameters affecting utility functions in the brain, parameters that vary from person to person. You could actually get a significant amount of adaptation in ten generations' time. I was speculating that maybe the rise and fall of human civilizations, as per Toynbee and Spengler, might correlate with these kinds of things. The political scientist on the committee, [Karl Deutsch](https://en.wikipedia.org/wiki/Karl_Deutsch), raised his hand. ... His book, *The Nerves of Government*, which compares governments to neural networks, is one of the classic, accepted, authoritative books in political science.
-> 
+>
 > He raised his hand and he said, "Wait a minute, you can't get significant genetic change in ten generations. That cannot be a factor in the rise and fall of civilizations. That's crazy."
-> 
+>
 > Next to him was a mathematical biologist by the name of [Bossert](https://en.wikipedia.org/wiki/William_H._Bossert), who was one of the world's authorities on population biology. He raised his hand and said, "What do you mean? In our experiments, we get it in seven generations. This guy is understating it. Let me show you the experiments."
-> 
+>
 > And Deutsch said, "What do you mean, it's common knowledge? All of our political theories are based on the assumption this cannot happen." And Bossert said, "Well, it happens. Here's the data."
-> 
+>
 > ... I passed the orals having said about two sentences and not having discussed models of intelligence.
 
 It turns out Werbos interpreted backpropagation as the mathematical interpretation of Freudian psychic energy flow. The thesis committee was not amused.
@@ -557,9 +559,9 @@ Thanks, Grossberg, for using the law of excluded middle to crush Werbos' dream.
 He then went to [Marvin Minsky](https://en.wikipedia.org/wiki/Marvin_Minsky), who gave us some new clues about why backpropagation took so long to discover: "everybody knows a neuron is a 1-0 spike generator"!
 
 > "I've got a way now to adapt multilayer perceptrons, and the key is that they're not Heaviside functions; they are differentiable. And I know that action potentials, nerve spikes, are 1 or 0, as in McCulloch-Pitts neurons, but here in this book that I had for my first course in neurophysiology are some actual tracings. If you look at these tracings in Rosenblith, they show volleys of spikes, and volleys are the unit of analysis. This is an argument for treating this activity as differentiable, at least as piecewise linear. If you look at that, I can show you how to differentiate through it."
-> 
+>
 > Minsky basically said, "Look, **everybody knows a neuron is a 1-0 spike generator. That is the official model from the biologists**. Now, you and I are not biologists. If you and I come out and say the biologists are wrong, and this thing is not producing 1s and 0s, nobody is going to believe us. It's totally crazy. I can't get involved in anything like this."
-> 
+>
 > He was probably right, I guess, but he was clearly very worried about his reputation and his credibility in his community.
 
 Although I believe Minsky would have disapproved of the idea of backpropagation even if he had thought that neurons are not strictly 1-0 spike generators. In the epilogue to [@minskyPerceptronsIntroductionComputational1988], he claimed that gradient descent does not scale, and [using differentiable activation functions is just a hack intended to make backpropagation work](https://yuxi-liu-wired.github.io/blog/posts/perceptron-controversy/#differentiable-activation-is-just-a-hack), a pointless hack, as backpropagation would not scale.
@@ -568,14 +570,14 @@ Although I believe Minsky would have disapproved of the idea of backpropagation 
 
 Further, in a 1991 interview, Minsky made the same kind of statement:
 
-> I don't know what they would have done with the money. The story of DARPA and all that is just a myth. The problem is that there were no good ideas. The modern idea of backpropagation could be an old idea. There was someone . . . [trying to remember]. 
-> 
+> I don't know what they would have done with the money. The story of DARPA and all that is just a myth. The problem is that there were no good ideas. The modern idea of backpropagation could be an old idea. There was someone . . . [trying to remember].
+>
 > Question: Paul Werbos?
-> 
-> Answer: That's it! [excited]. But, you see, it's not a good discovery. It's alright, but it takes typically 100,000 repetitions. It converges slowly, and it cannot learn anything difficult. Certainly, in 1970 the computers were perhaps too slow and expensive to do it. I know that Werbos thought of that idea. It's certainly trivial. The idea is how you do gradient descent. I didn't consider it practical. 
-> 
-> Question: Because of the computational costs? 
-> 
+>
+> Answer: That's it! [excited]. But, you see, it's not a good discovery. It's alright, but it takes typically 100,000 repetitions. It converges slowly, and it cannot learn anything difficult. Certainly, in 1970 the computers were perhaps too slow and expensive to do it. I know that Werbos thought of that idea. It's certainly trivial. The idea is how you do gradient descent. I didn't consider it practical.
+>
+> Question: Because of the computational costs?
+>
 > Answer: Yes, but also, with artificial intelligence, we had the experience that when you make a process like that you usually get stuck at a local minimum. We still don't have any theory of what range of problems they work well for." (Minsky, interview) [@olazaranHistoricalSociologyNeural1991, page 249]
 
 Out of curiosity, I looked up the "Rosenblith" book [@rosenblithSensoryCommunicationContributions2012] that Werbos mentioned, and indeed there were a few tracings that show continuously varying neural activation.
@@ -592,7 +594,7 @@ Rosenblith images.
 Then Minsky dunked on reinforcement learning as well, because he had an unpublished "jitters machine" that failed to optimize its reward. Presumably the name "jitters machine" refers to how it would jitter in place, not able to move towards the goal.
 
 > Minsky also said, "You know, I used to believe in all this kind of stuff with reinforcement learning because I knew reinforcement learning would work. I knew how to implement it. I had a nice guy named Oliver Selfridge who came in and acted as my patron and gave me permission to do it. We coauthored a paper, but it was really my idea, and he was just acting as patron on the Jitters machine. I'll hand you the tech report, which we have deliberately never published."
-> 
+>
 > It was his bad experience with the Jitters machine that turned him off on reinforcement learning and all the neural net ideas. It just didn't work. I later looked at that paper ... He had a system that was highly multivariate with a single reinforcement signal. The system can't learn efficiently with that. At any rate, he was totally turned off.
 
 The brief description of the unpublished jitters machine was not making sense to me, so I looked around the literature. It was *so* unpublished that I found only two other references in the entire literature [@werbosApplicationsAdvancesNonlinear1982; @werbosBuildingUnderstandingAdaptive1987], both by Werbos. According to him,
@@ -612,7 +614,7 @@ Without patrons, he faced the committee again.
 Oh, now it's too trivial?? I swear the backstory of backpropagation gets more and more ridiculous by the day.
 
 > ... they had discontinued support because they were not interested, so I had no money. ... Not even money to buy food. A generous guy, who was sort of a Seventh Day Adventist and a Harvard Ph.D. candidate in ethnobotany, had a slum apartment that rented for about $40 a month in Roxbury in the ghetto. He let me share a room in his suite, in his suite with the plaster falling off, and didn't ask for rent in advance. I had no money at that time for food. There was a period of three months when I was living there in the slums. To conserve the little bit of money I had, I remember eating soybean soup and chicken neck soup. I remember getting the shakes from inadequate nutrition.
-> 
+>
 > Finally, they said, "Look, you know, we're not going to allow this." There was this meeting where we sat around the table. The chairman of the applied math department at that time was a numerical analyst D. G. M. Anderson. He said, "We can't even allow you to stay as a student unless you do something. You've got to come up with a thesis, and it can't be in this area."
 
 Karl Deutsch, who believed in Werbos, sponsored his PhD thesis on a "respectable" problem: fitting an ARMA model to a time-series data of political regimes, and use it to forecast nationalism and political assimilation. [Box–Jenkins method](https://en.wikipedia.org/wiki/Box%E2%80%93Jenkins_method) ran too slowly, so Werbos programmed in the backpropagation which worked, and he finally obtained his PhD in 1974. This is the original reference point for modern neural network backpropagation algorithm.
@@ -626,15 +628,15 @@ Karl Deutsch, who believed in Werbos, sponsored his PhD thesis on a "respectable
 But the saga is not over. After the PhD, Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.
 
 > I found out that DARPA had spent a lot of effort building a worldwide conflict forecasting model for the Joint Chiefs of Staff that was used in the long-range strategy division of the Joint Chiefs. ... I wound up sending a couple of graduate students to create a really good database of Latin America. I said, "You want variance, high variance. Something hard to predict." I thought conflict in Latin America would be the most beautiful case. I figured there were enough cultural homogeneities that it would be a single stochastic process, but with lots and lots of variance in that process. So we got truly annual data going back, I don't know, twenty or thirty years for all the countries in Latin America and then reestimated the Joint Chief's model on it. It had an r2 of about .0016 at forecasting conflict. By jiggling and jiggling we could raise it to about .05. It could predict GNP and economic things decently. Conflict prediction we couldn't improve, though; it was hopeless.
-> 
+>
 > DARPA wasn't happy when I published that result. They wanted me to do something real and practical and useful for the United States. This was useful, but it was an exposé. They didn't like that. Therefore, the report, which included backpropagation in detail and other advanced methods, was not even entered into DOCSUB. Every time I tried to enter it into DOCSUB, somebody jiggled influence to say, "No, no, no, we can't publish this. This is too hot."
-> 
+>
 > It was published in [@werbosEmpiricalTestNew1978] anyway because they couldn't block the journals, but it didn't include the appendices. So that paper in 1978 said, "We've got this great thing called dynamic feedback, which lets you estimate these things. It calculates derivatives in a single swoop, and you can use it for lots of things, like AI." ... **the appendix on how to do it was not there because of page limits** ... At that point, DARPA was no longer happy.
 
 So he went to the Department of Energy, used backpropagation to create another model, and was silenced once again, unable to publish that report until 1988 [@werbosGeneralizationBackpropagationApplication1988].
 
 > They had a million-dollar contract at Oak Ridge National Laboratory to study that model. They wanted me for several things. One, they wanted me to be a translator between engineering and economics. Two, they wanted a critique. They wanted exposés. They wanted me to rip apart the models of the Department of Energy in a very scientific, objective way that didn't look like I was trying to rip them apart but was anyway. That's exactly what they wanted to hire me for, and I didn't really know that was the motive. These particular people didn't like modeling very much.
-> 
+>
 > So at some point, they wanted sensitivity analysis. And I said, "You know, I know a little bit about calculating derivatives." ... I applied it to a natural gas model at the Department of Energy. In the course of applying it, I did indeed discover dirt. They didn't want me to publish it because it was too politically sensitive. It was a real-world application, but the problem was that it was too real. At DOE, you know, you don't have First Amendment rights. That's one of the terrible things somebody's got to fix in this country. The reality of the First Amendment has deteriorated. Nobody's breaking the law, but the spirit of the First Amendment has decayed too far for science. At any rate, they finally gave me permission to publish it around '86 and '87. I sent it to the journal Neural Nets - that is, how you do simultaneous recurrent nets and time-lag recurrent nets together. Then the editorial process messed around with it, made the paper perhaps worse, and it finally got published in '88, which makes me very sad because now I gotta worry about, 'Well, gee, didn't Pineda do this in '88?
 
 As a side note, one might feel that Werbos' "turning Freud into mathematics" seems rather strange. This feeling is completely justified. I found a recent paper by him [@werbosIntelligenceBrainTheory2009] with this crackpot illustration:
