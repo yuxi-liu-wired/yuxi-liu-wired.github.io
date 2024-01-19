@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Yuxi Liu">
+<meta name="dcterms.date" content="2024-01-18">
+<meta name="description" content="The forecast chain: scale, perplexity, Turing test, AGI.">
+
+<title>Yuxi on the Wired - When will AI pass the Turing Test?</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../img/favicon.ico" rel="icon">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta property="og:title" content="Yuxi on the Wired - When will AI pass the Turing Test?">
+<meta property="og:description" content="The forecast chain: scale, perplexity, Turing test, AGI.">
+<meta property="og:site-name" content="Yuxi on the Wired">
+<meta name="twitter:title" content="Yuxi on the Wired - When will AI pass the Turing Test?">
+<meta name="twitter:description" content="The forecast chain: scale, perplexity, Turing test, AGI.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Yuxi on the Wired</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog/index.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../projects/index.html" rel="" target="">
+ <span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about/index.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://bair.berkeley.edu/" rel="" target=""><i class="bi bi-folder-symlink" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">When will AI pass the Turing Test?</h1>
+                  <div>
+        <div class="description">
+          The forecast chain: scale, perplexity, Turing test, AGI.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">scaling</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Yuxi Liu </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 18, 2024</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">January 20, 2024</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sequential-hypothesis-test" id="toc-sequential-hypothesis-test" class="nav-link active" data-scroll-target="#sequential-hypothesis-test">Sequential hypothesis test</a>
+  <ul class="collapse">
+  <li><a href="#slowdown-factor" id="toc-slowdown-factor" class="nav-link" data-scroll-target="#slowdown-factor">Slowdown factor</a></li>
+  </ul></li>
+  <li><a href="#entropy-of-natural-languages" id="toc-entropy-of-natural-languages" class="nav-link" data-scroll-target="#entropy-of-natural-languages">Entropy of natural languages</a></li>
+  <li><a href="#compute-scaling" id="toc-compute-scaling" class="nav-link" data-scroll-target="#compute-scaling">Compute scaling</a></li>
+  <li><a href="#forecasting-agi" id="toc-forecasting-agi" class="nav-link" data-scroll-target="#forecasting-agi">Forecasting AGI</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Alternative title: <em>How much would it cost to train the first AI scientist?</em></p>
+<blockquote class="blockquote">
+<p>The Direct Approach framework bounds the compute requirements for transformative AI by extrapolating neural scaling laws. We combine those estimates with simple models of future progress in algorithms, investment, and compute costs to produce a user-adjustable forecast over the date at which TAI will be achieved. <span class="citation" data-cites="barnettDirectApproach2023">(<a href="#ref-barnettDirectApproach2023" role="doc-biblioref">Barnett and Besiroglu 2023</a>)</span></p>
+</blockquote>
+<p>I encourage you to play with the <a href="https://epochai.org/blog/direct-approach-interactive-model"><em>Direct Approach Interactive Model</em></a> to explore a mathematical model behind this.</p>
+<section id="sequential-hypothesis-test" class="level2">
+<h2 class="anchored" data-anchor-id="sequential-hypothesis-test">Sequential hypothesis test</h2>
+<p>We need the following equality:</p>
+<p><span class="math display">\[\frac 1n E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{P(X_{1:n}|H_0)}{P(X_{1:n}|H_1)}\right] = \frac 1n
+E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{1}{P(X_{1:n}|H_1)}\right] - \frac 1n  E_{X \sim P(\cdot | H_0)}\left[ \frac{1}{\ln P(X_{1:n}|H_0)}\right]\]</span></p>
+<p><strong>Explain what each of the three terms of the equality mean. Suppose the machine is a perfect replica of the human, what would each term be?</strong></p>
+<p><span class="math display">\[\underbrace{\frac 1n E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{P(X_{1:n}|H_0)}{P(X_{1:n}|H_1)}\right]}_{\frac 1n D_{KL}(P(\cdot | H_0)\| P(\cdot | H_1)) } = \underbrace{\frac 1n
+E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{1}{P(X_{1:n}|H_1)}\right]}_{\text{negative log-likelihood loss per token}} - \underbrace{\frac 1n  E_{X \sim P(\cdot | H_0)}\left[ \frac{1}{\ln P(X_{1:n}|H_0)}\right]}_{\text{entropy rate of the human itself}}\]</span></p>
+<p>The first term is the KL-divergence between the machine and the human, as two sources of symbolic strings, averaged over sequence length. Roughly speaking, it is how different they are, per symbol emitted. It is an information-theoretic quantity.</p>
+<p>The second term is negative log-likelihood loss per token. This is what the language model is trained to minimize.</p>
+<p>The third term is the entropy rate of the human. It is how random the human is, as a source of symbols.</p>
+<p>If the machine is a perfect replica of the human, then the second term is zero, and the first term equals the third term.</p>
+<p><span class="math display">\[T^* \approx \frac{\ln 10}{L - L_\infty}\]</span></p>
+<p>Here, each token <em>on average</em> moves the log-probability-ratio away from 0 by another <span class="math inline">\((L-L_\infty)\)</span>. Decision is triggered when it finally moves out of the interval <span class="math inline">\([-\ln 10, \ln 10]\)</span>.</p>
+<p>We are not able to simply look at a few tokens, draw a straight line, and call it a day, because the trajectory of log-probability-ratio is much closer to a random walk with drift. Subjectively, if you were a judge and watching the log-probability-ratio moving, you’d see ups and downs, keeping you in suspense, until it finally crosses the decision boundaries.}</p>
+<section id="slowdown-factor" class="level3">
+<h3 class="anchored" data-anchor-id="slowdown-factor">Slowdown factor</h3>
+<p>Humans are not perfect judges. However, as a crude approximation, we can model them as a slowed-down version of the perfect judge. Specifically, if it takes about <span class="math inline">\(T\)</span> tokens for the perfect judge to reach a likelihood ratio of <span class="math inline">\(r\)</span>, it would take about <span class="math inline">\(sT\)</span> tokens for a human judge. Here, <span class="math inline">\(s\)</span> is a number larger than one.</p>
+<p>We do not have good data on what <span class="math inline">\(s\)</span> is, or whether it is even consistently measurable. However, for our current question, let’s assume <span class="math inline">\(s=10\)</span>.</p>
+<p><strong>What should the language model’s <span class="math inline">\(L-L_\infty\)</span> be, before it can pass the Turing test against a human judge for 1000 tokens?</strong></p>
+<p><span class="math display">\[10 \times \ln 10 / 1000 = 0.023\]</span></p>
+<p>How do we estimate the slowdown factor?</p>
+<p><span class="citation" data-cites="jannaiHumanNotGamified2023">(<a href="#ref-jannaiHumanNotGamified2023" role="doc-biblioref">Jannai et al. 2023</a>)</span></p>
+</section>
+</section>
+<section id="entropy-of-natural-languages" class="level2">
+<h2 class="anchored" data-anchor-id="entropy-of-natural-languages">Entropy of natural languages</h2>
+<p>We found that <span class="math inline">\(L_\infty\)</span> should be interpreted as the intrinsic entropy of the source material. In this case, it is the entropy of natural English. Now, the intrinsic entropy of English is not very easy to estimate, but there had been several attempts.</p>
+<p>The earliest attempt is by Shannon himself, in 1951. He estimated that the entropy of English is about 0.6 – 1.3 bits per character. Now, we cannot use this number directly, because it is not in the right units – loglikelihood loss is in units of nat/token.</p>
+<p>The conversion between nat and bit is known exactly: <span class="math inline">\(1 \;\mathrm{nat} = \ln(2)\;\mathrm{nat}= 0.693\;\mathrm{nat}\)</span>. The conversion between character and token can be estimated by running a tokenizer over a large natural English corpus. I have estimated this by running the GPT-2 tokenizer on WikiText2 corpus, and found that on average, 0.22 tokens/character, 1.17 tokens/word.</p>
+<p><strong>What is Shannon’s estimated entropy of English, in units of nat/token?</strong></p>
+<p><span class="math display">\[\ln 2 \times [0.6, 1.3] / 0.22 = [1.89, 4.09]\;\mathrm{nat/token}\]</span></p>
+<p>Another way to estimate is by attempting to compress a large natural English corpus. It is known in basic information theory that the entropy rate is the lower bound on compression rate. In more detail, if you have a source of information emitting symbols, and its symbol stream has an entropy rate of <span class="math inline">\(x \;\mathrm{bit/symbol}\)</span>, then it takes <span class="math inline">\(xl\)</span> bits to encode a long segment <span class="math inline">\(l\)</span> symbols long.</p>
+<p>The <a href="http://prize.hutter1.net/">Hutter prize</a> is a competition for compressing a <span class="math inline">\(10^9\)</span>-byte segment of the English Wikipedia as much as possible. The competition has been ongoing since 2005.</p>
+<p>The zipped file is only about 300 Mb in size, meaning that the total entropy in the corpus is no more than <span class="math inline">\(3\times 10^8\)</span> bytes.</p>
+<p>Over the years, the progress has been slow but somewhat steady. If we extrapolate the prize-winning entries over the years, we see that the best possible compression ratio seems to be about 10x.</p>
+<p>I ran the GPT-2 tokenizer through 1/100 of the dataset, and got 2.96 million tokens. So the entire dataset should have about 300 million tokens. Assuming this, <strong>what is the entropy of English, in units of nat/token?</strong></p>
+<p>If we assume the maximal compression ratio of 10x, then the corpus contains entropy</p>
+<p><span class="math display">\[10^8\;\mathrm{byte} = 8\times 10^8 \;\mathrm{bit} = 5.55\times 10^8 \;\mathrm{nat}\]</span></p>
+<p><span class="math display">\[\frac{5.55\times 10^8}{3\times 10^8}= 1.85 \;\mathrm{nat/token}\]</span></p>
+<p>And the third way is to look at what the scaling laws for the largest language models imply what <span class="math inline">\(L_\infty\)</span> is. According to page 25 of “Training Compute-Optimal Large Language Models” (2022) (hereafter “Chinchilla scaling law”), <span class="math inline">\(L_\infty = 1.69\;\mathrm{nat/token}\)</span>.</p>
+<p>The estimate by compression and language modelling are remarkably close.</p>
+<p>Shannon’s estimate of entropy is above the other two estimates by about 2x. Considering that he measured this by asking volunteers to just look at a small passage of text and keep guessing the next character, we can consider his estimate a noisy estimate biased to be too high (since the volunteers would not be able to extract the very last predictabilities of English by only looking at a small preceding passage).</p>
+</section>
+<section id="compute-scaling" class="level2">
+<h2 class="anchored" data-anchor-id="compute-scaling">Compute scaling</h2>
+<p>The “Chinchilla scaling law” paper reported a series of training runs on language models, trained by Google DeepMind researchers. According to them, if we have a fixed amount of computing budget <span class="math inline">\(C\)</span> (in units of FLOP), by choosing the model and dataset size correctly, the minimal reducible loss achievable is</p>
+<p><span class="math display">\[L - L_\infty = \frac{1070}{C^{0.154}}\]</span></p>
+</section>
+<section id="forecasting-agi" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-agi">Forecasting AGI</h2>
+<p>Assuming slowdown factor <span class="math inline">\(s=10\)</span>, and Chinchilla scaling law, then, we have a direct method to predict how long a language model can pass a Turing test, according to how many FLOPs it cost to compute:</p>
+<p><span class="math display">\[T^* \sim \frac{10\ln 10}{1070}C^{0.154}\]</span></p>
+<p>This gives, as a rule of thumb, 100x compute means 2x length of Turing test.</p>
+<p>If GPT-4 costs 2e25 FLOP in compute, <strong>for how many words can it pass the Turing test?</strong> Assume 1 word is 1.2 tokens, as described previously.</p>
+<p><span class="math display">\[T^* \approx 170 \text{ tokens} \approx 150 \text{ words}\]</span> meaning it has a good chance of passing the Turing test if limited to only 150 words. For context, the <em>Attention is All You Need</em> paper has an abstract that’s 200 tokens long.</p>
+<p>A typical scientific paper is about 4000 words long. <strong>How much training compute would it cost, in units of of GPT-4? Assuming GPT-4 cost 10 million USD to train, how much money would this model cost to train?</strong></p>
+<p>4000 words is 27x more than 150 words, so it would need <span class="math inline">\(27^{1/0.153} = 2e9\)</span> amount of compute. Assuming 1 GPT-4 cost 10 million USD, that would cost 2e16 USD, or 200 years of global GDP (2023).</p>
+<p>So it seems like it would take a very long time to train the first AI scientist by just scaling up the GPT-like models. We need more than pure language modelling.</p>
+<p>I leave you with the inspirational quote from Edward “the Bomb” Teller:</p>
+<blockquote class="blockquote">
+<p>The possibilities of developing an atomic weapon and the desirability of doing it secretly were discussed at a Princeton University conference in which I participated in March 1939… Bohr said this rare variety could not be separated from common uranium except by turning the country into a gigantic factory. Bohr was worried that this could be done and that an atomic bomb could be developed—but he hoped that neither could be accomplished. Years later, when Bohr came to Los Alamos, I was prepared to say, “You see…” But before I could open my mouth, he said: “You see, I told you it couldn’t be done without turning the whole country into a factory. You have done just that.” <span class="citation" data-cites="tellerLegacyHiroshima1975">(<a href="#ref-tellerLegacyHiroshima1975" role="doc-biblioref">Teller and Brown 1975</a>)</span></p>
+</blockquote>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-barnettDirectApproach2023" class="csl-entry" role="listitem">
+Barnett, Matthew, and Tamay Besiroglu. 2023. <span>“The <span>Direct Approach</span>.”</span> <em>Epoch</em>. https://epochai.org/blog/the-direct-approach.
+</div>
+<div id="ref-jannaiHumanNotGamified2023" class="csl-entry" role="listitem">
+Jannai, Daniel, Amos Meron, Barak Lenz, Yoav Levine, and Yoav Shoham. 2023. <span>“Human or <span>Not</span>? <span>A Gamified Approach</span> to the <span>Turing Test</span>.”</span> <em>arXiv.org</em>, May.
+</div>
+<div id="ref-tellerLegacyHiroshima1975" class="csl-entry" role="listitem">
+Teller, Edward, and Allen Brown. 1975. <em>The Legacy of <span>Hiroshima</span></em>. <span>Westport, Conn</span>: <span>Greenwood Press</span>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left"><span class="faux-block">Everything ©<a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></div>   
+    <div class="nav-footer-center"><span class="faux-block">Yuxi on the Wired</span></div>
+    <div class="nav-footer-right"><span class="faux-block"><a href="../../../sitemap.xml">sitemap</a></span></div>
+  </div>
+</footer>
+
+
+
+</body></html>

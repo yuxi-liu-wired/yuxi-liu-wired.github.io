@@ -1,0 +1,130 @@
+---
+title: "When will AI pass the Turing Test?"
+
+author: "Yuxi Liu"
+date: "2024-01-18"
+date-modified: "2024-01-20"
+categories: [AI, scaling]
+format:
+  html:
+    toc: true
+description: "The forecast chain: scale, perplexity, Turing test, AGI."
+
+# image: "figure/banner.png"
+status: "draft"
+confidence: "unlikely"
+importance: 10
+---
+
+{{< include ../../../static/_macros.tex >}}
+
+
+Alternative title: *How much would it cost to train the first AI scientist?*
+
+> The Direct Approach framework bounds the compute requirements for transformative AI by extrapolating neural scaling laws. We combine those estimates with simple models of future progress in algorithms, investment, and compute costs to produce a user-adjustable forecast over the date at which TAI will be achieved. [@barnettDirectApproach2023]
+
+I encourage you to play with the [*Direct Approach Interactive Model*](https://epochai.org/blog/direct-approach-interactive-model) to explore a mathematical model behind this.
+
+## Sequential hypothesis test
+
+We need the following equality:
+
+$$\frac 1n E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{P(X_{1:n}|H_0)}{P(X_{1:n}|H_1)}\right] = \frac 1n 
+E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{1}{P(X_{1:n}|H_1)}\right] - \frac 1n  E_{X \sim P(\cdot | H_0)}\left[ \frac{1}{\ln P(X_{1:n}|H_0)}\right]$$
+
+**Explain what each of the three terms of the equality mean. Suppose the machine is a perfect replica of the human, what would each term be?**
+
+$$\underbrace{\frac 1n E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{P(X_{1:n}|H_0)}{P(X_{1:n}|H_1)}\right]}_{\frac 1n D_{KL}(P(\cdot | H_0)\| P(\cdot | H_1)) } = \underbrace{\frac 1n 
+E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{1}{P(X_{1:n}|H_1)}\right]}_{\text{negative log-likelihood loss per token}} - \underbrace{\frac 1n  E_{X \sim P(\cdot | H_0)}\left[ \frac{1}{\ln P(X_{1:n}|H_0)}\right]}_{\text{entropy rate of the human itself}}$$
+
+The first term is the KL-divergence between the machine and the human, as two sources of symbolic strings, averaged over sequence length. Roughly speaking, it is how different they are, per symbol emitted. It is an information-theoretic quantity.
+
+The second term is negative log-likelihood loss per token. This is what the language model is trained to minimize.
+
+The third term is the entropy rate of the human. It is how random the human is, as a source of symbols. 
+
+If the machine is a perfect replica of the human, then the second term is zero, and the first term equals the third term.
+
+$$T^* \approx \frac{\ln 10}{L - L_\infty}$$
+
+Here, each token *on average* moves the log-probability-ratio away from 0 by another $(L-L_\infty)$. Decision is triggered when it finally moves out of the interval $[-\ln 10, \ln 10]$.
+
+We are not able to simply look at a few tokens, draw a straight line, and call it a day, because the trajectory of log-probability-ratio is much closer to a random walk with drift. Subjectively, if you were a judge and watching the log-probability-ratio moving, you'd see ups and downs, keeping you in suspense, until it finally crosses the decision boundaries.}
+
+### Slowdown factor
+
+Humans are not perfect judges. However, as a crude approximation, we can model them as a slowed-down version of the perfect judge. Specifically, if it takes about $T$ tokens for the perfect judge to reach a likelihood ratio of $r$, it would take about $sT$ tokens for a human judge. Here, $s$ is a number larger than one.
+
+We do not have good data on what $s$ is, or whether it is even consistently measurable. However, for our current question, let's assume $s=10$.
+
+**What should the language model's $L-L_\infty$ be, before it can pass the Turing test against a human judge for 1000 tokens?**
+
+$$10 \times \ln 10 / 1000 = 0.023$$
+
+How do we estimate the slowdown factor?
+
+[@jannaiHumanNotGamified2023]
+
+## Entropy of natural languages
+
+We found that $L_\infty$ should be interpreted as the intrinsic entropy of the source material. In this case, it is the entropy of natural English. Now, the intrinsic entropy of English is not very easy to estimate, but there had been several attempts.
+
+The earliest attempt is by Shannon himself, in 1951.\footnote{Shannon, Claude E. "Prediction and entropy of printed English." Bell system technical journal 30.1 (1951): 50-64.} He estimated that the entropy of English is about 0.6 -- 1.3 bits per character. Now, we cannot use this number directly, because it is not in the right units -- loglikelihood loss is in units of nat/token.
+
+The conversion between nat and bit is known exactly: $1 \;\mathrm{nat} = \ln(2)\;\mathrm{nat}= 0.693\;\mathrm{nat}$. The conversion between character and token can be estimated by running a tokenizer over a large natural English corpus. I have estimated this by running the GPT-2 tokenizer on WikiText2 corpus, and found that on average, 0.22 tokens/character, 1.17 tokens/word.
+
+**What is Shannon's estimated entropy of English, in units of nat/token?**
+
+$$\ln 2 \times [0.6, 1.3] / 0.22 = [1.89, 4.09]\;\mathrm{nat/token}$$
+
+Another way to estimate is by attempting to compress a large natural English corpus. It is known in basic information theory that the entropy rate is the lower bound on compression rate. In more detail, if you have a source of information emitting symbols, and its symbol stream has an entropy rate of $x \;\mathrm{bit/symbol}$, then it takes $xl$ bits to encode a long segment $l$ symbols long.
+
+The [Hutter prize](http://prize.hutter1.net/) is a competition for compressing a $10^9$-byte segment of the English Wikipedia as much as possible. The competition has been ongoing since 2005. 
+
+The zipped file is only about 300 Mb in size, meaning that the total entropy in the corpus is no more than $3\times 10^8$ bytes.
+
+Over the years, the progress has been slow but somewhat steady. If we extrapolate the prize-winning entries over the years, we see that the best possible compression ratio seems to be about 10x.
+
+I ran the GPT-2 tokenizer through 1/100 of the dataset, and got 2.96 million tokens. So the entire dataset should have about 300 million tokens. Assuming this, **what is the entropy of English, in units of nat/token?**
+
+If we assume the maximal compression ratio of 10x, then the corpus contains entropy 
+
+$$10^8\;\mathrm{byte} = 8\times 10^8 \;\mathrm{bit} = 5.55\times 10^8 \;\mathrm{nat}$$
+
+$$\frac{5.55\times 10^8}{3\times 10^8}= 1.85 \;\mathrm{nat/token}$$
+
+And the third way is to look at what the scaling laws for the largest language models imply what $L_\infty$ is. According to page 25 of "Training Compute-Optimal Large Language Models" (2022) (hereafter "Chinchilla scaling law"), $L_\infty = 1.69\;\mathrm{nat/token}$.
+
+The estimate by compression and language modelling are remarkably close. 
+
+Shannon's estimate of entropy is above the other two estimates by about 2x. Considering that he measured this by asking volunteers to just look at a small passage of text and keep guessing the next character, we can consider his estimate a noisy estimate biased to be too high (since the volunteers would not be able to extract the very last predictabilities of English by only looking at a small preceding passage).
+
+## Compute scaling
+
+The "Chinchilla scaling law" paper reported a series of training runs on language models, trained by Google DeepMind researchers. According to them, if we have a fixed amount of computing budget $C$ (in units of FLOP), by choosing the model and dataset size correctly, the minimal reducible loss achievable is
+
+$$L - L_\infty = \frac{1070}{C^{0.154}}$$
+
+## Forecasting AGI
+
+Assuming slowdown factor $s=10$, and Chinchilla scaling law, then, we have a direct method to predict how long a language model can pass a Turing test, according to how many FLOPs it cost to compute:
+
+$$T^* \sim \frac{10\ln 10}{1070}C^{0.154}$$
+
+This gives, as a rule of thumb, 100x compute means 2x length of Turing test.
+
+If GPT-4 costs 2e25 FLOP in compute,\footnote{Best estimate, as OpenAI is famously secretive.} **for how many words can it pass the Turing test?** Assume 1 word is 1.2 tokens, as described previously.
+
+$$T^* \approx 170 \text{ tokens} \approx 150 \text{ words}$$
+meaning it has a good chance of passing the Turing test if limited to only 150 words. For context, the *Attention is All You Need* paper has an abstract that's 200 tokens long. 
+
+A typical scientific paper is about 4000 words long. **How much training compute would it cost, in units of of GPT-4? Assuming GPT-4 cost 10 million USD to train, how much money would this model cost to train?**
+
+4000 words is 27x more than 150 words, so it would need $27^{1/0.153} = 2e9$ amount of compute. Assuming 1 GPT-4 cost 10 million USD, that would cost 2e16 USD, or 200 years of global GDP (2023).
+
+So it seems like it would take a very long time to train the first AI scientist by just scaling up the GPT-like models. We need more than pure language modelling.
+
+I leave you with the inspirational quote from Edward "the Bomb" Teller:
+
+> The possibilities of developing an atomic weapon and the desirability of doing it secretly were discussed at a Princeton University conference in which I participated in March 1939... Bohr said this rare variety could not be separated from common uranium except by turning the country into a gigantic factory. Bohr was worried that this could be done and that an atomic bomb could be developed—but he hoped that neither could be accomplished. Years later, when Bohr came to Los Alamos, I was prepared to say, "You see..." But before I could open my mouth, he said: “You see, I told you it couldn't be done without turning the whole country into a factory. You have done just that.” [@tellerLegacyHiroshima1975]
+
