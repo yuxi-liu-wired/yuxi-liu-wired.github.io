@@ -16,134 +16,358 @@ confidence: "unlikely"
 importance: 10
 ---
 
-{{< include ../../../static/_macros.tex >}}
-
+{{< include ../../../utils/blog_utils/_macros.tex >}}
 
 Alternative title: *How much would it cost to train the first AI scientist?*
+
+This essay explains *the Direct Approach* proposed by [@barnettScalingTransformativeAutoregressive2023].[^direct-approach-report]
 
 > The Direct Approach framework bounds the compute requirements for transformative AI by extrapolating neural scaling laws. We combine those estimates with simple models of future progress in algorithms, investment, and compute costs to produce a user-adjustable forecast over the date at which TAI will be achieved. [@barnettDirectApproach2023]
 
 I encourage you to play with the [*Direct Approach Interactive Model*](https://epochai.org/blog/direct-approach-interactive-model) to explore a mathematical model behind this.
 
+[^direct-approach-report]: The thing is released in a scattered way, typical for Internet-native publication. There is the report [@barnettScalingTransformativeAutoregressive2023], in the form of a paper -- clearly meant to be cited, despite being hard to read. There is the website [@barnettDirectApproach2023], in the form of a blog post -- clearly meant to be read, despite not being upper-class enough to be cited in journal papers. Finally there is the [interactive model](https://epochai.org/blog/direct-approach-interactive-model) which looks like an optional add-on to the blog post.
+
 ## Ergodic theory
 
-### Interpreting measure theory
+This section is foundational, but the full complexity is not necessary. In the next section we will build the theory at two levels of generality, once with ergodic theory and once with just a working knowledge in probability theory.
+
+### Measure-theoretic POV
+
+I know, you know too, nobody really likes measure theory any more than pianists like practicing scales hundreds of times. Still, it is at the right level of abstraction for many theories, including probability. We also will omit all mentions of "almost-everywhere", "except on a set of measure zero", and similar annoying phrases. As long as you never make a union of uncountable many subsets, you will not be hurt by this omission.
+
+A [probability space](https://en.wikipedia.org/wiki/Probability_space) is a measurable space with a measure of $1$. We write it as $(\Omega, \mathcal B, Pr)$, where $\mathcal B$ is the sigma-algebra of measurable sets, and $Pr$ is the probability measure. We also write $\mu$ for the measure.[^pronounced-mu]
+
+[^pronounced-mu]: Pronounced "mu" -- it is a pun because both "mu" and "measure" starts with "m".
+
+We consider a single measurable function $T : \Omega \to \Omega$, and call it the **shift map**.
+
+We demand that $T$ *must* **preserve measure**. That is, $\forall S \in \mathcal B$, we have $Pr(T^{-1}(S)) = Pr(S)$.
+
+A subset is **measurable** iff it is an element of $\mathcal B$. A measurable set is also called an **event**.
+
+A subset $S \in \mathcal B$ is $T$-invariant iff $T^{-1}(S) = S$ almost everywhere.[^ae-warning] Let $\mathcal I$ be the set of all $T$-invariant subsets:
+
+$$
+\mathcal I := \{S \in \mathcal B : T^{-1}(S) = S\}
+$$
+
+[^ae-warning]: That is, except on a subset of measure zero: $Pr(T^{-1}(S) - S) = 0$ and $Pr(S - T^{-1}(S)) = 0$. This is the last time we will measure this.
+
+Now, obviously any set of measure zero or one are $T$-invariant. We say that those are *trivially* $T$-invariant. We say that $T$ is **ergodic** iff $\mathcal I$ has only such trivial subsets. In other words, $T$ is ergodic iff it cannot be factored into two nontrivial chunks:
+
+$$
+S, S' \text{ partitions } \Omega,\quad \text{such that } T^{-1}(S) = S ,\; T^{-1}(S') = S',\; Pr(S) > 0 ,\; Pr(S') > 0
+$$
+
+We *usually* ask $T$ to also be ergodic, though sometimes we don't need that.
+
+
+Ergodic maps have many very good properties. We will use the following one. For the theorem, you can picture it as the real space $\R^n$ with the gaussian probability distribution, but in fact, it applies for just about everything we would care about, such as the space of English texts, [queuing jobs](https://en.wikipedia.org/wiki/Queueing_theory), [random walks](https://en.wikipedia.org/wiki/Wiener_process), etc.[^rigor-mortis]
+
+[^rigor-mortis]: Except pathological examples constructed by logicians who have nothing better to do than to care about the continuum hypothesis, large cardinals, and the arithmetic hierarchy. Those who desire the rigor-mortis of logic, let them have it.
+
+::: {#thm-ergodic-dense-orbit}
+
+## Dense orbits
+
+If the state space is a [topological space with a countable basis](https://en.wikipedia.org/wiki/Second-countable_space), and any nonempty open set has positive measure, then almost any $X\in\Omega$ has a dense orbit.
+
+:::
+
+::: {.proof}
+Let $U$ be a nonempty open set. 
+
+$\Omega - \cup_{i \geq 0} T^{-i}U$ is $T$-invariant, and since it excludes $U$, it does not have the full measure. Since $T$ is ergodic, the set actually has zero measure.
+
+Now, $\cup(\Omega - \cup T^{-i}U)$ is a union of countably many zero-measure sets, so it still has zero measure. By expanding the definition, this is the set of all points with non-dense orbit.
+:::
+
+Finally, there is a common theme in ergodic theory. There are rigorous versions of it, but instead of going for rigor, the spirit is more important:
+
+::: {#thm-ergodic-decomposition}
+
+## ergodic decomposition
+
+Any interesting map is a partition/sum/integral of ergodic maps.
+
+:::
+
+For example, the shear map on the unit square $[0, 1]^2$ defined by
+
+$$
+(x, y) \mapsto (x, x+y \mod 1)
+$$
+
+can be thought of as an integral over rotations: For each $x \in [0, 1]$, we have $T_x : y \mapsto x+y\mod 1$. For almost all $x\in [0, 1]$, we have $T_x$ an [irrational rotation](https://en.wikipedia.org/wiki/Irrational_rotation), thus ergodic.
+
+### Sequence POV
 
 We must interpret the language of measure theory, which is dead like chalk dust, back into the language of sequence predictions, which is alive like reinforced concrete.
 
-Each state $x\in \Omega$ is a text: a stream of letters infinite both forwards and backwards. The state space $\Omega$ is the all possible texts $(X_n)_n$. We assume that all letters come from the same finite-size alphabet, for example, the 128 ASCII symbols. 
+Each point in the state space $X\in \Omega$ is a text: a stream of tokens infinite both forwards and backwards. The state space $\Omega$ is the all possible texts $(X_n)_n$. We assume that all tokens come from the same finite-size alphabet, for example, the 128 ASCII symbols. 
 
-The map on the state space $T : \Omega \to \Omega$ is the shift map, defined by
+The shift map on the state space $T : \Omega \to \Omega$ is defined by moving the origin to the right by one:
 
 $$
 T(\dots, X_{-1}, X_0, X_1, \dots) := (\dots, X_0, X_1, X_2, \dots)
 $$
 
-Repeatedly applying the shift map $T$ is just reading the stream, one letter at a time:
+The shift map is measure-preserving, meaning that the process is **stationary**: We could have started reading at any point, and we would still expect to see the same kind of probability distribution. It would not be like "Sorry, the word 'cat' appears with zero probability when $n \geq 1000$.". It would be like "No matter where we start reading, we should expect to the first three tokens to be 'cat' with probability $10^{-4}$.".
+
+Repeatedly applying the shift map $T$ is just reading through the stream, one token at a time:
 
 $$
 \text{...Lorem ipsum ...} \mapsto \text{...orem ipsum d...} \mapsto \text{...rem ipsum do...} \mapsto \cdots
 $$
 
-A periodic point of $T$ is a text that repeats itself. For example, $X := \text{... and and and ...}$ satisfies $T^4X = X$.
+A periodic point of $T$ is a text that repeats itself like a broken record. For example, $X := \text{... and and and ...}$ satisfies $T^4X = X$.
 
-A $T$-invariant set $S\subset \Omega$ is a set of texts, such that if we take any text $X$ from $S$, and jump either forwards or backwards for an arbitrary amount, we get another set in $S$. In other words, $S$ is a set of letter streams where there is no origin: you can start reading from any letter.
+A $T$-invariant set $S\subset \Omega$ is a set of texts, such that if we take any text $X$ from $S$, and jump either forwards or backwards for an arbitrary amount, we get another set in $S$. In other words, $S$ is a set of token streams where there is no origin: you can start reading from any token.
 
 A probability distribution over $\Omega$ describes the probability of observing various kinds of text streams.
 
 If we can partition $\Omega$ into two subsets $P, Q$, with probabilities $\epsilon > 0, 1-\epsilon > 0$, then it means that any text from $P$ is different from any text from $Q$, after any shift. It is as if there are two languages, and each text can be exclusively written in one language only.
 
-To be ergodic means that there is no such partition. In fact, we have the theorem: 
+We wish to consider only texts created by some imaginary "universal English speaker". In particular, we do not want it to get stuck in one sub-language of English, then never escape from it. That is, we assume the universal speaker is **ergodic**.
 
-If the state space has a countable basis, and any nonempty open set has positive measure, then almost any $x\in\Omega$ has dense orbit.
+Now imagine that we randomly sample two pieces of text generated by the universal speaker, and we shift the first text around to match it against the second. By @thm-ergodic-dense-orbit, the orbit of the first text is dense in the space of all possible English texts spoken by the universal speaker. We can gamify this situation thus:
 
-Proof: Let $U$ be a nonempty open set. Since $\Omega - \cup T^{-i}U$ is $T$-invariant and has non-full measure, it has zero measure. Therefore $\cup(\Omega - \cup T^{-i}U)$, the set of all points with non-dense orbit, has zero measure.
+* Prover: "I take one piece of text $x$, then another piece $x'$.".
+* Challenger: "I challenge you to find a stretch of text from $x$ that matches the $-1000:1000$ stretch in $x'$.".
+* Prover asks [a team of immortal monkeys](https://en.wikipedia.org/wiki/Infinite_monkey_theorem) to do the task. A million years later: "At $49134819$.".
+* Challenger verifies that $T^{49134819}(x)_{-1000:1000} = (x')_{-1000:1000}$.
 
-That is, if we randomly sample two pieces of text, and we shift one piece of text for long enough, we can find longer and longer stretches of text that matches the second text. It is like the old story about how you can find the entirety of Shakespeare in the digits of $\pi$, if you go far enough into the digits.
+### Shannon--McMillan--Breiman
 
-The Shannon--McMillan--Breiman theorem 
+If someone has created an infinite sequence of coin flips $X_{-\infty:+\infty}$, then revealed it to us one by one, then each reveal would give us $1 \rm{bit} = \ln 2 \rm{nat}$. The long-term average obtained per reveal is still $\ln 2 \rm{nat}$, a rather boring situation.
 
-## Sequential hypothesis test
+How do we measure the entropy of an English speaker? It speaks token by token, and we have to measure the average information we obtain per token. The problem is that there are two senses of "average". It could be the time-average: we listen to the speaker speak for a very long time, and calculate the entropy in the speech. It could be the ensemble-average: we listen to the speaker speak for a very long time, then do it again, then again, etc, then average together the time-averages.
 
-We need the following equality:
+If the speaker is ergodic, then the speaker essentially has just one speech, and any two samples of its speech are just translations of each other. Consequently, it is intuitively clear that with probability 1, the time-average of the entropy of one speech equals the ensemble-average of the entropy of all speeches. Intuitively, with probability 1,
 
-$$\frac 1n E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{P(X_{1:n}|H_0)}{P(X_{1:n}|H_1)}\right] = \frac 1n 
-E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{1}{P(X_{1:n}|H_1)}\right] - \frac 1n  E_{X \sim P(\cdot | H_0)}\left[ \frac{1}{\ln P(X_{1:n}|H_0)}\right]$$
+$$
+\frac{1}{n} \ln Pr(X_{1:n}) \to \E\lrs{\frac{1}{n} \ln Pr(X_{1:n})}
+$$
 
-**Explain what each of the three terms of the equality mean. Suppose the machine is a perfect replica of the human, what would each term be?**
+For non-ergodic speakers. We simply [decompose the speaker into an ensemble of ergodic speakers](@thm-ergodic-decomposition), then apply the SMB theorem to each one. It is like the strong law of large numbers. Intuitively, it that with probability 1,
 
-$$\underbrace{\frac 1n E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{P(X_{1:n}|H_0)}{P(X_{1:n}|H_1)}\right]}_{\frac 1n D_{KL}(P(\cdot | H_0)\| P(\cdot | H_1)) } = \underbrace{\frac 1n 
-E_{X \sim P(\cdot | H_0)}\left[ \ln\frac{1}{P(X_{1:n}|H_1)}\right]}_{\text{negative log-likelihood loss per token}} - \underbrace{\frac 1n  E_{X \sim P(\cdot | H_0)}\left[ \frac{1}{\ln P(X_{1:n}|H_0)}\right]}_{\text{entropy rate of the human itself}}$$
+$$
+\frac{1}{n} \ln Pr(X_{1:n}| X \text{ is type }i)\to \E\lrs{\frac{1}{n} \ln Pr(X_{1:n}) | X \text{ is type }i}
+$$
 
-The first term is the KL-divergence between the machine and the human, as two sources of symbolic strings, averaged over sequence length. Roughly speaking, it is how different they are, per symbol emitted. It is an information-theoretic quantity.
+This is the [Shannon--McMillan--Breiman theorem](https://en.wikipedia.org/wiki/Shannon-McMillan-Breiman_theorem).
 
-The second term is negative log-likelihood loss per token. This is what the language model is trained to minimize.
+In textbooks and Wikipedia, the SMB theorem is stated rigorously, but you have already understood the idea of SMB, and the rigorous versions are simply paraphrases of the idea.
 
-The third term is the entropy rate of the human. It is how random the human is, as a source of symbols. 
+## Turing test
+
+### The Turing test
+
+In the [Turing test](https://en.wikipedia.org/wiki/Turing_test), there are three players: one judge and two players. The first player is a human, and the second is a machine. The judge asks each player text questions and receives text answers. The judge must decide who is the human.
+
+We consider a simplified Turing test. In this test, the judge does not ask, and simply receives *one* stream of text $X_{1:\infty}$. The judge must decide whether the stream is produced by the human or the machine, and do so quickly.
+
+Cast in the language of statistical hypothesis testing, we have two hypotheses:
+
+* $H_0$ "the stream is produced by the human"
+* $H_1$ "the stream is produced by the machine"
+
+The judge would read from the stream $X_{1:\infty}$, `o-n-e- -t-o-k-e-n` at a time, and at each token, decide whether to take another one, or announce its judgment: $H_0$ or $H_1$.
+
+As the organizers of the Turing test, we would start the test by flipping a fair coin to decide whether to use the human or the machine. Therefore, $Pr(H_0) = Pr(H_1)$, and by Bayes, the posterior log-probability ratio is 
+
+$$
+\ln\frac{Pr(X_{1:n}|H_0)}{Pr(X_{1:n}|H_1)} = \ln\frac{Pr(H_0|X_{1:n})}{Pr(H_1|X_{1:n})}
+$$
+
+This allows us to use the [sequential probability ratio test](https://en.wikipedia.org/wiki/Sequential_probability_ratio_test) (SPRT). The judge would decide on two decision boundaries, and calculate $\ln\frac{Pr(X_{1:n}|H_0)}{Pr(X_{1:n}|H_1)}$ at each token. It would stop and announce the decision as soon as the quantity exceeds one of the boundaries. 
+
+For example, suppose the judge wants to decide when the odds ratio is 10 to 1, then it would make the decision boundaries to be $[-\ln 10, + \ln 10]$. If $\ln\frac{Pr(X_{1:n}|H_0)}{Pr(X_{1:n}|H_1)}$ goes above $+\ln 10$ when $n = 60$, then the judge would announce "$H_0$" at that point.
+
+The $\ln 10$ is a good rule of thumb, which we will use for the remainder of the essay.
+
+### Sequential hypothesis testing
+
+Consider the following simple equation:
+
+$$
+\ub{\frac 1n \E_{X \sim Pr(\cdot | H_0)}\left[ \ln\frac{Pr(X_{1:n}|H_0)}{Pr(X_{1:n}|H_1)}\right]}{$\frac 1n D_{KL}(Pr(\cdot | H_0)\| Pr(\cdot | H_1))$} = \ub{\frac 1n 
+\E_{X \sim Pr(\cdot | H_0)}\lrs{\ln\frac{1}{Pr(X_{1:n}|H_1)}}}{negative log-likelihood loss per token} - \ub{\frac 1n  \E_{X \sim Pr(\cdot | H_0)}\lrs{\frac{1}{\ln Pr(X_{1:n}|H_0)}}}{entropy rate of the human itself}
+$${#eq-sprt}
+
+The first term is the KL-divergence per token between the machine and the human. Roughly speaking, it is how different they are, per token emitted. It is an information-theoretic quantity.
+
+The second term is negative log-likelihood loss per token. This is what language models are trained to minimize. We write it as $L$.
+
+The third term is the entropy rate of the human. It is how random the human is. We write it as $L_\infty$, because it is the theoretical minimal loss that the language model can reach.
 
 If the machine is a perfect replica of the human, then the second term is zero, and the first term equals the third term.
+
+Assuming that the human is an ergodic speakers of English, we can sample an infinite stream $X_{1:\infty}$ from the human, then call up the SMB theorem and find that
+
+$$
+\frac 1n \ln\frac{Pr(X_{1:n}|H_0)}{Pr(X_{1:n}|H_1)} \to L - L_\infty
+$$
+
+On the other hand, if the machine is also an ergodic speaker of English, then we can sample an infinite stream $X_{1:\infty}$ from the machine, then call up the SMB theorem and find that
+
+$$
+\frac 1n \ln\frac{Pr(X_{1:n}|H_1)}{Pr(X_{1:n}|H_0)} \to L' - L_\infty'
+$$
+
+where unfortunately, we have the odd $L'$ and $L_\infty'$, defined by
+
+$$
+L' := \lim_n \frac 1n 
+\E_{X \sim Pr(\cdot | H_1)}\lrs{\ln\frac{1}{Pr(X_{1:n}|H_0)}}, \quad L_\infty' := \lim_n \frac 1n 
+\E_{X \sim Pr(\cdot | H_1)}\lrs{\ln\frac{1}{Pr(X_{1:n}|H_1)}}
+$$
+
+We can interpret them as the loss of the human at imitating the machine, and the entropy rate of the machine itself. When the machine is close enough to the human, we can take the approximation $L' \approx L,  L_\infty' \approx L_\infty$.
+
+Now, define the log-ratio at step $n$ to be $r_n := \frac{Pr(X_{1:n}|H_0)}{Pr(X_{1:n}|H_1)}$. During a Turing test, the judge calculates
+
+$$
+\begin{aligned}
+r_0 &= 1 \\
+r_1 &= r_0 + \frac{Pr(X_{1:1}|H_0)}{Pr(X_{1:1}|H_1)} \\
+r_2 &= r_1 + \frac{Pr(X_{1:2}|X_{1:1}, H_0)}{Pr(X_{1:2}|X_{1:1}, H_1)} \\
+&\cdots
+\end{aligned}
+$$
+
+So, imagine that such a perfect judge is going through a Turing test, upon receiving "my cat is technically", and we are listening on its thoughts:
+
+* "If it were a human, then it would start with 'my' with probability $0.01$. If it were a machine, then $0.05$. Therefore, the odds ratio is 2 to 1."
+* "If it were a human, then it would follow 'my' with 'cat' with probability $0.01$. If it were a machine, then $0.033$. Therefore, the odds ratio is 3 to 1."
+* "If it were a human, then it would follow 'is' with 'my cat' with probability... I do not know. However, I do know that the odds *ratio* is 2 to 1. Now the total odds ratio is 12 to 1, I can decide: $H_0$."
+
+We see that the judge does not have to know the probabilities $Pr(X_{1:n}|H_0)$ and $Pr(X_{1:n}|H_1)$, only their *ratio*. This might be a minor point, but this idea of likelihood ratio is quite important. It is like "I don't know how often you say 'cat' but I know that you say it twice as often than I do!".
+
+### Slowdown factor
+
+To perform the SPRT as described, the judge must know intimately the difference between a human and a machine. Can the judge do that? Can anyone know, with certainty, that I would start my speech with "Forty cats ..." with a probability that is *exactly* 32.42 times that of GPT-3?
+
+As a crude approximation, we can model real-world judges as slowed-down version of the perfect judge. We can imagine that at each step, instead of updating the log-ratio by 
+
+$$
+\ln r_{n+1} \leftarrow \ln r_n + \ln \frac{Pr(X_{n+1}|H_0, X_{1:n})}{Pr(X_{n+1}|H_1, X_{1:n})}
+$$
+
+we update it by 
+
+$$
+\ln r_{n+1} \leftarrow \ln r_n + \frac 1s \ln \frac{Pr(X_{n+1}|H_0, X_{1:n})}{Pr(X_{n+1}|H_1, X_{1:n})}
+$$
+
+where $s > 1$ is the **slowdown factor**. This implies that if it takes $\sim T$ tokens for the perfect judge to reach a likelihood ratio of $r$, it would take $\sim sT$ tokens for a human judge. 
+
+### Measuring the slowdown factor
+
+The slowdown factor $s$ is unknown.
+
+> Informed by an internal poll, we enforce a lognormal distribution with a median of 53.1, a 15th percentile estimate of 9.84, and an 85th percentile of 290. [@atkinsonDirectApproachInteractive2023]
+
+The original paper [@barnettScalingTransformativeAutoregressive2023] contains no estimate of $s$. They did propose to measure it experimentally by running the Turing test with a human judge and two language models. One model $H_0$ "perfectly imitates humans" by simply sampling a random text segment from a corpus, and the other model $H_1$ is a trained language model, finetuned to imitate the same corpus. They claimed that for any piece of text $X_{1:n}$, they can calculate the log-ratio $\ln\frac{Pr(X_{1:n}|H_0)}{Pr(X_{1:n}|H_1)}$, but I found it difficult: Suppose $X_{1:n} = \text{ technically fork}$, which is unlikely but possible, yet the phrase never appears in the corpus, what should be $Pr(X_{1:n}|H_0)$? We can use one of the many smoothing tricks [@jurafskySpeechLanguageProcessing2023, chapter 3], but this gets complicated.
+
+What I think would work well is if both $H_0$and $H_1$ are language models, perhaps even the same model with different sampling temperatures, then the human judge only has to distinguish the two models.
+
+There was one large-scale attempt at the Turing test in early 2023, in a game called "Human or Not?" [@jannaiHumanNotGamified2023]. Human participants took 2-minute conversations, and at the end, had to decide whether they were talking to a human or a bot.[^human-participant]
+
+[^human-participant]: There was no mention of whether the bots had to decide the same question.
+
+> The conversations have a “ping-pong” structure that prevents players from sending two consecutive messages without a response, in order to ensure a balanced and dynamic exchange. Each message, limited to a maximum of 100 characters, has to be composed and sent within a 20-second window, and the chat ends after 2 minutes, usually consisting of 4-5 messages from each side. This ensures that players don’t have to wait for too long, so they can remain engaged with the game and a constant suspense is kept. Once the conversation is over, players are prompted to guess whether their conversational partner was a fellow human or an AI bot. [@jannaiHumanNotGamified2023]
+
+I counted that during a typical message, each side sends $[20, 40]$ English words in total, or $[30, 50]$ tokens. In $[60\%, 70\%]$ of trials, the human participant judged correctly. This suggests that the log-ratio achieved after $[30, 50]$ tokens is around the range of $[\pm \ln 6/4, \pm \ln 7/3]$. In other words, the average log-ratio per token is
+
+$$
+\frac{[\ln 6/4, \ln 7/3]}{[30, 50]} = [0.01, 0.03] \;\rm{ nat/token}
+$$
+
+They used several different AI, ranging between Jurassic-2, GPT-4, and Cohere. None of them have published their training compute or loss curves. The only good estimate is for GPT-4, which has training cost $C = 2\times 10^{25}\rm{FLOP}$.
+
+Assuming that [Chinchilla scaling](#eq-chinchilla-scaling) holds, average log-ratio per token that an ideal judge should achieve is $L - L_\infty = \frac{1070}{C^{0.154}} = 0.14 \;\rm{ nat/token}$. Therefore, $s = [5, 14]$. I did not expect the estimate to be nearly symmetric around $10$.
+
+## Entropy of natural languages
+
+In @eq-sprt, we argued that $L_\infty$ *should* be interpreted as the entropy rate of source material -- human-generated English. Unfortunately, unlike that of coin flips, or Markov chains, the entropy rate of English cannot be calculated, only estimated. Fortunately, it can be estimated in several ways, and we can check their agreement.
+
+### Chinchilla scaling
+
+In the Chinchilla scaling law paper, the authors trained many LLM of the same architecture, and fitted a statistical law to the data, giving $L_\infty = 1.69 \;\rm{ nat/token}$ (without error bars, unfortunately) [@hoffmannTrainingComputeOptimalLarge2022, page 25].
+
+### Guessing characters
+
+The earliest attempt is by Shannon himself [@shannonPredictionEntropyPrinted1951]: $[0.6, 1.3] \;\rm{bit/character}$. He obtained the estimate by asking human subjects to guess the next character repeatedly until they got it right, and repeat it for every character. Let $p_k$ be the frequency that the subject guesses exactly $k$ times, then we have both an upper and a lower bound for the entropy per character:
+
+$$
+\sum_k k(p_k - p_{k+1}) \ln k \leq H \leq -\sum_k p_k \ln p_k
+$$
+
+Over the years, others devised other methods to estimate this entropy. For example, [@coverConvergentGamblingEstimate1978] used a gambling game estimation, in the style of the [Kelly criterion](https://en.wikipedia.org/wiki/Kelly_criterion). Subjects were required to divide their entire bankroll into 27 differently-sized bets over 27 possibilities (26 letters and 1 whitespace). The right bet pays back 27-fold, and the other bets are lost. Let $S_n$ be the size of bankroll after $n$ rounds of betting, then
+
+$$
+H \leq \ln 27 - \limsup_n \frac 1n \ln S_n
+$$
+
+They found that $H \leq 1.3 \;\rm{bit/character}$.
+
+The guesser does not have to be a human. It can very well be a language model. [@brownEstimateUpperBound1992] made a simple trigram model over the Brown corpus (600 million words), and found that it gives $H \leq 1.75 \;\rm{bit/character}$. [@behrjrEstimatingComparingEntropy2002] used a model that combines multiple n-gram models, giving $H \leq 1.46 \;\rm{bit/character}$.
+
+### Compression
+
+Another way to estimate is by attempting to compress a large natural English corpus. It is known in basic information theory that the entropy rate is the lower bound on compression rate. In more detail, if you have a source of information emitting symbols, and its symbol stream has an entropy rate of $x \;\mathrm{bit/symbol}$, then it takes $xl$ bits to encode a long segment $l$ symbols long.
+
+The [Hutter prize](http://prize.hutter1.net/) is a competition for compressing a $10^9$-byte segment of the English Wikipedia (`enwik9`) as much as possible. For the size of the finished product, both the algorithm and the compressed data must be counted. In particular, if a neural network is used, then the size of the neural network weights must be counted as well.
+
+The standard zip algorithm can compress it down to about 300 Mb in size, a compression ratio of $\sim 3\times$. Over the years, the progress has been slow but somewhat steady, currently at $8.76\times$. If we extrapolate the prize-winning entries over the years, it seems that the best possible compression ratio is $\sim 10\times$. If we assume this, then the corpus contains entropy
+
+$$10^8\;\mathrm{byte} = 8\times 10^8 \;\mathrm{bit} = 5.55\times 10^8 \;\mathrm{nat}$$
+
+I ran the GPT-2 tokenizer through $1/100$ of the dataset, and got 2.96 million tokens. So the entire dataset should have about 300 million tokens. Assuming this, the entropy rate of Wikipedia-English is
+
+$$\frac{5.55\times 10^8}{3\times 10^8}= 1.85 \;\mathrm{nat/token}$$
+
+Similar to the Hutter prize, the [Large Text Compression Benchmark](https://mattmahoney.net/dc/text.html) also asks for compressing the `enwik9` dataset. However, there is no limit to the algorithm runtime or size. Currently (2024-01-19), the maximal compression rate reached is $9.35\times$ with [`nncp v3.2`](https://bellard.org/nncp/), which uses a small Transformer model.
+
+[@grassbergerDataCompressionEntropy2002] used a substitutional compression algorithm with increasingly large codebooks. When the codebook had 6000 codes, the algorithm gave $h \leq 1.82 \;\rm{bit/character}$. By extrapolating a curve, they estimated a lower bound of $h \geq [0.5, 0.9]\;\rm{bit/character}$.
+
+### Their agreement
+
+To compare the agreements, we should convert bit/character to nat/token.
+
+The conversion between nat and bit is known exactly: $1 \;\mathrm{bit} = \ln(2)\;\mathrm{nat}$. The conversion between character and token can be estimated by running a tokenizer over a large natural English corpus. I have estimated this by running the GPT-2 tokenizer on WikiText2 corpus, and found that on average,
+
+$$
+1 \;\rm{token} = 4.5 \;\rm{character} = 0.85 \;\rm{word}
+$$
+
+Thus, Shannon's estimate is $[1.89, 4.09]\;\rm{nat/token}$.
+
+The estimate by compression and language modelling are remarkably close. 
+
+Shannon's estimate of entropy is above the other two estimates by about $2\times$. Considering that he measured this by asking volunteers to just look at a small passage of text and keep guessing the next character, we can consider his estimate a noisy estimate biased to be too high (since the volunteers would not be able to extract the very last predictabilities of English by only looking at a small preceding passage).
+
+## Forecasting AGI
+
+According to [Chinchilla scaling law](https://en.wikipedia.org/wiki/Neural_scaling_law#Chinchilla_scaling_(Hoffmann,_et_al,_2022)) [@hoffmannTrainingComputeOptimalLarge2022], if we have a fixed amount of computing budget $C$ (in units of FLOP), by choosing the model and dataset size correctly, the minimal reducible loss achievable is
+
+$$
+L - L_\infty = \frac{1070}{C^{0.154}}
+$${#eq-chinchilla-scaling}
+
+Assume slowdown factor $s=10$.
 
 $$T^* \approx \frac{\ln 10}{L - L_\infty}$$
 
 Here, each token *on average* moves the log-probability-ratio away from 0 by another $(L-L_\infty)$. Decision is triggered when it finally moves out of the interval $[-\ln 10, \ln 10]$.
 
-We are not able to simply look at a few tokens, draw a straight line, and call it a day, because the trajectory of log-probability-ratio is much closer to a random walk with drift. Subjectively, if you were a judge and watching the log-probability-ratio moving, you'd see ups and downs, keeping you in suspense, until it finally crosses the decision boundaries.}
-
-### Slowdown factor
-
-Humans are not perfect judges. However, as a crude approximation, we can model them as a slowed-down version of the perfect judge. Specifically, if it takes about $T$ tokens for the perfect judge to reach a likelihood ratio of $r$, it would take about $sT$ tokens for a human judge. Here, $s$ is a number larger than one.
-
-We do not have good data on what $s$ is, or whether it is even consistently measurable. However, for our current question, let's assume $s=10$.
+We are not able to simply look at a few tokens, draw a straight line, and call it a day, because the trajectory of log-probability-ratio is much closer to a random walk with drift. Subjectively, if you were a judge and watching the log-probability-ratio moving, you'd see ups and downs, keeping you in suspense, until it finally crosses the decision boundaries.
 
 **What should the language model's $L-L_\infty$ be, before it can pass the Turing test against a human judge for 1000 tokens?**
 
 $$10 \times \ln 10 / 1000 = 0.023$$
-
-How do we estimate the slowdown factor?
-
-[@jannaiHumanNotGamified2023]
-
-## Entropy of natural languages
-
-We found that $L_\infty$ should be interpreted as the intrinsic entropy of the source material. In this case, it is the entropy of natural English. Now, the intrinsic entropy of English is not very easy to estimate, but there had been several attempts.
-
-The earliest attempt is by Shannon himself, in 1951.\footnote{Shannon, Claude E. "Prediction and entropy of printed English." Bell system technical journal 30.1 (1951): 50-64.} He estimated that the entropy of English is about 0.6 -- 1.3 bits per character. Now, we cannot use this number directly, because it is not in the right units -- loglikelihood loss is in units of nat/token.
-
-The conversion between nat and bit is known exactly: $1 \;\mathrm{nat} = \ln(2)\;\mathrm{nat}= 0.693\;\mathrm{nat}$. The conversion between character and token can be estimated by running a tokenizer over a large natural English corpus. I have estimated this by running the GPT-2 tokenizer on WikiText2 corpus, and found that on average, 0.22 tokens/character, 1.17 tokens/word.
-
-**What is Shannon's estimated entropy of English, in units of nat/token?**
-
-$$\ln 2 \times [0.6, 1.3] / 0.22 = [1.89, 4.09]\;\mathrm{nat/token}$$
-
-Another way to estimate is by attempting to compress a large natural English corpus. It is known in basic information theory that the entropy rate is the lower bound on compression rate. In more detail, if you have a source of information emitting symbols, and its symbol stream has an entropy rate of $x \;\mathrm{bit/symbol}$, then it takes $xl$ bits to encode a long segment $l$ symbols long.
-
-The [Hutter prize](http://prize.hutter1.net/) is a competition for compressing a $10^9$-byte segment of the English Wikipedia as much as possible. The competition has been ongoing since 2005. 
-
-The zipped file is only about 300 Mb in size, meaning that the total entropy in the corpus is no more than $3\times 10^8$ bytes.
-
-Over the years, the progress has been slow but somewhat steady. If we extrapolate the prize-winning entries over the years, we see that the best possible compression ratio seems to be about 10x.
-
-I ran the GPT-2 tokenizer through 1/100 of the dataset, and got 2.96 million tokens. So the entire dataset should have about 300 million tokens. Assuming this, **what is the entropy of English, in units of nat/token?**
-
-If we assume the maximal compression ratio of 10x, then the corpus contains entropy 
-
-$$10^8\;\mathrm{byte} = 8\times 10^8 \;\mathrm{bit} = 5.55\times 10^8 \;\mathrm{nat}$$
-
-$$\frac{5.55\times 10^8}{3\times 10^8}= 1.85 \;\mathrm{nat/token}$$
-
-And the third way is to look at what the scaling laws for the largest language models imply what $L_\infty$ is. According to page 25 of "Training Compute-Optimal Large Language Models" (2022) (hereafter "Chinchilla scaling law"), $L_\infty = 1.69\;\mathrm{nat/token}$.
-
-The estimate by compression and language modelling are remarkably close. 
-
-Shannon's estimate of entropy is above the other two estimates by about 2x. Considering that he measured this by asking volunteers to just look at a small passage of text and keep guessing the next character, we can consider his estimate a noisy estimate biased to be too high (since the volunteers would not be able to extract the very last predictabilities of English by only looking at a small preceding passage).
-
-## Compute scaling
-
-The "Chinchilla scaling law" paper reported a series of training runs on language models, trained by Google DeepMind researchers. According to them, if we have a fixed amount of computing budget $C$ (in units of FLOP), by choosing the model and dataset size correctly, the minimal reducible loss achievable is
-
-$$L - L_\infty = \frac{1070}{C^{0.154}}$$
-
-## Forecasting AGI
 
 Assuming slowdown factor $s=10$, and Chinchilla scaling law, then, we have a direct method to predict how long a language model can pass a Turing test, according to how many FLOPs it cost to compute:
 
@@ -165,4 +389,3 @@ So it seems like it would take a very long time to train the first AI scientist 
 I leave you with the inspirational quote from Edward "the Bomb" Teller:
 
 > The possibilities of developing an atomic weapon and the desirability of doing it secretly were discussed at a Princeton University conference in which I participated in March 1939... Bohr said this rare variety could not be separated from common uranium except by turning the country into a gigantic factory. Bohr was worried that this could be done and that an atomic bomb could be developed—but he hoped that neither could be accomplished. Years later, when Bohr came to Los Alamos, I was prepared to say, "You see..." But before I could open my mouth, he said: “You see, I told you it couldn't be done without turning the whole country into a factory. You have done just that.” [@tellerLegacyHiroshima1975]
-
