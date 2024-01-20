@@ -325,7 +325,7 @@ x_T &amp;= f_T(x_0, x_1, \dots , x_{T-1})
 <p><span class="math display">\[
 \frac{dx_T}{dx_{T-2}} =
     \nabla_{x_{T-1}} f_{T}(x_0, x_1, \dots , x_{T-2}) +
-    \underbrace{\frac{dx_T}{dx_{T-1}}\nabla_{x_{T-2}} f_{T-1}(x_0, x_1, \dots , x_{T-2})}_{\text{the chain rule}}
+    \underbrace{\frac{dx_T}{dx_{T-1}}\nabla_{x_{T-2}} f_{T-1}(x_0, x_1, \dots , x_{T-2})}_{the chain rule}
 \]</span></p>
 <p>This generalizes to the rest of the steps.</p>
 <p>The above computation is fully general, but this makes it inefficient. In practical applications of backpropagation, the computation graph is usually very sparse, meaning that each <span class="math inline">\(x_t\)</span> only directly influence a few more nodes down the line. In standard neural networks, typically <span class="math inline">\(x_{t}\)</span> only directly influences <span class="math inline">\(x_{t+1}, x_{t+2}\)</span>. Thus, sparsity is vital for backpropagation to be relevant.</p>
@@ -379,8 +379,8 @@ g_T &amp;= I \\
 <div class="page-columns page-full"><p>When the computation graph has both nodes with discrete logical times and nodes with continuous logical times, we call such a system as having hybrid logical time.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;The name “hybrid” comes from “<a href="https://en.wikipedia.org/wiki/Hybrid_system">hybrid control theory</a>”, which are systems with both discrete changes, or jumps, and continuous changes, or flow. They appear whenever a digital device is used to control a continuous system, such as a computer piloting an airplane.</p></li></div></div>
 <p>The idea can be illustrated by the fundamental problem in control theory: how to optimize control? You cannot optimize without optimizing a real number, so we write down the number as <span class="math inline">\(J\)</span>, representing the “cost” of the trajectory. For example, in driving a car, we might want to optimize comfort, time-until-arrival, and fuel cost. We can then write <span class="math inline">\(J\)</span> down as something like</p>
 <p><span class="math display">\[
-J = \underbrace{(x_{T, 0} - x_{goal})^2}_{\text{location should be at the goal location at the end time}}
-    + \underbrace{(x_{T, 1} - 0)^2}_{\text{speed should be zero at the end time}} + \int_0^T u_t^2 dt
+J = \underbrace{(x_{T, 0} - x_{goal})^2}_{location should be at the goal location at the end time}
+    + \underbrace{(x_{T, 1} - 0)^2}_{speed should be zero at the end time} + \int_0^T u_t^2 dt
 \]</span></p>
 <p>More generally, the objective to be optimized is in the form</p>
 <p><span class="math display">\[
@@ -441,7 +441,7 @@ H(x_t, u_t, \lambda_t) := L(x_t, u_t) + \lambda_t f(x_t, u_t)
 <p><span class="math display">\[
 \begin{cases}
 H^*(x_t, \lambda_t) &amp;:= \min_{u_t}H(x_t, u_t, \lambda_t) = \min_{u_t} \left(L(x_t, u_t) + \lambda_t f(x_t, u_t)\right) \\
-u^*(x_t, \lambda_t) &amp;:= \mathop{\mathrm{argmin}}_{u_t}H(x_t, u_t, \lambda_t)
+u^*(x_t, \lambda_t) &amp;:= \argmin_{u_t}H(x_t, u_t, \lambda_t)
 \end{cases}
 \]</span></p>
 <p>Then, by <a href="https://en.wikipedia.org/wiki/Hotelling%27s_lemma">Hotelling’s lemma</a>, we derive the <a href="https://en.wikipedia.org/wiki/Hamiltonian_mechanics">Hamiltonian equations of motion</a>:</p>
@@ -1310,7 +1310,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="an">importance:</span><span class="co"> 4</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../../../static/_macros.tex &gt;}}</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../../../utils/blog_utils/_macros.tex &gt;}}</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Abstract</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
