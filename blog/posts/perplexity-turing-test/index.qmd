@@ -1,14 +1,14 @@
 ---
-title: "When will AI pass the Turing Test?"
+title: "Predicting AGI by the Turing Test"
 
 author: "Yuxi Liu"
 date: "2024-01-20"
 date-modified: "2024-01-20"
-categories: [AI, scaling]
+categories: [AI, scaling, math]
 format:
   html:
     toc: true
-description: "The forecast chain: scale, perplexity, Turing test, AGI."
+description: "Minimizing log-perplexity loss is equivalent to maximizing survival length in a Turing test. Assuming compute-loss scaling law, a scaled-up GPT that produces human-like science papers would cost ~200 years of global GDP."
 
 # image: "figure/banner.png"
 status: "finished"
@@ -18,13 +18,17 @@ importance: 10
 
 {{< include ../../../utils/blog_utils/_macros.tex >}}
 
-Alternative title: *How much would it cost to train the first AI scientist?*
+## Abstract
 
 This essay explains *the Direct Approach* proposed by [@barnettScalingTransformativeAutoregressive2023].[^direct-approach-report] I encourage you to play with the [*Direct Approach Interactive Model*](https://epochai.org/blog/direct-approach-interactive-model) to explore an interactive simulation using the approach.
 
 > The Direct Approach framework bounds the compute requirements for transformative AI by extrapolating neural scaling laws. We combine those estimates with simple models of future progress in algorithms, investment, and compute costs to produce a user-adjustable forecast over the date at which TAI will be achieved. [@barnettDirectApproach2023]
 
 [^direct-approach-report]: The thing is released in a scattered way, typical for Internet-native publication. There is the report [@barnettScalingTransformativeAutoregressive2023], in the form of a paper -- clearly meant to be cited, despite being hard to read. There is the website [@barnettDirectApproach2023], in the form of a blog post -- clearly meant to be read, despite not being upper-class enough to be cited in journal papers. Finally there is the [interactive model](https://epochai.org/blog/direct-approach-interactive-model) which looks like an optional add-on to the blog post.
+
+From the POV of the judge, a Turing test is a sequential test for two statistical hypotheses -- "is human" and "is machine". Under reasonable assumptions, halving the (reducible part of) log-perplexity loss of the language model would double the time it can survive in a Turing test. 
+
+If we say that the first AGI has arrived when we have an AI that can write scientific papers that imitate a human scientist's, then we can calculate the log-perplexity loss of the first AGI. If we assume it is just a scaled-up GPT, then assuming the Chinchilla scaling law, [it would cost a bit above 200 years of global GDP](#sec-forecasting-agi). This makes it virtually certain that the first AGI will not be a scaled-up GPT.
 
 ## Turing test as statistical hypothesis test
 
@@ -178,7 +182,7 @@ In @eq-sprt, we argued that $L_\infty$ *should* be interpreted as the entropy ra
 
 Since tokenizers are temporary, but English is permanent, we convert all units to $\;\rm{bit/character}$ for easy comparison.
 
-### Chinchilla scaling
+### Chinchilla scaling {#sec-chinchilla-scaling}
 
 In the Chinchilla scaling law paper, the authors trained many language models with various sizes from a single architecture family, and fitted a statistical law to the data, giving $L_\infty = 1.69 \;\rm{ nat/token}$ (without error bars, unfortunately) [@hoffmannTrainingComputeOptimalLarge2022, page 25].
 
@@ -259,7 +263,7 @@ Similar to the Hutter prize, the [Large Text Compression Benchmark](https://matt
 
 Notably, the above table has mostly upper bounds, and only one dubious lower bound (by Shannon) from 1951. Perhaps lower bounds can be established by using [randomness extractors](https://en.wikipedia.org/wiki/Randomness_extractor) on a large corpus, and checking that the output from the extractor passes pseudorandomness tests.
 
-## Forecasting AGI
+## Forecasting AGI {#sec-forecasting-agi}
 
 According to the [Chinchilla scaling law](https://en.wikipedia.org/wiki/Neural_scaling_law#Chinchilla_scaling_(Hoffmann,_et_al,_2022)) [@hoffmannTrainingComputeOptimalLarge2022], if we have a fixed amount of computing budget $C$, by choosing the model and dataset size correctly, the minimal reducible loss achievable is
 
