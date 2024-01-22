@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Yuxi on the Wired</title>
+<link>https://yuxi-liu-wired.github.io/sketch/index.html</link>
+<atom:link href="https://yuxi-liu-wired.github.io/sketch/index.xml" rel="self" type="application/rss+xml"/>
+<description>Personal website of Yuxi Liu</description>
+<image>
+<url>https://yuxi-liu-wired.github.io/img/blog icon.jpg</url>
+<title>Yuxi on the Wired</title>
+<link>https://yuxi-liu-wired.github.io/sketch/index.html</link>
+</image>
+<generator>quarto-1.3.450</generator>
+<lastBuildDate>Thu, 18 Jan 2024 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>A Scrapbook of Neural Network Lores</title>
+  <dc:creator>Yuxi Liu</dc:creator>
+  <link>https://yuxi-liu-wired.github.io/sketch/posts/neural-network-scrapbook/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="the-scaling-hypothesis" class="level2">
+<h2 class="anchored" data-anchor-id="the-scaling-hypothesis">The scaling hypothesis</h2>
+<p>Marvin Minsky, on how he gave up on neural networks after the 1950s because he could not afford a few million neurons.</p>
+<blockquote class="blockquote">
+<p>I had the naive idea that if one could build a big enough network, with enough memory loops, it might get lucky and acquire the ability to envision things in its head. This became a field of study later. It was called self-organizing random networks. Even today, I still get letters from young students who say, ‘Why are you people trying to program intelligence? Why don’t you try to find a way to build a nervous system that will just spontaneously create it?’ Finally, I decided that either this was a bad idea or it would take thousands or millions of neurons to make it work, and I couldn’t afford to try to build a machine like that. <span class="citation" data-cites="bernsteinMarvinMinskyVision1981">(Bernstein 1981)</span></p>
+</blockquote>
+<p>Peter Norvig, on how he quickly gave up on neural networks in the 1980s due to lack of compute.</p>
+<blockquote class="blockquote">
+<p>And then it finally worked. And I think the biggest difference was the computing power. Definitely there were advances in data. So we could do image net because Fei-Fei Li and others gathered this large database, and that was really important. There are certainly differences in the algorithm, right? We’ve got a slightly different squashing function. Instead of shaped like this, it’s shaped like this. I mean, I don’t know how big a deal that was, but we learned how to do stochastic gradient dissent a little bit better. We figured that dropout gave you a little bit better robustness.</p>
+<p>So there were small things, but I think probably the biggest was the computing power. And I mean, I certainly remember Geoffrey Hinton came to Berkeley when I was a grad student in 1981, I think, when he talked about these neural nets. And we fellow grad students thought that was so cool. So we said, “Let’s go back into the lab and implement it.</p>
+<p>And of course, there was absolutely nothing you could download, so we had to build it all from scratch. And we got it to do exclusive or, and then we got it to do something a little bit more complicated. And it was exciting. And then we gave it the first real problem, and it ran overnight, and it didn’t converge, and we let it run one more day, and it still didn’t converge. And then we gave up, and we went back to our sort of knowledge-based systems approach. But if we had the computing power of today, it probably would have converged after five seconds. <span class="citation" data-cites="norvigSingularityEyeBeholder2021">(Norvig 2021)</span></p>
+</blockquote>
+<p>“The last bits are deepest”</p>
+<blockquote class="blockquote">
+<p>Why Does Pretraining Work?</p>
+<p>Early on in training, a model learns the crudest levels: that some letters like ‘e’ are more frequent than others like ‘z’, that every 5 characters or so there is a space, and so on. … once a model has learned a good English vocabulary and correct formatting/spelling, what’s next? There’s not much juice left in predicting within-words. The next thing is picking up associations among words. … If the word “Jefferson” is the last word, then “Washington” may not be far away, and it should hedge its bets on predicting that ‘W’ is the next character, and then if it shows up, go all-in on “ashington”. … Now training is hard. Even subtler aspects of language must be modeled, such as keeping pronouns consistent. This is hard in part because the model’s errors are becoming rare, and because the relevant pieces of text are increasingly distant and ‘long-range’. … If we compared two models, one of which didn’t understand gender pronouns at all and guessed ‘he’/‘she’ purely at random, and one which understood them perfectly and always guessed ‘she’, the second model would attain a lower average error of barely &lt;0.02 bits per character! …</p>
+<p>The implication here is that the final few bits are the most valuable bits, which require the most of what we think of as intelligence. A helpful analogy here might be our actions: for the most part, all humans execute actions equally well. … Where individuals differ is when they start running into the long tail of novel choices, rare choices, choices that take seconds but unfold over a lifetime, choices where we will never get any feedback (like after our death). One only has to make a single bad decision, out of a lifetime of millions of discrete decisions, to wind up in jail or dead. A small absolute average improvement in decision quality, if it is in those decisions, may be far more important than its quantity indicates, and give us some intuition for why those last bits are the hardest/deepest. <span class="citation" data-cites="branwenScalingHypothesis2020">(Branwen 2020)</span></p>
+</blockquote>
+<p>Echos of “The last bits are deepest” from a very early paper on using a trigram model to estimate the entropy of English over the Brown corpus (600 million words).</p>
+<blockquote class="blockquote">
+<p>From a loftier perspective, we cannot help but notice that linguistically the trigram concept, which is the workhorse of our language model, seems almost moronic. It captures local tactic constraints by sheer force of numbers, but the more well-protected bastions of semantic, pragmatic, and discourse constraint and even morphological and global syntactic constraint remain unscathed, in fact unnoticed. Surely the extensive work on these topics in recent years can be harnessed to predict English better than we have yet predicted it.</p>
+<p>We see this paper as a gauntlet thrown down before the computational linguistics community. The Brown Corpus is a widely available, standard corpus and the subject of much linguistic research. By predicting the corpus character by character, we obviate the need for a common agreement on a vocabulary. Given a model, the computations required to determine the cross-entropy are within reach for even a modest research budget. We hope by proposing this standard task to unleash a fury of competitive energy that will gradually corral the wild and unruly thing that we know the English language to be. <span class="citation" data-cites="brownEstimateUpperBound1992">(Brown et al. 1992)</span></p>
+</blockquote>
+</section>
+<section id="neural-networks-want-to-work" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="neural-networks-want-to-work">Neural networks want to work</h2>
+<p>Marvin Minsky’s SNARC (1951). Designed to simulate one mouse escaping a maze, it ended up simulating multiple mice due to design bugs – which were never debugged. Though the machine had only 40 neurons, and its parts failed all the time, the whole network continued to work.</p>
+<blockquote class="blockquote">
+<p>It turned out that because of an electronic accident in our design we could put two or three rats in the same maze and follow them all. The rats actually interacted with one another. If one of them found a good path, the others would tend to follow it. We sort of quit science for a while to watch the machine. We were amazed that it could have several activities going on at once in its little nervous system. Because of the random wiring, it had a sort of fail-safe characteristic. If one of the neurons wasn’t working, it wouldn’t make much of a difference—and, with nearly three hundred tubes and the thousands of connections we had soldered, there would usually be something wrong somewhere. In those days, even a radio set with twenty tubes tended to fail a lot. I don’t think we ever debugged our machine completely, but that didn’t matter. By having this crazy random design, it was almost sure to work, no matter how you built it. <span class="citation" data-cites="bernsteinMarvinMinskyVision1981">(Bernstein 1981)</span></p>
+</blockquote>
+<p>Bernard Widrow once built a MADALINE I (circa 1962) in a rush to present at a technical meeting. Despite that only 1/4 of its circuits were defective, it still worked at reduced capacity.</p>
+<blockquote class="blockquote">
+<p>We discovered the inherent ability of adaptive computers to ignore their own defects while we were rushing through construction of a system called Madaline I for presentation at a technical meeting. The machine was finished late the night before the meeting and the next day we showed some very complex pattern discriminations. Later we discovered that about a fourth of the circuitry was defective. Things were connected backward, there were short circuits, and poor solder joints. We were pretty unhappy until it dawned on us that this system has the ability to adapt around its own internal flaws. The capacity of the system is diminished but it does not fail. <span class="citation" data-cites="widrowAdalineSmarterSweet1963">(Widrow 1963)</span></p>
+</blockquote>
+<p>Andrej Karpathy, on how neural network program bugs are very hard to find, because bugged neural networks do not fail, merely degrade.</p>
+<blockquote class="blockquote">
+<p>… perhaps you forgot to flip your labels when you left-right flipped the image during data augmentation. Your net can still (shockingly) work pretty well because your network can internally learn to detect flipped images and then it left-right flips its predictions. Or maybe your autoregressive model accidentally takes the thing it’s trying to predict as an input due to an off-by-one bug. Or you tried to clip your gradients but instead clipped the loss, causing the outlier examples to be ignored during training. Or you initialized your weights from a pretrained checkpoint but didn’t use the original mean. Or you just screwed up the settings for regularization strengths, learning rate, its decay rate, model size, etc. Therefore, your misconfigured neural net will throw exceptions only if you’re lucky; Most of the time it will train but silently work a bit worse. <span class="citation" data-cites="karpathyRecipeTrainingNeural2019">(Karpathy 2019)</span></p>
+</blockquote>
+<p>Researchers at OpenAI (2018) reported that fixing RL bugs is as important as better algorithms.</p>
+<blockquote class="blockquote">
+<p>Big-picture considerations like susceptibility to the noisy-TV problem are important for the choice of a good exploration algorithm. However, we found that getting seemingly-small details right in our simple algorithm made the difference between an agent that never leaves the first room and an agent that can pass the first level. To add stability to the training, we avoided saturation of the features and brought the intrinsic rewards to a predictable range. We also noticed <strong>significant improvements in performance of RND every time we discovered and fixed a bug</strong> (our favorite one involved accidentally zeroing an array which resulted in extrinsic returns being treated as non-episodic; we realized this was the case only after being puzzled by the extrinsic value function looking suspiciously periodic). Getting such details right was a significant part of achieving high performance even with algorithms conceptually similar to prior work. This is one reason to prefer simpler algorithms where possible. <span class="citation" data-cites="burdaReinforcementLearningPredictionbased2018">(Burda and Edwards 2018)</span></p>
+</blockquote>
+<p>Around 2019, Gwern, Shawn Presser, and others, trained <img src="https://latex.codecogs.com/png.latex?512%5Ctimes%20512"> image generation models using the BigGAN architecture. However, they used <a href="https://github.com/google/compare_gan"><code>compare_gan</code></a>, which had a multiply-by-zero bug. Somehow it still worked, but not well enough compared to the original <a href="https://github.com/ajbrock/BigGAN-PyTorch"><code>BigGAN</code></a>.</p>
+<blockquote class="blockquote">
+<p>Our primary goal was to train &amp; release 512px BigGAN models on not just ImageNet but all the other datasets we had like anime datasets. The compare_gan BigGAN implementation turned out to have a subtle +1 gamma bug which stopped us from reaching results comparable to the model; while we beat our heads against the wall trying to figure out why it was working but not well enough (figuring it out far too late, after we had disbanded) … “Neural nets want to work” – even if they start out being effectively multiplied by zero. <span class="citation" data-cites="branwenGANsDidnFail2022">(Branwen 2022)</span></p>
+</blockquote>
+<p>Personal story at the <a href="https://rail.eecs.berkeley.edu/deeprlcourse-fa22/">Berkeley CS 285, <em>Deep Reinforcement Learning</em>, 2022 Fall</a>.</p>
+<p>For <a href="https://web.archive.org/web/20230305152623/https://rail.eecs.berkeley.edu/deeprlcourse/static/homeworks/hw3.pdf">Homework 3</a>, we were asked to implement the soft actor-critic algorithm. We would implement the agent, run the agent on the <a href="https://gymnasium.farama.org/environments/mujoco/half_cheetah/"><code>Half Cheetah</code></a> environment, and submit the trajectories to <a href="https://en.wikipedia.org/wiki/Gradescope">Gradescope</a>, where an autograder would check the trajectories and see if the agent achieved a final score above 300. For the <code>Half Cheetah</code>, score means the distance it travels per episode, averaged over several episodes.</p>
+<p>I noticed that the algorithm I implemented did learn, but the learning curve looked like a rollercoaster, jumping up and down around the range of 250 – 300. After many fruitless and paranoid programming sessions I managed to pass the autograder by trying enough random seeds and just submitting the best seeds. The professor, <a href="https://people.eecs.berkeley.edu/~svlevine/">Sergey Levine</a>, offered little help, admitting that RL agents are extremely hard to debug.</p>
+<p>One day after the assignment deadline, the professor announced that there was <a href="https://web.archive.org/web/20240118234154/https://github.com/berkeleydeeprlcourse/homework_fall2022/commit/d2227e86fb1faf02c115c30c3762f1cfc049c84e">a critical one-line bug in the starter code</a>: The correct algorithm should train the model with past game frames in a random order, but the given code always give them in the FIFO order. With the fix, the learning curve would smoothly sigmoid to 350.</p>
+<section id="the-neural-net-tank-urban-legend" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="the-neural-net-tank-urban-legend">The Neural Net Tank Urban Legend</h3>
+<p>A large list of examples in <a href="https://gwern.net/tank">The Neural Net Tank Urban Legend · Gwern.net</a>. I have a few more.</p>
+<p>According to Sejnowski, Takeo Kanade did work on detecting tanks in images. This is unconfirmed. I have looked for “Artificial Intelligence Vision: Progress and Non-Progress”, but it is not available online. I looked for your doctoral dissertation of 1974, but it contains only facial recognition. I also cannot find anything about detecting tanks in his publication list.</p>
+<blockquote class="blockquote">
+<p>In his talk “Artificial Intelligence Vision: Progress and Non-Progress,” Takeo Kanade (from Carnegie Mellon) noted that computer memories back in the 1960s were tiny by today’s standards and could hold only one image at a time. For his doctoral dissertation in 1974, Takeo had shown that, though his program could find a tank in one image, it was too difficult for it to do so in other images where the tank was in a different position and the lighting was different. But, by the time his early students graduated, the programs they designed could recognize tanks under more general conditions because computers were more powerful. Today his students’ programs can recognize tanks in any image. The difference is that today we have access to millions of images that sample a wide range of poses and lighting conditions, and computers are millions of times more powerful. <span class="citation" data-cites="sejnowskiDeepLearningRevolution2018">(Sejnowski 2018, 256)</span></p>
+</blockquote>
+<p>There was not a lot of actual research on tank recognition. <span class="citation" data-cites="kanalRecognitionSystemDesign1964">(Kanal and Randall 1964)</span> contains some good pictures. The network was a two-layered perceptron network, of type <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7BN%20%5Ctimes%20N%7D%20%5Cto%20%5C%7B0,%201%5C%7D%5E%7B32%5Ctimes%2032%7D%20%5Cto%20%5C%7B0,%201%5C%7D%5E%7B24%7D%20%5Cto%20%5C%7B0,%201%5C%7D">. It works as follows:</p>
+<ul>
+<li>The grayscale photo is down-scaled and binarized by convolution with a <a href="https://en.wikipedia.org/wiki/Discrete_Laplace_operator">discrete Laplace filter</a>: <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5E%7BN%20%5Ctimes%20N%7D%20%5Cto%20%5C%7B0,%201%5C%7D%5E%7B32%5Ctimes%2032%7D">.</li>
+<li>The weights for the 24 hidden perceptrons are constructed by <a href="https://en.wikipedia.org/wiki/Linear_discriminant_analysis">linear discriminant analysis</a>: <img src="https://latex.codecogs.com/png.latex?%5C%7B0,%201%5C%7D%5E%7B32%5Ctimes%2032%7D%20%5Cto%20%5C%7B0,%201%5C%7D%5E%7B24%7D"></li>
+<li>The output perceptron is learned by the <a href="https://en.wikipedia.org/wiki/Perceptron#Learning_algorithm_for_a_single-layer_perceptron">perceptron learning rule</a>: <img src="https://latex.codecogs.com/png.latex?%5C%7B0,%201%5C%7D%5E%7B24%7D%20%5Cto%20%5C%7B0,%201%5C%7D">.</li>
+</ul>
+<div id="fig-kanal-1964-neural-tanks" class="quarto-layout-panel page-columns page-full">
+<p></p><figcaption>Figure&nbsp;1: Images from <span class="citation" data-cites="kanalRecognitionSystemDesign1964">(Kanal and Randall 1964)</span>.</figcaption><p></p>
+<figure class="figure page-columns page-full">
+<div class="quarto-layout-row quarto-layout-valign-top page-columns page-full">
+<div class="quarto-layout-cell quarto-layout-cell-subref page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-kanal-1964-neural-tanks-tank-nontank-mosaic" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="https://yuxi-liu-wired.github.io/sketch/posts/neural-network-scrapbook/figure/kanal_1964_fig_tank_nontank_mosaic.png" class="img-fluid figure-img" data-ref-parent="fig-kanal-1964-neural-tanks"></p>
+<figcaption class="figure-caption margin-caption">(a) Grayscale photos, some containing tanks, and some not.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-kanal-1964-neural-tanks-binary-image-tank" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="https://yuxi-liu-wired.github.io/sketch/posts/neural-network-scrapbook/figure/kanal_1964_fig_binary_image_tank.png" class="img-fluid figure-img" data-ref-parent="fig-kanal-1964-neural-tanks"></p>
+<figcaption class="figure-caption margin-caption">(b) A picture of a tank after convolution with a discrete Laplace filter.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top page-columns page-full">
+<div class="quarto-layout-cell quarto-layout-cell-subref page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-kanal-1964-neural-tanks-architecture" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="https://yuxi-liu-wired.github.io/sketch/posts/neural-network-scrapbook/figure/kanal_1964_fig_architecture.png" class="img-fluid figure-img" data-ref-parent="fig-kanal-1964-neural-tanks"></p>
+<figcaption class="figure-caption margin-caption">(c) The architecture of the network.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="the-second-neural-network-winter" class="level2">
+<h2 class="anchored" data-anchor-id="the-second-neural-network-winter">The second neural network winter</h2>
+<p><a href="https://yuxi-liu-wired.github.io/blog/posts/perceptron-controversy/#connectionism-19451970">The first neural network winter</a> started around 1965, when the main research centers pivoted away from neural networks: the Stanford Research Institute group turned to symbolic AI; the Bernard Widrow group turned to using <em>single</em> neurons as adaptive filters; the Frank Rosenblatt group died from lack of funds and then the literal death of Rosenblatt in 1971. It rose again around 1985, when backpropagation and improved compute allowed researchers to train neural networks on the order of <img src="https://latex.codecogs.com/png.latex?10%5E4"> parameters and <img src="https://latex.codecogs.com/png.latex?4"> layers.</p>
+<p>Something strange happened during the 1990 – 2010 period: the neural network research community silently disappeared again for another 20 years. Unlike the previous case, there was no great mythology or drama about this winter, no <em>Perceptron</em> controversy.</p>
+<p>I would like to find out why.</p>
+<blockquote class="blockquote">
+<p>Lukas: So I remember Daphne Koller telling me, maybe 2003, that the kind of state-of-the-art handwriting systems were neural nets, but that it was such an ad hoc kind of system that we shouldn’t focus on it. And I wonder if maybe I should have paid more attention to that and tried harder to make neural nets work for the applications I was doing.</p>
+<p>Peter: Yeah, me too. And certainly Yann LeCun had success with the digit database, and I think that was over-engineered in that they looked at exactly the features they needed for that set of digitizations of those digits. And in fact, I remember researchers talking about, “Well, what change are we going to do for sample number 347?” Right?</p>
+<p>Lukas: Oh, really? Okay.</p>
+<p>Peter: There were individual data points that they would perform theories on, so that was definitely over-tuning to the data. And it should have been an indication that was a good approach. It was better than other approaches at the time.</p>
+<p>Lukas: I guess so. Although that does sound like damming level of over-fitting the data, I suppose.</p>
+<p>Peter: Right. There was only a couple thousand data points. I forget exactly how many. Maybe it was 10,000. Maybe it was even 100,000, but it wasn’t many. <span class="citation" data-cites="norvigSingularityEyeBeholder2021">(Norvig 2021)</span></p>
+</blockquote>
+
+
+<!-- -->
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-bernsteinMarvinMinskyVision1981" class="csl-entry">
+Bernstein, Jeremy. 1981. <span>“Marvin <span>Minsky</span>’s <span>Vision</span> of the <span>Future</span>.”</span> <em>The New Yorker</em>, December.
+</div>
+<div id="ref-branwenScalingHypothesis2020" class="csl-entry">
+Branwen, Gwern. 2020. <span>“The <span>Scaling Hypothesis</span>.”</span> https://www.gwern.net/Scaling-hypothesis.
+</div>
+<div id="ref-branwenGANsDidnFail2022" class="csl-entry">
+———. 2022. <span>“<span>GANs Didn</span>’t <span>Fail</span>, <span>They Were Abandoned</span>.”</span> https://gwern.net/gan.
+</div>
+<div id="ref-brownEstimateUpperBound1992" class="csl-entry">
+Brown, Peter F., Stephen A. Della Pietra, Vincent J. Della Pietra, Jennifer C. Lai, and Robert L. Mercer. 1992. <span>“An Estimate of an Upper Bound for the Entropy of <span>English</span>.”</span> <em>Computational Linguistics</em> 18 (1): 31–40.
+</div>
+<div id="ref-burdaReinforcementLearningPredictionbased2018" class="csl-entry">
+Burda, Yura, and Harri Edwards. 2018. <span>“Reinforcement Learning with Prediction-Based Rewards.”</span> <em>OpenAI</em>.
+</div>
+<div id="ref-kanalRecognitionSystemDesign1964" class="csl-entry">
+Kanal, Laveen N., and Neil C. Randall. 1964. <span>“Recognition System Design by Statistical Analysis.”</span> In <em>Proceedings of the 1964 19th <span>ACM</span> National Conference</em>, 42–501.
+</div>
+<div id="ref-karpathyRecipeTrainingNeural2019" class="csl-entry">
+Karpathy, Andrej. 2019. <span>“A <span>Recipe</span> for <span>Training Neural Networks</span>.”</span> <em>Andrej Karpathy Blog</em>.
+</div>
+<div id="ref-norvigSingularityEyeBeholder2021" class="csl-entry">
+Norvig, Peter. 2021. <span>“Singularity <span>Is</span> in the <span>Eye</span> of the <span>Beholder</span>.”</span>
+</div>
+<div id="ref-sejnowskiDeepLearningRevolution2018" class="csl-entry">
+Sejnowski, Terrence J. 2018. <em>The <span>Deep Learning Revolution</span></em>. Illustrated edition. <span>Cambridge, Massachusetts London, England</span>: <span>The MIT Press</span>.
+</div>
+<div id="ref-widrowAdalineSmarterSweet1963" class="csl-entry">
+Widrow, Bernard. 1963. <span>“Adaline: <span>Smarter</span> Than <span>Sweet</span>.”</span> <em>Stanford Today</em>, no. Autumn 1963.
+</div>
+</div></section></div> ]]></description>
+  <category>AI</category>
+  <category>scaling</category>
+  <category>NN</category>
+  <guid>https://yuxi-liu-wired.github.io/sketch/posts/neural-network-scrapbook/index.html</guid>
+  <pubDate>Thu, 18 Jan 2024 08:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Information Warfare</title>
+  <dc:creator>Yuxi Liu</dc:creator>
+  <link>https://yuxi-liu-wired.github.io/sketch/posts/info-warfare/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><small>This essay is unfinished, but it is already interesting to read. I plan to grow this substantially as I find more examples and theories.</small></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>There is a secret battle on the Internet – info-warfare. It is invisible like the battle for stock market arbitrage.</p>
+<p>Every time you get an incomprehensible error message refusing to allow your account log-in for reasons they refuse to explain, every time a platform said your post contained something against its content policy without explaining which, every time the captcha gets an upgrade that makes it harder for you to solve… You have been hit by a stray bullet from the secret battle.</p>
+<p>In the novel <em>Blindsight</em> <span class="citation" data-cites="wattsFirefall2017">(Watts 2017)</span>, after humans made first contact with an alien probe, it attacked after a long conversation. The humans interpreted that this way: The alien probe could not understand some of human speech, and concluded that it was an information object crafted specifically made to confuse it – an act of war.</p>
+<blockquote class="blockquote">
+<p>Imagine you’re a scrambler.</p>
+<p>Imagine you have intellect but no insight, agendas but no awareness. Your circuitry hums with strategies for survival and persistence, flexible, intelligent, even technological—but no other circuitry monitors it. You can think of anything, yet are conscious of nothing.</p>
+<p>You can’t imagine such a being, can you? The term being doesn’t even seem to apply, in some fundamental way you can’t quite put your finger on.</p>
+<p>Try.</p>
+<p>Imagine that you encounter a signal. It is structured, and dense with information. It meets all the criteria of an intelligent transmission. Evolution and experience offer a variety of paths to follow, branch-points in the flowcharts that handle such input. Sometimes these signals come from conspecifics who have useful information to share, whose lives you’ll defend according to the rules of kin selection. Sometimes they come from competitors or predators or other inimical entities that must be avoided or destroyed; in those cases, the information may prove of significant tactical value. Some signals may even arise from entities which, while not kin, can still serve as allies or symbionts in mutually beneficial pursuits. You can derive appropriate responses for any of these eventualities, and many others.</p>
+<p>You decode the signals, and stumble:</p>
+<blockquote class="blockquote">
+<p>I had a great time. I really enjoyed him. Even if he cost twice as much as any other hooker in the dome—</p>
+<p>To fully appreciate Kesey’s Quartet—</p>
+<p>They hate us for our freedom—</p>
+<p>Pay attention, now—</p>
+<p>Understand.</p>
+</blockquote>
+<p>There are no meaningful translations for these terms. They are needlessly recursive. They contain no usable intelligence, yet they are structured intelligently; there is no chance they could have arisen by chance.</p>
+<p>The only explanation is that something has coded nonsense in a way that poses as a useful message; only after wasting time and effort does the deception becomes apparent. The signal functions to consume the resources of a recipient for zero payoff and reduced fitness. The signal is a virus.</p>
+<p>Viruses do not arise from kin, symbionts, or other allies.</p>
+<p>The signal is an attack.</p>
+</blockquote>
+</section>
+<section id="game-theory-and-evolution" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="game-theory-and-evolution">Game theory and evolution</h2>
+<p>In game theory, information warfare would be studied as a kind of <strong>signaling game</strong> <span class="citation" data-cites="sobelSignalingGames2020">(Sobel 2020)</span>. We would explain how creatures actually use their symbols by assuming that they are playing a certain kind of game, then solve for the Nash equilibria. If there are only a few Nash equilibria, and those are the ones we observe, then we declare the theory a success.</p>
+<div class="page-columns page-full"><p>Whereas in classical game theory, every agent is basically picking one strategy at a time to maximize its own utility, in evolutionary game theory, there are no agents. There are still individuals that fight or flee, but they no longer choose to. Each individual acts out its strategy until it dies without adapting.<sup>1</sup> The population learns and adapts, and increases fitness of the individuals, but if we were to call the population an agent, it is an odd one. It plans by stochastic gradient ascent, and only increases the relative fitness, not absolute – which might not even exist.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;More sophisticated evolutionary game theory would allow individuals that <em>do</em> adapt, learn, and calculate the optimal strategy. However, this quickly becomes intractable, and this level of generality is too powerful for this essay anyway.</p></li></div></div>
+<p>For example, if the population can contain only three kinds of individuals, in a game of rock-paper-scissors, and only the winners can reproduce with very low mutation rates, then the population serenely turn around the length-3 cycle, chasing its tail, never increasing absolute fitness. Indeed, there is no absolute fitness, like how there is no absolute height in Escher’s staircase.</p>
+<blockquote class="blockquote">
+<p>[The earth] breathes like a great lung; when it exhales, delicate and graceful life teems out of its pores, and all the creatures stretch out their arms to the sun; but when it takes in its breath, a rustle of fragile spirits breaking sweeps through the multitudes, and their corpses lash the ground like showers of hail. <span class="citation" data-cites="zapffeLastMessiah2004">(Zapffe 2004)</span></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Brains are survival engines, not truth detectors. If self-deception promotes fitness, the brain lies. Stops noticing – irrelevant things. Truth never matters. Only fitness. By now you don’t experience the world as it exists at all. You experience a simulation built from assumptions. Shortcuts. Lies. Whole species is agnosiac by default. <span class="citation" data-cites="wattsFirefall2017">(Watts 2017)</span></p>
+</blockquote>
+<p>Consider the simplest case. Every round of interaction has two individuals. The interaction is symmetric (so there is no issue of “who goes first”). If I play <img src="https://latex.codecogs.com/png.latex?s"> and you play <img src="https://latex.codecogs.com/png.latex?t">, then my payoff from the interaction is <img src="https://latex.codecogs.com/png.latex?%5Cpi(s%7Ct)">, and your payoff is <img src="https://latex.codecogs.com/png.latex?%5Cpi(t%7Cs)">. In this simplified case, we say that <img src="https://latex.codecogs.com/png.latex?s"> is…</p>
+<ul>
+<li>a <strong>Nash equilibrium</strong> iff for any other strategy <img src="https://latex.codecogs.com/png.latex?s'%20%5Cneq%20s">, we have <img src="https://latex.codecogs.com/png.latex?%5Cpi(s'%7Cs)%20%5Cleq%20%5Cpi(s%7Cs)">;</li>
+<li>an <strong>evolutionarily stable strategy</strong> (ESS) iff either <img src="https://latex.codecogs.com/png.latex?%5Cpi(s'%7Cs)%20%3C%20%5Cpi(s%7Cs)"> or <img src="https://latex.codecogs.com/png.latex?%5Cpi(s'%7Cs)%20=%20%5Cpi(s%7Cs)"> but <img src="https://latex.codecogs.com/png.latex?%5Cpi(s%7Cs')%20%3E%20%5Cpi(s'%7Cs')">;</li>
+<li>a <strong>strict Nash equilibrium</strong> iff <img src="https://latex.codecogs.com/png.latex?%5Cpi(s'%7Cs)%20%3C%20%5Cpi(s%7Cs)">.</li>
+</ul>
+<p>Intuitively speaking, if you play the Nash equilibrium, you would be like “Why bother changing my strategy?”. If you play the strict Nash equilibrium, you would be like “I would be actively punished to change my strategy.”. The ESS is an interesting intermediate case where the first deviant might be fine, but the second deviant <em>would</em> be punished. This captures the idea of a stable population. It is not a matter of whether an individual might unilaterally want to change – individuals are not agents and have no desire at all. It is rather a matter of whether one kind of population could neutrally drift into another kind of population, or be actively replaced by an invasion of mutants.</p>
+</section>
+<section id="chinese" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="chinese">Chinese</h2>
+<p>The Chinese government has a mature system for information warfare. It has four main components. I do not know how they are usually termed, so I will describe them in my own language.</p>
+<ul>
+<li><strong>espionage</strong>: This component is a typical one. Most large governments have an intelligence agency whose job is to discover the secrets of foreign governments. Compared to the espionage of developed countries like America, Chinese espionage has a strong focus on industrial and technological espionage.</li>
+<li><strong>internal</strong>: This is the largest component in terms of the number of people employed.</li>
+<li><strong>expat</strong>: This component has the main goal of maintaining support from the community of Chinese students and expats who are living abroad.</li>
+<li><strong>foreigner</strong>: This component is the smallest and the least important. Its main goal is to create general support for the Chinese government among people who are not Chinese citizens or descendants. Its activities are mainly restricted to creating bland “cultural enrichment” videos.</li>
+</ul>
+<p>This section discusses only the internal component. The foreign component is not different or more sophisticated from typical public relations campaign, and I know too little about espionage to write on that component. The expat component is very similar to the internal component, except that the Chinese government has to depend on local agents such as the Chinese Students and Scholars Association <span class="citation" data-cites="boweChinaOverseasUnited2018">(Bowe 2018)</span>, and indirect threats, such as making visas difficult to obtain. In any case, the expat component is merely meant to support the internal component. It is my impression that the Chinese government cares little what the expats think about politics, as long as they do not turn Chinese people living inside China into heretics.</p>
+<section id="internal-operations" class="level3">
+<h3 class="anchored" data-anchor-id="internal-operations">Internal operations</h3>
+<p>Internally, there are several types of operations <span class="citation" data-cites="kingHowChineseGovernment2017">(King, Pan, and Roberts 2017)</span>:</p>
+<ul>
+<li>Direct content silencing: As all Chinese websites and <abbr title="Internet Service Provider">ISP</abbr>s are registered with the local government, essentially any content on the Chinese Internet can be silenced at will by the Chinese government. This weapon can be as precise as disallowing replies to a single post for a limited period, or as blunt as deleting entire websites.</li>
+<li>Direct account silencing: As a simple extension of direct content silencing, any account can be silenced at will. This can be as precise as muting a single account for a week, or as blunt as deleting all accounts that has used hashtags from a list.</li>
+<li>The Great Firewall: The most famous of all. This blocks certain connections between the Chinese Internet and the external Internet.</li>
+<li>Noise injection: This is a blunt instrument. Like a cuttlefish injecting ink, people employed by the Chinese government or the social media websites post “noise” to dilute potentially dangerous information to a low level.</li>
+<li>Opinion guidance: This is a precise and subtle instrument used on particularly important topics.</li>
+</ul>
+<p>The final goal is to maintain the stability of the regime, but it is too vague. For practice, it is translated to the instrumental goal of <em>preventing mass action</em>. “Mass action” means hundreds of citizens gathering and doing something political together. It can be a demonstration, a protest, a sit-in, a political speaking event, etc. It does not have to be pro- or anti-government. Indeed, even pro-government protests have been suppressed recently. The <a href="https://en.wikipedia.org/wiki/2012_China_anti-Japanese_demonstrations">2012 anti-Japanese protest</a> was the last mass action acquiesced by the government. Since then, anti-Japanese protests have been suppressed, despite anti-Japanese sentiment being officially promoted as a patriotic duty.</p>
+<p>Unlike what one might expect, the most common mass actions in China have nothing to do with democracy. Instead, they typically happen like this: Some people feel wronged by a corrupt low-level official, a bad merchant, or some other local bully. They find each other and walk to the local government, holding banners. Their goal is to be loud enough that a clean high-level official would see and hear them, and bring them justice.</p>
+<p>For example, a common cause for mass action is when a local bank has failed. The people with bank accounts in it would stand in front of the bank holding banners and demand for the government to refund them. Another common cause is when a real estate company goes bankrupt. The people with half-developed apartments would stand in front of the gates of the estate and demand either a refund, or another development company to come in and continue the development. This has become a particularly acute problem through the 2010s, as land prices rose, and real estate companies depended increasingly on selling future housing units just to be able to fund current developments. This makes it a dangerous balancing act. If the company cannot sell off future housing units quickly, the development of current units would pause, scaring away potential buyers for future units, leading to a death spiral.</p>
+</section>
+<section id="the-great-firewall" class="level3">
+<h3 class="anchored" data-anchor-id="the-great-firewall">The Great Firewall</h3>
+<p>In simplified terms, The Great Firewall eavesdrops on packets sent above the TCP layer, and replaces them with the TCP Reset packet when it detects possibly censorable content, for instance, when the IP address matches one of Google’s many CDN server addresses. This ends the TCP connection between the client and the server. It is most often used to terminate connections between a client inside the Chinese Internet and a server outside the Chinese Internet, although it can also operate in the other direction. It can also perform other packet replacement than just a TCP Reset packet, as in <em>the Great Cannon</em>. <span class="citation" data-cites="marczakAnalysisChinaGreat2015">(Marczak et al. 2015)</span></p>
+</section>
+<section id="noise-injection" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="noise-injection">Noise injection</h3>
+<p>For those Chinese citizens who have nevertheless bypassed the Great Firewall, they may organize mass action on social media, such as Twitter, that are not controlled by the Chinese government. In those instances, the Chinese government can inject noise to flood out the signal. A great example happened during the <a href="https://en.wikipedia.org/wiki/2022_COVID-19_protests_in_China">2022 COVID-19 protests</a>. To dampen the probability of mass action, the Chinese government awakened sleeper Twitter accounts that had been waiting for just such an emergency.</p>
+<blockquote class="blockquote">
+<p>Numerous Chinese-language accounts, some dormant for months or years, came to life early Sunday and started spamming the service with links to escort services and other adult offerings alongside city names. The result: For hours, anyone searching for posts from those cities and using the Chinese names for the locations would see pages and pages of useless tweets instead of information about the daring protests as they escalated to include calls for Communist Party leaders to resign.</p>
+<p><a href="https://www.washingtonpost.com/technology/2022/11/27/twitter-china-spam-protests/"><em>Twitter grapples with Chinese spam obscuring news of protests</em></a> <span class="citation" data-cites="mennTwitterGrapplesChinese2022">(Menn 2022)</span></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Search for Beijing/Shanghai/other cities in Chinese on Twitter and you’ll mostly see ads for escorts/porn/gambling, drowning out legitimate search results. Data analysis in this thread suggests that there has been a <em>significant</em> uptick in these spam tweets. … They tweet at a high, steady rate throughout the day, suggesting automation. Then I looked at the number of tweets by each account over time. Interestingly, more than 70% of these spam accounts only started tweeting like crazy recently.</p>
+<p><a href="https://web.archive.org/web/20230926020335/https://threadreaderapp.com/thread/1597034969293271040.html">Twitter post by Air-Moving Device,</a> <span class="citation" data-cites="air-movingdeviceThreadSearchBeijing2022">(Air-Moving Device 2022b)</span></p>
+</blockquote>
+<p>The same method shows that the great spamming cannon only fired at Beijing and Shanghai, not the other cities.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="https://yuxi-liu-wired.github.io/sketch/posts/info-warfare/figure/china-noise-injection-tweet.jpeg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption class="figure-caption margin-caption">Figure from <a href="https://twitter.com/AirMovingDevice/status/1597070892021862400">a subsequent post</a> <span class="citation" data-cites="air-movingdeviceGreatSuggestionControl2022">(Air-Moving Device 2022a)</span>.</figcaption>
+</figure>
+</div>
+</section>
+<section id="public-opinion-guidance" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="public-opinion-guidance">Public opinion guidance</h3>
+<p><a href="https://en.wikipedia.org/wiki/Ma_(negative_space)">間 (<em>Ma</em>)</a> is the Japanese term for negative space, the art of speaking with and listening for what is not there.</p>
+<div class="page-columns page-full"><p>Imagine a space of political ideologies, such as the Political Compass. In an Internet without censorship, we can put a dot on each website espousing a position, and end up with a pointillistic landscape of the political Internet. Now imagine an all-powerful censor comes in and erases whatever it does not accept. It would leave behind a blotted painting. The censor did not paint a single point, but its eraser is a paintbrush too! Reading what is not said is the art of <em>Ma</em>.<sup>2</sup></p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;Gwern proposed a <a href="https://gwern.net/idea#chinese-censorship-audit">Chinese Censorship Audit</a>. The idea is to compare the Chinese Wikipedia with a Chinese fork for overt erasures. Those are undeniable results of censorship.</p></li></div></div>
+<p>Any opinion with an extensive following on the Chinese Internet is the negative space of censorship, and any opinion that should have a following online, but not, is the negative space of speech. This gives us four layers of Chinese opinions:</p>
+<ul>
+<li>Officially endorsed opinion, as declared in published documents. This includes items such as Xi Jinping Thought, anti-historical nihilism, etc.</li>
+<li>Officially allowed opinion, the negative space of censorship.</li>
+<li>Officially disallowed opinion, the negative space of speech.</li>
+<li>Officially forbidden opinion, as declared in published documents. This includes <a href="https://en.wikipedia.org/wiki/Historical_nihilism">Historical Nihilism</a>, <a href="https://en.wikipedia.org/wiki/Taiwan_independence_movement">Taiwan independence</a>, etc.</li>
+</ul>
+<p>The first and last items, being officially declared, are overt and easy to point to. The middle two items are by nature ambiguous and difficult to study. It is as if they are already camouflaged for the information battlefield. The use of these two negative spaces is an officially endorsed strategy, called “public opinion guidance” (舆论引导).</p>
+<p>While on Twitter, Nazism might survive with heavy camouflage, it is not American official approval; yet on Weibo, Nazism survives with minor or no camouflage. This shows that Nazism is officially allowed, even though Fascism is officially forbidden.</p>
+<p>In 2022, when <a href="https://en.wikipedia.org/wiki/Shinzo_Abe">Shizo Abe</a> was assassinated, the Chinese internet <a href="https://web.archive.org/web/20231126215143/https://chinadigitaltimes.net/chinese/684006.html">erupted into cheers</a>. Such cheers are only weakly balanced by those who want to respect the dead. While the cheers still remain online one year later (as <a href="https://archive.is/icMNX">a brief search of the hashtag <code>#安倍已无生命体征#</code> on Weibo on 2023-12-16 showed</a>), subtle suggestions that a <em>certain somebody else</em> should be dead were swiftly suppressed within a day.</p>
+<blockquote class="blockquote">
+<p>Zeng Ying was brutally trolled by Chinese netizens for sobbing while reporting live on Shinzo Abe’s assassination earlier this month. She was forced to apologize for being “unprofessional,” for “showing personal emotion on a public platform” and “hurting everyone’s feelings”.</p>
+<p><a href="https://web.archive.org/web/20220805014645/https://www.independent.co.uk/asia/china/zeng-ying-suicide-shinzo-abe-b2128922.html"><em>Shinzo Abe death: Chinese journalist attempted suicide after being cyberbullied for emotional reportage</em></a> <span class="citation" data-cites="muzaffarChineseJournalistAttempts2022">(Muzaffar 2022)</span></p>
+</blockquote>
+</section>
+<section id="external-attacks" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="external-attacks">External attacks</h3>
+<p>The Chinese government maintains its stability by targeting the information received by Chinese citizens. To do this, it mainly censors the Internet inside China, and produces noise outside, but occasionally, it directly attacks the outside.</p>
+<p>Since 2015, the Chinese government has employed <a href="https://web.archive.org/web/20231214165158/https://cybersecurity.att.com/blogs/labs-research/the-great-cannon-has-been-deployed-again">the Great Cannon</a> multiple times to perform <a href="https://en.wikipedia.org/wiki/Denial-of-service_attack">DDoS attacks</a> on websites it wants to censor, such as a certain GitHub page hosting softwares for bypassing the Great Firewall.</p>
+<div class="page-columns page-full"><p>The Great Cannon is a <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle</a><sup>3</sup> DDoS attack. When an external IP address requests for certain JavaScript files hosted on certain servers located inside the Great Firewall<sup>4</sup>, as the packet crosses the Great Firewall, a program makes a statistical decision. If the decision rule triggers, it replaces the innocuous JavaScript with a malicious JavaScript, which would rapidly send requests to a list of targeted servers. <span class="citation" data-cites="marczakAnalysisChinaGreat2015">(Marczak et al. 2015)</span></p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;<a href="https://en.wikipedia.org/wiki/Mandarin_(bureaucrat)">mandarin</a>-in-the-middle?</p></li><li id="fn4"><p><sup>4</sup>&nbsp;Typically, those are Baidu infrastructure servers that host commonly used analytics, social, or advertising scripts.</p></li></div></div>
+</section>
+</section>
+<section id="corporate" class="level2">
+<h2 class="anchored" data-anchor-id="corporate">Corporate</h2>
+<section id="offensive" class="level3">
+<h3 class="anchored" data-anchor-id="offensive">Offensive</h3>
+<p>Among corporations, overt use of offensive information is rare now, as states have gradually consolidated its monopoly on violence. Towards customers, overt deception in advertisement is rare, although misdirection is common. Towards other corporations, overtly announcing deceptive information is possible, but not commonly employed. (Why?)</p>
+</section>
+<section id="platform" class="level3">
+<h3 class="anchored" data-anchor-id="platform">Platform</h3>
+<blockquote class="blockquote">
+<p>A platform is when the economic value of everybody that uses it, exceeds the value of the company that creates it. Then it’s a platform.</p>
+<p>— <a href="https://semilshah.com/2015/09/17/transcript-chamath-at-strictlyvcs-insider-series/">Bill Gates</a></p>
+</blockquote>
+<p>Social media are platforms, but there are other platforms as well. For example, ChatGPT is a platform, as people find even its free tier economically valuable.</p>
+<p>Platforms must also deal with content censorship, but their kind of censorship is different.</p>
+<p>Censorship by private institutions (companies, websites, etc) is very different from official censorship (Chinese, intelligence agency, etc). For private institutions, censorship has the main economic goals:</p>
+<ul>
+<li>remove spam. Spam is defined as content that the intended customers do not want to see. This can usually be done by automated filters. See email spam filters.</li>
+<li>Remove things that might harm the public image. That is, removing content that the non-customers do not want to see. This is usually harder to do right since there is a somewhat different economy.</li>
+<li>Spam producers focus on economies of scale. Their goal is massive scaling, like spawning billions of eggs just for a few to survive and make money. Most of the spam emails are patently unbelievable, but since spam is so cheap they can focus on just scaling up the traffic and wait for a few victims. This makes spam filtering easy, and more resembles defending against DDoS than against information war.</li>
+</ul>
+<p>I was once blocked for over ten minutes on ChatGPT trying to debug a certain message. It turned out to be the word “dike”. What annoyed me the most is that the error message is completely uninformative. It merely told me that the message violated some policy with no further information. Why is it like that? It has a simple economic reason.</p>
+<p>Suppose I were a spammer. I would simply try another spam message. For ChatGPT to provide any detailed feedback would only help my work. Suppose I were a non-spammer. I would probably try with more patience and found the offending word. I might curse it, but there is nothing I can do other than donating some money to its competitors.</p>
+<p>Now suppose I were a reporter trying to write an incriminating report. I would be looking for the right kind of censorship. If the feedback message contains any detail that could help the bad actors bypass the censorship, I would be shocked and write about how this makes the censorship pointless.</p>
+<p>The economic equilibrium in the second case is what you get: the company uses simple censoring methods that balance between protecting the public image and driving away customers. The result is usually simple filter lists for rare words. The customers grumble but don’t switch to a different platform, but instead make their own unscalable methods of trickery. All sides talk vapidly about “harm” and “responsibility” and other defensive non-informative information (what I call “bullshit camouflage”).</p>
+</section>
+<section id="defensive" class="level3">
+<h3 class="anchored" data-anchor-id="defensive">Defensive</h3>
+<p>When corporations practice defensive information war, they typically practice it in the form of bland speech.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Speculative content follows
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<p>I suspect the increasingly opaque error messages used by websites are not due to incompetence, or a mistaken attempt at being user-friendly, but a design choice, a deliberate defense in their escalating information warfare against spammers.</p>
+<p>For example, I have found that in certain contexts, trying to use OAuth on my Google account would result in the one and only error message:</p>
+<blockquote class="blockquote">
+<p>Sorry, something went wrong there. Try again.</p>
+</blockquote>
+<p>What is that “something”? Why can’t Google provide any useful error message?</p>
+<p>Some time ago, I attempted to buy a pepper spray on Amazon, and I simply could not get pass the age verification screen. Calling the customer service resulted in twenty minutes of wrangling with the website. It finally turned out that for some reason, the GUI on my end is different from the GUI on their end – presumably just a backend server bug. Whereas on their end, the presumably correct GUI asks for the driver’s license number as the only acceptable form of age verification, on my end I was able to use a passport number, which then the system rejected for not being a driver’s license number.</p>
+<p>While this in itself is frustrating but at least reasonable – the Amazon website is vast and sprawling, and I understand enough about websites and programming to sympathize with the programmers who maintain it – I was greatly annoyed that the only error message is just <code>Based on the ID number provided, we are unable to complete your order</code>.</p>
+<p>Sometimes, I help others access or solve problems with e-commerce websites from within China, such as Taobao or Tmall. This form of highly nondescript error message is also prevalent inside Chinese e-commerce websites, and as far as I can discern, is not caused by the Chinese-specific issue of censorship. Rather, they typically convey the message “According to our statistical analysis, you are sufficiently suspicious to trigger a statistical decision rule, but we won’t tell you what, because if you were a bad actor we would not want you to know which of the things you did was suspicious.”.</p>
+<p>The convergence of behavior both inside and outside China suggests that it is not due to Chinese censorship, or lack thereof. It suggests that it is a common issue encountered by e-commerce, which suggests it is mostly intended to combat commercial spam.</p>
+<p>Spammers are always attempting to bypass statistical detection of spammers, and on the other side, e-commerce websites are attempting to create statistical detectors of spammers. It is always a battle on the margin. For the e-commerce websites, the goal is not to stamp out spammers, or to ensure all legitimate users were accepted, but rather balance stamping out spammers, retaining legitimate users, and cost. The calculus of cost governs each aspect. In the equilibrium state, they occasionally ban legitimate users and then handle a fraction of those with manual interview. Each legitimate user grumbles but mostly acquiesces. Similarly, the marginal cost of losing a spam account is smaller than the marginal cost of going through a manual interview, so spammers would just open another account than go through the manual interview.</p>
+</section>
+<section id="regulatory" class="level3">
+<h3 class="anchored" data-anchor-id="regulatory">Regulatory</h3>
+<p>Banks, like e-commerce websites, often have vague nondescript error messages as well. However, banks are typically less worried about spammers than about money-laundry and government regulations. In this case, it is still defensive information, but not against spammers, but against the possibility of leaking sensitive information.</p>
+<blockquote class="blockquote">
+<p>In the specific case of “Why did the bank close my account, seemingly for no reason? Why will no one tell me anything about this? Why will no one take responsibility?”, the answer is frequently that the bank is following the law. … [Suspicious Activity Reports] can (and sometimes must!) be filed for innocuous reasons and do not necessarily imply any sort of wrongdoing.</p>
+<p>If the United States brings its subpoena power to bear against a bank teller and asks them about a SAR, they’re supposed to say nothing. That is the law… to avoid constantly violating this, Compliance at most functioning institutions has long-since decided that SARs will live in their own walled garden of a subsystem … If, for example, a SAR is misfiled because that subsystem doesn’t share the same view of account ownership as another part of the overall system, investigating that problem might require telling the customer that they were investigated, which you cannot do. And because this is insufficiently Kafkaesque, at some financial institutions, you can get a SAR filed for knowing what a SAR is, because “advanced knowledge of anti-moneylaundering procedure” is a characteristic only of financial professionals and terrorists.</p>
+<p><a href="https://web.archive.org/web/20231210001242/https://www.bitsaboutmoney.com/archive/seeing-like-a-bank/"><em>Seeing like a Bank</em></a> <span class="citation" data-cites="mckenzieSeeingBank2023">(McKenzie 2023)</span></p>
+</blockquote>
+</section>
+</section>
+<section id="fictional" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="fictional">Fictional</h2>
+<p>In fiction, there have been cases of “cognitohazard”. However, their purported effects are much more overt than the somewhat subtle effects described in the essay. Whereas the information objects described in the essay redirect, confuse, camouflage, and waste the opponents’ time, cognitohazards typically directly destroy the information-processing hardware of the opponents. In general, cognitohazards differ from the other examples, because they operate by breaking the abstraction layer. They are digital operations that causes analog operations that destroy the hardware. On the digital layer, the underlying hardware is assumed to be always there, like air before the discovery of vacuum. Cognitohazards pull out the air of the digital world and exposes the vacuum, destroying digital life in the process.</p>
+<div class="page-columns page-full"><p>The short story <a href="https://web.archive.org/web/20231119155432/https://www.infinityplus.co.uk/stories/blit.htm"><em>BLIT</em></a> <span class="citation" data-cites="langfordCOMPBASILISKFAQ1999">(Langford 1999)</span> is a common reference point for speculations on cognitohazards, although the namesake of BLIT itself does not break the software-hardware abstraction barrier, and therefore is not a cognitohazard according to our definition. In the story, a human mind is a software running on a brain-hardware, and upon “Gödelian shock inputs”<sup>5</sup>, the software falls into “vicious circles” from which it cannot recover to a working state, although the hardware seems to remain just fine. Many BLITs were discovered, with the first one resembling a fractal parrot.<sup>6</sup></p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;The story does not elaborate, but it is common knowledge among mathematical logicians that anything powerful enough for Peano arithmetics is powerful enough to be hacked. For example, <span class="citation" data-cites="dowlingThereAreNo1989">(Dowling 1989)</span> is a one-page proof that shows that “no program can both test its input for the presence of a virus and simultaneously be guaranteed not to spread a virus itself”, by translating this statement into math, then quote <a href="https://en.wikipedia.org/wiki/Rice's_theorem">Rice’s theorem</a>. The same argument can be used to show that “Gödelian shock inputs” must exist, assuming that human minds are softwares that can process arbitrary formulas in Peano arithmetics.</p></li><li id="fn6"><blockquote class="blockquote"><sup>6</sup>&nbsp;
+<p>… so called because its outline, when processed for non-hazardous viewing, is generally considered to resemble that of the bird. A processed (anamorphically elongated) partial image appears in Appendix 3 of this report, page A3-ii. THE STATED PAGE MUST NOT BE VIEWED THROUGH ANY FORM OF CYLINDRICAL LENS. PROLONGED VIEWING IS STRONGLY DISRECOMMENDED. PLEASE READ PAGE A3-i BEFORE PROCEEDING.</p>
+<p>2-6. This first example of the Berryman Logical Image Technique (hence the usual acronym BLIT) evolved from AI work at the Cambridge IV supercomputer facility, now discontinued. V.Berryman and C.M.Turner [3] hypothesized that pattern-recognition programs of sufficient complexity might be vulnerable to “Gödelian shock input” in the form of data incompatible with internal representation. Berryman went further and suggested that the existence of such a potential input was a logical necessity …</p>
+</blockquote>
+</li></div></div>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="https://yuxi-liu-wired.github.io/sketch/posts/info-warfare/figure/blit_parrot.jpeg" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption margin-caption">The BLIT emerging from AI work at the Cambridge IV supercomputer facility.</figcaption>
+</figure>
+</div>
+<p>Real-life analogs of cognitohazards are extremely rare, and their status as “cognitohazards” is controversial. Nevertheless, here are some possible analogs.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/McCollough_effect">McCollough effect</a> shows that visual perception can be modified for up to 3 months with just a few minutes of visual stimulus. There have been several explanations, but none is satisfactory. They however all share the common idea that the visual stimulus itself changes the neurons in the low-level of perception.</p>
+<p>Badly designed digital computers, such as the <a href="https://en.wikipedia.org/wiki/Z1_(computer)">Zuse Z1</a> or <a href="https://en.wikipedia.org/wiki/Commodore_PET">Commodore PET</a>, can suffer from the “<a href="https://en.wikipedia.org/wiki/Killer_poke">killer poke</a>”.</p>
+<p>Other than cognitohazards, the SCP world contains examples of anti-memetics, which are information objects that are hard to remember and reason about. They are not cognitohazards, but are rather camouflaged information.</p>
+</section>
+<section id="argument" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="argument">Argument</h2>
+<p>An argument can be thought of as a game of wits and rhetorics, structured like a tennis game. Two sides stand facing each other, and hit the “point of the argument” back and forth. When one side finally “drops the ball”, the other side wins the point. When seen this way, many puzzling aspects of argument games turns clear.</p>
+<p>Let’s start with the simplest problem: Why is it that people have an urge to “have the last say”? To not drop the ball. If one side makes an argument, and the other does not offer a counter-argument, the round is assumed to be over and the first side won. If argument games are used to discover truths, this can get rather strange.</p>
+<section id="the-algorithmic-fairness-controversy" class="level3">
+<h3 class="anchored" data-anchor-id="the-algorithmic-fairness-controversy">The algorithmic fairness controversy</h3>
+<p>In 2019, I looked into the controversy over “algorithmic fairness” of the Northpointe COMPAS, which I explained in <a href="https://yuxi-liu-wired.github.io/blog/posts/no-nonsense-algorithmic-bias/"><em>The Racial Algorithmic Bias Controversy</em></a>. What was curious about the controversy is that neither side did it the way I would have done it. I would have just written out the simple mathematical model, then argued about which measure to choose. Instead, the actual controversy went like this:</p>
+<ul>
+<li><a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">ProPublica wrote a long article</a>, putting in a lot of human faces for <em>pathos</em>.</li>
+<li><a href="https://www.equivant.com/response-to-propublica-demonstrating-accuracy-equity-and-predictive-parity/">Northpointe replied</a> tersely that the COMPAS system has good statistical properties.</li>
+<li><a href="https://www.propublica.org/article/technical-response-to-northpointe">ProPublica replied</a> with such detailed statistical arguments that I can only characterize as “statistical spam”.</li>
+</ul>
+<p>And here, the game stood. Who “won”? From my point of view, both sides missed the point completely and the whole game was moot. In fact I would rank ProPublica much lower than Northpointe for first using <em>pathos</em>, then using statistical spam. However, from a tennis game model of argument, ProPublica won, because Northpointe dropped the ball. Statistical spam is bad for discovering the truth, but a good play, because it is hard to counter-argue statistical spam. To the onlookers, they can use the controversy to have their own argument games, which would go as follows:</p>
+<ul>
+<li>A: “Haven’t you heard of the algorithmic bias?”</li>
+<li>B: “Yes, but Northpointe made a counter-argument.”</li>
+<li>A: “Well, ProPublica have shown that the counter-argument was statistically moot.”</li>
+<li>And at that point, person B would have to admit defeat, or attempt to actually parsing the statistical spam and then give up out of frustration, or dismiss the ProPublica statistical spam as irrelevant.</li>
+</ul>
+<p>In my view, dismissing outright the ProPublica statistical spam is the right move, but it is going against the human intuition that whoever has the last say in an argument is in the right. People intuitively disdain “dismissing the last move” as childish cheating, much as shouting “That doesn’t count!” in a tennis game.</p>
+</section>
+<section id="continental-philosophy" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="continental-philosophy">Continental philosophy</h3>
+<blockquote class="blockquote">
+<p>[Bertrand Russell] thinks I am muddleheaded; but then I think he is simpleminded.</p>
+<p>— Alfred North Whitehead</p>
+</blockquote>
+<p>Continental philosophy presents another example of information warfare. The very definition of continental philosophy is tricky, especially if you want to respect the wishes of continental philosophers, who simultaneously want to build a coherent movement and want to reject all attempts at pigeonholing as inherently dehumanizing. To keep this section meaningful, we will disrespect their wishes.</p>
+<p>To begin, consider the infamous passage “God is a Lobster”:</p>
+<blockquote class="blockquote">
+<p>Challenger quoted a sentence he said he came across in a geology textbook. He said we needed to learn it by heart because we would only be in a position to understand it later on: “A surface of stratification is a more compact plane of consistency lying between two layers.” The layers are the strata. They come at least in pairs, one serving as substratum for the other. The surface of stratification is a machinic assemblage distinct from the strata. The assemblage is between two layers, between two strata; on one side it faces the strata (in this direction, the assemblage is an inter stratum), but the other side faces something else, the body without organs or plane of consistency (here, it is a metastratum). In effect, the body without organs is itself the plane of consistency, which becomes compact or thickens at the level of the strata.</p>
+<p>God is a Lobster, or a double pincer, a double bind. Not only do strata come at least in pairs, but in a different way each stratum is double (it itself has several layers). Each stratum exhibits phenomena constitutive of double articulation. Articulate twice, B-A, BA. This is not at all to say that the strata speak or are language based. Double articulation is so extremely variable that we cannot begin with a general model, only a relatively simple case. The first articulation chooses or deducts, from unstable particle-flows, metastable molecular or quasi-molecular units (substances) upon which it imposes a statistical order of connections and successions (forms). <span class="citation" data-cites="deleuzeThousandPlateausCapitalism1987">(Deleuze and Guattari 1987, chap. 3)</span></p>
+</blockquote>
+<p>A mathematician might look at this passage, and, if not immediately dismissing it as word salad, start writing down equations like</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cexists%20G%20:%20G%20%5Cin%20%5Ctext%7BLobster%7D,%20%5Cexists%20P%20:%20%5Ctext%7BisPincers%7D(G,%20P),%20%5Cexists%20B,%20A:%20P%20=%20BAAB,%20%5Cdots.%0A"></p>
+<p>They would then attempt to define an algebraic structure – call it <img src="https://latex.codecogs.com/png.latex?L">-sequences, <img src="https://latex.codecogs.com/png.latex?L"> for “lobster” – and try to construct examples of <img src="https://latex.codecogs.com/png.latex?L">-sequences. Deleuze and Guattari never made such an attempt.</p>
+<blockquote class="blockquote">
+<p>One of the fundamental tasks of the State is to striate the space over which it reigns, or to utilize smooth spaces as a means of communication in the service of striated space. It is a vital concern of every State not only to vanquish nomadism but to control migrations and, more generally, to establish a zone of rights over an entire “exterior,” over all of the flows traversing the ecumenon. <span class="citation" data-cites="deleuzeThousandPlateausCapitalism1987">(Deleuze and Guattari 1987, 385)</span></p>
+</blockquote>
+<p>Torrents of noise flood the world every second. Continental philosophy is not noise, even if they resemble noise. Why do they exist? Why do people write them, and why do people transmit them?</p>
+<blockquote class="blockquote">
+<p>There are no meaningful translations for these terms. They are needlessly recursive. They contain no usable intelligence, yet they are structured intelligently; there is no chance they could have arisen by chance.</p>
+</blockquote>
+<p>I explain them as information objects with three aspects: the literal text, the actual practical use, and the rhetorical game mechanics.</p>
+<p>The literal text of continental philosophy is typically made of complex sentences, and filled with allusions to past literature, word-plays, puns, neologisms, and foreign words. To interpret them coherently, you need concentration, patience, and to have read the prerequisite texts. Consequently, such texts allow those few readers who can actually interpret them coherently a lot of bragging rights and all the pleasures of being in a society of esoteric wisdom. One can get a distinct feeling of this by going into the local university’s philosophy department and eavesdrop on their late-night discussions, or going to an online forum of continental philosophy.</p>
+<p>However, if they are merely hard to understand, they would not have more followers than modern set theory, which is equally complex and arcane:</p>
+<blockquote class="blockquote">
+<p>Theorem 44: The generic mantle of <img src="https://latex.codecogs.com/png.latex?V"> is a definable transitive class in <img src="https://latex.codecogs.com/png.latex?V">, containing all ordinals, invariant under set forcing, and a model of the ZF axioms of set theory.</p>
+<p>Proof: The generic mantle is a definable transitive class containing all ordinals and closed under the Gödel operations, because it is the intersection of the generic grounds, each of which has those closure properties in the corresponding extension of <img src="https://latex.codecogs.com/png.latex?V">. So by Fact 10, in order to show that <img src="https://latex.codecogs.com/png.latex?gM"> is an inner model, it remains to show merely that it is almost universal, which we do below… <span class="citation" data-cites="fuchsSettheoreticGeology2015">(Fuchs, Hamkins, and Reitz 2015)</span></p>
+</blockquote>
+<p>Even a complete outsider to mathematics could quickly understand naive set theory, with an hour of tutorial on drawing circles and dots and Venn diagrams. Modern set theory, while a vast complication over the simple picture of Venn diagrams, is not different in kind. If the outsider looks at the paper on set-theoretic geology and asks “But what does it have to do with geology?”, I can reply simply, “It is a one-way analogy. Set theorists noticed that they can start with ZF set theory and add the Axiom of Choice to get ZFC set theory, then add ZFC-consistency to get an even bigger set theory, and so on. So they thought ‘What if we went the other way? Going down instead of up?’ So they tried making smaller set theories below ZF set theory, and smaller, and smaller, all the way down the ‘mantle’ and below.”</p>
+<p>There we go, I have explained set-theoretic geology. Reading it, everyone can see that set-theoretic geology has no relevance to actual geology, anymore than the Conway’s Game of Life has relevance to actual biology.</p>
+<p>In comparison, continental philosophy is designed to look as if they talk about general practical issues, such as economics, justice, the meaning of life, happiness, God (which is a lobster), and more.</p>
+<p>Finally, continental philosophy occupies a particular niche in the game of rhetorics that allows it to <a href="https://en.wikipedia.org/wiki/Social_reproduction">reproduce itself socially</a>.</p>
+<p>Since its language is vague and suggestive, it seems relevant to any field, and so it can just walk into any tennis court uninvited and make an opening move. Since its language is dense and hard to distinguish from noise, the others might just ignore it, allowing it to declare victory by default. If someone responds, then the real fun begins.</p>
+<table class="table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>objection</th>
+<th>response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>This is irrelevant.</td>
+<td>This problem is relevant to real people’s real lives.</td>
+</tr>
+<tr class="even">
+<td>This philosophical argument is irrelevant to the real problem.</td>
+<td>(Quote someone like the Frankfurt School.)</td>
+</tr>
+<tr class="odd">
+<td>We do not talk about this topic in this style.</td>
+<td>Open yourself to the challenges of alterity, lest you impose hegemonic reason.</td>
+</tr>
+<tr class="even">
+<td>Speak more simply.</td>
+<td>Speaking simply is reductionistic. The real world is complex.</td>
+</tr>
+<tr class="odd">
+<td>[points at quote] This is technically wrong.</td>
+<td>You have misunderstood what the authors are really saying. Engage with the source respectfully instead of quoting them out of context.</td>
+</tr>
+</tbody>
+</table>
+<p>By repeatedly butting into any fashionable controversy of the day, continental philosophy keeps itself from falling into oblivion like modern set theory. By not losing the rhetorical game, it keeps itself from being debunked like old quantum theory. However, to complete its social reproduction, continental philosophy still has to protect itself from challenges from within.</p>
+<div class="page-columns page-full"><p>Euclid’s <em>Elements</em> was a compilation and cleaning-up of geometry books that came before it. It was of such fine quality that it destroyed the works upon which it was based.<sup>7</sup> Back then, books were expensive and required frequent copying by hand. Faced with a choice between copying Euclid’s <em>Elements</em> or the books that it obsoleted, the ancients chose to copy Euclid instead of the previous works that were of historical interest only, historical interest that the ancients could not afford.</p><div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;This is a cartoon sketch. The actual textual history of Euclid’s <em>Elements</em> is studied only by historians of mathematics. Working mathematicians typically hold it at a respectful distance and actively try not to not get too close to it, since an accurate view of the history of mathematics is harmful to the actual practice of mathematics (I speak from personal experience), because the real history of mathematics is not a mathematical textbook written for its educational content. History of mathematics is useful only as a carefully sketched cartoon, omitting almost all the real details, and completely violating historical truth sometimes, because some truths are not adaptive.</p></li></div></div>
+<p>To reproduce itself, continental philosophy must keep itself from being explained or clarified, especially by insiders. To educate new continental philosophers, the old continental philosophers would write simple explainers and summaries, like <em>The Edinburgh Dictionary of Continental Philosophy</em>. However, such reference books risk becoming substitutes for the original source material, starting a slippery slope into clarity. This prevents the old confusions from being cleared up. “textual deference”, and “there is no substitute for reading the masters” <span class="citation" data-cites="smithTextualDeference1991">(Smith 1991)</span>.</p>
+<p>To throw such textual deference into stark relief, consider how scientists treat their history. Working scientists have only the most cartoonish knowledge of the history of their fields. Classical papers are rarely read, except in fields so immature that they do not have good textbooks yet and the only way to proceed is reading the original papers. In fact, one can measure the maturity of a field by the ignorance of its practitioners about its original sources, and the lack of bibliography in textbooks. A textbook on electrodynamics does not refer to Coulomb or Maxwell’s original books. A course in relativity does not attempt to explicate the original papers by Einstein. The original sources are typically fumbling and barely comprehensible, a target for improvement, then swiftly relegated to mere history.</p>
+<p>How does continental philosophy protect itself from progress? The easiest method is to simply declare some sources as original and all else derivative, to freeze the great canonical works for all times. However, this is not sustainable, as new philosophers are not content to merely read the great canons, but want their own chance at joining the great canons. Thus we arrive at the tradition of “the Great Conversation”:</p>
+<blockquote class="blockquote">
+<p>What binds the authors together in an intellectual community is the great conversation in which they are engaged. In the works that come later in the sequence of years, we find authors listening to what their predecessors have had to say about this idea or that, this topic or that. They not only harken to the thought of their predecessors, they also respond to it by commenting on it in a variety of ways. <span class="citation" data-cites="adlerGreatConversationRevisited1990">(Adler 1990, 28)</span></p>
+</blockquote>
+<p>With the Great Conversation, continental philosophy reproduces itself. The old master texts remain inscrutable. New inscrutable texts are added to the canon. New texts that are too clear or sensible are denounced as derivative, analytical, reductionistic, or perhaps kitsch, and denied entrance to the canon.</p>
+
+
+<!-- -->
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-adlerGreatConversationRevisited1990" class="csl-entry">
+Adler, Mortimer. 1990. <span>“The Great Conversation Revisited.”</span> <em>The Great Conversation: A Peoples Guide to Great Books of the Western World</em>.
+</div>
+<div id="ref-air-movingdeviceGreatSuggestionControl2022" class="csl-entry">
+Air-Moving Device. 2022a. <span>“Great Suggestion for a Control Group <span>Andy</span>.”</span> Tweet. <em>Twitter</em>.
+</div>
+<div id="ref-air-movingdeviceThreadSearchBeijing2022" class="csl-entry">
+———. 2022b. <span>“Thread: <span>Search</span> for <span>Beijing</span>/<span>Shanghai</span>/Other Cities in <span>Chinese</span> on <span>Twitter</span>.”</span> Tweet. <em>Twitter</em>.
+</div>
+<div id="ref-boweChinaOverseasUnited2018" class="csl-entry">
+Bowe, Alexander. 2018. <span>“China’s Overseas <span>United Front</span> Work: <span>Background</span> and Implications for the <span>United States</span>.”</span> <span>US-China Economic and Security Review Commission</span>.
+</div>
+<div id="ref-deleuzeThousandPlateausCapitalism1987" class="csl-entry">
+Deleuze, Gilles, and Félix Guattari. 1987. <em>A Thousand Plateaus: Capitalism and Schizophrenia</em>. <span>Minneapolis</span>: <span>University of Minnesota Press</span>.
+</div>
+<div id="ref-dowlingThereAreNo1989" class="csl-entry">
+Dowling, William F. 1989. <span>“There <span>Are No Safe Virus Tests</span>.”</span> <em>The American Mathematical Monthly</em> 96 (9): 835–36. <a href="https://doi.org/10.1080/00029890.1989.11972292">https://doi.org/10.1080/00029890.1989.11972292</a>.
+</div>
+<div id="ref-fuchsSettheoreticGeology2015" class="csl-entry">
+Fuchs, Gunter, Joel David Hamkins, and Jonas Reitz. 2015. <span>“Set-Theoretic Geology.”</span> <em>Annals of Pure and Applied Logic</em> 166 (4): 464–501. <a href="https://doi.org/10.1016/j.apal.2014.11.004">https://doi.org/10.1016/j.apal.2014.11.004</a>.
+</div>
+<div id="ref-kingHowChineseGovernment2017" class="csl-entry">
+King, Gary, Jennifer Pan, and Margaret E. Roberts. 2017. <span>“How the <span>Chinese</span> Government Fabricates Social Media Posts for Strategic Distraction, Not Engaged Argument.”</span> <em>American Political Science Review</em> 111 (3): 484–501. <a href="https://doi.org/10.1017/S0003055417000144">https://doi.org/10.1017/S0003055417000144</a>.
+</div>
+<div id="ref-langfordCOMPBASILISKFAQ1999" class="csl-entry">
+Langford, David. 1999. <span>“<span>COMP</span>.<span>BASILISK FAQ</span>.”</span> <em>Nature</em> 402 (6761): 465–65. <a href="https://doi.org/10.1038/44964">https://doi.org/10.1038/44964</a>.
+</div>
+<div id="ref-marczakAnalysisChinaGreat2015" class="csl-entry">
+Marczak, Bill, Nicholas Weaver, Jakub Dalek, Roya Ensafi, David Fifield, Sarah McKune, Arn Rey, John Scott-Railton, Ron Deibert, and Vern Paxson. 2015. <span>“An <span>Analysis</span> of <span>China</span>’s <span>‘<span>Great Cannon</span>’</span>.”</span> In <em>5th <span>USENIX Workshop</span> on <span>Free</span> and <span>Open Communications</span> on the <span>Internet</span> (<span>FOCI</span> 15)</em>.
+</div>
+<div id="ref-mckenzieSeeingBank2023" class="csl-entry">
+McKenzie, Patrick. 2023. <span>“Seeing Like a <span>Bank</span>.”</span> <em>Bits About Money</em>.
+</div>
+<div id="ref-mennTwitterGrapplesChinese2022" class="csl-entry">
+Menn, Joseph. 2022. <span>“Twitter Grapples with <span>Chinese</span> Spam Obscuring News of Protests.”</span> <em>Washington Post</em>, November.
+</div>
+<div id="ref-muzaffarChineseJournalistAttempts2022" class="csl-entry">
+Muzaffar, Maroosha. 2022. <span>“Chinese Journalist Attempts Suicide After Cyber-Bullying over <span>Shinzo Abe</span> Reportage.”</span> <em>The Independent</em>, July.
+</div>
+<div id="ref-smithTextualDeference1991" class="csl-entry">
+Smith, Barry. 1991. <span>“Textual Deference.”</span> <em>American Philosophical Quarterly</em> 28 (1): 1–12.
+</div>
+<div id="ref-sobelSignalingGames2020" class="csl-entry">
+Sobel, Joel. 2020. <span>“Signaling <span>Games</span>.”</span> In <em>Complex <span>Social</span> and <span>Behavioral Systems</span></em>, edited by Marilda Sotomayor, David Pérez-Castrillo, and Filippo Castiglione, 251–68. <span>New York, NY</span>: <span>Springer US</span>. <a href="https://doi.org/10.1007/978-1-0716-0368-0_481">https://doi.org/10.1007/978-1-0716-0368-0_481</a>.
+</div>
+<div id="ref-wattsFirefall2017" class="csl-entry">
+Watts, Peter. 2017. <em><span>Firefall</span></em>. <span>London</span>: <span>Head of Zeus</span>.
+</div>
+<div id="ref-zapffeLastMessiah2004" class="csl-entry">
+Zapffe, Peter. 2004. <span>“The Last Messiah.”</span> Translated by Gisle Tangenes. <em>Philosophy Now</em> 45: 35–39.
+</div>
+</div></section></div> ]]></description>
+  <category>fun</category>
+  <category>wip</category>
+  <category>evolution</category>
+  <category>sociology</category>
+  <guid>https://yuxi-liu-wired.github.io/sketch/posts/info-warfare/index.html</guid>
+  <pubDate>Sat, 16 Dec 2023 08:00:00 GMT</pubDate>
+  <media:content url="https://yuxi-liu-wired.github.io/sketch/posts/info-warfare/figure/banner_2.png" medium="image" type="image/png" height="82" width="144"/>
+</item>
+</channel>
+</rss>
