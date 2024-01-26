@@ -156,9 +156,15 @@ The slowdown factor $s$ is unknown.
 
 The original paper [@barnettScalingTransformativeAutoregressive2023] contains no estimate of $s$. They did propose to measure it experimentally by running the Turing test with a human judge and two language models. One model $H_0$ "perfectly imitates humans" by simply sampling a random text segment from a corpus, and the other model $H_1$ is a trained language model, finetuned to imitate the same corpus. They claimed that for any piece of text $X_{1:n}$, they can calculate the log-ratio $\ln\frac{Pr(X_{1:n}|H_0)}{Pr(X_{1:n}|H_1)}$, but I found it difficult: Suppose $X_{1:n} = \text{ technically fork}$, which is unlikely but possible, yet the phrase never appears in the corpus, what should be $Pr(X_{1:n}|H_0)$? We can use one of the many smoothing tricks [@jurafskySpeechLanguageProcessing2023, chapter 3], but this gets complicated.
 
+#### My ideas
+
 What I think would work well is if both $H_0$and $H_1$ are language models, perhaps even the same model with different sampling temperatures, then the human judge only has to distinguish the two models.
 
 Perhaps we can make this into a gambling game. The human subject would be presented with two long outputs from two hidden Markov models. Then the subject becomes the judge of a Turing test: "Are you seeing the output from machine 0 or machine 1?". At each step, the subject can either pay a few cents of fake money to see another character, or stop and make a bet with the entire bankroll: "I bet 70\% of my bankroll on machine 0 and the rest on machine 1!". Both bets have payoff odds of $2:1$. I believe that if the cost of seeing another character is *just right*, the subject would be nudged to make a decision at exactly $10:1$ posterior odds ratio on the two hypotheses "machine 0" and "machine 1".
+
+A diffusion guessing game: The user uploads a lot of MIDI musics. The program plays back note by note, but adds increasingly severe distortions (add a gaussian or Poisson noise to each note). The user guesses which music it is. The more noise there is, the longer it should take the user to guess. Compare the length with the Bayesian optimal predictor.
+
+#### Human-or-not
 
 There was one large-scale attempt at the Turing test in early 2023, in a game called "Human or Not?" [@jannaiHumanNotGamified2023]. Human participants took 2-minute conversations, and at the end, had to decide whether they were talking to a human or a bot.[^human-participant]
 
@@ -198,6 +204,22 @@ $$
 
 Thus, $L_\infty \approx \frac{1.69}{4.5\times \ln 2} = 0.54 \;\rm{bit/character}$.
 
+### Turing-completeness
+
+Unfortunately, to lower-bound entropy rates, we typically have to make strong assumptions, because in general, lower-bounding entropy is not computable. For example, the entropy of $982148086513282306647093844\dots$ appears to be $\ln 10$, but it is in fact zero, because those are the digits of $10^{100} \pi$ starting at the radix point. In general, this means we have all the hairy problems of measuring the Kolmogorov complexity.
+
+There is also another problem: Probabilistically speaking, there is no such thing as the entropy rate of a single sequence. We can convert a single sequence into a stochastic process, by, for example, sampling a random positive integer $n$, then start the sequence at the $n$-th place. The problem is that we really have two versions of the same word "entropy", one is by minimal description length, and another is by probability. The two versions are connected by Shannon coding theorem, but they are not the same.
+
+This is similar to the Halting problem. It's possible in general to prove that a machine halts: just run it. It's not possible in general to prove that it does not halt. Similarly, there is a program $P$, such that given any input $x$, it will output a sequence of numbers $P(x)_1, P(x)_2, \dots$ that can converge to the Kolmogorov complexity *from above*: $P(x)_1 > P(x)_2 > \cdots, \lim_n P(x)_n = K(x)$. The program just runs every possible Turing machine in parallel.
+
+There are two catches.
+
+One, it is impossible to know in general whether $P(x)_n$ is the last time it will output, or whether if we wait a few more eternities, we will see another output $P(x)_{n+1}$.
+
+Two, it is also impossible to have a program $P'$ that approaches it from below: $P(x)_1 < P(x)_2 < \cdots, \lim_n P(x)_n = K(x)$. Otherwise, we would have a machine that can calculate the Busy Beaver function.
+
+[@feutrillReviewShannonDifferential2021] reviews the entropy rate formulas for several commonly used models. An ergodic Markov chain with stationary distribution $\pi_i$ and transition probabilities $p_{ij}$ has entropy rate $-\sum_{ij}\pi_i p_{ij}\ln p_{ij}$. For the hidden Markov model, there is no known closed-form formula in the transition probabilities, though there are upper and lower bounds [@coverElementsInformationTheory2006, Theorem 4.5.1].
+
 ### Guessing game
 
 The earliest attempt to measure the entropy rate of English is by Shannon himself [@shannonPredictionEntropyPrinted1951]: $[0.6, 1.3] \;\rm{bit/character}$. He obtained the estimate by presenting human subjects $n-1$ characters from a text, and ask them to guess the next character repeatedly, until they got it right. In this case, the optimal strategy is to construct the $n$-gram table, and pick the argmax character for the given $(n-1)$-gram, then the arg-next-max, and so on.
@@ -208,7 +230,9 @@ $$
 \sum_{k=1}^N k(p_k - p_{k+1}) \ln k \leq H \leq - \sum_{k=1}^N p_k \ln p_k
 $$
 
-The upper bound is proved by [Shannon's source coding theorem](https://en.wikipedia.org/wiki/Shannon's_source_coding_theorem). Taking a human subject, copy it, then they can be used as an encoder-decoder pair.[^rng-human] The lower bound is not only tricky to prove, but also **wrong** in general. It is only correct when the human subject is *the optimal* $N$-gram predictor.[^wrong-shannon] Because of this, I do not recommend using this lower bound, but will quote it anyway.
+The upper bound is proved by [Shannon's source coding theorem](https://en.wikipedia.org/wiki/Shannon's_source_coding_theorem). Taking a human subject, copy it, then they can be used as an encoder-decoder pair.[^rng-human] The lower bound is not only tricky to prove, but also **wrong** in general. It is only correct when the human subject is *the optimal* $N$-gram predictor, *and* when the language *is* exactly generated by an $N$-gram model.[^wrong-shannon]
+
+[@burtonLongrangeConstraintsStatistical1955] uses the same method as Shannon, but with longer contexts and texts from more books (Shannon sampled all passages from just one book). They found that English has "redundancy" in $[0.6, 0.8]$, meaning that English has entropy rate $\ln 27 \times (1- [0.6, 0.8]) = [0.7, 1.3] \;\rm{bit/character}$.
 
 [^rng-human]: It still works even if the humans are pseudorandom. We just have to whisper the same <abbr title="Random Number Generator">RNG</abbr> seed into both humans' ears, and then they would behave in the same pseudorandom way.
 
@@ -260,6 +284,7 @@ Similar to the Hutter prize, the [Large Text Compression Benchmark](https://matt
 | Hutter prize extrapolated | compression, extrapolation | compression ratio $\sim 10$ | $\sim 0.62$ |
 | [Large Text Compression Benchmark](https://mattmahoney.net/dc/text.html) (`nncp v3.2`, 2023) | compression | compression ratio $\geq 9.35$ | $\leq 0.66$ |
 | [@shannonPredictionEntropyPrinted1951] | guessing game | $\in [0.6, 1.3] \;\rm{bit/character}$ | $\in [0.6, 1.3]$ |
+| [@burtonLongrangeConstraintsStatistical1955] | guessing game | $\in [0.6, 1.3] \;\rm{bit/character}$ | $\in [0.7, 1.3]$ |
 | [@coverConvergentGamblingEstimate1978] | guessing game | $\leq 1.3 \;\rm{bit/character}$ | $\leq 1.3$ |
 | [@brownEstimateUpperBound1992] | 3-gram language model | $\leq 1.75 \;\rm{bit/character}$ | $\leq 1.75$ |
 | [@behrjrEstimatingComparingEntropy2002] | n-gram language model | $\leq 1.46 \;\rm{bit/character}$ | $\leq 1.46$ |
