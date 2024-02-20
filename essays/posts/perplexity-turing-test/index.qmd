@@ -257,16 +257,16 @@ Another way to estimate is by lossless compression of a large corpus, since the 
 
 The [Hutter prize](http://prize.hutter1.net/) is a competition for compressing a $10^9$-byte corpus from the English Wikipedia (`enwik9`). For the size of the finished product, both the algorithm and the compressed data must be counted. In particular, if a neural network is used, then the size of the neural network weights must be counted as well.
 
-The `enwik9` dataset is in `XML` format, and thus contains a lot of non-English content like `<timestamp>2005-12-27T18:46:47Z</timestamp>`. It has $10^9$ bytes. It is tricky to decide how to clean it up to remove all the `XML` formatting. As a simple estimate, we counted its words and characters directly with Linux command `wc` without any preprocessing, which gives us
+The `enwik9` dataset is in `XML` format, and thus contains a lot of non-English content like `<timestamp>2005-12-27T18:46:47Z</timestamp>`. It has $10^9$ bytes. It is tricky to decide how to clean it up to remove all the `XML` formatting. As a simple estimate, we simply counted its characters:
 
 $$
-13,147,025 \text{ words} =  129,347,857 \text{ characters} = 1,000,000,000 \text{ bytes}
+997,520,891 \text{ characters} = 1,000,000,000 \text{ bytes}
 $$
 
 Therefore, the entropy rate is
 
 $$
-\frac{8\times 10^8 / 13,147,025}{\text{compression ratio}} = \frac{6.15}{\text{compression ratio}}\;\rm{bit/character}
+\frac{8\times 10^8 / 997,520,891}{\text{compression ratio}} = \frac{8.02}{\text{compression ratio}}\;\rm{bit/character}
 $${#eq-hutter-prize-entropy-rate}
 
 The standard zip algorithm can compress it down to about 300 Mb in size, a compression ratio of $\sim 3\times$. Over the years, the progress has been slow but somewhat steady. The current winning entry (Saurabh Kumar, 2023) has a compression ratio of $8.76\times$. If we extrapolate the prize-winning entries over the years, it seems that the best possible compression ratio is $\sim 10\times$. 
@@ -280,9 +280,9 @@ Similar to the Hutter prize, the [Large Text Compression Benchmark](https://matt
 | estimate | method | raw number| effective entropy rate (bit/char) |
 | ---- | ---- | ---- | ---- |
 | [@grassbergerDataCompressionEntropy2002] | compression, extrapolation | $0.7 \pm 0.2 \;\rm{bit/character}$ | $\sim[0.5, 0.9]$ |
-| [Hutter prize](http://prize.hutter1.net/) (Saurabh Kumar, 2023) | compression | compression ratio $\geq 8.76$ | $\leq 0.70$ |
-| Hutter prize extrapolated | compression, extrapolation | compression ratio $\sim 10$ | $\sim 0.62$ |
-| [Large Text Compression Benchmark](https://mattmahoney.net/dc/text.html) (`nncp v3.2`, 2023) | compression | compression ratio $\geq 9.35$ | $\leq 0.66$ |
+| [Hutter prize](http://prize.hutter1.net/) (Kaido Orav, 2024) | compression | compression ratio $\geq 8.88$ | $\leq 0.90$ |
+| Hutter prize extrapolated | compression, extrapolation | compression ratio $\sim 10$ | $\sim 0.80$ |
+| [Large Text Compression Benchmark](https://mattmahoney.net/dc/text.html) (`nncp v3.2`, 2023) | compression | compression ratio $\geq 9.35$ | $\leq 0.86$ |
 | [@shannonPredictionEntropyPrinted1951] | guessing game | $\in [0.6, 1.3] \;\rm{bit/character}$ | $\in [0.6, 1.3]$ |
 | [@burtonLongrangeConstraintsStatistical1955] | guessing game | $\in [0.6, 1.3] \;\rm{bit/character}$ | $\in [0.7, 1.3]$ |
 | [@coverConvergentGamblingEstimate1978] | guessing game | $\leq 1.3 \;\rm{bit/character}$ | $\leq 1.3$ |
@@ -291,6 +291,8 @@ Similar to the Hutter prize, the [Large Text Compression Benchmark](https://matt
 | [@hoffmannTrainingComputeOptimalLarge2022] | Transformer language model, extrapolation | $L_\infty = 1.69 \;\rm{nat/token}$ | $\sim 0.54$ |
 
 Notably, the above table has mostly upper bounds, and only one dubious lower bound (by Shannon) from 1951. Perhaps lower bounds can be established by using [randomness extractors](https://en.wikipedia.org/wiki/Randomness_extractor) on a large corpus, and checking that the output from the extractor passes pseudorandomness tests.
+
+Most of the data seems to be centered around 0.8 bpc. The one outlier is the Chinchilla scaling law estimate: 0.54 bpc. I have found that a lot hinges on the exact tokenizer-dataset fit, which is why tokenization is so annoying and I wish people would try to do away with it, or at least report bit-per-character in addition to nat-per-token.
 
 ## Forecasting AGI {#sec-forecasting-agi}
 
