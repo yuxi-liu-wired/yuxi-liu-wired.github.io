@@ -201,13 +201,17 @@ div.csl-indent {
    
   <ul>
   <li><a href="#the-manifold-hypothesis" id="toc-the-manifold-hypothesis" class="nav-link active" data-scroll-target="#the-manifold-hypothesis">The manifold hypothesis</a></li>
-  <li><a href="#synthetic-data-manifolds" id="toc-synthetic-data-manifolds" class="nav-link" data-scroll-target="#synthetic-data-manifolds">Synthetic data manifolds</a>
+  <li><a href="#deriving-the-scaling-law" id="toc-deriving-the-scaling-law" class="nav-link" data-scroll-target="#deriving-the-scaling-law">Deriving the scaling law</a>
   <ul class="collapse">
-  <li><a href="#some-proofs" id="toc-some-proofs" class="nav-link" data-scroll-target="#some-proofs">Some proofs</a></li>
+  <li><a href="#prototype-case" id="toc-prototype-case" class="nav-link" data-scroll-target="#prototype-case">Prototype case</a></li>
+  <li><a href="#generalization" id="toc-generalization" class="nav-link" data-scroll-target="#generalization">Generalization</a></li>
+  <li><a href="#scaling-of-nearest-neighbor-rule" id="toc-scaling-of-nearest-neighbor-rule" class="nav-link" data-scroll-target="#scaling-of-nearest-neighbor-rule">Scaling of nearest neighbor rule</a></li>
   </ul></li>
-  <li><a href="#learning-data-manifold-by-neural-networks" id="toc-learning-data-manifold-by-neural-networks" class="nav-link" data-scroll-target="#learning-data-manifold-by-neural-networks">Learning data manifold by neural networks</a></li>
-  <li><a href="#experiments" id="toc-experiments" class="nav-link" data-scroll-target="#experiments">Experiments</a></li>
-  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#experiments" id="toc-experiments" class="nav-link" data-scroll-target="#experiments">Experiments</a>
+  <ul class="collapse">
+  <li><a href="#synthetic-data-manifolds" id="toc-synthetic-data-manifolds" class="nav-link" data-scroll-target="#synthetic-data-manifolds">Synthetic data manifolds</a></li>
+  <li><a href="#experimental-data" id="toc-experimental-data" class="nav-link" data-scroll-target="#experimental-data">Experimental data</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -242,62 +246,94 @@ div.csl-indent {
 </figure>
 </div>
 </section>
-<section id="synthetic-data-manifolds" class="level2">
-<h2 class="anchored" data-anchor-id="synthetic-data-manifolds">Synthetic data manifolds</h2>
-<p>Consider the simplest data manifold: <span class="math inline">\(\mathbb R^d\)</span>, affinely transformed, then embedded in <span class="math inline">\(\mathbb R^n\)</span>, with <span class="math inline">\(n &gt; d\)</span>.</p>
+<section id="deriving-the-scaling-law" class="level2">
+<h2 class="anchored" data-anchor-id="deriving-the-scaling-law">Deriving the scaling law</h2>
+<p>We can get a feel for where the number <span class="math inline">\(4/d\)</span> came from by studying a simpler model.</p>
+<section id="prototype-case" class="level3">
+<h3 class="anchored" data-anchor-id="prototype-case">Prototype case</h3>
+<p>Consider a problem of regression. We have to learn the true function on the <span class="math inline">\(n\)</span>-dimensional cube: <span class="math inline">\(f: [0, 1]^d \to \mathbb{R}\)</span>. Assume it is <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity">Lipschitz continuous</a>, that is, its first derivative is upper bounded by <span class="math inline">\(\lambda\)</span>. In particular, this means <span class="math inline">\(|f(x) - f(y)| \leq \lambda |x-y|\)</span> for all <span class="math inline">\(x, y\)</span> in the domain.</p>
+<p>We approximate the true function with a piecewise-constant function <span class="math inline">\(\hat f: [0, 1]^d \to \mathbb{R}\)</span>, meaning that its graph looks like a staircase. We divide the cube into <span class="math inline">\(N\)</span> equal smaller cubic pieces, and define <span class="math inline">\(\hat f\)</span> to be equal to the value of <span class="math inline">\(f\)</span> at the center of each cubic piece.</p>
+<div id="thm-mse-scaling" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 </strong></span>When the loss is mean square error, it scales like <span class="math inline">\(L = \Theta(N^{-2/d})\)</span>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>With <span class="math inline">\(N\)</span> parameters, we can divide the <span class="math inline">\([0, 1]^d\)</span> cube into <span class="math inline">\(N\)</span> equal parts, therefore, each cube has side length <span class="math inline">\(N^{-1/d}\)</span>. Therefore, the distance between the center of each cube and the point farthest from the center is also <span class="math inline">\(\Theta(N^{-1/d})\)</span>.</p>
+<p>Now, since the function has bounded first derivative, we know that the difference between the function value at the center of the cube and the function value at the farthest point is bounded by <span class="math inline">\(\lambda \cdot \Theta(N^{-1/d}) = \Theta(N^{-1/d})\)</span>. Therefore, the mean square loss on each individual little cube is bounded by <span class="math inline">\(\Theta(N^{-2/d})\)</span>.</p>
+<p>And since the overall mean square loss is the average of the loss on each individual cube, the total loss is also bounded by <span class="math inline">\(\Theta(N^{-2/d})\)</span>.</p>
+</div>
+</section>
+<section id="generalization" class="level3">
+<h3 class="anchored" data-anchor-id="generalization">Generalization</h3>
+<p>More generally, if <span class="math inline">\(f\)</span> has bounded second-derivative, and we use a piecewise-linear <span class="math inline">\(\hat f\)</span> function approximator, then the mean square loss scales like <span class="math inline">\(\Theta(N^{-4/d})\)</span>. By piece-wise linear, we mean that the domain of <span class="math inline">\(\hat f\)</span> is divided into little cubes, and it is linear on each little cube.</p>
+<p>Indeed, this generalizes in the obvious way:</p>
+<div id="thm-general-case" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 </strong></span>If the loss is mean <span class="math inline">\(p\)</span>-th power loss, <span class="math inline">\(f\)</span> has bounded <span class="math inline">\(k+1\)</span>-th order derivatives, and <span class="math inline">\(\hat f\)</span> is composed of piece-wise <span class="math inline">\(k\)</span>-degree polynomials, then the loss scales like <span class="math inline">\(\Theta(N^{-p(k+1)/d})\)</span>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>We prove another case where the loss is still mean square error, but <span class="math inline">\(f\)</span> has bounded <span class="math inline">\(2\)</span>-th order derivatives.</p>
+<p>By Taylor expansion, if we use the first-order Taylor expansion to approximate <span class="math inline">\(f\)</span> at the center of each cube, then the error is bounded by <span class="math inline">\(\Theta(N^{-2/d})\)</span>. And since the mean square loss is the average of the square of the error, the total mean squared loss is bounded by <span class="math inline">\(\Theta(N^{-4/d})\)</span> on each little cube.</p>
+<p>And since the overall mean square loss is the average of the loss on each individual cube, the total loss is also bounded by <span class="math inline">\(\Theta(N^{-4/d})\)</span>.</p>
+<p>For the general case, take the Taylor expansion to the <span class="math inline">\(k\)</span>-th order at the center of each little cube.</p>
+</div>
+</section>
+<section id="scaling-of-nearest-neighbor-rule" class="level3">
+<h3 class="anchored" data-anchor-id="scaling-of-nearest-neighbor-rule">Scaling of nearest neighbor rule</h3>
+<p>What is the worst possible scaling? It would be when <span class="math inline">\(k=0\)</span> and <span class="math inline">\(p=1\)</span>, giving us <span class="math inline">\(L = \Theta(N^{-1/d})\)</span>. What does this mean? To have <span class="math inline">\(k=0\)</span> means that we use piecewise-constant fitting function <span class="math inline">\(\hat f\)</span>. To have <span class="math inline">\(p=1\)</span> means that we are using the L1-loss. This is essentially piecewise constant, median regression.</p>
+<p>Under mild assumptions, the nearest neighbor rule for classification has the same form of scaling, where the loss is not L1-loss, but 0-1 loss.</p>
+<p>People have found sharper scaling laws under assuming nicer datasets, using complicated functional analysis tools scaling laws. A dataset can be “nice” in several ways. One way is to have few outliers: it should have a thin tail, looking more like a box, rather than a gently rising hill. Another way is to have smoothly varying boundaries: its boundary should not look “bumpy”. See <em>Two Phases of Scaling Laws for Nearest Neighbor Classifiers</em> <span class="citation" data-cites="TODO">(<a href="#ref-TODO" role="doc-biblioref"><strong>TODO?</strong></a>)</span> for a brief review and further citations to the literature.</p>
+</section>
+</section>
+<section id="experiments" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="experiments">Experiments</h2>
+<p>According to the theory, if the data manifold has dimension <span class="math inline">\(d\)</span>, then as we scale up a neural network with <span class="math inline">\(N\)</span> parameters, the MSE loss of a fully-trained network would scale like <span class="math inline">\(L \sim N^{-\alpha}\)</span>, where <span class="math inline">\(\alpha \approx 4/d\)</span>. We test this in two ways, once with synthetic datasets, where we know that the data manifold has the desired number of dimensions, and once with the CIFAR10 dataset, where we do not have the .</p>
+<section id="synthetic-data-manifolds" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="synthetic-data-manifolds">Synthetic data manifolds</h3>
+<p>Since Consider the simplest data manifold: <span class="math inline">\(\mathbb R^d\)</span>, affine-transformed, then embedded in <span class="math inline">\(\mathbb R^n\)</span>, with <span class="math inline">\(n &gt; d\)</span>.</p>
 <p>To synthesize such a data manifold, we randomly initialize a <strong>teacher network</strong>, so-called because it implements the function that a <strong>student network</strong> will fit to by supervised training. Each teacher network is constructed thus:</p>
 <ul>
 <li>The number of neurons in each layer are: <span class="math inline">\([d, 9, 600, 600, 1]\)</span></li>
 <li>It has 0 bias.</li>
-<li>The weights between layers are sampeled from <span class="math inline">\(\mathcal N(0, m^{-1/2})\)</span> , where <span class="math inline">\(m\)</span> is the input size of the layer (a form of He initialization).</li>
+<li>The weights between layers are sampled from <span class="math inline">\(\mathcal N(0, m^{-1/2})\)</span> , where <span class="math inline">\(m\)</span> is the input size of the layer (a form of He initialization).</li>
 <li>The activation function at the second (with 9 neurons) and last layers are identity. All other activation functions are ReLU.</li>
 </ul>
-<p>Once we have constructed a teacher network, we use it to generate a dataset <span class="math inline">\(\{(x_i, y_i)\}_i\)</span> thus:</p>
+<p>Once we have constructed a teacher network, we use it to generate a dataset <span class="math inline">\(\{(x_i, y_i)\}_i\)</span> in this way:</p>
 <ul>
 <li>Generate random gaussian vectors <span class="math inline">\(\{t_i\}_i\)</span> in <span class="math inline">\(\mathbb R^d\)</span>, with mean <span class="math inline">\(0\)</span> and std <span class="math inline">\(I_{d\times d}\)</span>.</li>
 <li>For each <span class="math inline">\(t \in \{t_i\}_i\)</span>, push <span class="math inline">\(t\)</span> through the teacher network.</li>
 <li>Let <span class="math inline">\(x \in \mathbb R^9\)</span> be the teacher network activation at the second layer, with 9 neurons.</li>
 <li>Let <span class="math inline">\(y \in \mathbb R\)</span> be the teacher network output.</li>
 </ul>
-<section id="some-proofs" class="level3">
-<h3 class="anchored" data-anchor-id="some-proofs">Some proofs</h3>
-<p>Assuming that we have Lipschitz continuity, we can make some proofs.</p>
-</section>
-</section>
-<section id="learning-data-manifold-by-neural-networks" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="learning-data-manifold-by-neural-networks">Learning data manifold by neural networks</h2>
-<p>According to the theory, if the data manifold has dimension <span class="math inline">\(d\)</span>, then as we scale up a neural network with <span class="math inline">\(N\)</span> parameters, the MSE loss of a fully-trained network would scale like <span class="math inline">\(L \sim N^{-\alpha}\)</span>, where <span class="math inline">\(\alpha \approx 4/d\)</span>.</p>
-<p>Let’s test this.</p>
 <p>First, we define the “student” neural network architecture:</p>
 <ul>
 <li>The number of neurons in each layer are: <span class="math inline">\([9, n, n, 1]\)</span>.</li>
 <li>The biases are initialized to 0.</li>
-<li>The weights between layers are sampeled from <span class="math inline">\(\mathcal N(0, m^{-1/2})\)</span>, where <span class="math inline">\(m\)</span> is the input size of the layer (a form of He initialization).</li>
+<li>The weights between layers are sampled from <span class="math inline">\(\mathcal N(0, m^{-1/2})\)</span>, where <span class="math inline">\(m\)</span> is the input size of the layer (a form of He initialization).</li>
 <li>All activation functions are ReLU.</li>
 </ul>
-<div class="page-columns page-full"><p>A simple computation shows that the network has exactly <span class="math inline">\(N = n^2+12n + 1\)</span> parameters<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;<span class="math inline">\(N = \underbrace{(n+n+1)}_{\text{first layer}} + \underbrace{(9n + n^2 + n)}_{\text{second layer}}\)</span></p></li></div></div>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/teacher_neural_network.svg" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption margin-caption">An example teacher network architecture with <span class="math inline">\([9, 5, 5, 1]\)</span> neurons.</figcaption>
 </figure>
 </div>
+<p>The parameter count is</p>
+<p><span class="math display">\[
+N = \underbrace{(n+n+1)}_{\text{first layer}} + \underbrace{(9n + n^2 + n)}_{\text{second layer}}
+\]</span></p>
 </section>
-<section id="experiments" class="level2">
-<h2 class="anchored" data-anchor-id="experiments">Experiments</h2>
+<section id="experimental-data" class="level3">
+<h3 class="anchored" data-anchor-id="experimental-data">Experimental data</h3>
 <p>I ran it for days on my laptop.</p>
 <p><img src="figure/training_runs_and_linear_fits.png" class="img-fluid"></p>
 <p><img src="figure/violin_plot_with_linear_fits.png" class="img-fluid"></p>
-</section>
-<section id="interpretation" class="level2">
-
+<p>All code for generating the dataset, and for analyzing the dataset, are in a GitHub repo: <a href="https://github.com/yuxi-liu-wired/scaling-law-by-data-manifold"><code>yuxi-liu-wired/scaling-law-by-data-manifold</code></a>.</p>
 
 
 
 </section>
+</section>
 
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Interpretation</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-bahriExplainingNeuralScaling2021" class="csl-entry" role="listitem">
 Bahri, Yasaman, Ethan Dyer, Jared Kaplan, Jaehoon Lee, and Utkarsh Sharma. 2021. <span>“Explaining Neural Scaling Laws.”</span> <em>arXiv Preprint arXiv:2102.06701</em>. <a href="https://arxiv.org/abs/2102.06701">https://arxiv.org/abs/2102.06701</a>.
 </div>
