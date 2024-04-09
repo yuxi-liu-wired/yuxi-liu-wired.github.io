@@ -123,11 +123,11 @@ div.csl-indent {
 
 <meta property="og:title" content="Yuxi on the Wired - How to Renormalization">
 <meta property="og:description" content="How to do renormalization theory.">
-<meta property="og:image" content="https://yuxi-liu-wired.github.io/sketches/posts/renormalization-how-to/figure/firefox-renormalization-group-theory.jpeg">
+<meta property="og:image" content="https://yuxi-liu-wired.github.io/sketches/posts/renormalization-how-to/figure/rn_flow_feigenbaum_2.svg">
 <meta property="og:site-name" content="Yuxi on the Wired">
 <meta name="twitter:title" content="Yuxi on the Wired - How to Renormalization">
 <meta name="twitter:description" content="How to do renormalization theory.">
-<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/sketches/posts/renormalization-how-to/figure/firefox-renormalization-group-theory.jpeg">
+<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/sketches/posts/renormalization-how-to/figure/rn_flow_feigenbaum_2.svg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -274,7 +274,10 @@ div.csl-indent {
   <li><a href="#universality-1" id="toc-universality-1" class="nav-link" data-scroll-target="#universality-1">Universality</a></li>
   <li><a href="#sociophysics" id="toc-sociophysics" class="nav-link" data-scroll-target="#sociophysics">Sociophysics</a></li>
   </ul></li>
-  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
+  <ul class="collapse">
+  <li><a href="#probability" id="toc-probability" class="nav-link" data-scroll-target="#probability">Probability</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -292,8 +295,185 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="what-is-renormalization">What is renormalization?</h2>
 <p>Renormalization is not group theory. The name “renormalization group theory” is truly terrible. To an applied physicist, the name “group theory” is abstract and inspires fear and uncertainty. To a mathematician, the name “group theory” is plain wrong, because you can always undo a group-action, but you can never undo a coarse-graining.</p>
 </section>
-<section id="the-logistic-map-rn-on-mathbbr" class="level2">
+<section id="the-logistic-map-rn-on-mathbbr" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-logistic-map-rn-on-mathbbr">The logistic map: RN on <span class="math inline">\(\mathbb{R}\)</span></h2>
+<p>Thus, we obtain the self-similarity equation</p>
+<p><span class="math display">\[
+f(x) = -\alpha f\left(f\left(\frac{x}{-\alpha} \right)\right)
+\]</span></p>
+<p>In words, if we scale up the graph for <span class="math inline">\(f^2\)</span> by <span class="math inline">\(\alpha\)</span>, then rotate by 180 degrees, we get back the graph for <span class="math inline">\(f\)</span>.</p>
+<p>By eye-balling the curve, we see that <span class="math inline">\(f\)</span> should be an even function. Also, since the <span class="math inline">\(f^2\)</span> can be graphically calculated by doing the cobweb diagram with the graph of <span class="math inline">\(f\)</span>, it does not matter if we first scale up the graph of <span class="math inline">\(f\)</span> by a factor of <span class="math inline">\(r\)</span> to <span class="math inline">\(F\)</span>, then double it to <span class="math inline">\(F^2\)</span>, or if we first double it to <span class="math inline">\(f^2\)</span>, then scale its graph. We would get back the same thing. Thus, wolog, we can scale <span class="math inline">\(f\)</span> such that <span class="math inline">\(f(0) = 1\)</span>.</p>
+<p>So, our task is to solve the following equation:</p>
+<p><span class="math display">\[
+\begin{cases}
+f(x) = -\alpha f\left(f\left(\frac{x}{-\alpha} \right)\right)\\
+f(x) = 1 - a_2 x^2 + a_4 x^4 + \dots
+\end{cases}
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solving the equation at order 2">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solving the equation at order 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>At order 2, we approximate by <span class="math inline">\(f(x) \approx 1 - a_2 x^2\)</span>, and ignore all higher-order terms. This gives us two equations for two unknowns:</p>
+<p><span class="math display">\[
+\begin{cases}
+1-a_2 = \frac{1}{-\alpha} \\
+\frac{2a_2^2}{\alpha} = a_2
+\end{cases}
+\]</span></p>
+<p>It has two solutions. One solution has <span class="math inline">\(\alpha &lt; 0\)</span>, which we know is unphysical. The other one is</p>
+<p><span class="math display">\[
+\begin{cases}
+\alpha = 1 + \sqrt{3} \approx 2.732 \\
+a_2 = \frac{1 + \sqrt{3}}{2} \approx 1.366
+\end{cases}
+\]</span></p>
+</div>
+</div>
+</div>
+<p>What happens if we are not <em>exactly</em> at the fixed point, but starts slightly off? Let’s say we start with a function <span class="math inline">\(f_0(x) = 1 - a_{2,0}x^2\)</span>, where <span class="math inline">\(a_{2,0} = a_2^* + \Delta\)</span>, where <span class="math inline">\(a_2^*\)</span> is the fixed point, and <span class="math inline">\(\Delta\)</span> is small but nonzero. Here we should think of the space of possible functions. Each point in this space is a possible scaling limit, but start a bit too small and we fall into boredom, start a bit too high and we fall into chaos. Start just right, and we harvest a beautiful fractal.</p>
+<p>After one iteration, we have <span class="math inline">\(f_1(x) = -\alpha_0 f_0(f_0(x/(-\alpha_0)))\)</span>, where <span class="math inline">\(\alpha_0\)</span> was fixed by <span class="math inline">\(f_1(0) = 1\)</span>. This gives us</p>
+<p><span class="math display">\[
+\begin{cases}
+\alpha_0 = \frac{1}{-1+a_{2, 0}} \\
+\frac{2a_{2, 0}^2}{\alpha_0} = a_{2, 1}
+\end{cases}
+\]</span></p>
+<p>That is, we have the <strong>renormalization flow equation</strong></p>
+<p><span class="math display">\[
+2a_{2, 0}^2(a_{2, 0}-1)= a_{2, 1}
+\]</span></p>
+<p>We can plot the space of all possible <span class="math inline">\(f(x)\)</span> as a line, like</p>
+<p><span class="math display">\[1-0x^2, 1-0.5 x^2, 1-x^2, 1-1.5x^2, \dots\]</span></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/rn_flow_feigenbaum_2.svg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">RN flow diagram of the self-similarity map at order 2.</figcaption>
+</figure>
+</div>
+<p>This is a 1-dimensional slice of the space of all possible <span class="math inline">\(f\)</span> (the space of theories). Then, the effect of repeatedly applying the self-similarity map is to iterate the map <span class="math inline">\(a_2 \mapsto 2a_{2}^2(a_{2}-1)\)</span>. If we are precisely at the fixed-point <span class="math inline">\(a_2^*\)</span>, then we are not going anywhere, but if we are not exactly there, then since the slope of <span class="math inline">\(a_2 \mapsto 2a_{2}^2(a_{2}-1)\)</span> is <span class="math inline">\(\delta \approx 5.73\)</span> at that point, we would get farther and farther away:</p>
+<p><span class="math display">\[
+f_0 = 1-(a_2^* + \Delta)x^2, \quad f_1 = 1-(a_2^* + \delta\Delta)x^2, \quad f_1 = 1-(a_2^* + \delta^2\Delta)x^2, \quad \dots
+\]</span></p>
+<p>and after <span class="math inline">\(\log_\delta(\frac{0.1}{\Delta})\)</span>, we would be at roughly <span class="math inline">\(1-(a_2^* \pm 0.1)x^2\)</span>, which is when we can finally notice that we are <em>obviously</em> no longer in the neighborhood of the fixed point anymore. If we start at <span class="math inline">\(a_2^* + \Delta/\delta\)</span>, then we can sustain the illusion for one more iteration. Similarly, if we start at <span class="math inline">\(a_2^* + \Delta/\delta^n\)</span>, then we can sustain the illusion for <span class="math inline">\(n\)</span> more iterations.</p>
+<p>Now, thinking back to what the logistic map says, we understand what we have discovered: The graph of <span class="math inline">\(f_{r^* - \Delta}\)</span> is similar to the graph of <span class="math inline">\(f_{r^* - \Delta/\delta}^2\)</span> scaled by <span class="math inline">\(-\alpha\)</span>. If we let <span class="math inline">\(r_1, r_2, r_3, \dots\)</span> be the points at which the logistic map splits into a stable cycle of period <span class="math inline">\(2^1, 2^2, 2^3, \dots\)</span>, then we have <span class="math inline">\(r_{n} \approx r^* - \Delta/\delta^{n}\)</span>, and so we have:</p>
+<p><span class="math display">\[
+\frac{r^* - r_n}{r^* - r_{n+1}} \to \delta
+\]</span></p>
+<p>This is usually spoken in this way: the intervals between two bifurcations shrinks at a rate of <span class="math inline">\(\delta\)</span>.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/feigenbaum_delta_bifurcation_diagram.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">The bifurcation diagram for the logistic map. As the bifurcations approach the point of chaos, the interval between two bifurcations gets shorter and shorter, at a rate of <span class="math inline">\(\delta\)</span> per bifurcation.</figcaption>
+</figure>
+</div>
+<p><span class="math inline">\(\delta\)</span> is called <strong>Feigenbaum’s first constant</strong>, and <span class="math inline">\(\alpha\)</span> is <strong>Feigenbaum’s second constant</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Solving the equation at order 4">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solving the equation at order 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Similarly, we can solve the equation at order 4 by plugging in <span class="math inline">\(f(x) \approx 1 - a_2 x^2 + a_4 x^4\)</span>, obtaining 3 equations for 3 variables:</p>
+<p><span class="math display">\[
+\begin{cases}
+1-a_2+a_4 = \frac{1}{-\alpha} \\
+\frac{2a_2^2 - 4a_2a_4}{\alpha} = a_2 \\
+\frac{a_4(4a_4+6a_2^2) - a_2(2a_4 + a_2^2)}{-\alpha^2} = a_4
+\end{cases}
+\]</span></p>
+<p>To solve this numerically, first guess a solution from the previous one, <span class="math inline">\(\alpha \approx 2.732, a_2 \approx 1.366\)</span>, then plug into the first equation to get <span class="math inline">\(a_4 \approx 0\)</span>. Then, standard numerical root-finding gives</p>
+<p><span class="math display">\[
+\begin{cases}
+\alpha \approx 2.534 \\
+a_2 \approx 1.522 \\
+a_4 \approx 0.128
+\end{cases}
+\]</span></p>
+</div>
+</div>
+</div>
+<p>We can also make the same argument using a flow in theory-space, except now we are doing it over a 2-dimensional slice of it. The flow map is</p>
+<p><span class="math display">\[
+F(a_2, a_4) = \left(
+   (2a_2^2 - 4a_2a_4)(-1+a_2 - a_4), -(a_4(4a_4+6a_2^2) - a_2(2a_4 + a_2^2))(-1+a_2 - a_4)^3
+\right)
+\]</span></p>
+<p>At the fixed-point <span class="math inline">\((a_2, a_4) = (1.522, 0.128)\)</span>, the Jacobian matrix is <span class="math display">\[
+\nabla F = \begin{bmatrix}
+6.0506 &amp; -6.2524 \\
+1.2621 &amp; -1.6909
+\end{bmatrix}
+\]</span></p>
+<p>This matrix has eigenvalues of <span class="math inline">\(4.843, -0.483\)</span>, so it is a saddle point, with <span class="math inline">\(\delta = 4.843\)</span>. The flow and the eigenvectors <span class="math inline">\((0.982, 0.190), (0.691, 0.723)\)</span> are plotted below.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/rn_flow_feigenbaum_4.svg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">RN flow diagram of the self-similarity map at order 4. The two eigenvector directions at the fixed point are plotted as dashed lines.</figcaption>
+</figure>
+</div>
+<p>In summary:</p>
+<table class="table">
+<caption>The solution to the self-similarity equation, at increasingly high orders of approximation</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th>Order 2</th>
+<th>4</th>
+<th><span class="math inline">\(\infty\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a_2\)</span></td>
+<td>1.366</td>
+<td>1.522</td>
+<td>1.530</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(a_4\)</span></td>
+<td></td>
+<td>0.128</td>
+<td>0.105</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\alpha\)</span></td>
+<td>2.732</td>
+<td>2.534</td>
+<td>2.503</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\delta\)</span></td>
+<td>5.73</td>
+<td>4.843</td>
+<td>4.669</td>
+</tr>
+</tbody>
+</table>
+<p>Even in this tiny problem, we can already draw several lessons, which will appear again and again in RN:</p>
+<ul>
+<li>We assume a function is self-similar, and calculate from there.</li>
+<li>Self-similarity is a transform on a function (or “theory”).</li>
+<li>If we repeatedly apply the self-similarity transform on a function, we would obtain a scaling limit, a perfectly self-similar object – a fractal.</li>
+<li>In the space of all possible theories, the self-similarity transform creates a flow-field in the theory space. The interesting fixed-points of the flow-field are its saddle points.</li>
+<li>The largest eigenvalue of the saddle point describes what happens when you are close to the saddle point, but not quite there.</li>
+<li>Bravely calculate using the cheapest approximation you can think of. It often gets you within 50% of the right answer.</li>
+<li>But if you want accuracy, you can always use a computer and calculate many orders higher.</li>
+</ul>
 </section>
 <section id="the-ising-model-rn-on-a-lattice" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-ising-model-rn-on-a-lattice">The Ising model: RN on a lattice</h2>
@@ -312,26 +492,35 @@ div.csl-indent {
 <p>For that matter, we can do it for any finite number of those <span class="math inline">\(\mathbb{Z}\)</span> put together. We can then imagine doing that for such ladders with widths <span class="math inline">\(2, 3, 4, 5, 6, \dots\)</span>, then discover a pattern, and take the limit. If this works, we would solve the Ising model on <span class="math inline">\(\mathbb{Z}^2\)</span>.</p>
 <p>Arduous as it sounds, this is exactly how Lars Onsager arrived at his solution of the Ising model in <span class="math inline">\(\mathbb{Z}^2\)</span>. He calculated up to ladders with width 6, diagonalizing matrices of size <span class="math inline">\(64\times 64\)</span> in the process, then he guessed the general pattern and proceeded from there, emboldened by the guess. As Chen-Ning Yang reported:</p>
 <blockquote class="blockquote">
-<p>In 1944, L. Onsager produced, quite unexpectedly, an exact evaluation of the partition function of the model in two dimensions. It was a real tour de force. I had studied his paper in Chicago in the spring of 1947, but did not understand the method, which was very, very complicated, with many algebraic somersaults. …</p>
-<p>In March, 1965 … I asked him how it came about that he took all those complicated algebraic steps in his paper of 1944. He said he had a lot of time during the war, so he began to diagonalize the transfer matrix, which had already been discussed by E. Montroll and by H. A. Kramers and G. H. Wannier. He started with a <span class="math inline">\(2 \times \infty\)</span>, then a <span class="math inline">\(3 \times \infty\)</span>, then a <span class="math inline">\(4 \times \infty\)</span> lattice. He then went on to a <span class="math inline">\(5 \times \infty\)</span> lattice, for which the transfer matrix is <span class="math inline">\(32 \times 32\)</span> in size. Such a matrix is quite large, but the experience he had gained with the smaller matrices came in handy, and he was able, after some time, to find all 32 of the eigenvalues. He proceeded then to the <span class="math inline">\(6 \times \infty\)</span> case, and eventually diagonalized the <span class="math inline">\(64 \times 64\)</span> matrix, finding that all the eigenvalues were of the form <span class="math inline">\(e^{\pm \gamma_1 \pm \gamma_2 \pm \gamma_3 \pm \gamma_4 \pm \gamma_5 \pm \gamma_6}\)</span>. That led to the concept that the algebra of the problem was a product algebra, and hence the manipulations in his paper. <span class="citation" data-cites="yangSelectedPapers194519802005">(<a href="#ref-yangSelectedPapers194519802005" role="doc-biblioref">Yang 2005, 11–13</a>)</span></p>
+<p>In 1944, L. Onsager produced, quite unexpectedly, an exact evaluation of the partition function of the model in two dimensions. It was a real tour de force. I had studied his paper in Chicago in the spring of 1947, but did not understand the method, which was very, very complicated, with many algebraic somersaults….</p>
+<p>In March, 1965… I asked him how it came about that he took all those complicated algebraic steps in his paper of 1944. He said he had a lot of time during the war, so he began to diagonalize the transfer matrix, which had already been discussed by E. Montroll and by H. A. Kramers and G. H. Wannier. He started with a <span class="math inline">\(2 \times \infty\)</span>, then a <span class="math inline">\(3 \times \infty\)</span>, then a <span class="math inline">\(4 \times \infty\)</span> lattice. He then went on to a <span class="math inline">\(5 \times \infty\)</span> lattice, for which the transfer matrix is <span class="math inline">\(32 \times 32\)</span> in size. Such a matrix is quite large, but the experience he had gained with the smaller matrices came in handy, and he was able, after some time, to find all 32 of the eigenvalues. He proceeded then to the <span class="math inline">\(6 \times \infty\)</span> case, and eventually diagonalized the <span class="math inline">\(64 \times 64\)</span> matrix, finding that all the eigenvalues were of the form <span class="math inline">\(e^{\pm \gamma_1 \pm \gamma_2 \pm \gamma_3 \pm \gamma_4 \pm \gamma_5 \pm \gamma_6}\)</span>. That led to the concept that the algebra of the problem was a product algebra, and hence the manipulations in his paper. <span class="citation" data-cites="yangSelectedPapers194519802005">(<a href="#ref-yangSelectedPapers194519802005" role="doc-biblioref">Yang 2005, 11–13</a>)</span></p>
 </blockquote>
 <p>I also want to quote this from the same pages, because it describes accurately what it feels like to do real-space RN:</p>
 <blockquote class="blockquote">
 <p>a long calculation, the longest in my career. Full of local, tactical tricks, the calculation proceeded by twists and turns. There were many obstructions. But always, after a few days, a new trick was somehow found that pointed to a new path. The trouble was that I soon felt I was in a maze and was not sure whether in fact, after so many turns, I was anywhere nearer the goal than when I began. This kind of strategic overview was very depressing, and several times I almost gave up. But each time something drew me back, usually a new tactical trick that brightened the scene, even though only locally. Finally, after about six months of work off and on, all the pieces suddenly fitted together, producing miraculous cancellations, and I was staring at the amazingly simple final result [spontaneous magnetization of the Ising model] <span class="citation" data-cites="yangSelectedPapers194519802005">(<a href="#ref-yangSelectedPapers194519802005" role="doc-biblioref">Yang 2005, 12</a>)</span></p>
 </blockquote>
 </section>
-<section id="kadanoff-decimation-take-0" class="level3">
+<section id="kadanoff-decimation-take-0" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="kadanoff-decimation-take-0">Kadanoff decimation, take 0</h3>
-<p>The problem: given a hexagonal grid, you make <span class="math inline">\(p\)</span> of them black and the rest white. What is the critical p where you get a percolation (infinitely big black island)?</p>
-<p><img src="figure/hexagonal_decimation.png" class="img-fluid"></p>
-<p><img src="figure/hexagonal_decimation_fixed_point.png" class="img-fluid"></p>
-<p><span class="citation" data-cites="stinchcombeIntroductionScalingConcepts1991">(<a href="#ref-stinchcombeIntroductionScalingConcepts1991" role="doc-biblioref">Stinchcombe 1991</a>)</span></p>
-<p>Occupation probability <span class="math inline">\(p\)</span></p>
-<p>Renormalization by the triangles, as shown. After one iteration, the lattice length increases from <span class="math inline">\(l\)</span> to <span class="math inline">\(\sqrt 3 l\)</span> , and the renormalized occupation probability changes from <span class="math inline">\(p\)</span> to <span class="math inline">\(p^3 + 3p^2(1-p) = p^2(3-2p)\)</span> .</p>
-<p>The equilibrium point is <span class="math inline">\(p=1/2\)</span> . This is the percolation probability.</p>
-<p>Let reduced probability be <span class="math inline">\(\bar p = p-1/2\)</span> . We find that renormalization makes <span class="math inline">\(\bar p_{n+1} = \frac 32 \bar p_n\)</span></p>
-<p>Suppose we start with <span class="math inline">\(\bar p_0\)</span> , and we perform <span class="math inline">\(N\)</span> renormalizations to reach some constant <span class="math inline">\(\Delta \bar p\)</span> (for example, 0.001), then <span class="math display">\[N = \frac{\ln \Delta \bar p - \ln \bar p_0}{\ln \frac 32}\]</span> and during the time, the lattice length increased by<br>
-<span class="math display">\[3^{\frac 12 N} \propto \bar p_0^{-\frac{\ln 3}{2\ln \frac 32}} = \bar p_0^{-1.36}\]</span>- Since at constant <span class="math inline">\(\Delta \bar p\)</span> , the lattice has a certain fixed look with a certain characteristic size for its clusters, we find that when the occupation probability is <span class="math inline">\(p\)</span> , the characteristic size of clusters scales as about <span class="math inline">\((p-1/2)^{-1.36}\)</span> .</p>
+<p>This section based on <span class="citation" data-cites="simkinReinventingWillis2011">(<a href="#ref-simkinReinventingWillis2011" role="doc-biblioref">Simkin and Roychowdhury 2011, sec. 10</a>)</span>, which contains an extensive bibliography.</p>
+<p>The problem: given a hexagonal grid, you make <span class="math inline">\(p\)</span> of them black and the rest white. What is the critical <span class="math inline">\(p\)</span> where you get a percolation (infinitely big black island)?</p>
+<p>Renormalization by the triangles, as shown. After one iteration, the lattice length increases from <span class="math inline">\(l\)</span> to <span class="math inline">\(\sqrt 3 l\)</span> , and the renormalized occupation probability changes from <span class="math inline">\(p\)</span> to <span class="math inline">\(p^3 + 3p^2(1-p) = p^2(3-2p)\)</span>.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/hexagonal_decimation.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">Kadanoff decimation on a triangular lattice. <span class="citation" data-cites="simkinReinventingWillis2011">(<a href="#ref-simkinReinventingWillis2011" role="doc-biblioref">Simkin and Roychowdhury 2011, fig. 1</a>)</span></figcaption>
+</figure>
+</div>
+<p>The equilibrium point is <span class="math inline">\(p=1/2\)</span>. This is the percolation probability. Let the reduced probability be <span class="math inline">\(\bar p = p-1/2\)</span>. We find that one iteration of the RN flow makes <span class="math inline">\(\bar p_{n+1} = \frac 32 \bar p - 2 \bar p^3\)</span> which is <span class="math inline">\(\approx \frac 32 \bar p_n\)</span> for small values of <span class="math inline">\(\bar p\)</span>.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/rn_flow_hexagonal_grid_1.svg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">RN flow for Kadanoff decimation on a triangular lattice, on a 1-dimensional slice.</figcaption>
+</figure>
+</div>
+<p>Suppose we start with <span class="math inline">\(\bar p_0\)</span> , and we perform <span class="math inline">\(N\)</span> repeats of RN to reach some constant <span class="math inline">\(\Delta \bar p\)</span> (for example, 0.001), then <span class="math display">\[N = \frac{\ln \Delta \bar p - \ln \bar p_0}{\ln \frac 32}\]</span></p>
+<p>during which time, the lattice length has increased by <span class="math display">\[3^{\frac 12 N} \propto \bar p_0^{-\frac{\ln 3}{2\ln \frac 32}} = \bar p_0^{-1.36}\]</span></p>
+<p>Since at constant <span class="math inline">\(\Delta \bar p\)</span>, the lattice has a certain fixed look-and-feel with a certain characteristic size for its clusters, we find that the characteristic length of its clusters is <span class="math inline">\(\propto (p-1/2)^{-1.36}\)</span>. The actual exponent (named <span class="math inline">\(\nu\)</span>) is exactly <span class="math inline">\(1\)</span>. Not bad for such a cheap calculation!</p>
 </section>
 <section id="kadanoff-decimation-take-1" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="kadanoff-decimation-take-1">Kadanoff decimation, take 1</h3>
@@ -369,54 +558,60 @@ div.csl-indent {
 <p>Why is there a phase transition with polynomial decay? Two exponentials cancel exactly, leaving only a polynomial.</p>
 <p>Consider the Ising model on the plane. Fix an origin <span class="math inline">\(0\)</span> , and we ask, how strong is the correlation between the origin <span class="math inline">\(0\)</span> and a point that is at distance <span class="math inline">\((n, n)\)</span> away from the origin, where <span class="math inline">\(n\)</span> is large?</p>
 <p>Well, the two points are correlated because they are connected by chains of spins. The more chains there are, the stronger the correlation, but the longer each chain is, the weaker the correlation.</p>
-<p>How many chains? The shortest chains are of length <span class="math inline">\(2n\)</span> , and there are <span class="math display">\[{2n \choose n} \sim \frac{4^{n}}{\sqrt{n\pi }}\]</span> of them (use Stirling approximation).</p>
+<p>How many chains? The shortest chains are of length <span class="math inline">\(2n\)</span> , and there are <span class="math display">\[{2n \choose n} \sim \frac{4^{n}}{\sqrt{n\pi }}\]</span></p>
+<p>of them (use Stirling approximation).</p>
 <p>Each chain has an exponential decay. We can use the 1D Ising model transfer matrix <span class="math display">\[M^n = \begin{bmatrix}
       \frac{1 + \tanh^n(\beta J)}{2} &amp; \frac{1 - \tanh^n(\beta J)}{2} \\
       \frac{1 - \tanh^n(\beta J)}{2} &amp; \frac{1 + \tanh^n(\beta J)}{2}
-      \end{bmatrix}\]</span> The correlation is <span class="math inline">\(\tanh^n(\beta J)\)</span> .</p>
-<p>Since the chain has length <span class="math inline">\(2n\)</span> , we need to use <span class="math inline">\(\tanh^{2n}(\beta J)\)</span> .</p>
-<p>We can think of spin at origin as <span class="math inline">\(x_{(0,0)} + z_1 + z_2 + \cdots\)</span> and the spin at <span class="math inline">\((n, n)\)</span> as <span class="math inline">\(x_{(n,n)} + z_1 + z_2 + \cdots\)</span> , where <span class="math inline">\(z_1, z_2, ...\)</span> are random variables that are responsible for creating the correlations between the two spins along each chain. Then, since <span class="math inline">\(\ket{z_i}=0\)</span> , we have correlation <span class="math display">\[\sim \frac{4^{n}}{\sqrt{n\pi }} \tanh^{2n}(\beta J)\]</span> The two terms are exactly balanced when <span class="math inline">\(\beta J = \tanh^{-1}(1/2) = 0.549\cdots\)</span> .</p>
+      \end{bmatrix}
+\]</span></p>
+<p>The correlation is <span class="math inline">\(\tanh^n(\beta J)\)</span>.</p>
+<p>Since the chain has length <span class="math inline">\(2n\)</span> , we need to use <span class="math inline">\(\tanh^{2n}(\beta J)\)</span>.</p>
+<p>We can think of spin at origin as <span class="math inline">\(x_{(0,0)} + z_1 + z_2 + \cdots\)</span> and the spin at <span class="math inline">\((n, n)\)</span> as <span class="math inline">\(x_{(n,n)} + z_1 + z_2 + \cdots\)</span> , where <span class="math inline">\(z_1, z_2,...\)</span> are random variables that are responsible for creating the correlations between the two spins along each chain. Then, since <span class="math inline">\(\ket{z_i}=0\)</span> , we have correlation</p>
+<p><span class="math display">\[\sim \frac{4^{n}}{\sqrt{n\pi }} \tanh^{2n}(\beta J)\]</span></p>
+<p>The two terms are exactly balanced when <span class="math inline">\(\beta J = \tanh^{-1}(1/2) = 0.549\cdots\)</span>.</p>
 <p>Now, the exact result is <span class="math inline">\(\beta J = 0.44\cdots\)</span> , so our crude estimate is only <span class="math inline">\(25\%\)</span> too high.</p>
 <p>Now, right at the critical point, the correlation is <span class="math inline">\(\sim (n\pi)^{-1/2}\)</span> , so we see that when the exponential decay in correlation is exactly matched with the exponential growth in possible paths, the remaining polynomial decay comes to the fore.</p>
-<p>Notice that we have also calculated one of the Ising critical exponents: <span class="math inline">\(\nu = 1/2\)</span> . The actual answer is <span class="math inline">\(1\)</span> , but it is actually <span class="math inline">\(1/2\)</span> for all dimensions <span class="math inline">\(\geq 4\)</span> (the mean field theory).</p>
-<p>Similarly, with <span class="math display">\[\binom{kn}{n, \cdots n}\sim \frac{k^{kn}}{n^{\frac{k-1}2}}\frac{k^{1/2}}{(2\pi)^{\frac{k-1}2}}\]</span> we can estimate the critical <span class="math inline">\(\beta J \approx \tanh^{-1}(1/k)\)</span> in <span class="math inline">\(k\)</span> -dimensions.</p>
+<p>Notice that we have also calculated one of the Ising critical exponents: <span class="math inline">\(\nu = 1/2\)</span>. The actual answer is <span class="math inline">\(1\)</span> , but it is actually <span class="math inline">\(1/2\)</span> for all dimensions <span class="math inline">\(\geq 4\)</span> (the mean field theory).</p>
+<p>Similarly, with <span class="math display">\[\binom{kn}{n, \cdots n}\sim \frac{k^{kn}}{n^{\frac{k-1}2}}\frac{k^{1/2}}{(2\pi)^{\frac{k-1}2}}\]</span></p>
+<p>we can estimate the critical <span class="math inline">\(\beta J \approx \tanh^{-1}(1/k)\)</span> in <span class="math inline">\(k\)</span> -dimensions.</p>
 </section>
 </section>
 <section id="universality" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="universality">Universality</h2>
 <p><span class="citation" data-cites="battermanUniversalityRGExplanations2019">(<a href="#ref-battermanUniversalityRGExplanations2019" role="doc-biblioref"><strong>battermanUniversalityRGExplanations2019?</strong></a>)</span></p>
 <ul>
-<li>The theory of critical points in phase transitions is the paradigm example of universality.</li>
-<li>macroscale - mesoscale - microscale
+<li><p>The theory of critical points in phase transitions is the paradigm example of universality.</p></li>
+<li><p>macroscale - mesoscale - microscale</p>
 <ul>
 <li>macroscale: thermodynamics, continuum, no fluctuation.</li>
 <li>mesoscale: fluctuations in aggregates of atomic scale properties may be important, order parameters code for some feature of the microstructure.</li>
 <li>microscale: particles and quantum mechanics.</li>
 </ul></li>
-<li>Criticality is just the space between two characteristic scales. The real question is why do we have characteristic scales that are so wide apart?
+<li><p>Criticality is just the space between two characteristic scales. The real question is why do we have characteristic scales that are so wide apart?</p>
 <ul>
 <li>BIB. Statistical physics: statics, dynamics and renormalization (Kadanoff 2000), p.&nbsp;251</li>
-<li>shows an amazing variety of length scales: There is the Hubble radius of the universe, <span class="math inline">\(10^{10}\)</span> light years or so and the radius of our own solar system, <span class="math inline">\(10^{11}\)</span> meters roughly, and us-two meters perhaps, and an atom <span class="math inline">\(-10^{-10}\)</span> meters in radius, and a proton <span class="math inline">\(10^{-16}\)</span> meters, and the characteristic length of quantum gravity-which involves another factor of about <span class="math inline">\(10^{20}\)</span> . How these vastly different lengths arise is a very interesting and fundamental question. … However, we can think about how one describes the region between these lengths. If one is looking at scales between two fundamental lengths, there are no nearby characteristic lengths. Similarly in critical phenomena, whenever one looks [at] any event which takes place between the scale of the lattice constant [the spacing between molecules or spins] and the much larger scale of the coherence length, one is in a situation in which there are no nearby characteristic lengths.<br>
+<li>shows an amazing variety of length scales: There is the Hubble radius of the universe, <span class="math inline">\(10^{10}\)</span> light years or so and the radius of our own solar system, <span class="math inline">\(10^{11}\)</span> meters roughly, and us-two meters perhaps, and an atom <span class="math inline">\(-10^{-10}\)</span> meters in radius, and a proton <span class="math inline">\(10^{-16}\)</span> meters, and the characteristic length of quantum gravity-which involves another factor of about <span class="math inline">\(10^{20}\)</span>. How these vastly different lengths arise is a very interesting and fundamental question…. However, we can think about how one describes the region between these lengths. If one is looking at scales between two fundamental lengths, there are no nearby characteristic lengths. Similarly in critical phenomena, whenever one looks [at] any event which takes place between the scale of the lattice constant [the spacing between molecules or spins] and the much larger scale of the coherence length, one is in a situation in which there are no nearby characteristic lengths.<br>
 </li>
 </ul></li>
-<li>Near the critical point, fluctuations are dominant and average values for the order parameters lose their meaning. Equilibrium statistical mechanics is unable to describe the critical behavior because there are fluctuations at all length scales.</li>
-<li>The universality hypothesis
+<li><p>Near the critical point, fluctuations are dominant and average values for the order parameters lose their meaning. Equilibrium statistical mechanics is unable to describe the critical behavior because there are fluctuations at all length scales.</p></li>
+<li><p>The universality hypothesis</p>
 <ul>
 <li>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, p 273.</li>
 <li>All phase transition problems can be divided into a small number of different classes depending upon the dimensionality of the system and the symmetries of the order state. Within each class, all phase transitions have identical behaviour in the critical region, only the names of the variables are changed.</li>
 </ul></li>
-<li>Universality hypothesis implies that if we have two Hamiltonians <span class="math inline">\(H_1, H_2\)</span> where one can be smoothly perturbed to the other by <span class="math inline">\(H_\lambda := (1-\lambda)H_1 + \lambda H_2\)</span> , and renormalization works on <span class="math inline">\(\lambda\)</span> , then we can run the same scaling law method with <span class="math inline">\(\lambda\)</span> too, and so the scaling laws for <span class="math inline">\(H_1, H_2\)</span> are the same.
+<li><p>Universality hypothesis implies that if we have two Hamiltonians <span class="math inline">\(H_1, H_2\)</span> where one can be smoothly perturbed to the other by <span class="math inline">\(H_\lambda := (1-\lambda)H_1 + \lambda H_2\)</span> , and renormalization works on <span class="math inline">\(\lambda\)</span> , then we can run the same scaling law method with <span class="math inline">\(\lambda\)</span> too, and so the scaling laws for <span class="math inline">\(H_1, H_2\)</span> are the same.</p>
 <ul>
 <li>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, p 275-276</li>
 </ul></li>
-<li>Correlation length <span class="math inline">\(\xi\)</span> is the largest fluctuation droplet that can form before it contains so much excess free energy that equilibrium thermodynamics asserts itself.
+<li><p>Correlation length <span class="math inline">\(\xi\)</span> is the largest fluctuation droplet that can form before it contains so much excess free energy that equilibrium thermodynamics asserts itself.</p>
 <ul>
 <li>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, p 274.</li>
 <li>Just below the critical temperature, the system has a free choice to make between being a liquid at high density or a vapor at low density. Both choices are equally good. But since liquid wants to be in contact with liquid and vapor with vapor, the system must decide.</li>
 <li>A natural fluctuation produces a droplet of the wrong phase. This droplet secretes other material of the same density, and it grows larger and larger. It stops growing when the cost in available—i.e.&nbsp;free-energy for making the droplet of wrong phase becomes comparable with kT. Since near the critical point it cost very little free energy per unit volume to make the wrong phase, the droplet can grow very large.</li>
 <li>The coherence length <span class="math inline">\(\xi\)</span> is a size of a typical droplet. As the critical point is approached, the free energy cost of making a droplet goes to zero, and the size of a typical droplet <span class="math inline">\(\xi\)</span> , goes to infinity.</li>
 </ul></li>
-<li>Boiling water is just a magnet. Vapor is just up-spin and liquid is just down-spin. collapsed:: true
+<li><p>Boiling water is just a magnet. Vapor is just up-spin and liquid is just down-spin.</p>
 <ul>
 <li>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, pp 297–299</li>
 <li>Droplet picture of correlation behaviour</li>
@@ -426,7 +621,7 @@ div.csl-indent {
 <li><img src="../assets/image_1689752122707_0.png" class="img-fluid" alt="image.png">{:height 285, :width 458}</li>
 <li></li>
 </ul></li>
-<li>The two questions to be explained. Both can be explained by renormalization.
+<li><p>The two questions to be explained. Both can be explained by renormalization.</p>
 <ul>
 <li>Why are the phase transitions stable under perturbation of the microscopic Hamiltonians of the systems?
 <ul>
@@ -437,12 +632,12 @@ div.csl-indent {
 <li>The renormalization flow depends on the symmetry and the dimension.</li>
 </ul></li>
 </ul></li>
-<li>Renormalization is not trivial.
+<li><p>Renormalization is not trivial.</p>
 <ul>
 <li>We may well try to simplify the nature of a model to the point where it represents a ‘mere caricature’ of reality. But notice that when one looks at a good political cartoon one can recognize the various characters even though the artist has portrayed them with but a few strokes. … [A] good theoretical model of a complex system should be like a good caricature: it should emphasize those features which are most important and should downplay the inessential details.” (Fisher 1983, p.&nbsp;47) Lange claims that here Fisher “seems to be supporting a ‘common features account’: the minimal model, despite being a caricature of some actual system, shares with it ‘those features which are most important’” (Lange 2015, p.&nbsp;299, fn. 3).</li>
 <li>But renormalization theory explains more: it explains why those features matter and others don’t. It explains why we have universal classes according to symmetry and dimension and not, say, the precise shape of the atomic force laws.</li>
 </ul></li>
-<li>Renormalization theory explains the use of effective Hamiltonians and toy models instead of microscopically accurate models. Specifically, one starts with some microscopic accurate model, then apply renormalization and show that the details fall away and we end up with the toy model.</li>
+<li><p>Renormalization theory explains the use of effective Hamiltonians and toy models instead of microscopically accurate models. Specifically, one starts with some microscopic accurate model, then apply renormalization and show that the details fall away and we end up with the toy model.</p></li>
 </ul>
 <section id="the-view-from-symmetries" class="level3">
 <h3 class="anchored" data-anchor-id="the-view-from-symmetries">The view from symmetries</h3>
@@ -681,12 +876,78 @@ div.csl-indent {
 </section>
 <section id="appendix" class="level2">
 <h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
-<p>I want to write about this someday: <span class="citation" data-cites="amirElementaryRenormalizationgroupApproach2020">(<a href="#ref-amirElementaryRenormalizationgroupApproach2020" role="doc-biblioref">Amir 2020</a>)</span></p>
+<section id="probability" class="level3">
+<h3 class="anchored" data-anchor-id="probability">Probability</h3>
+<p>This section is based on <span class="citation" data-cites="amirElementaryRenormalizationgroupApproach2020">(<a href="#ref-amirElementaryRenormalizationgroupApproach2020" role="doc-biblioref">Amir 2020</a>)</span>.</p>
+<p>Let’s take a look at the central limit theorem. It says that if <span class="math inline">\(X_1, X_2, \dots\)</span> are IID samples from a distribution with finite mean <span class="math inline">\(E[X]\)</span> and variance <span class="math inline">\(V[X]\)</span>, then <span class="math inline">\(\frac{(X_1 + \dots + X_n) - n E[X]}{\sqrt{n V[X]}}\)</span> converges to the standard normal distribution. If we think about it more carefully from the self-similarity point of view, we can think of it like this: we can decompose each <span class="math inline">\(X\)</span> into a sum of two random variables: <span class="math inline">\(X_i = A_i + Z_i\)</span>, where <span class="math inline">\(Z_i\)</span> is a normal distribution with the same mean and variance, and <span class="math inline">\(A_i\)</span> is the “noise” part of it. Each <span class="math inline">\(A_i\)</span> might be overpowering, but when we repeatedly coarse-grain by taking a bunch of <span class="math inline">\(X_i\)</span>, and adding them up (a lossy operation!), we would eventually destroy all traces of what cannot survive coarse-graining, and leaving behind a fixed-point of coarse-graining.</p>
+<p>SETUP.</p>
+<ul>
+<li><span class="math inline">\(X_1, X_2, \dots\)</span> are IID random variables, with characteristic function <span class="math inline">\(\phi_X(t)= E[e^{itX}]\)</span>.</li>
+<li><span class="math inline">\(S_n = X_1 + \dots + X_n\)</span>.</li>
+<li><span class="math inline">\(a_n, b_n\)</span> are two sequences of real numbers, such that <span class="math inline">\(\frac{S_n - b_n}{a_n}\)</span> converges in distribution to a nontrivial random variable <span class="math inline">\(Z\)</span> with characteristic function <span class="math inline">\(\phi(t)\)</span>.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Deriving the field equation by RN">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deriving the field equation by RN
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Since <span class="math inline">\(\frac{X_1 + \dots + X_n - b_n}{a_n}\)</span> converges in distribution to a nontrivial random variable, the sequence <span class="math inline">\(a_n\)</span> must diverge to infinity. For, if the sequence <span class="math inline">\(a_n\)</span> is bounded, then for large enough <span class="math inline">\(n\)</span> , the sum <span class="math inline">\(X_1 + \dots + X_n\)</span> would spread wider and wider, and dividing it by <span class="math inline">\(a_n\)</span> cannot keep it together.</p>
+<p>Let <span class="math inline">\(Z\)</span> be a random variable with characteristic function <span class="math inline">\(\phi\)</span>. By assumption, <span class="math inline">\((S_n- b_n)/a_n\)</span> is approximately distributed like <span class="math inline">\(Z\)</span> , that is, <span class="math inline">\(S_n\)</span> is approximately distributed as <span class="math inline">\(a_nZ + b_n\)</span>. Thus,</p>
+<p><span class="math display">\[\phi_{S_n}(t) \approx e^{ib_n t}\phi(a_nt )\]</span></p>
+<p>Given <span class="math inline">\(1 \ll n \ll N\)</span> , we can compute <span class="math inline">\(\phi_{S_N}\)</span> in two ways: adding it up as <span class="math inline">\(N\)</span> copies of <span class="math inline">\(X\)</span> , or adding it up as <span class="math inline">\(N/n\)</span> copies of <span class="math inline">\(S_n\)</span>. Both should give us the same result. That is: <span class="math display">\[\phi_{S_N} = \phi_X^N = \phi_{S_n}^{N/n}\]</span></p>
+<p>However, since <span class="math inline">\(n\)</span> is very large, we have the approximations <span class="math inline">\(\phi_{S_n}(t) \approx e^{ib_n t}\phi(a_nt )\)</span>. Thus, we have</p>
+<p><span class="math display">\[
+\ln \phi_{S_N}(t) \approx \frac{N}{n}(ib_n t + \ln\phi(a_n t))
+\]</span></p>
+<p>Note how we have an exponent of the form <span class="math inline">\(Nf(n)\)</span> , where <span class="math inline">\(N\)</span> is a very large number, and <span class="math inline">\(n\)</span> is a number that is small compared to it. This is a common pattern in RN calculation.</p>
+<p>Since <span class="math inline">\(n\)</span> is small compared to <span class="math inline">\(N\)</span> , but large compared to <span class="math inline">\(1\)</span> , we can pretend that it’s a continuous variable, and take derivative of it. Since the left side is independent of <span class="math inline">\(n\)</span> , the derivative should be zero:</p>
+<p><span class="math display">\[
+\partial_n \frac{N}{n}(ib_n t + \ln\phi(a_n t)) = 0
+\]</span></p>
+<p>Simplifying it, and substituting <span class="math inline">\(t\)</span> for <span class="math inline">\(a_n t\)</span> , we get the <strong>field equation</strong></p>
+<p><span class="math display">\[\frac{\phi'(t)}{\phi(t)}t - \ln \phi(t) \frac{a_n}{n \partial_n  a_n} + it\partial_n (b_n/n) \frac{n}{\partial_n a_n} = 0\]</span></p>
+</div>
+</div>
+</div>
+<p>Thus, we have obtained the field equation:</p>
+<p><span class="math display">\[\frac{\phi'(t)}{\phi(t)}t -\frac{a_n}{n \partial_n  a_n} \ln \phi(t)  + \frac{n\partial_n (b_n/n)}{\partial_n a_n} it = 0\]</span></p>
+<p>which we can solve by standard mathematical analysis without any more use of RN, so we don’t do those. You can read <span class="citation" data-cites="amirElementaryRenormalizationgroupApproach2020">(<a href="#ref-amirElementaryRenormalizationgroupApproach2020" role="doc-biblioref">Amir 2020</a>)</span> if you are interested.</p>
+<p>However, there is a problem: If we have a “field” equation, what is the “field”? Well, here is one way to think of it.</p>
+<p>Imagine a line of atoms, at locations <span class="math inline">\(1, 2, 3, \dots\)</span>. Each atom has a height <span class="math inline">\(X_1, X_2, X_3, \dots\)</span>. Now, we can coarse-grain the system by a factor of <span class="math inline">\(4\)</span>, by defining</p>
+<p><span class="math display">\[Y_1 = \frac{X_1 + \dots + X_4 - b_4}{a_4}, \quad Y_2 = \frac{X_5 + \dots + X_8 - b_4}{a_4}, \quad \dots\]</span></p>
+<p>from which we can perform another coarse-graining by a factor of <span class="math inline">\(100\)</span>, ending up with a coarse-grain by a factor of <span class="math inline">\(400\)</span>. Now, if the system has a nontrivial scaling limit, then this should give us the same result as doing a coarse-graining by <span class="math inline">\(5\)</span>, then by <span class="math inline">\(80\)</span>, or first <span class="math inline">\(6\)</span> then <span class="math inline">\(67\)</span>. This is the RN argument we used here.</p>
+<p>Now, since <span class="math inline">\(S_n \approx a_n Z + b_n\)</span>, we see that <span class="math inline">\(b_n\)</span> can be thought of as the coarse-grained height of height-field, and <span class="math inline">\(a_n\)</span> as the coarse-grained jaggedness of the height-field. Then, the field equation describes how the two numbers vary according to <span class="math inline">\(n\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercise: extreme value distribution">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise: extreme value distribution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The maximum of random variables often has a nontrivial scaling limit as well. That is, there exists some sequence <span class="math inline">\(a_n, b_n\)</span> such that <span class="math inline">\(\frac{\max(X_1, \dots, X_n) - b_n}{a_n}\)</span> converges to a nontrivial distribution with cumulative distribution function (CDF) <span class="math inline">\(F\)</span>.</p>
+<p>Let <span class="math inline">\(F_X\)</span> be the CDF of <span class="math inline">\(X\)</span>, then we have <span class="math inline">\(F_{\max(X_1, \dots, X_N)}(t) = F_{\max(X_1)}(t)^{N}\)</span>. Now, derive the field equation by an RN argument.</p>
+<p>Answer: <span class="math inline">\(\partial_n \frac 1n \ln F(\frac{t-b_n}{a_n}) = 0\)</span>.</p>
+</div>
+</div>
+</div>
 
 
 <!-- -->
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
@@ -714,11 +975,11 @@ Maris, Humphrey J., and Leo P. Kadanoff. 1978. <span>“Teaching the Renormaliza
 <div id="ref-sethnaCourseCracklingNoise2007" class="csl-entry" role="listitem">
 Sethna, James P. 2007. <span>“Course 6 <span>Crackling</span> Noise and Avalanches: <span>Scaling</span>, Critical Phenomena, and the Renormalization Group.”</span> <em>Les Houches</em> 85: 257–88. <a href="https://www.sciencedirect.com/science/article/pii/S0924809907800138">https://www.sciencedirect.com/science/article/pii/S0924809907800138</a>.
 </div>
+<div id="ref-simkinReinventingWillis2011" class="csl-entry" role="listitem">
+Simkin, M. V., and V. P. Roychowdhury. 2011. <span>“Re-Inventing <span>Willis</span>.”</span> <em>Physics Reports</em> 502 (1): 1–35. <a href="https://doi.org/10.1016/j.physrep.2010.12.004">https://doi.org/10.1016/j.physrep.2010.12.004</a>.
+</div>
 <div id="ref-stevensNeuralEventsPsychophysical1970" class="csl-entry" role="listitem">
 Stevens, S. S. 1970. <span>“Neural <span>Events</span> and the <span>Psychophysical Law</span>.”</span> <em>Science</em> 170 (3962): 1043–50. <a href="https://doi.org/10.1126/science.170.3962.1043">https://doi.org/10.1126/science.170.3962.1043</a>.
-</div>
-<div id="ref-stinchcombeIntroductionScalingConcepts1991" class="csl-entry" role="listitem">
-Stinchcombe, R. B. 1991. <span>“Introduction to <span>Scaling Concepts</span>.”</span> In <em>Scaling <span>Phenomena</span> in <span>Disordered Systems</span></em>, edited by Roger Pynn and Arne Skjeltorp, 13–30. Boston, MA: Springer US. <a href="https://doi.org/10.1007/978-1-4757-1402-9_2">https://doi.org/10.1007/978-1-4757-1402-9_2</a>.
 </div>
 <div id="ref-wilsonProblemsPhysicsMany1979" class="csl-entry" role="listitem">
 Wilson, Kenneth G. 1979. <span>“Problems in <span>Physics</span> with <span>Many Scales</span> of <span>Length</span>.”</span> <em>Scientific American</em> 241 (2): 158–79. <a href="https://doi.org/10.1038/scientificamerican0879-158">https://doi.org/10.1038/scientificamerican0879-158</a>.
@@ -1143,7 +1404,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="an">importance:</span><span class="co"> 4</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../../../utils/blog_utils/_macros.tex &gt;}}</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>{{&lt; include../../../utils/blog_utils/_macros.tex &gt;}}</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## What is renormalization?</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
@@ -1153,263 +1414,488 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## The logistic map: RN on $\R$</span></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Ising model: RN on a lattice</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/firefox-renormalization-group-theory.jpeg)</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">When an Ising model is at the critical temperature $T_c$, coarse-graining would not end up with all-black or all-white, but would have the same amount of details no matter how much we coarse-grain. Figure 13 from [@sethnaCourseCracklingNoise2007].</span><span class="co">](figure/ising%20model.png)</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>This is an example of **real space RN**. Real space RN is a garden of tricks,</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@yangSelectedPapers194519802005</span><span class="co">]</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Ising model in $\Z$</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>So far, we have been doing it for the Ising model on $\Z$. But it's clear that we can also do it for two $\Z$ put side-by-side like a ladder. Each "rung" of the ladder can be thought of as one big atom, with 4 possible states: up-up, up-down, down-up, down-down. We can then do the same calculation as the previous case, except that instead of a $2\times 2$ matrix, we have a $4 \times 4$ matrix.</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>For that matter, we can do it for any finite number of those $\Z$ put together. We can then imagine doing that for such ladders with widths $2, 3, 4, 5, 6, \dots$, then discover a pattern, and take the limit. If this works, we would solve the Ising model on $\Z^2$.</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>Arduous as it sounds, this is exactly how Lars Onsager arrived at his solution of the Ising model in $\Z^2$. He calculated up to ladders with width 6, diagonalizing matrices of size $64\times 64$ in the process, then he guessed the general pattern and proceeded from there, emboldened by the guess. As Chen-Ning Yang reported:</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In 1944, L. Onsager produced, quite unexpectedly, an exact evaluation of the partition function of the model in two dimensions. It was a real tour de force. I had studied his paper in Chicago in the spring of 1947, but did not understand the method, which was very, very complicated, with many algebraic somersaults. ...</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In March, 1965 ... I asked him how it came about that he took all those complicated algebraic steps in his paper of 1944. He said he had a lot of time during the war, so he began to diagonalize the transfer matrix, which had already been discussed by E. Montroll and by H. A. Kramers and G. H. Wannier. He started with a $2 \times \infty$, then a $3 \times \infty$, then a $4 \times \infty$ lattice. He then went on to a $5 \times \infty$ lattice, for which the transfer matrix is $32 \times 32$ in size. Such a matrix is quite large, but the experience he had gained with the smaller matrices came in handy, and he was able, after some time, to find all 32 of the eigenvalues. He proceeded then to the $6 \times \infty$ case, and eventually diagonalized the $64 \times 64$ matrix, finding that all the eigenvalues were of the form $e^{\pm \gamma_1 \pm \gamma_2 \pm \gamma_3 \pm \gamma_4 \pm \gamma_5 \pm \gamma_6}$. That led to the concept that the algebra of the problem was a product algebra, and hence the manipulations in his paper. </span><span class="co">[</span><span class="ot">@yangSelectedPapers194519802005, pages 11--13</span><span class="co">]</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>Thus, we obtain the self-similarity equation</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>f(x) = -\alpha f\left(f\left(\frac{x}{-\alpha} \right)\right)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>In words, if we scale up the graph for $f^2$ by $\alpha$, then rotate by 180 degrees, we get back the graph for $f$. </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>By eye-balling the curve, we see that $f$ should be an even function. Also, since the $f^2$ can be graphically calculated by doing the cobweb diagram with the graph of $f$, it does not matter if we first scale up the graph of $f$ by a factor of $r$ to $F$, then double it to $F^2$, or if we first double it to $f^2$, then scale its graph. We would get back the same thing. Thus, wolog, we can scale $f$ such that $f(0) = 1$.</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>So, our task is to solve the following equation:</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>\begin{cases}</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>f(x) = -\alpha f\left(f\left(\frac{x}{-\alpha} \right)\right)<span class="sc">\\</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>f(x) = 1 - a_2 x^2 + a_4 x^4 + \dots</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>\end{cases}</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Solving the equation at order 2" collapse="true" }</span>
 <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>I also want to quote this from the same pages, because it describes accurately what it feels like to do real-space RN:</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>At order 2, we approximate by $f(x) \approx 1 - a_2 x^2$, and ignore all higher-order terms. This gives us two equations for two unknowns:</span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; a long calculation, the longest in my career. Full of local, tactical tricks, the calculation proceeded by twists and turns. There were many obstructions. But always, after a few days, a new trick was somehow found that pointed to a new path. The trouble was that I soon felt I was in a maze and was not sure whether in fact, after so many turns, I was anywhere nearer the goal than when I began. This kind of strategic overview was very depressing, and several times I almost gave up. But each time something drew me back, usually a new tactical trick that brightened the scene, even though only locally. Finally, after about six months of work off and on, all the pieces suddenly fitted together, producing miraculous cancellations, and I was staring at the amazingly simple final result </span><span class="sc">\[</span><span class="at">spontaneous magnetization of the Ising model</span><span class="sc">\]</span><span class="at"> </span><span class="co">[</span><span class="ot">@yangSelectedPapers194519802005, page 12</span><span class="co">]</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="fu">### Kadanoff decimation, take 0</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>The problem: given a hexagonal grid, you make $p$ of them black and the rest white. What is the critical p where you get a percolation (infinitely big black island)?</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/hexagonal_decimation.png)</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/hexagonal_decimation_fixed_point.png)</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@stinchcombeIntroductionScalingConcepts1991</span><span class="co">]</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>Occupation probability $p$</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>Renormalization by the triangles, as shown. After one iteration, the lattice length increases from $l$ to $\sqrt 3 l$ , and the renormalized occupation probability changes from $p$ to $p^3 + 3p^2(1-p) = p^2(3-2p)$ .</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>\begin{cases}</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>1-a_2 = \frac{1}{-\alpha} <span class="sc">\\</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>\frac{2a_2^2}{\alpha} = a_2</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>\end{cases}</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>It has two solutions. One solution has $\alpha &lt; 0$, which we know is unphysical. The other one is </span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>\begin{cases}</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>\alpha = 1 + \sqrt{3} \approx 2.732 <span class="sc">\\</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>a_2 = \frac{1 + \sqrt{3}}{2} \approx 1.366</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>\end{cases}</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>The equilibrium point is $p=1/2$ . This is the percolation probability.</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>Let reduced probability be $\bar p = p-1/2$ . We find that renormalization makes $\bar p_{n+1} = \frac 32 \bar p_n$</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>What happens if we are not *exactly* at the fixed point, but starts slightly off? Let's say we start with a function $f_0(x) = 1 - a_{2,0}x^2$, where $a_{2,0} = a_2^* + \Delta$, where $a_2^*$ is the fixed point, and $\Delta$ is small but nonzero. Here we should think of the space of possible functions. Each point in this space is a possible scaling limit, but start a bit too small and we fall into boredom, start a bit too high and we fall into chaos. Start just right, and we harvest a beautiful fractal.</span>
 <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>Suppose we start with $\bar p_0$ , and we perform $N$ renormalizations to reach some constant $\Delta \bar p$ (for example, 0.001), then </span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>$$N = \frac{\ln \Delta \bar p - \ln \bar p_0}{\ln \frac 32}$$  and during the time, the lattice length increased by  </span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>$$3^{\frac 12 N} \propto \bar p_0^{-\frac{\ln 3}{2\ln \frac 32}} = \bar p_0^{-1.36}$$- Since at constant $\Delta \bar p$ , the lattice has a certain fixed look with a certain characteristic size for its clusters, we find that when the occupation probability is $p$ , the characteristic size of clusters scales as about $(p-1/2)^{-1.36}$ .</span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="fu">### Kadanoff decimation, take 1</span></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">Figure source</span><span class="co">](https://phas.ubc.ca/~berciu/TEACHING/PHYS502/PROJECTS/21-Jonah.pdf)</span>](figure/Kadanoff%20decimation.png)</span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="fu">### Kadanoff decimation, take 2</span></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@marisTeachingRenormalizationGroup1978</span><span class="co">]</span></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; This paper attracted much favorable notice since, beyond obtaining all the scaling properties, it seemed to lay out a direct route to the actual calculation of critical properties. On closer examination, however, the implied program seemed -- as I will explain briefly -- to **run rapidly into insuperable difficulties** and interest faded. In retrospect, however, Kadanoff's scaling picture embodied important features eventually seen to be basic to Wilson’s conception of the full renormalization group.</span></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@fisherRenormalizationGroupTheory1998</span><span class="co">]</span></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="fu">### Migdal bond-moving</span></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">Figure source</span><span class="co">](https://phas.ubc.ca/~berciu/TEACHING/PHYS502/PROJECTS/21-Jonah.pdf)</span>](figure/Migdal%20bond-moving.png)</span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>With that simple idea I somehow got within 0.23% of the exact answer. </span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## A bag of intuitions</span></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="fu">### Power laws are born of two exponential parents</span></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>In psychophysics, this is known as Stevens' power law <span class="co">[</span><span class="ot">@stevensNeuralEventsPsychophysical1970</span><span class="co">]</span>.</span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>Why is there a phase transition with polynomial decay? Two exponentials cancel exactly, leaving only a polynomial.</span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>Consider the Ising model on the plane. Fix an origin $0$ , and we ask, how strong is the correlation between the origin $0$ and a point that is at distance $(n, n)$ away from the origin, where $n$ is large?</span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>Well, the two points are correlated because they are connected by chains of spins. The more chains there are, the stronger the correlation, but the longer each chain is, the weaker the correlation.</span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>How many chains? The shortest chains are of length $2n$ , and there are</span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>$${2n \choose n} \sim \frac{4^{n}}{\sqrt{n\pi }}$$    of them (use Stirling approximation).  </span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>After one iteration, we have $f_1(x) = -\alpha_0 f_0(f_0(x/(-\alpha_0)))$, where $\alpha_0$ was fixed by $f_1(0) = 1$. This gives us</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>\begin{cases}</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>\alpha_0 = \frac{1}{-1+a_{2, 0}} <span class="sc">\\</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>\frac{2a_{2, 0}^2}{\alpha_0} = a_{2, 1}</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>\end{cases}</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>That is, we have the **renormalization flow equation**</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>2a_{2, 0}^2(a_{2, 0}-1)= a_{2, 1}</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>We can plot the space of all possible $f(x)$ as a line, like </span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>$$1-0x^2, 1-0.5 x^2, 1-x^2, 1-1.5x^2, \dots$$</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="al">![RN flow diagram of the self-similarity map at order 2.](figure/rn_flow_feigenbaum_2.svg)</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>This is a 1-dimensional slice of the space of all possible $f$ (the space of theories). Then, the effect of repeatedly applying the self-similarity map is to iterate the map $a_2 \mapsto 2a_{2}^2(a_{2}-1)$. If we are precisely at the fixed-point $a_2^*$, then we are not going anywhere, but if we are not exactly there, then since the slope of $a_2 \mapsto 2a_{2}^2(a_{2}-1)$ is $\delta \approx 5.73$ at that point, we would get farther and farther away:</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>f_0 = 1-(a_2^* + \Delta)x^2, \quad f_1 = 1-(a_2^* + \delta\Delta)x^2, \quad f_1 = 1-(a_2^* + \delta^2\Delta)x^2, \quad \dots</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>and after $\log_\delta(\frac{0.1}{\Delta})$, we would be at roughly $1-(a_2^* \pm 0.1)x^2$, which is when we can finally notice that we are *obviously* no longer in the neighborhood of the fixed point anymore. If we start at $a_2^* + \Delta/\delta$, then we can sustain the illusion for one more iteration. Similarly, if we start at $a_2^* + \Delta/\delta^n$, then we can sustain the illusion for $n$ more iterations.</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>Now, thinking back to what the logistic map says, we understand what we have discovered: The graph of $f_{r^* - \Delta}$ is similar to the graph of $f_{r^* - \Delta/\delta}^2$ scaled by $-\alpha$. If we let $r_1, r_2, r_3, \dots$ be the points at which the logistic map splits into a stable cycle of period $2^1, 2^2, 2^3, \dots$, then we have $r_{n} \approx r^* - \Delta/\delta^{n}$, and so we have:</span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>\frac{r^* - r_n}{r^* - r_{n+1}} \to \delta</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>This is usually spoken in this way: the intervals between two bifurcations shrinks at a rate of $\delta$. </span>
 <span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>Each chain has an exponential decay. We can use the 1D Ising model transfer matrix</span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>$$M^n = \begin{bmatrix}</span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>      \frac{1 + \tanh^n(\beta J)}{2} &amp; \frac{1 - \tanh^n(\beta J)}{2} <span class="sc">\\</span></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>      \frac{1 - \tanh^n(\beta J)}{2} &amp; \frac{1 + \tanh^n(\beta J)}{2}</span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>      \end{bmatrix}$$</span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>The correlation is $\tanh^n(\beta J)$ .</span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>Since the chain has length $2n$ , we need to use $\tanh^{2n}(\beta J)$ .</span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>We can think of spin at origin as $x_{(0,0)} + z_1 + z_2 + \cdots$ and the spin at $(n, n)$ as $x_{(n,n)} + z_1 + z_2 + \cdots$ , where $z_1, z_2, ...$ are random variables that are responsible for creating the correlations between the two spins along each chain. Then, since $\ket{z_i}=0$ , we have correlation</span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>$$\sim \frac{4^{n}}{\sqrt{n\pi }} \tanh^{2n}(\beta J)$$</span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>The two terms are exactly balanced when $\beta J = \tanh^{-1}(1/2) = 0.549\cdots$ .</span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>Now, the exact result is $\beta J = 0.44\cdots$ , so our crude estimate is only $25\%$ too high.</span>
-<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>Now, right at the critical point, the correlation is $\sim (n\pi)^{-1/2}$ , so we see that when the exponential decay in correlation is exactly matched with the exponential growth in possible paths, the remaining polynomial decay comes to the fore.</span>
-<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>Notice that we have also calculated one of the Ising critical exponents: $\nu = 1/2$ . The actual answer is $1$ , but it is actually $1/2$ for all dimensions $\geq 4$ (the mean field theory).</span>
-<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>Similarly, with </span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>$$\binom{kn}{n, \cdots n}\sim \frac{k^{kn}}{n^{\frac{k-1}2}}\frac{k^{1/2}}{(2\pi)^{\frac{k-1}2}}$$    we can estimate the critical $\beta J \approx \tanh^{-1}(1/k)$ in $k$ -dimensions.</span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="fu">## Universality</span></span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@battermanUniversalityRGExplanations2019</span><span class="co">]</span></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="al">![The bifurcation diagram for the logistic map. As the bifurcations approach the point of chaos, the interval between two bifurcations gets shorter and shorter, at a rate of $\delta$ per bifurcation.](figure/feigenbaum_delta_bifurcation_diagram.png)</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>$\delta$ is called **Feigenbaum's first constant**, and $\alpha$ is **Feigenbaum's second constant**.</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Solving the equation at order 4" collapse="true" }</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>Similarly, we can solve the equation at order 4 by plugging in $f(x) \approx 1 - a_2 x^2 + a_4 x^4$, obtaining 3 equations for 3 variables:</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>\begin{cases}</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>1-a_2+a_4 = \frac{1}{-\alpha} <span class="sc">\\</span></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>\frac{2a_2^2 - 4a_2a_4}{\alpha} = a_2 <span class="sc">\\</span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>\frac{a_4(4a_4+6a_2^2) - a_2(2a_4 + a_2^2)}{-\alpha^2} = a_4</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>\end{cases}</span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>To solve this numerically, first guess a solution from the previous one, $\alpha \approx 2.732, a_2 \approx 1.366$, then plug into the first equation to get $a_4 \approx 0$. Then, standard numerical root-finding gives </span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>\begin{cases}</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>\alpha \approx 2.534 <span class="sc">\\</span></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>a_2 \approx 1.522 <span class="sc">\\</span> </span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>a_4 \approx 0.128</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>\end{cases}</span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The theory of critical points in phase transitions is the paradigm example of universality.</span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>macroscale - mesoscale - microscale</span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>macroscale: thermodynamics, continuum, no fluctuation.</span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>mesoscale: fluctuations in aggregates of atomic scale properties may be important, order parameters code for some feature of the microstructure.</span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>microscale: particles and quantum mechanics.</span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Criticality is just the space between two characteristic scales. The real question is why do we have characteristic scales that are so wide apart?</span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>BIB. Statistical physics: statics, dynamics and renormalization (Kadanoff 2000), p. 251</span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>shows an amazing variety of length scales: There is the Hubble radius of the universe, $10^{10}$ light years or so and the radius of our own solar system, $10^{11}$ meters roughly, and us-two meters perhaps, and an atom $-10^{-10}$ meters in radius, and a proton $10^{-16}$ meters, and the characteristic length of quantum gravity-which involves another factor of about $10^{20}$ .</span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>    How these vastly different lengths arise is a very interesting and fundamental question. ... However, we can think about how one describes the region between these lengths. If one is looking at scales between two fundamental lengths, there are no nearby characteristic lengths. Similarly in critical phenomena, whenever one looks <span class="co">[</span><span class="ot">at</span><span class="co">]</span> any event which takes place between the scale of the lattice constant <span class="co">[</span><span class="ot">the spacing between molecules or spins</span><span class="co">]</span> and the much larger scale of the coherence length, one is in a situation in which there are no nearby characteristic lengths.  </span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Near the critical point, fluctuations are dominant and average values for the order parameters lose their meaning. Equilibrium statistical mechanics is unable to describe the critical behavior because there are fluctuations at all length scales.</span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The universality hypothesis</span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, p 273.</span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>All phase transition problems can be divided into a small number of different classes depending upon the dimensionality of the system and the symmetries of the order state. Within each class, all phase transitions have identical behaviour in the critical region, only the names of the variables are changed.</span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Universality hypothesis implies that if we have two Hamiltonians $H_1, H_2$ where one can be smoothly perturbed to the other by $H_\lambda := (1-\lambda)H_1 + \lambda H_2$ , and renormalization works on $\lambda$ , then we can run the same scaling law method with $\lambda$ too, and so the scaling laws for $H_1, H_2$ are the same.</span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, p 275-276</span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Correlation length $\xi$ is the largest fluctuation droplet that can form before it contains so much excess free energy that equilibrium thermodynamics asserts itself.</span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, p 274.</span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Just below the critical temperature, the system has a free choice to make between being a liquid at high density or a vapor at low density. Both choices are equally good. But since liquid wants to be in contact with liquid and vapor with vapor, the system must decide.</span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>A natural fluctuation produces a droplet of the wrong phase. This droplet secretes other material of the same density, and it grows larger and larger. It stops growing when the cost in available—i.e. free-energy for making the droplet of wrong phase becomes comparable with kT. Since near the critical point it cost very little free energy per unit volume to make the wrong phase, the droplet can grow very large.</span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>The coherence length $\xi$ is a size of a typical droplet. As the critical point is approached, the free energy cost of making a droplet goes to zero, and the size of a typical droplet $\xi$ , goes to infinity.</span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Boiling water is just a magnet. Vapor is just up-spin and liquid is just down-spin.</span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>  collapsed:: true</span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, pp 297--299</span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Droplet picture of correlation behaviour</span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>However, as criticality is approached, the difference in magnetization between the two different phases gets smaller and smaller. Hence the energetic cost per unit area of producing a region of the wrong phase approaches zero. For this reason, the area of a droplet and its radius both can get very, very large. Critical phenomena are connected with large-scale but weak fluctuations in the magnetization.</span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>So far, our picture of critical fluctuations is like that in Fig. 1.3. Droplets with spin down of all sizes up to a maximum size $\xi$ appear near the critical point. However, this picture is incomplete. Each fluctuating region is also a nearly-critical system. Fluctuations appear within the droplets.</span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="al">![image.png](../assets/image_1689752136072_0.png)</span>{:height 469, :width 477}</span>
-<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="al">![image.png](../assets/image_1689752122707_0.png)</span>{:height 285, :width 458}</span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>  -</span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The two questions to be explained. Both can be explained by renormalization.</span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Why are the phase transitions stable under perturbation of the microscopic Hamiltonians of the systems?</span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>The universality class is the basin of attraction of the fixed point. Scaling exponents and other universal properties are determined by the flow in a neighborhood of the fixed point.</span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Why are the universality classes dependent upon the symmetry of the order parameter and the dimension?</span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>The renormalization flow depends on the symmetry and the dimension.</span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Renormalization is not trivial.</span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>We may well try to simplify the nature of a model to the point where it represents a ‘mere caricature’ of reality. But notice that when one looks at a good political cartoon one can recognize the various characters even though the artist has portrayed them with but a few strokes. … <span class="co">[</span><span class="ot">A</span><span class="co">]</span> good theoretical model of a complex system should be like a good caricature: it should emphasize those features which are most important and should downplay the inessential details.” (Fisher 1983, p. 47) Lange claims that here Fisher “seems to be supporting a ‘common features account’: the minimal model, despite being a caricature of some actual system, shares with it ‘those features which are most important’ ” (Lange 2015, p. 299, fn. 3).</span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>But renormalization theory explains more: it explains why those features matter and others don't. It explains why we have universal classes according to symmetry and dimension and not, say, the precise shape of the atomic force laws.</span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Renormalization theory explains the use of effective Hamiltonians and toy models instead of microscopically accurate models. Specifically, one starts with some microscopic accurate model, then apply renormalization and show that the details fall away and we end up with the toy model.</span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a><span class="fu">### The view from symmetries</span></span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>| physical system | site types |</span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>|---|---|---|</span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>| uniaxial magnet | up / down | </span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>| fluid | has atom / no atom |</span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>| brass crystal | zinc / copper |</span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>| simple lattice field theory | has particle / no particle |</span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>| d | n | Theoretical Model (Ising Model) | Physical System | Order Parameter |</span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>|---|---|---|---|---| </span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>| 2 | 1 | Two dimensions | Adsorbed films | Surface density |</span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>|  | 2 | XY model in two dimensions | Helium-4 films | Amplitude of superfluid phase |</span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>|  | 3 | Heisenberg model in two dimensions |  | Magnetization |</span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>| &gt;2 | ∞ | "Spherical" model | None |  |</span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>| 3 | 0 | Self-avoiding random walk | Conformation of long-chain polymers | Density of chain ends |</span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>|  | 1 | Ising model in three dimensions | Uniaxial ferromagnet | Magnetization |</span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>|  |  |  | Fluid near a critical point | Density difference between phases |</span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>|  |  |  | Mixture of liquids near consolute point | Concentration difference |</span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>|  |  |  | Alloy near order-disorder transition | Concentration difference |</span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>|  | 2 | XY model in three dimensions | Planar ferromagnet | Magnetization |</span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>|  |  |  | Helium 4 near superfluid transition | Amplitude of superfluid phase |</span>
-<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>|  | 3 | Heisenberg model in three dimensions | Isotropic ferromagnet | Magnetization |</span>
-<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>| ≤4 | -2 |  | None |  |</span>
-<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a>|  | 32 | Quantum chromodynamics | Quarks bound in protons, neutrons, etc. |  |</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>We can also make the same argument using a flow in theory-space, except now we are doing it over a 2-dimensional slice of it. The flow map is</span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>F(a_2, a_4) = \left(</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>   (2a_2^2 - 4a_2a_4)(-1+a_2 - a_4), -(a_4(4a_4+6a_2^2) - a_2(2a_4 + a_2^2))(-1+a_2 - a_4)^3</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>\right)</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>At the fixed-point $(a_2, a_4) = (1.522, 0.128)$, the Jacobian matrix is</span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>\nabla F = \begin{bmatrix}</span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>6.0506 &amp; -6.2524 <span class="sc">\\</span></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>1.2621 &amp; -1.6909</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>\end{bmatrix}</span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>This matrix has eigenvalues of $4.843, -0.483$, so it is a saddle point, with $\delta = 4.843$. The flow and the eigenvectors $(0.982, 0.190), (0.691, 0.723)$ are plotted below.</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="al">![RN flow diagram of the self-similarity map at order 4. The two eigenvector directions at the fixed point are plotted as dashed lines.](figure/rn_flow_feigenbaum_4.svg)</span></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>In summary:</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>|    | Order  2 |   4 |  $\infty$ |</span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>|-----|-----|-----|----|</span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>| $a_2$  | 1.366 | 1.522 | 1.530 |</span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>| $a_4$  |     | 0.128 | 0.105 |</span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>| $\alpha$   | 2.732 | 2.534 | 2.503 |</span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>| $\delta$  | 5.73 | 4.843 | 4.669 |</span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>: The solution to the self-similarity equation, at increasingly high orders of approximation</span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>Even in this tiny problem, we can already draw several lessons, which will appear again and again in RN:</span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>We assume a function is self-similar, and calculate from there.</span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Self-similarity is a transform on a function (or "theory").</span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>If we repeatedly apply the self-similarity transform on a function, we would obtain a scaling limit, a perfectly self-similar object -- a fractal.</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>In the space of all possible theories, the self-similarity transform creates a flow-field in the theory space. The interesting fixed-points of the flow-field are its saddle points.</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The largest eigenvalue of the saddle point describes what happens when you are close to the saddle point, but not quite there.</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Bravely calculate using the cheapest approximation you can think of. It often gets you within 50% of the right answer.</span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>But if you want accuracy, you can always use a computer and calculate many orders higher.</span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Ising model: RN on a lattice</span></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/firefox-renormalization-group-theory.jpeg)</span></span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">When an Ising model is at the critical temperature $T_c$, coarse-graining would not end up with all-black or all-white, but would have the same amount of details no matter how much we coarse-grain. Figure 13 from [@sethnaCourseCracklingNoise2007].</span><span class="co">](figure/ising%20model.png)</span></span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>This is an example of **real space RN**. Real space RN is a garden of tricks,</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@yangSelectedPapers194519802005</span><span class="co">]</span></span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Ising model in $\Z$</span></span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>So far, we have been doing it for the Ising model on $\Z$. But it's clear that we can also do it for two $\Z$ put side-by-side like a ladder. Each "rung" of the ladder can be thought of as one big atom, with 4 possible states: up-up, up-down, down-up, down-down. We can then do the same calculation as the previous case, except that instead of a $2\times 2$ matrix, we have a $4 \times 4$ matrix.</span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>For that matter, we can do it for any finite number of those $\Z$ put together. We can then imagine doing that for such ladders with widths $2, 3, 4, 5, 6, \dots$, then discover a pattern, and take the limit. If this works, we would solve the Ising model on $\Z^2$.</span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>Arduous as it sounds, this is exactly how Lars Onsager arrived at his solution of the Ising model in $\Z^2$. He calculated up to ladders with width 6, diagonalizing matrices of size $64\times 64$ in the process, then he guessed the general pattern and proceeded from there, emboldened by the guess. As Chen-Ning Yang reported:</span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In 1944, L. Onsager produced, quite unexpectedly, an exact evaluation of the partition function of the model in two dimensions. It was a real tour de force. I had studied his paper in Chicago in the spring of 1947, but did not understand the method, which was very, very complicated, with many algebraic somersaults....</span></span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In March, 1965... I asked him how it came about that he took all those complicated algebraic steps in his paper of 1944. He said he had a lot of time during the war, so he began to diagonalize the transfer matrix, which had already been discussed by E. Montroll and by H. A. Kramers and G. H. Wannier. He started with a $2 \times \infty$, then a $3 \times \infty$, then a $4 \times \infty$ lattice. He then went on to a $5 \times \infty$ lattice, for which the transfer matrix is $32 \times 32$ in size. Such a matrix is quite large, but the experience he had gained with the smaller matrices came in handy, and he was able, after some time, to find all 32 of the eigenvalues. He proceeded then to the $6 \times \infty$ case, and eventually diagonalized the $64 \times 64$ matrix, finding that all the eigenvalues were of the form $e^{\pm \gamma_1 \pm \gamma_2 \pm \gamma_3 \pm \gamma_4 \pm \gamma_5 \pm \gamma_6}$. That led to the concept that the algebra of the problem was a product algebra, and hence the manipulations in his paper. </span><span class="co">[</span><span class="ot">@yangSelectedPapers194519802005, pages 11--13</span><span class="co">]</span></span>
 <span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a>Table reproduced from <span class="co">[</span><span class="ot">@wilsonProblemsPhysicsMany1979</span><span class="co">]</span>.</span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a>I also want to quote this from the same pages, because it describes accurately what it feels like to do real-space RN:</span>
 <span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a><span class="fu">### $d=1$: Droplets inside droplets</span></span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; a long calculation, the longest in my career. Full of local, tactical tricks, the calculation proceeded by twists and turns. There were many obstructions. But always, after a few days, a new trick was somehow found that pointed to a new path. The trouble was that I soon felt I was in a maze and was not sure whether in fact, after so many turns, I was anywhere nearer the goal than when I began. This kind of strategic overview was very depressing, and several times I almost gave up. But each time something drew me back, usually a new tactical trick that brightened the scene, even though only locally. Finally, after about six months of work off and on, all the pieces suddenly fitted together, producing miraculous cancellations, and I was staring at the amazingly simple final result </span><span class="sc">\[</span><span class="at">spontaneous magnetization of the Ising model</span><span class="sc">\]</span><span class="at"> </span><span class="co">[</span><span class="ot">@yangSelectedPapers194519802005, page 12</span><span class="co">]</span></span>
 <span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a>Critical opalescence, boiling, </span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a><span class="fu">### Kadanoff decimation, take 0</span></span>
 <span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">High-resolution reprint of [@guggenheimPrincipleCorrespondingStates1945, figure 2] in [@herbutModernApproachCritical2007, page 13].</span><span class="co">](figure/herbut_2007_corresponding_states.png)</span></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a>This section based on <span class="co">[</span><span class="ot">@simkinReinventingWillis2011, section 10</span><span class="co">]</span>, which contains an extensive bibliography.</span>
 <span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">@kadanoffOrderChaosII1999, page 298</span><span class="co">]</span>](figure/kadanoff_1999_fig_1_3.png)</span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>The problem: given a hexagonal grid, you make $p$ of them black and the rest white. What is the critical $p$ where you get a percolation (infinitely big black island)?</span>
 <span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">@kadanoffOrderChaosII1999, page 299</span><span class="co">]</span>](figure/kadanoff_1999_fig_1_4.png)</span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>Renormalization by the triangles, as shown. After one iteration, the lattice length increases from $l$ to $\sqrt 3 l$ , and the renormalized occupation probability changes from $p$ to $p^3 + 3p^2(1-p) = p^2(3-2p)$.</span>
 <span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a>Just below the critical temperature, the system has a free choice to make between being a liquid at high density or a vapor at low density. Both choices are equally good. But since liquid wants to be in contact with liquid and vapor with vapor, the system must decide.</span>
-<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a>A natural fluctuation produces a droplet of the wrong phase. This droplet secretes other material of the same density, and it grows larger and larger. It stops growing when the cost in available—i.e. free-energy for making the droplet of wrong phase becomes comparable with kT. Since near the critical point it cost very little free energy per unit volume to make the wrong phase, the droplet can grow very large.</span>
-<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>The coherence length $\xi$ is a size of a typical droplet. As the critical point is approached, the free energy cost of making a droplet goes to zero, and the size of a typical droplet $\xi$, goes to infinity.</span>
-<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>However, as criticality is approached, the difference in magnetization between the two different phases gets smaller and smaller. Hence the energetic cost per unit area of producing a region of the wrong phase approaches zero. For this reason, the area of a droplet and its radius both can get very, very large. Critical phenomena are connected with large-scale but weak fluctuations in the magnetization.</span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">Kadanoff decimation on a triangular lattice. [@simkinReinventingWillis2011, figure 1]</span><span class="co">](figure/hexagonal_decimation.png)</span></span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>The equilibrium point is $p=1/2$. This is the percolation probability. Let the reduced probability be $\bar p = p-1/2$. We find that one iteration of the RN flow makes $\bar p_{n+1} = \frac 32 \bar p - 2 \bar p^3$ which is $\approx \frac 32 \bar p_n$ for small values of $\bar p$. </span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a><span class="al">![RN flow for Kadanoff decimation on a triangular lattice, on a 1-dimensional slice.](figure/rn_flow_hexagonal_grid_1.svg)</span></span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>Suppose we start with $\bar p_0$ , and we perform $N$ repeats of RN to reach some constant $\Delta \bar p$ (for example, 0.001), then </span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>$$N = \frac{\ln \Delta \bar p - \ln \bar p_0}{\ln \frac 32}$$</span>
 <span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>So far, our picture of critical fluctuations is like that in Fig. 1.3. Droplets with spin down of all sizes up to a maximum size $\xi$ appear near the critical point. However, this picture is incomplete. Each fluctuating region is also a nearly-critical system. Fluctuations appear within the droplets.</span>
-<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>As you approach $T_c = 2.269\dots$ from above, you notice that little droplets seem to condense out of a hot grey gas.</span>
-<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a>Define reduced temperature as $t = T/T_c - 1$. So that critical point is $t=0$. When t is 0.1, there are small droplets. When t = 0.05, the droplets grow larger, but! If you zoom out by a factor of x (you can measure it experimentally by running two simulations and try to match them by eye, or by taking screenshots and match them with an image frequency analyzer), they look the same. </span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>during which time, the lattice length has increased by</span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>$$3^{\frac 12 N} \propto \bar p_0^{-\frac{\ln 3}{2\ln \frac 32}} = \bar p_0^{-1.36}$$</span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a>Since at constant $\Delta \bar p$, the lattice has a certain fixed look-and-feel with a certain characteristic size for its clusters, we find that the characteristic length of its clusters is $\propto (p-1/2)^{-1.36}$. The actual exponent (named $\nu$) is exactly $1$. Not bad for such a cheap calculation!</span>
 <span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>So, this means that spatially zooming out by x is equivalent to increasing the reduced temperature by 2.</span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a><span class="fu">### Kadanoff decimation, take 1</span></span>
 <span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a>It is a similar thing for $t &lt; 0$. At $t = -1$, the entire field freezes into one color. As t increases, small droplets appear... There is another scaling law. By renormalization theory, the two scaling laws have the same exponent. </span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">Figure source</span><span class="co">](https://phas.ubc.ca/~berciu/TEACHING/PHYS502/PROJECTS/21-Jonah.pdf)</span>](figure/Kadanoff%20decimation.png)</span>
 <span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a>Renormalization is doing a zooming of the system. We start with the full system, then zoom it to describe it in a similar way that loses some details (and gains some details). This gives us another system. Repeated renormalization then is moving from one system to another in the space of possible systems.</span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a><span class="fu">### Kadanoff decimation, take 2</span></span>
 <span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a>This is called "renormalization flow in the space of Hamiltonians".</span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@marisTeachingRenormalizationGroup1978</span><span class="co">]</span></span>
 <span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a>The fixed points of the flow are then critical systems. You apply the RN and get the same thing. This is a fractal, because zooming in you get the same thing. So it also has a power law, $1/f^a$ noise, and other things that fractals have.</span>
-<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Big whirls have little whirls that feed on their velocity,</span></span>
-<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; and little whirls have lesser whirls and so on to viscosity.</span></span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; This paper attracted much favorable notice since, beyond obtaining all the scaling properties, it seemed to lay out a direct route to the actual calculation of critical properties. On closer examination, however, the implied program seemed -- as I will explain briefly -- to **run rapidly into insuperable difficulties** and interest faded. In retrospect, however, Kadanoff's scaling picture embodied important features eventually seen to be basic to Wilson’s conception of the full renormalization group.</span></span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@fisherRenormalizationGroupTheory1998</span><span class="co">]</span></span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a><span class="fu">### Migdal bond-moving</span></span>
 <span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a><span class="fu">### Videos and interactives</span></span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">Figure source</span><span class="co">](https://phas.ubc.ca/~berciu/TEACHING/PHYS502/PROJECTS/21-Jonah.pdf)</span>](figure/Migdal%20bond-moving.png)</span>
 <span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Complexity Explorables | I sing well-tempered</span><span class="co">](https://www.complexity-explorables.org/explorables/i-sing-well-tempered/)</span></span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>With that simple idea I somehow got within 0.23% of the exact answer. </span>
 <span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Ising model</span><span class="co">](https://www.ibiblio.org/e-notes/Perc/ising1k.htm)</span></span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## A bag of intuitions</span></span>
 <span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">The Renormalisation Group - YouTube</span><span class="co">](https://www.youtube.com/watch?v=MxRddFrEnPc)</span></span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a><span class="fu">### Power laws are born of two exponential parents</span></span>
 <span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a><span class="fu">## Field theory: RN on $\R^d$ where $d\to \infty$</span></span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>In psychophysics, this is known as Stevens' power law <span class="co">[</span><span class="ot">@stevensNeuralEventsPsychophysical1970</span><span class="co">]</span>.</span>
 <span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wilson's Nobel Prize: RN flow in theory-space</span></span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a>Why is there a phase transition with polynomial decay? Two exponentials cancel exactly, leaving only a polynomial.</span>
 <span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>Kenneth Wilson was awarded the 1982 Nobel Prize in Physics for his work on phase transitions</span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>Consider the Ising model on the plane. Fix an origin $0$ , and we ask, how strong is the correlation between the origin $0$ and a point that is at distance $(n, n)$ away from the origin, where $n$ is large?</span>
 <span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>The modern perspective is the perspective of  <span class="co">[</span><span class="ot">@fisherRenormalizationGroupTheory1998</span><span class="co">]</span></span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>Well, the two points are correlated because they are connected by chains of spins. The more chains there are, the stronger the correlation, but the longer each chain is, the weaker the correlation.</span>
 <span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">@fisherRenormalizationGroupTheory1998, figure 4</span><span class="co">]</span>](figure/fisher_1998_fig_4.png)</span>
-<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">@fisherRenormalizationGroupTheory1998, figure 5</span><span class="co">]</span>](figure/fisher_1998_fig_5.png)</span>
-<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>How many chains? The shortest chains are of length $2n$ , and there are</span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>$${2n \choose n} \sim \frac{4^{n}}{\sqrt{n\pi }}$$</span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>of them (use Stirling approximation).  </span>
 <span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reprise: What is renormalization?</span></span>
-<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a><span class="fu">### Universality</span></span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a>In the early 20th century, material scientists noticed the remarkable phenomenon of "corresponding states".</span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>Each chain has an exponential decay. We can use the 1D Ising model transfer matrix</span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a>$$M^n = \begin{bmatrix}</span>
+<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a>      \frac{1 + \tanh^n(\beta J)}{2} &amp; \frac{1 - \tanh^n(\beta J)}{2} <span class="sc">\\</span></span>
+<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>      \frac{1 - \tanh^n(\beta J)}{2} &amp; \frac{1 + \tanh^n(\beta J)}{2}</span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>      \end{bmatrix}</span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sociophysics</span></span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a>The correlation is $\tanh^n(\beta J)$.</span>
 <span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>A koan</span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>Since the chain has length $2n$ , we need to use $\tanh^{2n}(\beta J)$.</span>
 <span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; "The details don't matter." said them triumphantly as they declared their independence from biophysics.</span></span>
-<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; "'the details don't matter.'" said them mockingly as they declared their insurrection against sociophysics.</span></span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>We can think of spin at origin as $x_{(0,0)} + z_1 + z_2 + \cdots$ and the spin at $(n, n)$ as $x_{(n,n)} + z_1 + z_2 + \cdots$ , where $z_1, z_2,...$ are random variables that are responsible for creating the correlations between the two spins along each chain. Then, since $\ket{z_i}=0$ , we have correlation</span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>$$\sim \frac{4^{n}}{\sqrt{n\pi }} \tanh^{2n}(\beta J)$$</span>
 <span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>Explanation:</span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>The two terms are exactly balanced when $\beta J = \tanh^{-1}(1/2) = 0.549\cdots$.</span>
 <span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>The traditional approach of historians, going back to the days of "kings and battles", is to run to personality theory and the individual acts when confronted by a problem in sociology or economics! One establishes the individual actors, makes some (hopefully) sensible approximations of their personality makeups and then proceeds to attempt to explain for events, actions and so on. However, for truly complicated systems in what, these days, is much better called "sociophysics", this is a hopeless task; furthermore, in many ways it is not even a very sensible one! The modern attitude is, rather, that the task of the theorist is to understand what is going on and to elucidate which are the crucial features of the problem. If one had a perfect archive of exactly what every person thought and said during the start of WWI, one would still have no understanding of why it started!</span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>Now, the exact result is $\beta J = 0.44\cdots$ , so our crude estimate is only $25\%$ too high.</span>
 <span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a>More is different <span class="co">[</span><span class="ot">@andersonMoreDifferent1972</span><span class="co">]</span></span>
+<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a>Now, right at the critical point, the correlation is $\sim (n\pi)^{-1/2}$ , so we see that when the exponential decay in correlation is exactly matched with the exponential growth in possible paths, the remaining polynomial decay comes to the fore.</span>
 <span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a><span class="fu">## Appendix</span></span>
+<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a>Notice that we have also calculated one of the Ising critical exponents: $\nu = 1/2$. The actual answer is $1$ , but it is actually $1/2$ for all dimensions $\geq 4$ (the mean field theory).</span>
 <span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>I want to write about this someday: <span class="co">[</span><span class="ot">@amirElementaryRenormalizationgroupApproach2020</span><span class="co">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>Similarly, with </span>
+<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a>$$\binom{kn}{n, \cdots n}\sim \frac{k^{kn}}{n^{\frac{k-1}2}}\frac{k^{1/2}}{(2\pi)^{\frac{k-1}2}}$$</span>
+<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a>we can estimate the critical $\beta J \approx \tanh^{-1}(1/k)$ in $k$ -dimensions.</span>
+<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a><span class="fu">## Universality</span></span>
+<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@battermanUniversalityRGExplanations2019</span><span class="co">]</span></span>
+<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The theory of critical points in phase transitions is the paradigm example of universality.</span>
+<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>macroscale - mesoscale - microscale</span>
+<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>macroscale: thermodynamics, continuum, no fluctuation.</span>
+<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>mesoscale: fluctuations in aggregates of atomic scale properties may be important, order parameters code for some feature of the microstructure.</span>
+<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>microscale: particles and quantum mechanics.</span>
+<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Criticality is just the space between two characteristic scales. The real question is why do we have characteristic scales that are so wide apart?</span>
+<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>BIB. Statistical physics: statics, dynamics and renormalization (Kadanoff 2000), p. 251</span>
+<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>shows an amazing variety of length scales: There is the Hubble radius of the universe, $10^{10}$ light years or so and the radius of our own solar system, $10^{11}$ meters roughly, and us-two meters perhaps, and an atom $-10^{-10}$ meters in radius, and a proton $10^{-16}$ meters, and the characteristic length of quantum gravity-which involves another factor of about $10^{20}$.</span>
+<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a>    How these vastly different lengths arise is a very interesting and fundamental question.... However, we can think about how one describes the region between these lengths. If one is looking at scales between two fundamental lengths, there are no nearby characteristic lengths. Similarly in critical phenomena, whenever one looks <span class="co">[</span><span class="ot">at</span><span class="co">]</span> any event which takes place between the scale of the lattice constant <span class="co">[</span><span class="ot">the spacing between molecules or spins</span><span class="co">]</span> and the much larger scale of the coherence length, one is in a situation in which there are no nearby characteristic lengths.  </span>
+<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Near the critical point, fluctuations are dominant and average values for the order parameters lose their meaning. Equilibrium statistical mechanics is unable to describe the critical behavior because there are fluctuations at all length scales.</span>
+<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The universality hypothesis</span>
+<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, p 273.</span>
+<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>All phase transition problems can be divided into a small number of different classes depending upon the dimensionality of the system and the symmetries of the order state. Within each class, all phase transitions have identical behaviour in the critical region, only the names of the variables are changed.</span>
+<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Universality hypothesis implies that if we have two Hamiltonians $H_1, H_2$ where one can be smoothly perturbed to the other by $H_\lambda := (1-\lambda)H_1 + \lambda H_2$ , and renormalization works on $\lambda$ , then we can run the same scaling law method with $\lambda$ too, and so the scaling laws for $H_1, H_2$ are the same.</span>
+<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, p 275-276</span>
+<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Correlation length $\xi$ is the largest fluctuation droplet that can form before it contains so much excess free energy that equilibrium thermodynamics asserts itself.</span>
+<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, p 274.</span>
+<span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Just below the critical temperature, the system has a free choice to make between being a liquid at high density or a vapor at low density. Both choices are equally good. But since liquid wants to be in contact with liquid and vapor with vapor, the system must decide.</span>
+<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>A natural fluctuation produces a droplet of the wrong phase. This droplet secretes other material of the same density, and it grows larger and larger. It stops growing when the cost in available—i.e. free-energy for making the droplet of wrong phase becomes comparable with kT. Since near the critical point it cost very little free energy per unit volume to make the wrong phase, the droplet can grow very large.</span>
+<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>The coherence length $\xi$ is a size of a typical droplet. As the critical point is approached, the free energy cost of making a droplet goes to zero, and the size of a typical droplet $\xi$ , goes to infinity.</span>
+<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Boiling water is just a magnet. Vapor is just up-spin and liquid is just down-spin.</span>
+<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, pp 297--299</span>
+<span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Droplet picture of correlation behaviour</span>
+<span id="cb1-317"><a href="#cb1-317" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>However, as criticality is approached, the difference in magnetization between the two different phases gets smaller and smaller. Hence the energetic cost per unit area of producing a region of the wrong phase approaches zero. For this reason, the area of a droplet and its radius both can get very, very large. Critical phenomena are connected with large-scale but weak fluctuations in the magnetization.</span>
+<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>So far, our picture of critical fluctuations is like that in Fig. 1.3. Droplets with spin down of all sizes up to a maximum size $\xi$ appear near the critical point. However, this picture is incomplete. Each fluctuating region is also a nearly-critical system. Fluctuations appear within the droplets.</span>
+<span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="al">![image.png](../assets/image_1689752136072_0.png)</span>{:height 469, :width 477}</span>
+<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="al">![image.png](../assets/image_1689752122707_0.png)</span>{:height 285, :width 458}</span>
+<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a>  -</span>
+<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The two questions to be explained. Both can be explained by renormalization.</span>
+<span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Why are the phase transitions stable under perturbation of the microscopic Hamiltonians of the systems?</span>
+<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>The universality class is the basin of attraction of the fixed point. Scaling exponents and other universal properties are determined by the flow in a neighborhood of the fixed point.</span>
+<span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Why are the universality classes dependent upon the symmetry of the order parameter and the dimension?</span>
+<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>The renormalization flow depends on the symmetry and the dimension.</span>
+<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Renormalization is not trivial.</span>
+<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>We may well try to simplify the nature of a model to the point where it represents a ‘mere caricature’ of reality. But notice that when one looks at a good political cartoon one can recognize the various characters even though the artist has portrayed them with but a few strokes. … <span class="co">[</span><span class="ot">A</span><span class="co">]</span> good theoretical model of a complex system should be like a good caricature: it should emphasize those features which are most important and should downplay the inessential details.” (Fisher 1983, p. 47) Lange claims that here Fisher “seems to be supporting a ‘common features account’: the minimal model, despite being a caricature of some actual system, shares with it ‘those features which are most important’ ” (Lange 2015, p. 299, fn. 3).</span>
+<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>But renormalization theory explains more: it explains why those features matter and others don't. It explains why we have universal classes according to symmetry and dimension and not, say, the precise shape of the atomic force laws.</span>
+<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Renormalization theory explains the use of effective Hamiltonians and toy models instead of microscopically accurate models. Specifically, one starts with some microscopic accurate model, then apply renormalization and show that the details fall away and we end up with the toy model.</span>
+<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a><span class="fu">### The view from symmetries</span></span>
+<span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a>| physical system | site types |</span>
+<span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a>|---|---|---|</span>
+<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a>| uniaxial magnet | up / down | </span>
+<span id="cb1-337"><a href="#cb1-337" aria-hidden="true" tabindex="-1"></a>| fluid | has atom / no atom |</span>
+<span id="cb1-338"><a href="#cb1-338" aria-hidden="true" tabindex="-1"></a>| brass crystal | zinc / copper |</span>
+<span id="cb1-339"><a href="#cb1-339" aria-hidden="true" tabindex="-1"></a>| simple lattice field theory | has particle / no particle |</span>
+<span id="cb1-340"><a href="#cb1-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-341"><a href="#cb1-341" aria-hidden="true" tabindex="-1"></a>| d | n | Theoretical Model (Ising Model) | Physical System | Order Parameter |</span>
+<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a>|---|---|---|---|---| </span>
+<span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a>| 2 | 1 | Two dimensions | Adsorbed films | Surface density |</span>
+<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a>|  | 2 | XY model in two dimensions | Helium-4 films | Amplitude of superfluid phase |</span>
+<span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a>|  | 3 | Heisenberg model in two dimensions |  | Magnetization |</span>
+<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a>| &gt;2 | ∞ | "Spherical" model | None |  |</span>
+<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a>| 3 | 0 | Self-avoiding random walk | Conformation of long-chain polymers | Density of chain ends |</span>
+<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a>|  | 1 | Ising model in three dimensions | Uniaxial ferromagnet | Magnetization |</span>
+<span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a>|  |  |  | Fluid near a critical point | Density difference between phases |</span>
+<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a>|  |  |  | Mixture of liquids near consolute point | Concentration difference |</span>
+<span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a>|  |  |  | Alloy near order-disorder transition | Concentration difference |</span>
+<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>|  | 2 | XY model in three dimensions | Planar ferromagnet | Magnetization |</span>
+<span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a>|  |  |  | Helium 4 near superfluid transition | Amplitude of superfluid phase |</span>
+<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a>|  | 3 | Heisenberg model in three dimensions | Isotropic ferromagnet | Magnetization |</span>
+<span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a>| ≤4 | -2 |  | None |  |</span>
+<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>|  | 32 | Quantum chromodynamics | Quarks bound in protons, neutrons, etc. |  |</span>
+<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a>Table reproduced from <span class="co">[</span><span class="ot">@wilsonProblemsPhysicsMany1979</span><span class="co">]</span>.</span>
+<span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a><span class="fu">### $d=1$: Droplets inside droplets</span></span>
+<span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a>Critical opalescence, boiling, </span>
+<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">High-resolution reprint of [@guggenheimPrincipleCorrespondingStates1945, figure 2] in [@herbutModernApproachCritical2007, page 13].</span><span class="co">](figure/herbut_2007_corresponding_states.png)</span></span>
+<span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">@kadanoffOrderChaosII1999, page 298</span><span class="co">]</span>](figure/kadanoff_1999_fig_1_3.png)</span>
+<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">@kadanoffOrderChaosII1999, page 299</span><span class="co">]</span>](figure/kadanoff_1999_fig_1_4.png)</span>
+<span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a>Just below the critical temperature, the system has a free choice to make between being a liquid at high density or a vapor at low density. Both choices are equally good. But since liquid wants to be in contact with liquid and vapor with vapor, the system must decide.</span>
+<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a>A natural fluctuation produces a droplet of the wrong phase. This droplet secretes other material of the same density, and it grows larger and larger. It stops growing when the cost in available—i.e. free-energy for making the droplet of wrong phase becomes comparable with kT. Since near the critical point it cost very little free energy per unit volume to make the wrong phase, the droplet can grow very large.</span>
+<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-375"><a href="#cb1-375" aria-hidden="true" tabindex="-1"></a>The coherence length $\xi$ is a size of a typical droplet. As the critical point is approached, the free energy cost of making a droplet goes to zero, and the size of a typical droplet $\xi$, goes to infinity.</span>
+<span id="cb1-376"><a href="#cb1-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a>However, as criticality is approached, the difference in magnetization between the two different phases gets smaller and smaller. Hence the energetic cost per unit area of producing a region of the wrong phase approaches zero. For this reason, the area of a droplet and its radius both can get very, very large. Critical phenomena are connected with large-scale but weak fluctuations in the magnetization.</span>
+<span id="cb1-378"><a href="#cb1-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-379"><a href="#cb1-379" aria-hidden="true" tabindex="-1"></a>So far, our picture of critical fluctuations is like that in Fig. 1.3. Droplets with spin down of all sizes up to a maximum size $\xi$ appear near the critical point. However, this picture is incomplete. Each fluctuating region is also a nearly-critical system. Fluctuations appear within the droplets.</span>
+<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a>As you approach $T_c = 2.269\dots$ from above, you notice that little droplets seem to condense out of a hot grey gas.</span>
+<span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a>Define reduced temperature as $t = T/T_c - 1$. So that critical point is $t=0$. When t is 0.1, there are small droplets. When t = 0.05, the droplets grow larger, but! If you zoom out by a factor of x (you can measure it experimentally by running two simulations and try to match them by eye, or by taking screenshots and match them with an image frequency analyzer), they look the same. </span>
+<span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a>So, this means that spatially zooming out by x is equivalent to increasing the reduced temperature by 2.</span>
+<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a>It is a similar thing for $t &lt; 0$. At $t = -1$, the entire field freezes into one color. As t increases, small droplets appear... There is another scaling law. By renormalization theory, the two scaling laws have the same exponent. </span>
+<span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-388"><a href="#cb1-388" aria-hidden="true" tabindex="-1"></a>Renormalization is doing a zooming of the system. We start with the full system, then zoom it to describe it in a similar way that loses some details (and gains some details). This gives us another system. Repeated renormalization then is moving from one system to another in the space of possible systems.</span>
+<span id="cb1-389"><a href="#cb1-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-390"><a href="#cb1-390" aria-hidden="true" tabindex="-1"></a>This is called "renormalization flow in the space of Hamiltonians".</span>
+<span id="cb1-391"><a href="#cb1-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-392"><a href="#cb1-392" aria-hidden="true" tabindex="-1"></a>The fixed points of the flow are then critical systems. You apply the RN and get the same thing. This is a fractal, because zooming in you get the same thing. So it also has a power law, $1/f^a$ noise, and other things that fractals have.</span>
+<span id="cb1-393"><a href="#cb1-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-394"><a href="#cb1-394" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Big whirls have little whirls that feed on their velocity,</span></span>
+<span id="cb1-395"><a href="#cb1-395" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb1-396"><a href="#cb1-396" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; and little whirls have lesser whirls and so on to viscosity.</span></span>
+<span id="cb1-397"><a href="#cb1-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-398"><a href="#cb1-398" aria-hidden="true" tabindex="-1"></a><span class="fu">### Videos and interactives</span></span>
+<span id="cb1-399"><a href="#cb1-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-400"><a href="#cb1-400" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Complexity Explorables | I sing well-tempered</span><span class="co">](https://www.complexity-explorables.org/explorables/i-sing-well-tempered/)</span></span>
+<span id="cb1-401"><a href="#cb1-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-402"><a href="#cb1-402" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Ising model</span><span class="co">](https://www.ibiblio.org/e-notes/Perc/ising1k.htm)</span></span>
+<span id="cb1-403"><a href="#cb1-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-404"><a href="#cb1-404" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">The Renormalisation Group - YouTube</span><span class="co">](https://www.youtube.com/watch?v=MxRddFrEnPc)</span></span>
+<span id="cb1-405"><a href="#cb1-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-406"><a href="#cb1-406" aria-hidden="true" tabindex="-1"></a><span class="fu">## Field theory: RN on $\R^d$ where $d\to \infty$</span></span>
+<span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wilson's Nobel Prize: RN flow in theory-space</span></span>
+<span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a>Kenneth Wilson was awarded the 1982 Nobel Prize in Physics for his work on phase transitions</span>
+<span id="cb1-411"><a href="#cb1-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-412"><a href="#cb1-412" aria-hidden="true" tabindex="-1"></a>The modern perspective is the perspective of  <span class="co">[</span><span class="ot">@fisherRenormalizationGroupTheory1998</span><span class="co">]</span></span>
+<span id="cb1-413"><a href="#cb1-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-414"><a href="#cb1-414" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">@fisherRenormalizationGroupTheory1998, figure 4</span><span class="co">]</span>](figure/fisher_1998_fig_4.png)</span>
+<span id="cb1-415"><a href="#cb1-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-416"><a href="#cb1-416" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">@fisherRenormalizationGroupTheory1998, figure 5</span><span class="co">]</span>](figure/fisher_1998_fig_5.png)</span>
+<span id="cb1-417"><a href="#cb1-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-418"><a href="#cb1-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-419"><a href="#cb1-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-420"><a href="#cb1-420" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reprise: What is renormalization?</span></span>
+<span id="cb1-421"><a href="#cb1-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-422"><a href="#cb1-422" aria-hidden="true" tabindex="-1"></a><span class="fu">### Universality</span></span>
+<span id="cb1-423"><a href="#cb1-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-424"><a href="#cb1-424" aria-hidden="true" tabindex="-1"></a>In the early 20th century, material scientists noticed the remarkable phenomenon of "corresponding states".</span>
+<span id="cb1-425"><a href="#cb1-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-426"><a href="#cb1-426" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sociophysics</span></span>
+<span id="cb1-427"><a href="#cb1-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-428"><a href="#cb1-428" aria-hidden="true" tabindex="-1"></a>A koan</span>
+<span id="cb1-429"><a href="#cb1-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-430"><a href="#cb1-430" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; "The details don't matter." said them triumphantly as they declared their independence from biophysics.</span></span>
+<span id="cb1-431"><a href="#cb1-431" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb1-432"><a href="#cb1-432" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; "'the details don't matter.'" said them mockingly as they declared their insurrection against sociophysics.</span></span>
+<span id="cb1-433"><a href="#cb1-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-434"><a href="#cb1-434" aria-hidden="true" tabindex="-1"></a>Explanation:</span>
+<span id="cb1-435"><a href="#cb1-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-436"><a href="#cb1-436" aria-hidden="true" tabindex="-1"></a>The traditional approach of historians, going back to the days of "kings and battles", is to run to personality theory and the individual acts when confronted by a problem in sociology or economics! One establishes the individual actors, makes some (hopefully) sensible approximations of their personality makeups and then proceeds to attempt to explain for events, actions and so on. However, for truly complicated systems in what, these days, is much better called "sociophysics", this is a hopeless task; furthermore, in many ways it is not even a very sensible one! The modern attitude is, rather, that the task of the theorist is to understand what is going on and to elucidate which are the crucial features of the problem. If one had a perfect archive of exactly what every person thought and said during the start of WWI, one would still have no understanding of why it started!</span>
+<span id="cb1-437"><a href="#cb1-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-438"><a href="#cb1-438" aria-hidden="true" tabindex="-1"></a>More is different <span class="co">[</span><span class="ot">@andersonMoreDifferent1972</span><span class="co">]</span></span>
+<span id="cb1-439"><a href="#cb1-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-440"><a href="#cb1-440" aria-hidden="true" tabindex="-1"></a><span class="fu">## Appendix</span></span>
+<span id="cb1-441"><a href="#cb1-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-442"><a href="#cb1-442" aria-hidden="true" tabindex="-1"></a><span class="fu">### Probability</span></span>
+<span id="cb1-443"><a href="#cb1-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-444"><a href="#cb1-444" aria-hidden="true" tabindex="-1"></a>This section is based on <span class="co">[</span><span class="ot">@amirElementaryRenormalizationgroupApproach2020</span><span class="co">]</span>.</span>
+<span id="cb1-445"><a href="#cb1-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-446"><a href="#cb1-446" aria-hidden="true" tabindex="-1"></a>Let's take a look at the central limit theorem. It says that if $X_1, X_2, \dots$ are IID samples from a distribution with finite mean $E<span class="co">[</span><span class="ot">X</span><span class="co">]</span>$ and variance $V<span class="co">[</span><span class="ot">X</span><span class="co">]</span>$, then $\frac{(X_1 + \dots + X_n) - n E<span class="co">[</span><span class="ot">X</span><span class="co">]</span>}{\sqrt{n V<span class="co">[</span><span class="ot">X</span><span class="co">]</span>}}$ converges to the standard normal distribution. If we think about it more carefully from the self-similarity point of view, we can think of it like this: we can decompose each $X$ into a sum of two random variables: $X_i = A_i + Z_i$, where $Z_i$ is a normal distribution with the same mean and variance, and $A_i$ is the "noise" part of it. Each $A_i$ might be overpowering, but when we repeatedly coarse-grain by taking a bunch of $X_i$, and adding them up (a lossy operation!), we would eventually destroy all traces of what cannot survive coarse-graining, and leaving behind a fixed-point of coarse-graining.</span>
+<span id="cb1-447"><a href="#cb1-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-448"><a href="#cb1-448" aria-hidden="true" tabindex="-1"></a>SETUP.</span>
+<span id="cb1-449"><a href="#cb1-449" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-450"><a href="#cb1-450" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>$X_1, X_2, \dots$ are IID random variables, with characteristic function $\phi_X(t)= E<span class="co">[</span><span class="ot">e^{itX}</span><span class="co">]</span>$.</span>
+<span id="cb1-451"><a href="#cb1-451" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>$S_n = X_1 + \dots + X_n$.</span>
+<span id="cb1-452"><a href="#cb1-452" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>$a_n, b_n$ are two sequences of real numbers, such that $\frac{S_n - b_n}{a_n}$ converges in distribution to a nontrivial random variable $Z$ with characteristic function $\phi(t)$.</span>
+<span id="cb1-453"><a href="#cb1-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-454"><a href="#cb1-454" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Deriving the field equation by RN" collapse="true" }</span>
+<span id="cb1-455"><a href="#cb1-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-456"><a href="#cb1-456" aria-hidden="true" tabindex="-1"></a>Since $\frac{X_1 + \dots + X_n - b_n}{a_n}$ converges in distribution to a nontrivial random variable, the sequence $a_n$ must diverge to infinity. For, if the sequence $a_n$ is bounded, then for large enough $n$ , the sum $X_1 + \dots + X_n$ would spread wider and wider, and dividing it by $a_n$ cannot keep it together.</span>
+<span id="cb1-457"><a href="#cb1-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-458"><a href="#cb1-458" aria-hidden="true" tabindex="-1"></a>Let $Z$ be a random variable with characteristic function $\phi$. By assumption, $(S_n- b_n)/a_n$ is approximately distributed like $Z$ , that is, $S_n$ is approximately distributed as $a_nZ + b_n$. Thus,</span>
+<span id="cb1-459"><a href="#cb1-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-460"><a href="#cb1-460" aria-hidden="true" tabindex="-1"></a>$$\phi_{S_n}(t) \approx e^{ib_n t}\phi(a_nt )$$</span>
+<span id="cb1-461"><a href="#cb1-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-462"><a href="#cb1-462" aria-hidden="true" tabindex="-1"></a>Given $1 \ll n \ll N$ , we can compute $\phi_{S_N}$ in two ways: adding it up as $N$ copies of $X$ , or adding it up as $N/n$ copies of $S_n$. Both should give us the same result. That is:</span>
+<span id="cb1-463"><a href="#cb1-463" aria-hidden="true" tabindex="-1"></a>$$\phi_{S_N} = \phi_X^N = \phi_{S_n}^{N/n}$$</span>
+<span id="cb1-464"><a href="#cb1-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-465"><a href="#cb1-465" aria-hidden="true" tabindex="-1"></a>However, since $n$ is very large, we have the approximations $\phi_{S_n}(t) \approx e^{ib_n t}\phi(a_nt )$. Thus, we have</span>
+<span id="cb1-466"><a href="#cb1-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-467"><a href="#cb1-467" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-468"><a href="#cb1-468" aria-hidden="true" tabindex="-1"></a>\ln \phi_{S_N}(t) \approx \frac{N}{n}(ib_n t + \ln\phi(a_n t))</span>
+<span id="cb1-469"><a href="#cb1-469" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-470"><a href="#cb1-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-471"><a href="#cb1-471" aria-hidden="true" tabindex="-1"></a>Note how we have an exponent of the form $Nf(n)$ , where $N$ is a very large number, and $n$ is a number that is small compared to it. This is a common pattern in RN calculation.</span>
+<span id="cb1-472"><a href="#cb1-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-473"><a href="#cb1-473" aria-hidden="true" tabindex="-1"></a>Since $n$ is small compared to $N$ , but large compared to $1$ , we can pretend that it's a continuous variable, and take derivative of it. Since the left side is independent of $n$ , the derivative should be zero:</span>
+<span id="cb1-474"><a href="#cb1-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-475"><a href="#cb1-475" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-476"><a href="#cb1-476" aria-hidden="true" tabindex="-1"></a>\partial_n \frac{N}{n}(ib_n t + \ln\phi(a_n t)) = 0</span>
+<span id="cb1-477"><a href="#cb1-477" aria-hidden="true" tabindex="-1"></a>$$  </span>
+<span id="cb1-478"><a href="#cb1-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-479"><a href="#cb1-479" aria-hidden="true" tabindex="-1"></a>Simplifying it, and substituting $t$ for $a_n t$ , we get the **field equation**</span>
+<span id="cb1-480"><a href="#cb1-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-481"><a href="#cb1-481" aria-hidden="true" tabindex="-1"></a>$$\frac{\phi'(t)}{\phi(t)}t - \ln \phi(t) \frac{a_n}{n \partial_n  a_n} + it\partial_n (b_n/n) \frac{n}{\partial_n a_n} = 0$$</span>
+<span id="cb1-482"><a href="#cb1-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-483"><a href="#cb1-483" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-484"><a href="#cb1-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-485"><a href="#cb1-485" aria-hidden="true" tabindex="-1"></a>Thus, we have obtained the field equation:</span>
+<span id="cb1-486"><a href="#cb1-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-487"><a href="#cb1-487" aria-hidden="true" tabindex="-1"></a>$$\frac{\phi'(t)}{\phi(t)}t -\frac{a_n}{n \partial_n  a_n} \ln \phi(t)  + \frac{n\partial_n (b_n/n)}{\partial_n a_n} it = 0$$</span>
+<span id="cb1-488"><a href="#cb1-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-489"><a href="#cb1-489" aria-hidden="true" tabindex="-1"></a>which we can solve by standard mathematical analysis without any more use of RN, so we don't do those. You can read <span class="co">[</span><span class="ot">@amirElementaryRenormalizationgroupApproach2020</span><span class="co">]</span> if you are interested.</span>
+<span id="cb1-490"><a href="#cb1-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-491"><a href="#cb1-491" aria-hidden="true" tabindex="-1"></a>However, there is a problem: If we have a "field" equation, what is the "field"?  Well, here is one way to think of it.</span>
+<span id="cb1-492"><a href="#cb1-492" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-493"><a href="#cb1-493" aria-hidden="true" tabindex="-1"></a>Imagine a line of atoms, at locations $1, 2, 3, \dots$. Each atom has a height $X_1, X_2, X_3, \dots$. Now, we can coarse-grain the system by a factor of $4$, by defining </span>
+<span id="cb1-494"><a href="#cb1-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-495"><a href="#cb1-495" aria-hidden="true" tabindex="-1"></a>$$Y_1 = \frac{X_1 + \dots + X_4 - b_4}{a_4}, \quad Y_2 = \frac{X_5 + \dots + X_8 - b_4}{a_4}, \quad \dots$$</span>
+<span id="cb1-496"><a href="#cb1-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-497"><a href="#cb1-497" aria-hidden="true" tabindex="-1"></a>from which we can perform another coarse-graining by a factor of $100$, ending up with a coarse-grain by a factor of $400$. Now, if the system has a nontrivial scaling limit, then this should give us the same result as doing a coarse-graining by $5$, then by $80$, or first $6$ then $67$. This is the RN argument we used here.</span>
+<span id="cb1-498"><a href="#cb1-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-499"><a href="#cb1-499" aria-hidden="true" tabindex="-1"></a>Now, since $S_n \approx a_n Z + b_n$, we see that $b_n$ can be thought of as the coarse-grained height of height-field, and $a_n$ as the  coarse-grained jaggedness of the height-field. Then, the field equation describes how the two numbers vary according to $n$.</span>
+<span id="cb1-500"><a href="#cb1-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-501"><a href="#cb1-501" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Exercise: extreme value distribution" collapse="true" }</span>
+<span id="cb1-502"><a href="#cb1-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-503"><a href="#cb1-503" aria-hidden="true" tabindex="-1"></a>The maximum of random variables often has a nontrivial scaling limit as well. That is, there exists some sequence $a_n, b_n$ such that $\frac{\max(X_1, \dots, X_n) - b_n}{a_n}$ converges to a nontrivial distribution with cumulative distribution function (CDF) $F$.</span>
+<span id="cb1-504"><a href="#cb1-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-505"><a href="#cb1-505" aria-hidden="true" tabindex="-1"></a>Let $F_X$ be the CDF of $X$, then we have $F_{\max(X_1, \dots, X_N)}(t) = F_{\max(X_1)}(t)^{N}$. Now, derive the field equation by an RN argument.</span>
+<span id="cb1-506"><a href="#cb1-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-507"><a href="#cb1-507" aria-hidden="true" tabindex="-1"></a>Answer: $\partial_n \frac 1n \ln F(\frac{t-b_n}{a_n}) = 0$.</span>
+<span id="cb1-508"><a href="#cb1-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-509"><a href="#cb1-509" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

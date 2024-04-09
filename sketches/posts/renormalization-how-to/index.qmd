@@ -15,7 +15,7 @@ confidence: "certain"
 importance: 4
 ---
 
-{{< include ../../../utils/blog_utils/_macros.tex >}}
+{{< include../../../utils/blog_utils/_macros.tex >}}
 
 ## What is renormalization?
 
@@ -24,6 +24,156 @@ Renormalization is not group theory. The name "renormalization group theory" is 
 
 
 ## The logistic map: RN on $\R$
+
+
+Thus, we obtain the self-similarity equation
+
+$$
+f(x) = -\alpha f\left(f\left(\frac{x}{-\alpha} \right)\right)
+$$
+
+In words, if we scale up the graph for $f^2$ by $\alpha$, then rotate by 180 degrees, we get back the graph for $f$. 
+
+By eye-balling the curve, we see that $f$ should be an even function. Also, since the $f^2$ can be graphically calculated by doing the cobweb diagram with the graph of $f$, it does not matter if we first scale up the graph of $f$ by a factor of $r$ to $F$, then double it to $F^2$, or if we first double it to $f^2$, then scale its graph. We would get back the same thing. Thus, wolog, we can scale $f$ such that $f(0) = 1$.
+
+So, our task is to solve the following equation:
+
+$$
+\begin{cases}
+f(x) = -\alpha f\left(f\left(\frac{x}{-\alpha} \right)\right)\\
+f(x) = 1 - a_2 x^2 + a_4 x^4 + \dots
+\end{cases}
+$$
+
+::: {.callout-note title="Solving the equation at order 2" collapse="true" }
+
+At order 2, we approximate by $f(x) \approx 1 - a_2 x^2$, and ignore all higher-order terms. This gives us two equations for two unknowns:
+
+$$
+\begin{cases}
+1-a_2 = \frac{1}{-\alpha} \\
+\frac{2a_2^2}{\alpha} = a_2
+\end{cases}
+$$
+
+It has two solutions. One solution has $\alpha < 0$, which we know is unphysical. The other one is 
+
+$$
+\begin{cases}
+\alpha = 1 + \sqrt{3} \approx 2.732 \\
+a_2 = \frac{1 + \sqrt{3}}{2} \approx 1.366
+\end{cases}
+$$
+
+:::
+
+What happens if we are not *exactly* at the fixed point, but starts slightly off? Let's say we start with a function $f_0(x) = 1 - a_{2,0}x^2$, where $a_{2,0} = a_2^* + \Delta$, where $a_2^*$ is the fixed point, and $\Delta$ is small but nonzero. Here we should think of the space of possible functions. Each point in this space is a possible scaling limit, but start a bit too small and we fall into boredom, start a bit too high and we fall into chaos. Start just right, and we harvest a beautiful fractal.
+
+After one iteration, we have $f_1(x) = -\alpha_0 f_0(f_0(x/(-\alpha_0)))$, where $\alpha_0$ was fixed by $f_1(0) = 1$. This gives us
+
+$$
+\begin{cases}
+\alpha_0 = \frac{1}{-1+a_{2, 0}} \\
+\frac{2a_{2, 0}^2}{\alpha_0} = a_{2, 1}
+\end{cases}
+$$
+
+That is, we have the **renormalization flow equation**
+
+$$
+2a_{2, 0}^2(a_{2, 0}-1)= a_{2, 1}
+$$
+
+We can plot the space of all possible $f(x)$ as a line, like 
+
+$$1-0x^2, 1-0.5 x^2, 1-x^2, 1-1.5x^2, \dots$$
+
+![RN flow diagram of the self-similarity map at order 2.](figure/rn_flow_feigenbaum_2.svg)
+
+This is a 1-dimensional slice of the space of all possible $f$ (the space of theories). Then, the effect of repeatedly applying the self-similarity map is to iterate the map $a_2 \mapsto 2a_{2}^2(a_{2}-1)$. If we are precisely at the fixed-point $a_2^*$, then we are not going anywhere, but if we are not exactly there, then since the slope of $a_2 \mapsto 2a_{2}^2(a_{2}-1)$ is $\delta \approx 5.73$ at that point, we would get farther and farther away:
+
+$$
+f_0 = 1-(a_2^* + \Delta)x^2, \quad f_1 = 1-(a_2^* + \delta\Delta)x^2, \quad f_1 = 1-(a_2^* + \delta^2\Delta)x^2, \quad \dots
+$$
+
+and after $\log_\delta(\frac{0.1}{\Delta})$, we would be at roughly $1-(a_2^* \pm 0.1)x^2$, which is when we can finally notice that we are *obviously* no longer in the neighborhood of the fixed point anymore. If we start at $a_2^* + \Delta/\delta$, then we can sustain the illusion for one more iteration. Similarly, if we start at $a_2^* + \Delta/\delta^n$, then we can sustain the illusion for $n$ more iterations.
+
+Now, thinking back to what the logistic map says, we understand what we have discovered: The graph of $f_{r^* - \Delta}$ is similar to the graph of $f_{r^* - \Delta/\delta}^2$ scaled by $-\alpha$. If we let $r_1, r_2, r_3, \dots$ be the points at which the logistic map splits into a stable cycle of period $2^1, 2^2, 2^3, \dots$, then we have $r_{n} \approx r^* - \Delta/\delta^{n}$, and so we have:
+
+$$
+\frac{r^* - r_n}{r^* - r_{n+1}} \to \delta
+$$
+
+This is usually spoken in this way: the intervals between two bifurcations shrinks at a rate of $\delta$. 
+
+![The bifurcation diagram for the logistic map. As the bifurcations approach the point of chaos, the interval between two bifurcations gets shorter and shorter, at a rate of $\delta$ per bifurcation.](figure/feigenbaum_delta_bifurcation_diagram.png)
+
+$\delta$ is called **Feigenbaum's first constant**, and $\alpha$ is **Feigenbaum's second constant**.
+
+::: {.callout-note title="Solving the equation at order 4" collapse="true" }
+
+Similarly, we can solve the equation at order 4 by plugging in $f(x) \approx 1 - a_2 x^2 + a_4 x^4$, obtaining 3 equations for 3 variables:
+
+$$
+\begin{cases}
+1-a_2+a_4 = \frac{1}{-\alpha} \\
+\frac{2a_2^2 - 4a_2a_4}{\alpha} = a_2 \\
+\frac{a_4(4a_4+6a_2^2) - a_2(2a_4 + a_2^2)}{-\alpha^2} = a_4
+\end{cases}
+$$
+
+To solve this numerically, first guess a solution from the previous one, $\alpha \approx 2.732, a_2 \approx 1.366$, then plug into the first equation to get $a_4 \approx 0$. Then, standard numerical root-finding gives 
+
+$$
+\begin{cases}
+\alpha \approx 2.534 \\
+a_2 \approx 1.522 \\ 
+a_4 \approx 0.128
+\end{cases}
+$$
+
+:::
+
+We can also make the same argument using a flow in theory-space, except now we are doing it over a 2-dimensional slice of it. The flow map is
+
+$$
+F(a_2, a_4) = \left(
+   (2a_2^2 - 4a_2a_4)(-1+a_2 - a_4), -(a_4(4a_4+6a_2^2) - a_2(2a_4 + a_2^2))(-1+a_2 - a_4)^3
+\right)
+$$
+
+At the fixed-point $(a_2, a_4) = (1.522, 0.128)$, the Jacobian matrix is
+$$
+\nabla F = \begin{bmatrix}
+6.0506 & -6.2524 \\
+1.2621 & -1.6909
+\end{bmatrix}
+$$
+
+This matrix has eigenvalues of $4.843, -0.483$, so it is a saddle point, with $\delta = 4.843$. The flow and the eigenvectors $(0.982, 0.190), (0.691, 0.723)$ are plotted below.
+
+![RN flow diagram of the self-similarity map at order 4. The two eigenvector directions at the fixed point are plotted as dashed lines.](figure/rn_flow_feigenbaum_4.svg)
+
+In summary:
+
+|    | Order  2 |   4 |  $\infty$ |
+|-----|-----|-----|----|
+| $a_2$  | 1.366 | 1.522 | 1.530 |
+| $a_4$  |     | 0.128 | 0.105 |
+| $\alpha$   | 2.732 | 2.534 | 2.503 |
+| $\delta$  | 5.73 | 4.843 | 4.669 |
+
+: The solution to the self-similarity equation, at increasingly high orders of approximation
+
+Even in this tiny problem, we can already draw several lessons, which will appear again and again in RN:
+
+* We assume a function is self-similar, and calculate from there.
+* Self-similarity is a transform on a function (or "theory").
+* If we repeatedly apply the self-similarity transform on a function, we would obtain a scaling limit, a perfectly self-similar object -- a fractal.
+* In the space of all possible theories, the self-similarity transform creates a flow-field in the theory space. The interesting fixed-points of the flow-field are its saddle points.
+* The largest eigenvalue of the saddle point describes what happens when you are close to the saddle point, but not quite there.
+* Bravely calculate using the cheapest approximation you can think of. It often gets you within 50% of the right answer.
+* But if you want accuracy, you can always use a computer and calculate many orders higher.
 
 ## The Ising model: RN on a lattice
 
@@ -43,9 +193,9 @@ For that matter, we can do it for any finite number of those $\Z$ put together. 
 
 Arduous as it sounds, this is exactly how Lars Onsager arrived at his solution of the Ising model in $\Z^2$. He calculated up to ladders with width 6, diagonalizing matrices of size $64\times 64$ in the process, then he guessed the general pattern and proceeded from there, emboldened by the guess. As Chen-Ning Yang reported:
 
-> In 1944, L. Onsager produced, quite unexpectedly, an exact evaluation of the partition function of the model in two dimensions. It was a real tour de force. I had studied his paper in Chicago in the spring of 1947, but did not understand the method, which was very, very complicated, with many algebraic somersaults. ...
+> In 1944, L. Onsager produced, quite unexpectedly, an exact evaluation of the partition function of the model in two dimensions. It was a real tour de force. I had studied his paper in Chicago in the spring of 1947, but did not understand the method, which was very, very complicated, with many algebraic somersaults....
 > 
-> In March, 1965 ... I asked him how it came about that he took all those complicated algebraic steps in his paper of 1944. He said he had a lot of time during the war, so he began to diagonalize the transfer matrix, which had already been discussed by E. Montroll and by H. A. Kramers and G. H. Wannier. He started with a $2 \times \infty$, then a $3 \times \infty$, then a $4 \times \infty$ lattice. He then went on to a $5 \times \infty$ lattice, for which the transfer matrix is $32 \times 32$ in size. Such a matrix is quite large, but the experience he had gained with the smaller matrices came in handy, and he was able, after some time, to find all 32 of the eigenvalues. He proceeded then to the $6 \times \infty$ case, and eventually diagonalized the $64 \times 64$ matrix, finding that all the eigenvalues were of the form $e^{\pm \gamma_1 \pm \gamma_2 \pm \gamma_3 \pm \gamma_4 \pm \gamma_5 \pm \gamma_6}$. That led to the concept that the algebra of the problem was a product algebra, and hence the manipulations in his paper. [@yangSelectedPapers194519802005, pages 11--13]
+> In March, 1965... I asked him how it came about that he took all those complicated algebraic steps in his paper of 1944. He said he had a lot of time during the war, so he began to diagonalize the transfer matrix, which had already been discussed by E. Montroll and by H. A. Kramers and G. H. Wannier. He started with a $2 \times \infty$, then a $3 \times \infty$, then a $4 \times \infty$ lattice. He then went on to a $5 \times \infty$ lattice, for which the transfer matrix is $32 \times 32$ in size. Such a matrix is quite large, but the experience he had gained with the smaller matrices came in handy, and he was able, after some time, to find all 32 of the eigenvalues. He proceeded then to the $6 \times \infty$ case, and eventually diagonalized the $64 \times 64$ matrix, finding that all the eigenvalues were of the form $e^{\pm \gamma_1 \pm \gamma_2 \pm \gamma_3 \pm \gamma_4 \pm \gamma_5 \pm \gamma_6}$. That led to the concept that the algebra of the problem was a product algebra, and hence the manipulations in his paper. [@yangSelectedPapers194519802005, pages 11--13]
 
 I also want to quote this from the same pages, because it describes accurately what it feels like to do real-space RN:
 
@@ -53,25 +203,25 @@ I also want to quote this from the same pages, because it describes accurately w
 
 ### Kadanoff decimation, take 0
 
-The problem: given a hexagonal grid, you make $p$ of them black and the rest white. What is the critical p where you get a percolation (infinitely big black island)?
+This section based on [@simkinReinventingWillis2011, section 10], which contains an extensive bibliography.
 
-![](figure/hexagonal_decimation.png)
+The problem: given a hexagonal grid, you make $p$ of them black and the rest white. What is the critical $p$ where you get a percolation (infinitely big black island)?
 
-![](figure/hexagonal_decimation_fixed_point.png)
+Renormalization by the triangles, as shown. After one iteration, the lattice length increases from $l$ to $\sqrt 3 l$ , and the renormalized occupation probability changes from $p$ to $p^3 + 3p^2(1-p) = p^2(3-2p)$.
 
-[@stinchcombeIntroductionScalingConcepts1991]
+![Kadanoff decimation on a triangular lattice. [@simkinReinventingWillis2011, figure 1]](figure/hexagonal_decimation.png)
 
-Occupation probability $p$
+The equilibrium point is $p=1/2$. This is the percolation probability. Let the reduced probability be $\bar p = p-1/2$. We find that one iteration of the RN flow makes $\bar p_{n+1} = \frac 32 \bar p - 2 \bar p^3$ which is $\approx \frac 32 \bar p_n$ for small values of $\bar p$. 
 
-Renormalization by the triangles, as shown. After one iteration, the lattice length increases from $l$ to $\sqrt 3 l$ , and the renormalized occupation probability changes from $p$ to $p^3 + 3p^2(1-p) = p^2(3-2p)$ .
+![RN flow for Kadanoff decimation on a triangular lattice, on a 1-dimensional slice.](figure/rn_flow_hexagonal_grid_1.svg)
 
-The equilibrium point is $p=1/2$ . This is the percolation probability.
+Suppose we start with $\bar p_0$ , and we perform $N$ repeats of RN to reach some constant $\Delta \bar p$ (for example, 0.001), then 
+$$N = \frac{\ln \Delta \bar p - \ln \bar p_0}{\ln \frac 32}$$
 
-Let reduced probability be $\bar p = p-1/2$ . We find that renormalization makes $\bar p_{n+1} = \frac 32 \bar p_n$
+during which time, the lattice length has increased by
+$$3^{\frac 12 N} \propto \bar p_0^{-\frac{\ln 3}{2\ln \frac 32}} = \bar p_0^{-1.36}$$
 
-Suppose we start with $\bar p_0$ , and we perform $N$ renormalizations to reach some constant $\Delta \bar p$ (for example, 0.001), then 
-$$N = \frac{\ln \Delta \bar p - \ln \bar p_0}{\ln \frac 32}$$  and during the time, the lattice length increased by  
-$$3^{\frac 12 N} \propto \bar p_0^{-\frac{\ln 3}{2\ln \frac 32}} = \bar p_0^{-1.36}$$- Since at constant $\Delta \bar p$ , the lattice has a certain fixed look with a certain characteristic size for its clusters, we find that when the occupation probability is $p$ , the characteristic size of clusters scales as about $(p-1/2)^{-1.36}$ .
+Since at constant $\Delta \bar p$, the lattice has a certain fixed look-and-feel with a certain characteristic size for its clusters, we find that the characteristic length of its clusters is $\propto (p-1/2)^{-1.36}$. The actual exponent (named $\nu$) is exactly $1$. Not bad for such a cheap calculation!
 
 ### Kadanoff decimation, take 1
 
@@ -104,29 +254,37 @@ Consider the Ising model on the plane. Fix an origin $0$ , and we ask, how stron
 Well, the two points are correlated because they are connected by chains of spins. The more chains there are, the stronger the correlation, but the longer each chain is, the weaker the correlation.
 
 How many chains? The shortest chains are of length $2n$ , and there are
-$${2n \choose n} \sim \frac{4^{n}}{\sqrt{n\pi }}$$ 	  of them (use Stirling approximation).  
+$${2n \choose n} \sim \frac{4^{n}}{\sqrt{n\pi }}$$
+
+of them (use Stirling approximation).  
 
 Each chain has an exponential decay. We can use the 1D Ising model transfer matrix
 $$M^n = \begin{bmatrix}
 	  \frac{1 + \tanh^n(\beta J)}{2} & \frac{1 - \tanh^n(\beta J)}{2} \\
 	  \frac{1 - \tanh^n(\beta J)}{2} & \frac{1 + \tanh^n(\beta J)}{2}
-	  \end{bmatrix}$$
-The correlation is $\tanh^n(\beta J)$ .
+	  \end{bmatrix}
+$$
 
-Since the chain has length $2n$ , we need to use $\tanh^{2n}(\beta J)$ .
+The correlation is $\tanh^n(\beta J)$.
 
-We can think of spin at origin as $x_{(0,0)} + z_1 + z_2 + \cdots$ and the spin at $(n, n)$ as $x_{(n,n)} + z_1 + z_2 + \cdots$ , where $z_1, z_2, ...$ are random variables that are responsible for creating the correlations between the two spins along each chain. Then, since $\ket{z_i}=0$ , we have correlation
+Since the chain has length $2n$ , we need to use $\tanh^{2n}(\beta J)$.
+
+We can think of spin at origin as $x_{(0,0)} + z_1 + z_2 + \cdots$ and the spin at $(n, n)$ as $x_{(n,n)} + z_1 + z_2 + \cdots$ , where $z_1, z_2,...$ are random variables that are responsible for creating the correlations between the two spins along each chain. Then, since $\ket{z_i}=0$ , we have correlation
+
 $$\sim \frac{4^{n}}{\sqrt{n\pi }} \tanh^{2n}(\beta J)$$
-The two terms are exactly balanced when $\beta J = \tanh^{-1}(1/2) = 0.549\cdots$ .
+
+The two terms are exactly balanced when $\beta J = \tanh^{-1}(1/2) = 0.549\cdots$.
 
 Now, the exact result is $\beta J = 0.44\cdots$ , so our crude estimate is only $25\%$ too high.
 
 Now, right at the critical point, the correlation is $\sim (n\pi)^{-1/2}$ , so we see that when the exponential decay in correlation is exactly matched with the exponential growth in possible paths, the remaining polynomial decay comes to the fore.
 
-Notice that we have also calculated one of the Ising critical exponents: $\nu = 1/2$ . The actual answer is $1$ , but it is actually $1/2$ for all dimensions $\geq 4$ (the mean field theory).
+Notice that we have also calculated one of the Ising critical exponents: $\nu = 1/2$. The actual answer is $1$ , but it is actually $1/2$ for all dimensions $\geq 4$ (the mean field theory).
 
 Similarly, with 
-$$\binom{kn}{n, \cdots n}\sim \frac{k^{kn}}{n^{\frac{k-1}2}}\frac{k^{1/2}}{(2\pi)^{\frac{k-1}2}}$$ 	  we can estimate the critical $\beta J \approx \tanh^{-1}(1/k)$ in $k$ -dimensions.
+$$\binom{kn}{n, \cdots n}\sim \frac{k^{kn}}{n^{\frac{k-1}2}}\frac{k^{1/2}}{(2\pi)^{\frac{k-1}2}}$$
+
+we can estimate the critical $\beta J \approx \tanh^{-1}(1/k)$ in $k$ -dimensions.
 
 ## Universality
 
@@ -139,8 +297,8 @@ $$\binom{kn}{n, \cdots n}\sim \frac{k^{kn}}{n^{\frac{k-1}2}}\frac{k^{1/2}}{(2\pi
   - microscale: particles and quantum mechanics.
 - Criticality is just the space between two characteristic scales. The real question is why do we have characteristic scales that are so wide apart?
   - BIB. Statistical physics: statics, dynamics and renormalization (Kadanoff 2000), p. 251
-  - shows an amazing variety of length scales: There is the Hubble radius of the universe, $10^{10}$ light years or so and the radius of our own solar system, $10^{11}$ meters roughly, and us-two meters perhaps, and an atom $-10^{-10}$ meters in radius, and a proton $10^{-16}$ meters, and the characteristic length of quantum gravity-which involves another factor of about $10^{20}$ .
-    How these vastly different lengths arise is a very interesting and fundamental question. ... However, we can think about how one describes the region between these lengths. If one is looking at scales between two fundamental lengths, there are no nearby characteristic lengths. Similarly in critical phenomena, whenever one looks [at] any event which takes place between the scale of the lattice constant [the spacing between molecules or spins] and the much larger scale of the coherence length, one is in a situation in which there are no nearby characteristic lengths.  
+  - shows an amazing variety of length scales: There is the Hubble radius of the universe, $10^{10}$ light years or so and the radius of our own solar system, $10^{11}$ meters roughly, and us-two meters perhaps, and an atom $-10^{-10}$ meters in radius, and a proton $10^{-16}$ meters, and the characteristic length of quantum gravity-which involves another factor of about $10^{20}$.
+    How these vastly different lengths arise is a very interesting and fundamental question.... However, we can think about how one describes the region between these lengths. If one is looking at scales between two fundamental lengths, there are no nearby characteristic lengths. Similarly in critical phenomena, whenever one looks [at] any event which takes place between the scale of the lattice constant [the spacing between molecules or spins] and the much larger scale of the coherence length, one is in a situation in which there are no nearby characteristic lengths.  
 - Near the critical point, fluctuations are dominant and average values for the order parameters lose their meaning. Equilibrium statistical mechanics is unable to describe the critical behavior because there are fluctuations at all length scales.
 - The universality hypothesis
   - BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, p 273.
@@ -153,7 +311,7 @@ $$\binom{kn}{n, \cdots n}\sim \frac{k^{kn}}{n^{\frac{k-1}2}}\frac{k^{1/2}}{(2\pi
   - A natural fluctuation produces a droplet of the wrong phase. This droplet secretes other material of the same density, and it grows larger and larger. It stops growing when the cost in available—i.e. free-energy for making the droplet of wrong phase becomes comparable with kT. Since near the critical point it cost very little free energy per unit volume to make the wrong phase, the droplet can grow very large.
   - The coherence length $\xi$ is a size of a typical droplet. As the critical point is approached, the free energy cost of making a droplet goes to zero, and the size of a typical droplet $\xi$ , goes to infinity.
 - Boiling water is just a magnet. Vapor is just up-spin and liquid is just down-spin.
-  collapsed:: true
+
   - BIB. From Order To Chaos II, Essays: Critical, Chaotic And Otherwise, pp 297--299
   - Droplet picture of correlation behaviour
   - However, as criticality is approached, the difference in magnetization between the two different phases gets smaller and smaller. Hence the energetic cost per unit area of producing a region of the wrong phase approaches zero. For this reason, the area of a droplet and its radius both can get very, very large. Critical phenomena are connected with large-scale but weak fluctuations in the magnetization.
@@ -281,4 +439,72 @@ More is different [@andersonMoreDifferent1972]
 
 ## Appendix
 
-I want to write about this someday: [@amirElementaryRenormalizationgroupApproach2020]
+### Probability
+
+This section is based on [@amirElementaryRenormalizationgroupApproach2020].
+
+Let's take a look at the central limit theorem. It says that if $X_1, X_2, \dots$ are IID samples from a distribution with finite mean $E[X]$ and variance $V[X]$, then $\frac{(X_1 + \dots + X_n) - n E[X]}{\sqrt{n V[X]}}$ converges to the standard normal distribution. If we think about it more carefully from the self-similarity point of view, we can think of it like this: we can decompose each $X$ into a sum of two random variables: $X_i = A_i + Z_i$, where $Z_i$ is a normal distribution with the same mean and variance, and $A_i$ is the "noise" part of it. Each $A_i$ might be overpowering, but when we repeatedly coarse-grain by taking a bunch of $X_i$, and adding them up (a lossy operation!), we would eventually destroy all traces of what cannot survive coarse-graining, and leaving behind a fixed-point of coarse-graining.
+
+SETUP.
+
+* $X_1, X_2, \dots$ are IID random variables, with characteristic function $\phi_X(t)= E[e^{itX}]$.
+* $S_n = X_1 + \dots + X_n$.
+* $a_n, b_n$ are two sequences of real numbers, such that $\frac{S_n - b_n}{a_n}$ converges in distribution to a nontrivial random variable $Z$ with characteristic function $\phi(t)$.
+
+::: {.callout-note title="Deriving the field equation by RN" collapse="true" }
+
+Since $\frac{X_1 + \dots + X_n - b_n}{a_n}$ converges in distribution to a nontrivial random variable, the sequence $a_n$ must diverge to infinity. For, if the sequence $a_n$ is bounded, then for large enough $n$ , the sum $X_1 + \dots + X_n$ would spread wider and wider, and dividing it by $a_n$ cannot keep it together.
+
+Let $Z$ be a random variable with characteristic function $\phi$. By assumption, $(S_n- b_n)/a_n$ is approximately distributed like $Z$ , that is, $S_n$ is approximately distributed as $a_nZ + b_n$. Thus,
+
+$$\phi_{S_n}(t) \approx e^{ib_n t}\phi(a_nt )$$
+
+Given $1 \ll n \ll N$ , we can compute $\phi_{S_N}$ in two ways: adding it up as $N$ copies of $X$ , or adding it up as $N/n$ copies of $S_n$. Both should give us the same result. That is:
+$$\phi_{S_N} = \phi_X^N = \phi_{S_n}^{N/n}$$
+
+However, since $n$ is very large, we have the approximations $\phi_{S_n}(t) \approx e^{ib_n t}\phi(a_nt )$. Thus, we have
+
+$$
+\ln \phi_{S_N}(t) \approx \frac{N}{n}(ib_n t + \ln\phi(a_n t))
+$$
+
+Note how we have an exponent of the form $Nf(n)$ , where $N$ is a very large number, and $n$ is a number that is small compared to it. This is a common pattern in RN calculation.
+
+Since $n$ is small compared to $N$ , but large compared to $1$ , we can pretend that it's a continuous variable, and take derivative of it. Since the left side is independent of $n$ , the derivative should be zero:
+
+$$
+\partial_n \frac{N}{n}(ib_n t + \ln\phi(a_n t)) = 0
+$$	
+
+Simplifying it, and substituting $t$ for $a_n t$ , we get the **field equation**
+
+$$\frac{\phi'(t)}{\phi(t)}t - \ln \phi(t) \frac{a_n}{n \partial_n  a_n} + it\partial_n (b_n/n) \frac{n}{\partial_n a_n} = 0$$
+
+:::
+
+Thus, we have obtained the field equation:
+
+$$\frac{\phi'(t)}{\phi(t)}t -\frac{a_n}{n \partial_n  a_n} \ln \phi(t)  + \frac{n\partial_n (b_n/n)}{\partial_n a_n} it = 0$$
+
+which we can solve by standard mathematical analysis without any more use of RN, so we don't do those. You can read [@amirElementaryRenormalizationgroupApproach2020] if you are interested.
+
+However, there is a problem: If we have a "field" equation, what is the "field"?  Well, here is one way to think of it.
+
+Imagine a line of atoms, at locations $1, 2, 3, \dots$. Each atom has a height $X_1, X_2, X_3, \dots$. Now, we can coarse-grain the system by a factor of $4$, by defining 
+
+$$Y_1 = \frac{X_1 + \dots + X_4 - b_4}{a_4}, \quad Y_2 = \frac{X_5 + \dots + X_8 - b_4}{a_4}, \quad \dots$$
+
+from which we can perform another coarse-graining by a factor of $100$, ending up with a coarse-grain by a factor of $400$. Now, if the system has a nontrivial scaling limit, then this should give us the same result as doing a coarse-graining by $5$, then by $80$, or first $6$ then $67$. This is the RN argument we used here.
+
+Now, since $S_n \approx a_n Z + b_n$, we see that $b_n$ can be thought of as the coarse-grained height of height-field, and $a_n$ as the  coarse-grained jaggedness of the height-field. Then, the field equation describes how the two numbers vary according to $n$.
+
+::: {.callout-note title="Exercise: extreme value distribution" collapse="true" }
+
+The maximum of random variables often has a nontrivial scaling limit as well. That is, there exists some sequence $a_n, b_n$ such that $\frac{\max(X_1, \dots, X_n) - b_n}{a_n}$ converges to a nontrivial distribution with cumulative distribution function (CDF) $F$.
+
+Let $F_X$ be the CDF of $X$, then we have $F_{\max(X_1, \dots, X_N)}(t) = F_{\max(X_1)}(t)^{N}$. Now, derive the field equation by an RN argument.
+
+Answer: $\partial_n \frac 1n \ln F(\frac{t-b_n}{a_n}) = 0$.
+
+:::
+
