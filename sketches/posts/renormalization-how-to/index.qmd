@@ -7,6 +7,8 @@ categories: [math, physics, scaling]
 format:
   html:
     toc: true
+    resources:
+        - "figure/**"
 description: "How to do renormalization theory."
 
 # image: "figure/banner.png"
@@ -21,18 +23,74 @@ importance: 4
 
 Renormalization is not group theory. The name "renormalization group theory" is truly terrible. To an applied physicist, the name "group theory" is abstract and inspires fear and uncertainty. To a mathematician, the name "group theory" is plain wrong, because you can always undo a group-action, but you can never undo a coarse-graining.
 
-
-
 ## The logistic map: RN on $\R$
 
+This section based on [Wikipedia](https://en.wikipedia.org/wiki/Logistic_map).
 
-Thus, we obtain the self-similarity equation
+### The logistic map
+
+Consider a function $f_r(x)=r x(1-x)$, and we want to study what happens when we iterate the map many times. The map might fall into a fixed point, a fixed cycle, or chaos. We can see all those cases in its [bifurcation diagram](https://en.wikipedia.org/wiki/Bifurcation_diagram).
+
+![The bifurcation diagram of the logistic map. [Source](https://en.wikipedia.org/wiki/File:Logistic_Bifurcation_map_High_Resolution.png)](figure/Logistic_Bifurcation_map_High_Resolution.png)
+
+When the map falls into a stable fixed cycle of length $n$, we would find that the graph of $f_r^n$ and the graph of $x \mapsto x$ intersect at $n$ points, and the slope of the graph of $f_r^n$ is bounded in $(-1, +1)$ at those intersections.
+
+For example, when $r=3.0$, we find that there is only a single intersection, at which point the slope is exactly $+1$, indicating that it is a stable single fixed point, but is about to undergo a bifurcation.
+
+![Relationship between $x_{n+2}$ and $x_{n}$, as $r$ increases from $2.7$ to $3.3$. Before the period doubling bifurcation occurs. The orbit converges to a single fixed point where the graph of $f_r^2$ intersects the diagonal line. As $r$ reaches $3$, the intersection pitchforks into three. The middle intersection becomes unstable, but the two neighboring intersections are stable.](figure/period_doubling_bifurcation.png)
+
+As $r$ increases to beyond $r=3.0$, the intersection point splits to two, which is a period doubling. For example, when $r=3.4$, there are three intersection points, with the middle one unstable, and the two others stable.
+
+![When $r=3.4$, there are three intersection points, with the middle one unstable, and the two others stable. [Source](https://en.wikipedia.org/wiki/File:Logistic_iterates_3.4.svg)](figure/Logistic_iterates_3.4.svg)
+
+As $r$ approaches $r=3.45$, another period-doubling occurs in the same way. The period-doublings occur more and more frequently, until at a certain $r \approx 3.56994567$, the period doublings become infinite, and the map becomes chaotic. This is the period-doubling route to chaos.
+
+![When $r \approx 3.56994567$, there are infinitely many intersections, and we have arrived at chaos via the period-doubling route. [Source](https://en.wikipedia.org/wiki/File:Logistic_iterates_with_r%3D3.56994567.svg)](figure/Logistic_iterates_3.56994567.svg)
+
+Something remarkable happens when we superimpose the graphs of $f_r, f_r^2, f_r^4, \dots$ when $r$ is at the critical point $3.5699\dots$. We see that each iteration of the graph seems to resemble itself, except that it is scaled and rotated by 180 degrees. We can naturally guess that $f_r^\infty$ converges to a certain function that is infinitely jagged, such that it exactly resembles itself if scaled and rotated, that is, it is a fractal.
+
+![The graphs of $f_r, f_r^2, f_r^4, \dots$ when $r$ is at the critical point.](figure/Logistic_iterates_together_r=3.56994567.svg)
+
+As $r$ approaches the critical value, we can see how the graph of $f_r^\infty$ takes on more and more details, and at the critical point, becomes a perfect fractal.
+
+<figure>
+  <video controls width=100%>
+    <source src="figure/Logistic_map_approaching_the_scaling_limit.webm" type="video/webm" />
+  </video>
+  <figcaption>The graphs of $f_r, f_r^2, f_r^4, \dots$ as $r$ approaches the critical point from below.</figcaption>
+</figure>
+
+### Universality
+
+Looking at the bifurcation diagram, we can see a region, starting just after $r = 3.8$, where there is a clear "window" with period $3$ bursting out of a sea of chaos. The window then bifurcates repeatedly, to stable cycles of periods $6, 12, 24, \dots$ until it all collapses back into the chaos again at around $r \approx 3.8494344$. Though this is a different place, the bifurcation diagram looks suspiciously similar to the previous case.
+
+Not only that, if we look at the movie of $f_r^\infty$ as $r$ approaches this critical point, we again see the same jagged shape.
+
+<video controls width=100%>
+  <source src="figure/Logistic_map_approaching_the_period-3_scaling_limit.webm" type="video/webm" />
+</video>
+
+Are we seeing some kind of *universal* feature of period-doubling routes to chaos? Is this a general pattern independent of the details of how exactly the logistic map is defined? What if we change to another dynamical system completely different?
+
+For example, we can consider the gauss map $x_{n+1} = \exp(-\alpha x^2_n)+\beta$. For fixed $\alpha$, we can plot the bifurcation graph as we vary $\beta$. Though it looks different, the two bifurcation graphs have a clear resemblance. This is an instance of **universality**, for which we will see [again and again later](#sec-universality). If $f_r$ is a family of curves with parabolic tops[^feigenbaum-universality], then it will bifurcate just like the logistic curve.
+
+[^feigenbaum-universality]: Rigorously, we can describe it as follows. If $F: \R^2 \to \R$ is smooth, and for all $r \in \R$, the function $F(r, \cdot): \R \to \R$ has a single global maximum, at which point $\partial_x^2 F(r, x) < 0$, then its bifurcation diagram looks the same as that of the logistic map, and it will have the same two scaling exponents $\alpha, \delta$, to be calculated below.
+
+![The bifurcation graphs of gauss map with $\alpha = 5$ and the logistic map.](figure/bifurcation_gauss_logistic.png)
+
+More to the issue at hand: Why do the two graphs look similar?
+
+![The bifurcation graph is self-similar. [Source](https://ja.wikipedia.org/wiki/ファイル:ロジスティック写像の窓の自己相似.png)](figure/logistic_bifurcation_graph_fractal.png)
+
+### The self-similarity equation
+
+Recall how we said that the limit of $f^\infty_r$ should be self-similar, in the sense that if we iterate it twice, then rotate and scale it by a factor, we get back the same function. That is, it should be a solution to the **self-similarity equation**
 
 $$
 f(x) = -\alpha f\left(f\left(\frac{x}{-\alpha} \right)\right)
 $$
 
-In words, if we scale up the graph for $f^2$ by $\alpha$, then rotate by 180 degrees, we get back the graph for $f$. 
+In words, if we scale up the graph for $f^2$ by $\alpha > 0$, then rotate by 180 degrees, we get back the graph for $f$. 
 
 By eye-balling the curve, we see that $f$ should be an even function. Also, since the $f^2$ can be graphically calculated by doing the cobweb diagram with the graph of $f$, it does not matter if we first scale up the graph of $f$ by a factor of $r$ to $F$, then double it to $F^2$, or if we first double it to $f^2$, then scale its graph. We would get back the same thing. Thus, wolog, we can scale $f$ such that $f(0) = 1$.
 
@@ -106,7 +164,7 @@ $$
 
 This is usually spoken in this way: the intervals between two bifurcations shrinks at a rate of $\delta$. 
 
-![The bifurcation diagram for the logistic map. As the bifurcations approach the point of chaos, the interval between two bifurcations gets shorter and shorter, at a rate of $\delta$ per bifurcation.](figure/feigenbaum_delta_bifurcation_diagram.png)
+![The bifurcation diagram for the logistic map. As the bifurcations approach the point of chaos, the interval between two bifurcations gets shorter and shorter, at a rate of $\delta$ per bifurcation. [Source](https://ja.wikipedia.org/wiki/ファイル:ロジスティック写像、周期倍分岐カスケードの軌道図.png)](figure/logistic_bifurcation_graph_fractal_delta.png)
 
 $\delta$ is called **Feigenbaum's first constant**, and $\alpha$ is **Feigenbaum's second constant**.
 
@@ -163,7 +221,9 @@ In summary:
 | $\alpha$   | 2.732 | 2.534 | 2.503 |
 | $\delta$  | 5.73 | 4.843 | 4.669 |
 
-: The solution to the self-similarity equation, at increasingly high orders of approximation
+: The solution to the self-similarity equation, at increasingly high orders of approximation.
+
+### Lessons
 
 Even in this tiny problem, we can already draw several lessons, which will appear again and again in RN:
 
@@ -523,7 +583,7 @@ How these vastly different lengths arise is a very interesting and fundamental q
 
 Near the critical point, fluctuations are dominant and average values for the order parameters lose their meaning. Equilibrium statistical mechanics is unable to describe the critical behavior because there are fluctuations at all length scales.
 
-### Universality: The details don't matter
+### Universality: The details don't matter {#sec-universality}
 
 In the early 20th century, material scientists noticed the remarkable phenomenon of "corresponding states".
 
