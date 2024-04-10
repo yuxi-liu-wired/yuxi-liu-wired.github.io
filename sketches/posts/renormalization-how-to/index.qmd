@@ -103,6 +103,16 @@ f(x) = 1 - a_2 x^2 + a_4 x^4 + \dots
 \end{cases}
 $$
 
+We can solve the equation numerically as the fixed point. We would start with $f(x) = 1-x^2$, then guess a good $\alpha$ and repeatedly apply $f \mapsto -\alpha f\left(f\left(\frac{x}{-\alpha} \right)\right)$. If we picked $\alpha$ correctly, we would have gotten the right result, as shown:
+
+![At the point of chaos $r^*=3.5699 \cdots$, as we repeat the functional equation iteration $f(x) \mapsto-\alpha f(f(-x / \alpha))$ with $\alpha=2.5029 \ldots$, we find that the map does converge to a limit. [Source](https://en.wikipedia.org/wiki/File:Logistic_scaling_limit,_r%3D3.56994567.svg)](figure/Logistic_scaling_limit_critical.svg)
+
+If $\alpha$ is not correct, then the iterates would not converge, but would have a zooming effect that looks cool.
+
+<video controls width=100%>
+  <source src="figure/Logistic_scaling_with_varying_scaling_factor.webm" type="video/webm" />
+</video>
+
 ::: {.callout-note title="Solving the equation at order 2" collapse="true" }
 
 At order 2, we approximate by $f(x) \approx 1 - a_2 x^2$, and ignore all higher-order terms. This gives us two equations for two unknowns:
