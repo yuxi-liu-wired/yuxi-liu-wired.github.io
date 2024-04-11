@@ -248,11 +248,73 @@ Even in this tiny problem, we can already draw several lessons, which will appea
 
 ## Ising model and friends: RN on a grid
 
-This section studies RN on a grid, using what is called **real space RN**, in contrast to **momentum space RN**. Real space RN is a garden of tricks, useful and intuitive, but not as powerful as momentum space RN. If you find the kind of mathematical trickery in this section fun, look at [@burkhardtRealSpaceRenormalization1982] for more.
+This section studies RN on a grid, using what is called **real space RN**, in contrast to **momentum space RN**. Real space RN is a garden of tricks, useful and intuitive, but not as powerful as momentum space RN. If you find the kind of mathematical trickery in this section fun, look at [@kadanoffStatisticalPhysicsStatics1999, chapter 14; @burkhardtRealSpaceRenormalization1982] for more.
 
 > This paper attracted much favorable notice since, beyond obtaining all the scaling properties, it seemed to lay out a direct route to the actual calculation of critical properties. On closer examination, however, the implied program seemed -- as I will explain briefly -- to **run rapidly into insuperable difficulties** and interest faded. In retrospect, however, Kadanoff's scaling picture embodied important features eventually seen to be basic to Wilson's conception of the full renormalization group.
 >
 > [@fisherRenormalizationGroupTheory1998]
+
+
+I recommend that you open these and play as you follow along:
+
+* [Complexity Explorables | I sing well-tempered](https://www.complexity-explorables.org/explorables/i-sing-well-tempered/)
+* [Ising model](https://www.ibiblio.org/e-notes/Perc/ising1k.htm) by [Evgeny Demidov](https://www.ibiblio.org/e-notes/Perc/contents.htm).
+
+### Percolation
+
+Percolation is about randomly punching holes in a material until it falls apart. In the simplest setting, the material is a square lattice $\Z^2$, and each site (vertex) is either open or closed.[^percolation-2d] Open means there is a hole there, and closed means the site is intact. Sites are open or closed randomly and independently with probability $p$. We are interested in whether there is an infinite connected cluster of open sites.
+
+[^percolation-2d]: Percolation on $\Z$ is trivial, even more trivial than Ising model on $\Z$. The trouble is the same: you can only go from one point to another point by one route, and if at any point on the route, you are stopped, then that's the end -- you can't get there by any other way. Thus, long-range interactions decay exponentially with distance, which means no power law, no phase transition, no critical point. See a [later section](#sec-power-law-two-exponential-parents).
+
+This is a model for a porous material: for example, water seeping through the ground. If we have a layer of rock, then groundwater can seep through if there is a single connected path from top to bottom. A layer of rock can be thought of as a grid, with little cracks between grid-points. According to percolation theory, at a "critical probability", suddenly we have arbitrarily large connected clusters of cracks, and so water can seep arbitrarily far in the rock -- it is all or nothing.
+
+That is, there is a sharp transition: if $p$ is small, then there is no infinite cluster of open sites, and the water cannot go through; but if $p$ is large, then there is an infinite cluster of open sites, and water can go through. The critical value $p_c$ is about $0.5927...$. See [@grimmettPercolation1999] for more details about percolation.
+
+To use Kadanoff blocking for percolation, the first step is to coarse grain the lattice. We group the sites into blocks of $3 \times 3$ and call a block open if there is a path of open sites connecting the left and right sides of the block. Otherwise, the block is closed.
+
+The next step is to define a new percolation model on the coarse-grained lattice, but this is a little trickier than in the Ising model, because there is no obvious way to map the parameters of the original model to the parameters of the new model. We need to find a new probability $p'$ such that the new model on the coarse-grained lattice has the same behavior as the original model on the fine lattice. In particular, we want the probability of having an infinite cluster of open sites to be the same in both models.
+
+It turns out that there is no exact way to do this, but we can make an approximation. One way to do this is to use Monte Carlo simulations to estimate the probability of having an infinite cluster for different values of $p'$.
+
+### Kadanoff blocking
+
+This section based on [@simkinReinventingWillis2011, section 10] and [@stinchcombeIntroductionScalingConcepts1991].
+
+![When an Ising model is at the critical temperature $T_c$, coarse-graining would not end up with all-black or all-white, but would have the same amount of details no matter how much we coarse-grain. [@sethnaCourseCracklingNoise2007, figure 13].](figure/ising%20model.png)
+
+The idea of Kadanoff blocking is simple: "This fractal looks the same if I take off my glasses, just bigger. If I zoom out and blur a bit, we get pretty much the same thing again. So, if I take a 3-by-3 pixel, block and replace it by one big pixel, we should get the same thing again."
+
+Given a hexagonal grid, you make $p$ of them black and the rest white. What is the critical $p$ where you get a percolation (infinitely big black island)? To do this by blocking, we regard a triangle as a large spin, and "merge" the three spins on a triangle to one single spin. If two or three spins are black, then the whole spin is also black, otherwise, the whole spin is white.
+
+Then, after one blocking operation, the lattice length increases from $l$ to $\sqrt 3 l$ , and the renormalized occupation probability changes from $p$ to $p^3 + 3p^2(1-p) = p^2(3-2p)$. That is, we have the RN flow equation
+
+$$p' = p^3 + 3p^2(1-p) = p^2(3-2p)$$
+
+![Kadanoff blocking on a triangular lattice. [@simkinReinventingWillis2011, figure 1]](figure/hexagonal_decimation.png)
+
+The equilibrium point is $p=1/2$. This is the percolation probability. Let the reduced probability be $\bar p = p-1/2$. We find that one iteration of the RN flow makes $\bar p_{n+1} = \frac 32 \bar p - 2 \bar p^3$ which is $\approx \frac 32 \bar p_n$ for small values of $\bar p$. 
+
+![RN flow for Kadanoff blocking on a triangular lattice.](figure/rn_flow_hexagonal_grid_1.svg)
+
+Suppose we start with $\bar p_0$ , and we perform $N$ repeats of RN to reach some constant $\Delta \bar p$ (for example, 0.001), then 
+
+$$N = \frac{\ln \Delta \bar p - \ln \bar p_0}{\ln \frac 32}$$
+
+during which time, the lattice length has increased by
+
+$$3^{\frac 12 N} \propto \bar p_0^{-\frac{\ln 3}{2\ln \frac 32}}$$
+
+Since at constant $\Delta \bar p$, the lattice has a certain *characteristic* look-and-feel with a certain *characteristic* size for its clusters, we find that the *characteristic* length of its clusters is $\propto (p-1/2)^{-\nu}$, where[^characteristic-look-and-feel]
+
+[^characteristic-look-and-feel]:
+    It amuses me to no end that the word *characteristic* is something chemists use a lot. Physicists do it too, sure, with their "characteristic length", "characteristic height", "characteristic temperature", and such, but it is abstract. You rarely need to actually check a cake's characteristic length against a standard cake. However, when you are doing chemistry, and you need to check a chemical's *characteristic smell*, then you are out of luck.
+
+    > I'm saddened to report that the chemical literature contains descriptions of dimethylcadmium's smell. Whoever provided these reports was surely exposed to far more of the vapor than common sense would allow ... its odor is variously described as "foul", "unpleasant", "metallic", "disagreeable", and (wait for it) "characteristic", which is an adjective that shows up often in the literature with regard to smells, and almost always makes a person want to punch whoever thought it was useful. ... if you're working with organocadmium derivatives and smell something nasty, but nasty in a new, exciting way that you've never quite smelled before, then you can probably assume the worst. [@loweThingsWonWork2013]
+
+$$\nu = \frac{\ln 3}{2\ln \frac 32} \approx 1.355$$
+
+The actual exponent is believed to be $\nu = 4/3$, so we are only 1.6% off. Very good for such a cheap calculation!
+
 
 ### The Ising model
 
@@ -334,6 +396,8 @@ $$
 
 but this time, this RN flow has only a single stable fixed point at $J = 0$. Not only that, since $\frac 12 \ln \cosh(2J) \approx J^2$ if $J$ is small, if we decimate for $n$ times, we would end up with $J' \sim J^{2^n}$. What does this mean?
 
+![The RN flow for the 1D Ising model has only a single fixed point at zero.](figure/rn_flow_1d_ising.svg)
+
 Suppose we start with a magnet with interaction strength $J$, then after we zoom out for $n$ times, where $n$ is large, we would end up with a decimated view of the magnet, where we can only see the atoms at sites $0, 2^n, 2\times 2^n, 3 \times 2^n, \dots$. Our RN flow calculation states that the strength of interaction between $s_0$ and $s_{2^n}$ are just the multiplication of all the bonds between them. This is not so strange if we think about it: on a 1D Ising model, the only way for $s_0$ to interact with $s_{2^n}$ is if they laboriously go, bond-by-bond, across all the $2^n$ bonds, and at each bond, the interaction strength must be degraded. It would be like trying to draw with a pair of chopstick holding a pair of chopsticks holding a pair of chopsticks... holding a paintbrush. You rapidly run out of all bonding strength.
 
 In particular, it shows that no matter how strong $J$ is, the correlation between distant atoms would decay rapidly, and so there is no ferromagnetism on the 1D Ising model. This is what disappointed Ising so much back in 1925 and what led him to abandon this model of magnetism.
@@ -404,7 +468,7 @@ We can of course deal with the problem by cutting off the weak interaction terms
 
 Before we are finished with the Ising model, here is one more trick: the Migdal bond-moving trick. The idea is shown in the diagram.
 
-![The Migdal bond-moving trick. [@kadanoffStatisticalPhysicsStatics2007, figure 14.2].](figure/Migdal%20bond-moving.png)
+![The Migdal bond-moving trick. [@kadanoffStatisticalPhysicsStatics1999, figure 14.2].](figure/Migdal%20bond-moving.png)
 
 We perform the trick in two steps. First, we take the odd-numbered vertical bonds and move them to the even-numbered ones. Next, we decimate the crossed-out spins. Since this trick does not handle the vertical and horizontal bonds equally, we write the bond-strengths separately as $J_x, J_y$. The RN flow of this step is
 
@@ -427,6 +491,8 @@ A small improvement is to find the "double fixed point". That is, we consider ap
 $$x = f_1(f_2(x)); \quad x = f_2(f_1(x))$$
 
 Now, these have different solutions, so we do the obvious thing and take their midpoint. This gives $0.4417$. And with that simple idea, I got within 0.23% of the true answer.
+
+We can also calculate the scaling exponent, like how we found $\delta$ for the logistic map. The average gradient at the fixed point is $\frac{(f_1\circ f_2)' + (f_2\circ f_1)'}{2}$ which is $2.7633$, corresponding to a length scaling exponent of $\nu = \frac{\ln 4}{\ln 2.7633} = 1.364$, which is well off the real value of 1.
 
 ::: {#fig-migdal-rn-flow layout-ncol=2}
 
@@ -456,63 +522,6 @@ I also want to quote this from the same pages, because it describes accurately w
 > a long calculation, the longest in my career. Full of local, tactical tricks, the calculation proceeded by twists and turns. There were many obstructions. But always, after a few days, a new trick was somehow found that pointed to a new path. The trouble was that I soon felt I was in a maze and was not sure whether in fact, after so many turns, I was anywhere nearer the goal than when I began. This kind of strategic overview was very depressing, and several times I almost gave up. But each time something drew me back, usually a new tactical trick that brightened the scene, even though only locally. Finally, after about six months of work off and on, all the pieces suddenly fitted together, producing miraculous cancellations, and I was staring at the amazingly simple final result \[spontaneous magnetization of the Ising model\] 
 > 
 > [@yangSelectedPapers194519802005, page 12]
-
-### Percolation
-
-Whereas Kadanoff decimation is best demonstrated on the Ising model, Kadanoff blocking is better illustrated on a problem of percolation. Now, percolation is about randomly punching holes in a material until it falls apart.
-
-In the simplest setting, the material is a square lattice $\Z^2$, and each site (vertex) is either open or closed.[^percolation-2d] Open means there is a hole there, and closed means the site is intact. Sites are open or closed randomly and independently with probability $p$. We are interested in whether there is an infinite connected cluster of open sites.
-
-[^percolation-2d]: Percolation on $\Z$ is trivial, even more trivial than Ising model on $\Z$. The trouble is the same: you can only go from one point to another point by one route, and if at any point on the route, you are stopped, then that's the end -- you can't get there by any other way. Thus, long-range interactions decay exponentially with distance, which means no power law, no phase transition, no critical point. See a [later section](#sec-power-law-two-exponential-parents).
-
-This is a model for a porous material: for example, water seeping through the ground. If we have a layer of rock, then groundwater can seep through if there is a single connected path from top to bottom. A layer of rock can be thought of as a grid, with little cracks between grid-points. According to percolation theory, at a "critical probability", suddenly we have arbitrarily large connected clusters of cracks, and so water can seep arbitrarily far in the rock -- it is all or nothing.
-
-That is, there is a sharp transition: if $p$ is small, then there is no infinite cluster of open sites, and the water cannot go through; but if $p$ is large, then there is an infinite cluster of open sites, and water can go through. The critical value $p_c$ is about $0.5927...$. See [@grimmettPercolation1999] for more details about percolation.
-
-To use Kadanoff blocking for percolation, the first step is to coarse grain the lattice. We group the sites into blocks of $3 \times 3$ and call a block open if there is a path of open sites connecting the left and right sides of the block. Otherwise, the block is closed.
-
-The next step is to define a new percolation model on the coarse-grained lattice, but this is a little trickier than in the Ising model, because there is no obvious way to map the parameters of the original model to the parameters of the new model. We need to find a new probability $p'$ such that the new model on the coarse-grained lattice has the same behavior as the original model on the fine lattice. In particular, we want the probability of having an infinite cluster of open sites to be the same in both models.
-
-It turns out that there is no exact way to do this, but we can make an approximation. One way to do this is to use Monte Carlo simulations to estimate the probability of having an infinite cluster for different values of $p'$.
-
-### Kadanoff blocking
-
-This section based on [@simkinReinventingWillis2011, section 10] and [@stinchcombeIntroductionScalingConcepts1991].
-
-![When an Ising model is at the critical temperature $T_c$, coarse-graining would not end up with all-black or all-white, but would have the same amount of details no matter how much we coarse-grain. [@sethnaCourseCracklingNoise2007, figure 13].](figure/ising%20model.png)
-
-The idea of Kadanoff blocking is simple: "This fractal looks the same if I take off my glasses, just bigger. If I zoom out and blur a bit, we get pretty much the same thing again. So, if I take a 3-by-3 pixel, block and replace it by one big pixel, we should get the same thing again."
-
-Given a hexagonal grid, you make $p$ of them black and the rest white. What is the critical $p$ where you get a percolation (infinitely big black island)? To do this by blocking, we regard a triangle as a large spin, and "merge" the three spins on a triangle to one single spin. If two or three spins are black, then the whole spin is also black, otherwise, the whole spin is white.
-
-Then, after one blocking operation, the lattice length increases from $l$ to $\sqrt 3 l$ , and the renormalized occupation probability changes from $p$ to $p^3 + 3p^2(1-p) = p^2(3-2p)$. That is, we have the RN flow equation
-
-$$p' = p^3 + 3p^2(1-p) = p^2(3-2p)$$
-
-![Kadanoff blocking on a triangular lattice. [@simkinReinventingWillis2011, figure 1]](figure/hexagonal_decimation.png)
-
-The equilibrium point is $p=1/2$. This is the percolation probability. Let the reduced probability be $\bar p = p-1/2$. We find that one iteration of the RN flow makes $\bar p_{n+1} = \frac 32 \bar p - 2 \bar p^3$ which is $\approx \frac 32 \bar p_n$ for small values of $\bar p$. 
-
-![RN flow for Kadanoff blocking on a triangular lattice.](figure/rn_flow_hexagonal_grid_1.svg)
-
-Suppose we start with $\bar p_0$ , and we perform $N$ repeats of RN to reach some constant $\Delta \bar p$ (for example, 0.001), then 
-
-$$N = \frac{\ln \Delta \bar p - \ln \bar p_0}{\ln \frac 32}$$
-
-during which time, the lattice length has increased by
-
-$$3^{\frac 12 N} \propto \bar p_0^{-\frac{\ln 3}{2\ln \frac 32}}$$
-
-Since at constant $\Delta \bar p$, the lattice has a certain *characteristic* look-and-feel with a certain *characteristic* size for its clusters, we find that the *characteristic* length of its clusters is $\propto (p-1/2)^{-\nu}$, where[^characteristic-look-and-feel]
-
-[^characteristic-look-and-feel]:
-    It amuses me to no end that the word *characteristic* is something chemists use a lot. Physicists do it too, sure, with their "characteristic length", "characteristic height", "characteristic temperature", and such, but it is abstract. You rarely need to actually check a cake's characteristic length against a standard cake. However, when you are doing chemistry, and you need to check a chemical's *characteristic smell*, then you are out of luck.
-
-    > I'm saddened to report that the chemical literature contains descriptions of dimethylcadmium's smell. Whoever provided these reports was surely exposed to far more of the vapor than common sense would allow ... its odor is variously described as "foul", "unpleasant", "metallic", "disagreeable", and (wait for it) "characteristic", which is an adjective that shows up often in the literature with regard to smells, and almost always makes a person want to punch whoever thought it was useful. ... if you're working with organocadmium derivatives and smell something nasty, but nasty in a new, exciting way that you've never quite smelled before, then you can probably assume the worst. [@loweThingsWonWork2013]
-
-$$\nu = \frac{\ln 3}{2\ln \frac 32} \approx 1.355$$
-
-The actual exponent is believed to be $\nu = 4/3$, so we are only 1.6% off. Very good for such a cheap calculation!
 
 ## A bag of intuitions
 
@@ -582,18 +591,38 @@ More is different [@andersonMoreDifferent1972]
 
 ### Mesophysics: Why are things interesting between the large and the small?
 
-Criticality is just the space between two characteristic scales. The real question is why do we have characteristic scales that are so wide apart?
+The space of all theories is big, but most of it is rather uninteresting. Consider the humble Ising model on $\Z^2$. Too much interaction and you get a block of spins all pointing in one direction. Too little interaction and you get a gas of spins pointing noisily in all directions. Only right at the critical point do we get interesting behavior in all possible scales. Not only that, the critical point is very delicate.
+
+If you take an Ising model at $J$ that is just a bit above $J_c$ and zoom out, then by the RN flow equation, the effective $J$ would keep increasing, and it becomes more and more uniform until it's a perfect shade of black/white at $J = +\infty$. Conversely, if you start with $J$ slightly below $J_c$ and keep zooming out, $J$ would approach $0$ and everything would become a uniform shade of gray, with the spins pointing up and down with no regard for any other spin. Balanced on a knife's edge is $J = J_c$, where there is interesting behavior at all levels of zooming.
+
+<figure>
+  <video controls width=100%>
+    <source src="figure/renormalization_group_douglas_ashton.webm" type="video/webm" />
+  </video>
+  <figcaption>Zooming in and out of the Ising model. Video by Douglas Ashton, taken from <a href="https://blog.dougmet.net/2012/04/the-renormalisation-group/">The Renormalisation Group | dougmet-dot-net</a>.</figcaption>
+</figure>
+
+But what keeps $J = J_c$?
+
+Why is it that we are surprised by the quantum mechanics in the microscopic world? Because daily life in the mesoscopic world does not betray its origin from the microscopic world. The details has been renormalized away. But if that's the case, how come that our world is neither a homogeneous block of spins all pointing up, nor a hot mess of spins unrelated to every other spin? Why is the mesoscopic world interesting?
+
+Look around you. The world is interesting, with power laws, fractal patterns, and details at all scales. You never see a pencil standing on its end without some hand keeping it there. What keeps the mesoscopic world in its critical place? 
+
+One answer is that most of the interestingness did not come from criticality. However, if there exists *some* criticality in the mesoscopic world, and there does not seem to be an intelligent agent keeping the criticality there, then we have a mystery. This is the question that launched a thousand papers, including the famed self-organized criticality paper [@bakSelforganizedCriticalityExplanation1987], itself launching a thousand papers. The idea is typically illustrated by the forest fire model.
+
+Consider the standard percolation model on a square grid. Each point might be occupied (a "tree" grows there) or unoccupied (empty plot of land). Randomly, lightning falls, and if it hits a tree, the tree catches on fire and the fire spreads to any neighboring trees. The process ends when there are no more burning trees.
+
+As the proportion $p$ of a site being occupied ("tree density") changes, we see a phase transition. For low $p < p_c$, there is no percolation, the fire quickly dies out. For high $p > p_c$, there is percolation, and so the fire spreads across the entire grid. The process automatically balances the system at the critical value $p_c$, the system is poised between these two regimes, and the burnt-out patches can be of any size, following a power-law distribution. In this way, the delicate critical point in the standard percolation model has been transformed to a robust critical point.
 
 > Nature shows an amazing variety of length scales: There is the Hubble radius of the universe, $10^{10}$ light years or so and the radius of our own solar system, $10^{11}$ meters roughly, and us-two meters perhaps, and an atom $-10^{-10}$ meters in radius, and a proton $10^{-16}$ meters, and the characteristic length of quantum gravity-which involves another factor of about $10^{20}$.
-How these vastly different lengths arise is a very interesting and fundamental question.... However, we can think about how one describes the region between these lengths. If one is looking at scales between two fundamental lengths, there are no nearby characteristic lengths. Similarly in critical phenomena, whenever one looks [at] any event which takes place between the scale of the lattice constant [the spacing between molecules or spins] and the much larger scale of the coherence length, one is in a situation in which there are no nearby characteristic lengths. [@kadanoffStatisticalPhysicsStatics2007, page 251]
+> 
+> How these vastly different lengths arise is a very interesting and fundamental question.... However, we can think about how one describes the region between these lengths. If one is looking at scales between two fundamental lengths, there are no nearby characteristic lengths. Similarly in critical phenomena, whenever one looks \[at\] any event which takes place between the scale of the lattice constant \[the spacing between molecules or spins\] and the much larger scale of the coherence length, one is in a situation in which there are no nearby characteristic lengths. [@kadanoffStatisticalPhysicsStatics1999, page 251]
 
-* macroscale: thermodynamics, continuum, no fluctuation.
-* mesoscale: fluctuations in aggregates of atomic scale properties may be important, order parameters code for some feature of the microstructure.
-* microscale: particles and quantum mechanics.  
-
-Near the critical point, fluctuations are dominant and average values for the order parameters lose their meaning. Equilibrium statistical mechanics is unable to describe the critical behavior because there are fluctuations at all length scales.
+In a footnote, Kadanoff suggested that self-organized criticality might explain forms of stable criticality we see around us. Kadanoff wrote the words in 1999, near the end of the 1980s--90s chaos theory boom. Since then, the self-organized criticality theory has fallen by the wayside, like fractal compression, mirrorshades, and large-folio printed pages of fractal art. The modern evaluation is that while it was oversold by Per Bak, and certainly could not explain *all* critical phenomena [@bakHowNatureWorks1996], it can explain some of them [@watkins25YearsSelforganized2016, section 8].
 
 ### Universality: The details don't matter {#sec-universality}
+
+Or: Why elephants don't know, or don't need to know, quantum mechanics.
 
 In the early 20th century, material scientists noticed the remarkable phenomenon of "corresponding states".
 
@@ -623,6 +652,8 @@ But renormalization theory explains more: it explains why those features matter 
 
 Renormalization theory explains the use of effective Hamiltonians and toy models instead of microscopically accurate models. Specifically, one starts with some microscopic accurate model, then apply renormalization and show that the details fall away and we end up with the toy model.
 
+On the flip-side, the details only matter away from the critical point. If we spend all our time near the critical point, we would not know or need to know the details.
+
 ### Sociophysics
 
 > "The details don't matter." said them triumphantly as they declared their independence from biophysics.
@@ -644,7 +675,9 @@ Renormalization theory explains the use of effective Hamiltonians and toy models
 
 ### Symmetries determine the shape of theory space {#sec-rn-theory-space-symmetry}
 
-As a particular example, boiling water is just a magnet, where vapor is just up-spin and liquid is just down-spin.
+The Ising model on $\Z^2$ is not a single theory, but an entire infinite-dimensional space of possible theories. Each Ising model . 
+
+As a particular example, with $n=1$, boiling water is just a magnet, where vapor is just up-spin and liquid is just down-spin.
 
 | physical system | site types |
 |---|---|---|
@@ -653,9 +686,9 @@ As a particular example, boiling water is just a magnet, where vapor is just up-
 | brass crystal | zinc / copper |
 | simple lattice field theory | has particle / no particle |
 
-: Title 1
+: Examples of $d=3, n=1$ systems.
 
-| d | n | Theoretical Model (Ising Model) | Physical System | Order Parameter |
+| d | n | Theoretical Model | Physical Systesm | Order Parameter |
 |---|---|---|---|---| 
 | 2 | 1 | Two dimensions | Adsorbed films | Surface density |
 |  | 2 | XY model in two dimensions | Helium-4 films | Amplitude of superfluid phase |
@@ -672,53 +705,29 @@ As a particular example, boiling water is just a magnet, where vapor is just up-
 | ≤4 | -2 |  | None |  |
 |  | 32 | Quantum chromodynamics | Quarks bound in protons, neutrons, etc. |  |
 
-: Title 2. 
+: Table of theory-spaces with their corresponding symmetries. Reproduced from [@wilsonProblemsPhysicsMany1979].
 
-Tables reproduced from [@wilsonProblemsPhysicsMany1979].
+### Droplets inside droplets
 
-### $d=1$: Droplets inside droplets
+I *especially* recommend playing with the [interactive Ising model](https://www.ibiblio.org/e-notes/Perc/ising1k.htm) by [Evgeny Demidov](https://www.ibiblio.org/e-notes/Perc/contents.htm) while reading this section.
 
-Critical opalescence, boiling, 
+We can interpret an Ising model over $\Z^3$ as a mixture of liquid and gaseous water. Each site can either be in a liquid state or in a vapor state. We start below the critical temperature, so that the bonding strength $J$ is just slightly larger than the critical $J_c$. The system must make a free choice to make between being a liquid ocean with tiny islands of liquid or a vapor ocean with tiny islands of liquid. Both choices are equally good in our toy model. Since liquid wants to be in contact with liquid and vapor with vapor, the system must decide. For the sake of intuition, we say that we have an ocean of liquid with tiny droplets of vapor inside.
 
-![[@kadanoffOrderChaosII1999, page 298]](figure/kadanoff_1999_fig_1_3.png)
+Now we increase the temperature towards the critical temperature. As we get hotter, thermal fluctuations become larger. In the ocean of liquid, a thermal fluctuation produces a droplet of vapor. This droplet secretes other material of the same density, and it grows larger and larger.
 
-![[@kadanoffOrderChaosII1999, page 299]](figure/kadanoff_1999_fig_1_4.png)
+![Vapor droplets inside an ocean of liquid. [@kadanoffOrderChaosII1999, page 298]](figure/kadanoff_1999_fig_1_3.png)
 
+However, as criticality is approached, the energetic cost in making a fluctuation approaches zero. The energetic penalty in creating droplets gets smaller and smaller. So, the droplets can grow large, until it becomes infinite right at the critical point.
 
-Just below the critical temperature, the system has a free choice to make between being a liquid at high density or a vapor at low density. Both choices are equally good. But since liquid wants to be in contact with liquid and vapor with vapor, the system must decide.
+Furthermore, each droplet itself is a nearly-critical system, so fluctuations appear within the droplets, in a delicate fractal.
 
-A natural fluctuation produces a droplet of the wrong phase. This droplet secretes other material of the same density, and it grows larger and larger. It stops growing when the cost in available—i.e. free-energy for making the droplet of wrong phase becomes comparable with kT. Since near the critical point it cost very little free energy per unit volume to make the wrong phase, the droplet can grow very large.
-
-The coherence length $\xi$ is a size of a typical droplet. As the critical point is approached, the free energy cost of making a droplet goes to zero, and the size of a typical droplet $\xi$, goes to infinity.
-
-However, as criticality is approached, the difference in magnetization between the two different phases gets smaller and smaller. Hence the energetic cost per unit area of producing a region of the wrong phase approaches zero. For this reason, the area of a droplet and its radius both can get very, very large. Critical phenomena are connected with large-scale but weak fluctuations in the magnetization.
-
-So far, our picture of critical fluctuations is like that. Droplets with spin down of all sizes up to a maximum size $\xi$ appear near the critical point. However, this picture is incomplete. Each fluctuating region is also a nearly-critical system. Fluctuations appear within the droplets.
+![Droplets inside dropltes inside droplets... [@kadanoffOrderChaosII1999, page 299]](figure/kadanoff_1999_fig_1_4.png)
 
 As you approach $T_c = 2.269\dots$ from above, you notice that little droplets seem to condense out of a hot grey gas.
-Define reduced temperature as $t = T/T_c - 1$. So that critical point is $t=0$. When t is 0.1, there are small droplets. When t = 0.05, the droplets grow larger, but! If you zoom out by a factor of x (you can measure it experimentally by running two simulations and try to match them by eye, or by taking screenshots and match them with an image frequency analyzer), they look the same. 
-
-So, this means that spatially zooming out by x is equivalent to increasing the reduced temperature by 2.
-
-It is a similar thing for $t < 0$. At $t = -1$, the entire field freezes into one color. As t increases, small droplets appear... There is another scaling law. By renormalization theory, the two scaling laws have the same exponent. 
-
-Renormalization is doing a zooming of the system. We start with the full system, then zoom it to describe it in a similar way that loses some details (and gains some details). This gives us another system. Repeated renormalization then is moving from one system to another in the space of possible systems.
-
-This is called "renormalization flow in the space of Hamiltonians".
-
-The fixed points of the flow are then critical systems. You apply the RN and get the same thing. This is a fractal, because zooming in you get the same thing. So it also has a power law, $1/f^a$ noise, and other things that fractals have.
 
 > Big whirls have little whirls that feed on their velocity,
 > 
 > and little whirls have lesser whirls and so on to viscosity.
-
-### Videos and interactives
-
-[Complexity Explorables | I sing well-tempered](https://www.complexity-explorables.org/explorables/i-sing-well-tempered/)
-
-[Ising model](https://www.ibiblio.org/e-notes/Perc/ising1k.htm)
-
-[The Renormalisation Group - YouTube](https://www.youtube.com/watch?v=MxRddFrEnPc)
 
 ## Field theory: RN on $\R^\infty$
 
