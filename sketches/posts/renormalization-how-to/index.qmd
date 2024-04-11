@@ -6,6 +6,7 @@ date-modified: "2024-04-07"
 categories: [math, physics, scaling]
 format:
   html:
+    code-fold: true
     toc: true
     resources:
         - "figure/**"
@@ -55,7 +56,7 @@ As $r$ approaches the critical value, we can see how the graph of $f_r^\infty$ t
 
 <figure>
   <video controls width=100%>
-    <source src="figure/Logistic_map_approaching_the_scaling_limit.webm" type="video/webm" />
+    <source src="figure/Logistic_map_approaching_the_scaling_limit.mp4" type="video/mp4" />
   </video>
   <figcaption>The graphs of $f_r, f_r^2, f_r^4, \dots$ as $r$ approaches the critical point from below.</figcaption>
 </figure>
@@ -67,7 +68,7 @@ Looking at the bifurcation diagram, we can see a region, starting just after $r 
 Not only that, if we look at the movie of $f_r^\infty$ as $r$ approaches this critical point, we again see the same jagged shape.
 
 <video controls width=100%>
-  <source src="figure/Logistic_map_approaching_the_period-3_scaling_limit.webm" type="video/webm" />
+  <source src="figure/Logistic_map_approaching_the_period-3_scaling_limit.mp4" type="video/mp4" />
 </video>
 
 Are we seeing some kind of *universal* feature of period-doubling routes to chaos? Is this a general pattern independent of the details of how exactly the logistic map is defined? What if we change to another dynamical system completely different?
@@ -254,7 +255,6 @@ This section studies RN on a grid, using what is called **real space RN**, in co
 >
 > [@fisherRenormalizationGroupTheory1998]
 
-
 I recommend that you open these and play as you follow along:
 
 * [Complexity Explorables | I sing well-tempered](https://www.complexity-explorables.org/explorables/i-sing-well-tempered/)
@@ -314,7 +314,6 @@ Since at constant $\Delta \bar p$, the lattice has a certain *characteristic* lo
 $$\nu = \frac{\ln 3}{2\ln \frac 32} \approx 1.355$$
 
 The actual exponent is believed to be $\nu = 4/3$, so we are only 1.6% off. Very good for such a cheap calculation!
-
 
 ### The Ising model
 
@@ -624,35 +623,28 @@ In a footnote, Kadanoff suggested that self-organized criticality might explain 
 
 Or: Why elephants don't know, or don't need to know, quantum mechanics.
 
-In the early 20th century, material scientists noticed the remarkable phenomenon of "corresponding states".
+In the early 20th century, material scientists noticed the remarkable phenomenon of "corresponding states". As first reported by [@guggenheimPrincipleCorrespondingStates1945], scientists measured the density $\rho$ of many substances near their liquid-vapor critical point. They fixed pressure and increased temperature $T$ around the critical temperature $T_c$. As they plotted the relation between $T$ and $\rho$, rescaled by critical temperature $T_c$ and density at critical point $\rho_c$, remarkably, all the substances fell onto a single curve.
 
 ![High-resolution reprint of [@guggenheimPrincipleCorrespondingStates1945, figure 2] in [@herbutModernApproachCritical2007, page 13].](figure/herbut_2007_corresponding_states.png)
 
-The **universality hypothesis**:
+Despite the diversity of intermolecular forces, the phase transition behavior of a wide variety of gasses follows a universal pattern.
+
+We see this pattern over and over again in physics. To give another example, imagine water flowing through a porous rock, oil through sand, or electricity through a random network of resistors. These systems, seemingly completely unrelated, share the same underlying mathematical structure and exhibit universal behavior near the percolation threshold. This universality arises because the details of the microscopic interactions become irrelevant at larger scales, and the system's behavior is governed by the collective properties of its components.
+
+It is often noted that quantum mechanics is unintuitive, because the mesoscopic physics is so different from the microscopic physics, so we had evolved to intuit the mesoscopic world, and not the microscopic world. But why is it possible to ignore quantum mechanics? Elephants don't need to know, or don't care about, the Standard Model of particle physics.[^elephants-dont-play-chess] When they walk, they push dirt around. When water flows, it pushes water around. The long-distance behavior of a system does not depend on the details of the short-distance interactions. The benefit of RN is that it saves us from the effort of understanding the microscopic details. On the flip-side, the details do matter if we are far from the critical point.
+
+[^elephants-dont-play-chess]: Nor do they play chess. [@brooksElephantsDonPlay1990]
+
+This is an overarching theme in renormalization theory, which might be called the **universality hypothesis**:
 
 > All phase transition problems can be divided into a small number of different classes depending upon the dimensionality of the system and the symmetries of the order state. Within each class, all phase transitions have identical behaviour in the critical region, only the names of the variables are changed. [@kadanoffOrderChaosII1999, page 273]
 
-[@battermanUniversalityRGExplanations2019]
+Furthermore, universality justifies our toy models as "serious play". When I was first learning statistical mechanics, I was terribly confused by it. "They can't be serious -- do they think I'm stupid? How could the Ising model possibly be relevant to real magnets?" But  the universality hypothesis justifies Ising models as serious toy models. Even if they are completely different from real magnets when far from the critical point, as we approach the critical point, their behavior becomes *exactly equal* at the limit.
 
-The two questions to be explained. Both can be explained by renormalization.
+RN theory explains why certain features matter when we zoom out and others are washed away. It explains why we have universal classes according to symmetry and dimension and not, say, the precise shape of the atomic force laws. It justifies the use of toy models instead of microscopically accurate models. Specifically, one starts with some microscopic accurate model, then apply renormalization and show that the details fall away and we end up at the same destination as the toy model. [@battermanUniversalityRGExplanations2019]
 
-Why are the phase transitions stable under perturbation of the microscopic Hamiltonians of the systems?
-
-The universality class is the basin of attraction of the fixed point. Scaling exponents and other universal properties are determined by the flow in a neighborhood of the fixed point.
-
-Why are the universality classes dependent upon the symmetry of the order parameter and the dimension?
-
-The renormalization flow depends on the symmetry and the dimension.
-
-Renormalization is not trivial.
-
-We may well try to simplify the nature of a model to the point where it represents a ‘mere caricature’ of reality. But notice that when one looks at a good political cartoon one can recognize the various characters even though the artist has portrayed them with but a few strokes. … [A] good theoretical model of a complex system should be like a good caricature: it should emphasize those features which are most important and should downplay the inessential details.” (Fisher 1983, p. 47) Lange claims that here Fisher “seems to be supporting a ‘common features account’: the minimal model, despite being a caricature of some actual system, shares with it ‘those features which are most important’ ” (Lange 2015, p. 299, fn. 3).
-
-But renormalization theory explains more: it explains why those features matter and others don't. It explains why we have universal classes according to symmetry and dimension and not, say, the precise shape of the atomic force laws.
-
-Renormalization theory explains the use of effective Hamiltonians and toy models instead of microscopically accurate models. Specifically, one starts with some microscopic accurate model, then apply renormalization and show that the details fall away and we end up with the toy model.
-
-On the flip-side, the details only matter away from the critical point. If we spend all our time near the critical point, we would not know or need to know the details.
+> We may well try to simplify the nature of a model to the point where it represents a ‘mere caricature’ of reality. But notice that when one looks at a good political cartoon one can recognize the various characters even though the artist has portrayed them with but a few strokes. ... \[A\] good theoretical model of a complex system should be like a good caricature: it should emphasize those features which are most important and should downplay the inessential details. [@fisherScalingUniversalityRenormalization1983, page 47]
+ [@battermanUniversalityRGExplanations2019]
 
 ### Sociophysics
 
@@ -731,23 +723,264 @@ As you approach $T_c = 2.269\dots$ from above, you notice that little droplets s
 
 ## Field theory: RN on $\R^\infty$
 
-## Wilson's Nobel Prize: RN in momentum space
+### The recipe of field-theoretic calculations.
 
-RN in momentum space is also called RN in frequency space. It is called "momentum" because it was first done by quantum field theorists to study subatomic particles, and in quantum mechanics, the spatial frequency of a particle-wave is proportional its momentum: $p = \hbar k$, for which [de Broglie](https://en.wikipedia.org/wiki/Louis_de_Broglie) was awarded a Nobel Prize in 1929.
+Here is the reference. You should not read this directly. Instead, you should go directly to the examples below and refer back to this as you go along.
 
-In the 1970s, [Kenneth Wilson](https://en.wikipedia.org/wiki/Kenneth_G._Wilson) invented RN in momentum space and used it to solve many problems. He was awarded the 1982 Nobel Prize in Physics for this work.
+1. To calculate: a massive integral of the form
 
-![Firefox icon after summing away its high-frequency components.](figure/firefox-renormalization-group-theory.jpeg)
+$$
+\ub{\int\cdots\int}{$N \to \infty$, with constraint $C$} (\text{something}) \rho(x)d^N x
+$$
 
-## Appendix
+2. The constraint $C$ is handled by introducing a Dirac delta factor:
 
-### Probability
+$$
+=_{\ln} \ub{\int\cdots\int}{$N \to \infty$} (\text{something}) \times (\delta^{(n)}(C' - C))^N
+$$
+
+3. Express the Dirac delta function as a Fourier transform using $\delta^{(n)}(x) = \frac{1}{2\pi}\int e^{-i x \lambda} d\lambda$, then exchange the order of integral.
+4. The inner integral splits into a product of $N$ terms, then evaluate each term, resulting in something like
+
+$$
+=_{\ln} \ub{\int\cdots\int}{$n$} (\text{something else}) e^{NS[\lambda]} d^n\lambda
+$$
+
+where $S$ is sometimes called the **field free energy**.
+
+5. Argue that, at large $N$, the integral is dominated by the stationary point of $S[\lambda]$.
+6. Write down $\nabla S = 0$, and give it the fancy name of **mean field equation**.
+7. Solve the mean field equation to be some $\lambda^*$.
+8. Declare the result to be 
+
+$$=_{\ln} e^{N S[\lambda^*]}$$
+
+Here, we use the notation $=_{\ln}$ to mean that they have the same exponential rate. That is, $f(N) =_{\ln} g(N)$ means that
+
+$$
+\lim_{N \to \infty} \frac 1N \ln f = \lim_{N \to \infty}  \frac 1N \ln g
+$$
+
+### Sanov's theorem
+
+#### Statement of Sanov's theorem
+
+[Sanov's theorem](https://en.wikipedia.org/wiki/Sanov%27s_theorem) concerns the large deviation principle for IID samples from a multinomial distribution.
+
+To see how Sanov's theorem works, let's consider an example. Say you are working at a dice factory, and your job is to quality-assure dices. An ideal dice should have all $p_i = 1/6$, and your job is to test that a given real dice has $p_i \approx 1/6$. Since you are not able to observe $p$ directly, you can only throw the dice for $N$ rounds, and compute the empirical distribution $\hat p$ from the outcomes $x_1, ..., x_N$.
+
+For example, if you threw it 7 times and you got every number once except $1$ twice, then $\hat p = (2/7, 1/7, ..., 1/7)$.
+
+Because $\hat p$ depends on the throws, it is itself a random variable. Intuitively, we should expect that $\hat p$ converging to $p$ as $N \to \infty$. Sanov's theorem states that it is exponentially unlikely for us to be far from the right answer, with the rate of exponential convergence depending on how far we are mistaken. The further $\hat p$ is from $p$, the faster we can eliminate that possibility.
+
+Let's state this more formally.
+
+Define:
+
+* $p_{1:n}$ is a probability vector.
+* $x_{1:N}$ are IID samples from a multinomial distribution with probability vector $p_{1:n}$.
+* $\hat{p}$ is the empirical distribution derived from these samples.
+* $\Delta_n$ is the probability simplex.
+
+As the number of samples $N$ approaches infinity, the probability of observing a specific empirical distribution $\hat{p}$ within a closed subset $A \subset \Delta_n$ is characterized by the Kullback-Leibler (KL) divergence $D_{KL}(\hat{p} \| p)$ between the empirical distribution $\hat{p}$ and the true distribution $p$.
+
+Formally stated:
+
+::: {#thm-sanov}
+
+## Sanov
+
+$$\lim_{N \to \infty} \frac{1}{N} \ln Pr(\hat{p} \in A) = -\inf_{\hat{p} \in A} D_{KL}(\hat{p} \| p)$$
+
+:::
+
+We can get an intuitive feel for Sanov's theorem by the following video.
+
+Let us fix $n = 3$ and $p = (0.2, 0.3, 0.5)$. We set $n = 3$ because $\Delta_3$ has two dimensions, which allows us to actually plot it.
+
+If we sample for $N$ times from the multinomial distribution defined by $p$, and plot the heatmap of the samples within $\Delta_2$ (shown as a black triangle), we notice that as $N \rightarrow \infty$, the distribution converges to a gaussian around the point $(0.2,0.3,0.5)$, with the contours converging in shape to ellipses, with radii converging as $1 / \sqrt{N}$.
+
+Meanwhile, the separation between the discrete points converge as $1 / N$, and so the discrete multinomial distribution converges to a continuous gaussian distribution.
+
+So, roughly speaking, we have approximately
+
+$$
+Pr(\hat p) \propto e^{- (\hat p - p)^T NV (\hat p - p)}
+$$
+
+for some covariance matrix $V$ that describes the shape of the ellipses.
+
+<video controls width=100%>
+  <source src="figure/Sanov_convergence.webm" type="video/webm" />
+</video>
+
+Now, if we boldly proceed, we would obtain
+
+$$
+\frac 1N \ln Pr(\hat p) \sim -(\hat p - p)^T A (\hat p - p)
+$$
+
+This is not quite right, because for any finite $N$, there are only finitely many possible $\hat p$. So generally $Pr(\hat p) = 0$, and to fix this, instead of writing $Pr(\hat p)$, we should write $Pr(\hat p \in A)$ for some closed subset $A \subset \Delta_n$.
+
+Next, since given any two exponentially decaying functions $f(N) \propto e^{-kN}, g(N) \propto e^{-lN}$, we have $f \gg g$ iff $k < l$, we only need to account for the least unlikely case:
+
+$$
+\lim_N \frac 1N \ln Pr(\hat p \in A) \approx \max_{q\in A} (-(q-p)^T A (q-p)) \approx - \min_{q\in A} D_{KL}(q \| p)
+$$
+
+> Any large deviation is done in the least unlikely of all the unlikely ways!
+>
+> [@denhollanderLargeDeviations2008, page 10]
+
+#### Field-theoretic proof
+
+This section is based on [@mezardInformationPhysicsComputation2009, section 4.7].
+
+We employ field-theoretic techniques to compute the rate function, treating both the empirical distribution $\hat{p}$ and the true distribution $p$ as fields over a finite set of points:
+
+$$p: \{1, 2, ..., n\} \to \R$$
+
+::: {.callout-note title="formulate a constraint" collapse="true" }
+
+We really want to write $Pr(\hat{p} = q)$, even though as we noted, this does not make sense. To fix this problem, we introduce an infinitesimal fudge factor of $\epsilon$.
+
+That is, we want to know the probability of observing an empirical distribution $\hat{p}$ within an infinitesimal neighborhood of a specific distribution $q$:
+
+$$Pr(\hat{p} =_{\epsilon} q)$$
+
+where $=\epsilon$ means that $\hat{p}_i \in q_i \pm \epsilon$ for each $i = 1, 2, \dots, n$, or more roughly, that they are within an $O(\epsilon)$ distance of each other.
+
+Thus, we can write the desired problem in the form of a constrained integral:
+
+$$
+Pr(\hat p =_\epsilon q) = \int_{\R^N} \rho(x) d^N x \left( 1[\hat p(x) = q]\right)
+$$
+
+:::
+
+::: {.callout-note title="introduce a Dirac delta" collapse="true" }
+
+Next, we need to move the constraint from the integral domain to the integrand, in preparation for exchanging the order of integral. We do this by introducing a Dirac delta factor.
+
+For any fixed tiny, but non-zero, $\epsilon$, we have
+
+$$
+\int_{\R^N} \rho(x) d^N x \left( 1[\hat p(x) = q]\right) =_{\ln} \int_{\R^N} \rho(x) d^N x \left( \frac{1[\hat p(x) = q]}{\mathrm{Vol}(\text{ball with radius } \epsilon)}\right)
+$$
+
+because even though $\frac{1[\hat p(x) = q]}{\mathrm{Vol}(\text{ball with radius } \epsilon)}$ is huge, it is still $O(1)$, and $\lim_{N\to\infty} \frac{(\text{huge but fixed})}{N} = 0$.
+
+$$
+= \int_{\R^N} \rho(x) d^N x \delta^{(n)}(\hat p(x) - q)
+$$
+
+:::
+
+::: {.callout-note title="do a Fourier transform" collapse="true" }
+
+Next, we do the Fourier transform of the Dirac delta factor. This step is mostly mechanical.
+
+$$
+\begin{aligned}
+\delta^{(n)} (\hat p(x) - q) &= \delta^{(n)} (N\hat p(x) - N q) \\
+&= \prod_{k=1}^n \delta \left( \sum_{j=1}^N 1[x_j = k] - Nq_k \right) \\
+&= \prod_{k=1}^n \frac{1}{2\pi} \int d\lambda_k e^{i\lambda_k \left( \sum_{j=1}^N 1[x_j = k] - Nq_k \right)} \\
+&=_{\ln} \int d^n \lambda e^{i \sum_{k=1}^n \lambda_k \left( \sum_{j=1}^N 1[x_j = k] - Nq_k \right)}
+\end{aligned}
+$$
+
+::: 
+
+::: {.callout-note title="exchange the order of integration" collapse="true" }
+
+Now we exchange the order of integration.
+
+$$
+\begin{aligned}
+Pr(\hat p =_\epsilon q) &= {\color{red}\int_{\R^N} \rho(x) d^N x} {\color{red}\int d^n \lambda} e^{i \sum_{k=1}^n \lambda_k \left( \sum_{j=1}^N 1[x_j = k] - Nq_k \right)} \\
+&= \int d^n \lambda \int_{\R^N} \rho(x) d^N xe^{i \sum_{k=1}^n \lambda_k \left( \sum_{j=1}^N 1[x_j = k] - Nq_k \right)} \\
+&= \int d^n \lambda e^{-iN \sum_{k=1}^n \lambda_k q_k}  \int_{\R^N} \rho(x) d^N x e^{i \sum_{j=1}^N \sum_{k=1}^n \lambda_k 1[x_j = k]} \\
+\end{aligned}
+$$
+
+:::
+
+::: {.callout-note title="inner integral" collapse="true" }
+
+The inner integral splits because of the independence of $x_1, ..., x_N$.
+
+$$
+\int_{\R^N} \rho(x) d^N x e^{i \sum_{j=1}^N \sum_{k=1}^n \lambda_k 1[x_j = k]} = \prod_{j=1}^N \langle e^{i \sum_{k=1}^n \lambda_k 1[x_j = k]}\rangle_{x_j}
+$$
+
+where the angled bracket denotes a probability expectation, and the subscript $x_j$ denotes what we are taking the expectation over. Because all $x_j$ have the same distribution, it is equal to
+
+$$
+\langle e^{i \sum_{k=1}^n \lambda_k 1[x_j = k]}\rangle_{x_1}^N = \left(\sum_{k=1}^n p_k e^{i\lambda_k} \right)^N = e^{N \ln \left(\sum_{k=1}^n p_k e^{i\lambda_k} \right)}
+$$
+
+:::
+
+::: {.callout-note title="outer integral" collapse="true" }
+
+$$
+\begin{aligned}
+Pr(\hat p =_\epsilon q) &= \int d^n \lambda e^{-iN \sum_{k=1}^n \lambda_k q_k + N \ln \left(\sum_{k=1}^n p_k e^{i\lambda_k} \right)} \\
+&= \int d^n \lambda e^{NS[\lambda]}
+\end{aligned}
+$$
+
+where the field free energy is
+
+$$S[\lambda] = \ln \left( \sum_{k\in 1:n}p_k e^{i \lambda_k}\right)-i\sum_{k\in 1:n} \lambda_k q_k$$
+
+:::
+
+::: {.callout-note title="the mean field equation" collapse="true" }
+
+The dominant contribution to the integral arises from the saddle point of the action, which corresponds to the solution of the mean field equation
+
+$$\nabla_{\lambda} S = 0$$
+
+The mean field equation is solved by some $\lambda^*$ satisfying:
+
+$$\begin{cases}
+i\lambda_k^* = \ln(C q_k/p_k) \\
+C = \sum_k p_k e^{i\lambda_k^*}
+\end{cases}
+$$
+
+Unfortunately, it is difficult to solve this in closed form, but we are on a lucky break: plugging them back to $S[\lambda^*]$ gives us a clean solution:
+
+Plugging those back to $S$, we find that 
+$$S[\lambda^*] = -\sum_{k=1}^n q_k \ln(q_k/p_k) = -D_{KL}(q\| p)$$
+
+:::
+
+Conclusion
+
+$$Pr(\hat p =_{\epsilon} q) =_{\ln} e^{NS[\lambda^*]} = e^{-ND_{KL}(q \| p)}$$ 
+
+> The reader who has never encountered this type of reasoning before may wonder why use such an indirect approach. It turns out that it is a very common formalism in statistical physics, where similar methods are also applied, under the name 'field theory', to continuous spaces $\mathcal X$ (some implicit discretization is then usually assumed at intermediate steps, and the correct definition of a continuum limit is often not obvious). In particular, the reader interested in the statistical-physics approach to optimization problems or information theory will often find this type of calculation in research papers. One of the advantages of this approach is that it provides a formal solution to a large variety of problems. The quantity to be computed is expressed in an integral form. In problems that have a ‘mean-field’ structure, the dimension of the space over which the integration is performed does not depend upon N. Therefore its leading exponential behaviour at large N can be obtained by saddle point methods. The reader who wants to get some practice with this approach is invited to ‘derive’ the various theorems and corollaries of this chapter in this way.
+>
+> [@mezardInformationPhysicsComputation2009, section 4.7]
+
+### Generalized central limit theorem
 
 This section is based on [@amirElementaryRenormalizationgroupApproach2020].
 
-Let's take a look at the central limit theorem. It says that if $X_1, X_2, \dots$ are IID samples from a distribution with finite mean $E[X]$ and variance $V[X]$, then $\frac{(X_1 + \dots + X_n) - n E[X]}{\sqrt{n V[X]}}$ converges to the standard normal distribution. If we think about it more carefully from the self-similarity point of view, we can think of it like this: we can decompose each $X$ into a sum of two random variables: $X_i = A_i + Z_i$, where $Z_i$ is a normal distribution with the same mean and variance, and $A_i$ is the "noise" part of it. Each $A_i$ might be overpowering, but when we repeatedly coarse-grain by taking a bunch of $X_i$, and adding them up (a lossy operation!), we would eventually destroy all traces of what cannot survive coarse-graining, and leaving behind a fixed-point of coarse-graining.
+Consider three random walks generated from three distinct probability distributions: Gaussian, Cauchy, and Pareto $\mu=0.7$. We notice two facts:
 
-SETUP.
+* The random walks are self-similar. A small section has the same look-and-feel as a large section of it.
+* Different random walks have very different characters. The Gaussian walk appears smoother, while the Cauchy and Pareto walks display more dramatic jumps and bursts, reflecting the heavier tails of their respective distributions.
+
+![Three random walks generated from three distinct probability distributions: Gaussian, Cauchy, and Pareto $\mu=0.7$](figure/generalized_random_walks_CLT.svg)
+
+When we see self-similarity, we think RN. Can we use RN to study random walks? Yes.
+
+Let's take a fresh look at the central limit theorem. It says that if $X_1, X_2, \dots$ are IID samples from a distribution with finite mean $E[X]$ and variance $V[X]$, then $\frac{(X_1 + \dots + X_n) - n E[X]}{\sqrt{n V[X]}}$ converges to the standard normal distribution. If we think about it from the RN point of view, we can decompose each $X$ into a sum of two random variables: $X_i = A_i + Z_i$, where $Z_i$ is a normal distribution with the same mean and variance, and $A_i$ is the "noise" part of it. Each $A_i$ might be overpowering, but when we repeatedly coarse-grain by taking a bunch of $X_i$, and adding them up (a lossy operation!), we would eventually destroy all traces of what cannot survive coarse-graining, and leaving behind a fixed-point of coarse-graining.
+
+We define the following letters:
 
 * $X_1, X_2, \dots$ are IID random variables, with characteristic function $\phi_X(t)= E[e^{itX}]$.
 * $S_n = X_1 + \dots + X_n$.
@@ -810,6 +1043,16 @@ Answer: $\partial_n \frac 1n \ln F(\frac{t-b_n}{a_n}) = 0$.
 
 :::
 
+## Wilson's Nobel Prize: RN in momentum space
+
+RN in momentum space is also called RN in frequency space. It is called "momentum" because it was first done by quantum field theorists to study subatomic particles, and in quantum mechanics, the spatial frequency of a particle-wave is proportional its momentum: $p = \hbar k$, for which [de Broglie](https://en.wikipedia.org/wiki/Louis_de_Broglie) was awarded a Nobel Prize in 1929.
+
+In the 1970s, [Kenneth Wilson](https://en.wikipedia.org/wiki/Kenneth_G._Wilson) invented RN in momentum space and used it to solve many problems. He was awarded the 1982 Nobel Prize in Physics for this work.
+
+![Firefox icon after summing away its high-frequency components.](figure/firefox-renormalization-group-theory.jpeg)
+
+## Appendix
+
 ### Neural networks
 
-[@mehtaExactMappingVariational2014]
+If only I understood what this is saying, then I could write this section. [@mehtaExactMappingVariational2014]
