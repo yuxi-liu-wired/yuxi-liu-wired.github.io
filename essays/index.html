@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -49,7 +49,12 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -58,6 +63,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -96,25 +102,48 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <meta property="og:title" content="Yuxi on the Wired - Essays">
-<meta property="og:image" content="https://yuxi-liu-wired.github.io/essays/posts/perplexity-turing-test/figure/banner_4_edit.png">
-<meta property="og:site-name" content="Yuxi on the Wired">
-<meta property="og:image:height" content="1024">
-<meta property="og:image:width" content="1792">
+<meta property="og:image" content="https://yuxi-liu-wired.github.io/essays/img/blog icon.jpg">
+<meta property="og:site_name" content="Yuxi on the Wired">
 <meta name="twitter:title" content="Yuxi on the Wired - Essays">
-<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/essays/posts/perplexity-turing-test/figure/banner_4_edit.png">
-<meta name="twitter:image-height" content="1024">
-<meta name="twitter:image-width" content="1792">
+<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/essays/img/blog icon.jpg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../img/favicon.ico" alt="" class="navbar-logo">
     </a>
@@ -129,46 +158,46 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../essays/index.html" rel="" target="" aria-current="page">
- <span class="menu-text">Essays</span></a>
+    <a class="nav-link active" href="../essays/index.html" aria-current="page"> 
+<span class="menu-text">Essays</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../sketches/index.html" rel="" target="">
- <span class="menu-text">Sketches</span></a>
+    <a class="nav-link" href="../sketches/index.html"> 
+<span class="menu-text">Sketches</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../projects/index.html" rel="" target="">
- <span class="menu-text">Projects</span></a>
+    <a class="nav-link" href="../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../notes/index.html" rel="" target="">
- <span class="menu-text">Notes</span></a>
+    <a class="nav-link" href="../notes/index.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../docs/index.html" rel="" target="">
- <span class="menu-text">Docs</span></a>
+    <a class="nav-link" href="../docs/index.html"> 
+<span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about/index.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../about/index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://bair.berkeley.edu/" rel="" target=""><i class="bi bi-folder-symlink" role="img">
+    <a class="nav-link" href="https://bair.berkeley.edu/"> <i class="bi bi-folder-symlink" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -181,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       
     
@@ -192,10 +221,10 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
   
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(12)</span></div><div class="category" data-category="AI">AI <span class="quarto-category-count">(9)</span></div><div class="category" data-category="anime">anime <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cybernetics">cybernetics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="economics">economics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="fun">fun <span class="quarto-category-count">(2)</span></div><div class="category" data-category="history">history <span class="quarto-category-count">(3)</span></div><div class="category" data-category="interpretation">interpretation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="math">math <span class="quarto-category-count">(5)</span></div><div class="category" data-category="physics">physics <span class="quarto-category-count">(2)</span></div><div class="category" data-category="probability">probability <span class="quarto-category-count">(1)</span></div><div class="category" data-category="scaling">scaling <span class="quarto-category-count">(3)</span></div><div class="category" data-category="statistics">statistics <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(13)</span></div><div class="category" data-category="AI">AI <span class="quarto-category-count">(9)</span></div><div class="category" data-category="anime">anime <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cybernetics">cybernetics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="economics">economics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="fun">fun <span class="quarto-category-count">(2)</span></div><div class="category" data-category="history">history <span class="quarto-category-count">(3)</span></div><div class="category" data-category="interpretation">interpretation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="math">math <span class="quarto-category-count">(6)</span></div><div class="category" data-category="physics">physics <span class="quarto-category-count">(3)</span></div><div class="category" data-category="probability">probability <span class="quarto-category-count">(1)</span></div><div class="category" data-category="scaling">scaling <span class="quarto-category-count">(4)</span></div><div class="category" data-category="statistics">statistics <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -206,21 +235,64 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="AI,scaling" data-listing-date-sort="1705996800000" data-listing-file-modified-sort="1706070152585" data-listing-date-modified-sort="1705996800000" data-listing-reading-time-sort="14">
+<div class="quarto-post image-right" data-index="0" data-categories="math,physics,scaling" data-listing-date-sort="1712473200000" data-listing-file-modified-sort="1712896873336" data-listing-date-modified-sort="1712473200000" data-listing-reading-time-sort="75" data-listing-word-count-sort="14817">
 <div class="thumbnail">
-<p><a href="../essays/posts/mixture-of-experts/index.html"> <p class="card-img-top"><img src="posts\mixture-of-experts\figure\Exam_pass_logistic_curve.svg"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../essays/posts/renormalization-how-to/index.html" class="no-external"></a></p><a href="../essays/posts/renormalization-how-to/index.html" class="no-external">
+<p class="card-img-top"><img src="posts\renormalization-how-to\figure\Logistic_Bifurcation_map_High_Resolution.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../essays/posts/renormalization-how-to/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/mixture-of-experts/index.html">
 <h3 class="no-anchor listing-title">
-Mixture of Experts
+<a href="../essays/posts/renormalization-how-to/index.html" class="no-external">How to do renormalization</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/renormalization-how-to/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('math'); return false;">
+math
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('physics'); return false;">
+physics
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('scaling'); return false;">
+scaling
+</div>
+</div>
+<div class="listing-description">
+<a href="../essays/posts/renormalization-how-to/index.html" class="no-external">Survival guide for renormalization (RN) theory. How to do it in real space and frequency space. What it all means. Should have something for everyone, from mathematicians to physicists to outsiders, from serious series to pretty pictures. Intended audience: those with two years of undergrad mathematics.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="../essays/posts/renormalization-how-to/index.html" class="no-external">
+<div class="listing-date">
+2024-04-07
+</div>
+<div class="listing-reading-time">
+75 min
+</div>
+<div class="metadata-value listing-file-modified">
+2024-04-11
 </div>
 </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="AI,scaling" data-listing-date-sort="1705996800000" data-listing-file-modified-sort="1706070152585" data-listing-date-modified-sort="1705996800000" data-listing-reading-time-sort="14" data-listing-word-count-sort="2762">
+<div class="thumbnail">
+<p><a href="../essays/posts/mixture-of-experts/index.html" class="no-external"></a></p><a href="../essays/posts/mixture-of-experts/index.html" class="no-external">
+<p class="card-img-top"><img src="posts\mixture-of-experts\figure\Exam_pass_logistic_curve.svg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../essays/posts/mixture-of-experts/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../essays/posts/mixture-of-experts/index.html" class="no-external">Mixture of Experts</a>
+</h3>
+<div class="listing-subtitle">
+<a href="../essays/posts/mixture-of-experts/index.html" class="no-external"></a>
+</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -229,14 +301,12 @@ AI
 scaling
 </div>
 </div>
-<a href="../essays/posts/mixture-of-experts/index.html">
 <div class="listing-description">
-<p>How MoE works, its history, and what it is good for.</p>
+<a href="../essays/posts/mixture-of-experts/index.html" class="no-external">How MoE works, its history, and what it is good for.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/mixture-of-experts/index.html">
+<a href="../essays/posts/mixture-of-experts/index.html" class="no-external">
 <div class="listing-date">
 2024-01-23
 </div>
@@ -249,19 +319,19 @@ scaling
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="AI,scaling,math" data-listing-date-sort="1705737600000" data-listing-file-modified-sort="1708395896569" data-listing-date-modified-sort="1705737600000" data-listing-reading-time-sort="29">
+<div class="quarto-post image-right" data-index="2" data-categories="AI,scaling,math" data-listing-date-sort="1705737600000" data-listing-file-modified-sort="1708395896569" data-listing-date-modified-sort="1705737600000" data-listing-reading-time-sort="29" data-listing-word-count-sort="5782">
 <div class="thumbnail">
-<p><a href="../essays/posts/perplexity-turing-test/index.html"> <img src="../essays/posts/perplexity-turing-test/figure/banner_4_edit.png" class="thumbnail-image" alt="An abstract representation of the Turing test. On the left is a dark city of obelisks over a bright background, and on the right is the same thing, mirrored and inverted, but with subtle differences due to the randomness of the art generator. It represents the abstract idea of the Turing test: duality, subtle differences, same contours, and complex object made of simple parts. High contrast, monochromatic, minimalistic, in the style of vector svg art."> </a></p>
+<p><a href="../essays/posts/perplexity-turing-test/index.html" class="no-external"></a></p><a href="../essays/posts/perplexity-turing-test/index.html" class="no-external">
+<p><img src="../essays/posts/perplexity-turing-test/figure/banner_4_edit.png" class="thumbnail-image" alt="An abstract representation of the Turing test. On the left is a dark city of obelisks over a bright background, and on the right is the same thing, mirrored and inverted, but with subtle differences due to the randomness of the art generator. It represents the abstract idea of the Turing test: duality, subtle differences, same contours, and complex object made of simple parts. High contrast, monochromatic, minimalistic, in the style of vector svg art."></p>
+</a><p><a href="../essays/posts/perplexity-turing-test/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/perplexity-turing-test/index.html">
 <h3 class="no-anchor listing-title">
-Predicting AGI by the Turing Test
+<a href="../essays/posts/perplexity-turing-test/index.html" class="no-external">Predicting AGI by the Turing Test</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/perplexity-turing-test/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -273,14 +343,12 @@ scaling
 math
 </div>
 </div>
-<a href="../essays/posts/perplexity-turing-test/index.html">
 <div class="listing-description">
-<p>Minimizing log-perplexity loss is equivalent to maximizing survival length in a Turing test. Assuming compute-loss scaling law, a scaled-up GPT that produces human-like science papers would cost ~200 years of global GDP.</p>
+<a href="../essays/posts/perplexity-turing-test/index.html" class="no-external">Minimizing log-perplexity loss is equivalent to maximizing survival length in a Turing test. Assuming compute-loss scaling law, a scaled-up GPT that produces human-like science papers would cost ~200 years of global GDP.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/perplexity-turing-test/index.html">
+<a href="../essays/posts/perplexity-turing-test/index.html" class="no-external">
 <div class="listing-date">
 2024-01-20
 </div>
@@ -293,19 +361,19 @@ math
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="AI,history" data-listing-date-sort="1704096000000" data-listing-file-modified-sort="1706070152617" data-listing-date-modified-sort="1704096000000" data-listing-reading-time-sort="108">
+<div class="quarto-post image-right" data-index="3" data-categories="AI,history" data-listing-date-sort="1704096000000" data-listing-file-modified-sort="1706070152617" data-listing-date-modified-sort="1704096000000" data-listing-reading-time-sort="108" data-listing-word-count-sort="21526">
 <div class="thumbnail">
-<p><a href="../essays/posts/perceptron-controversy/index.html"> <img src="../essays/posts/perceptron-controversy/figure/banner_2_cropped.png" class="thumbnail-image" alt="Brutalist architecture representing a single perceptron. A hexagonal building in the center representing the unit itself, with multiple arc legs representing the input weights, and antennas projecting off the top representing the output. High contrast, monochromatic, minimalistic, in the style of vector svg art."> </a></p>
+<p><a href="../essays/posts/perceptron-controversy/index.html" class="no-external"></a></p><a href="../essays/posts/perceptron-controversy/index.html" class="no-external">
+<p><img src="../essays/posts/perceptron-controversy/figure/banner_2_cropped.png" class="thumbnail-image" alt="Brutalist architecture representing a single perceptron. A hexagonal building in the center representing the unit itself, with multiple arc legs representing the input weights, and antennas projecting off the top representing the output. High contrast, monochromatic, minimalistic, in the style of vector svg art."></p>
+</a><p><a href="../essays/posts/perceptron-controversy/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/perceptron-controversy/index.html">
 <h3 class="no-anchor listing-title">
-The Perceptron Controversy
+<a href="../essays/posts/perceptron-controversy/index.html" class="no-external">The Perceptron Controversy</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/perceptron-controversy/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -314,14 +382,12 @@ AI
 history
 </div>
 </div>
-<a href="../essays/posts/perceptron-controversy/index.html">
 <div class="listing-description">
-<p>Connectionism died in the 60s from technical limits to scaling, then resurrected in the 80s after backprop allowed scaling. The Minsky–Papert anti-scaling hypothesis explained, psychoanalyzed, and buried.</p>
+<a href="../essays/posts/perceptron-controversy/index.html" class="no-external">Connectionism died in the 60s from technical limits to scaling, then resurrected in the 80s after backprop allowed scaling. The Minsky–Papert anti-scaling hypothesis explained, psychoanalyzed, and buried.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/perceptron-controversy/index.html">
+<a href="../essays/posts/perceptron-controversy/index.html" class="no-external">
 <div class="listing-date">
 2024-01-01
 </div>
@@ -334,19 +400,19 @@ history
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="AI,math,physics,history" data-listing-date-sort="1703577600000" data-listing-file-modified-sort="1706070127906" data-listing-date-modified-sort="1703664000000" data-listing-reading-time-sort="54">
+<div class="quarto-post image-right" data-index="4" data-categories="AI,math,physics,history" data-listing-date-sort="1703577600000" data-listing-file-modified-sort="1706070127906" data-listing-date-modified-sort="1703664000000" data-listing-reading-time-sort="54" data-listing-word-count-sort="10771">
 <div class="thumbnail">
-<p><a href="../essays/posts/backstory-of-backpropagation/index.html"> <img src="../essays/posts/backstory-of-backpropagation/figure/banner_cropped.png" class="thumbnail-image" alt="Stylized illustration of a computational graph, with gibberish text that resemble vector calculus, thick and thin lines representing the flow of numbers in the graph. In the center of the vaguely octagonal graph is a letter D, D for derivative. High contrast, monochromatic, minimalistic, in the style of vector svg art."> </a></p>
+<p><a href="../essays/posts/backstory-of-backpropagation/index.html" class="no-external"></a></p><a href="../essays/posts/backstory-of-backpropagation/index.html" class="no-external">
+<p><img src="../essays/posts/backstory-of-backpropagation/figure/banner_cropped.png" class="thumbnail-image" alt="Stylized illustration of a computational graph, with gibberish text that resemble vector calculus, thick and thin lines representing the flow of numbers in the graph. In the center of the vaguely octagonal graph is a letter D, D for derivative. High contrast, monochromatic, minimalistic, in the style of vector svg art."></p>
+</a><p><a href="../essays/posts/backstory-of-backpropagation/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/backstory-of-backpropagation/index.html">
 <h3 class="no-anchor listing-title">
-The Backstory of Backpropagation
+<a href="../essays/posts/backstory-of-backpropagation/index.html" class="no-external">The Backstory of Backpropagation</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/backstory-of-backpropagation/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -361,14 +427,12 @@ physics
 history
 </div>
 </div>
-<a href="../essays/posts/backstory-of-backpropagation/index.html">
 <div class="listing-description">
-<p>Why backprop was resisted for 20 years: assumption of discretely spiking neurons, goal of synthesizing Boolean logic, fear of local optima, and bad luck. Werbos has the best claim for invention.</p>
+<a href="../essays/posts/backstory-of-backpropagation/index.html" class="no-external">Why backprop was resisted for 20 years: assumption of discretely spiking neurons, goal of synthesizing Boolean logic, fear of local optima, and bad luck. Werbos has the best claim for invention.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/backstory-of-backpropagation/index.html">
+<a href="../essays/posts/backstory-of-backpropagation/index.html" class="no-external">
 <div class="listing-date">
 2023-12-26
 </div>
@@ -381,19 +445,19 @@ history
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="AI,cybernetics,math,history" data-listing-date-sort="1703318400000" data-listing-file-modified-sort="1705895244897" data-listing-date-modified-sort="1703318400000" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="5" data-categories="AI,cybernetics,math,history" data-listing-date-sort="1703318400000" data-listing-file-modified-sort="1705895244897" data-listing-date-modified-sort="1703318400000" data-listing-reading-time-sort="15" data-listing-word-count-sort="2861">
 <div class="thumbnail">
-<p><a href="../essays/posts/cybernetic-artificial-intelligence/index.html"> <img src="../essays/posts/cybernetic-artificial-intelligence/figure/cybernetic_meadow.png" class="thumbnail-image" alt="A grid of electromechanical spider-like robots on a concrete surface, with small cracks and many rounded-headed copper spires like tallgrass. It might be called poetically &amp;#039;a cybernetic meadow'. Realistic sci-fi illustration."> </a></p>
+<p><a href="../essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external"></a></p><a href="../essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external">
+<p><img src="../essays/posts/cybernetic-artificial-intelligence/figure/cybernetic_meadow.png" class="thumbnail-image" alt="A grid of electromechanical spider-like robots on a concrete surface, with small cracks and many rounded-headed copper spires like tallgrass. It might be called poetically &amp;#039;a cybernetic meadow'. Realistic sci-fi illustration."></p>
+</a><p><a href="../essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/cybernetic-artificial-intelligence/index.html">
 <h3 class="no-anchor listing-title">
-Cybernetic artificial intelligence
+<a href="../essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external">Cybernetic artificial intelligence</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -408,14 +472,12 @@ math
 history
 </div>
 </div>
-<a href="../essays/posts/cybernetic-artificial-intelligence/index.html">
 <div class="listing-description">
-<p>Machine learning and self-reproduction according to Norbert Wiener.</p>
+<a href="../essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external">Machine learning and self-reproduction according to Norbert Wiener.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/cybernetic-artificial-intelligence/index.html">
+<a href="../essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external">
 <div class="listing-date">
 2023-12-23
 </div>
@@ -428,19 +490,19 @@ history
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="AI,math" data-listing-date-sort="1703145600000" data-listing-file-modified-sort="1706070127926" data-listing-date-modified-sort="1703836800000" data-listing-reading-time-sort="25">
+<div class="quarto-post image-right" data-index="6" data-categories="AI,math" data-listing-date-sort="1703145600000" data-listing-file-modified-sort="1706070127926" data-listing-date-modified-sort="1703836800000" data-listing-reading-time-sort="25" data-listing-word-count-sort="4922">
 <div class="thumbnail">
-<p><a href="../essays/posts/reading-perceptron-book/index.html"> <img src="../essays/posts/reading-perceptron-book/figure/banner_2.png" class="thumbnail-image" alt="The cover of &amp;#039;Project SOGO: Principles of Hypnotic Bionics'. It is a combination of 'Project PARA: Principles of Neurodynamics' and 'Shoggoth' from Lovecraft's cosmology. The idea is that the book is mythical like the Necronomicon (see Minsky's quote). In the style of a cold-war era RAND corporation report."> </a></p>
+<p><a href="../essays/posts/reading-perceptron-book/index.html" class="no-external"></a></p><a href="../essays/posts/reading-perceptron-book/index.html" class="no-external">
+<p><img src="../essays/posts/reading-perceptron-book/figure/banner_2.png" class="thumbnail-image" alt="The cover of &amp;#039;Project SOGO: Principles of Hypnotic Bionics'. It is a combination of 'Project PARA: Principles of Neurodynamics' and 'Shoggoth' from Lovecraft's cosmology. The idea is that the book is mythical like the Necronomicon (see Minsky's quote). In the style of a cold-war era RAND corporation report."></p>
+</a><p><a href="../essays/posts/reading-perceptron-book/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/reading-perceptron-book/index.html">
 <h3 class="no-anchor listing-title">
-Reading <em>Perceptrons</em>
+<a href="../essays/posts/reading-perceptron-book/index.html" class="no-external">Reading <em>Perceptrons</em></a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/reading-perceptron-book/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -449,14 +511,12 @@ AI
 math
 </div>
 </div>
-<a href="../essays/posts/reading-perceptron-book/index.html">
 <div class="listing-description">
-<p>A long, hard stare into the math of <em>Perceptrons</em>, the mythical neural network killer.</p>
+<a href="../essays/posts/reading-perceptron-book/index.html" class="no-external">A long, hard stare into the math of <em>Perceptrons</em>, the mythical neural network killer.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/reading-perceptron-book/index.html">
+<a href="../essays/posts/reading-perceptron-book/index.html" class="no-external">
 <div class="listing-date">
 2023-12-21
 </div>
@@ -469,19 +529,19 @@ math
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="AI,economics" data-listing-date-sort="1701763200000" data-listing-file-modified-sort="1705895215247" data-listing-date-modified-sort="1701763200000" data-listing-reading-time-sort="30">
+<div class="quarto-post image-right" data-index="7" data-categories="AI,economics" data-listing-date-sort="1701763200000" data-listing-file-modified-sort="1705895215247" data-listing-date-modified-sort="1701763200000" data-listing-reading-time-sort="30" data-listing-word-count-sort="5848">
 <div class="thumbnail">
-<p><a href="../essays/posts/neural-scaling-laws/index.html"> <img src="../essays/posts/neural-scaling-laws/figure/banner_5_adjusted.png" class="thumbnail-image" alt="Brutalist architecture representing a neural network. A vaguely hexagonal 3D array of concrete blocks connected by thin &amp;#039;walkways', small thin steel 'lampposts' topped with balls, and balls rolling around."> </a></p>
+<p><a href="../essays/posts/neural-scaling-laws/index.html" class="no-external"></a></p><a href="../essays/posts/neural-scaling-laws/index.html" class="no-external">
+<p><img src="../essays/posts/neural-scaling-laws/figure/banner_5_adjusted.png" class="thumbnail-image" alt="Brutalist architecture representing a neural network. A vaguely hexagonal 3D array of concrete blocks connected by thin &amp;#039;walkways', small thin steel 'lampposts' topped with balls, and balls rolling around."></p>
+</a><p><a href="../essays/posts/neural-scaling-laws/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/neural-scaling-laws/index.html">
 <h3 class="no-anchor listing-title">
-Fermi Estimation for Neural Networks
+<a href="../essays/posts/neural-scaling-laws/index.html" class="no-external">Fermi Estimation for Neural Networks</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/neural-scaling-laws/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -490,14 +550,12 @@ AI
 economics
 </div>
 </div>
-<a href="../essays/posts/neural-scaling-laws/index.html">
 <div class="listing-description">
-<p>The bitter lesson in bite-sized packets.</p>
+<a href="../essays/posts/neural-scaling-laws/index.html" class="no-external">The bitter lesson in bite-sized packets.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/neural-scaling-laws/index.html">
+<a href="../essays/posts/neural-scaling-laws/index.html" class="no-external">
 <div class="listing-date">
 2023-12-05
 </div>
@@ -510,19 +568,19 @@ economics
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="AI,scaling" data-listing-date-sort="1698822000000" data-listing-file-modified-sort="1712544101333" data-listing-date-modified-sort="1705737600000" data-listing-reading-time-sort="8">
+<div class="quarto-post image-right" data-index="8" data-categories="AI,scaling" data-listing-date-sort="1698822000000" data-listing-file-modified-sort="1712544101333" data-listing-date-modified-sort="1705737600000" data-listing-reading-time-sort="8" data-listing-word-count-sort="1586">
 <div class="thumbnail">
-<p><a href="../essays/posts/scaling-law-by-data-manifold/index.html"> <p class="card-img-top"><img src="posts\scaling-law-by-data-manifold\figure\cvae_latent_space.jpg"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../essays/posts/scaling-law-by-data-manifold/index.html" class="no-external"></a></p><a href="../essays/posts/scaling-law-by-data-manifold/index.html" class="no-external">
+<p class="card-img-top"><img src="posts\scaling-law-by-data-manifold\figure\cvae_latent_space.jpg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../essays/posts/scaling-law-by-data-manifold/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/scaling-law-by-data-manifold/index.html">
 <h3 class="no-anchor listing-title">
-Neural scaling law by data manifold dimensions
+<a href="../essays/posts/scaling-law-by-data-manifold/index.html" class="no-external">Neural scaling law by data manifold dimensions</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/scaling-law-by-data-manifold/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -531,14 +589,12 @@ AI
 scaling
 </div>
 </div>
-<a href="../essays/posts/scaling-law-by-data-manifold/index.html">
 <div class="listing-description">
-<p>Neural networks scale they way they do, purely because of data.</p>
+<a href="../essays/posts/scaling-law-by-data-manifold/index.html" class="no-external">Neural networks scale they way they do, purely because of data.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/scaling-law-by-data-manifold/index.html">
+<a href="../essays/posts/scaling-law-by-data-manifold/index.html" class="no-external">
 <div class="listing-date">
 2023-11-01
 </div>
@@ -551,19 +607,19 @@ scaling
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="AI,interpretation" data-listing-date-sort="1693551600000" data-listing-file-modified-sort="1712544052131" data-listing-date-modified-sort="1709625600000" data-listing-reading-time-sort="8">
+<div class="quarto-post image-right" data-index="9" data-categories="AI,interpretation" data-listing-date-sort="1693551600000" data-listing-file-modified-sort="1712544052131" data-listing-date-modified-sort="1709625600000" data-listing-reading-time-sort="8" data-listing-word-count-sort="1523">
 <div class="thumbnail">
-<p><a href="../essays/posts/grokking-modular-arithmetics/index.html"> <p class="card-img-top"><img src="posts\grokking-modular-arithmetics\figure\network.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../essays/posts/grokking-modular-arithmetics/index.html" class="no-external"></a></p><a href="../essays/posts/grokking-modular-arithmetics/index.html" class="no-external">
+<p class="card-img-top"><img src="posts\grokking-modular-arithmetics\figure\network.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../essays/posts/grokking-modular-arithmetics/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/grokking-modular-arithmetics/index.html">
 <h3 class="no-anchor listing-title">
-Grokking modular arithmetics
+<a href="../essays/posts/grokking-modular-arithmetics/index.html" class="no-external">Grokking modular arithmetics</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/grokking-modular-arithmetics/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -572,14 +628,12 @@ AI
 interpretation
 </div>
 </div>
-<a href="../essays/posts/grokking-modular-arithmetics/index.html">
 <div class="listing-description">
-<p>Toy model of grokking: tiny neural networks learn modular arithmetics after it has already reached full correctness on the training set.</p>
+<a href="../essays/posts/grokking-modular-arithmetics/index.html" class="no-external">Toy model of grokking: tiny neural networks learn modular arithmetics after it has already reached full correctness on the training set.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/grokking-modular-arithmetics/index.html">
+<a href="../essays/posts/grokking-modular-arithmetics/index.html" class="no-external">
 <div class="listing-date">
 2023-09-01
 </div>
@@ -592,19 +646,19 @@ interpretation
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="anime,fun" data-listing-date-sort="1667286000000" data-listing-file-modified-sort="1705895247731" data-listing-date-modified-sort="1701417600000" data-listing-reading-time-sort="13">
+<div class="quarto-post image-right" data-index="10" data-categories="anime,fun" data-listing-date-sort="1667286000000" data-listing-file-modified-sort="1705895247731" data-listing-date-modified-sort="1701417600000" data-listing-reading-time-sort="13" data-listing-word-count-sort="2557">
 <div class="thumbnail">
-<p><a href="../essays/posts/serial-experiments-lain/index.html"> <img src="../essays/posts/serial-experiments-lain/figure/sel_title_illustration.png" class="thumbnail-image" alt="A girl facing away from the viewer, sitting in a datacenter, connected by wires to the server racks. In the middle-top is an ethereal tree-shaped network of light, representing the neural network of Lain. Cyberpunk-style anime art."> </a></p>
+<p><a href="../essays/posts/serial-experiments-lain/index.html" class="no-external"></a></p><a href="../essays/posts/serial-experiments-lain/index.html" class="no-external">
+<p><img src="../essays/posts/serial-experiments-lain/figure/sel_title_illustration.png" class="thumbnail-image" alt="A girl facing away from the viewer, sitting in a datacenter, connected by wires to the server racks. In the middle-top is an ethereal tree-shaped network of light, representing the neural network of Lain. Cyberpunk-style anime art."></p>
+</a><p><a href="../essays/posts/serial-experiments-lain/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/serial-experiments-lain/index.html">
 <h3 class="no-anchor listing-title">
-Serial Experiments Lain
+<a href="../essays/posts/serial-experiments-lain/index.html" class="no-external">Serial Experiments Lain</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/serial-experiments-lain/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('anime'); return false;">
 anime
@@ -613,14 +667,12 @@ anime
 fun
 </div>
 </div>
-<a href="../essays/posts/serial-experiments-lain/index.html">
 <div class="listing-description">
-<p>Lain is the collective subconscious as a neural network.</p>
+<a href="../essays/posts/serial-experiments-lain/index.html" class="no-external">Lain is the collective subconscious as a neural network.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/serial-experiments-lain/index.html">
+<a href="../essays/posts/serial-experiments-lain/index.html" class="no-external">
 <div class="listing-date">
 2022-11-01
 </div>
@@ -633,19 +685,19 @@ fun
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="probability,statistics" data-listing-date-sort="1563001200000" data-listing-file-modified-sort="1705541662718" data-listing-date-modified-sort="1704873600000" data-listing-reading-time-sort="14">
+<div class="quarto-post image-right" data-index="11" data-categories="probability,statistics" data-listing-date-sort="1563001200000" data-listing-file-modified-sort="1705541662718" data-listing-date-modified-sort="1704873600000" data-listing-reading-time-sort="14" data-listing-word-count-sort="2649">
 <div class="thumbnail">
-<p><a href="../essays/posts/no-nonsense-algorithmic-bias/index.html"> <img src="../essays/posts/no-nonsense-algorithmic-bias/figure/square_with_4_blocks.png" class="thumbnail-image"> </a></p>
+<p><a href="../essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external"></a></p><a href="../essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external">
+<p><img src="../essays/posts/no-nonsense-algorithmic-bias/figure/square_with_4_blocks.png" class="thumbnail-image"></p>
+</a><p><a href="../essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/no-nonsense-algorithmic-bias/index.html">
 <h3 class="no-anchor listing-title">
-The Racial Algorithmic Bias Controversy
+<a href="../essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external">The Racial Algorithmic Bias Controversy</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('probability'); return false;">
 probability
@@ -654,14 +706,12 @@ probability
 statistics
 </div>
 </div>
-<a href="../essays/posts/no-nonsense-algorithmic-bias/index.html">
 <div class="listing-description">
-<p>The racial algorithmic bias controversy, as seen by a mathematician.</p>
+<a href="../essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external">The racial algorithmic bias controversy, as seen by a mathematician.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/no-nonsense-algorithmic-bias/index.html">
+<a href="../essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external">
 <div class="listing-date">
 2019-07-13
 </div>
@@ -674,19 +724,19 @@ statistics
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="physics,math,fun" data-listing-date-sort="1525158000000" data-listing-file-modified-sort="1705972236657" data-listing-date-modified-sort="1702540800000" data-listing-reading-time-sort="54">
+<div class="quarto-post image-right" data-index="12" data-categories="physics,math,fun" data-listing-date-sort="1525158000000" data-listing-file-modified-sort="1705972236657" data-listing-date-modified-sort="1702540800000" data-listing-reading-time-sort="54" data-listing-word-count-sort="10728">
 <div class="thumbnail">
-<p><a href="../essays/posts/wigner-rotation/index.html"> <img src="../essays/posts/wigner-rotation/figure/discrete_lorentz_rapidity_0.1_boosts_17.png" class="thumbnail-image" alt="A picture of iterating the same Lorentz boost for many times on a plus-sign with unit-length arms, creating the outlines of a hyperbola."> </a></p>
+<p><a href="../essays/posts/wigner-rotation/index.html" class="no-external"></a></p><a href="../essays/posts/wigner-rotation/index.html" class="no-external">
+<p><img src="../essays/posts/wigner-rotation/figure/discrete_lorentz_rapidity_0.1_boosts_17.png" class="thumbnail-image" alt="A picture of iterating the same Lorentz boost for many times on a plus-sign with unit-length arms, creating the outlines of a hyperbola."></p>
+</a><p><a href="../essays/posts/wigner-rotation/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../essays/posts/wigner-rotation/index.html">
 <h3 class="no-anchor listing-title">
-The Wigner Rotation in Special Relativity via Hyperbolic Geometry
+<a href="../essays/posts/wigner-rotation/index.html" class="no-external">The Wigner Rotation in Special Relativity via Hyperbolic Geometry</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../essays/posts/wigner-rotation/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('physics'); return false;">
 physics
@@ -698,14 +748,12 @@ math
 fun
 </div>
 </div>
-<a href="../essays/posts/wigner-rotation/index.html">
 <div class="listing-description">
-<p>The <em>other</em> special relativity paradox that you have never heard of.</p>
+<a href="../essays/posts/wigner-rotation/index.html" class="no-external">The <em>other</em> special relativity paradox that you have never heard of.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../essays/posts/wigner-rotation/index.html">
+<a href="../essays/posts/wigner-rotation/index.html" class="no-external">
 <div class="listing-date">
 2018-05-01
 </div>
@@ -764,6 +812,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -832,13 +907,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -917,10 +994,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -930,8 +1024,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -943,7 +1046,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -987,6 +1213,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1012,6 +1239,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1074,13 +1327,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left"><span class="faux-block">Yuxi on the Wired</span></div>   
+    <div class="nav-footer-left">
+<p><span class="faux-block">Yuxi on the Wired</span></p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
-    <div class="nav-footer-right"><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></p>
+</div>
   </div>
 </footer>
+
 
 
 
