@@ -1686,8 +1686,8 @@ E\nu = n h
 </blockquote>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="figure/adiabatic-pendulum.png" class="img-fluid figure-img" style="width:20.0%"></p>
-<figcaption class="margin-caption">The adiabatic pendulum of Lorentz.</figcaption>
+<p><img src="figure/adiabatic-pendulum.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<figcaption class="margin-caption">The adiabatic pendulum of Lorentz. Figure from <span class="citation" data-cites="fowler13AdiabaticInvariants2020">(<a href="#ref-fowler13AdiabaticInvariants2020" role="doc-biblioref">Fowler 2020</a>)</span></figcaption>
 </figure>
 </div>
 <p>Why is this interesting? The quantum hypothesis states that for quantum oscillators, <span class="math inline">\(E/\nu = nh\)</span>, where <span class="math inline">\(n\)</span> can only take values in the natural numbers. The Lorentz pendulum seems to show that the quantity <span class="math inline">\(E/\nu\)</span> can change continuously. Thus, for example, we might start at a quantized value of <span class="math inline">\(E/\nu = 100h\)</span>, and end up at <span class="math inline">\(100.5h\)</span>, invalidating the quantum hypothesis for macroscopic systems. And if macroscopic systems do not follow the quantum hypothesis, then as the macroscopic system becomes microscopic, it seems the quantum hypothesis would be invalidated as well.</p>
@@ -1768,7 +1768,24 @@ Proof
 </div>
 <div id="callout-20" class="callout-20-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>Let</p>
+<p>In general, force is the energetic cost of changing a parameter. That is, <span class="math inline">\(F = (\partial_\lambda H)_{p, q}\)</span>. Here, we are using a notation commonly used in thermodynamics: for partial derivatives, we write in the subscript the variables being held constant.</p>
+<p>Let us adiabatically vary <span class="math inline">\(\lambda\)</span>. After many cycles have passed, the oscillator is orbiting around the cycle defined by <span class="math inline">\(H(q, p; \lambda) = E\)</span>. After many more cycles have passed, we have varied <span class="math inline">\(\lambda\)</span> by <span class="math inline">\(\delta \lambda\)</span>, and the oscillator would be orbiting around the cycle defined by <span class="math inline">\(H(q, p; \lambda + \delta \lambda) = E + \delta E\)</span>, where <span class="math inline">\(\delta E = \bar F \delta \lambda\)</span> is the increase in oscillator energy due to the external force varying <span class="math inline">\(\lambda\)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figure/adiabatic_theorem_proof.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p>As pictured, we take for each point <span class="math inline">\((q_0, p_0)\)</span> on the first cycle, and move by <span class="math inline">\(\delta p\)</span>, to end up with point <span class="math inline">\((q_0, p_0 + \delta p)\)</span> on the second cycle. The cycle area would change by</p>
+<p><span class="math display">\[\delta(\text{area}) = \oint (\delta p)dq = \int_0^T (\delta p )\dot q dt + O(\delta T \delta p)\]</span></p>
+<p>where <span class="math inline">\(T\)</span> is the cycle time of the first cycle, and <span class="math inline">\(T + \delta t\)</span> is the cycle time of the second cycle.</p>
+<p>Expanding and simplifying,</p>
+<p><span class="math display">\[
+H(q_0, p_0 + \delta p ; \lambda + \delta \lambda) = E + \underbrace{\delta E}_{\text{$= \bar F \delta \lambda$}} \implies
+(\partial_p H)_{\lambda, q}\delta p = [\overline{(\partial_\lambda H)_{q, p}} - (\partial_\lambda H)_{q, p}] \delta\lambda
+\]</span></p>
+<p>Now integrate over a single cycle, and using the Hamilton equation of motion <span class="math inline">\(\dot q = (\partial_p)_{\lambda, p}\)</span>,</p>
+<p><span class="math display">\[\delta(\text{area}) =  \delta\lambda \int_0^T [\overline{(\partial_\lambda H)_{q, p}} - (\partial_\lambda H)_{q, p}] dt + O(\delta^2)\]</span></p>
+<p>By definition, <span class="math inline">\(\overline{(\partial_\lambda H)_{q, p}} = \frac 1T \int_0^T (\partial_\lambda H)_{q, p}dt\)</span>, thus we have <span class="math inline">\(\delta(\text{area}) = O(\delta^2)\)</span>. Thus, integrating over the entirety of the adiabatic process, <span class="math inline">\(\Delta(\text{area}) = O(\delta)\)</span>, which converges to zero as the adiabatic process becomes infinitely slow.</p>
 </div>
 </div>
 </div>
@@ -2071,6 +2088,9 @@ Fernandez-Pineda, C., A. Diez de los Rios, and J. I. Mengual. 1982. <span>“Adi
 </div>
 <div id="ref-feynmanQEDStrangeTheory2006" class="csl-entry" role="listitem">
 Feynman, Richard P. 2006. <em><span>QED</span>: The Strange Theory of Light and Matter</em>. Expanded ed. Princeton Science Library. Princeton, NJ: Princeton Univ. Press.
+</div>
+<div id="ref-fowler13AdiabaticInvariants2020" class="csl-entry" role="listitem">
+Fowler, Michael. 2020. <span>“13.1: <span>Adiabatic Invariants</span>.”</span> <em>Physics LibreTexts</em>. https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Graduate_Classical_Mechanics_(Fowler)/13%3A_Adiabatic_Invariants_and_Action-Angle_Variables/13.01%3A_Adiabatic_Invariants.
 </div>
 <div id="ref-goldsteinClassicalMechanics2008" class="csl-entry" role="listitem">
 Goldstein, Herbert, Charles P. Poole, and John L. Safko. 2008. <em>Classical Mechanics</em>. 3. ed., [Nachdr.]. San Francisco Munich: Addison Wesley.

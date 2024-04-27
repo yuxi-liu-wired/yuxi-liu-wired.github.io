@@ -1633,7 +1633,7 @@ At the 1911 Solvay Conference, where the great physicists grappled with the new 
 >
 > [@institutssolvayTheorieRayonnementQuanta1912, page 450]
 
-![The adiabatic pendulum of Lorentz.](figure/adiabatic-pendulum.png){width=20% fig-align="center"}
+![The adiabatic pendulum of Lorentz. Figure from [@fowler13AdiabaticInvariants2020]](figure/adiabatic-pendulum.png){width=30% fig-align="center"}
 
 Why is this interesting? The quantum hypothesis states that for quantum oscillators, $E/\nu = nh$, where $n$ can only take values in the natural numbers. The Lorentz pendulum seems to show that the quantity $E/\nu$ can change continuously. Thus, for example, we might start at a quantized value of $E/\nu = 100h$, and end up at $100.5h$, invalidating the quantum hypothesis for macroscopic systems. And if macroscopic systems do not follow the quantum hypothesis, then as the macroscopic system becomes microscopic, it seems the quantum hypothesis would be invalidated as well.
 
@@ -1691,7 +1691,30 @@ Generalizing from this experience, for an arbitrary 1D oscillator with Hamiltoni
 
 ::: {.callout-note title="Proof" collapse="false"}
 
-Let
+In general, force is the energetic cost of changing a parameter. That is, $F = (\partial_\lambda H)_{p, q}$. Here, we are using a notation commonly used in thermodynamics: for partial derivatives, we write in the subscript the variables being held constant.
+
+Let us adiabatically vary $\lambda$. After many cycles have passed, the oscillator is orbiting around the cycle defined by $H(q, p; \lambda) = E$. After many more cycles have passed, we have varied $\lambda$ by $\delta \lambda$, and the oscillator would be orbiting around the cycle defined by $H(q, p; \lambda + \delta \lambda) = E + \delta E$, where $\delta E = \bar F \delta \lambda$ is the increase in oscillator energy due to the external force varying $\lambda$.
+
+![](figure/adiabatic_theorem_proof.jpg){width=80% fig-align="center"}
+
+As pictured, we take for each point $(q_0, p_0)$ on the first cycle, and move by $\delta p$, to end up with point $(q_0, p_0 + \delta p)$ on the second cycle. The cycle area would change by 
+
+$$\delta(\text{area}) = \oint (\delta p)dq = \int_0^T (\delta p )\dot q dt + O(\delta T \delta p)$$
+
+where $T$ is the cycle time of the first cycle, and $T + \delta t$ is the cycle time of the second cycle.
+
+Expanding and simplifying,
+
+$$
+H(q_0, p_0 + \delta p ; \lambda + \delta \lambda) = E + \ub{\delta E}{$= \bar F \delta \lambda$} \implies 
+(\partial_p H)_{\lambda, q}\delta p = [\overline{(\partial_\lambda H)_{q, p}} - (\partial_\lambda H)_{q, p}] \delta\lambda
+$$
+
+Now integrate over a single cycle, and using the Hamilton equation of motion $\dot q = (\partial_p)_{\lambda, p}$, 
+
+$$\delta(\text{area}) =  \delta\lambda \int_0^T [\overline{(\partial_\lambda H)_{q, p}} - (\partial_\lambda H)_{q, p}] dt + O(\delta^2)$$
+
+By definition, $\overline{(\partial_\lambda H)_{q, p}} = \frac 1T \int_0^T (\partial_\lambda H)_{q, p}dt$, thus we have $\delta(\text{area}) = O(\delta^2)$. Thus, integrating over the entirety of the adiabatic process, $\Delta(\text{area}) = O(\delta)$, which converges to zero as the adiabatic process becomes infinitely slow.
 
 :::
 
