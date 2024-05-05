@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,6 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -103,7 +104,12 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -112,6 +118,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -121,10 +128,37 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <meta property="og:title" content="Yuxi on the Wired - The Perceptron Controversy">
 <meta property="og:description" content="Connectionism died in the 60s from technical limits to scaling, then resurrected in the 80s after backprop allowed scaling. The Minsky–Papert anti-scaling hypothesis explained, psychoanalyzed, and buried.">
 <meta property="og:image" content="https://yuxi-liu-wired.github.io/essays/posts/perceptron-controversy/figure/banner_2_cropped.png">
-<meta property="og:site-name" content="Yuxi on the Wired">
+<meta property="og:site_name" content="Yuxi on the Wired">
 <meta property="og:image:height" content="891">
 <meta property="og:image:width" content="1437">
 <meta property="og:image:alt" content="Brutalist architecture representing a single perceptron. A hexagonal building in the center representing the unit itself, with multiple arc legs representing the input weights, and antennas projecting off the top representing the output. High contrast, monochromatic, minimalistic, in the style of vector svg art.">
@@ -140,10 +174,10 @@ div.csl-indent {
 <body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
     </a>
@@ -158,46 +192,46 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../essays/index.html" rel="" target="">
- <span class="menu-text">Essays</span></a>
+    <a class="nav-link" href="../../../essays/index.html"> 
+<span class="menu-text">Essays</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../sketches/index.html" rel="" target="">
- <span class="menu-text">Sketches</span></a>
+    <a class="nav-link" href="../../../sketches/index.html"> 
+<span class="menu-text">Sketches</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../projects/index.html" rel="" target="">
- <span class="menu-text">Projects</span></a>
+    <a class="nav-link" href="../../../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../notes/index.html" rel="" target="">
- <span class="menu-text">Notes</span></a>
+    <a class="nav-link" href="../../../notes/index.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../docs/index.html" rel="" target="">
- <span class="menu-text">Docs</span></a>
+    <a class="nav-link" href="../../../docs/index.html"> 
+<span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../about/index.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about/index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://bair.berkeley.edu/" rel="" target=""><i class="bi bi-folder-symlink" role="img">
+    <a class="nav-link" href="https://bair.berkeley.edu/"> <i class="bi bi-folder-symlink" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -247,7 +281,7 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
@@ -288,12 +322,13 @@ div.csl-indent {
   </ul>
 </nav>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -314,12 +349,12 @@ div.csl-indent {
 </section>
 <section id="the-enigma-of-marvin-minsky" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-enigma-of-marvin-minsky">The enigma of Marvin Minsky</h2>
-<div class="page-columns page-full"><p>In a 1993 interview, <a href="https://en.wikipedia.org/wiki/Robert_Hecht-Nielsen">Robert Hecht-Nielsen</a> recounted an encounter between <a href="https://en.wikipedia.org/wiki/Marvin_Minsky">Marvin Minsky</a> and the neural network community in the late 1980s<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;This was corroborated by a contemporary news report on the International Conference on Neural Networks of 1988:</p>
+<p>In a 1993 interview, <a href="https://en.wikipedia.org/wiki/Robert_Hecht-Nielsen">Robert Hecht-Nielsen</a> recounted an encounter between <a href="https://en.wikipedia.org/wiki/Marvin_Minsky">Marvin Minsky</a> and the neural network community in the late 1980s<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;This was corroborated by a contemporary news report on the International Conference on Neural Networks of 1988:</p>
 <blockquote class="blockquote">
 <p>Minsky who has been criticized by many for the conclusions he and Papert make in ‘Perceptrons,’ opened his defense with the line ‘Everybody seems to think I’m the devil.’ Then he made the statement, ‘I was wrong about Dreyfus too, but I haven’t admitted it yet,’ which brought another round of applause. (quoted in <span class="citation" data-cites="olazaranHistoricalSociologyNeural1991">(<a href="#ref-olazaranHistoricalSociologyNeural1991" role="doc-biblioref">Olazaran 1991, 285</a>)</span>)</p>
 </blockquote>
-</li></div></div>
-<blockquote class="blockquote">
+</div></div><blockquote class="blockquote">
 <p>Minsky had gone to the same New York “science” high school as Frank Rosenblatt, a Cornell psychology Ph.D.&nbsp;whose “perceptron” neural network pattern recognition machine was receiving significant media attention. The wall-to-wall media coverage of Rosenblatt and his machine irked Minsky. One reason was that although Rosenblatt’s training was in “soft science,” his perceptron work was quite mathematical and quite sound—turf that Minsky, with his “hard science” Princeton mathematics Ph.D., didn’t feel Rosenblatt belonged on. Perhaps an even greater problem was the fact that the heart of the perceptron machine was a clever motor-driven potentiometer adaptive element that had been pioneered in the world’s first neurocomputer, the “SNARC”, which had been designed and built by Minsky several years earlier! In some ways, Minsky’s early career was like that of Darth Vader. He started out as one of the earliest pioneers in neural networks but was then turned to the dark side of the force (AI) and became the strongest and most effective foe of his original community. This view of his career history is not unknown to him. When he was invited to give the keynote address at a large neural network conference in the late 1980s to an absolutely rapt audience, he began with the words: “I am not the Devil!” <span class="citation" data-cites="rosenfeldTalkingNetsOral2000">(<a href="#ref-rosenfeldTalkingNetsOral2000" role="doc-biblioref">Rosenfeld and Anderson 2000, 303–5</a>)</span></p>
 </blockquote>
 <p>However, it appears that he had changed his mind later. As recounted by <a href="https://en.wikipedia.org/wiki/Terry_Sejnowski">Terry Sejnowski</a>:</p>
@@ -331,20 +366,20 @@ div.csl-indent {
 <p>What are we to make of the enigma of Minsky? Was he the devil or not?</p>
 <section id="the-intellectual-history-of-minsky" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="the-intellectual-history-of-minsky">The intellectual history of Minsky</h3>
-<div class="page-columns page-full"><p>During his undergraduate years, Minsky was deeply impressed by <a href="https://en.wikipedia.org/wiki/Andrew_M._Gleason">Andrew Gleason</a>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and decided to work on pure mathematics, resulting in his 1951 undergraduate thesis <em>A Generalization of Kakutani’s Fixed-Point Theorem</em>, which extended an obscure fixed-point theorem of <a href="https://en.wikipedia.org/wiki/Shizuo_Kakutani">Kakutani</a> – not <a href="https://en.wikipedia.org/wiki/Kakutani_fixed-point_theorem">the famous version</a>, as Kakutani proved more than one fixed-point theorem.</p><div class="no-row-height column-margin column-container"><li id="fn2"><blockquote class="blockquote"><sup>2</sup>&nbsp;
+<p>During his undergraduate years, Minsky was deeply impressed by <a href="https://en.wikipedia.org/wiki/Andrew_M._Gleason">Andrew Gleason</a>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and decided to work on pure mathematics, resulting in his 1951 undergraduate thesis <em>A Generalization of Kakutani’s Fixed-Point Theorem</em>, which extended an obscure fixed-point theorem of <a href="https://en.wikipedia.org/wiki/Shizuo_Kakutani">Kakutani</a> – not <a href="https://en.wikipedia.org/wiki/Kakutani_fixed-point_theorem">the famous version</a>, as Kakutani proved more than one fixed-point theorem.</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><blockquote class="blockquote"><sup>2</sup>&nbsp;
 <p>I asked Gleason how he was going to solve it. Gleason said he had a plan that consisted of three steps, each of which he thought would take him three years to work out. Our conversation must have taken place in 1947, when I was a sophomore. Well, the solution took him only about five more years … Gleason made me realize for the first time that mathematics was a landscape with discernible canyons and mountain passes, and things like that. In high school, I had seen mathematics simply as a bunch of skills that were fun to master – but I had never thought of it as a journey and a universe to explore. No one else I knew at that time had that vision, either. <span class="citation" data-cites="bernsteinMarvinMinskyVision1981">(<a href="#ref-bernsteinMarvinMinskyVision1981" role="doc-biblioref">Bernstein 1981</a>)</span></p>
 </blockquote>
-</li></div></div>
-<div id="thm-kakutani" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1 (Kakutani’s fixed point theorem on the sphere) </strong></span>If <span class="math inline">\(f\)</span> is an <span class="math inline">\(\mathbb{R}^2\)</span>-valued continuous function on the unit sphere in <span class="math inline">\(\mathbb{R}^3\)</span>, then for any side length <span class="math inline">\(r \in (0, \sqrt{3})\)</span>, there exist <span class="math inline">\(x_1, x_2, x_3\)</span> on the sphere forming an equilateral triangle with side length <span class="math inline">\(r\)</span>, such that <span class="math inline">\(f(x_1) = f(x_2) = f(x_3)\)</span>.</p>
+</div></div><div id="thm-kakutani" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Kakutani’s fixed point theorem on the sphere)</strong></span> If <span class="math inline">\(f\)</span> is an <span class="math inline">\(\mathbb{R}^2\)</span>-valued continuous function on the unit sphere in <span class="math inline">\(\mathbb{R}^3\)</span>, then for any side length <span class="math inline">\(r \in (0, \sqrt{3})\)</span>, there exist <span class="math inline">\(x_1, x_2, x_3\)</span> on the sphere forming an equilateral triangle with side length <span class="math inline">\(r\)</span>, such that <span class="math inline">\(f(x_1) = f(x_2) = f(x_3)\)</span>.</p>
 <p>Equivalently, if <span class="math inline">\(x_1, x_2, x_3\)</span> form an equilateral triangle on the unit sphere, then there exists a rotation <span class="math inline">\(T\)</span> such that <span class="math inline">\(f(T(x_1)) = f(T(x_2)) = f(T(x_3))\)</span>.</p>
 </div>
 <p>Using knot theory, Minsky proved an extension where <span class="math inline">\(x_1, x_2, x_3\)</span> are three points of a square or a regular pentagon <span class="citation" data-cites="minskyMyUndergraduateThesis2011">(<a href="#ref-minskyMyUndergraduateThesis2011" role="doc-biblioref">M. Minsky 2011</a>)</span>. The manuscript “disappeared” <span class="citation" data-cites="minskySelectedPublicationsMarvin">(<a href="#ref-minskySelectedPublicationsMarvin" role="doc-biblioref">M. L. Minsky n.d.</a>)</span>.</p>
 <blockquote class="blockquote">
 <p>I wrote it up and gave it to Gleason. He read it and said, ‘You are a mathematician.’ Later, I showed the proof to Freeman Dyson, at the Institute for Advanced Study, and he amazed me with a proof <span class="citation" data-cites="dysonContinuousFunctionsDefined1951">(<a href="#ref-dysonContinuousFunctionsDefined1951" role="doc-biblioref">Dyson 1951</a>)</span> that there must be at least one square that has the same temperature at all four vertices. He had found somewhere in my proof a final remnant of unused logic. <span class="citation" data-cites="bernsteinMarvinMinskyVision1981">(<a href="#ref-bernsteinMarvinMinskyVision1981" role="doc-biblioref">Bernstein 1981</a>)</span></p>
 </blockquote>
-<div class="page-columns page-full"><p>He then became interested in neural networks and reinforcement learning, and constructed a very simple electromechanical machine called SNARC.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The SNARC machine is a recurrent neural network that performs reinforcement learning by the Hebbian learning rule. It simulates a mouse running around a maze, while the operator watches an indicator light showing the mouse. The operator can press a button as a reward signal, which would cause an electric motor to turn a chain. The chain is clutched to rheostats that connect the neurons, with the stretch of the clutch being proportional to the charge in a capacitor. During the operation of the neural network, the capacitor charges up if there is neural co-activation on the connection, and decays naturally, thus serving as a short-term memory. When the reward button is pressed, the clutches turn by an amount proportional to the co-activation of neural connections, thereby completing the Hebbian learning.</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;It was published as <span class="citation" data-cites="minskyNeuralanalogueCalculatorBased1952">(<a href="#ref-minskyNeuralanalogueCalculatorBased1952" role="doc-biblioref">M. Minsky 1952</a>)</span>, but the document is not available online, and I could only piece together a possible reconstruction from the fragments of information.</p></li></div></div>
-<p>Minsky was impressed by how well it worked. The machine was designed to simulate one mouse, but by some kind of error it simulated multiple mice, and yet it still worked.</p>
+<p>He then became interested in neural networks and reinforcement learning, and constructed a very simple electromechanical machine called SNARC.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The SNARC machine is a recurrent neural network that performs reinforcement learning by the Hebbian learning rule. It simulates a mouse running around a maze, while the operator watches an indicator light showing the mouse. The operator can press a button as a reward signal, which would cause an electric motor to turn a chain. The chain is clutched to rheostats that connect the neurons, with the stretch of the clutch being proportional to the charge in a capacitor. During the operation of the neural network, the capacitor charges up if there is neural co-activation on the connection, and decays naturally, thus serving as a short-term memory. When the reward button is pressed, the clutches turn by an amount proportional to the co-activation of neural connections, thereby completing the Hebbian learning.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;It was published as <span class="citation" data-cites="minskyNeuralanalogueCalculatorBased1952">(<a href="#ref-minskyNeuralanalogueCalculatorBased1952" role="doc-biblioref">M. Minsky 1952</a>)</span>, but the document is not available online, and I could only piece together a possible reconstruction from the fragments of information.</p></div></div><p>Minsky was impressed by how well it worked. The machine was designed to simulate one mouse, but by some kind of error it simulated multiple mice, and yet it still worked.</p>
 <blockquote class="blockquote">
 <p>The rats actually interacted with one another. If one of them found a good path, the others would tend to follow it. We sort of quit science for a while to watch the machine. … In those days, even a radio set with twenty tubes tended to fail a lot. I don’t think we ever debugged our machine completely, but that didn’t matter. By having this crazy random design, it was almost sure to work, no matter how you built it. <span class="citation" data-cites="bernsteinMarvinMinskyVision1981">(<a href="#ref-bernsteinMarvinMinskyVision1981" role="doc-biblioref">Bernstein 1981</a>)</span></p>
 </blockquote>
@@ -356,12 +391,12 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>Minsky’s doctoral dissertation in mathematics from Princeton in 1954 was a theoretical and experimental study of computing with neural networks. He had even built small networks from electronic parts to see how they behaved. The story I heard when I was a graduate student at Princeton in physics was that there wasn’t anyone in the Mathematics Department who was qualified to assess his dissertation, so they sent it to the mathematicians at the Institute for Advanced Study in Princeton who, it was said, talked to God. The reply that came back was, “If this isn’t mathematics today, someday it will be,” which was good enough to earn Minsky his PhD. <span class="citation" data-cites="sejnowskiDeepLearningRevolution2018">(<a href="#ref-sejnowskiDeepLearningRevolution2018" role="doc-biblioref">Sejnowski 2018, 259</a>)</span></p>
 </blockquote>
-<div class="page-columns page-full"><p>Reading the story, I recalled <a href="https://web.archive.org/web/20231223082954/http://www.catb.org/jargon/html/koans.html">“Sussman attains enlightenment”</a>, a <a href="https://simple.wikipedia.org/wiki/Hacker_koan">hacker koan</a> about Minsky and his student <a href="https://en.wikipedia.org/wiki/Gerald_Jay_Sussman">Sussman</a> <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;This is based on a true story.</p>
+<p>Reading the story, I recalled <a href="https://web.archive.org/web/20231223082954/http://www.catb.org/jargon/html/koans.html">“Sussman attains enlightenment”</a>, a <a href="https://simple.wikipedia.org/wiki/Hacker_koan">hacker koan</a> about Minsky and his student <a href="https://en.wikipedia.org/wiki/Gerald_Jay_Sussman">Sussman</a> <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;This is based on a true story.</p>
 <blockquote class="blockquote">
 <p>… Sussman told Minsky that he was using a certain randomizing technique in his program because he didn’t want the machine to have any preconceived notions. Minsky said, “Well, it has them, it’s just that you don’t know what they are.” It was the most profound thing Gerry Sussman had ever heard. And Minsky continued, telling him that the world is built a certain way, and the most important thing we can do with the world is avoid randomness, and figure out ways by which things can be planned. <span class="citation" data-cites="levyHackersHeroesComputer2010">(<a href="#ref-levyHackersHeroesComputer2010" role="doc-biblioref">Levy 2010, 110–11</a>)</span></p>
 </blockquote>
-</li></div></div>
-<blockquote class="blockquote">
+</div></div><blockquote class="blockquote">
 <p>In the days when Sussman was a novice, Minsky once came to him as he sat hacking at the PDP-6. “What are you doing?”, asked Minsky. “I am training a randomly wired neural net to play Tic-Tac-Toe” Sussman replied. “Why is the net wired randomly?”, asked Minsky. “I do not want it to have any preconceptions of how to play”, Sussman said. Minsky then shut his eyes. “Why do you close your eyes?”, Sussman asked his teacher. “So that the room will be empty.” At that moment, Sussman was enlightened.</p>
 </blockquote>
 <p>As for Sussman, I knew him for two things: writing the <a href="https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs"><em>SICP</em></a> book, and being the coordinator of the infamous <em>summer vision project</em> that was to construct “a significant part of a visual system” in a single summer, using only undergraduate student researchers. A brief read of his “<a href="https://web.archive.org/web/20231007210930/http://aurellem.org/thoughts/html/sussman-reading-list.html">reading list</a>” shows where his loyalties lie: firmly in <a href="https://en.wikipedia.org/wiki/Neats_and_scruffies">the school of neats</a>.</p>
@@ -378,12 +413,12 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/minsky_robot_arm_blocks.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">Marvin Minsky and Builder the robot. It’s hard to tell who is having more fun here.</figcaption>
+<figcaption class="margin-caption">Marvin Minsky and Builder the robot. It’s hard to tell who is having more fun here.</figcaption>
 </figure>
 </div>
 <p>From the concrete description, as well as the many attractive illustrations in the book, it is clear that Minsky intended the “Society of Mind” to be a uniform computing substrate (silicon or carbon) upon which millions of little symbolic programs are running, each capable of running some specific task, each describable by a distinct and small piece of symbolic program. They cannot be mere perceptrons in a uniform block of neural network, or mere logic gates in a uniform block of CPU.</p>
-<div class="page-columns page-full"><p>In his 1988 book, Minsky described dozens of these heterogeneous components he thought might make up a Society of Mind. However, the precise details are not relevant,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> as he freely admited that they are conjectured. He was only adamant about the overarching scheme: heterogeneous little separated components, not a homogeneous big connected piece.</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;The conjectured components included “K-lines”, “nomes”, “nemes”, “frames”, “frame-arrays”, etc. Although Minsky meant for this SoM project to last a very long time, building up to general intelligence brick by brick, my literature search shows that there had been no new development since the 2000s, so the overview <span class="citation" data-cites="singhExaminingSocietyMind2003">(<a href="#ref-singhExaminingSocietyMind2003" role="doc-biblioref">Singh 2003</a>)</span> still represents the SOTA of SoM.</p></li></div></div>
-<p>Perhaps a modern reincarnation of such an idea would be the dream of Internet agents operating in a digital economy, populated by agents performing simple tasks like spam filtering, listening for the price of petroleum, etc. Some agents would interface with reality, while others would interface with agents. Some agents are organized at a higher level into DAOs, created by a small committee of simple “manager agents” serving as the interface and coordinators for other agents. DAOs can interface with other DAOs through little speaker-agents, which consist of a simple text filter for the torrent of information and then outsource to text-weaving agents to compose the actual messages they send out.</p>
+<p>In his 1988 book, Minsky described dozens of these heterogeneous components he thought might make up a Society of Mind. However, the precise details are not relevant,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> as he freely admited that they are conjectured. He was only adamant about the overarching scheme: heterogeneous little separated components, not a homogeneous big connected piece.</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;The conjectured components included “K-lines”, “nomes”, “nemes”, “frames”, “frame-arrays”, etc. Although Minsky meant for this SoM project to last a very long time, building up to general intelligence brick by brick, my literature search shows that there had been no new development since the 2000s, so the overview <span class="citation" data-cites="singhExaminingSocietyMind2003">(<a href="#ref-singhExaminingSocietyMind2003" role="doc-biblioref">Singh 2003</a>)</span> still represents the SOTA of SoM.</p></div></div><p>Perhaps a modern reincarnation of such an idea would be the dream of Internet agents operating in a digital economy, populated by agents performing simple tasks like spam filtering, listening for the price of petroleum, etc. Some agents would interface with reality, while others would interface with agents. Some agents are organized at a higher level into DAOs, created by a small committee of simple “manager agents” serving as the interface and coordinators for other agents. DAOs can interface with other DAOs through little speaker-agents, which consist of a simple text filter for the torrent of information and then outsource to text-weaving agents to compose the actual messages they send out.</p>
 </section>
 <section id="sec-seymour-papert" class="level3">
 <h3 class="anchored" data-anchor-id="sec-seymour-papert">Seymour Papert</h3>
@@ -432,13 +467,13 @@ div.csl-indent {
 <p>At the time that Hoff left, about 1965 or 1966, we had already had lots of troubles with neural nets. My enthusiasm had dropped. But we were beginning to have successful adaptive filters, in other words, finding good applications. … So we stopped, basically stopped on neural nets, and began on adaptive antennas very strongly.” (Widrow, interview) <span class="citation" data-cites="olazaranHistoricalSociologyNeural1991">(<a href="#ref-olazaranHistoricalSociologyNeural1991" role="doc-biblioref">Olazaran 1991, 129–30</a>)</span></p>
 </blockquote>
 <p>SRI had a strong AI program, with luminaries such as <a href="https://en.wikipedia.org/wiki/Nils_John_Nilsson">Nils Nilsson</a>, <a href="https://en.wikipedia.org/wiki/Charles_Rosen_(scientist)">Charles Rosen</a>, <a href="https://en.wikipedia.org/wiki/Richard_O._Duda">Duda</a>, and <a href="https://en.wikipedia.org/wiki/Peter_E._Hart">Hart</a>. At first they worked on a system called MINOS, with several iterations. MINOS II in 1962 had 3 layers, but only one was trainable, presumably because they also had no better training method than the perceptron learning rule. Since they used 0-1 activation functions like everyone else, they were frustrated by the same problem of <em>not doing backpropagation</em>, so they switched to symbolic AI techniques around 1965.</p>
-<div class="page-columns page-full"><p>In 1973, Duda and Hart published the famous “Duda and Hart” book on pattern classification <span class="citation" data-cites="dudaPatternClassificationScene1973">(<a href="#ref-dudaPatternClassificationScene1973" role="doc-biblioref">Duda and Hart 1973</a>)</span>. The book contained two halves. The first half was statistical: Bayes, nearest neighbors, perceptron, clustering, etc. The second half was on scene analysis, a symbolic-AI method for computer vision. Indeed, <a href="https://yuxi-liu-wired.github.io/essays/posts/reading-perceptron-book/#chapter-13">Minsky and Papert promoted it as superior to perceptron networks</a>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> <a href="https://en.wikipedia.org/wiki/Shakey_the_robot">Shakey the robot</a>, built between 1966 and 1972, was a <em>tour de force</em> of scene analysis, and it could traverse a room in as short as an hour, avoiding geometric obstacles along the way. Its program was written in LISP, the staple programming language for symbolic AI.</p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;It is instructive to compare the first edition with the second, published in 2001 <span class="citation" data-cites="dudaPatternClassification2001">(<a href="#ref-dudaPatternClassification2001" role="doc-biblioref">Duda, Hart, and Stork 2001</a>)</span>. It had become almost completely statistical. There were new chapters on neural networks, Boltzmann machines, decision trees, and so on. In contrast, scene analysis was completely removed.</p>
+<p>In 1973, Duda and Hart published the famous “Duda and Hart” book on pattern classification <span class="citation" data-cites="dudaPatternClassificationScene1973">(<a href="#ref-dudaPatternClassificationScene1973" role="doc-biblioref">Duda and Hart 1973</a>)</span>. The book contained two halves. The first half was statistical: Bayes, nearest neighbors, perceptron, clustering, etc. The second half was on scene analysis, a symbolic-AI method for computer vision. Indeed, <a href="https://yuxi-liu-wired.github.io/essays/posts/reading-perceptron-book/#chapter-13">Minsky and Papert promoted it as superior to perceptron networks</a>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> <a href="https://en.wikipedia.org/wiki/Shakey_the_robot">Shakey the robot</a>, built between 1966 and 1972, was a <em>tour de force</em> of scene analysis, and it could traverse a room in as short as an hour, avoiding geometric obstacles along the way. Its program was written in LISP, the staple programming language for symbolic AI.</p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;It is instructive to compare the first edition with the second, published in 2001 <span class="citation" data-cites="dudaPatternClassification2001">(<a href="#ref-dudaPatternClassification2001" role="doc-biblioref">Duda, Hart, and Stork 2001</a>)</span>. It had become almost completely statistical. There were new chapters on neural networks, Boltzmann machines, decision trees, and so on. In contrast, scene analysis was completely removed.</p>
 <p>It says something about the obsolescence of scene analysis even in 2001, as Duda and Hart deleted half of their most famous book just to avoid talking about it. In fact, the only mention of “scene analysis” is a condemnation:</p>
 <blockquote class="blockquote">
 <p>Some of the earliest work on three-dimensional object recognition relied on complex grammars which described the relationships of corners and edges, in block structures such arches and towers. It was found that such systems were very brittle; they failed whenever there were errors in feature extraction, due to occlusion and even minor misspecifications of the model. For the most part, then, grammatical methods have been abandoned for object recognition and scene analysis. <span class="citation" data-cites="dudaPatternClassification2001">(<a href="#ref-dudaPatternClassification2001" role="doc-biblioref">Duda, Hart, and Stork 2001, sec. 8.8</a>)</span></p>
 </blockquote>
-</li></div></div>
-<blockquote class="blockquote">
+</div></div><blockquote class="blockquote">
 <p>I got very interested for a while in the problem of training more than one layer of weights, and was not able to make very much progress on that problem. … When we stopped the neural net studies at SRI, research money was running out, and we began looking for new ideas. (Nilsson, interview)</p>
 <p>About 1965 or 1966 we decided that we were more interested in the other artificial intelligence techniques. … Our group never solved the problem of training more than one layer of weights in an automatic fashion. We never solved that problem. That was most critical. Everybody was aware of that problem. (Rosen, interview) <span class="citation" data-cites="olazaranHistoricalSociologyNeural1991">(<a href="#ref-olazaranHistoricalSociologyNeural1991" role="doc-biblioref">Olazaran 1991, 131–33</a>)</span></p>
 </blockquote>
@@ -456,8 +491,8 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>Minsky and his crew thought that Frank Rosenblatt’s work was a waste of time, and they certainly thought that our work at SRI was a waste of time. Minsky really didn’t believe in perceptrons, he didn’t think it was the way to go. I know he knocked the hell out of our perceptron business. <span class="citation" data-cites="olazaranSociologicalHistoryNeural1993">(<a href="#ref-olazaranSociologicalHistoryNeural1993" role="doc-biblioref">Olazaran 1993, 622</a>)</span></p>
 </blockquote>
-<div class="page-columns page-full"><p>When <em>Perceptrons</em> was finally published in 1969, the connectionist camp was already deserted. The SRI group had switched to symbolic AI projects; Widrow’s group had switched to adapting single perceptrons to adaptive filtering; Frank Rosenblatt was still labouring, isolated, with dwindling funds, until his early death in 1971.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;The 1972 reprinting of <em>Perceptrons</em> included a handwritten note, “In memory of Frank Rosenblatt”. This was not an ironic dedication, as Minsky and Rosenblatt were personally friendly, although their research paradigms had been fighting for dominance.</p></li></div></div>
-<p>During the last days of Rosenblatt, he worked on a massive expansion of the Mark I Perceptron, named Tobermory. It would have been a multimodal neural network, capable of seeing and hearing in real time. From the obscurity of Tobermory, we can infer that it was a failure.</p>
+<p>When <em>Perceptrons</em> was finally published in 1969, the connectionist camp was already deserted. The SRI group had switched to symbolic AI projects; Widrow’s group had switched to adapting single perceptrons to adaptive filtering; Frank Rosenblatt was still labouring, isolated, with dwindling funds, until his early death in 1971.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;The 1972 reprinting of <em>Perceptrons</em> included a handwritten note, “In memory of Frank Rosenblatt”. This was not an ironic dedication, as Minsky and Rosenblatt were personally friendly, although their research paradigms had been fighting for dominance.</p></div></div><p>During the last days of Rosenblatt, he worked on a massive expansion of the Mark I Perceptron, named Tobermory. It would have been a multimodal neural network, capable of seeing and hearing in real time. From the obscurity of Tobermory, we can infer that it was a failure.</p>
 <blockquote class="blockquote">
 <p>The four-layer Tobermory perceptron, designed and built at Cornell University between 1961 and 1967, had 45 S units, 1600 A1 units, 1000 A2 units, and 12 R units. Intended for speech recognition, the input section consisted of 45 band-pass filters attached to 80 difference detectors, with the output of each detector sampled at 20 time intervals. Its 12000 weights consisted of toroidal cores capable of storing over 100 different amplitudes. Each A2 unit could be connected to any of 20 A1 units by means of a wall-sized plugboard. As has happened with so many other projects in the last three decades, by the time Tobermory was completed, the technology of commercial Von Neumann computers had advanced sufficiently to outperform the special-purpose parallel hardware. <span class="citation" data-cites="nagyNeuralNetworksthenNow1991">(<a href="#ref-nagyNeuralNetworksthenNow1991" role="doc-biblioref">Nagy 1991</a>)</span></p>
 </blockquote>
@@ -477,11 +512,11 @@ div.csl-indent {
 <p>ER: Robert Hecht-Nielsen has told me stories that long before Minsky and Papert ever committed anything to a paper that they delivered at a conference or published anywhere, they were going down to ARPA and saying, “You know, this is the wrong way to go. It shouldn’t be a biological model; it should be a logical model.”</p>
 <p>JC: I think that’s probably right. In those days they were really quite hostile to neural networks. I can remember having a discussion with Seymour … in the ’60s. We were talking about visual illusions. He felt that they were all higher-level effects that had nothing to do with neural networks as such. They needed a different, a top-down approach to understand. By then he had become a real, a true opponent of neural networks. I think Marvin had the same feelings as well. To some extent, David Marr had those feelings too. After he got to the AI lab, I think he got converted to that way of thinking. Then Tommy Poggio essentially persuaded him otherwise.</p>
 </blockquote>
-<p><a href="https://en.wikipedia.org/wiki/Teuvo_Kohonen">Teuvo Kohonen</a> seemed also angry at the <a href="https://en.wikipedia.org/wiki/Cognitive_revolution">Chomskyan school</a>, for reasons that I might write about later. <!-- connectionism-and-cognitivism --></p>
+<p><a href="https://en.wikipedia.org/wiki/Teuvo_Kohonen">Teuvo Kohonen</a> seemed also angry at the <a href="https://en.wikipedia.org/wiki/Cognitive_revolution">Chomskyan school</a>, for reasons I sketched out in the <a href="#appendix-the-chomskyans">appendix on the Chomskyans</a>.</p>
 <blockquote class="blockquote">
 <p>I was one of the people suffering from Minsky and Papert’s book [Perceptrons] because it went roughly this way: you start telling somebody about your work, and this visitor or whoever you talk to says, “Don’t you know that this area is dead?” It is something like what we experienced in the pattern recognition society when everything started to be structural and grammatical and semantic and so on. If somebody said, “I’m doing research on the statistical pattern recognition,” then came this remark, “Hey, don’t you know that is a dead idea already?”</p>
 </blockquote>
-<p><a href="https://en.wikipedia.org/wiki/Michael_A._Arbib">Michael A. Arbib</a> thought the book did not cause the neural network winter, but rather caused funding change it.</p>
+<p><a href="https://en.wikipedia.org/wiki/Michael_A._Arbib">Michael A. Arbib</a> thought the book did not cause the neural network winter, but rather caused by the change in funding.</p>
 <blockquote class="blockquote">
 <p>Minsky and Papert basically said that if you limit your networks to one layer in depth, then, unless you have very complicated individual neurons, you can’t do very much. This is not too surprising. … Many people see the book as what killed neural nets, but I really don’t think that’s true. I think that the funding priorities, the fashions in computer science departments, had shifted the emphasis away from neural nets to the more symbolic methods of AI by the time the book came out. I think it was more that a younger generation of computer scientists who didn’t know the earlier work may have used the book as justification for sticking with “straight AI” and ignoring neural nets.</p>
 </blockquote>
@@ -518,8 +553,8 @@ div.csl-indent {
 <p>Despite this imbalance, the mathematical work is substantial, and the perceptron controversy turns critically on the pliable interpretation sprouting from the solid structure. Therefore, I have detailed the mathematical content in a separate essay, <a href="https://yuxi-liu-wired.github.io/essays/posts/reading-perceptron-book/"><em>Reading Perceptrons</em></a>, to which I refer occasionally to gloss their interpretation.</p>
 <section id="minsky-and-papert-struck-back" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="minsky-and-papert-struck-back">Minsky and Papert struck back</h3>
-<div class="page-columns page-full"><p>In the 1980s, neural networks rose again to prominence under the name of “connectionism”, prompting an eventual response from Minsky and Papert. The <em>Perceptrons</em> book was reissued in 1988, with new chapters dedicated to rejecting connectionism. They took the 1986 two-volume work of <em>Parallel Distributed Processing</em> (<em>PDP</em>), especially <span class="citation" data-cites="rumelhartLearningInternalRepresentations1985">(<a href="#ref-rumelhartLearningInternalRepresentations1985" role="doc-biblioref">Rumelhart, Hinton, and Williams 1985</a>)</span> <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, as the representative of connectionism, and made specific objections to them.</p><div class="no-row-height column-margin column-container"><li id="fn8"><p><sup>8</sup>&nbsp;This paper was reprinted in <span class="citation" data-cites="rumelhartParallelDistributedProcessing1986">(<a href="#ref-rumelhartParallelDistributedProcessing1986" role="doc-biblioref">Rumelhart and McClelland 1986, vol. 1</a>, chapter 8)</span>, in which Minsky and Papert read it. This paper is often cited for the backpropagation algorithm, which I have discussed in <a href="https://yuxi-liu-wired.github.io/essays/posts/backstory-of-backpropagation/"><em>The Backstory of Backpropagation</em></a>.</p></li></div></div>
-<p>In the prologue, they staked their claim thus: Connectionism is a mistake engendered by a new generation of researchers ignorant of history; though the theorems of the <em>Perceptrons</em> book apply to only a single perceptron, the <em>lessons</em> extend to all neural networks. To back up the claim, they made specific technical, historical, and philosophical objections, all with the central goal of showing that <strong>homogeneous neural networks cannot scale</strong>.</p>
+<p>In the 1980s, neural networks rose again to prominence under the name of “connectionism”, prompting an eventual response from Minsky and Papert. The <em>Perceptrons</em> book was reissued in 1988, with new chapters dedicated to rejecting connectionism. They took the 1986 two-volume work of <em>Parallel Distributed Processing</em> (<em>PDP</em>), especially <span class="citation" data-cites="rumelhartLearningInternalRepresentations1985">(<a href="#ref-rumelhartLearningInternalRepresentations1985" role="doc-biblioref">Rumelhart, Hinton, and Williams 1985</a>)</span> <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, as the representative of connectionism, and made specific objections to them.</p>
+<div class="no-row-height column-margin column-container"><div id="fn8"><p><sup>8</sup>&nbsp;This paper was reprinted in <span class="citation" data-cites="rumelhartParallelDistributedProcessing1986">(<a href="#ref-rumelhartParallelDistributedProcessing1986" role="doc-biblioref">Rumelhart and McClelland 1986, vol. 1</a>, chapter 8)</span>, in which Minsky and Papert read it. This paper is often cited for the backpropagation algorithm, which I have discussed in <a href="https://yuxi-liu-wired.github.io/essays/posts/backstory-of-backpropagation/"><em>The Backstory of Backpropagation</em></a>.</p></div></div><p>In the prologue, they staked their claim thus: Connectionism is a mistake engendered by a new generation of researchers ignorant of history; though the theorems of the <em>Perceptrons</em> book apply to only a single perceptron, the <em>lessons</em> extend to all neural networks. To back up the claim, they made specific technical, historical, and philosophical objections, all with the central goal of showing that <strong>homogeneous neural networks cannot scale</strong>.</p>
 <blockquote class="blockquote">
 <p>… when we found that little of significance had changed since 1969, when the book was first published, we concluded that it would be more useful to keep the original text (with its corrections of 1972) and add an epilogue, so that the book could still be read in its original form. One reason why progress has been so slow in this field is that researchers unfamiliar with its history have continued to make many of the same mistakes that others have made before them.</p>
 <p>… there has been little clear-cut change in the conceptual basis of the field. The issues that give rise to excitement today seem much the same as those that were responsible for previous rounds of excitement. … many contemporary experimenters assume that, because the perceptron networks discussed in this book are not exactly the same as those in use today, these theorems no longer apply. Yet, as we will show in our epilogue, most of the <em>lessons</em> of the theorems still apply.</p>
@@ -581,8 +616,8 @@ div.csl-indent {
 <section id="gradient-descent-cannot-escape-local-minima" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="gradient-descent-cannot-escape-local-minima">Gradient descent cannot escape local minima</h4>
 <p>Gradient descent, backpropagation, and all other hill-climbing algorithms are all vulnerable to getting trapped in local optima, and therefore they cannot work – except in problem-architecture pairs where the loss landscape of this <em>particular</em> problem, for this <em>particular</em> architecture, using this <em>particular</em> loss function, is a single bump whose width is shorter than this <em>particular</em> learning rate.</p>
-<div class="page-columns page-full"><p>Gradient descent is just a form of hill-climbing, when the hill is differentiable. The perceptron learning algorithm can be interpreted as a hill-climbing algorithm too, as it makes localized decision to make one step in this direction or that, one error-signal at a time (Section 11.7). Therefore, the generic ineffectiveness of perceptron learning suggests that gradient descent is also generically ineffective and <strong>cannot scale</strong>. It does not even have a convergence theorem, so in that sense it’s <em>worse</em> than perceptron learning algorithm.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn9"><p><sup>9</sup>&nbsp;This claim is astonishing, now that we see how powerful backpropagation works, and how the perceptron learning rule had crippled neural network research for 30 years. We can understand their sentiments by remembering that they, like most of the academic community in computer science, favored the certainty of mathematical theorems over mere empirical success. <a href="https://en.wikipedia.org/wiki/Leo_Breiman">Leo Breiman</a> observed that academic statistics had been hamstrung by the same grasp over mathematical certainty, and thus over 95% of its publications were useless. <span class="citation" data-cites="breimanReflectionsRefereeingPapers1995">(<a href="#ref-breimanReflectionsRefereeingPapers1995" role="doc-biblioref">Breiman 1995</a>)</span></p></li></div></div>
-<blockquote class="blockquote">
+<p>Gradient descent is just a form of hill-climbing, when the hill is differentiable. The perceptron learning algorithm can be interpreted as a hill-climbing algorithm too, as it makes localized decision to make one step in this direction or that, one error-signal at a time (Section 11.7). Therefore, the generic ineffectiveness of perceptron learning suggests that gradient descent is also generically ineffective and <strong>cannot scale</strong>. It does not even have a convergence theorem, so in that sense it’s <em>worse</em> than perceptron learning algorithm.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn9"><p><sup>9</sup>&nbsp;This claim is astonishing, now that we see how powerful backpropagation works, and how the perceptron learning rule had crippled neural network research for 30 years. We can understand their sentiments by remembering that they, like most of the academic community in computer science, favored the certainty of mathematical theorems over mere empirical success. <a href="https://en.wikipedia.org/wiki/Leo_Breiman">Leo Breiman</a> observed that academic statistics had been hamstrung by the same grasp over mathematical certainty, and thus over 95% of its publications were useless. <span class="citation" data-cites="breimanReflectionsRefereeingPapers1995">(<a href="#ref-breimanReflectionsRefereeingPapers1995" role="doc-biblioref">Breiman 1995</a>)</span></p></div></div><blockquote class="blockquote">
 <p>We were very pleased to discover (see section 11.6) that PC could be represented as hill-climbing; however, that very fact led us to wonder whether such procedures could dependably be generalized, even to the limited class of multilayer machines that we named Gamba perceptrons. The situation seems not to have changed much – we have seen no contemporary connectionist publication that casts much new theoretical light on the situation. Then why has GD become so popular in recent years? … we fear that its reputation also stems from unfamiliarity with the manner in which hill-climbing methods deteriorate when confronted with larger-scale problems. … Indeed, GD can fail to find a solution when one exists, so in that narrow sense it could be considered <em>less</em> powerful than PC.</p>
 </blockquote>
 </section>
@@ -617,12 +652,12 @@ div.csl-indent {
 </section>
 <section id="connectionist-experiments-can-be-extrapolated-to-show-that-they-do-not-scale" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="connectionist-experiments-can-be-extrapolated-to-show-that-they-do-not-scale">Connectionist experiments can be extrapolated to show that they do not scale</h4>
-<div class="page-columns page-full"><p>Though lacking a theory of their own on the operation of multilayer perceptrons, Minsky and Papert proceeded to interpret the connectionist experiment data as showing that neural networks would fail to scale.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn10"><p><sup>10</sup>&nbsp;Without a mathematical theory of what neural networks can do, extrapolating from their behavior at small scales to the large scale is impossible and only reflect the bias behind those who make the extrapolation.</p></li></div></div>
-<p>Connectionists demonstrated that two-layered perceptrons, where both layers were trainable, bypassed the limits described in <em>Perceptrons</em>. For example, <span class="citation" data-cites="rumelhartLearningInternalRepresentations1985">(<a href="#ref-rumelhartLearningInternalRepresentations1985" role="doc-biblioref">Rumelhart, Hinton, and Williams 1985</a>)</span> showed that several problems unsolvable by a single perceptron – XOR, parity, symmetry, etc – were solved by a two-layered neural network.</p>
+<p>Though lacking a theory of their own on the operation of multilayer perceptrons, Minsky and Papert proceeded to interpret the connectionist experiment data as showing that neural networks would fail to scale.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn10"><p><sup>10</sup>&nbsp;Without a mathematical theory of what neural networks can do, extrapolating from their behavior at small scales to the large scale is impossible and only reflect the bias behind those who make the extrapolation.</p></div></div><p>Connectionists demonstrated that two-layered perceptrons, where both layers were trainable, bypassed the limits described in <em>Perceptrons</em>. For example, <span class="citation" data-cites="rumelhartLearningInternalRepresentations1985">(<a href="#ref-rumelhartLearningInternalRepresentations1985" role="doc-biblioref">Rumelhart, Hinton, and Williams 1985</a>)</span> showed that several problems unsolvable by a single perceptron – XOR, parity, symmetry, etc – were solved by a two-layered neural network.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/perceptrons_page_253.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">Page 253, Figure 2. Redrawn from <span class="citation" data-cites="rumelhartLearningInternalRepresentations1985">(<a href="#ref-rumelhartLearningInternalRepresentations1985" role="doc-biblioref">Rumelhart, Hinton, and Williams 1985</a>)</span></figcaption>
+<figcaption class="margin-caption">Page 253, Figure 2. Redrawn from <span class="citation" data-cites="rumelhartLearningInternalRepresentations1985">(<a href="#ref-rumelhartLearningInternalRepresentations1985" role="doc-biblioref">Rumelhart, Hinton, and Williams 1985</a>)</span></figcaption>
 </figure>
 </div>
 <p>While the connectionist authors saw the result as a hopeful sign, Minsky and Papert interpreted it as showing that the experiments wouldn’t scale, because the coefficients appeared to grow exponentially – in just the way they proved in <a href="https://yuxi-liu-wired.github.io/essays/posts/reading-perceptron-book/#exm-line-symmetry">Chapter 7</a>.</p>
@@ -662,7 +697,8 @@ Interjection
 <p>There is no reason to suppose that any of these virtues carry over to the many-layered version. Nevertheless, we consider it to be an important research problem to elucidate (or reject) our intuitive judgment that the extension is sterile. Per­haps some powerful convergence theorem will be discovered, or some profound reason for the failure to produce an interesting “learning theorem” for the multilayered machine will be found. <span class="citation" data-cites="minskyPerceptronsIntroductionComputational1988">(<a href="#ref-minskyPerceptronsIntroductionComputational1988" role="doc-biblioref">M. Minsky and Papert 1988, 232</a>)</span></p>
 </blockquote>
 </details>
-<div class="page-columns page-full"><p>What, then, explains the rise of connectionism? Since Papert reframed the fall of perceptron socially, it only stands to reason he would reframe the rise of connectionism as the rise of a social myth caused by other social myths, <em>not</em> by the increase in computing power or new algorithms like backpropagation, convolutional networks, and such. For one, the computing powers used by the breakthrough connectionist models like NETtalk were already within reach even in the 1960s.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> For another, he and Minsky were firm in their conviction that any uniform architecture must scale very badly and that no amount of computing or algorithmic advancement could be anything more than a sterile extension.</p><div class="no-row-height column-margin column-container"><li id="fn11"><p><sup>11</sup>&nbsp;NETtalk, a neural network with 3 layers and 18,629 weights, is entirely within reach for the 1960s. Its dataset was built in weeks <em>by hand</em>, and its training took a single night on a <a href="https://en.wikipedia.org/wiki/Ridge_Computers">Ridge computer</a> that is close to a <a href="https://en.wikipedia.org/wiki/VAX-11#VAX-11/780">VAX 11/780</a>. Now, VAX 11/780 has <span class="math inline">\(\sim 1 \;\rm{MFLOP/sec}\)</span>, so NETtalk took <span class="math inline">\(\sim 10^{11}\;\rm{FLOP}\)</span> to train. <a href="https://yuxi-liu-wired.github.io/docs/posts/1998-hans-moravec/#appendix-dataset">During the 1960s, typical workstations</a> have a computing power of <span class="math inline">\(\sim 0.11 \;\rm{MIPS}\)</span>, so NETtalk could be trained in a month.</p>
+<p>What, then, explains the rise of connectionism? Since Papert reframed the fall of perceptron socially, it only stands to reason he would reframe the rise of connectionism as the rise of a social myth caused by other social myths, <em>not</em> by the increase in computing power or new algorithms like backpropagation, convolutional networks, and such. For one, the computing powers used by the breakthrough connectionist models like NETtalk were already within reach even in the 1960s.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> For another, he and Minsky were firm in their conviction that any uniform architecture must scale very badly and that no amount of computing or algorithmic advancement could be anything more than a sterile extension.</p>
+<div class="no-row-height column-margin column-container"><div id="fn11"><p><sup>11</sup>&nbsp;NETtalk, a neural network with 3 layers and 18,629 weights, is entirely within reach for the 1960s. Its dataset was built in weeks <em>by hand</em>, and its training took a single night on a <a href="https://en.wikipedia.org/wiki/Ridge_Computers">Ridge computer</a> that is close to a <a href="https://en.wikipedia.org/wiki/VAX-11#VAX-11/780">VAX 11/780</a>. Now, VAX 11/780 has <span class="math inline">\(\sim 1 \;\rm{MFLOP/sec}\)</span>, so NETtalk took <span class="math inline">\(\sim 10^{11}\;\rm{FLOP}\)</span> to train. <a href="https://yuxi-liu-wired.github.io/docs/posts/1998-hans-moravec/#appendix-dataset">During the 1960s, typical workstations</a> have a computing power of <span class="math inline">\(\sim 0.11 \;\rm{MIPS}\)</span>, so NETtalk could be trained in a month.</p>
 <blockquote class="blockquote">
 <p>We then used the 20,000-word Brown Corpus and assigned phonemes, as well as stress marks, to each of letters. The alignment of the letters and sounds took weeks, but, once the learning started, the network absorbed the whole corpus in a single night. <span class="citation" data-cites="sejnowskiDeepLearningRevolution2018">(<a href="#ref-sejnowskiDeepLearningRevolution2018" role="doc-biblioref">Sejnowski 2018, 115</a>)</span></p>
 </blockquote>
@@ -670,8 +706,7 @@ Interjection
 <p>I had picked up a Ridge computer, made by a company that is now defunct, but it had the power of a VAX 11/780 which at that time was the standard candle of computer power. … We had a real computer, and we had a real algorithm, and we looked for a do-able project in language. … I went to the library and found a book on text-to-speech that had probably one thousand rules in it. It was just lists of rules and exceptions. After every rule, there were dozens of exceptions. I figured that either they’re doing it the wrong way, or this is a really tough problem. We considered finding something that was simpler after consulting the experts in linguistics. They said, “<a href="#appendix-the-chomskyans">Chomsky</a> worked on the problem, and it is well beyond the capability of anything that you could imagine trying to do.”</p>
 <p>… In retrospect it was an ideal choice for a problem. It was difficult with conventional techniques, and it was not clear that the network could handle it. … We knew back then there were many local minima in the network, and we knew we were getting trapped. The surprise was that this did not prevent the network from finding good solutions. <span class="citation" data-cites="rosenfeldTalkingNetsOral2000">(<a href="#ref-rosenfeldTalkingNetsOral2000" role="doc-biblioref">Rosenfeld and Anderson 2000, 324–25</a>)</span></p>
 </blockquote>
-</li></div></div>
-<blockquote class="blockquote">
+</div></div><blockquote class="blockquote">
 <p>Massively parallel supercomputers do play an important role in the connectionist revival. But I see it as a cultural rather than a technical role, another example of a sustaining myth. Connectionism does not use the new computers as physical machines; it derives strength from the “computer in the mind,” from its public’s largely nontechnical awareness of supercomputers. I see connectionism’s relationship to biology in similar terms. Although its models use biological metaphors, they do not depend on technical findings in biology any more than they do on modern supercomputers. … I also see a more subtle, but not less relevant, cultural resonance. This is a generalized turn away from the hard-edged rationalism of the time connectionism last went into eclipse and a resurgent attraction to more holistic ways of thinking.</p>
 </blockquote>
 </section>
@@ -686,9 +721,9 @@ Interjection
 <p>On the electrical engineering side, perceptron networks were studied under the name of “linear threshold logic” by electrical engineers since the 1950s, who clearly would not have bothered if they could not even make an XOR gate out of it. In fact, in a standard reference from 1965, there are chapters on “Single-Threshold-Element Synthesis by Iteration” – learning a single perceptron by the perceptron learning algorithm – and “Network Synthesis” – which does not imply machine learning, but rather hand-designing perceptron networks.<span class="citation" data-cites="dertouzosThresholdLogicSynthesis1965">(<a href="#ref-dertouzosThresholdLogicSynthesis1965" role="doc-biblioref">Dertouzos 1965</a>)</span></p>
 <p>What is going on?</p>
 <p>I believe the story got completely garbled during the teaching process. I am all for changing history for the sake of understanding – history is made for the winners, not the winners made for history – but the standard story about the XOR problem is nonsensical, as I have shown. So how did the story come about?</p>
-<div class="page-columns page-full"><p>I believe this is because <em>Perceptrons</em> contained a host of problems that their restricted form of perceptron machines could not do. The simplest one is the XOR problem. Teachers who just wanted to spend two minutes on the first neural network winter and move on, grabbed this XOR problem and pretended that it was the actual cause of it.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn12"><p><sup>12</sup>&nbsp;A mantis was crawling on the wheel of a slowly moving train. It gloated, “I am the prime mover of the train!”. When the caterpillar asked it to prove so, it jumped down and waved its arms in front of the train, which promptly crushed it.</p>
-<p>This is my retelling of the Taoist story of <a href="https://en.wiktionary.org/wiki/%E8%9E%B3%E8%87%82%E7%95%B6%E8%BB%8A#Chinese">螳臂當車</a>.</p></li></div></div>
-<p>There is one thing left to explain: what is the significance of the XOR problem to the neural network researchers back in the days? It was clearly significant for something, as when the connectionists rose in the 1980s, one of the first things they did was to check that they could solve the XOR problem. Rumelhart read the <em>Perceptrons</em> book very carefully in 1970; it inspired him to go into neural network research, entirely missing its intended message. After he developed backpropagation around 1982, he immediately tried to train an MLP on the XOR problem.</p>
+<p>I believe this is because <em>Perceptrons</em> contained a host of problems that their restricted form of perceptron machines could not do. The simplest one is the XOR problem. Teachers who just wanted to spend two minutes on the first neural network winter and move on, grabbed this XOR problem and pretended that it was the actual cause of it.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn12"><p><sup>12</sup>&nbsp;A mantis was crawling on the wheel of a slowly moving train. It gloated, “I am the prime mover of the train!”. When the caterpillar asked it to prove so, it jumped down and waved its arms in front of the train, which promptly crushed it.</p>
+<p>This is my retelling of the Taoist story of <a href="https://en.wiktionary.org/wiki/%E8%9E%B3%E8%87%82%E7%95%B6%E8%BB%8A#Chinese">螳臂當車</a>.</p></div></div><p>There is one thing left to explain: what is the significance of the XOR problem to the neural network researchers back in the days? It was clearly significant for something, as when the connectionists rose in the 1980s, one of the first things they did was to check that they could solve the XOR problem. Rumelhart read the <em>Perceptrons</em> book very carefully in 1970; it inspired him to go into neural network research, entirely missing its intended message. After he developed backpropagation around 1982, he immediately tried to train an MLP on the XOR problem.</p>
 <blockquote class="blockquote">
 <p>When I first did the XOR problem, it took a thousand iterations to solve it. If we thought that was the way it was going to go and that we were going to scale up to a hundred thousand input patterns, my God, we wouldn’t live long enough to see the results. But that’s not the way it’s gone. That problem turned out to be an anomaly. The scaling is about linear. We haven’t hit any exponential curves yet. <span class="citation" data-cites="rosenfeldTalkingNetsOral2000">(<a href="#ref-rosenfeldTalkingNetsOral2000" role="doc-biblioref">Rosenfeld and Anderson 2000</a>)</span></p>
 </blockquote>
@@ -720,10 +755,10 @@ Interjection
 <blockquote class="blockquote">
 <p>There is no reason to suppose that any of these virtues carry over to the many-layered version. Nevertheless, we consider it to be an important research problem to elucidate (or reject) our intuitive judgment that the extension is sterile. Per­haps some powerful convergence theorem will be discovered, or some profound reason for the failure to produce an interesting “learning theorem” for the multilayered machine will be found. <span class="citation" data-cites="minskyPerceptronsIntroductionComputational1988">(<a href="#ref-minskyPerceptronsIntroductionComputational1988" role="doc-biblioref">M. Minsky and Papert 1988, 232</a>)</span></p>
 </blockquote>
-<div class="page-columns page-full"><p>The irony is that decades later, despite the general neglect of neural networks, they quickly overtook symbolic or statistical AI<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> as soon as compute and data price fell so low that they had to appear. And so in 2012, Alex Krizhevsky cobbled together 8 GPUs and train a neural network that outperformed every symbolic or statistical AI.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> There are large homogeneous neural networks that work, and there are hints that some of them have small groups of neurons representing symbolic concepts, some of which are engaged in serial computation across the layers. However, to find these hints of symbolic programs, we had to take a large detour through the brute reason of uniform neural network architecture, uniform GPU architecture, and uniform training objectives.</p><div class="no-row-height column-margin column-container"><li id="fn13"><p><sup>13</sup>&nbsp;More precisely, classical-statistical AI, with fixed parameters, handcrafted features, and solvable models. A classical-statistical model is constructed as some form of <span class="math inline">\(p_\theta(y|x)\)</span>, where <span class="math inline">\(\theta\)</span> are the parameters, <span class="math inline">\(x\)</span> are the inputs, and <span class="math inline">\(y\)</span> are the outputs.</p>
+<p>The irony is that decades later, despite the general neglect of neural networks, they quickly overtook symbolic or statistical AI<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> as soon as compute and data price fell so low that they had to appear. And so in 2012, Alex Krizhevsky cobbled together 8 GPUs and train a neural network that outperformed every symbolic or statistical AI.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> There are large homogeneous neural networks that work, and there are hints that some of them have small groups of neurons representing symbolic concepts, some of which are engaged in serial computation across the layers. However, to find these hints of symbolic programs, we had to take a large detour through the brute reason of uniform neural network architecture, uniform GPU architecture, and uniform training objectives.</p>
+<div class="no-row-height column-margin column-container"><div id="fn13"><p><sup>13</sup>&nbsp;More precisely, classical-statistical AI, with fixed parameters, handcrafted features, and solvable models. A classical-statistical model is constructed as some form of <span class="math inline">\(p_\theta(y|x)\)</span>, where <span class="math inline">\(\theta\)</span> are the parameters, <span class="math inline">\(x\)</span> are the inputs, and <span class="math inline">\(y\)</span> are the outputs.</p>
 <p>The difference from neural networks is that for classical-statistical models, <span class="math inline">\(p_\theta\)</span> allows solvable inference from a dataset, such as by taking the average, derivative, variance, and such. Many of them were straight up linear regressions on handcrafted features (and thus subject to exactly the criticism of Minsky and Papert).</p>
-<p>A good example is the <a href="https://en.wikipedia.org/wiki/IBM_alignment_models#Model_1">IBM alignment model 1</a>, which can be trained by expectation-maximization with <em>closed form solution</em> (!). To see the difference, compare it with <span class="citation" data-cites="bahdanauNeuralMachineTranslation2014">(<a href="#ref-bahdanauNeuralMachineTranslation2014" role="doc-biblioref">Bahdanau, Cho, and Bengio 2014</a>)</span>, which also learns to align from a corpus, but does not have any closed form solution.</p></li><li id="fn14"><p><sup>14</sup>&nbsp;And if not Krizhevsky and Hinton, how much longer would it have taken? In 2009, Andrew Ng’s research cluster trained a 100M model on GPUs <span class="citation" data-cites="rainaLargescaleDeepUnsupervised2009">(<a href="#ref-rainaLargescaleDeepUnsupervised2009" role="doc-biblioref">Raina, Madhavan, and Ng 2009</a>)</span>, which suggests that the idea was ripe for taking due to the advance in compute and data, and would have happened around 2010 regardless. <a href="https://en.wikipedia.org/wiki/Rain_follows_the_plow">The rain might not follow the plow</a>, but the AI does follow the compute and data.</p></li></div></div>
-<p>Why must we take such a large detour? My guess is twofold. One, the resemblance to neat symbolic programs is partial. Large amounts of computing done by neural networks is only symbolic in the trivial, messy way. Only a small amount is symbolic in the neat way. Two, because symbolic programs suffer from diseconomies of scale. Peering into any large enough software project, be it the Cyc project, or the Linux source code, one feels that it is easier to start anew than to add to it. Perhaps with thousands of years of very patient work and many evolutionary deadends, purely symbolic AI research can succeed in constructing a general intelligence in the elegant style sketched by Minsky. The irony is that symbolic programs do not scale while neural networks scale, the exact opposite of the lesson that Minsky and Papert wished to impart by their book.</p>
+<p>A good example is the <a href="https://en.wikipedia.org/wiki/IBM_alignment_models#Model_1">IBM alignment model 1</a>, which can be trained by expectation-maximization with <em>closed form solution</em> (!). To see the difference, compare it with <span class="citation" data-cites="bahdanauNeuralMachineTranslation2014">(<a href="#ref-bahdanauNeuralMachineTranslation2014" role="doc-biblioref">Bahdanau, Cho, and Bengio 2014</a>)</span>, which also learns to align from a corpus, but does not have any closed form solution.</p></div><div id="fn14"><p><sup>14</sup>&nbsp;And if not Krizhevsky and Hinton, how much longer would it have taken? In 2009, Andrew Ng’s research cluster trained a 100M model on GPUs <span class="citation" data-cites="rainaLargescaleDeepUnsupervised2009">(<a href="#ref-rainaLargescaleDeepUnsupervised2009" role="doc-biblioref">Raina, Madhavan, and Ng 2009</a>)</span>, which suggests that the idea was ripe for taking due to the advance in compute and data, and would have happened around 2010 regardless. <a href="https://en.wikipedia.org/wiki/Rain_follows_the_plow">The rain might not follow the plow</a>, but the AI does follow the compute and data.</p></div></div><p>Why must we take such a large detour? My guess is twofold. One, the resemblance to neat symbolic programs is partial. Large amounts of computing done by neural networks is only symbolic in the trivial, messy way. Only a small amount is symbolic in the neat way. Two, because symbolic programs suffer from diseconomies of scale. Peering into any large enough software project, be it the Cyc project, or the Linux source code, one feels that it is easier to start anew than to add to it. Perhaps with thousands of years of very patient work and many evolutionary deadends, purely symbolic AI research can succeed in constructing a general intelligence in the elegant style sketched by Minsky. The irony is that symbolic programs do not scale while neural networks scale, the exact opposite of the lesson that Minsky and Papert wished to impart by their book.</p>
 <p>As an example, the history of computer vision demonstrates the problem with the symbolic AI approach. It is true that some problems, such as the parity problem or the connectedness problem, cannot be efficiently solved by neural networks. However, do they really matter? To make connection with the final goal of general computer vision, capable of understanding real scenes, turns out to be far less about provably detecting edges and cubes and cones in a picture, and far more about having a large dataset. In this sense, it’s Minsky and Papert who were misled by their experiments with building block-playing robots in a block world. It’s their work that could not scale.</p>
 </section>
 <section id="what-is-left-of-perceptrons" class="level3 page-columns page-full">
@@ -731,8 +766,8 @@ Interjection
 <p>I have never seen a piece of work so systematically opposed to <a href="https://gwern.net/scaling-hypothesis">the scaling hypothesis</a>. Reading their theory, I have the feeling that at every turn, I could hear them say, “Neural networks work – if they have less than 100 neurons.”. To their credit, they made falsifiable hypotheses. To their blame, they were almost all proven wrong. Neural networks do scale, to 100 billion and counting. Several standard architectures constitute almost the entirety of neural networks nowadays – MLP, CNN, GNN, LSTM, VAE, and Transformers. Six is quite far from the thousands of architectures they explicitly predicted.</p>
 <p>Among all the objections to neural networks in the <em>Perceptrons</em> book, almost all were either disproved (the anti-scaling hypothesis) or made irrelevant (the perceptron learning rule).</p>
 <p>Recognizing connectivity is hard and requires a serial program, but that’s fine, because it’s hard for humans too. Learning to solve logical problems is difficult and requires a thousand iterations. Well, it looks inefficient, except that neural networks are still the best we have even 30 years later, so perhaps the XOR problem is just something neural networks have to work hard for. That’s fine – in the worst case, we’ll just let the neural network offload those logical operations to a symbolic program, much like how humans use calculators.</p>
-<div class="page-columns page-full"><p>The only legitimate remaining problem is the recognition of symmetry. It is hard for all modern neural networks, including convolutional and fully connected versions.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> In any case, if human brains are neural networks and they can instantly recognize symmetries, then it shows that there is <em>some</em> remaining architectural trick we don’t yet know.</p><div class="no-row-height column-margin column-container"><li id="fn15"><p><sup>15</sup>&nbsp;It might be solved efficiently with a Transformer, but I need to check this.</p></li></div></div>
-<p>Therefore, out of all the clever mathematics and wise lessons of <em>Perceptrons</em>, we ended up with… just one problem remaining? Minsky and Papert hoped to show that there would be thousands of different problems, each requiring a bespoke algorithm implemented by a bespoke neural network. In this regard, their project has been fully debunked.</p>
+<p>The only legitimate remaining problem is the recognition of symmetry. It is hard for all modern neural networks, including convolutional and fully connected versions.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> In any case, if human brains are neural networks and they can instantly recognize symmetries, then it shows that there is <em>some</em> remaining architectural trick we don’t yet know.</p>
+<div class="no-row-height column-margin column-container"><div id="fn15"><p><sup>15</sup>&nbsp;It might be solved efficiently with a Transformer, but I need to check this.</p></div></div><p>Therefore, out of all the clever mathematics and wise lessons of <em>Perceptrons</em>, we ended up with… just one problem remaining? Minsky and Papert hoped to show that there would be thousands of different problems, each requiring a bespoke algorithm implemented by a bespoke neural network. In this regard, their project has been fully debunked.</p>
 </section>
 </section>
 <section id="appendix-the-three-camps-of-ai" class="level2 page-columns page-full">
@@ -750,12 +785,12 @@ Interjection
 <p>These operations of analysis, synthesis, and automatic self-adjustment of white boxes into the likeness of black boxes … [by] learning, by choosing appropriate inputs for the black and white boxes and comparing them; and in many of these processes, including the method of Professor Gabor, multiplication devices play an important role. While there are many approaches to the problem of multiplying two functions electrically, this task is not technically easy. On the one hand, a good multiplier must work over a large range of amplitudes. On the other hand, it must be so nearly instantaneous in its operation that it will be accurate up to high frequencies. Gabor claims for his multiplier a frequency range running to about 1,000 cycles. <span class="citation" data-cites="wienerCyberneticsControlCommunication2019">(<a href="#ref-wienerCyberneticsControlCommunication2019" role="doc-biblioref">Wiener 2019, xli</a>)</span></p>
 </blockquote>
 <p>The cybernetic approach to AI is a strange chapter in the history of AI, filled with machines too <em>sui generis</em> to have followups. It seems to me that there is no issue with building our way to AI one nonlinear filter at a time, except for technical issues, but the technical issues are insurmountable. One day I might write an essay that gives justice to the cybernetic approach, but as this essay is not about cybernetics, we will only give a whirlwind tour of highlights from the cybernetic approach to AI.</p>
-<div class="page-columns page-full"><p>In 1948, <a href="https://en.wikipedia.org/wiki/W._Ross_Ashby">Ross Ashby</a> built a “<a href="https://en.wikipedia.org/wiki/Homeostat">homeostat machine</a>”, consisting of four interacting electromechanical controllers. Each controller had some needles that can move in arcs. If one perturbs it, so that the needles move out of their “comfort zones”, the needles would complete an electric circuit, and the controller would start going through every possible setting one by one, until the needles return to their comfort zones.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> The other thing for which Ashby is famous is the “law of requisite variety”, which is equivalent to the theorem that to solve <span class="math inline">\(f(x) = y\)</span>, generically, the <span class="math inline">\(x\)</span> must have at least as many dimensions as the <span class="math inline">\(y\)</span>.</p><div class="no-row-height column-margin column-container"><li id="fn16"><p><sup>16</sup>&nbsp;Perhaps <a href="https://en.wikipedia.org/wiki/Useless_machine">Marvin Minsky’s useless machine</a> was a gentle parody of the homeostat machine. As the homeostat was built in 1948 and the useless machine in 1952, the timing checks out.</p></li></div></div>
-<div class="page-columns page-full"><p><a href="https://en.wikipedia.org/wiki/Stafford_Beer">Stafford Beer</a> started his professional life as a business consultant, and devised methods to increase steel plant production efficiency. He understood production management as a problem analogous to that of biological homeostasis – a problem solved by the nervous system – and so he managed production by imitating the nervous system<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>. He also investigated a wide variety of strange machines, including one that used an entire pond ecosystem as a computer for black-box homeostatic control <span class="citation" data-cites="beerProgressNoteResearch1962">(<a href="#ref-beerProgressNoteResearch1962" role="doc-biblioref">Beer 1962</a>)</span>:</p><div class="no-row-height column-margin column-container"><li id="fn17"><p><sup>17</sup>&nbsp;Stafford Beer might have meant this literally, according to <span class="citation" data-cites="pickeringScienceUnknowableStafford2004">(<a href="#ref-pickeringScienceUnknowableStafford2004" role="doc-biblioref">Pickering 2004</a>)</span>:</p>
+<p>In 1948, <a href="https://en.wikipedia.org/wiki/W._Ross_Ashby">Ross Ashby</a> built a “<a href="https://en.wikipedia.org/wiki/Homeostat">homeostat machine</a>”, consisting of four interacting electromechanical controllers. Each controller had some needles that can move in arcs. If one perturbs it, so that the needles move out of their “comfort zones”, the needles would complete an electric circuit, and the controller would start going through every possible setting one by one, until the needles return to their comfort zones.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> The other thing for which Ashby is famous is the “law of requisite variety”, which is equivalent to the theorem that to solve <span class="math inline">\(f(x) = y\)</span>, generically, the <span class="math inline">\(x\)</span> must have at least as many dimensions as the <span class="math inline">\(y\)</span>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn16"><p><sup>16</sup>&nbsp;Perhaps <a href="https://en.wikipedia.org/wiki/Useless_machine">Marvin Minsky’s useless machine</a> was a gentle parody of the homeostat machine. As the homeostat was built in 1948 and the useless machine in 1952, the timing checks out.</p></div><div id="fn17"><p><sup>17</sup>&nbsp;Stafford Beer might have meant this literally, according to <span class="citation" data-cites="pickeringScienceUnknowableStafford2004">(<a href="#ref-pickeringScienceUnknowableStafford2004" role="doc-biblioref">Pickering 2004</a>)</span>:</p>
 <blockquote class="blockquote">
 <p>… it is clear from subsequent developments that the homeostatic system Beer really had in mind was something like the human spinal cord and brain. He never mentioned this in his work on biological computers, but the image that sticks in my mind is that the brain of the cybernetic factory should really have been an unconscious human body, floating in a vat of nutrients and with electronic readouts tapping its higher and lower reflexes …</p>
 </blockquote>
-</li></div></div>
+</div></div><p><a href="https://en.wikipedia.org/wiki/Stafford_Beer">Stafford Beer</a> started his professional life as a business consultant, and devised methods to increase steel plant production efficiency. He understood production management as a problem analogous to that of biological homeostasis – a problem solved by the nervous system – and so he managed production by imitating the nervous system<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>. He also investigated a wide variety of strange machines, including one that used an entire pond ecosystem as a computer for black-box homeostatic control <span class="citation" data-cites="beerProgressNoteResearch1962">(<a href="#ref-beerProgressNoteResearch1962" role="doc-biblioref">Beer 1962</a>)</span>:</p>
 <blockquote class="blockquote">
 <p>Why not use an entire ecological system, such as a pond? The theory on which all this thinking is based does not require a knowledge of the black box employed. Accordingly, over the past year, I have been conducting experiments with a large tank or pond. The contents of the tank were randomly sampled from ponds in Derbyshire and Surrey. Currently there are a few of the usual creatures visible to the naked eye (Hydra, Cyclops, Daphnia, and a leech); microscopically there is the expected multitude of micro-organisms. In this tank are suspended four lights, the intensities of which can be varied to fine limits. At other points are suspended photocells with amplifying circuits which give them very high sensitivity. … There is an ecological guarantee that this system stabilizes itself, and is indeed ultra-stable. But, of course, the problem of making it act as a control system is very difficult indeed. I regard the machine as a tending-to-be-stable-but-not-quite homeostat …</p>
 </blockquote>
@@ -765,19 +800,19 @@ Interjection
 <p>We have made an ear and we have made a magnetic receptor. The ear can discriminate two frequencies, one of the order of fifty cycles per second and the other on the order of one hundred cycles per second. The ‘training’ procedure takes approximately half a day and once having got the ability to recognize sound at all, the ability to recognize and discriminate two sounds comes more rapidly. … The ear, incidentally, looks rather like an ear. It is a gap in the thread structure in which you have fibrils which resonate at the excitation frequency. <span class="citation" data-cites="gordonNaturalHistoryNetworks1959">(<a href="#ref-gordonNaturalHistoryNetworks1959" role="doc-biblioref">Gordon 1959</a>)</span></p>
 </blockquote>
 <p>The details of the electrochemical ear are lost, and this line of research had no followups.</p>
-<div class="page-columns page-full"><p>A faint echo of Pask’s electrochemical ear was heard in late 1990s, when <a href="https://web.archive.org/web/20231212170749/https://www.damninteresting.com/on-the-origin-of-circuits/">Adrian Thompson used evolutionary algorithm</a> to evolve circuits on <a href="https://en.wikipedia.org/wiki/Field-programmable_gate_array">field-programmable gate arrays</a> to tell apart input signals of frequencies <span class="math inline">\(1 \mathrm{~kHz}\)</span> and <span class="math inline">\(10 \mathrm{~kHz}\)</span>. Curiously, some circuits succeeded at the task despite using no master clock signal. He traced this down to the detailed physical properties that digital circuit design was precisely meant to abstract away from. The circuit functioned precisely <em>because</em> the electronic elements were not digital, but analog.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> The circuits’ performance degraded when outside the temperature range in which they evolved in <span class="citation" data-cites="thompsonAnalysisUnconventionalEvolved1999 thompsonExplorationsDesignSpace1999">(<a href="#ref-thompsonAnalysisUnconventionalEvolved1999" role="doc-biblioref">Thompson and Layzell 1999</a>; <a href="#ref-thompsonExplorationsDesignSpace1999" role="doc-biblioref">Thompson, Layzell, and Zebulum 1999</a>)</span>.</p><div class="no-row-height column-margin column-container"><li id="fn18"><p><sup>18</sup>&nbsp;It is as if a linear neural network managed to compute a nonlinear function precisely because floating point operations are not perfect.<span class="citation" data-cites="foersterNonlinearComputationDeep2017">(<a href="#ref-foersterNonlinearComputationDeep2017" role="doc-biblioref">Foerster 2017</a>)</span></p></li></div></div>
-<blockquote class="blockquote">
+<p>A faint echo of Pask’s electrochemical ear was heard in late 1990s, when <a href="https://web.archive.org/web/20231212170749/https://www.damninteresting.com/on-the-origin-of-circuits/">Adrian Thompson used evolutionary algorithm</a> to evolve circuits on <a href="https://en.wikipedia.org/wiki/Field-programmable_gate_array">field-programmable gate arrays</a> to tell apart input signals of frequencies <span class="math inline">\(1 \mathrm{~kHz}\)</span> and <span class="math inline">\(10 \mathrm{~kHz}\)</span>. Curiously, some circuits succeeded at the task despite using no master clock signal. He traced this down to the detailed physical properties that digital circuit design was precisely meant to abstract away from. The circuit functioned precisely <em>because</em> the electronic elements were not digital, but analog.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> The circuits’ performance degraded when outside the temperature range in which they evolved in <span class="citation" data-cites="thompsonAnalysisUnconventionalEvolved1999 thompsonExplorationsDesignSpace1999">(<a href="#ref-thompsonAnalysisUnconventionalEvolved1999" role="doc-biblioref">Thompson and Layzell 1999</a>; <a href="#ref-thompsonExplorationsDesignSpace1999" role="doc-biblioref">Thompson, Layzell, and Zebulum 1999</a>)</span>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn18"><p><sup>18</sup>&nbsp;It is as if a linear neural network managed to compute a nonlinear function precisely because floating point operations are not perfect.<span class="citation" data-cites="foersterNonlinearComputationDeep2017">(<a href="#ref-foersterNonlinearComputationDeep2017" role="doc-biblioref">Foerster 2017</a>)</span></p></div></div><blockquote class="blockquote">
 <p>… at <span class="math inline">\(43.0^{\circ} \mathrm{C}\)</span> the output is not steady at <span class="math inline">\(+5 \mathrm{~V}\)</span> for <span class="math inline">\(\mathrm{F} 1\)</span>, but is pulsing to <span class="math inline">\(0 \mathrm{~V}\)</span> for a small fraction of the time. Conversely, at <span class="math inline">\(23.5^{\circ} \mathrm{C}\)</span> the output is not a steady <span class="math inline">\(0 \mathrm{~V}\)</span> for <span class="math inline">\(\mathrm{F} 2\)</span>, but is pulsing to <span class="math inline">\(+5 \mathrm{~V}\)</span> for a small fraction of the time. This is not surprising: the only time reference that the system has is the natural dynamical behaviour of the components, and properties such as resistance, capacitance and propagation delays are temperature dependent. The circuit operates perfectly over the <span class="math inline">\(10^{\circ} \mathrm{C}\)</span> range of temperatures that the population was exposed to during evolution, and no more could reasonably be expected of it. <span class="citation" data-cites="thompsonEvolvedCircuitIntrinsic1996">(<a href="#ref-thompsonEvolvedCircuitIntrinsic1996" role="doc-biblioref">Thompson 1996</a>)</span></p>
 </blockquote>
-<div class="page-columns page-full"><p>Continuing the tradition of one-hit wonders, there was no followup work to this.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn19"><p><sup>19</sup>&nbsp;I have tried tracking down what Adrian Thompson has been doing since his late 1990s work. It turned out that the hardware evolution <a href="https://web.archive.org/web/20201015175808/https://sites.google.com/site/thompsonevolvablehardware/publications">was his PhD work</a> <span class="citation" data-cites="thompsonHardwareEvolutionAutomatic1998">(<a href="#ref-thompsonHardwareEvolutionAutomatic1998" role="doc-biblioref">Thompson 1998</a>)</span>. He has almost completely dropped off the face of academia. His website at University of Sussex <a href="https://web.archive.org/web/20030402181211/http://www.cogs.susx.ac.uk/users/adrianth/">did not see another update since 2002</a> and is currently dead. His <a href="https://web.archive.org/web/20201015175808/https://sites.google.com/site/thompsonevolvablehardware/publications">minimalistic Google Site</a> was created around 2014, and currently only survives on the Internet Archive. There was also a single <code>gif</code> of the circuit in operation, which I decided to download and <a href="./figure/gen1400_150x113_lossy25.gif">save for posterity</a>.</p></li></div></div>
-</section>
+<p>Continuing the tradition of one-hit wonders, there was no followup work to this.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn19"><p><sup>19</sup>&nbsp;I have tried tracking down what Adrian Thompson has been doing since his late 1990s work. It turned out that the hardware evolution <a href="https://web.archive.org/web/20201015175808/https://sites.google.com/site/thompsonevolvablehardware/publications">was his PhD work</a> <span class="citation" data-cites="thompsonHardwareEvolutionAutomatic1998">(<a href="#ref-thompsonHardwareEvolutionAutomatic1998" role="doc-biblioref">Thompson 1998</a>)</span>. He has almost completely dropped off the face of academia. His website at University of Sussex <a href="https://web.archive.org/web/20030402181211/http://www.cogs.susx.ac.uk/users/adrianth/">did not see another update since 2002</a> and is currently dead. His <a href="https://web.archive.org/web/20201015175808/https://sites.google.com/site/thompsonevolvablehardware/publications">minimalistic Google Site</a> was created around 2014, and currently only survives on the Internet Archive. There was also a single <code>gif</code> of the circuit in operation, which I decided to download and <a href="./figure/gen1400_150x113_lossy25.gif">save for posterity</a>.</p></div></div></section>
 <section id="symbolic-ai" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="symbolic-ai">Symbolic AI</h3>
 <p>The founding metaphor of the symbolic system camp was that intelligence is symbolic manipulation using preprogrammed symbolic rules: logical inference, heuristic tree search, list processing, syntactic trees, and such. The symbolic camp was not strongly centered, though it had key players like Alan Turing, John McCarthy, Herbert Simon, and Marvin Minsky.</p>
 <p>The project of symbolic AI is a curious episode in AI history. Despite its early successes such as SHRDLU, LISP, and ELIZA, despite the support of most of AI researchers during 1960–2000, and despite the support of reigning cognitivists in the adjacent field of psychology, it never achieved something as successful as neural networks.</p>
 <p>A brief sketch of the greatest project in symbolic AI might give you a feel for the difficulty involved. Have you ever heard of the Cyc doing anything useful in its 39 years of life? Compare that with something even as small as BERT.</p>
-<div class="page-columns page-full"><p>In 1984, <a href="https://en.wikipedia.org/wiki/Douglas_Lenat">Douglas Lenat</a> began the Cyc project, an ambitious attempt to scale symbolic AI up to the real world. The Cyc project used a LISP-like symbolic logic language to encode common sense. Even from the vantage point of 1985, it was clear to all that there was a lot of common sense to code in <a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>, although few could have predicted that Lenat would persevere at it for over 30 years. In 2016, Lenat finally declared the Cyc project “done” and set about commercializing it.</p><div class="no-row-height column-margin column-container"><li id="fn20"><p><sup>20</sup>&nbsp;They themselves probably underestimated the difficulty. In 1990, they confidently titled a paper “Cyc: A midterm report” <span class="citation" data-cites="lenatCycMidtermReport1990">(<a href="#ref-lenatCycMidtermReport1990" role="doc-biblioref">D. Lenat and Guha 1990</a>)</span>, suggesting that they expected to be done around 1995.</p></li></div></div>
-<blockquote class="blockquote">
+<p>In 1984, <a href="https://en.wikipedia.org/wiki/Douglas_Lenat">Douglas Lenat</a> began the Cyc project, an ambitious attempt to scale symbolic AI up to the real world. The Cyc project used a LISP-like symbolic logic language to encode common sense. Even from the vantage point of 1985, it was clear to all that there was a lot of common sense to code in <a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>, although few could have predicted that Lenat would persevere at it for over 30 years. In 2016, Lenat finally declared the Cyc project “done” and set about commercializing it.</p>
+<div class="no-row-height column-margin column-container"><div id="fn20"><p><sup>20</sup>&nbsp;They themselves probably underestimated the difficulty. In 1990, they confidently titled a paper “Cyc: A midterm report” <span class="citation" data-cites="lenatCycMidtermReport1990">(<a href="#ref-lenatCycMidtermReport1990" role="doc-biblioref">D. Lenat and Guha 1990</a>)</span>, suggesting that they expected to be done around 1995.</p></div></div><blockquote class="blockquote">
 <p>Having spent the past 31 years memorizing an astonishing collection of general knowledge, the artificial-intelligence engine created by Doug Lenat is finally ready to go to work. Lenat’s creation is Cyc, a knowledge base of semantic information designed to give computers some understanding of how things work in the real world. … “Part of the reason is the doneness of Cyc,” explains Lenat, who left his post as a professor at Stanford to start the project in late 1984. “Not that there’s nothing else to do,” he says. But he notes that most of what is left to be added is relevant to a specific area of expertise, such as finance or oncology. Among other projects, the company is developing a personal assistant equipped with Cyc’s general knowledge. This could perhaps lead to something similar to Siri but less predisposed to foolish misunderstandings. Michael Stewart, a longtime collaborator of Lenat’s and the CEO of Lucid, says the new company is in talks with various others interested in using the Cyc knowledge base. Lucid has been working with the Cleveland Clinic, for example, to help automate the process of finding patients for clinical studies. <span class="citation" data-cites="knightAI30Years2016">(<a href="#ref-knightAI30Years2016" role="doc-biblioref">Knight 2016</a>)</span></p>
 </blockquote>
 <p>That was essentially the last we heard from Cyc.</p>
@@ -785,7 +820,7 @@ Interjection
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/cyc_project_ontology.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption"><span class="citation" data-cites="lenatCycUsingCommon1985">(<a href="#ref-lenatCycUsingCommon1985" role="doc-biblioref">D. B. Lenat, Prakash, and Shepherd 1985, fig. 1</a>)</span></figcaption>
+<figcaption class="margin-caption"><span class="citation" data-cites="lenatCycUsingCommon1985">(<a href="#ref-lenatCycUsingCommon1985" role="doc-biblioref">D. B. Lenat, Prakash, and Shepherd 1985, fig. 1</a>)</span></figcaption>
 </figure>
 </div>
 <p>Their “midterm report” only accentuates this sense of tragedy, of seeing them fighting impossible odds, and losing. They saw with clarity that there is no shortcut to intelligence, no “Maxwell’s equations of thought”.</p>
@@ -798,13 +833,13 @@ Interjection
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/human_problem_solving_behavior_graph.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption"><span class="citation" data-cites="newellHumanProblemSolving1972">(<a href="#ref-newellHumanProblemSolving1972" role="doc-biblioref">Newell and Simon 1972, 533</a>)</span></figcaption>
+<figcaption class="margin-caption"><span class="citation" data-cites="newellHumanProblemSolving1972">(<a href="#ref-newellHumanProblemSolving1972" role="doc-biblioref">Newell and Simon 1972, 533</a>)</span></figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/human_problem_solving_transcript.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption"><span class="citation" data-cites="newellHumanProblemSolving1972">(<a href="#ref-newellHumanProblemSolving1972" role="doc-biblioref">Newell and Simon 1972, 534</a>)</span></figcaption>
+<figcaption class="margin-caption"><span class="citation" data-cites="newellHumanProblemSolving1972">(<a href="#ref-newellHumanProblemSolving1972" role="doc-biblioref">Newell and Simon 1972, 534</a>)</span></figcaption>
 </figure>
 </div>
 <p>This sense of vertigo is perhaps best described by Borges in <em>The analytical language of John Wilkins</em> <span class="citation" data-cites="borgesSelectedNonfictions2000">(<a href="#ref-borgesSelectedNonfictions2000" role="doc-biblioref">Borges 2000, 229–32</a>)</span>:</p>
@@ -825,22 +860,22 @@ Interjection
 <p>In a curious parallel, just as neural networks for AI became popular again in the late 1980s, statistical methods for NLP returned during the same period. The watershed moment was the series of <a href="https://en.wikipedia.org/wiki/IBM_alignment_models">IBM alignment models</a> published in 1993 <span class="citation" data-cites="brownMathematicsStatisticalMachine1993">(<a href="#ref-brownMathematicsStatisticalMachine1993" role="doc-biblioref">Brown et al. 1993</a>)</span>.</p>
 <p>In the 1950s, language production was modelled by theoretical machines: finite state automata, stack machines, Markov transition models, and variants thereof. We must understand Chomsky’s two contributions to linguistics. On the first part, he constructed a <a href="https://en.wikipedia.org/wiki/Chomsky_hierarchy">hierarchy</a> of increasingly powerful kinds of language. This hierarchy was in one-to-one correspondence with the hierarchy of theoretical machines, from finite state automata (type-3, or regular) all the way to Turing machines (type-0, or recursively enumerable). On the second part, he rejected statistical language learning and argued for inborn universal grammar.</p>
 <p>Chomsky argued, and subsequent linguists have found, that the syntax of all human languages is at the type-2 level, or a <a href="https://en.wikipedia.org/wiki/Context-free_grammar">context-free grammar</a>. None are regular and almost none are context-dependent. Regular languages are modeled by finite state machines and cannot model arbitrarily deep recursion, whereas context-free languages allow for arbitrarily deep recursion such as <a href="https://en.wikipedia.org/wiki/Center_embedding">center embedding</a>. This fact would come into play later.</p>
-<div class="page-columns page-full"><p>With the dominance of the Chomsky approach, finite state machines were abandoned, as they are not capable of parsing context-free grammar. You might have heard of the controversy over Pirahã. It is mainly fought over the problem of recursion: does the Pirahã language have recursion or not?<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn21"><p><sup>21</sup>&nbsp;Tracing the battle lines, I predicted that Pinker would argue that it must have recursion… and I turned out to be wrong. Pinker argued against Chomsky in this case.</p>
+<p>With the dominance of the Chomsky approach, finite state machines were abandoned, as they are not capable of parsing context-free grammar. You might have heard of the controversy over Pirahã. It is mainly fought over the problem of recursion: does the Pirahã language have recursion or not?<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn21"><p><sup>21</sup>&nbsp;Tracing the battle lines, I predicted that Pinker would argue that it must have recursion… and I turned out to be wrong. Pinker argued against Chomsky in this case.</p>
 <blockquote class="blockquote">
 <p>“There’s a lot of strange stuff going on in the Chomskyan program. He’s a guru, he makes pronouncements that his disciples accept on faith and that he doesn’t feel compelled to defend in the conventional scientific manner. Some of them become accepted within his circle as God’s truth without really being properly evaluated, and, surprisingly for someone who talks about universal grammar, he hasn’t actually done the spadework of seeing how it works in some weird little language that they speak in New Guinea.”</p>
 <p>Pinker says that his own doubts about the “Chomskyan program” increased in 2002, when Marc Hauser, Chomsky, and Tecumseh Fitch published their paper on recursion in Science. The authors wrote that the distinctive feature of the human faculty of language, narrowly defined, is recursion. Dogs, starlings, whales, porpoises, and chimpanzees all use vocally generated sounds to communicate with other members of their species, but none do so recursively, and thus none can produce complex utterances of infinitely varied meaning. “Recursion had always been an important part of Chomsky’s theory,” Pinker said. “But in Chomsky Mark II, or Mark III, or Mark VII, he all of a sudden said that the only thing unique to language is recursion. It’s not just that it’s the universal that has to be there; it’s the magic ingredient that makes language possible.” <span class="citation" data-cites="colapintoInterpreter2007">(<a href="#ref-colapintoInterpreter2007" role="doc-biblioref">Colapinto 2007</a>)</span></p>
 </blockquote>
-</li></div></div>
-<p>A key principle Chomsky used was the “poverty of stimulus” argument, which he used to argue that humans must have a universal grammar built in at birth, because children cannot possibly learn to speak when they are just a few years old – they cannot possibly have heard and seen enough. For one thing, true recursion can never be learned empirically, because true recursion can only be conclusively proven by observing an infinite number of sentences.</p>
+</div></div><p>A key principle Chomsky used was the “poverty of stimulus” argument, which he used to argue that humans must have a universal grammar built in at birth, because children cannot possibly learn to speak when they are just a few years old – they cannot possibly have heard and seen enough. For one thing, true recursion can never be learned empirically, because true recursion can only be conclusively proven by observing an infinite number of sentences.</p>
 <p>Consider the simple example of the <a href="https://en.wikipedia.org/wiki/Dyck_language">balanced brackets language</a>. A language learner observes sample sentences from the language and tries to infer the language. Suppose the learner sees a sequence <code>(), (()), ((())), (((())))</code>. What can they conclude? That it is the balanced brackets language? So we ask them to construct another sentence, and they confidently write <code>((((()))))</code>, but then we inform them that they have been tricked! The language is the balanced brackets language – except that the brackets only go 4 levels deep. In general, only by seeing all levels of recursion can the balanced brackets language be <em>conclusively</em> learned.</p>
 <p>Applied to linguistics, Chomsky claimed that statistical learning cannot learn syntax, and all attempts have been “colossal failures”.</p>
 <blockquote class="blockquote">
 <p>Just to illustrate, I’ll take one example that was presented back in the 1950s and has become a sort of a classic case because it’s so trivial. ‘Can eagles that fly swim?’ Okay, simple sentence. Everyone understands it. Any young child understands it. There is a question about it. We know that we associate the word ‘can’ with ‘swim,’ not with ‘fly.’ We’re asking ‘Can they swim?’ We’re not asking ‘Can they fly?’ Well, why is that? A natural answer ought to be that you associate ‘can’ with ‘fly.’ After all, ‘fly’ is the word that’s closest to ‘can,’ so why don’t you just take the closest word and interpret it that way? … Well, that property is universal. It holds up in every language. Languages may do it differently, but they’re going to have the same property. It holds in every construction anyone knows, and it’s just a universal property of language.</p>
 <p>Well, this particular example has taken on a life of its own. For one thing, it’s a poverty of stimulus problem, like Descartes’ triangle. There’s been a huge effort to show that it’s not a problem, that if you just do a complex statistical analysis of complex data, you’ll find that that’s what the child will determine from the data. The approaches are odd in several respects. First, every one is not only a failure but a colossal failure. I’m not going to talk about that. I actually have a recent paper about it with a computer scientist at MIT, Bob Berwick, where we run through a lot of the current proposals but it’s easy to show that they’re all just wildly wrong. But they keep coming. Almost every issue of the main cognitive science journals has another proposal of this sort, so that’s one odd fact. There are many efforts to show that there is nothing puzzling about it, they’re all colossal failures. <span class="citation" data-cites="chomskyPovertyStimulusUnfinished2010">(<a href="#ref-chomskyPovertyStimulusUnfinished2010" role="doc-biblioref">Chomsky 2010</a>)</span></p>
 </blockquote>
-<div class="page-columns page-full"><p>At last, a testable hypothesis! I asked GPT-4 to <code>Draw a syntax tree for "Can eagles that fly swim?"</code>, and received this:<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn22"><p><sup>22</sup>&nbsp;The code it gave failed on the first try, due to an environment variable issue on the Linux virtual machine it ran on. We fixed it after two more plies of conversation.</p></li></div></div>
-<div class="cell" data-execution_count="1">
-<details>
+<p>At last, a testable hypothesis! I asked GPT-4 to <code>Draw a syntax tree for "Can eagles that fly swim?"</code>, and received this:<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn22"><p><sup>22</sup>&nbsp;The code it gave failed on the first try, due to an environment variable issue on the Linux virtual machine it ran on. We fixed it after two more plies of conversation.</p></div></div><div id="2291f9d8" class="cell" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install svgling</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
@@ -874,7 +909,7 @@ Interjection
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/can_eagles_that_fly_swim_tree.svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">The syntax tree for “Can eagles that fly swim?”, drawn by GPT-4.</figcaption>
+<figcaption class="margin-caption">The syntax tree for “Can eagles that fly swim?”, drawn by GPT-4.</figcaption>
 </figure>
 </div>
 <p>As expected, Chomsky rejected statistical language learning to the very end.</p>
@@ -895,8 +930,8 @@ Interjection
 <blockquote class="blockquote">
 <p>In 1988, I served on a committee for the McDonnell and Pew Foundations that interviewed prominent cognitive scientists and neuroscientists to get their recommendations on how to jump-start a new field called “cognitive neuroscience”. … [Fodor] started by throwing down the gauntlet, “Cognitive neuroscience is not a science and it never will be.” … Fodor explained why the mind had to be thought of as a modular symbol-processing system running an intelligent computer program. [Patricia Churchland] asked him whether his theory also applied to cats. “Yes,” said Fodor, “cats are running the cat program.” But when Mortimer Mishkin, an NIH neuroscientist studying vision and memory, asked him to tell us about discoveries made in his own lab, Fodor mumbled something I couldn’t follow about using event-related potentials in a language experiment. Mercifully, at that moment, a fire drill was called and we all filed outside. Standing in the courtyard, I overheard Mishkin say to Fodor: “Those are pretty small potatoes.” When the drill was over, Fodor had disappeared.</p>
 </blockquote>
-<div class="page-columns page-full"><p>Similarly, Gary Marcus has consistently criticized neural network language models since at least 1992 <span class="citation" data-cites="marcusOverregularizationLanguageAcquisition1992">(<a href="#ref-marcusOverregularizationLanguageAcquisition1992" role="doc-biblioref">G. F. Marcus et al. 1992</a>)</span>. His theory of intelligence is fundamentally Chomskyan: neural networks can exhibit intelligence but only if they implement rules for symbolic manipulation.<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a> Moreover, many symbolic rules must be present at birth, by the poverty of stimulus.</p><div class="no-row-height column-margin column-container"><li id="fn23"><p><sup>23</sup>&nbsp;This sketch suffices. <span class="citation" data-cites="marcusAlgebraicMindIntegrating2003">(<a href="#ref-marcusAlgebraicMindIntegrating2003" role="doc-biblioref">G. F. Marcus 2003</a>)</span> is a book-length treatment.</p></li></div></div>
-<p>For example, here is him saying in 1993:</p>
+<p>Similarly, Gary Marcus has consistently criticized neural network language models since at least 1992 <span class="citation" data-cites="marcusOverregularizationLanguageAcquisition1992">(<a href="#ref-marcusOverregularizationLanguageAcquisition1992" role="doc-biblioref">G. F. Marcus et al. 1992</a>)</span>. His theory of intelligence is fundamentally Chomskyan: neural networks can exhibit intelligence but only if they implement rules for symbolic manipulation.<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a> Moreover, many symbolic rules must be present at birth, by the poverty of stimulus.</p>
+<div class="no-row-height column-margin column-container"><div id="fn23"><p><sup>23</sup>&nbsp;This sketch suffices. <span class="citation" data-cites="marcusAlgebraicMindIntegrating2003">(<a href="#ref-marcusAlgebraicMindIntegrating2003" role="doc-biblioref">G. F. Marcus 2003</a>)</span> is a book-length treatment.</p></div></div><p>For example, here is him saying in 1993:</p>
 <blockquote class="blockquote">
 <p>Whether children require “negative evidence” (i.e., information about which strings of words are not grammatical sentences) to eliminate their ungrammatical utterances is a central question in language acquisition because, lacking negative evidence, a child would require internal mechanisms to unlearn grammatical errors. … There is no evidence that noisy feedback is required for language learning, or even that noisy feedback exists. Thus internal mechanisms are necessary to account for the unlearning of ungrammatical utterances. <span class="citation" data-cites="marcusNegativeEvidenceLanguage1993">(<a href="#ref-marcusNegativeEvidenceLanguage1993" role="doc-biblioref">G. F. Marcus 1993</a>)</span></p>
 </blockquote>
@@ -904,17 +939,17 @@ Interjection
 <blockquote class="blockquote">
 <p>Human beings can learn abstract relationships in a few trials. If I told you that a schmister was a sister over the age of 10 but under the age of 21, perhaps giving you a single example, you could immediately infer whether you had any schmisters, whether your best friend had a schmister, whether your children or parents had any schmisters, and so forth. (Odds are, your parents no longer do, if they ever did, and you could rapidly draw that inference, too.) In learning what a schmister is, in this case through explicit definition, you rely not on hundreds or thousands or millions of training examples, but on a capacity to represent abstract relationships between algebra-like variables. Humans can learn such abstractions, both through explicit definition and more implicit means (Marcus, 2001). Indeed even 7-month old infants can do so, acquiring learned abstract language-like rules from a small number of unlabeled examples, in just two minutes. <span class="citation" data-cites="marcusDeepLearningCritical2018">(<a href="#ref-marcusDeepLearningCritical2018" role="doc-biblioref">G. Marcus 2018</a>)</span></p>
 </blockquote>
-<div class="page-columns page-full"><p>Not one to give up, he continued with the same criticisms into the age of Transformer language models. Given the track record, he is conveniently predictable<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>, and we can expect nothing less than see his recent criticisms of deep learning <span class="citation" data-cites="marcusDeepLearningCritical2018">(<a href="#ref-marcusDeepLearningCritical2018" role="doc-biblioref">G. Marcus 2018</a>)</span> and <a href="https://www.technologyreview.com/2020/08/22/1007539/gpt3-openai-language-generator-artificial-intelligence-ai-opinion/">large language models</a>, <a href="https://www.theatlantic.com/technology/archive/2023/03/ai-chatbots-large-language-model-misinformation/673376/">repeatedly</a>.</p><div class="no-row-height column-margin column-container"><li id="fn24"><p><sup>24</sup>&nbsp;It would be funny if someone could train a language model to pass the “Gary Marcus test”: impersonate Gary Marcus in a Turing test setup. If such a model were to pass, Marcus would either have to admit that the language model makes sense or accept that what he says is indistinguishable from nonsense.</p></li></div></div>
+<p>Not one to give up, he continued with the same criticisms into the age of Transformer language models. Given the track record, he is conveniently predictable<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>, and we can expect nothing less than see his recent criticisms of deep learning <span class="citation" data-cites="marcusDeepLearningCritical2018">(<a href="#ref-marcusDeepLearningCritical2018" role="doc-biblioref">G. Marcus 2018</a>)</span> and <a href="https://www.technologyreview.com/2020/08/22/1007539/gpt3-openai-language-generator-artificial-intelligence-ai-opinion/">large language models</a>, <a href="https://www.theatlantic.com/technology/archive/2023/03/ai-chatbots-large-language-model-misinformation/673376/">repeatedly</a>.</p>
 
 
 <!-- -->
 
 
-</section>
+<div class="no-row-height column-margin column-container"><div id="fn24"><p><sup>24</sup>&nbsp;It would be funny if someone could train a language model to pass the “Gary Marcus test”: impersonate Gary Marcus in a Turing test setup. If such a model were to pass, Marcus would either have to admit that the language model makes sense or accept that what he says is indistinguishable from nonsense.</p></div></div></section>
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bahdanauNeuralMachineTranslation2014" class="csl-entry" role="listitem">
 Bahdanau, Dzmitry, Kyunghyun Cho, and Yoshua Bengio. 2014. <span>“Neural <span>Machine Translation</span> by <span>Jointly Learning</span> to <span>Align</span> and <span>Translate</span>.”</span> arXiv. <a href="http://arxiv.org/abs/1409.0473">http://arxiv.org/abs/1409.0473</a>.
 </div>
@@ -1136,6 +1171,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -1202,13 +1264,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1338,10 +1402,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1351,8 +1432,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1364,7 +1454,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1408,6 +1621,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1433,6 +1647,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1739,11 +1979,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
 <span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; JC: I think that's probably right. In those days they were really quite hostile to neural networks. I can remember having a discussion with Seymour ... in the '60s. We were talking about visual illusions. He felt that they were all higher-level effects that had nothing to do with neural networks as such. They needed a different, a top-down approach to understand. By then he had become a real, a true opponent of neural networks. I think Marvin had the same feelings as well. To some extent, David Marr had those feelings too. After he got to the AI lab, I think he got converted to that way of thinking. Then Tommy Poggio essentially persuaded him otherwise. </span></span>
 <span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Teuvo Kohonen</span><span class="co">](https://en.wikipedia.org/wiki/Teuvo_Kohonen)</span> seemed also angry at the <span class="co">[</span><span class="ot">Chomskyan school</span><span class="co">](https://en.wikipedia.org/wiki/Cognitive_revolution)</span>, for reasons that I might write about later. <span class="co">&lt;!-- connectionism-and-cognitivism --&gt;</span></span>
+<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Teuvo Kohonen</span><span class="co">](https://en.wikipedia.org/wiki/Teuvo_Kohonen)</span> seemed also angry at the <span class="co">[</span><span class="ot">Chomskyan school</span><span class="co">](https://en.wikipedia.org/wiki/Cognitive_revolution)</span>, for reasons I sketched out in the <span class="co">[</span><span class="ot">appendix on the Chomskyans</span><span class="co">](#appendix-the-chomskyans)</span>.</span>
 <span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; I was one of the people suffering from Minsky and Papert's book </span><span class="co">[</span><span class="ot">Perceptrons</span><span class="co">]</span><span class="at"> because it went roughly this way: you start telling somebody about your work, and this visitor or whoever you talk to says, "Don't you know that this area is dead?" It is something like what we experienced in the pattern recognition society when everything started to be structural and grammatical and semantic and so on. If somebody said, "I'm doing research on the statistical pattern recognition," then came this remark, "Hey, don't you know that is a dead idea already?"</span></span>
 <span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Michael A. Arbib</span><span class="co">](https://en.wikipedia.org/wiki/Michael_A._Arbib)</span> thought the book did not cause the neural network winter, but rather caused funding change it.</span>
+<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Michael A. Arbib</span><span class="co">](https://en.wikipedia.org/wiki/Michael_A._Arbib)</span> thought the book did not cause the neural network winter, but rather caused by the change in funding.</span>
 <span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Minsky and Papert basically said that if you limit your networks to one layer in depth, then, unless you have very complicated individual neurons, you can't do very much. This is not too surprising. ... Many people see the book as what killed neural nets, but I really don't think that's true. I think that the funding priorities, the fashions in computer science departments, had shifted the emphasis away from neural nets to the more symbolic methods of AI by the time the book came out. I think it was more that a younger generation of computer scientists who didn't know the earlier work may have used the book as justification for sticking with "straight AI" and ignoring neural nets.</span></span>
 <span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a></span>
@@ -1920,12 +2160,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-426"><a href="#cb2-426" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
 <span id="cb2-427"><a href="#cb2-427" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ... Minsky and I both knew perceptrons extremely well. We had worked on them for many years before our joint project of under standing their limits was conceived... I was left with a deep respect for the extraordinary difficulty of being sure of what a computational system can or cannot do. I wonder at people who seem so secure in their intuitive convictions, or their less-than-rigorous rhetorical arguments, about computers, neural nets, or human minds.</span></span>
 <span id="cb2-428"><a href="#cb2-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-429"><a href="#cb2-429" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb2-430"><a href="#cb2-430" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Interjection<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb2-429"><a href="#cb2-429" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb2-430"><a href="#cb2-430" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Interjection&lt;/summary&gt;</span>
 <span id="cb2-431"><a href="#cb2-431" aria-hidden="true" tabindex="-1"></a>    I wonder at people who seem so secure in their intuitive convictions, or their less-than-rigorous rhetorical arguments, about computers, neural nets, or human minds:</span>
 <span id="cb2-432"><a href="#cb2-432" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-433"><a href="#cb2-433" aria-hidden="true" tabindex="-1"></a><span class="in">    &gt; There is no reason to suppose that any of these virtues carry over to the many-layered version. Nevertheless, we consider it to be an important research problem to elucidate (or reject) our intuitive judgment that the extension is sterile. Per­haps some powerful convergence theorem will be discovered, or some profound reason for the failure to produce an interesting “learning theorem” for the multilayered machine will be found. [@minskyPerceptronsIntroductionComputational1988, page 232]</span></span>
-<span id="cb2-434"><a href="#cb2-434" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb2-434"><a href="#cb2-434" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb2-435"><a href="#cb2-435" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-436"><a href="#cb2-436" aria-hidden="true" tabindex="-1"></a>What, then, explains the rise of connectionism? Since Papert reframed the fall of perceptron socially, it only stands to reason he would reframe the rise of connectionism as the rise of a social myth caused by other social myths, *not* by the increase in computing power or new algorithms like backpropagation, convolutional networks, and such. For one, the computing powers used by the breakthrough connectionist models like NETtalk were already within reach even in the 1960s.<span class="ot">[^nettalk]</span> For another, he and Minsky were firm in their conviction that any uniform architecture must scale very badly and that no amount of computing or algorithmic advancement could be anything more than a sterile extension.</span>
 <span id="cb2-437"><a href="#cb2-437" aria-hidden="true" tabindex="-1"></a></span>
@@ -2244,13 +2484,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left"><span class="faux-block">Yuxi on the Wired</span></div>   
+    <div class="nav-footer-left">
+<p><span class="faux-block">Yuxi on the Wired</span></p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
-    <div class="nav-footer-right"><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></p>
+</div>
   </div>
 </footer>
+
 
 
 
