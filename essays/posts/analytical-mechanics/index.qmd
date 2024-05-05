@@ -10,10 +10,10 @@ format:
     toc: true
     resources:
     - "figure/**"
-description: "."
+description: "What every graduate student should know about analytical mechanics, delivered with economic style and many illustrations. Particular focus on particle-wave duality and old quantum theory. Prerequisite: multivariate calculus and mathematical maturity."
 
-## image: "figure/banner.png"
-## image-alt: "A metaphor for real-space renormalization, where the building on the left is coarse-grained to the building on right. The facade of a wide brutalist architecture. On the left, the windows are small and the floors are close together. On the right, the windows are large and the floors are wide apart. High contrast, monochromatic, minimalistic, in the flat style of vector svg art., illustration, conceptual art."
+image: "figure/banner/banner_1.png"
+image-alt: "A brutalist representation of the particle-wave duality of the Hamiltonian--Jacobi equation. The gently rolling terraced hills represent the Hamilton principal function according to the wave interpretation, and the steel rebars with balls rolling alongside them represent the particle interpretation. Made in Ideogram V1 with the following prompt: A' brutalist terraced mountain made of concrete and steel rebar. There are ripples parallel to the ground. The steel rebars go downhill, and many marbles are rolling down along the steel rebars. White background. High contrast, grayscale, black-and-white minimalistic, in the flat style of vector svg art, conceptual art'"
 
 status: "finished"
 confidence: "certain"
@@ -22,47 +22,61 @@ importance: 4
 
 {{< include../../../utils/blog_utils/_macros.tex >}}
 
+<small>Plotting code for the essay is in a [Jupyter notebook](./figure/analytical_mechanics_plotting.ipynb).</small>
+
 ## Introduction
 
-One overarching goal is to show that classical mechanics is bursting at the seams, and to unmask classical mechanics, revealing the quantum mechanics that is deep inside.
+### What this essay contains
 
-### How I got here
+The prerequisites are multivariate calculus and mathematical maturity, like most of my writings.
 
-Early 2023, I undertook a serious study of economics. When I was studying [Ramsey's theory of optimal saving](https://en.wikipedia.org/wiki/Ramsey%E2%80%93Cass%E2%80%93Koopmans_model), I saw, to my great surprise, something they call a "Hamiltonian" [@campanteAdvancedMacroeconomicsEasy2021, chapter 3]. I was shocked, but after studying it carefully, and thinking it over, I realized that it was no mistake -- the Hamiltonian really occurs in economics. Moreover, the Hamiltonian in physics really has an economic interpretation. At that moment, suddenly everything fell into place. Those enlightenment-era philosophers saying things like "God has chosen the best of all possible worlds."[^leibniz-theodicy], or "Nature always acts in the simplest possible manner to produce its effects."[^maupertuis-theodicy]
+This essay works through what is typically contained in a university course on analytical mechanics.
 
-[^leibniz-theodicy]:
-    Leibniz, an originator of calculus and universal genius. In his [1710 book *Theodicy*], the phrase "best of all" appeared for no less than 13 times:
+It covers: calculus of variations, Lagrangian, Legendre transform, Hamiltonian, Hamilton's principal function, Hamilton--Jacobi equation, the particle-wave duality, Schrödinger's equation, Hamilton's geometric optics, action-angle variables, Noether's theorem, adiabaticity, old quantum theory, Bohr--Sommerfeld quantization, Einstein--Brillouin--Keller quantization.
 
-    > It is thus one must think of the creation of the best of all possible universes, all the more since God not only decrees to create a universe, but decrees also to create the best of all.
-    > 
-    > ... the City of God must be the most perfect of all possible states, since it was formed and is perpetually governed by the greatest and best of all Monarchs.
+It does not cover: canonical transforms, Poisson bracket, infinitesimal generator, symplectic geometry, symplectic form.
 
-    Etc, etc. Reading a chapter of the book, I felt a hypnotic numbing effect on the brain.
+Philosophically, this essay has two undercurrents:
 
-[^maupertuis-theodicy]:
-    Maupertuis proposed a version of the principle of least action in [*Mémoires de l'académie royale des sciences*, 1748, 417-426](https://en.wikisource.org/wiki/Translation:Accord_between_different_laws_of_Nature_that_seemed_incompatible). We will see him soon enough.
+One, that [thinking on the margins](https://en.wikipedia.org/wiki/Marginalism) is vital not just in economics, but also in classical mechanics. In my other essay, [*Classical thermodynamics and economics*](https://yuxi-liu-wired.github.io/essays/posts/equilibrium-thermoeconomics), I show that classical thermodynamics is also nothing more than thinking on the margins.
 
-## Overview
-
-| Symbol | Physics      | Economics       | Control Theory |
-|---|---|---|---|
-| $L$                           | Lagrangian    | time-rate of cost  | time-rate of cost |
-| $t$                           | time          | time                   | time |
-| $q$                           | location/coordinate | commodity/capital      | state variable |
-| $\dot q$                      | velocity      | investment rate/saving rate/cash flow/etc | control variable |
-| $S = \int L(t, q, \dot q)dt$  | action        | total cost | total cost |
-| $p$                           | momentum      | (shadow) price        | co-state variable |
-| $H = \sum_i p_i\dot q_i - L$  | Hamiltonian   | (market equivalent) cash flow[^cash-flow] | Hamiltonian |
-
-: The economics-mechanics analogy.
-
-[^cash-flow]: also known as \"[mark to market](https://en.wikipedia.org/wiki/Mark-to-market_accounting) cash flow\"
+Two, classical mechanics is a leakless leaky abstraction. Though classical mechanics has many equivalent forms, the search for the most elegant form has led us to the Hamilton--Jacobi equation, and the adiabatic theorem, both of which were on the threshold of quantum mechanics. Even though classical mechanics is a self-consistent closed world (thus "leakless"), when viewed in the right light, all its lines and planes to point towards a truer world (thus "leaky"), of which this world is merely a shadow (thus "abstraction").
 
 ### Conventions
 
 We always assume all functions are analytic (that is, they have Taylor expansions).
 
-We would often say \"minimize cost\" or \"maximize revenue\" or such, but we are actually merely \"stationarizing\" everything. For example, when we say "Let's maximize $f(x)$", what we mean is "Let's solve $f'(x) = 0$". We don't need to check $f''(x) < 0$. This is not a problem for physics, where the principle of *stationary* action rules, but in optimal control and economics, we should check if the solution is actually a minimum/maximum.
+We would often say \"minimize cost\" or \"maximize revenue\" or such, but we always mean \"stationarize\". For example, when we say "Let's maximize $f(x)$", what we mean is "Let's solve $f'(x) = 0$". If we were to actually maximize $f(x)$, we would have to check $f''(x) < 0$ as well, but we don't. This is not a problem for physics, where the principle of *stationary* action rules. However, in optimal control and economics, we should check if the solution is actually a minimum/maximum.[^stationarize]
+
+[^stationarize]: Thus, the analogy between classical mechanics and economics is not precise. However, the analogy is precise between classical thermodynamics and economics, since the entropy is actually maximized, and not merely stationarized.
+
+Instead of laboriously typing $\vec q$ or $\mathbf{q}$, I just write $q = (q_1, \dots, q_n)$, unless there is a serious risk of confusion.
+
+| Symbol | Mechanics      | Economics       | Control Theory |
+|---|---|---|---|
+| $L$                           | Lagrangian    | time-rate of cost  | time-rate of cost |
+| $t$                           | time          | time                   | time |
+| $q$                           | location/coordinate | commodity      | state variable |
+| $\dot q$                      | velocity      | production rate/consumption rate | control variable |
+| $S = \int L(t, q, \dot q)dt$  | action        | total cost | total cost |
+| $p$                           | momentum      | price        | co-state variable |
+| $H = \sum_i p_i\dot q_i - L$  | Hamiltonian   | market equivalent cash flow[^cash-flow] | Hamiltonian |
+
+: Reference table for the economics-mechanics analogy.
+
+[^cash-flow]: also known as \"[mark to market](https://en.wikipedia.org/wiki/Mark-to-market_accounting) cash flow\"
+
+### Why I wrote this
+
+I wrote this as "Analytical Mechanics done right", or "What every graduate student in physics should know about analytical mechanics, but didn't learn well, because the textbooks are filled with too many symbols and not enough pictures.", or "what I wish the textbooks to have said when I first learned the subject".
+
+In my physics Olympiad years, I saw the Lagrangian a few times, but we had no use for that. During my undergraduate years, I studied analytical mechanics. The construction of the Lagrangian was reasonable enough, and I understood how the Euler--Lagrange equation was derived by $\delta \int L = 0$. However, as soon as they proceeded to the Hamiltonian, I was entirely lost.
+
+What is $H(p, q) = p \dot q - L(q, \dot q)$? Why does the right side depend on $\dot q$ but not the left side? How does anyone just *make up* the Legendre transform out of thin air? It's named "Legendre transform" -- well, if it has such a fancy name, surely this has many more applications than $H = p \dot q - L$ -- else, why not call it "Legendre's one-time trick"? Canonical transform? Point transform? Aren't they all coordinate transforms? Poisson bracket? Infinitesimal generators? It was all a giant mess. Reading Goldstein's classic textbook only supplemented my confusion.
+
+Early 2023, I studied mathematical microeconomics. When I was studying [Ramsey's theory of optimal saving](https://en.wikipedia.org/wiki/Ramsey%E2%80%93Cass%E2%80%93Koopmans_model), I saw, to my great surprise, something they call a "Hamiltonian" [@campanteAdvancedMacroeconomicsEasy2021, chapter 3]. I was shocked, but after studying it carefully, and thinking it over, I realized that it was no mistake -- the "Hamiltonian" in economics and in physics really are the same. Physics has an economic interpretation. Everything fell into place over the course of a few hours. Guided by this vision, I worked through analytical mechanics again, this time with true understanding.
+
+It is my experience that everything in undergraduate physics is taught badly, except perhaps Newtonian mechanics. I have written this essay to make analytical mechanics finally make sense. It has made sense for me, and I hope it will make sense for you.
 
 ## Optimization as making money
 
@@ -148,7 +162,7 @@ $$p_x \delta x + p_y \delta y = \cos\theta \delta x + \sin\theta \delta y$$
 
 which is clearly true by geometry.
 
-::: {.callout-tip title="The market inside our head" collapse="false"}
+::: {.callout-tip title="The market inside our head"}
 
 We actually don't need an external market. We could have put up such a fictional market inside the factory, and simply read out its price $p_x, p_y$ without ever trading with it. Why? Because in this problem, a solution exists, and under some niceness assumptions, there exists a \"fair\" market price at which we are indifferent to trading with the market -- we can sell $\delta x$ and buy $\delta y$, but there is \"no point to it\" because it doesn't change our eventual cost. Thus, although the market exists, we never actually trade with it, so the market might as well be a card-board cutout with a number display of the latest prices. As long as we don't *actually* try to trade with it, we would be behaving exactly as if we are facing a real market with the same prices.
 
@@ -159,6 +173,97 @@ It is perhaps best to think of the markets as things inside the head, a system o
 > When the producer is truly ready, the market disappears.
 
 :::
+
+### Lagrange's devil at Disneyland
+
+This is a parable about maximizing entropy under conservation of energy.
+
+You are going to an amusement park, with many amusements $i = 1, 2, \dots, n$. You have exactly 1 day to spend there, so you need to spend $p_i$ of a day on amusement $i$. Now, your total utility at the end of the day is 
+
+$$S(p) := \sum_i p_i \ln \frac{1}{p_i}$$
+
+a sum of logarithms, the idea being that you gain utility on any amusement at a decreasing rate: The first minute on the rollercoaster is great, but the second is less, and the third even less.
+
+Suppose that's all there is to the amusement park, then the solution is clear: you should spend an equal amount of time at each amusement. This can be proved by the Lagrange multiplier mechanically, but underneath the algorithm of the Lagrange multiplier is the idea of partial equilibrium, so it's worth spelling it out in full.
+
+::: {.callout-note title="Proof by partial equilibrium" collapse="false"}
+
+Suppose your parents give you a schedule for your amusement. You look at the schedule and notice that $p_i < p_j$. You can reject the plan and say, "I can always do better just by spending equal time at $i, j$, even holding the other times fixed.". That is, if we are only allowed to trade between time at $i$ and $j$ (a "partial market"), then at partial market equilibrium, the marginal utility of amusements $i, j$ must be equal.
+
+The marginal utility of amusement $i$ is $\ln(1/p_i) - 1$, and the same for $j$. So, at partial equilibrium, $p_i = p_j$, and at general equilibrium, all partial markets are at partial equilibrium.
+
+:::
+
+Unfortunately, the amusement park is actually infinite. You can take this news in two ways: optimistically "I can earn arbitrarily high utility by spending $1/N$ of a day on $N$ amusements each, and let $N$ be as large as I want!" and pessimistically "No matter how much I try, I can never achieve the perfect day.". Fortunately, the amusement park has a token system: when you enter the park, you would buy a certain number of tokens. Then you spend some tokens at the rides, proportional to the time you spend there.
+
+Your parents lay down three rules:
+
+1. You will be given a certain number of tokens $E$ at the start of the day.
+2. The prices of amusements are $0 = E_0 \leq E_1 \leq E_2 \leq \cdots$. Here $E_0$ is the "zero-point energy", or in other words, "just relax".
+3. You must spend exactly all your tokens. Your parents hate wastefulness and would beat you up if you don't use all the tokens.
+It is possible to spend exactly all your tokens: $E_0 \leq E \leq \max_i E_i$.
+
+Thus we have reduced the problem to
+$$
+\begin{cases}
+    \max S(p) \\
+    \sum_i p_i \cdot 1 = 1 \\
+    \sum_i p_i \cdot E_i = E
+\end{cases}
+$$
+
+Under these assumptions, there exists a unique schedule that maximizes your fun, or entropy.
+
+Now there is a slight difficulty with your previous approach. Doing partial equilibrium between 2 amusements is not possible now, because you have two constraints of not just time, but also tokens. Suppose you spend less time at $i$ to spend more time at $j$, this might cause you to under- or over-spend your tokens. So, to make a partial equilibrium calculation, you must use at least 3 amusements, not 2. And you are not allowed to "just relax", since relaxing is actually "the 0th amusement", and thus it also costs you tokens and time. That is, you must open partial markets with $i, j, k$ at once, and then you can run the system to partial equilibrium. This is pretty annoying. There's got to be a better way. 
+
+Suddenly, in a puff of smoke, Lagrange's devil makes an appearance!
+
+* "You can't solve the general equilibrium problem, you say? Why not try the Lagrange multipliers?"
+* "Too annoying."
+* "Alright, how about I make you a deal --"
+* "Sorry, but I don't sell my soul."
+* "Don't be stupid -- only something as stupid as God could still believe in souls these days! I am proposing that you trade happiness for time and for tokens. I will make a set price for time and another set price for tokens. Both prices are in units of your happiness. You can buy happiness with time, or time with happiness, also for tokens."
+* "Uhmm..."
+* "That's all that I offer. You should read up on microeconomics so you can make the right choice. See you when the day comes!" 
+
+So the day comes and the devil shows up with the two prices:
+
+* 1 unit of time = $\alpha$ unit of utility.
+* 1 unit of token = $\beta$ unit of utility.
+
+So you solve the following problem
+
+$$\max_p \lrb{S(p) - \alpha \sum_i p_i - \beta \sum_i p_i E_i}$$
+
+What a great luck that the devil is there -- it has split a giant, intercorrelated general equilibrium into so many little, uncorrelated partial equilibria:
+$$\forall i,\quad \max_{p_i} \lrb{p_i \ln \frac{1}{p_i} - \alpha p_i - \beta p_i E_i}$$
+
+with solution $p_i = e^{-1-\alpha} e^{-\beta E_i}$.
+
+You are about to go to the devil, but then the devil waves at you to halt, "Don't make individual trades, but make a bulk one-time trade.". So you calculate $\sum_i p_i$ and $\sum_i p_i E_i$, and to your surprise, you found that they equal exactly $1$ and $E$. That is, you actually would spend all your time and tokens without needing to trade with the devil.
+
+And so you sits there, looking at your two equations in strange amusement:
+
+$$p_i = \frac{e^{-\beta E_i}}{e^{1+\alpha}}, \quad \alpha+1 = \ln\sum_i e^{-\beta E_i} , \quad E = \sum_i E_i \frac{e^{-\beta E_i}}{e^{1+\alpha}}$$
+
+A physicist comes and points out that they are better known as
+
+$$p_i =  \frac{e^{-\beta E_i}}{Z}, \quad Z = e^{-\beta F} = \sum_i e^{-\beta E_i}, \quad E = \sum_i p_i E_i$$
+
+where $Z$ is called "partition function", $F$ "Helmholtz free energy", and $\beta$ "inverse temperature". 
+
+As the devil prepares to leave, you call after it:
+
+* "I'm grateful for all your help, but, please why did you price your wares this way?"
+* "Because I don't want you to actually be happier!"
+* "What do you mean?"
+* "Suppose I were to the price of tokens, then what would you do? You would realize that you can profit by spending a little less time at every amusement, then sell both the time and the tokens you saved, increasing your happiness! Similarly for any other form of price change. If I priced it in any other way than the equilibrium prices, you would be able to exploit my bad pricing and arbitrage out some happiness."
+* "So why did you come to visit me in the first place?"
+* "It was easy to mess with mortals back before you discovered calculus. Now all I do is help you people discover general equilibrium, because you people have no fun anymore -- every arbitrage opportunity is exploited to death. Still, I have to come, because I am the CEO of Hell, and I need to make maximally profitable deals with mortals, no matter how pointless it is."
+
+> When the mortal is ready to make a deal, the devil appears.
+> 
+> When the mortal is truly ready to make a deal, the devil disappears.
 
 ### Isoperimetric problem
 
@@ -282,16 +387,20 @@ Since $\delta p$ is infinitesimal, this implies $\lra{-\delta p , \nabla_v H} \g
 
 :::
 
+:::{.callout-tip title="Notation for $\partial_t L$"}
 
-Here, we explicitly put a bracket around $\partial_t L$ to emphasize that we mean
+Here, we explicitly put a bracket around $\partial_t L$ to emphasize that
 
-$$\lim_{\epsilon \to 0} \frac{L(t + \epsilon, q, v^\ast(t, q, p)) - L(t, q, v^\ast(t, q, p))}{\epsilon}$$
-
-rather than
-
-$$\lim_{\epsilon \to 0} \frac{L(t + \epsilon, q, v^\ast(t + \epsilon, q, p)) - L(t, q, v^\ast(t, q, p))}{\epsilon}$$
+$$
+\begin{aligned}
+(\partial_t L)(t, q, v^\ast(t, q, p)) 
+&= \lim_{\epsilon \to 0} \frac{L(t + \epsilon, q, v^\ast(t, q, p)) - L(t, q, v^\ast(t, q, p))}{\epsilon} \\
+&\neq \lim_{\epsilon \to 0} \frac{L(t + \epsilon, q, v^\ast(t + \epsilon, q, p)) - L(t, q, v^\ast(t, q, p))}{\epsilon}
+\end{aligned}$$
 
 and similarly for $\nabla_q L$.
+
+:::
 
 ### Hamiltonian equations of motion
 
@@ -415,7 +524,7 @@ to certify that the *purportedly* stationary trajectory $q$ is truly stationary.
 
 In the Lagrangian formalism, we are given a system with $q$ coordinates, and allowed to manipulate $\dot q$ however we want, in order to minimize a \"cost\" function $\int_0^T L(t, q, \dot q)dt$.
 
-In the Hamiltonian formalism, we are also given a market to trade with. We attempt to maximize profit by varying production, buying, and selling. However, the market simultaneously adjusts its prices $p$ in just the right way so that we are always indifferent about the market (if we are ever not indifferent, the market is in serious trouble -- it doesn't actually carry any real commodity!), so we never actually make any trade. The market has been in our heads all along, but its effects are very real.
+In the Hamiltonian formalism, we are also given a market to trade with. We attempt to maximize profit by varying production, buying, and selling. However, the market simultaneously adjusts its prices $p$ in just the right way so that we are always indifferent about the market (if we are ever not indifferent, the market is in serious trouble -- it doesn't actually carry any real commodity!), so we never actually make any trade. The market has been in our heads all along, but its effects are real.
 
 Assuming this kind of double optimization (we against the market, and the market against us), the trajectory is uniquely determined by several possible specifications. We may fix it by $(t_0, q_0, p_0)$, or by $(t_0, q_0), (t, q)$, or by $(t_0, q_0, v_0)$, or perhaps more exotic constraints that mix up $t, q, p, v$.
 
@@ -716,7 +825,7 @@ For any $n = 1, 2, ...$, as $\theta$ moves from $\theta = 0$ to $\theta = \pi$, 
 
 For the wave way, imagine simultaneously shooting out a billiard in every direction with constant speed, and watch the \"wavefront\" of billiards evolve. The wavefront is reflected by the table edges and assumes increasingly complicated shapes, but it remains a closed curve (with possible self-intersections). As the closed curve reverberates across the table again and again, it sweeps across every point in the table again and again at discrete intervals.
 
-However, there is no way to smoothly reach one trajectory from any other -- you either have to make a very discrete jump in how hard you strike the billiard ball, or in which direction you strike. This contrasts with the case with both $q, q_0$ at the center, where you can smoothly vary your striking angle while keeping the same striking force.
+However, there is no way to smoothly reach one trajectory from any other -- you either have to make a discrete jump in how hard you strike the billiard ball, or in which direction you strike. This contrasts with the case with both $q, q_0$ at the center, where you can smoothly vary your striking angle while keeping the same striking force.
 
 Similarly, for a table with smooth boundary, for almost all point-pairs in the table, there are also a countable infinity of trajectories between them. We must say \"almost all\" to exclude singular cases such as the two focal points of an ellipse, where there is a whole continuum of trajectories between them.[^dynamical-billiards]
 
@@ -728,7 +837,7 @@ Why are we so concerned with reflections? Read on!
 
 ![The two ways to find trajectories from $q_0$ to $q$. The particle way involves sending out rays from $q_0$, reflecting off the walls of the table, until a ray hits $q$. The wave way involves sending out an expanding wavefront from $q_0$, rippling through the table, passing over $q$ again and again. The rays are perpendicular to the wavefront in this case.](figure/waves_rays_circle_table.jpg){width=50% fig-align="center"}
 
-![Similarly, in a rectangular billiard table, there are infinitly many possible ways to go from one point to another, but one cannot go from one way to another continuously.](figure/square_billard.jpg)
+![Similarly, in a rectangular billiard table, there are infinitely many possible ways to go from one point to another, but one cannot go from one way to another continuously.](figure/square_billard.jpg){width=80% fig-align="center"}
 
 ### Hamilton's principal function
 
@@ -863,9 +972,9 @@ We will prove [Noether's theorem](#thm-noether) similarly.
 
 ::: {#exr-zero-poincare-cartan}
 
-A one-dimensional family of trajectories in phase space sweep out a curved surface. Prove that for any cycle $\gamma$ on the curved surface, $\oint_\gamma \lra{p, dq} = 0$.
+A one-dimensional family of trajectories in phase space sweep out a curved surface. As shown in the illustration, prove that for any cycle $\gamma$ on the curved surface, $\oint_\gamma \lra{p, dq} = 0$.
 
-![Illustration for $\oint_\gamma \lra{p, dq} = 0$.](figure/zero_poincare_cartan.jpg){width=40% fig-align="center"}
+![Illustration for $\oint_\gamma \lra{p, dq} = 0$.](figure/zero_poincare_cartan.jpg){width=60% fig-align="center"}
 
 :::
 
@@ -887,9 +996,9 @@ for some $E\in \R$, then $S(t, q) = W(q) - Et$ is a solution to the HJE.
 
 We might naively think, by analogy with Fourier transform, that any solution to the HJE is a linear combination, of the form $S(t, q) = \int (W_E(q) - Et)dE$, but this is not true, since the HJE is nonlinear. Nevertheless, solutions of the form $S(t, q) = W(q) - Et$ are often sufficient for applications.
 
-### More proofs of HJE
+### Two more proofs of HJE
 
-::: {.callout-note title="proof by positional arbitrage" collapse="false"}
+::: {.callout-note title="Proof by positional arbitrage" collapse="false"}
 
 We only need to prove $p = \nabla S$, which is sufficient to prove @eq-HJ, and thus the HJE.
 
@@ -951,9 +1060,9 @@ $$
 
 we see $c=1$.
 
-![](figure/hje_proof.jpg){width=70% fig-align="center"}
+![The wavelet proof of the HJE.](figure/hje_proof.jpg){width=70% fig-align="center"}
 
-::: {.callout-tip title="convexity of the wavelet" collapse="true"}
+::: {.callout-tip title="convexity of the wavelet"}
 
 If the wavelet is convex, then the tangent point is unique, and there is only one way to proceed from $(t, q)$. However, if the wavelet is not, then there could exist *two* or more particle paths shooting out from $(t, q)$. It is similar to [birefringence](https://en.wikipedia.org/wiki/Birefringence) and conical refraction [@lunneyInsOutsConical2006].
 
@@ -982,7 +1091,7 @@ We defined "symmetry of the Lagrangian" by a condition on an integral: $\int_\ga
 
 :::
 
-::: {.callout-warning collapse="false"}
+::: {.callout-warning}
 
 A symmetry of the Lagrangian conserves *all* actions, even those of unphysical paths, but a conserved quantity of motion is only conserved along physical paths. We may call them "conserved quantity of *physical* motion" to emphasize the distinction.
 
@@ -1016,9 +1125,9 @@ The left side is defined on the phase space-time, while the right side is define
 
 Indeed, again and again we see that Lagrangian and Hamiltonian mechanics are different worlds, with their own dreams and phantasies, but always agreeing on the same reality.
 
-If this were the case, then why do we bother creating two mechanics, since there are no physical experiment to distinguish them? It is because in quantum mechanics, virtual trajectories are just as real as the "real" trajectories. A particle can very well go around the earth once before it arrives at its destination, taking the long way around. In this case, what is virtually possible matters just as much as what is classically real, and if Lagrangian mechanics and Hamiltonian mechanics can entertain different kinds of dreams, we might be able to tell them apart.
+If this were the case, then why do we bother creating two mechanics, since there are no physical experiment to distinguish them? It is because in quantum mechanics, virtual trajectories are just as real as the "real" trajectories. A particle can just go around the earth once before it arrives at its destination, taking the long way around. In this case, what is virtually possible matters just as much as what is classically real, and if Lagrangian mechanics and Hamiltonian mechanics can entertain different kinds of dreams, we might be able to tell them apart.
 
-![$S$ is a source of photons, and $P$ is a receiver. A photon can go from $S$ to $P$ by bouncing off the mirror below, along many paths. Each path has a certain amplitude, and the sum of all their amplitudes is the total amplitude. While the amplitude is dominated by the amplitudes near the classical path $SGP$, it is not the only path, and all paths, even the "virtual" paths like $SAP$, contributes to what we observe. [@feynmanQEDStrangeTheory2006, figure 24]](figure/qed_2006_fig_24.png)
+![$S$ is a source of photons, and $P$ is a receiver. A photon can go from $S$ to $P$ by bouncing off the mirror below, along many paths. Each path has a certain amplitude, and the sum of all their amplitudes is the total amplitude. While the amplitude is dominated by the amplitudes near the classical path $SGP$, it is not the only path, and all paths, even the "virtual" paths like $SAP$, contributes to what we observe. [@feynmanQEDStrangeTheory2006, figure 24]](figure/qed_2006_fig_24.png){width=60% fig-align="center"}
 
 ::: {.callout-note title="Proof" collapse="false"}
 
@@ -1039,6 +1148,155 @@ Therefore, $H T - \lra{p, \delta Q}$ is a conserved quantity of motion.
 :::
 
 The proof is similar to the proof of @thm-poincare-cartan, though they differ in that Noether's theorem shows a quantity, defined at a single point, is conserved over a trajectory, while the Poincaré--Cartan invariant is not defined at a single point, but as an integral over an entire cycle.
+
+![](figure/banner/2.png)
+
+## Hamiltonian optics {#sec-geometric-optics}
+
+### Isotropic case
+
+We are going back to the roots, as geometric optics was what inspired Hamilton to develop his theory of Hamiltonian mechanics.
+
+When Hamilton developed his Hamiltonian approach, it was to study geometric optics, which can be derived from Fermat's principle: *light paths have stationary travel time*. In other words, the action of a path is
+
+$$S(\text{path}) = \int_{\text{path}} dt$$
+
+Thus, $L = 1$\...? Well, here we see the problem: in geometric optics, if you fix the starting and ending point as $(t_0, q_0), (t, q)$, then *any* path between them takes exactly $t-t_0$ time, and there is nothing to vary. Consequently, we need to remove time from consideration, so that there is something to vary.
+
+Fermat's principle, reformulated, states *light paths have stationary optical length*. Let the medium be isotropic (light speed does not depend on direction), then we have
+
+$$S(\text{path}) = \int_{\text{path}} n(q) \|dq\|$$
+
+where $n$ is the refractive index. with $L(q) = n(q)$. Here we encounter a brief difficulty: time flows in one direction only, but space flows in infinitely many possible directions!
+
+The solution might seem like a joke, but it would work out well: select one direction[^principal-optical-axis], say $q_0$, and pretend that it is time. With this trick, all previous mathematical formalism immediately applies, and we have
+
+[^principal-optical-axis]: This direction is usually selected to be the direction of the **principal optic axis**. For example, the long-axis of a camera is a principal optic axis, and so is the barrel-axis of a telescope.
+
+$$S(\text{path}) = \int_{\text{path}} n(q_0, q_1, q_2) \sqrt{1 + \left(\frac{dq_1}{dq_0}\right)^2 + \left(\frac{dq_2}{dq_0}\right)^2}dq_0$$
+
+#### Derivation
+
+Let's make the notation cleaner, by rewriting $q_0$ as $t$, $(q_1, q_2)$ as $q$, and using $v$ to mean $\left(\frac{dq_1}{dq_0}, \frac{dq_2}{dq_0}\right)$. Then we have
+
+$$L(t, q, v) = n(t, q) \sqrt{1 + \|v\|^2}$$
+
+Routine calculation yields
+
+$$\begin{cases}     
+L(t, q, v) = n(t, q) \sqrt{1 + \|v\|^2}\\     
+H(t, q, p) = -\sqrt{n^2 - \|p\|^2} 
+\end{cases} \quad 
+\begin{cases}     
+p^\ast = \frac{nv}{\sqrt{1 + \|v\|^2}} \\     
+v^\ast = \frac{p}{\sqrt{n^2 - \|p\|^2}} 
+\end{cases}$$
+
+we continue with the HJE, which simplifies to:
+
+$$(\partial_t S)^2 + \|\nabla_q S\|^2 = n^2$$
+
+Reverting notation back to $(q_0, q_1, q_2)$, we find the **eikonal equation**[^eikonal-etymology]:
+
+[^eikonal-etymology]: From Greek εἰκών (*eikon*, \"image\"), from which the word "icon" derived.
+
+$$\|\nabla_q S\| = n(q)$$
+
+Why did the trick work? Well, if we look back to how we derived the Hamiltonian, we could see that what we called \"time\" is really just a special copy of $\R$, along which we organized all other state and control variables. We don't really need time to be anything more than the domain of functions, as in $q_i: \R \to \R$ and $v_i : \R\to \R$. It most definitely does not need to \"flow\", or flow only from the past to the future, or have any psychological significance.
+
+#### Interpretation
+
+Starting with Fermat's principle for light rays, we ended up with the eikonal equation for light waves. In general, we find the following duality between wave-field optics and particle-path optics.
+
+| perspective |   particle-path |                   wave-field |
+|--------------|--------------------------------|------------------------------------------|
+| action $S$ |    a function of particle path   |   a field on configuration-spacetime |
+| equation    |   $\|\nabla_q S\| = n(q)$      |  $\partial_t S + H(t, q, \nabla_q S) = 0$ |
+| in optics    |  light rays, Fermat's principle |  light waves, Huygens principle |
+| in mechanics  | point particles                 | matter waves |
+
+: The particle-wave duality.
+
+### Anisotropic case
+
+When the travel cost of light can depend on the direction of travel, we say that the medium is anisotropic. Now, you might expect 
+
+$$
+S = \int n(\hat{\delta q}) \delta q
+$$
+
+but this is incorrect, not because there is anything necessarily wrong with the formalism, but because of how $n$ is defined by convention in anisotropic material. At this point, we must study the full particle-wave duality again.
+
+For a moment, let's pretend light is really a particle, and consider how it might appear to someone who believes light is a wave. We arrange an entire plane of photons, such that the plane is perpendicular to a unit vector $\hat k$. Now, let them move optimally for time $\delta$. Each of them would go in the same optimal direction $v^*(\hat k)$, to push the wavefront as far-out as possible.
+
+![A plane of particles marching in sync at velocity $v$, but the collective effect is that the plane moves with group velocity $v_g$, which is different from the individual velocity $v$.](figure/planar_group_velocity.jpg){width="50%" fig-align="center"}
+
+Now, the wavefront does not move in the direction $v^*$, but in the direction $\hat k$. Therefore, the wavefront moves at **group velocity** $v_g(\hat k) = \lra{v^*(\hat k), \hat k} \hat k$.
+
+Since the photons are trying to push as far out as possible,
+
+$$v^*(\hat k) = \argmax_{v \in K_{particle}} \lra{\hat k, v}$$
+
+where we write $K_{particle}$ as the surface of all particle velocities in all directions. It is a sphere of radius $c$ in a vacuum, but in an anisotropic medium, we allow it to be any crazy shape.
+
+Instead of studying the group velocity, we actually need to use its inverse -- the wavevector $k = \frac{\hat k}{v_g}$.[^wavevector] We thus have
+
+$$k = \frac{\hat k}{\max_{v \in K_{particle} \lra{v, \hat k}}}$$
+
+[^wavevector]: The typical definition is $k_{usual} = \frac{2\pi}{\lambda}\hat k = \nabla \phi$, where $\phi$ is the phase of the light, and $f$ is its temporal frequency. Our definition, which makes it cleaner, but somewhat different from typical definition, is $k_{ours} = \frac{\nabla \phi}{2\pi f} = \frac{\nabla \phi}{\omega}$.
+
+The reason we use this instead of the group velocity is that, a little simplification later, we have the beautifully simple relation
+
+$$
+\forall k \in K_{wave}, \quad \max_{v \in K_{particle}}\lra{v, k} = 1
+$$
+
+This is a suggestive symmetry, which practically demands us to write it as a duality:
+
+$$
+\begin{cases}
+v^*(k) = \argmax_{v \in K_{particle}}\lra{v, k} \\
+k^*(v) = \argmax_{k \in K_{wave}}\lra{v, k}
+\end{cases}, \quad
+\begin{cases}
+\lra{v^*(k), k} = 1\\
+\lra{v, k^*(v)} = 1\\
+\end{cases}
+$$
+
+This is the polar dual construction, often used in convex analysis.[^polar-dual] [@hiriart-urrutyFundamentalsConvexAnalysis2001, Section C.3].
+
+[^polar-dual]: What, just because we have not mentioned Legendre transform for a few pages, you would think that we're done with convex analysis? Too bad! If nature is the great optimizer, then convex analysis is inescapable at every turn.
+
+The best case is if $K_{particle}$ is convex. In this case, each $k \in K_{wave}$ defines a plane perpendicular to it, at a distance $\|k\|^{=1}$ from the origin, and the plane is tangent to $K_{particle}$ at precisely $v^*(k)$, and conversely so. In other words, $K_{particle}$ is the envelope of polar lines to points in $K_{wave}$, and conversely so. 
+
+Conversely, we can pretend that light is really a wave, and consider how it might appear to someone who believes light is a particle. We would then go through the above argument, and obtain the same result.
+
+![A pair of polar duals. Both surfaces are convex.](figure/polar_duals_convex.jpg){width="80%" fig-align="center"}
+
+However, we want to deal with more general cases than this, so we need to resolve two issues.
+
+First issue: $K_{particle}$ might be non-convex. Second issue: it might be double-sheeted, or even many-sheeted. For example, in crystal, light polarized in two different orientations can move at two different velocities even in the same direction. Thus, its $K_{wave}$ has two sheets, and so its polar dual, $K_{particle}$, also has two sheets.
+
+Both issues are solved by extending the definition of polar duality: replace the maximum with a stationarity. We can still construct $K_{particle}$ from $K_{wave}$ by taking a tangent plane for each $k \in K_{wave}$, but now instead of the intersection of the half-planes, we use their envelope. A picture shows what we mean:
+
+![A pair of polar duals. The surfaces are no longer convex. Notice how the double tangent on the left becomes a double crossing point on the right.](figure/polar_duals_generic.jpg){width="60%" fig-align="center"}
+
+![The curve on the right is a trefoil curve defined by $z = 0.3 e^{i\phi} + e^{-2i \phi}$, shifted to make the image clearer. The curve on the left is the polar dual of the trefoil curve. It is the envelope of the polar dual lines of each point on the trefoil curve.](figure/trefoil_dual.svg)
+
+We still have a duality between points on the two surfaces, defined by stationarity, not optimality. For example, for any wavevector $k \in K_{wave}$, its corresponding dual point $v^*(k)$ satisfies $\lra{v^*(k) + \delta v, k} = 0$ for any $\delta v$ in the tangent space of $K_{particle}$ at $v^*(k)$.
+
+The first application of Hamiltonian mechanics was done by Hamilton, who in 1832 predicted theoretically that if light enters a biaxial crystal in just the right way, it will not just refract in one direction, but in an entire *cone* of directions -- which he termed [internal conical refraction](https://en.wikipedia.org/wiki/Conical_refraction). The theory of this is fascinating,[^conical-neptune] however, for lack of space, we will only give the barest description. 
+
+[^conical-neptune]: It was historically important as the first phenomenon predicted by mathematical reasoning before experimental observation [@berryChapterConicalDiffraction2007], and it was often compared to the mathematical prediction of Neptune by Le Verrier (1845) [@smithCambridgeNetworkAction1989].
+
+Simply put, it turns out that in a biaxial crystal, both $K_{particle}$ and $K_{wave}$ have the same shape of a large blob containing a smaller blob, touching each other at 4 cone-shaped points. Now, let $k_c \in K_{wave}$ be one of the cone-shaped points, then it corresponds to a tangent plane to $K_{particle}$. Each tangent point $v \in K_{particle}$, conversely, corresponds to a tangent plane to $k_c$.
+
+Since $k_c$ is a conical point, however, there are a whole *circle* of tangent planes to $K_{wave}$ at $k_c$. Consequently, the tangent plane to $K_{particle}$ is tangent to it on one entire circle. It is as if we throw a tire on the floor -- it will touch the floor not just at three points, but an entire circle of points. Now, suppose that we have a planar wave moving in the direction of $k_c$ inside the crystal, then each light-particle would have to move in a direction $\argmax_{v \in K_{particle}}\lra{v, k_c}$. But since there is an entire circle of such directions, we would have an entire circle of possible $v$, and thus, we obtain a hollow cone of light.
+
+![When a planar wave travels in a crystal, such that $K_{particle}$ is tangent to the plane of the wave at an entire circle, then instead of choosing one among the entire circle of velocities, the particles simply take every single possible direction on the circle, resulting in conical refraction.](figure/conical_refraction_tangent_velocity.jpg){width="50%" fig-align="center"}
+
+![The shape of the $K_{wave}$ surface. The $K_{particle}$ surface is topologically the same, and can be obtained from $K_{wave}$ by squashing it *just right*. Figure from [@schaeferBandTeilElektrodynamik1949, page 485, figure 128]](figure/schaefer_1949_fig_128.png)
 
 ## The particle-wave duality
 
@@ -1079,9 +1337,7 @@ Because the Lagrangian is time-independent, so any [time-independent solution](#
 
 $$S(t, q) = W(q) - Et, \quad \| \nabla_q W \| = \sqrt{2mE}$$
 
-for any constant $E > 0$ also gives a solution to the HJE. This is just the **eikonal equation**[^eikonal-etymology] for a medium of constant wave speed! More on this in [the section on geometric optics](#sec-geometric-optics). One can of course solve the eikonal equation by putting it into a numerical package and let it grind out the solution. However, we can interpret it by the Huygens principle.
-
-[^eikonal-etymology]: From Greek εἰκών (*eikon*, \"image\"), from which the word "icon" derived.
+for any constant $E > 0$ also gives a solution to the HJE. This is just the eikonal equation for a medium of constant wave speed! More on this in [the section on geometric optics](#sec-geometric-optics). One can of course solve the eikonal equation by putting it into a numerical package and let it grind out the solution. However, we can interpret it by the Huygens principle.
 
 Suppose you know a surface of constant $W = W_0$, and you know that the arrows of $\nabla_q W$ point outwards, then since $\nabla W$ is perpendicular to the surface, and is of constant length $\sqrt{2mE}$, you can step out a small distance $ds$ perpendicularly out of the whole surface $W= W_0$, and arrive at the surface of $W=W_0 + \sqrt{2mE} ds$. Alternatively, you can draw small spheres of radius $ds$, and their outwards envelope is the $W=W_0+ \sqrt{2mE} ds$ surface. These procedures are equivalent, but in one, we constructed \"rays\" while the other we constructed \"wave fronts\".
 
@@ -1127,7 +1383,7 @@ $$\partial_t S + \frac 1{2m} \|\nabla_q S\|^2 = -V(t, q)$$
 
 As before, if we interpret the equation as a wave equation, then the group velocity is $\frac{\partial_t S}{\nabla S} = \frac{-E}{p} \hat k$, with magnitude $v_g = \frac{E}{\sqrt{2m(E-V)}}$.
 
-::: {.callout-note title="example: particle in free fall" collapse="true"}
+::: {.callout-note title="Example: particle in free fall" collapse="true"}
 
 We consider the classical problem of a body in free fall, thrown from the origin $(t, q) = (0, 0)$. Basic physics tells us that the position and velocity of the body are given by
 
@@ -1194,7 +1450,7 @@ In the same way, analyze the simple harmonic oscillator -- a particle in a poten
 
 ### Deriving the time-independent Schrödinger equation
 
-This section based on [@masoliverClassicalQuantumMechanics2009; @derbesFeynmanDerivationSchrodinger1996; @hamillStudentGuideLagrangians2013, section 6.4].
+<small>This section based on [@masoliverClassicalQuantumMechanics2009; @derbesFeynmanDerivationSchrodinger1996; @hamillStudentGuideLagrangians2013, section 6.4].</small>
 
 Assume that the potential is time-independent: $V(t, q) = V(q)$. Assume that the physical system can be described by a function
 
@@ -1246,9 +1502,9 @@ Plug $\Psi(t, q) = \psi_0(t, q) e^{i S(t, q)/\hbar}$ back to the time-dependent 
 
 If the above derivation looks mildly suspect, and leaves you with a feeling of seeing a magic trick, it is not an accident. The analogy between classical mechanics and quantum mechanics is not exact, so we cannot logically derive quantum mechanics from classical mechanics. The simple problem is that classical mechanics, even when formulated in the form of Hamilton--Jacobi wave equations, cannot reproduce interference or diffractions. Consider the simple case of a straight-edge diffraction. If you aim a light beam at a sharp edge, then on the other side, there would be alternating bright and dark bands fading into the shadow. However, if light is going by the shortest path, then there should be no such banding, and the brightness should just drop off to zero monotonically.
 
-The solution is to admit that geometric optics is insufficient, that Huygens' principle is insufficient, and we need a full theory of light wave in order to explain what happens on the very smallest scales -- a diffraction theory. Similarly, classical mechanics is insufficient, and the HJE is insufficient, and we need a full theory of matter wave in order to explain what happens in the atomic world -- quantum mechanics.
+The solution is to admit that geometric optics is insufficient, that Huygens' principle is insufficient, and we need a full theory of light wave in order to explain what happens on the smallest scales -- a diffraction theory. Similarly, classical mechanics is insufficient, and the HJE is insufficient, and we need a full theory of matter wave in order to explain what happens in the atomic world -- quantum mechanics.
 
-![In classical mechanics, the shadow of a hard edge has no diffractive stripes.](figure/no_classical_diffraction.jpg){width="30%" fig-align="center"}
+![In classical mechanics, the shadow of a hard edge has no diffractive stripes.](figure/no_classical_diffraction.jpg){width="60%" fig-align="center"}
 
 ![The optical-mechanical analogy at three levels. There is a question mark, because I'm not sure if that should be quantum field theory.](figure/optical-mechanical_analogy.png)
 
@@ -1319,146 +1575,7 @@ Plug in $\psi(t, q) = \psi_0(q, t) e^{i S(t, q) / \hbar}$, and check that at $\h
 
 :::
 
-### Geometric optics {#sec-geometric-optics}
-
-We are going back to the roots, as geometric optics was what inspired Hamilton to develop his theory of Hamiltonian mechanics.
-
-When Hamilton developed his Hamiltonian approach, it was to study geometric optics, which can be derived from Fermat's principle: *light paths have stationary travel time*. In other words, the action of a path is
-
-$$S(\text{path}) = \int_{\text{path}} dt$$
-
-Thus, $L = 1$\...? Well, here we see the problem: in geometric optics, if you fix the starting and ending point as $(t_0, q_0), (t, q)$, then *any* path between them takes exactly $t-t_0$ time, and there is nothing to vary. Consequently, we need to remove time from consideration, so that there is something to vary.
-
-Fermat's principle, reformulated, states *light paths have stationary optical length*. Let the medium be isotropic (light speed does not depend on direction), then we have
-
-$$S(\text{path}) = \int_{\text{path}} n(q) \|dq\|$$
-
-where $n$ is the refractive index. with $L(q) = n(q)$. Here we encounter a brief difficulty: time flows in one direction only, but space flows in infinitely many possible directions!
-
-The solution might seem like a joke, but it would work out well: select one direction[^principal-optical-axis], say $q_0$, and pretend that it is time. With this trick, all previous mathematical formalism immediately applies, and we have
-
-[^principal-optical-axis]: This direction is usually selected to be the direction of the **principal optic axis**. For example, the long-axis of a camera is a principal optic axis, and so is the barrel-axis of a telescope.
-
-$$S(\text{path}) = \int_{\text{path}} n(q_0, q_1, q_2) \sqrt{1 + \left(\frac{dq_1}{dq_0}\right)^2 + \left(\frac{dq_2}{dq_0}\right)^2}dq_0$$
-
-#### Derivation
-
-Let's make the notation cleaner, by rewriting $q_0$ as $t$, $(q_1, q_2)$ as $q$, and using $v$ to mean $\left(\frac{dq_1}{dq_0}, \frac{dq_2}{dq_0}\right)$. Then we have
-
-$$L(t, q, v) = n(t, q) \sqrt{1 + \|v\|^2}$$
-
-Routine calculation yields
-
-$$\begin{cases}     
-L(t, q, v) = n(t, q) \sqrt{1 + \|v\|^2}\\     
-H(t, q, p) = -\sqrt{n^2 - \|p\|^2} 
-\end{cases} \quad 
-\begin{cases}     
-p^\ast = \frac{nv}{\sqrt{1 + \|v\|^2}} \\     
-v^\ast = \frac{p}{\sqrt{n^2 - \|p\|^2}} 
-\end{cases}$$
-
-we continue with the HJE, which simplifies to:
-
-$$(\partial_t S)^2 + \|\nabla_q S\|^2 = n^2$$
-
-Reverting notation back to $(q_0, q_1, q_2)$, we find the eikonal equation:
-
-$$\|\nabla_q S\| = n(q)$$
-
-Why did the trick work? Well, if we look back to how we derived the Hamiltonian, we could see that what we called \"time\" is really just a special copy of $\R$, along which we organized all other state and control variables. We don't really need time to be anything more than the domain of functions, as in $q_i: \R \to \R$ and $v_i : \R\to \R$. It most definitely does not need to \"flow\", or flow only from the past to the future, or have any psychological significance.
-
-#### Interpretation
-
-Starting with Fermat's principle for light rays, we ended up with the eikonal equation for light waves. In general, we find the following duality between wave-field optics and particle-path optics.
-
-| perspective |   particle-path |                   wave-field |
-|--------------|--------------------------------|------------------------------------------|
-| action $S$ |    a function of particle path   |   a field on configuration-spacetime |
-| equation    |   $\|\nabla_q S\| = n(q)$      |  $\partial_t S + H(t, q, \nabla_q S) = 0$ |
-| in optics    |  light rays, Fermat's principle |  light waves, Huygens principle |
-| in mechanics  | point particles                 | matter waves |
-
-: The particle-wave duality.
-
-### Anisotropic optics
-
-When the travel cost of light can depend on the direction of travel, we say that the medium is anisotropic. Now, you might expect 
-
-$$
-S = \int n(\hat{\delta q}) \delta q
-$$
-
-but this is incorrect, not because there is anything necessarily wrong with the formalism, but because of how $n$ is defined by convention in anisotropic material. At this point, we must study the full particle-wave duality again.
-
-For a moment, let's pretend light is really a particle, and consider how it might appear to someone who believes light is a wave. We arrange an entire plane of photons, such that the plane is perpendicular to a unit vector $\hat k$. Now, let them move optimally for time $\delta$. Each of them would go in the same optimal direction $v^*(\hat k)$, to push the wavefront as far-out as possible.
-
-![A plane of particles marching in sync at velocity $v$, but the collective effect is that the plane moves with group velocity $v_g$, which is different from the individual velocity $v$.](figure/planar_group_velocity.jpg){width="30%" fig-align="center"}
-
-Now, the wavefront does not move in the direction $v^*$, but in the direction $\hat k$. Therefore, the wavefront moves at **group velocity** $v_g(\hat k) = \lra{v^*(\hat k), \hat k} \hat k$.
-
-Since the photons are trying to push as far out as possible,
-
-$$v^*(\hat k) = \argmax_{v \in K_{particle}} \lra{\hat k, v}$$
-
-where we write $K_{particle}$ as the surface of all particle velocities in all directions. It is a sphere of radius $c$ in a vacuum, but in an anisotropic medium, we allow it to be any crazy shape.
-
-Instead of studying the group velocity, we actually need to use its inverse -- the wavevector $k = \frac{\hat k}{v_g}$.[^wavevector] We thus have
-
-$$k = \frac{\hat k}{\max_{v \in K_{particle} \lra{v, \hat k}}}$$
-
-[^wavevector]: The typical definition is $k_{usual} = \frac{2\pi}{\lambda}\hat k = \nabla \phi$, where $\phi$ is the phase of the light, and $f$ is its temporal frequency. Our definition, which makes it cleaner, but somewhat different from typical definition, is $k_{ours} = \frac{\nabla \phi}{2\pi f} = \frac{\nabla \phi}{\omega}$.
-
-The reason we use this instead of the group velocity is that, a little simplification later, we have the beautifully simple relation
-
-$$
-\forall k \in K_{wave}, \quad \max_{v \in K_{particle}}\lra{v, k} = 1
-$$
-
-This is a very suggestive symmetry, which practically demands us to write it as a duality:
-
-$$
-\begin{cases}
-v^*(k) = \argmax_{v \in K_{particle}}\lra{v, k} \\
-k^*(v) = \argmax_{k \in K_{wave}}\lra{v, k}
-\end{cases}, \quad
-\begin{cases}
-\lra{v^*(k), k} = 1\\
-\lra{v, k^*(v)} = 1\\
-\end{cases}
-$$
-
-This is the polar dual construction, often used in convex analysis.[^polar-dual] [@hiriart-urrutyFundamentalsConvexAnalysis2001, Section C.3].
-
-[^polar-dual]: What, just because we have not mentioned Legendre transform for a few pages, you would think that we're done with convex analysis? Too bad! If nature is the great optimizer, then convex analysis is inescapable at every turn.
-
-The best case is if $K_{particle}$ is convex. In this case, each $k \in K_{wave}$ defines a plane perpendicular to it, at a distance $\|k\|^{=1}$ from the origin, and the plane is tangent to $K_{particle}$ at precisely $v^*(k)$, and conversely so. In other words, $K_{particle}$ is the envelope of polar lines to points in $K_{wave}$, and conversely so. 
-
-Conversely, we can pretend that light is really a wave, and consider how it might appear to someone who believes light is a particle. We would then go through the above argument, and obtain the same result.
-
-![A pair of polar duals. Both surfaces are convex.](figure/polar_duals_convex.jpg){width="60%" fig-align="center"}
-
-However, we want to deal with more general cases than this, so we need to resolve two issues.
-
-First issue: $K_{particle}$ might be non-convex. Second issue: it might be double-sheeted, or even many-sheeted. For example, in crystal, light polarized in two different orientations can move at two different velocities even in the same direction. Thus, its $K_{wave}$ has two sheets, and so its polar dual, $K_{particle}$, also has two sheets.
-
-Both issues are solved by extending the definition of polar duality: replace the maximum with a stationarity. We can still construct $K_{particle}$ from $K_{wave}$ by taking a tangent plane for each $k \in K_{wave}$, but now instead of the intersection of the half-planes, we use their envelope. A picture shows what we mean:
-
-![A pair of polar duals. The surfaces are no longer convex. Notice how the double tangent on the left becomes a double crossing point on the right.](figure/polar_duals_generic.jpg){width="60%" fig-align="center"}
-
-![The curve on the right is a trefoil curve defined by $z = 0.3 e^{i\phi} + e^{-2i \phi}$, shifted to make the image clearer. The curve on the left is the polar dual of the trefoil curve. It is the envelope of the polar dual lines of each point on the trefoil curve.](figure/trefoil_dual.svg)
-
-We still have a duality between points on the two surfaces, defined by stationarity, not optimality. For example, for any wavevector $k \in K_{wave}$, its corresponding dual point $v^*(k)$ satisfies $\lra{v^*(k) + \delta v, k} = 0$ for any $\delta v$ in the tangent space of $K_{particle}$ at $v^*(k)$.
-
-The first application of Hamiltonian mechanics was done by Hamilton, who predicted theoretically that if light enters a biaxial crystal in just the right way, it will not just refract in one direction, but in an entire *cone* of directions -- which he termed [internal conical refraction](https://en.wikipedia.org/wiki/Conical_refraction). The theory of this is rather fascinating, but we will only give the barest description. 
-
-Simply put, it turns out that in a biaxial crystal, both $K_{particle}$ and $K_{wave}$ have the same shape of a large blob containing a smaller blob, touching each other at 4 cone-shaped points. Now, let $k_c \in K_{wave}$ be one of the cone-shaped points, then it corresponds to a tangent plane to $K_{particle}$. Each tangent point $v \in K_{particle}$, conversely, corresponds to a tangent plane to $k_c$.
-
-Since $k_c$ is a conical point, however, there are a whole *circle* of tangent planes to $K_{wave}$ at $k_c$. Consequently, the tangent plane to $K_{particle}$ is tangent to it on one entire circle. It is as if we throw a tire on the floor -- it will touch the floor not just at three points, but an entire circle of points. Now, suppose that we have a planar wave moving in the direction of $k_c$ inside the crystal, then each light-particle would have to move in a direction $\argmax_{v \in K_{particle}}\lra{v, k_c}$. But since there is an entire circle of such directions, we would have an entire circle of possible $v$, and thus, we obtain a hollow cone of light.
-
-![When a planar wave travels in a crystal, such that $K_{particle}$ is tangent to the plane of the wave at an entire circle, then instead of choosing one among the entire circle of velocities, the particles simply take every single possible direction on the circle, resulting in conical refraction.](figure/conical_refraction_tangent_velocity.jpg){width="30%" fig-align="center"}
-
-![The shape of the $K_{wave}$ surface. The $K_{particle}$ surface is topologically the same, and can be obtained from $K_{wave}$ by squashing it *just right*. Figure from [@schaeferBandTeilElektrodynamik1949, page 485, figure 128]](figure/schaefer_1949_fig_128.png)
+![](figure/banner/3.png)
 
 ## Periodic motion
 
@@ -1468,7 +1585,7 @@ Consider a simple harmonic oscillator (SHO), with Hamiltonian $H$ in the $(q, p)
 
 $$H(t, q, p) = \frac{p^2}{2m} + \frac 12 kq^2$$
 
-The motion of the system is very simple: a circular motion around $(q, p) = (0, 0)$:
+The motion of the system is simply a circular motion around $(q, p) = (0, 0)$:
 
 $$\begin{cases} 
 \dot q = p/m \\ 
@@ -1597,7 +1714,7 @@ Now, we can graphically see that this construction really preserves areas:
 
 ::: {.callout-warning}
 
-This is not as trivial as it seems. The idea of "area" in phase space was defined by $\oint pdq$, so it is not obvious that $\delta P \delta Q$ would be the area of the parallelogram, *especially* considering that the sides of a parallelogram might not even be perpendicular to each other!
+This is not as trivial as it seems. The "area" in phase space was defined by $\oint pdq$, but we did not say that $p, q$ are perpendicular in any sense. Thus, it is not obvious that $\delta P \delta Q$ would be the area of the parallelogram. Indeed, we *should not* say that $p, q$ are perpendicular, because angles do not exist and *should not* exist in phase space.
 
 :::
 
@@ -1605,7 +1722,7 @@ The entire construction of $(Q, P)$ from $(q, p)$ is often done in one divinely-
 
 ### Adiabaticity
 
-This section based on [@duncanConstructingQuantumMechanics2019, chapter 5; @deoliveiraParametricInvariance2022].
+<small>This section based on [@duncanConstructingQuantumMechanics2019, chapter 5; @deoliveiraParametricInvariance2022].</small>
 
 The Lorentz pendulum is a famous example that connects the classical and the quantum world. In the early 1900s, as physicists were trying to explain various phenomena, such as the black body radiation spectrum, the atomic spectra, and such, they came to the **quantum hypothesis**. Consider a classical system undergoing periodic motion -- such as the electrons cycling around a proton in the hydrogen atom. Whereas classically, its $\oint pdq$ may be of any value, the quantum hypothesis states that it can only take values in
 
@@ -1724,7 +1841,7 @@ For a multidimensional oscillating system, we have three possibilities.
 
 If the dimensions separate, like an $n$-dimensional oscillator $H = \frac{p_1^2 + \dots + p_n^2}{2m} + \frac 12 k (q_1^2 + \dots + q_n^2)$. In this case, the adiabatic theorem still applies along each dimension, with one adiabatic invariant per dimension.
 
-If all dimensions mix together, like a tank of hot entangled gas. In this case, the adiabatic theorem states that if we start with the microcanonical ensemble, then the phase space volume enclosed by the surface of $H = E$ remains constant as we adiabatically vary $\lambda$. The volume is named the Gibbs invariant.[@deoliveiraParametricInvariance2022]
+If all dimensions mix together, like a tank of hot entangled gas. In this case, the adiabatic theorem states that if we start with the microcanonical ensemble, then the phase space volume enclosed by the surface of $H = E$ remains constant as we adiabatically vary $\lambda$. The volume is named the Gibbs invariant. [@deoliveiraParametricInvariance2022]
 
 If the dimensions neither separate nor mix together, but have some kind of complicated dynamics, then what adiabaticity means in that case is still a current area of research.
 
@@ -1732,7 +1849,9 @@ If the dimensions neither separate nor mix together, but have some kind of compl
 
 #### Connection to thermodynamics
 
-A simpler example is when we put one ball moving in a piston. We hold one wall of the piston constant, and slowly move the other. The phase space diagram of the ball is then a rectangle. Let the ball have speed $v$, and the walls of the piston have separation $L$. The action enclosed by one cycle of the system is $I = 2mvL$. If we slowly move the wall of the piston, then the action is conserved, giving us
+Consider a ball in a piston, bouncing elastically off its two ends. We hold one end of the piston constant, and slowly move the other. Assume the ball only moves in the $x$-direction for simplicity. Let the ball have speed $v$, and the walls of the piston have separation $L$.
+
+The phase space diagram of the system is a rectangle with $\Delta q = L, \Delta p = (mv) - (-mv) = 2mv$, enclosing an area of $I = 2mvL$. If we slowly move the wall of the piston, then the action is conserved, giving us
 
 $$
 2mv_0 L_0 = 2mvL \implies v = \frac{L_0}{L} v_0
@@ -1771,19 +1890,19 @@ Given a Lorentz pendulum and a schedule for varying its arm length, we can plot 
 
 For a more rigorous proof of adiabatic invariance at the level of first-year graduate student, see [@wellsAdiabaticInvarianceAction2007]. [@henrardAdiabaticInvariantClassical1993] is a good comprehensive review of adiabatic invariance in classical mechanics, and points to the literature on a lot of applications in celestial mechanics, magnetism, and the geometry of phase space plots. In textbooks on classical statistical mechanics, the adiabatic invariance theorem is used to derive many results. [@fernandez-pinedaAdiabaticInvariancePhase1982] gives some worked-out examples, such as the ideal gas and the photon gas. 
 
-### Old quantum mechanics
+## Old quantum mechanics
 
 > Sommerfeld, in the new edition of his book [Atombau und Spektrallinien], has introduced the adiabatic hypothesis through a couple of very elegant changes and footnotes, in such a way that my participation in that can rather appear reduced to — a plagiarism. Lorentz and Einstein have founded the subject, I have given it a name and Burgers has put everything in order. I was first **very, very** depressed. I know that I have never discovered anything, and **quite surely never will discover anything**, that I can love so fervently as this line of thought which I found out with so large joy.
 >
 > Ehrenfest's letter to Bohr, 8 May 1922. Emphasis in original. Quoted in [@navarroPaulEhrenfestGenesis2006]
 
-#### The adiabatic hypothesis
+### The adiabatic hypothesis
 
 There are two ways to interpret the word "adiabatic". In thermodynamics, "adiabatic" means "no exchange of heat". In mechanics, "adiabatic" means "gradual".[^adiabatic-chinese] It is a winding story of how one word "adiabatic" came to mean two things that fortuitously are connected after all, the details of which are given in [@jammerConceptualDevelopmentQuantum1966, Chapter 3; @laidlerMeaningAdiabatic1994]. The story is almost as interesting as that of the word "entropy", which also has two meanings that are fortuitously connected after all.
 
 [^adiabatic-chinese]: Because "adiabatic" has two meanings in English, in Chinese, it also has two different translations based on the two meanings. There is 绝热, which means "no exchange of heat", and 浸渐, which means "gradually, like moisture soaking into something".
 
-Rankine first coined the term "adiabatic" in 1858, to denote a process in which no heat is exchanged with the surroundings. Later, Boltzmann and Clausius tried to explain the second law of thermodynamics mechanically, by using purely mechanical models of the microscopic world. In this sense, they defined an "adiabatic" mechanical process to be one where a certain variable is slowly changed (for example, if we have a box of little bouncing balls, and we very slowly move its walls), because an adiabatic thermodynamic process in their view is actually an adiabatic mechanical process.
+Rankine first coined the term "adiabatic" in 1858, to denote a process in which no heat is exchanged with the surroundings. Later, Boltzmann and Clausius tried to explain the second law of thermodynamics mechanically, by using purely mechanical models of the microscopic world. In this sense, they defined an "adiabatic" mechanical process to be one where a certain variable is slowly changed (for example, if we have a box of little bouncing balls, and we slowly move its walls), because an adiabatic thermodynamic process in their view is actually an adiabatic mechanical process.
 
 "Adiabatic motion" in mechanics was introduced by Helmholtz and Hertz, to denote mechanical processes where external forces act upon a system, but only on a few parameters, with no action on the underlying details. For example, think back to the case of bouncing balls in a box. The external force only moves the walls of the box *on average*, with no attempt to move the walls to manipulate the precise location of the ball. They used the thermodynamic terminology, because the work done on the system during an adiabatic motion results exclusively in changes in its energy. [@jammerConceptualDevelopmentQuantum1966, Chapter 3]
 
@@ -1807,9 +1926,9 @@ In short, this is Ehrenfest's recipe for doing "old quantum mechanics":
 * Proclaim that $I = nh$ for some constant $h$.
 * Calculate the properties of the system.
 
-#### The Bohr--Sommerfeld model
+### The Bohr--Sommerfeld model
 
-As an example, consider the pinnacle of old quantum theory, the [Bohr--Sommerfeld model](https://en.wikipedia.org/wiki/Bohr%E2%80%93Sommerfeld_model) of the hydrogen atom. First, treat the hydrogen atom as if it is a relativisitic solar system, with the electron as a planet, moving at relativistic speeds[^relativistic-atom] under the inverse-square force $F \propto \frac{1}{r^2}$. Next, assume that the adiabatic invariant is quantized:
+As an example, consider the pinnacle of old quantum theory, the [Bohr--Sommerfeld model](https://en.wikipedia.org/wiki/Bohr%E2%80%93Sommerfeld_model) of the hydrogen atom. First, treat the hydrogen atom as if it is a relativistic solar system, with the electron as a planet, moving at relativistic speeds[^relativistic-atom] under the inverse-square force $F \propto \frac{1}{r^2}$. Next, assume that the adiabatic invariant is quantized:
 
 [^relativistic-atom]:
     Because the electron moves faster closer to the atom than further away, it has more mass close to the atom than further away. This allows the orbit to precess in a way that is not predicted by Newtonian mechanics. Generally, any perturbation of the inverse-square force will cause the orbit to precess. Even special relativity would predict some precession for the perihelion of Mercury, though it predicts a value of $7''/\text{year}$ only $1/6$ of the correct value [@mcdonaldSpecialRelativityPrecession2023; @goldsteinClassicalMechanics2008, exercise 7.27, page 332]. Only general relativity predicts the correct value. Assuming that only special relativity contributes, the perihelion of Mercury would take $7.5e7$ Mercury-years to go around the sun once.
@@ -1846,7 +1965,7 @@ Selections from [@kramersAtomBohrTheory1923].
 
 ![Orbits of the Bohr--Sommerfeld model of the hydrogen atom, labelled by their principal quantum numbers and auxiliary quantum numbers. The jumps from 3<sub>1</sub>, 3<sub>2</sub>, 3<sub>3</sub> to 2<sub>2</sub> all create the Balmer spectral line H<sub>α</sub>, but they differ at the fine structure. Figure 27.](figure/fig_27_Kramer_Holst_1923.png){width=70% fig-align="center"}
 
-![Orbits of the Bohr--Sommerfeld model of the Radium atom. First end plate. I find its fonts very classy.](figure/structure_of_the_radium_figure_Kramer_Holst_1923.png)
+![Orbits of the Bohr--Sommerfeld model of the Radium atom. First end plate. I find its fonts classy.](figure/structure_of_the_radium_figure_Kramer_Holst_1923.png)
 
 ![A modern redrawing. [@holtebekkAtomAtomteori2023]](figure/atomteori_vectorized_bohr_atoms.png)
 
@@ -1856,7 +1975,7 @@ Selections from [@kramersAtomBohrTheory1923].
 >
 > Preface to the first edition of *Atomic structure and spectral lines*, Arnold Sommerfeld, 1919. [@sommerfeldAtomicStructureSpectral1923]
 
-#### The Einstein---Brillouin--Keller quantization
+### The Einstein---Brillouin--Keller quantization
 
 This topic is quite obscure and hard to find a simple reference on, yet I found that it is absolutely necessary to treat this correctly, if only to soothe my mathematical conscience. I wrote it based on [@stoneEinsteinUnknownInsight2005; @duncanConstructingQuantumMechanics2019, chapter 5].
 
@@ -1906,13 +2025,13 @@ There is only one problem left: What happens when we don't have a torus? It is a
 
 Consider the simplest case of three body problem: We put two suns in a circular orbit around each other, and a speck of dust orbiting them. The two suns' orbit is perfectly predictable, so we consider only the trajectory of the dust. We also assume the dust only moves in the plane of the suns. Thus, the system has only 2 dimensions of configuration, or 4 dimensions of phase.
 
-As the energy of the system is conserved, the motion of the dust is restricted to the constant energy surface $H(q_1, q_2, p_1 p_2) = E$, which is a 3-dimensional blob within the 4-dimensional phase space. However, in general, this is all we can say about it. The motion of the dust is chaotic, and would densely criss-cross over a 3-dimensional subset of the blob.
+As the energy of the system is conserved, the motion of the dust is restricted to the constant energy surface $H(q_1, q_2, p_1 p_2) = E$, which is a 3-dimensional blob within the 4-dimensional phase space. However, in general, this is all we can say about it. The motion of the dust is chaotic, and would densely crisscross over a 3-dimensional subset of the blob.
 
-Without a torus in phase space, we cannot find trajectories around the torus, and so the integral $\oint_{\gamma}\lra{p, dq$ is undefined. Einstein presciently pointed this out in his 1916 paper:
+Without a torus in phase space, we cannot find trajectories around the torus, and so the integral $\oint_{\gamma}\lra{p, dq}$ is undefined. Einstein presciently pointed this out in his 1916 paper:
 
 > If there exist fewer than $d$ \[constants of motion\], as is the case, for example, according to Poincaré in the three-body problem, then the $p_i$ are not expressible by the $q_i$ and the quantum condition of Sommerfeld-Epstein fails also in the slightly generalized form that has been given here.
 
-This failure of the EBK quantization on classically chaotic systems was forgotten for many years, but eventually rediscovered [@stoneEinsteinUnknownInsight2005]. When it did, it became a seed of quantum chaos, which I hope to explain clearly some day. In the mean time, I leave you with a beautiful picture of quantum chaos instead:
+This failure of the EBK quantization on classically chaotic systems was forgotten for many years, but eventually rediscovered [@stoneEinsteinUnknownInsight2005]. When it did, it became a seed of quantum chaos, which I hope to explain clearly some day. In the mean time, I leave you with some beautiful pictures of quantum chaos instead.
 
 ![The nonchaotic quantum circular billiard and the chaotic quantum cardioid billiard. Figure from [@backerQuantumChaosBilliards2007]](figure/chaotic_integrable_quantum_billiard.png)
 
