@@ -18,22 +18,10 @@ description: ""
 
 status: "draft"
 confidence: "certain"
-importance: 3
+importance: 5
 ---
 
 ## Introduction
-
-### The history of the document
-
-During my high school Physics Olympiad days, we learned some basic thermodynamics, but it was limited to mindless tasks like integrating around the $(P, V)$ diagram for various engine cycles. We never understood the conceptual foundations, like the difference between $\delta Q$ and $dU$. I also passed the AP Chemistry course, which confused me greatly with its "chemical equilibrium is reached at $\Delta = 0$". During my undergraduate years, special relativity was simple enough, electrodynamics difficult but sensible, analytical mechanics confusing to no end, and I didn't even try thermodynamics. In graduate studies, I had to wrestle with statistical mechanics and thermodynamics after all, to deal with modern AI methods like diffusion models.
-
-By pure serendipity, just as thermodynamical AI models rose to prominence, I had worked through a rigorous course on general equilibrium theory, the "standard model" for neoclassical economics [@starrGeneralEquilibriumTheory2011]. This gave me the conceptual foundation for looking past the textbooks' errors. Everything finally came together, and I understood thermodynamics.
-
-And just like when I rediscovered Wigner rotation, I figured out everything for myself before immediately knowing the right words to search, and finding that, of course, someone else has written this before, repeatedly [@smithClassicalThermodynamicsEconomic2008; @candealUtilityEntropy2001]. At least I think I wrote this pedagogically. I don't care if it is not new, or that it has been said before with more symbols and theorems. I have a thing to say, so I will say it well.
-
-As one who is enlightened, I see classical thermodynamics as the worst-taught subject out of all of undergraduate physics education.[^physics-education] Imagine my surprise when I realized that it is not about the conservation of energy ("thermo-"), not about change ("-dynamics"), not about statistical mechanics, not about time... but just about constrained optimization, and nothing more than that! To really understand it, one must unlearn a lot of the nonsense. Indeed, I hope that with this essay I will have slain all those mistakes, which is why the essay is filled with warnings against this and that error.
-
-[^physics-education]: How long does it take for something as simple as constrained-optimization thermodynamics to be actually taught in undergraduate classes? It has been over 100 years since Caratheodory's thermodynamics. Why is it thermodynamics still taught so badly? It has been over 100 years since the geometry of Wigner rotation has been discovered. Why is it still taught so badly? It has been over 190 years since Hamiltonian mechanics and over 70 years since dynamical programming has clarified the last obscure points of it. Why is it still taught so badly? It seems to me that physics education is a broken institution that takes all its effort just to not get worse, let alone making any progress.
 
 > Even if the capitalist system is to give way to one in which service and not profit shall be the object, there will still be an integral of anticipated utilities to be made a maximum. Since we must find a function which maximizes an integral we must in many cases use the Calculus of Variations. But the problem here transcends the questions of depreciation and useful life, and belongs to the dawning economic theory based on considerations of maximum and minimum which bears to the older theories the relations which the Hamiltonian dynamics and the thermodynamics of entropy bear to their predecessors.
 >
@@ -43,22 +31,13 @@ As one who is enlightened, I see classical thermodynamics as the worst-taught su
 >
 > Paul Samuelson, forward to [@bicklerInvestmentPortfolioDecisionmaking1974]
 
-### Annotated further readings
-
-* [@lemonsThermodynamicWeirdnessFahrenheit2019]. A very readable introduction to classical thermodynamics, slim but deep. I finally understood the meaning of thermodynamics means after reading it.
-* [@lemonsMereThermodynamics2008]. A textbook version of the author's [@lemonsThermodynamicWeirdnessFahrenheit2019], weaving in history and philosophical contemplation at every turn.
-* [@carnotReflectionsMotivePower1988]. A reprint of the most important papers in thermodynamics published before 1900. Useful to have on hand if you are reading [@lemonsThermodynamicWeirdnessFahrenheit2019].
-* [@pippardElementsClassicalThermodynamics1964]. Slim, elegant, both mathematical and applied. In the best British tradition of mathematics -- think James Maxwell and G. H. Hardy.
-* [@fermiThermodynamics1956]. The same as above. However, it also covers chemical thermodynamics.
-* [@buchdahlConceptsClassicalThermodynamics1966]. A textbook based on Carathéodory's axiomatic thermodynamics. The notation is ponderous, and the payoff is unclear. I don't know what is its intended audience -- perhaps professional pedants and differential geometers? Nevertheless, if you need to do research in Carathéodory's axiomatic thermodynamics, I think this is your best bet.
-
 ### Quick reference
 
 $U$ is the internal energy
 
 $\beta = 1/T$ is the inverse temperature.
 
-$X$ means "other properties that we are not concerned with".
+$X$ means "other properties that we are not concerned with". For example, with an ideal gas trapped in a copper box, its macroscopic state is determined by $U, N, V$. If we want to focus on $U$, then we can let $X = (N, V)$, and write $S = S(U, X)$. Similarly, for a photon gas in a blackbody chamber, its macroscopic state is determined by $U, V$, since photons can be created and destroyed on the inner surface of the blackbody chamber. We can then write $S = S(U, X)$.
 
 Thermodynamics is notorious for having too many partial differentials.
 
@@ -66,19 +45,26 @@ $(\partial_{x_1} f)_{x_1, x_2, \dots, x_n}$ means that we lay down a coordinate 
 
 If in doubt, write down
 
-$df = \sum_{i=1}^n (\partial_{x_i} f)_{x_1, \dots, x_n} dx_i$$
+$$df = \sum_{i=1}^n (\partial_{x_i} f)_{x_1, \dots, x_n} dx_i$$
 
 and reason thenceforth.
 
-In classical thermodynamics, we consider only equilibrium systems. Similarly, in classical microeconomics, we consider only general equilibrium. As we will see, this allows us to make a mathematical analogy.
+### Further readings
+
+* [@pippardElementsClassicalThermodynamics1964]. Slim, elegant, both mathematical and applied. In the best British tradition of mathematics -- think James Maxwell and G. H. Hardy.
+* [@fermiThermodynamics1956]. The same as above. However, it also covers chemical thermodynamics.
+* [@lemonsThermodynamicWeirdnessFahrenheit2019]. A very readable introduction to classical thermodynamics, slim but deep. I finally understood the meaning of the three laws of thermodynamics after reading it. Contains copious historical quotations.
+* [@lemonsMereThermodynamics2008]. A textbook version of the author's [@lemonsThermodynamicWeirdnessFahrenheit2019], weaving in history and philosophical contemplation at every turn.
+* [@carnotReflectionsMotivePower1988]. A reprint of the most important papers in thermodynamics published before 1900. Useful to have on hand if you are reading [@lemonsThermodynamicWeirdnessFahrenheit2019].
+* [@buchdahlConceptsClassicalThermodynamics1966]. A textbook based on Carathéodory's axiomatic thermodynamics. The notation is ponderous, and the payoff is unclear. I don't know what is its intended audience -- perhaps professional pedants and differential geometers? Nevertheless, if you need to do research in Carathéodory's axiomatic thermodynamics, I think this is your best bet.
 
 ## What is thermodynamics?
 
-Both neoclassical economics and classical thermodynamics are about maximizing under constraint.
+Both neoclassical economics and classical thermodynamics are about the equilibria of large systems. While a large system is generally hopelessly complicated, almost all the complexity falls away when the system is maximizing a single quantity. Ceaselessly striving to maximize entropy, a complex system sheds its complexity and reaches the pure simplicity of maximal entropy. Ceaselessly striving to maximize profit, a complex company sheds its complexity and reaches the pure simplicity of perfect product.
 
-Everything we can say about the world, according to them, are about systems, constraints, connections, and equilibria. Nothing more can be said. Time and change do not exist. All we can explain is which states *are* in constrained equilibrium, not how a system can *get there*. Atoms do not exist. All we can explain is what happens to homogeneous substances in constrained equilibrium. People do not exist. All we can explain is what happens to constrained economic systems in equilibrium.
+In both fields, everything we can say about the world are nothing more than about systems, constraints, contacts, and equilibria. Time and change do not exist. All we can explain is which states *are* in constrained equilibrium, not how a system can *get there*. Atoms do not exist. All we can explain is what happens to homogeneous substances in constrained equilibrium. People do not exist. All we can explain is what happens to constrained economic systems in equilibrium.
 
-There are several possible things to maximize: the total entropy, or the negative Gibbs free energy, or the profit, or the sum-total of utility, or something else. Through different lens, different things end up getting maximized, but they predict the same phenomena. This freedom in our set-up is mathematically convenient.
+Different things can be maximized: the total entropy, or the negative Gibbs free energy, or the profit, or the sum-total of utility, or something else. Through different lenses, different things are maximized, but they predict the same phenomena. Using this mathematical freedom, experts brachiate around the coordinate axes like gibbons brachiating around vines, looking for the perfect angle to solve each particular problem.
 
 | interpretation | maximized quantity | constraint |
 |---|---|---|
@@ -91,49 +77,75 @@ There are several possible things to maximize: the total entropy, or the negativ
 
 : Constrained maximization problems in economics and thermodynamics.
 
-### System
+### Systems
 
-Thermodynamic system. Such a system has (macroscopic) properties, related by equations of state. They are the main characters of the drama of thermodynamics.
+Systems are the main characters of the drama of thermodynamics. A thermodynamic system is something that is fully determined by a few macroscopic properties, related by equations of state. Once we know enough of its properties, we know all there is to know about such a system. There is nothing left to say about it.
 
-The prototypical system is a tank of ideal gas. Its properties are internal energy, temperature, volume, pressure, number of particles, etc. Its equations of state are
+**Everything is a thermodynamic system**. However, there are two special types: bath systems, and mechanical systems.[^anecdote-square] Any number of thermodynamic systems can be connected into a larger system -- a **compound system**.
+
+[^anecdote-square]: Some children are confused when they heard that squares are rectangles too. I hope you won't be equally confused when you heard that mechanical systems are also thermodynamical systems.
+
+The prototypical thermodynamic system is a tank of ideal gas whose number of particles is fixed. It has 2 degrees of freedom, so if we write down $n$ different macroscopic properties, they would (generically) be related by $n-2$ equations of state. So for example, if we write down the properties internal energy $U$, temperature $T$, volume $V$, pressure $P$, they would be related by the 2 equations of state
 
 $$PV = k_BNT, \quad U = \frac 32 k_B NT$$
 
-etc.
+If we know two out of the four of internal energy $U$, temperature $T$, volume $V$, pressure $P$, then we can solve for all the others by equations of state. The macroscopic properties fully describe the system, and nothing more can be said about it. We cannot ask more questions such as "Are there more particles on the left than on the right?" or "How long did it take for the system to reach equilibrium?", because such questions are literally *undefined* in classical thermodynamics.
 
-Once we know all of its properties, we know all there is to know about such a system. There is nothing left to say about it.
-
-For example, if we know the internal energy, temperature, volume, pressure, etc, of a tank of ideal gas, then that is all there is to know about it. We cannot ask more questions such as "Are there more particles on the left than on the right?" or "How long did it take for the system to reach equilibrium?", because such questions are literally undefined in classical thermodynamics.
-
-Because the properties are related by equations of state, we need only know a few of the properties in order to infer all the rest. For example, knowing the volume $V$, internal energy $U$, and particle number $N$, of a tank of ideal gas, we can infer that its pressure is $P = \frac{2U}{3V}$, and its temperature is $T = PV/k_BN$.
-
-We can succinctly write them as
+Because the properties are related by equations of state, we need only know a few of the properties in order to infer all the rest. For example, knowing the volume $V$, internal energy $U$, and particle number $N$, of a tank of ideal gas, we can infer that its pressure is $P = \frac{2U}{3V}$, and its temperature is $T = PV/k_BN$. Succinctly,
 
 $$P = P(U, V, N), \quad T = T(U, V, N)$$
 
 meaning "If we know $U, V, N$, then we can calculate $P$ and $T$ ".
 
-WARN. It's too easy to misread it as saying that $P$ *is* a mathematical function of $U, V, N$. It is not. It really is saying that, there exists a mathematical function $f_P$, such that for any state $\omega$ of the system, we have
+::: {.callout-warning}
+
+It's too easy to misread it as saying that $P$ *is* a mathematical function of $U, V, N$. It is not. It really is saying that, there exists a mathematical function $f_P$, such that for any state $\omega$ of the system, we have
 
 $$P(\omega) = f_P(U(\omega), V(\omega), N(\omega))$$
 
 :::
 
-Non-thermodynamic system, or perhaps, mechanical system, such as springs, pulleys, electric batteries. These are special kinds of thermodynamic systems: their entropy is always zero.
+Everything about a thermodynamical system is known once we specify how its entropy is a function of its macroscopic properties. 
+For example, the ideal gas is fully specified by
 
-Bath system. They are infinitely large thermodynamic systems. They are used as supporting characters for the thermodynamic systems.
+$$S(U, V, N) = k_B N \ln\left[\frac{V}{N}\,\left(\frac{U}{\hat{c}_V k_B N}\right)^{\hat{c}_V}\,\frac{1}{\Phi}\right]$$
+
+where $\hat c_V$ and $\Phi$ are constants that differ for each gas.
+
+As another example, the photon gas is defined by
+
+$$S(U, V) = C V^{1/4}U^{3/4}, \quad C=\left(\frac{256\pi^2 k_B^4}{1215 c^3 \hbar^3}\right)^{1/4}$$
+
+The fact that $S(U, V) \propto V^{1/4}U^{3/4}$ can be derived from 19th-century physics (and indeed, it was known to Boltzmann), but the constant $C$ has to wait for proper quantum mechanics.
+
+#### Baths
+
+A **bath system** is a thermodynamic system with nonzero entropy function, but infinitely large size.
 
 For example, if we take a copper piston and fill it with ideal gas, then immerse the piston in the bottom of an ocean, then it is a *volume-and-energy bath* with constant pressure-and-temperature. If we cover up the piston with some insulating material, then the ocean suddenly becomes merely a volume bath with constant pressure. If we use screws to fix the piston head, then the ocean suddenly becomes merely an energy bath with constant temperature.
 
 Because they are infinitely large, if you connect two baths together, something bad will happen. For example, if you connect two energy baths together, but with different temperature, what would happen? The simple answer is: "A torrent of heat will flow from the hotter to the colder bath." The more correct answer is: "Classical thermodynamics does not allow such a question to be asked. It would be like asking what happens when 'an unstoppable force meets an immovable object'. If we literally have two baths, then we cannot connect them. If we only have two giant oceans that seem like baths when compared to this little tank of gas, then if the two oceans are connected to each other, they will no longer appear as baths to each other."
 
-Compound: Any combination of systems and connections is a compound system.
+A heat bath, or more accurately an energy bath, is a system that you can take or dump as much energy as you want, always at constant marginal price of energy. An atmosphere, or more accurately an energy-and-volume bath, is a system that you can take or dump as much energy or volume as you want, always at constant temperature and pressure. In general, a bath is an infinite source of a conserved quantity at constant marginal entropy. We can imagine other forms of baths. For example, the surface of a lake could serve as an energy-and-area bath. A large block of salt can serve as a salt-chemical bath.
+
+#### Mechanical systems
+
+A **mechanical system** is a thermodynamic system whose entropy is always zero. Essentially all systems studied in classical mechanics are such systems. In classical thermodynamics, they are not put center-stage, but if you know where to look, you will see them everywhere. 
+
+An ideal linear-spring has two macroscopic properties: length $x$ and internal energy $U$, with equation of state $U = \frac 12kx^2$. For example, a helix spring is close to an ideal linear-spring.
+
+An ideal surface-spring is the same as an ideal linear-spring, but with area $A$ instead of length $x$. Its equation of state is $U = \sigma A$, where $\sigma$ is surface tension constant. For example, a balloon skin is close to an ideal surface-spring.
+
+An ideal volume-spring is similar. It would resemble a lump of jelly. An ideal gas, though it looks like a volume-spring, is not an example, because its entropy is not zero. In particular, this means an ideal gas has temperature and can be "heated up", but a lump of ideal jelly cannot.
+
+In general, we can construct an arbitrary energy storage system, such that it has two macroscopic properties $x, U$, satisfying $U = f(x)$, where $f$ is any differentiable function. We can imagine taking a mystery box with a chain we can pull on, and by some internal construction with gears, pulleys, weights, and springs, the force on the chain is $f'(x)$, where $x$ is the length by which we have pulled.
 
 ### Constraint
 
-Constraint: $f(A, B, C, \dots) = f_0$, where $f$ is a mathematical function, $A, B, C, \dots$ are macroscopic properties, and $f_0$ is a constant.
+A **constraint** is an equation of form $f(A, B, C, \dots) = f_0$, where $f$ is a mathematical function, $A, B, C, \dots$ are macroscopic properties, and $f_0$ is a constant.
 
 For example, if we have two tanks of gas in thermal contact, then the constraint is as follows:
+
 $$
 \begin{cases}
 V_1 &= V_{1,0} \\
@@ -144,144 +156,106 @@ $$
 
 meaning that the volume of each tank of gas is conserved, and the sum of their energy is also conserved.
 
+The constraints on a compound system are determined by the contacts between its subsystems.
+
 ### Contacts
 
-If we only have systems isolated in perfect vacuum, then nothing interesting will happen. If two systems are perfectly connected, then they will never be brought apart. A connection allows two systems to interact, without destroying their individuality. It allows two systems to communicate, without becoming literally one system. Economically speaking, contacts are trade contracts.
+If we only have systems isolated in a perfect vacuum, then nothing interesting will happen. If two systems are perfectly connected, then they will never be brought apart. A contact allows two systems to interact, without destroying their individuality. It allows two systems to communicate, without becoming literally one system. Economically, contacts are trade contracts.
 
-In general, the effect of a connection is to replace two constraints with one.
-
-For example, a metal rod between two pistons loosens the two constraints
+In general, the effect of a contact is to reduce the number of constraints by one. For example, a metal rod between two pistons reduces the two constraints
 
 $$V_1 = V_{1,0}, \quad V_2 = V_{2, 0}$$
 
-by one constraint:
+into one constraint:
 $$V_1 + V_2 = V_{1,0} + V_{2,0}$$
 
-A connection does not have to be merely a linear relation. For example, if we have two pistons of the same area, connected by a lever, such that pushing on one piston by $\Delta x$ would be pulling on the other piston by $2 \Delta x$, then the constraint becomes
+As another example, in a tank of three kinds of gas $N_2, H_2, NH_3$, allowing a single chemical reaction $N_2 + 3H_2 \rightleftharpoons 2NH_3$ reduces three constraints
 
-$$2(V_1 - V_{1,0}) + (V_2 - V_{2,0}) = 0$$
-
-and one can design some delicate gears and chain contraption to realize any constraint function:
 $$
-f(V_1, V_2) = f(V_{1,0}, V_{2,0})
+N_{N_2} = N_{N_2, 0}, \quad N_{H_2} = N_{H_2, 0}, \quad N_{NH_3}= N_{NH_3, 0}
 $$
 
-### Example systems
+into two:
 
-#### Baths
+$$
+N_{N_2} - N_{N_2, 0} = (N_{H_2} - N_{H_2, 0})/3, \quad N_{N_2} - N_{N_2, 0} = (N_{NH_3} - N_{NH_3, 0})/2
+$$
 
-A heat bath, or more accurately an energy bath, is a system that you can take or dump as much energy as you want, always at constant marginal price of energy.
+A contact can be nonlinear. For example, if we have two pistons of the same area, connected by a lever, such that pushing on one piston by $\Delta x$ would be pulling on the other piston by $2 \Delta x$, then the constraint becomes $2(V_1 - V_{1,0}) + (V_2 - V_{2,0}) = 0$. And by designing a series of levers, gears, and chains, we can realize any constraint function $f(V_1, V_2) = f(V_{1,0}, V_{2,0})$ for any smooth function $f$.
 
-An atmosphere, or more accurately an energy-and-volume bath, is a system that you can take or dump as much energy or volume as you want, always at constant temperature and pressure.
+![A thermodynamical system (a piston of gas) is connected to a mechanical system (a mass in gravity) via an arbitrary constraint (variable gears).](figure/arbitrary_mechanical_system.png)
 
-In general, a bath is an infinite source of a conserved quantity at constant marginal entropy.
+### Compound systems
 
-We can imagine other forms of baths. For example, the surface of a lake could serve as an energy-and-area bath. A large block of salt can serve as a salt-chemical bath.
+A compound system is nothing more than several systems connected. If we know the connections, and the entropy function of each subsystem, then we know everything about the compound system. The number of DOF for the compound system is the sum of the DOF of the subsystems, minus the degree of constraints.
 
-#### Photon gas
+For example, in the adiabatic expansion of a tank of ideal gas, we are really studying one compound system made of:
 
-$$S(U, V) = C V^{1/4}U^{3/4} , \quad C=\left(\frac{256\pi^2 k_B^4}{1215 c^3 \hbar^3}\right)^{1/4}$$
-
-That $S(U, V) \propto V^{1/4}U^{3/4}$ can be derived from 19th-century physics (and indeed, it was known to Boltzmann), but the constant $C$ has to wait for proper quantum mechanics.
-
-#### Ideal gas
-
-$$S(U, V, N) = k_B N \ln\left[\frac{V}{N}\,\left(\frac{U}{\hat{c}_V k_B N}\right)^{\hat{c}_V}\,\frac{1}{\Phi}\right]$$
-
-where $\hat c_V$ and $\Phi$ are constants that differ for each gas.
-
-#### Non-thermodynamic systems
-
-A non-thermodynamic system is one where entropy is zero. Essentially all systems studied in classical mechanics are such systems. In classical thermodynamics, they are not put center-stage, but if you know where to look, you will see them everywhere. 
-
-An ideal linear-spring has two macroscopic properties: length $x$ and internal energy $U$, with equation of state $U = \frac 12kx^2$. For example, a helix spring is close to an ideal linear-spring.
-
-An ideal surface-spring is the same as an ideal linear-spring, but with area $A$ instead of length $x$. Its equation of state is $U = \sigma A$, where $\sigma$ is surface tension constant. For example, a balloon skin is close to an ideal surface-spring.
-
-An ideal volume-spring is similar. It would resemble a lump of jelly. An ideal gas, though it looks like a volume-spring, is not an example, because its entropy is not zero. In particular, this means an ideal gas has temperature and can be "heated up", but a lump of ideal jelly cannot.
-
-In general, we can construct an arbitrary energy storage system, such that it has two macroscopic properties $x, U$, satisfying $U = f(x)$, where $f$ is any differentiable function. We can imagine taking a mystery box with a chain we can pull on, and by some internal construction with gears, pulleys, weights, and springs, the force on the chain is $f'(x)$, where $x$ is the length by which we have pulled.
-
-#### Adiabatic expansion of a tank of ideal gas
-
-We need three components: a tank of ideal gas (thermodynamic system), a lump of mass in gravity (mechanical system), with a gear system between them (connection).
+* a tank of ideal gas (thermodynamic system),
+* a lump of mass in gravity (mechanical system),
+* with a gear system between them (contact).
 
 The gear system is designed with gear-ratio that varies as the system turns, in just the right way such that the system is always in equilibrium no matter the position of the piston, so that it really has no preference of going forwards or backwards.
 
-### What are heat and work?
+![The compound system. Inside it, there is a subsystem of a tank of ideal gas that undergoes adiabatic expansion.](figure/arbitrary_mechanical_system.png)
 
-Heat energy and work energy are both misnomers. Neither are types of energy. Instead, they are types of energy-flow. So more properly, we should speak of only heat energy-flow and work energy-flow.
+::: {.callout-tip title="Only one system"}
 
-To perform work, one must perform work *upon* something. In other words, there is no such thing as "system A performed work". There is really "some energy and length is traded between A to B in compliance with a work-equation-constraint".
+We typically think of the tank of ideal gas itself as part of the thermodynamics, and the other parts as "the environment", but we should properly speaking consider one single compound system, of which the tank of ideal gas is merely a sub-system. This way, we can state directly that the entropy of the entire compound system is maximized.
 
-### What is a heat engine system?
+:::
 
-A heat engine is a system that is used as a component of a larger compound system. The large system contains 4 parts: two energy baths, one heat engine, and one carefully designed non-thermodynamic system acting as energy storage.
+The most important compound system is the heat-engine-and-environment-system. 
 
-If you only want a heat engine that works, then the energy storage does not need to be carefully designed. However, if you want a Carnot heat engine, i.e. at maximal efficiency, then the energy storage must be designed to be exactly right. It must be designed to follow the exact parameters of the heat engine, as well as the two energy baths' inverse temperatures. If any of those is ignored, the energy storage would fail to "mesh" with the rest of the compound system, and cause waste.
+A heat engine is a thermodynamic system that is used as a component of a larger compound system. The large system contains 4 parts: two energy baths, one heat engine, and one carefully designed mechanical system acting as energy storage.
+
+If you only want a heat engine that works, then the energy storage does not need to be carefully designed. However, if you want a Carnot heat engine, i.e. at maximal efficiency, then the energy storage must be designed to be exactly right. It must be designed to follow the exact parameters of the heat engine, as well as the two energy baths' temperatures. If any of those is ignored, the energy storage would fail to "mesh" with the rest of the compound system, and cause waste.
 
 This is why a heat engine must be a component of a larger *compound system*. Every part of it depends on every other part. The energy storage unit is just as important and precisely designed as the heat engine.
 
-### What is equilibrium?
+### Equilibrium, virtual vs actual states
 
 > Freedom is an iron cage.
+> 
 > Constraints set it free again.
 
-Classical thermodynamics is a strange kind of science. It is quite subtle, subtle as general equilibrium microeconomics. The key to understanding it is to distinguish equilibrium and nonequilibrium.
-
-| equilibrium | nonequilibrium |
-|---|---|
-| physical | virtual |
-| defined by external constraints | defined by internal variables |
-
-A little story.
+A little parable.
 
 On the African savannah there lived a bunch of meerkats. Meerkats love to stand on the tallest place.
 
 At first, they could stand wherever they wanted, so they all stood on one single hill. It was crowded. A blind lion who had memorized the landscape came and ate all of them.
 
-Then humans came and added walls that divided the savannah into tiny little stripes. Now each meerkat's location is determined by which stripe it happened to fall in. The blind lion could find the meerkat if he knew the stripe location. In other words, optimizing for height, when there is one constraint, leads to one dimension of uncertainty.
+Then humans came and added long walls that divided the savannah into thin stripes. Now each meerkat's location is determined by which stripe it happened to fall in. The blind lion could find the meerkat if he knew the stripe location. In other words, optimizing for height, when there is one constraint, leads to one dimension of uncertainty.
 
-This is a subtle point, so I will say it again. If you want to optimize for a quantity, and you don't have a constraint, then you would always go to the globally best solution. The whole space of possibilities is open to you, but you don't need them.
+This is a subtle point, so I will say it again. If you want to optimize for a quantity, and you don't have a constraint, then you would always go to the globally best solution. The whole space of possibilities is open to you, but you don't need them. Those states are "virtual" because they are never observed, even though their existence is inferrable.
 
 But if you have one constraint, then you have one unique solution for each possible setting of constraint. You are still not free, but at least now you have a puppet master.
 
-In classical thermodynamics, only equilibrium states are "real". Nonequilibrium states are "virtual", much like a virtual path in Lagrangian mechanics. Sure, you could imagine that if you throw a rock upwards, it would execute a complex figure-8 motion before returning to ground again, but that's a virtual path. The only real path is the unique virtual path that stationarizes the action integral.
+In classical thermodynamics, only equilibrium states are "real". Nonequilibrium states are "virtual". In Lagrangian mechanics, only stationary-action paths are real, and the other paths are virtual. You can imagine that if you throw a rock upwards, it would execute a complex figure-8 motion before returning to ground again, but that's a virtual path. The only real path is the unique virtual path that stationarizes the action integral.
 
-Similarly, in classical thermodynamics, you could imagine that a tank of gas contains all its gas on the left side, but that's a virtual state that does not satisfy the optimization constraint. Consequently, it is only a virtual state, not a real state. Only one virtual state is real -- the unique virtual state that maximizes entropy under constraint.
+Similarly, in classical thermodynamics, you could imagine that a tank of gas contains all its gas on the left side. Its entropy is just $S(U, V/2, N)$, but that's a virtual state that does not satisfy maximize entropy under constraint. The unique entropy-maximizing virtual state is the real state.
 
-EXP. equilibrium vs nonequilibrium entropy.
+For every constraint, there are many nonequilibrium states that satisfy the constraint, but only one equilibrium entropy, and so equilibrium entropy is a function of constraints, even though the entropy function itself is not. It optimizes all its complexities away, allowing us to know it through just its external constraints.
 
-For example, consider this statement, an important consequence of the second law:
-> A closed system maximizes its entropy under its constraint.
+### Some common misconceptions
 
-If we consider only equilibrium states, then the statement makes no sense:
-
-> A closed system under constraint would end up in the equilibrium state that has the highest entropy among all equilibrium states satisfying the constraint.
-
-Since in general, there exists only one equilibrium state given the constraint, this is as ridiculous as "A customer can have a car painted in his favorite color as long as it's black."
-
-The statement is actually saying this:
-
-> A closed system under constraint has many satisfying nonequilibrium states, but only one equilibrium state: the one with the lowest nonequilibrium entropy. Consequently, for every constraint, there are many nonequilibrium states that satisfy the constraint, but only one equilibrium entropy, and so equilibrium entropy is a function of constraints, even though the nonequilibrium entropy is not.
-
-### What it is not
-
-Forget about molecules and atoms. Forget about statistics and statistical mechanics. Forget about $S = k_B\ln \Omega$ or $S = -\sum_i p_i \ln p_i$. **Randomness does not exist** in classical thermodynamics.
-
-Forget about heat. **Heat does not exist** -- it is not a noun, but an adverb at most. The theory of caloric has already been disproven in the 19th century by the cannon-boring experiment.
+Thermodynamics is not statistical mechanics. Forget about molecules and atoms. Forget about statistics and statistical mechanics. Forget about $S = k_B\ln \Omega$ or $S = -\sum_i p_i \ln p_i$. **Randomness does not exist** in classical thermodynamics.
 
 Forget about the first law of thermodynamics. **Energy is nothing special.** The conservation of energy is no more important than the conservation of volume, or the conservation of charge.
+
+Forget about heat. **Heat does not exist** -- it is not a noun, not even an adjective, but an adverb at most. The theory of caloric has already been disproven in the 19th century by the cannon-boring experiment.
+
+Heat energy and work energy are both misnomers. Neither are types of energy. Instead, they are types of energy-flow. We should speak of only heat energy-flow and work energy-flow.
+
+To perform work, one must perform work *upon* something. In other words, there is no such thing as "system A performed work". There is really "some energy and length is traded between A to B in compliance with a work-equation-constraint".
 
 Forget about time. **Time does not exist** in classical thermodynamics. We can say nothing at all about what happens between equilibria. We can only say, "This is an equilibrium, but that is not an equilibrium. There is nothing at all to say about what happens between them.
 
 The name "thermodynamics" is a complete misnomer, because heat does not exist (thus no "thermo-") and time does not exist (thus no "-dynamics). It should be called "entropo-statics".
 
-#### Time does not exist
-
 If time does not exist, you ask, what do we mean when we study Joule expansion? That is, when we take half a tank of gas, and suddenly open the middle wall and wait until the gas equilibrates in the entire gas?
 
-In fact, we did not open the middle wall. We did not wait. Gas did not expand. The past did not cause the future. Time is an stubbornly persistent illusion, and causality too.
+In fact, we did not open the middle wall. We did not wait. Gas did not expand. The past did not cause the future. Time is an stubbornly persistent illusion, and causality is illusory too.
 
 In fact, we are considering two different problems in thermodynamics.
 
@@ -311,14 +285,15 @@ That the two different problems seem to "follow one from another" is an illusion
 
 Time only appears in the following sense: We observe a real-world system, like a car engine, and notice that its motion seems to consist of a sequence of equilibria. Keeping those almost-equilibria in mind, we delve into the ocean of classical thermodynamics, until we have found some equilibria that resemble the almost-equilibria we have in mind. And so, from the bottom of the ocean, we pick up one equilibrium, then another, then another. Then we string together these little equilibria along a number line like a pearl necklace. We run our fingers over these pearls, and delight in its "motion", like flipping the pages of a stop-motion book and shouting, "Look, it is moving!".
 
-## The three laws of classical thermodynamics
+## The three laws
 
-### second law
+### Second law
 
 > For the equilibrium of any isolated system it is necessary and sufficient that in all possible variations of the state of the systems which do not alter its energy, the variation of its entropy shall either vanish or be negative.
-Gibbs, Josiah Willard. "On the equilibrium of heterogeneous substances." (1879): 300-320.
+> 
+> [@gibbsEquilibriumHeterogeneousSubstances1878]
 
-The second law of thermodynamics is all important: maximizing entropy is all of classical thermodynamics! Everything else are just tricks for us to understand how to maximize entropy.
+The second law of thermodynamics is all important: maximizing entropy is all of classical thermodynamics. All other parts are just tricks for maximizing entropy.
 
 ### First law
 
@@ -326,35 +301,22 @@ The second law of thermodynamics is all important: maximizing entropy is all of 
 >
 > [@emdenWhyWeHave1938]
 
-The first law of thermodynamics is entirely trivial. Energy is *nothing special*!
+The first law of thermodynamics is entirely trivial. Energy is *nothing special*! Energy is *just* a conserved quantity, one among equals, much like volume, mass, and many other things... Every conserved quantity is equally conserved,[^equally-conserved] so it does not deserve a special thermodynamic law. You might as well say "conservation of mass" is "the second-first law of thermodynamics" and "conservation of volume" is "the third-first law of thermodynamics", and "conservation of electrons" and "conservation of protons" and "conservation of length" (if you are studying a thermodynamic system restricted to move on a line) and "conservation of area" (if you are studying a thermodynamic system restricted on the surface of a lake) and so on...
 
-Energy is just a conserved quantity, much like volume, mass, and some other things... In particular, the conservation of energy is not nearly as important as it sounds like. It does not deserve the title of "the first law of thermodynamics". You might as well say "conservation of mass" is "the second-first law of thermodynamics" and "conservation of volume" is "the third-first law of thermodynamics", and "conservation of electrons" and "conservation of protons" and "conservation of length" (if you are studying a thermodynamic system restricted to move on a line) and "conservation of area" (if you are studying a thermodynamic system restricted on the surface of a lake) and so on...
+[^equally-conserved]:
+    The first law of thermodynamics had always struck me as oddly out of place, almost like a joke that I could not catch, like 
 
-This sounds extraordinary, but that is merely how classical thermodynamics works. The first law of thermodynamics does not deserve its title. There should not even be a first law of thermodynamics.
+    > All animals are equal, but some animals are more equal than others
 
-Properly speaking, "conservation of energy" is not a law of thermodynamics, but a law of physics. Why? Well, energy is nothing special inside classical thermodynamics, but it is extremely special if we zoom out to consider the whole of physics, because whereas in classical thermodynamics, you can consider systems that conserve energy, or volume, or length, or mass... when you move outside of thermodynamics, such as when you add in electrodynamics, special relativity, and quantum mechanics, all kinds of conservations breakdown. You don't have conservation of mass, or number of electrons, or even volume, but energy is always conserved.
+    but with
 
-Since energy is nothing special, we will demote it to "just another commodity", like volume, number of electrons, protons, and so on.
+    > All conserved quantities are conserved, but some quantities are more conserved than others.
 
-Every conserved quantity is a commodity. The company has some commodity. Commodities themselves have no intrinsic value. Instead, the company is valued by a certain accounting agency. The CEO's job is to move around the commodities so that the accounting agency gives it the highest value on the book.
+    I kept waiting for the textbooks, or the teachers, or someone, to drop the act and confess, "Actually, we were joking -- conservation of energy really is not that special, and we were just bored with standard physics and wanted to confuse you with a cute magic trick before showing you what standard physics really is saying.". Slowly, I realized that there is no joke -- conservation of energy is unironically treated as special by not just the students, but even the teachers. I had to figure out for myself how the joke really works, and it required me to rebuild thermodynamics along my preferences.
 
-A compound system is a *conglomerate*: a giant company made of little companies.
+This sounds extraordinary, but that is merely how classical thermodynamics works. The first law of thermodynamics does not deserve its title. It should be demoted to an experimental fact, not a law. Just to drive the point home, I wrote an entire [sci-fi worldbuilding sketch](#sec-stereodynamics) about an alien species, for which it is the conservation of volume that is fundamental, not energy, and which discovered stereodynamics. If you can laugh at their mistaken importance of the conservation of volume, maybe you can laugh at the mistaken importance of the conservation of energy too.
 
-A subsystem has an inverse temperature $\beta = 1/T$, which equals
-
-$$\beta = \frac{d(\text{value of a sub-company})}{d(\text{energy owned by the sub-company})}$$
-
-In other words, the marginal value of energy. Electricity price!
-
-If a subsystem has variable volume then it has a pressure $P$, which satisfies
-
-$$\beta P= \frac{d(\text{value of a sub-company})}{d(\text{volume owned by the sub-company})}$$
-
-In other words, the marginal value of space. Real estate price!
-
-Yes, I know it sounds weird to say (Pressure/Temperature), but that's just how the math works out. It turns out that `(Pressure/Temperature)` is more fundamental than `Pressure`... Pressure, indeed, is actually `Real estate price / Electricity price`. That's why it has units of `($/m^3)/($/Joule) = Joule/m^3`!
-
-Why, then, do we speak of pressure $P$ and temperature $T$, instead of $\beta$ and $\beta P$ ? I blame habit and the general inability to visualize classical entropy.
+The proper place for the law of conservation of energy is not classical thermodynamics, but general physics, because energy is nothing special inside classical thermodynamics, but it is extremely special if we zoom out to consider the whole of physics. Whereas in classical thermodynamics, systems conserve energy, and volume, and mass, and electron-number, and proton-number, and... when you move outside of thermodynamics, such as when you add in electrodynamics, special relativity, and quantum mechanics, all kinds of conservations breakdown. You don't have conservation of mass, or number of electrons, or even volume, but energy is always conserved.
 
 ### Zeroth law
 
@@ -380,13 +342,35 @@ If $S_1(X_1, Y) + S_(X_2, Y)$ is maximized under constraint $X_1 + X_2 = X$, the
 
 ### Third law
 
-This is not a law in classical thermodynamics.
+This law simply states that all systems have $\beta < \infty$. It is rarely if ever used in classical thermodynamics. Indeed, its proper place is not thermodynamics, but quantum statistical mechanics, where it states that a substance, when at the lowest possible energy (ground state), has finite statistical entropy.
+
+### Economic interpretation
+
+TODO
+
+Every conserved quantity is a commodity. The company has some commodity. Commodities themselves have no intrinsic value. Instead, the company is valued by a certain accounting agency. The CEO's job is to move around the commodities so that the accounting agency gives it the highest value on the book.
+
+A compound system is a *conglomerate*: a giant company made of little companies.
+
+A subsystem has an inverse temperature $\beta = 1/T$, which equals
+
+$$\beta = \frac{d(\text{value of a sub-company})}{d(\text{energy owned by the sub-company})}$$
+
+In other words, the marginal value of energy. Electricity price!
+
+If a subsystem has variable volume then it has a pressure $P$, which satisfies
+
+$$\beta P= \frac{d(\text{value of a sub-company})}{d(\text{volume owned by the sub-company})}$$
+
+In other words, the marginal value of space. Real estate price!
+
+Yes, I know it sounds weird to say (Pressure/Temperature), but that's just how the math works out. It turns out that `(Pressure/Temperature)` is more fundamental than `Pressure`... Pressure, indeed, is actually `Real estate price / Electricity price`. That's why it has units of `($/m^3)/($/Joule) = Joule/m^3`!
+
+Why, then, do we speak of pressure $P$ and temperature $T$, instead of $\beta$ and $\beta P$? I blame habit and the general inability to visualize classical entropy.
 
 ## basic theorems derived
 
-
 ### thermodynamic potentials/forces
-
 
 In general:
 $$
@@ -408,8 +392,7 @@ $$dS = \beta dU + \beta P dV - \beta \mu dN$$
 Conventional notations are energy-centric, so we rewrite it to single out $dU$ :
 $$
 dU = TdS + (- PdV) + \mu dN
-
-$
+$$
 
 Now we see how the notation came about: $TdS$ is the heat energy-flow into the system, $-PdV$ is the mechanical work energy-flow into the system, and $\mu dN$ is the chemical energy-flow into the system.
 
@@ -417,8 +400,9 @@ In conventional notation, the $-PdV$ is the annoying term with the negative sign
 
 If I could truly reform notation, I would redefine $\beta P$ as $p_V$, meaning "the price of volume", and redefine $-\beta \mu$ as $p_N$, meaning "the price of particle".
 
-EXP. photon gas has $\mu = 0$.
+::: {#exm-0}
 
+## photon gas with $\mu = 0$
 
 Suppose we have a piston chamber, with its inner surface covered with silver, and there is a tiny speck of blackbody inside it, then the chamber would be filled with bouncing photons, in the form of a "photon gas". The photons would reflect off the surface of the chamber, some absorbed and some emitted in turn, by the blackbody.
 
@@ -430,34 +414,31 @@ However, the photon gas is quite special, in that photons can be created and des
 
 This contrasts with the typical case with chemical gases like oxygen, where the particle number in a reaction chamber is constant, allowing $\mu \neq 0$ even at equilibrium.
 
+:::
+
 ### Helmholtz free entropy
-
-
-DEF. Helmholtz free entropy
-
 
 We have a thermodynamic system, in thermal equilibrium with an energy bath with price $\beta$, and arbitrary contact with another thermodynamic system of arbitrary design.
 
-The (equilibrium) Helmholtz free entropy is
+::: {#def-helmholtz}
 
-$
+## Helmholtz free entropy
+
+The **Helmholtz free entropy** is the convex dual of entropy with respect to energy:
+
+$$
 f(\beta, X) = \max_U [S(U, X) - \beta U]
+$$ {#eq-Helmholtz-S}
 
-$
+where $U$ is its internal energy, and $X$ are some other macroscopic properties.
 
-In other words, it's the convex dual of entropy wirt energy.
+Of historical importance is the **Helmholtz free energy** $F := - T f$, or equivalently,
 
-where $U$ is its internal energy, and $X$ are some of its other macroscopic properties.
+$$
+F = \min_U [U - TS(U, X)]
+$$ {#eq-Helmholtz-U}
 
-For example, if we are dealing with ideal gas in a copper box, then its macroscopic state is determined by $U, N, V$, thus we have $X = (N, V)$. If we are dealing photon gas in a blackbody chamber with a tiny copper wire piercing through to allow thermal contact, then its macroscopic state is determined by $U, V$, since photons can be created and destroyed on the inner surface of the blackbody chamber. Thus $X = V$.
-
-DEF. Helmholtz free energy $F$
-
-
-The Helmholtz free energy
-$$F = - T f = \min_U [U - TS(U, X)]$$
-
-is more conventional, but also more confusing.
+:::
 
 ::: {#thm-helmholtz-free-entropy}
 
@@ -514,8 +495,7 @@ $$
 
 where $W$ is "work", that is, the increase in internal energy of the non-thermodynamic system. This is an equality when the process is reversible.
 
-PROOF.
-
+::: {.callout-note title="Proof" collapse="true"}
 
 We have, by conservation of energy, and the second law,
 $$
@@ -527,9 +507,11 @@ $$
 
 which simplifies to the result.
 
+:::
+
 If the process is reversible, then the entropy before and after must be equal, giving us
 
-$
+$$
 \begin{cases}
 U_1 = U_0 - (W + Q)  \\
 \beta Q + S(U_1, X_1) = S(U_0, X_0)
@@ -537,23 +519,30 @@ U_1 = U_0 - (W + Q)  \\
 $$
 
 which simplifies to the result.
--
 
 $$\beta = (\partial_U S)_X(U^*(\beta, X), X)$$
 
 if $S$ is differentiable and strictly convex at that point.
 
-PROOF. Differentiate $f$.
--
+::: {.callout-note title="Proof"}
+
+Differentiate $f$.
+
+:::
 
 $$df =  (\partial_X S)_U|_{U=U^*(\beta, X)} dX - U^*(\beta, X) d\beta$$
 
 if $S$ is differentiable and strictly convex at that point.
 
-PROOF. Use Hotelling's lemma (see the essay on Analytical Mechanics).
+::: {.callout-note title="Proof"}
 
-EXP. first-order phase transition
+Use Hotelling's lemma (see the essay on [*Analytical Mechanics*](https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/)).
 
+:::
+
+::: {#exm-0}
+
+### First-order phase transition
 
 What happens if $S$ is not differentiable and strictly convex? In this case, we do not have $\beta = (\partial_U S)_X$. We have two possibilities.
 
@@ -565,8 +554,11 @@ For example, if we confine some liquid water in a vacuum chamber, and bathe it i
 
 At the critical point, $(\partial_{\beta}f)_X$ abruptly changes. So if we plot $\beta \mapsto f(\beta, X)$, the curve would kink there.
 
-THM. Maxwell equal area rule
+:::
 
+::: {#thm-0}
+
+## Maxwell equal area rule
 
 In a first-order phase transition at a fixed temperature and varying pressure/volume, the $P, V$ diagram has a horizontal line going from $(P_c, V_1)$ to $(P_c, V_2)$, such that
 
@@ -574,7 +566,9 @@ $$\int PdV = P_c(V_2-V_1)$$
 
 ![Maxwell's equal area rule states that the area of the regions labelled I and II are equal.](figure/maxwell_equal_area_rule.png)
 
-PROOF.
+:::
+
+::: {.callout-note title="Proof" collapse="false"}
 
 Fix the system's internal energy $U$, and its temperature $T$, and plot the $V, S$ curve.
 
@@ -583,43 +577,31 @@ When pressure is at a critical value $P_c$, the line of slope $\beta P_c$ is tan
 Now, move the system state from the first point to the second. During the process,
 $$\int PdV = \int (TdS -dU)  = \int TdS = T \Delta S = T \beta P_c(V_2 - V_1) = P_c(V_2-V_1)$$
 
-TODO: figure
+![TODO]()
 
-### Gibbs and Landau free energy
+:::
 
+### Other free energies
 
-This case generalizes the above case by allowing volume exchange with a bath.
-
-DEF. Gibbs free entropy
-
-We have a thermodynamic system, in equilibrium with an energy-and-volume market of  constant prices $\beta, \beta P$, and arbitrary contact with another thermodynamic system of arbitrary design.
-
-The Gibbs free entropy is
+Consider a thermodynamic system whose entropy function is $S(U, V, X)$, where $U$ is the internal energy and $V$ is the volume. Its **Gibbs free entropy** is
 
 $$
 g(\beta, \beta P, X) = \max_{U, V} (S(U, V, X) - \beta U - (\beta P)V)
 $$
 
-In other words, it's the convex dual of entropy wirt energy and volume.
+In other words, it's the convex dual of entropy with respect to energy and volume. Similarly, its **Gibbs free energy** is $G = -g/\beta$.
 
-Again, the conventional quantity is $G = -g/\beta$, the Gibbs free energy, which is *minimized* at constrained equilibrium.
-
-DEF. Landau free entropy
-
-This case is a further generalization, where we have a thermodynamic system in contact with an energy-volume-chemical market of constant prices
-$$\beta, \beta P, -\beta\mu_1, -\beta\mu_2, \dots, -\beta \mu_n$$
-
-The Landau free entropy of the system is
+Similarly, if the thermodynamic system has an entropy function of form $S(U, V, N_1, \dots, N_m, X)$, where $N_1, \dots, N_m$ are the particle number of different chemical species, then its **Landau free entropy** is
 
 $$
 \omega(\beta, \beta P, -\beta\mu_1, \dots, -\beta\mu_n) = \max_{U, V, N_1, \dots, N_n} \left(S(U, V, N_1, \dots, N_n, X) - \beta U - (\beta P)V - \sum_{i=1}^n (-\beta \mu_i) N_i \right)
 $$
 
-In other words, it's the convex dual of entropy wirt energy, volume, and particle numbers.
+In other words, it's the convex dual of entropy with respect to energy, volume, and particle numbers.
 
-We can prove the analogous theorems in the same way.
+We can prove many analogous theorems in the same way, such as the following theorem on Gibbs free entropy:
 
-THM.
+::: {#thm-0}
 
 Let a thermodynamic system be in equilibrium with an energy-and-volume bath of prices $\beta, \beta P$. If the system has constraint on the state by $C(X) = 0$, then the system equilibrates at
 
@@ -630,9 +612,21 @@ C(X) = 0
 \end{cases}
 $$
 
-$$dg =  (\partial_X S)_{U, V} dX - Ud\beta - V d(\beta P) $$
+And if $S$ is strictly convex and differentiable at that point, then $dg =  (\partial_X S)_{U, V} dX - Ud\beta - V d(\beta P)$.
 
-if $S$ is strictly convex and differentiable at that point.
+:::
+
+::: {#exr-0}
+
+Formulate and prove the analogous theorems for Landau free entropy.
+
+:::
+
+::: {#exr-0}
+
+If we consider a compound system inside an adiathermal piston under an atmosphere, then we can consider the following form of free energy: $\tilde s(U, \beta P, X) := \max_{V} (S(U, V, X) - \beta U - (\beta P)V)$. Formulate and prove the analogous theorems for this free entropy.
+
+:::
 
 Consider the following method of extracting non-thermodynamic energy: Connect the system to an energy-and-volume bath at prices $\beta, \beta P$, and a non-thermodynamic system of arbitrary design. The system starts at $\beta, \beta P, X_0$ and ends at $\beta, \beta P, X_1$. We have
 
@@ -649,25 +643,19 @@ Take-home lessons:
 
 ### Maxwell relations
 
-THM. First relation
+Since $dS = \beta dU + \beta P dV$, we have the first Maxwell relation
 
-Since $dS = \beta dU + \beta P dV$, we have
+$$
+\partial_U \partial_V S = (\partial_V \beta)_U = (\partial_U(\beta P) )_V
+$$ {#eq-maxwell-1}
 
-$$\partial_U \partial_V S = (\partial_V \beta)_U = (\partial_U(\beta P) )_V$$
-
-In economic language, we have
+In economic language, it states
 
 $$
 \partial_{q_i}\partial_{q_j} S = (\partial_{q_i} p_j)_{q_j} = (\partial_{q_j} p_i)_{q_i}
-$$
+$$ {#eq-maxwell-1-econ}
 
-where $q_i$ is the quantity of commodity $i$, and $p_i$ is its marginal utility.
-
-For example, if $i, j$ are noodles and bread, then $(\partial_{q_i} p_j)_{q_j}$ is how much the marginal price of bread would rise if I have a little more noodle. As noodles and bread are substitutional goods, we expect the number to be negative, meaning that having more noodles, I would price bread less. The Maxwell relation then tells us that it is exactly the same in the other direction: If I am given a little more bread, I would price noodles less. Not only that, I would want less by *exactly the same amount*, because
-
-$$(\partial_{q_i} p_j)_{q_j} = (\partial_{q_j} p_i)_{q_i}$$
-
-In economics, we usually prefer writing demanded quantity as a function of marginal price.
+where $q_i$ is the quantity of commodity $i$, and $p_i$ is its marginal utility. In economics, we usually prefer writing demanded quantity as a function of marginal price as
 
 $$(\partial_{p_j}q_i)_{q_j} = (\partial_{p_i}q_j)_{q_i}$$
 
@@ -675,43 +663,41 @@ This is a symmetry of [cross-price elasticity of demand](https://en.wikipedia.or
 
 [^maxwell-relation-samuelson]: Samuelson used the Maxwell relations, and other relations, to justify neoclassical economics. His idea is that, while utility functions are unobservable, and we do not have a scientific instrument to measure "economic equilibrium", we can make falsifiable predictions from assuming that the economy is in equilibrium -- such as the symmetry of the cross-price elasticity of demand.
 
+For example, if $i, j$ are noodles and bread, then $(\partial_{q_i} p_j)_{q_j}$ is how much the marginal price of bread would rise if I have a little more noodle. As noodles and bread are substitutional goods, we expect the number to be negative, meaning that having more noodles, I would price bread less. The Maxwell relation then tells us that it is exactly the same in the other direction: If I am given a little more bread, I would price noodles less. Not only that, I would want less by *exactly the same amount*.
+
 The second relation is a bit hard to explain, since enthalpy really does not have a good representation in entropy-centric thermodynamics. However, it turns out to be just the third relation with $i, j$ switched.
 
-Third relation
-
-Since $df = \beta P dV - Ud\beta$, we have
+Since $df = \beta P dV - Ud\beta$, we have the third Maxwell relation
 
 $$
 \partial_\beta\partial_V f = -(\partial_V U)_\beta = +(\partial_\beta(\beta P))_V
-$$
+$$ {#eq-maxwell-3}
 
 In economic language, we have
 
 $$
 \partial_{p_i}\partial_{q_j} \left[\max_{q_i}(S(q) - p_i q_i )\right]= -(\partial_{q_j} q_i)_{p_i} = (\partial_{p_i}p_j)_{q_j}
-$$
+$$ {#eq-maxwell-3-econ}
 
 Continuing from the previous example, if $i, j$ are noodles and bread, and we open a shop with an infinite amount of noodles always at the exact price, then I would of course buy and sell from the noodle shop until my marginal price of noodles is equal to the shop's price. Now, $(\partial_{q_j} q_i)_{p_i}$ is how much noodles I would buy if I am given a marginal unit of bread. As noodles and bread are substitutional goods, this number is negative. This then means $(\partial_{p_i}p_j)_{q_j} > 0$, meaning that if the noodle price suddenly increases a bit, then I would sell a bit of noodles until I have reached equilibrium again. At that equilibrium, since I have less noodles, I would price higher its substitutional good, bread, by an equal amount as the previous scenario.
 
-Fourth relation
-
-Since $dg = -Ud\beta - Vd(\beta P)$, we have
+Since $dg = -Ud\beta - Vd(\beta P)$, we have the fourth Maxwell relation
 
 $$
 -\partial_{\beta}\partial_{\beta P}g = (\partial_{\beta P}U)_\beta = (\partial_\beta V)_{\beta P}
-$$
+$$ {#eq-maxwell-4}
 
 In economic language, we have
 
 $$
 \partial_{p_i}\partial_{p_j} \left[\max_{q_i, q_j}(S(q) - p_i q_i - p_j q_j)\right]= -(\partial_{p_j} q_i)_{p_i}= -(\partial_{p_i} q_j)_{p_j}
-$$
-
-Continuing from the previous example, if $i, j$ are noodles and bread, and we open a shop with an infinite amount of noodles and bread, then I would of course buy and sell from the shop until my marginal prices of noodles and bread are equal to the shop's prices. Now, if the shop suddenly raises the price of bread by a small amount, I would sell off some bread until my marginal price for bread increases to the shop's new price. Now my marginal price for noodles increases too by substitutional effect, so I buy some noodles. Thus $(\partial_{p_j} q_i)_{p_i} > 0$. Switching the scenario, we find that raising the price of noodles would make me buy bread, by an equal amount as the previous scenario.
+$$ {#eq-maxwell-4-econ}
 
 This is another symmetry of cross-price elasticity of demand.
 
-PROOF. (alternate)
+Continuing from the previous example, if $i, j$ are noodles and bread, and we open a shop with an infinite amount of noodles and bread, then I would of course buy and sell from the shop until my marginal prices of noodles and bread are equal to the shop's prices. Now, if the shop suddenly raises the price of bread by a small amount, I would sell off some bread until my marginal price for bread increases to the shop's new price. Now my marginal price for noodles increases too by substitutional effect, so I buy some noodles. Thus $(\partial_{p_j} q_i)_{p_i} > 0$. Switching the scenario, we find that raising the price of noodles would make me buy bread, by an equal amount as the previous scenario.
+
+::: {.callout-note title="Alternate proof of the Maxwell relations" collapse="false"}
 
 We use the notation of economics here.
 
@@ -738,6 +724,8 @@ This allows us to derive all the Maxwell relations. For example, setting $(x, y)
 $$(\partial_{q_j} q_i)_{p_i} = -(\partial_{p_i}p_j)_{q_j}$$
 
 ![Deriving the four Maxwell relations by picking the right variables for $(x, y)$.](figure/maxwell_relations_commutative_diagram.png)
+
+:::
 
 ## Caratheodory's thermodynamics
 
@@ -779,7 +767,9 @@ where $\tilde p_i = (\partial_{q_i}q_0)_{q_1, \dots, q_n}$.
 
 Economically speaking, we can say that $\tilde p_i$ is the marginal worth of $q_i$ denoted in units of $q_0$. For example, we can say that $q_0$ are cowry shells, which themselves are pretty and give us some utility. However, it can also be used as a monetary unit. Then, if $i$ is bread, then $\tilde p_i$ is the marginal amount of cowry shells that we would pay for a marginal amount of bread. If we were to visit a free market where we can buy and sell items denoted in cowry shells, then we would buy bread if $\tilde p_i > \tilde p_{i, market}$, and sell bread if $\tilde p_i < \tilde p_{i, market}$. Right at the border of $\tilde p_i = \tilde p_{i, market}$, we would be indifferent about buying or selling bread. When $\tilde p_i = \tilde p_{i, market}$ for all $i$, we would be completely indifferent about the market.
 
-THM. (existence and uniqueness of temperature and entropy)
+::: {#thm-0}
+
+## existence and uniqueness of temperature and entropy
 
 There exists unique functions $\beta, S$ on the state space, such that
 
@@ -787,11 +777,15 @@ $$
 dq_0 - \sum_i \tilde p_i dq_i = \beta^{-1} dS
 $$
 
-PROOF.
+:::
+
+::: {.callout-note title="Proof"}
 
 At each point $P$ the one-form $\omega(p)$ is visualized as a stack of parallel planes. The planes are quilted together, but with "uneven thickness". By scaling the one-forms just right at every point, the thickness becomes equalized, and so $\beta \omega = dg$ for two real-valued functions $\beta, g$.
 
 ![Proving Caratheodory's theorem. Figure from [Wikipedia](https://en.wikipedia.org/wiki/File:Caratheodory%27s_theorem_illustration.jpg).](figure/Caratheodory_s_theorem_illustration.jpg){width=50% fig-align="center"}
+
+:::
 
 Economically speaking, we can say that $S$ is the utility, and $\beta$ is the marginal utility of cowry shells. The theorem tells us that just by knowing how we *order* the goods (" $S(\vec q) > S(\vec q')$ "), we can extract a *numerical value* for the goods (" $S(\vec q) - S(\vec q') = 1.34(S(\vec q'') - S(\vec q'''))$ "). Out of *ordinal utility*, we have achieved *cardinal utility*.
 
@@ -803,7 +797,7 @@ The debate has been mostly resolved by the work of [Gérard Debreu](https://en.w
 
 This theorem, or rather, this *family* of theorems, have several names, as befitting for such a versatile and productive family. In calculus, it's called the integrability of Pfaffian forms. In differential geometry, it's called Darboux's theorem, or Frobenius theorem. In economics, it's called the integrability of demand, or the cardinal-ordinal utility representation theorem.
 
-### What's so special about energy, or cowry shells?
+::: {.callout-tip title="What's so special about energy, or cowry shells?"}
 
 When cast in the language of economics, cowry shells are not special. We could denote prices in cowry shells, or cans of sardine, or grams of gold. That is, we are free to pick any numéraire we want, as long as we are consistent about it.
 
@@ -818,6 +812,8 @@ $$dV - (-P^{-1})dU= (\beta P)^{-1}dS$$
 and from the perspective of classical thermodynamics, there is *no* possibility of saying that energy is *more special* than volume. Energy is exactly as special as volume, and no more special than that.
 
 When I realized this difference, I was so incensed at this mistake that I wrote an entire [sci-fi worldbuilding sketch](#sec-stereodynamics) about an alien species, for which it is the conservation of volume that is fundamental, not energy, and which discovered stereodynamics, not thermodynamics.
+
+:::
 
 ## Geometric thermodynamics
 
@@ -875,7 +871,9 @@ Given such a field of planes $dS - \sum_{i=1}^n p_i dq_i$ in $\R^{2n+1}$, we say
 
 For example, when $n=1$, a Legendrian submanifold is a curve that winds around $\R^3$ that is always tangent to the plane at every moment.
 
-THM.
+::: {#thm-0}
+
+
 
 
 Let $S(q)$ be a differentiable function. We can interpret $S(q)$ as how much money we can earn if we produce something using the bundle of raw materials $(q_1, \dots, q_n)$.
@@ -900,7 +898,8 @@ $$\nabla_q (S(q) - \braket{p, q}) = 0$$
 
 at $q(p)$. If $S$ is strictly convex, then $q(p)$ is profit-maximizing.
 
-PROOF. First part is proven by Hotelling's lemma. Second part is proven by plugging in $dS - \sum_i p_i dq_i = 0$. And if $S$ is strictly convex, then $q \mapsto S(q) - \braket{p, q}$ is also strictly convex, and so zero gradient implies global maximum.
+::: {.callout-note title="Proof" collapse="false"}
+ First part is proven by Hotelling's lemma. Second part is proven by plugging in $dS - \sum_i p_i dq_i = 0$. And if $S$ is strictly convex, then $q \mapsto S(q) - \braket{p, q}$ is also strictly convex, and so zero gradient implies global maximum.
 
 Economically speaking, $max_q (S(q) - \braket{p, q})$ means to maximize profit. What does it mean thermodynamically speaking? It means minimizing $\braket{p, q} - S(q)$, which is the Gibbs free entropy! Let me write it in a more familiar form, for a tank of gas:
 $$\min_{\beta, \beta P} (\beta U + (\beta P) V - S)$$
@@ -933,7 +932,9 @@ Over time, Samuelson's stance on operationalism softened to a more pragmatic app
 
 For example, while Samuelson initially sought to eliminate utility functions, he later argued that even if utility is not directly observable, it can be uniquely determined from observing agents' preferences, by invoking some [utility representation theorems](https://en.wikipedia.org/wiki/Utility_representation_theorem) -- provided that the preferences satisfy certain properties. [@samuelsonMyLifePhilosophy1999]
 
-EXP. (ideal gas law)
+::: {#exm-0}
+
+ (ideal gas law)
 
 Suppose we know from experiment that a tank of ideal gas satisfies
 
@@ -950,7 +951,8 @@ It is tedious but simple to verify, by directly calculating the areas of the cur
 
 Alternatively, we can use the method of exhaustion and Eudoxus' theory of proportions to prove this, in a way that even ancient Greeks would approve.
 
-PROOF.
+::: {.callout-note title="Proof" collapse="false"}
+
 
 Notice that under the squashing map $(P, V) \mapsto (cP, V/c)$, both families of lines are preserved, and furthermore, this map preserves area, so we can calculate the area of any curvy parallelogram by tiling it with tiny strips of thin parallelograms.
 
@@ -1012,7 +1014,9 @@ We find that the chemical potential, unfortunately, has an additive constant. We
 
 ![The equal area ratio condition.](figure/Samuelson_area_ratio_condition.png)
 
-THM. (area ratio law implies a new coordinate system)
+::: {#thm-0}
+
+ (area ratio law implies a new coordinate system)
 
 Consider an open rectangle $R$ in the plane $\R^2$. Let there be two families of curves
 
@@ -1025,7 +1029,8 @@ and that the two families of lines are the constant $z$ and constant $w$ curves.
 
 The coordinate system is unique up to an affine squashing transform, that is, $(z, w) \mapsto (cz + d, w/c + e)$ for some constants $c, d, e$ with $c > 0$.
 
-PROOF.
+::: {.callout-note title="Proof" collapse="false"}
+
 
 
 Fix an arbitrary point as $(z, w) = (0, 0)$. Pick an arbitrary curve in one of the families, not passing $(0, 0)$ point, and call it the $w=1$ line. By continuity, there exists a unique curve in the other family, such that their curved parallelogram has unit area. Call that other curve the $z=1$ line. Now we can label the four corners of it $(z, w) = (0, 0), (0, 1), (1, 0), (1, 1)$.
@@ -1110,15 +1115,15 @@ And repeating the same pattern, as soon as I unlearned this, I knew the right ph
 
 ### Equilibrium of a single gas or a single solution
 
-NOTE. Gibbs vs Helmholtz
+::: {.callout-tip title="Gibbs vs Helmholtz"}
 
 We study the case of a reaction chamber held under constant volume and temperature, which one can picture as a sealed glass tube in an ice-water bath. Everything still applies when the reaction chamber has constant pressure as well. For example, this happens if we have a flaccid plastic bag at the bottom of the ocean. The inside of the plastic bag would have constant temperature and pressure.
 
-All results in this section has a direct translation to that case. We simply have to replace the Helmholtz free energy by the Gibbs free energy.
+Every result in this section can be direct translated to that case, by replacing "Helmholtz" with "Gibbs".
 
 :::
 
-Let's start with an example: the dimerization of nitrogen dioxide in a sealed tube.
+Let's start with an example: $2 NO_2 \rightleftharpoons N_2O_4$, the dimerization of nitrogen dioxide in a sealed tube.
 
 The thermodynamic system is some $NO_2$ and $N_2O_4$. The system is sealed in a glass tube of constant volume $V$, bathing in a water-ice mixture of temperature $T$.
 
@@ -1250,7 +1255,9 @@ Interpreted economically, this is the case of a consumer that maximizes its util
 
 Generalizing from the above two experiences, we immediately obtain the following theorem.
 
-THM. (existence and uniqueness of chemical equilibrium, at constant volume and temperature)
+::: {#thm-0}
+
+ (existence and uniqueness of chemical equilibrium, at constant volume and temperature)
 
 
 Consider a sealed reaction chamber held in an energy bath, so that both the price of energy $\beta$, and the volume $V$, of the system is fixed.
@@ -1274,7 +1281,8 @@ If $F$ is not strictly concave, then there could be multiple coexisting equilibr
 
 :::
 
-PROOF.
+::: {.callout-note title="Proof" collapse="false"}
+
 
 
 Existence: $F$ is continuous, so it has at least one minimum on every compact set.
@@ -1326,7 +1334,9 @@ $$
 Q = \frac{\{C\}^c\{D\}^d}{\{A\}^a\{B\}^b}
 $$
 
-THM. (fundamental theorem of chemical equilibrium)
+::: {#thm-0}
+
+ (fundamental theorem of chemical equilibrium)
 
 Given any chemical reaction $0 \rightleftharpoons \sum_i a_i A_i$, any standard state, and any temperature,
 $$\begin{cases}
@@ -1348,7 +1358,8 @@ for each reaction $j = 1, 2, \dots, r$
 
 :::
 
-PROOF.
+::: {.callout-note title="Proof" collapse="false"}
+
 
 $$\begin{aligned}
 (\partial_\xi F)_{T, V} &= \sum_i (\partial_\xi n_i) (\partial_{n_i} F)_{T, V, \vec n} \\
@@ -1401,7 +1412,9 @@ The first case is typically what is taught by a first course in analytical chemi
 
 We will now prove the first case rigorously.
 
-THM. (activity of ideal-gas-like substances)
+::: {#thm-0}
+
+ (activity of ideal-gas-like substances)
 
 For any temperature $T$ and any two pressures $P, P^\circ$, by the ideal gas laws, the chemical potential of the chemical species satisfies the equation
 
@@ -1438,7 +1451,9 @@ Thus, for any $T, P, P^\circ$, we have
 
 $$\mu(T, P) = \mu(T, P^\circ) + RT \ln\frac{P}{P^\circ}$$
 
-EXP. The pH value of a solution is not $pH = -\log_{10} [H^+]$, which has the wrong units. It is not even $pH = -\log_{10} \frac{[H^+]}{[H^+]^\circ}$, since the $H^+$ particles might not behave like an ideal gas. The actually correct definition is
+::: {#exm-0}
+
+ The pH value of a solution is not $pH = -\log_{10} [H^+]$, which has the wrong units. It is not even $pH = -\log_{10} \frac{[H^+]}{[H^+]^\circ}$, since the $H^+$ particles might not behave like an ideal gas. The actually correct definition is
 
 $$pH = -\log_{10}  \{H^+\}$$
 
@@ -1466,7 +1481,7 @@ $$\{A\} = \frac{f}{f^\circ} = \frac{\phi P}{\phi^\circ P^\circ}$$
 
 And so, by checking a table of fugacity coefficients, chemical engineers can balance chemical reactions of real gasses, even far from ideality.
 
-::: {.callout-warning title="standard state"}
+::: {.callout-warning title="Standard state"}
 
 Despite what the name "standard" might imply, a chemical species has infinitely many standard states. For example, pure gaseous oxygen has many different standard states -- one for each temperature. We have a standard state at $T = 300\mathrm{K}$ defined by $[O_2] = 1 \mathrm{mol/L}$, and another at $T = 350\mathrm{K}$ defined by $[O_2] = 1 \mathrm{mol/L}$, etc.
 
@@ -1490,7 +1505,7 @@ $$P = [A]RT$$
 
 For non-ideal gas, we still have an equation of state between $P, [A], T$, meaning that we still must specify exactly two, no more and no less.
 
-::: {.callout-tip title="intensive quantities"}
+::: {.callout-tip title="Intensive quantities"}
 
  Why is a standard state defined by intensive quantities like temperature, pressure, or molarity? Why isn't it defined by extensive quantities like volume, mass, and moles?
 
@@ -1564,7 +1579,7 @@ That is, the two lumps of substances have the same temperature, pressure, and ch
 Since both sides have the same temperature and pressure, it is cleaner to change to Gibbs free energy, yielding:
 $$(\partial_{N} G_1)_{T, P}(T, P, N_1) = (\partial_{N} G_2)_{T, P} (T, P, N_2)$$
 
-::: {#warn-diamond-water-paradox .callout-warning title="the diamond water paradox, and thinking on the margins"}
+::: {#warn-diamond-water-paradox .callout-warning title="The diamond water paradox, and thinking on the margins"}
 
 Typical textbooks on thermodynamics illustrate the phase equilibrium rule using the van der Waals equation. However, there is a subtlety involved. For the van der Waals gas, the Gibbs free energy $G$ is proportional to particle number:
 
@@ -1609,11 +1624,13 @@ Therefore, we can trace the pressure-volume diagram with our finger, from high p
 
 Generally, $g_1(T, P) \neq g_2(T, P)$. When $g_1 < g_2$, every particle would switch to phase 1. When $g_1 > g_2$, every particle would switch to phase 2. At exactly a knife's edge, the particles are indifferent as to which phase they would go to.
 
-INTP. corporate buyout in an ideal world
+::: {.callout-tip title="Interpretation: corporate buyout in an ideal world"}
 
 We have two companies such that they can exchange their human-particles, and that there is neither economies nor diseconomies of scale (that is, as the company grows ever larger, an extra worker neither provides more nor less value than its very first worker). Then, in general, the two companies balance on a knife's edge. If the value of a worker is even *slightly* greater in one company than another, then that company would immediately buy out every worker from the other company, and so the two companies cannot possibly coexist. Only when the market prices for space and energy happen to conspire *just right*, can the two companies coexist, neither side buying out the other side.
 
-DEF. The degrees of thermodynamic freedom
+:::
+
+#### Degrees of thermodynamic freedom
 
 Consider a chunk of (nonideal) gas. We know everything there is to know about it if we know its $(U, V, N)$. Every other thermodynamic quantity can be computed by its entropy function $S(U, V, N)$. Thus, we have a system with three degrees of thermodynamic freedom... or do we?
 
@@ -1637,9 +1654,15 @@ $$\beta, \beta P, -\beta\mu_1, \dots, -\beta \mu_k$$
 
 are related by 1 equation of state.
 
-THM. Gibbs phase rule
+### Gibbs phase rule
+
+::: {#thm-0}
+
+## Gibbs phase rule
 
 $$F = 2 + C - R - P$$
+
+:::
 
 We have a closed and adiathermal reaction chamber, containing $C$ different chemical species, that can undergo $R$ linearly independent chemical reactions.[^gibbs-euler-equation]
 
@@ -1648,8 +1671,6 @@ We have a closed and adiathermal reaction chamber, containing $C$ different chem
 When the system is in an equilibrium, the chamber would contain $P$ different phases. Each phase would be homogeneous, but different from the other phases. All phases can exchange energy, volume, and particles.
 
 ![Phases in equilibrium inside a chamber. [@blankschteinCriteriaPhaseEquilibria2020, figure 27.2]](../assets/image_1714623429068_0.png)
-
-PROOF.
 
 First, let's consider the case where $R = 0$. That is, there can be no chemical reaction. In this case, the constrained optimization problem is
 
@@ -1715,7 +1736,7 @@ Possibly, the system cannot satisfy $\sum_j a_j \mu_j = 0$, and so the chemical 
 
 More generally, if we impose $R$ linearly independent chemical reactions, then $F = 2 + C - P - R$.
 
-::: {.callout-tip title="beyond the Gibbs phase rule"}
+::: {.callout-tip title="Beyond the Gibbs phase rule"}
 
 When the phases are not free to exchange particles, energies, volumes, etc, then the Gibbs phase rule does not apply, but the same idea of constrained minimization still applies. There are no generic rule like the Gibbs phase rule, and one must analyze each case specifically. [@blankschteinCriteriaPhaseEquilibria2020]
 
@@ -1790,7 +1811,7 @@ The effect is that we have a nonlinear optimization problem, allowing interior s
 
 ![As we increate $T$, the contours of constant Gibbs free energy are curved lines rotating around. Now it is possible for for both phases to coexist over an entire 2D region of $(P, T)$.](figure/TODO)
 
-## Stereodynamics {#sec-stereodynamics}
+## Stereodynamics {#sec-stereodynamics .appendix}
 
 <small>Based on [Liu Cixin](https://en.wikipedia.org/wiki/Liu_Cixin)'s sci-fi story *Mountain* (2006)</small>
 
@@ -1858,9 +1879,9 @@ Finally, we launched a exploration submarine. It was a hard spherical shell, pla
 
 ### Classical stereodynamics
 
-0th law: If two systems are both in volumetric equilibrium with a third system, then they are in volumetric equilibrium with each other.
+Zeroth law: If two systems are both in volumetric equilibrium with a third system, then they are in volumetric equilibrium with each other.
 
-1th law: The change in volume of the system $\Delta V$ is equal to the difference between the seep-transfer $V_Q$ done to the system, and the work-transfer $V_W$ done by the system:
+First law: The change in volume of the system $\Delta V$ is equal to the difference between the seep-transfer $V_Q$ done to the system, and the work-transfer $V_W$ done by the system:
 
 $$\Delta V = V_Q - V_W$$
 
@@ -1874,7 +1895,7 @@ There are more complex forms of internal-volume. For example, according to Lord 
 
 The seep-transfer of volume is the other form of volume transfer. For example, it happens when one swaps a sponge-rock for a hard-rock, or when groundwater seeps from one slab of spongy rock into another slab of spongy rock.
 
-2th law: impermeable accessibility.
+Second law: impermeable accessibility.
 
 We say that a system is "impermeable" if volume cannot pass through its boundaries.
 
@@ -1888,12 +1909,11 @@ For any two points, $\vec q, \vec q'$, one of them is impermeably accessible fro
 
 A space engine is a system that converts internal volume to mechanical volume.
 
-The space engine has a working substance moving between two space sources of differing volumetric potentials $\Gamma_1 > \Gamma_2$. Volumetric potential is defined as
+The space engine has a working substance moving between two space sources of differing volumetric potentials $\Gamma_1 > \Gamma_2$. **Volumetric potential** is defined as
 
-$
+$$
 \Gamma:= \left(\frac{\partial V}{\partial S}\right)_X
-
-$
+$$
 
 where $S$ is the entropy, $V$ is the volume, and $X$ are the other stereodynamic properties of the system. We also typically write $\gamma = \Gamma^{-1}$, the inverse volumetric potential.
 
@@ -1966,3 +1986,17 @@ The consciousness of AC encompassed all of what had once been a Universe and bro
 And AC said, "LET THERE BE ROOM!"
 
 And there was room --
+
+## Appendix: The history of the document {.appendix}
+
+During my high school Physics Olympiad days, we learned some basic thermodynamics, but it was limited to mindless tasks like integrating around the $(P, V)$ diagram for various engine cycles. We never understood the conceptual foundations, like the difference between $\delta Q$ and $dU$. I also passed the AP Chemistry course, which also contained some basic and deeply confusing thermodynamics, especially with the statement "chemical equilibrium is reached at $\Delta = 0$".
+
+During my undergraduate years, special relativity was simple enough, electrodynamics difficult but sensible, analytical mechanics confusing to no end, and I didn't even try thermodynamics. In graduate studies, I had to wrestle with statistical mechanics and thermodynamics after all, to deal with modern AI methods like diffusion models.
+
+By pure serendipity, at the same time as diffusion models rose to prominence, I had just worked through a rigorous course on general equilibrium theory, the "standard model" for neoclassical economics [@starrGeneralEquilibriumTheory2011]. This gave me the conceptual foundation for looking past the textbooks' errors. Everything fell into place, and I saw through thermodynamics.
+
+And just like when I rediscovered Wigner rotation, as soon as I have figured out everything for myself, I knew the right words to search, and found that, of course, someone else has written this before [@smithClassicalThermodynamicsEconomic2008], repeatedly [@candealUtilityEntropy2001]. So why spend all this time to write another one? I think I have written this pedagogically. I don't care if it is not new, or that it has been said before with more symbols and theorems. I have a thing to say, so I will say it well.
+
+As an enlightened one, I see classical thermodynamics as the worst-taught subject out of all of undergraduate physics education.[^physics-education] Imagine my surprise when I realized that it is not about the conservation of energy ("thermo-"), not about change ("-dynamics"), not about statistical mechanics, not about time... but just about constrained optimization, and nothing more than that! To really understand it, one must unlearn a lot of the nonsense. Indeed, I hope that with this essay I will have slain all those mistakes, which is why the essay is filled with warnings against this and that error.
+
+[^physics-education]: How long does it take for something as simple as constrained-optimization thermodynamics to be actually taught in undergraduate classes? It has been over 100 years since Caratheodory's thermodynamics. Why is it thermodynamics still taught so badly? It has been over 100 years since the geometry of Wigner rotation has been discovered. Why is it still taught so badly? It has been over 190 years since Hamiltonian mechanics and over 70 years since dynamical programming has clarified the last obscure points of it. Why is it still taught so badly? It seems to me that physics education is a broken institution that takes all its effort just to not get worse, let alone making any progress.
