@@ -21,7 +21,7 @@ importance: 3
 
 ## Setup
 
-Given a natural number $N$, we have modular arithmetic on $\mathbb Z_N = \{0, 1, ..., N-1\}$. For example, $\mathbb Z_{12}$ is the "clock face modular arithmetic". The problem for our neural network is to learn binary functions on $\mathbb Z_N$. That is, we are to learn a binary function $f: \mathbb Z_N\times \mathbb Z_N \to \mathbb Z_N$.
+Given a natural number $N$, we have modular arithmetic on $\mathbb{Z}_N = \{0, 1, ..., N-1\}$. For example, $\mathbb{Z}_{12}$ is the "clock face modular arithmetic". The problem for our neural network is to learn binary functions on $\mathbb Z_N$. That is, we are to learn a binary function $f: \mathbb Z_N\times \mathbb Z_N \to \mathbb Z_N$.
 
 Each such binary function can be exactly specified by a $N\times N$ table, so there are $N^{N^2}$ possible such functions. Most of them are completely random and uninteresting, both for us and for neural networks, but a few are very interesting, and modular addition is one such interesting function.
 
@@ -42,13 +42,13 @@ The network architecture we use has 3 layers:
 
 * Input is $x = [x^{(1)}, x^{(2)}]$. Both $x^{(1)}, x^{(2)} \in \mathbb R^N$ are one-hot encodings of $\mathbb Z_N$.
 * Hidden layer activation is $z = \phi(\frac{1}{\sqrt M} W^{(1)}z)$, where $\phi$ is the activation function. Here $z \in \mathbb R^M$ can be of any width.
-* Output is $y = \frac 1N W^{(2)}z$, where $y \in \mathbb R^N$ should be a one-hot encoding of $\mathbb Z_N$.
+* The output is $y = \frac{1}{N} W^{(2)}z$, where $y \in \mathbb{R}^N$ should be a one-hot encoding of $\mathbb{Z}_N$.
 * All entries of $W^{(1)}, W^{(2)} \sim \mathcal N(0, 1)$ are initialized as standard gaussians.
 * $W^{(1)}, W^{(2)}$ are all the parameters of the network. There is no bias. Thus the network has $3MN$ parameters in total.
 
 ![An example network with the given architecture, with $N=3, M = 10$.](figure/network.png)
 
-In the paper, Gromov found that grokking occurs under different choices of activation functions $\phi$, different training methods (SGD, Adam, etc), and different training set ratio $\alpha$.
+In the paper, Gromov found that grokking occurs under different choices of activation functions $\phi$, different training methods (SGD, Adam, etc.), and different training set ratios $\alpha$.
 
 The simplest example where grokking occurs is with
 
@@ -56,7 +56,7 @@ The simplest example where grokking occurs is with
 * Full-batch gradient descent.
 * MSE loss.
 
-I used AdamW optimizer instead of standard gradient descent, since it converges faster. The dataset is formatted as an array of triples of form $(x_1, x_2, y)$, interpreted as $x_1 + x_2 = y \mod N$. I split the dataset randomly into two datasets.
+I used AdamW optimizer instead of standard gradient descent, since it converges faster. The dataset is formatted as an array of triples of the form $(x_1, x_2, y)$, interpreted as $x_1 + x_2 = y \mod N$. I split the dataset randomly into two datasets.
 
 ## Results
 
@@ -66,11 +66,11 @@ I used AdamW optimizer instead of standard gradient descent, since it converges 
 
 Some observations:
 
-* The test set accuracy curve *decreases* as train set accuracy increases to perfection.
-* The test set accuracy curves rises only after train set accuracy is perfect. First slowly, then rapidly ("grokking"). This can be quite puzzling, since if the network has really achieved perfection on the training set, then there is nothing left to learn, and so it shouldn't be able to improve any further -- and yet it does improve.
-* Perfect accuracy on train set is reached at epoch 10x that of train set.
-* The learning curves shows something smoother, but also something interesting: the train loss decreases monotonically, but the test loss rises, then decreases.
-* For a while, test loss rose *while* test accuracy increased!
+* The test set accuracy curve *decreases* as the training set accuracy increases to perfection.
+* The test set accuracy curve rises only after the training set accuracy is perfect. First slowly, then rapidly ("grokking"). This can be quite puzzling, since if the network has really achieved perfection on the training set, then there is nothing left to learn, and so it shouldn't be able to improve any further -- and yet it does improve.
+* Perfect accuracy on the training set is reached at epoch 10x that of the training set.
+* The learning curves show something smoother, but also something interesting: the training loss decreases monotonically, but the test loss rises, then decreases.
+* For a while, the test loss rose *while* the test accuracy increased!
 
 Some lessons:
 
@@ -81,7 +81,7 @@ Some lessons:
 
 ### Interpretation
 
-Since the neural network is so small, we can interpret it. What kind of neural network did we end up, that could do modular addition?
+Since the neural network is so small, we can interpret it. What kind of neural network did we end up with that could do modular addition?
 
 Directly inspecting the weight matrices, we notice suggestive wavy bands that resemble sine waves.
 
@@ -91,11 +91,11 @@ Let's sort them according to frequency, as found by running a Fourier transform 
 
 ![The weight matrices, with columns ordered by frequency.](figure/weights%20ordered%20by%20frequency.png)
 
-We see that the learned neural network is probably doing some Fourier transform. This can be confirmed by plotting the activation map on every hidden neuron. Specifically, for each hidden neuron, we can calculate its activation upon each of the $N\times N$ possible inputs. THis is plotted as a heatmap with $N\times N$ pixels. We then get one heatmap per hidden neuron, and display all of them in a grid:
+We see that the learned neural network is probably doing some Fourier transform. This can be confirmed by plotting the activation map on every hidden neuron. Specifically, for each hidden neuron, we can calculate its activation for each of the $N\times N$ possible inputs. This is plotted as a heatmap with $N\times N$ pixels. We then get one heatmap per hidden neuron and display all of them in a grid:
 
 ![The activation pattern of neurons in the hidden layer as one scans through all possible inputs.](figure/activation%20maps.png)
 
-We see that the network has learned some sine waves. It seems to be a robust fact that networks trained to do modular arithmetics, with one-hot encoding, learns to use trigonometry for this task. (the use of one-hot encoding seems very relevant, as [noted here](https://www.lesswrong.com/posts/tdENX8dzdro8PXAzP/short-remark-on-the-subjective-mathematical-naturalness-of)).
+We see that the network has learned some sine waves. It seems to be a robust fact that networks trained to do modular arithmetic, with one-hot encoding, learn to use trigonometry for this task. (the use of one-hot encoding seems very relevant, as [noted here](https://www.lesswrong.com/posts/tdENX8dzdro8PXAzP/short-remark-on-the-subjective-mathematical-naturalness-of)).
 
 ### The null hypothesis
 
@@ -105,7 +105,7 @@ As one would expect, the neural network can successfully memorize arbitrary bina
 
 ![Learning curves for a neural network trained on a randomly initialized binary operation.](figure/learning%20curves_random.png)
 
-For both null hypotheses, I tried interpreting them using the same methodology, they look as well as one might have expected: complete noise.
+For both null hypotheses, I tried interpreting them using the same methodology; they look as one might expect: complete noise.
 
 ::: {#fig-noisy-network layout-ncol=2}
 
