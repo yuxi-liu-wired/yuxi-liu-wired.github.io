@@ -33,15 +33,18 @@ importance: 5
 
 ### Quick reference
 
-$U$ is the internal energy
+* $S$: entropy
+* $U$: internal energy
+* $V$: volume
+* $T$: temperature
+* $\beta = 1/T$: inverse temperature
+* $N$: number of particles of a chemical species
+* $n$: number of moles of a chemical species
+* $\xi$: extent of reaction
 
-$\beta = 1/T$ is the inverse temperature.
+And $X$ means "other properties that we are not concerned with". For example, with an ideal gas trapped in a copper box, its macroscopic state is determined by $U, N, V$. If we want to focus on $U$, then we can let $X = (N, V)$, and write $S = S(U, X)$. Similarly, for a photon gas in a blackbody chamber, its macroscopic state is determined by $U, V$, since photons can be created and destroyed on the inner surface of the blackbody chamber. We can then write $S = S(U, X)$.
 
-$X$ means "other properties that we are not concerned with". For example, with an ideal gas trapped in a copper box, its macroscopic state is determined by $U, N, V$. If we want to focus on $U$, then we can let $X = (N, V)$, and write $S = S(U, X)$. Similarly, for a photon gas in a blackbody chamber, its macroscopic state is determined by $U, V$, since photons can be created and destroyed on the inner surface of the blackbody chamber. We can then write $S = S(U, X)$.
-
-Thermodynamics is notorious for having too many partial differentials.
-
-$(\partial_{x_1} f)_{x_1, x_2, \dots, x_n}$ means that we lay down a coordinate system defined by $x_1, \dots, x_n$, then calculate $\partial_{x_1}f$, fixing the other coordinates constant. In particular, $(\partial_{x_1} f)_{x_2, \dots, x_n}$ is likely different from $(\partial_{x_1} f)_{x_1, y_2, \dots, y_n}$
+Thermodynamics is notorious for having too many partial differentials and coordinate changes. $(\partial_{x_1} f)_{x_1, x_2, \dots, x_n}$ means that we lay down a coordinate system defined by $x_1, \dots, x_n$, then calculate $\partial_{x_1}f$, fixing the other coordinates constant. In particular, $(\partial_{x_1} f)_{x_2, \dots, x_n}$ is likely different from $(\partial_{x_1} f)_{x_1, y_2, \dots, y_n}$.
 
 If in doubt, write down
 
@@ -83,7 +86,7 @@ Systems are the main characters of the drama of thermodynamics. A thermodynamic 
 
 **Everything is a thermodynamic system**. However, there are two special types: bath systems, and mechanical systems.[^anecdote-square] Any number of thermodynamic systems can be connected into a larger system -- a **compound system**.
 
-[^anecdote-square]: Some children are confused when they heard that squares are rectangles too. I hope you won't be equally confused when you heard that mechanical systems are also thermodynamical systems.
+[^anecdote-square]: Some children are confused when they heard that squares are rectangles too. I hope you won't be equally confused when you heard that mechanical systems are also thermodynamic systems.
 
 The prototypical thermodynamic system is a tank of ideal gas whose number of particles is fixed. It has 2 degrees of freedom, so if we write down $n$ different macroscopic properties, they would (generically) be related by $n-2$ equations of state. So for example, if we write down the properties internal energy $U$, temperature $T$, volume $V$, pressure $P$, they would be related by the 2 equations of state
 
@@ -139,6 +142,24 @@ An ideal surface-spring is the same as an ideal linear-spring, but with area $A$
 An ideal volume-spring is similar. It would resemble a lump of jelly. An ideal gas, though it looks like a volume-spring, is not an example, because its entropy is not zero. In particular, this means an ideal gas has temperature and can be "heated up", but a lump of ideal jelly cannot.
 
 In general, we can construct an arbitrary energy storage system, such that it has two macroscopic properties $x, U$, satisfying $U = f(x)$, where $f$ is any differentiable function. We can imagine taking a mystery box with a chain we can pull on, and by some internal construction with gears, pulleys, weights, and springs, the force on the chain is $f'(x)$, where $x$ is the length by which we have pulled.
+
+### State space
+
+A tank of gas has on the order of $10^{26}$ particles, but in classical thermodynamics, its state is entirely determined if we know its $U, V, N$. In this sense, we can say that its macroscopic state space has just 3 dimensions. In many situations, such as in the Carnot heat engine, we also fix its $N$, in which case its state space has just 2 dimensions.
+
+This is typically plotted in either the $(P, V)$ space, or the $(T, S)$ space, or some other spaces, but in every case, there are just two dimensions. We can unify all these diagrams as merely different viewpoints upon the same curvy surface -- the state space $\mathcal X$ itself. Each point $\omega \in \mathcal X$ in the state space is a state, and each macroscopic property $X$ is a scalar function of type $X : \mathcal X \to \R$. 
+
+If the state space has just $d$ dimensions, then we need only $d$ macroscopic properties $X_1, \dots, X_d$ in order to lay down a coordinate system for the state space. If we have another macroscopic property $Y$, then there in general exists a function $f_Y: \R^d \to \R$, such that $Y(\omega) = f_Y(X_1(\omega), \dots, X_d(\omega))$ for any state $\omega$. In other words, we have an **equation of state**.
+
+![The state space for a thermodynamic system with 2 degrees of freedom. If we lay down three macroscopic properties, then they satisfy one equation of state.](figure/thermodynamic_state_manifold.png)
+
+::: {#exr-0}
+
+Based on the following diagram, prove that if we have three scalar functions $x, y, z$ on a smooth 2D surface, then $\left(\frac{\partial x}{\partial z}\right)_y\left(\frac{\partial y}{\partial x}\right)_z\left(\frac{\partial z}{\partial y}\right)_x = -1$. Generalize this to higher dimensions.
+
+![](figure/constraint_partial_derivatives.jpg)
+
+:::
 
 ### Constraint
 
@@ -205,7 +226,9 @@ We typically think of the tank of ideal gas itself as part of the thermodynamics
 
 :::
 
-The most important compound system is the heat-engine-and-environment-system. 
+::: {#exm-0}
+
+## heat-engine-and-environment compound system
 
 A heat engine is a thermodynamic system that is used as a component of a larger compound system. The large system contains 4 parts: two energy baths, one heat engine, and one carefully designed mechanical system acting as energy storage.
 
@@ -213,13 +236,13 @@ If you only want a heat engine that works, then the energy storage does not need
 
 This is why a heat engine must be a component of a larger *compound system*. Every part of it depends on every other part. The energy storage unit is just as important and precisely designed as the heat engine.
 
+:::
+
 ### Equilibrium, virtual vs actual states
 
 > Freedom is an iron cage.
 > 
 > Constraints set it free again.
-
-A little parable.
 
 On the African savannah there lived a bunch of meerkats. Meerkats love to stand on the tallest place.
 
@@ -287,6 +310,8 @@ Time only appears in the following sense: We observe a real-world system, like a
 
 ## The three laws
 
+More accurately: one law and two non-laws.
+
 ### Second law
 
 > For the equilibrium of any isolated system it is necessary and sufficient that in all possible variations of the state of the systems which do not alter its energy, the variation of its entropy shall either vanish or be negative.
@@ -342,63 +367,78 @@ If $S_1(X_1, Y) + S_(X_2, Y)$ is maximized under constraint $X_1 + X_2 = X$, the
 
 ### Third law
 
-This law simply states that all systems have $\beta < \infty$. It is rarely if ever used in classical thermodynamics. Indeed, its proper place is not thermodynamics, but quantum statistical mechanics, where it states that a substance, when at the lowest possible energy (ground state), has finite statistical entropy.
+The third law is rarely if ever used in classical thermodynamics, and its precise meaning is still unclear. It seems to me that its proper place is not thermodynamics, but quantum statistical mechanics, where it states that a substance, when at the lowest possible energy (ground state), has finite entropy -- Einstein's formulation of the third law. [@klimenkoTeachingThirdLaw2012]
 
-### Economic interpretation
+### An economic interpretation
 
-TODO
+Here is an economic interpretation of classical thermodynamics. There are other possible interpretations, and we will use the others in this essay.
 
-Every conserved quantity is a commodity. The company has some commodity. Commodities themselves have no intrinsic value. Instead, the company is valued by a certain accounting agency. The CEO's job is to move around the commodities so that the accounting agency gives it the highest value on the book.
+In this interpretation, the laws of nature become the CEO of a company. Every conserved quantity is a commodity. The company has some commodity. Commodities themselves have no intrinsic value. Instead, the company is valued by a certain accounting agency. The CEO's job is to move around the commodities so that the accounting agency gives it the highest book-value.
 
-A compound system is a *conglomerate*: a giant company made of little companies.
+A compound system is a *conglomerate company*: a giant company made of little companies. If entropy is extensive, then it means the total book-value for the conglomerate is the sum of the book-value of each subsidiary company. Otherwise, entropy is nonextensive, and the accounting agency believes that the conglomerate has [*corporate synergy*](https://en.wikipedia.org/wiki/Corporate_synergy).
 
-A subsystem has an inverse temperature $\beta = 1/T$, which equals
+The inverse temperature $\beta$ is the marginal value of energy:
 
 $$\beta = \frac{d(\text{value of a sub-company})}{d(\text{energy owned by the sub-company})}$$
 
-In other words, the marginal value of energy. Electricity price!
+The pressure $P$, multiplied by $\beta$, is the marginal value of space:
 
-If a subsystem has variable volume then it has a pressure $P$, which satisfies
+$$\beta P = \frac{d(\text{value of a sub-company})}{d(\text{volume owned by the sub-company})}$$
 
-$$\beta P= \frac{d(\text{value of a sub-company})}{d(\text{volume owned by the sub-company})}$$
+::: {.callout-tip}
 
-In other words, the marginal value of space. Real estate price!
+It might appear odd to write $\beta P$, but in the entropy-centric view of thermodynamics, it is the quantity $\beta P$ that is fundamental, and in comparison, the pressure $P$ is less fundamental, as a ratio $P := \frac{\beta P}{\beta}$. Why, then, do we speak of pressure $P$ and temperature $T$, instead of $\beta$ and $\beta P$? It is because classical thermodynamics is traditionally understood as energy-centric.
 
-Yes, I know it sounds weird to say (Pressure/Temperature), but that's just how the math works out. It turns out that `(Pressure/Temperature)` is more fundamental than `Pressure`... Pressure, indeed, is actually `Real estate price / Electricity price`. That's why it has units of `($/m^3)/($/Joule) = Joule/m^3`!
+:::
 
-Why, then, do we speak of pressure $P$ and temperature $T$, instead of $\beta$ and $\beta P$? I blame habit and the general inability to visualize classical entropy.
+## Basic consequences
 
-## basic theorems derived
+### Thermodynamic force/suction
 
-### thermodynamic potentials/forces
+Since nature is entropy-maximizing, if entropy can be increased by moving some energy from one system to another, it will happen. Similarly for space. It would seem as if there is a **thermodynamic suction** that is sucking on on energy, and the side with the higher thermodynamic suction tends to absorb it. 
 
-In general:
 $$
-\text{thermodynamic potential of $X$} = \left(\frac{\partial S}{\partial X}\right) _{\text{non-}X}
+\text{thermodynamic suction of $X$} = \left(\frac{\partial S}{\partial X}\right)_{\text{non-}X}
 $$
 
-For example, for a tank of gas, the macroscopic properties are $U, V, N$, and so it has three thermodynamic forces:
+In energy-centric thermodynamics, we use **thermodynamic force**, or **thermodynamic potential**, defined by
 
+$$
+\text{thermodynamic force of $X$} = -\frac{\left(\frac{\partial S}{\partial X}\right)_{\text{non-}X}}{\left(\frac{\partial S}{\partial U}\right)_{\text{non-}U}}
+$$
 
-$$\beta = (\partial_U S)_{V, N}$
+For example, for a tank of gas, the macroscopic properties are $U, V, N$, and so it has three thermodynamic suctions:
 
-$$\beta P = (\partial_V S)_{U, N}$
+$$
+\begin{aligned}
+  \beta &= (\partial_U S)_{V, N}\\
+  \beta P &= (\partial_V S)_{U, N}\\
+  -\beta \mu &= (\partial_N S)_{U, V}
+\end{aligned}
+$$
 
-$$-\beta \mu = (\partial_N S)_{U, V}$
+and the thermodynamic forces associated with $V, N$ are $P$ and $-\mu$.
 
-Unfortunately, as you might have noticed, the conventional notations are a mess. The first one, $\beta$, is the inverse of temperature. This one is at least reasonable. The second one, $\beta P$, is $\beta$ multiplied by pressure. The third one is truly the most annoying, as it not only involves $\beta$, but also a negative sign. To see how the notation came about, we can write it out in differential form:
+Unfortunately, the notations for thermodynamic suctions are far from elegant. The first one, $\beta$, is the inverse of temperature.. The second one, $\beta P$, is $\beta$ multiplied by pressure. The third one is truly the most annoying, as it not only involves $\beta$, but also a negative sign. To see how the notation came about, we can write it out in differential form:
+
 $$dS = \beta dU + \beta P dV - \beta \mu dN$$
 
-Conventional notations are energy-centric, so we rewrite it to single out $dU$ :
+Conventional notations are energy-centric, so we rewrite it to single out $dU$:
+
 $$
 dU = TdS + (- PdV) + \mu dN
 $$
 
 Now we see how the notation came about: $TdS$ is the heat energy-flow into the system, $-PdV$ is the mechanical work energy-flow into the system, and $\mu dN$ is the chemical energy-flow into the system.
 
-In conventional notation, the $-PdV$ is the annoying term with the negative sign. In entropy-centric notation, it is $\mu dN$ that becomes annoying.
+If I could truly reform notation, I would redefine $\beta P$ as $p_V$, meaning "the price of volume", meaning "the price of particle", and so on. In this notation, we have:
 
-If I could truly reform notation, I would redefine $\beta P$ as $p_V$, meaning "the price of volume", and redefine $-\beta \mu$ as $p_N$, meaning "the price of particle".
+$$
+\begin{aligned}
+dS &= p_U dU + p_V dV + p_N dN \\
+dU &= p_U^{-1}dS - \frac{p_V}{p_U}dV - \frac{p_N}{p_U}dN
+\end{aligned}
+$$
 
 ::: {#exm-0}
 
@@ -418,7 +458,7 @@ This contrasts with the typical case with chemical gases like oxygen, where the 
 
 ### Helmholtz free entropy
 
-We have a thermodynamic system, in thermal equilibrium with an energy bath with price $\beta$, and arbitrary contact with another thermodynamic system of arbitrary design.
+When we have a small system connected to a large system, while we can solve its equilibria by maximizing the plain old entropy for the full compound system, it is often easier conceptually to define a "free entropy" for the small system, and treat the large system as a bath. This is similar to how one can solve for the motion of a cannonball on earth by describing a constant gravitational acceleration, even though we can could have solved for the full cannonball-earth two-body system.
 
 ::: {#def-helmholtz}
 
@@ -442,11 +482,28 @@ $$ {#eq-Helmholtz-U}
 
 ::: {#thm-helmholtz-free-entropy}
 
-The system equilibrates at $U^*(\beta, X) = \argmax_U [S(U, X) - \beta U]$.
+## maximize Helmholtz free entropy
+
+If a thermodynamic system is in energy-contact with an energy bath with price $\beta$, and is held under constraint on the state by $C(X) = 0$, then the system equilibrates at
+
+$$
+\begin{cases}
+\max_{U, X} [S(U, X) - \beta U] = \max_{X} f(\beta, X)\\
+C(X) = 0
+\end{cases}
+$$
+
+That is, the system always equilibrates at the maximal Helmholtz free entropy state that satisfies the constraint.
+
+Equivalently, the system minimizes its Helmholtz free energy under constraint.
 
 :::
 
 ::: {.callout-note title="Proof" collapse="false"}
+
+If we prove the case for Helmholtz free entropy, then multiplying it by $-T$, we find that the system minimizes its Helmholtz free energy under constraint. So it remains to prove the case for Helmholtz free entropy.
+
+We prove the case where there is no constraint on the state of the system. The proof for the case with constraint is similar.
 
 Suppose the system starts out at $\beta, U_0, X$. Then the equilibrium condition is
 
@@ -473,31 +530,24 @@ which is the desired result.
 
 :::
 
-More generally, if the system has constraint on the state by $C(X) = 0$, then the system equilibrates at
-$$
-\begin{cases}
-\max_{U, X} [S(U, X) - \beta U] = \max_{X} f(\beta, X)\\
-C(X) = 0
-\end{cases}
-$$
+::: {#thm-helmholtz-free-work}
 
-That is, the system always equilibrates at the maximal Helmholtz free entropy state that satisfies the constraint.
+## Helmholtz free energy difference is available for work
 
-Multiplying the above equation by $-T$, we find that the system always equilibrates at the minimal Helmholtz free entropy state that satisfies the constraint.
-
-:::
-
-Consider the following method of extracting non-thermodynamic energy: Connect the system to an energy bath at energy price $\beta$, and a non-thermodynamic system of arbitrary design. The system starts at $\beta, U_0, X_0$ and ends at $\beta, U_1, X_1$. We have
+Consider the following method of extracting mechanical energy. Connect the system to an energy bath at energy price $\beta$, and a mechanical system of arbitrary design. The system starts at $\beta, U_0, X_0$ and ends at $\beta, U_1, X_1$. No matter how the mechanical system is designed, and no matter whether the process is reversible or not, we have
 
 $$
 W\leq F(\beta, U_0, X_0) - F(\beta, U_1, X_1)
 $$
 
-where $W$ is "work", that is, the increase in internal energy of the non-thermodynamic system. This is an equality when the process is reversible.
+where $W$ is "mechanical work done by the system", that is, the increase in internal energy of the mechanical system. This is an equality when the process is reversible.
+
+:::
 
 ::: {.callout-note title="Proof" collapse="true"}
 
-We have, by conservation of energy, and the second law,
+By conservation of energy, and the second law,
+
 $$
 \begin{cases}
 U_1 = U_0 - (W + Q)  \\
@@ -506,8 +556,6 @@ U_1 = U_0 - (W + Q)  \\
 $$
 
 which simplifies to the result.
-
-:::
 
 If the process is reversible, then the entropy before and after must be equal, giving us
 
@@ -520,41 +568,50 @@ $$
 
 which simplifies to the result.
 
-$$\beta = (\partial_U S)_X(U^*(\beta, X), X)$$
+:::
 
-if $S$ is differentiable and strictly convex at that point.
+This result is typically interpreted as saying that $\Delta F = W$, that is, in a system in constant thermal equilibrium with an energy bath of constant temperature, the drop in Helmholtz energy of the system is the maximal mechanical work extractable from the system. Incidentally, this explains the odd name of "free energy" -- "free" as in "free to do work", to contrast with the other parts of internal energy, which is chained up and not free to do work.
 
-::: {.callout-note title="Proof"}
+::: {#thm-envelop-helmholtz}
 
-Differentiate $f$.
+## envelop theorem for Helmholtz
+
+For any inverse temperature $\beta > 0$ and thermodynamic properties $X$, let $U^*$ be the optimal internal energy that maximizes Helmholtz free entropy, then
+
+$$
+\begin{aligned}
+\beta &= (\partial_U S)_X|_{U=U^*(\beta, X), X = X} \\
+df    &=  (\partial_X S)_U|_{U=U^*(\beta, X), X = X} dX - U^*(\beta, X) d\beta
+\end{aligned}
+$$
+
+if $S$ is differentiable and strictly concave at that point.
 
 :::
 
-$$df =  (\partial_X S)_U|_{U=U^*(\beta, X)} dX - U^*(\beta, X) d\beta$$
-
-if $S$ is differentiable and strictly convex at that point.
-
 ::: {.callout-note title="Proof"}
 
-Use Hotelling's lemma (see the essay on [*Analytical Mechanics*](https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/)).
+For the first equation, differentiate $f$. For the second equation, apply the same no-arbitrage proof as in the proof of [Hotelling's lemma](https://en.wikipedia.org/wiki/Hotelling%27s_lemma) (see the essay on [*Analytical Mechanics*](https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/)).
 
 :::
 
-::: {#exm-0}
+Economically speaking, the second equation is a special case of the [envelop theorem](https://en.wikipedia.org/wiki/Envelope_theorem), just like Hotelling's lemma.
 
 ### First-order phase transition
 
-What happens if $S$ is not differentiable and strictly convex? In this case, we do not have $\beta = (\partial_U S)_X$. We have two possibilities.
+What happens if $S$ is not differentiable and strictly concave? In this case, we do not have $\beta = (\partial_U S)_X$. We have two possibilities.
 
 The first possibility is pictured as follows. There is a kink in the curve of $S(U, X)$. At that point of critical internal energy $U_c$, there is an entire interval of possible $\beta$. What we would notice is that at that critical internal energy and critical entropy, the system can be in equilibrium with *any* heat bath with *any* temperature between $[T_{c, min}, T_{c, max}]$. As far as I know, such systems do not exist, as all physically real systems have a unique temperature at all possible states.
 
+![When there is a kink in the curve of $S(U, X)$, the system has indeterminate temperature.](figure/indeterminate_temperature_SU_curve.png)
+
 The second possibility is pictured as follows. There is a bump in the curve, such that we can draw a double tangent over the bump, with slope $\beta_c$. At that critical inverse temperature, the system can be either at the lower tangent point, or the upper tangent point. It cannot be anywhere in-between, because as we saw, such points do not minimize $f(\beta, X)$, and thus are unstable.
+
+![When there is a double tangent in the curve of $S(U, X)$, the system has a first-order phase transition with latent entropy and energy.](figure/first_order_phase_transition_SU_curve.png)
 
 For example, if we confine some liquid water in a vacuum chamber, and bathe it in a cold bath, then at its critical $\beta_c$, it would split into two parts, one part is all ice, and the other part is all water, mixed in just the right proportion to give it the correct amount of total internal energy. As it loses internal energy, the ice part grows larger, until it is all ice, at which point the system has finally gotten over the bump, and could cool down further.
 
 At the critical point, $(\partial_{\beta}f)_X$ abruptly changes. So if we plot $\beta \mapsto f(\beta, X)$, the curve would kink there.
-
-:::
 
 ::: {#thm-0}
 
@@ -577,8 +634,6 @@ When pressure is at a critical value $P_c$, the line of slope $\beta P_c$ is tan
 Now, move the system state from the first point to the second. During the process,
 $$\int PdV = \int (TdS -dU)  = \int TdS = T \Delta S = T \beta P_c(V_2 - V_1) = P_c(V_2-V_1)$$
 
-![TODO]()
-
 :::
 
 ### Other free energies
@@ -591,17 +646,9 @@ $$
 
 In other words, it's the convex dual of entropy with respect to energy and volume. Similarly, its **Gibbs free energy** is $G = -g/\beta$.
 
-Similarly, if the thermodynamic system has an entropy function of form $S(U, V, N_1, \dots, N_m, X)$, where $N_1, \dots, N_m$ are the particle number of different chemical species, then its **Landau free entropy** is
-
-$$
-\omega(\beta, \beta P, -\beta\mu_1, \dots, -\beta\mu_n) = \max_{U, V, N_1, \dots, N_n} \left(S(U, V, N_1, \dots, N_n, X) - \beta U - (\beta P)V - \sum_{i=1}^n (-\beta \mu_i) N_i \right)
-$$
-
-In other words, it's the convex dual of entropy with respect to energy, volume, and particle numbers.
-
-We can prove many analogous theorems in the same way, such as the following theorem on Gibbs free entropy:
-
 ::: {#thm-0}
+
+## Gibbs free entropy is maximized
 
 Let a thermodynamic system be in equilibrium with an energy-and-volume bath of prices $\beta, \beta P$. If the system has constraint on the state by $C(X) = 0$, then the system equilibrates at
 
@@ -612,9 +659,55 @@ C(X) = 0
 \end{cases}
 $$
 
-And if $S$ is strictly convex and differentiable at that point, then $dg =  (\partial_X S)_{U, V} dX - Ud\beta - V d(\beta P)$.
+And if $S$ is strictly concave and differentiable at that point, then $dg =  (\partial_X S)_{U, V} dX - Ud\beta - V d(\beta P)$.
 
 :::
+
+::: {#thm-0}
+
+## Gibbs free energy difference is available for work
+
+Connect a system to an energy-and-volume bath at marginal entropies $\beta, \beta P$, and a mechanical system of arbitrary design. The system starts at $\beta, \beta P, X_0$ and ends at $\beta, \beta P, X_1$. Then,
+
+$$
+W\leq G(\beta, \beta P, X_0) - G(\beta, \beta P, X_1)
+$$
+
+where $W$ is "work", that is, the increase in internal energy of the mechanical system. If the process is reversible, then equality holds.
+
+:::
+
+::: {#thm-envelop-gibbs}
+
+## envelop theorem for Gibbs
+
+For any inverse temperature $\beta > 0$, any pressure $P$, and other thermodynamic properties $X$, let $U^*, V^*$ be the optimal internal energy and volume that maximizes Gibbs free entropy, then
+
+$$
+\begin{aligned}
+\beta &= (\partial_U S)_{V, X} \\
+\beta P &= (\partial_V S)_{U, X}\\
+dg    &=  (\partial_X S)_{U, V} dX - U^* d\beta - V^* d(\beta P)
+\end{aligned}
+$$
+
+if $S$ is differentiable and strictly concave at that point. Here, the left sides of all equations are evaluated at $U=U^*(\beta, \beta P, X), V=V^*(\beta, \beta P, X), X = X$.
+
+:::
+
+::: {#exr-0}
+
+Prove the above theorems for Gibbs free entropy.
+
+:::
+
+Similarly, if a system is in energy-volume-chemical contact with an energy-volume-chemical bath, then the following **Landau free entropy** is useful:
+
+$$
+\omega(\beta, \beta P, -\beta\mu_1, \dots, -\beta\mu_n) = \max_{U, V, N_1, \dots, N_n} \left(S(U, V, N_1, \dots, N_n, X) - \beta U - (\beta P)V - \sum_{i=1}^n (-\beta \mu_i) N_i \right)
+$$
+
+In other words, it's the convex dual of entropy with respect to energy, volume, and particle numbers.
 
 ::: {#exr-0}
 
@@ -624,22 +717,15 @@ Formulate and prove the analogous theorems for Landau free entropy.
 
 ::: {#exr-0}
 
-If we consider a compound system inside an adiathermal piston under an atmosphere, then we can consider the following form of free energy: $\tilde s(U, \beta P, X) := \max_{V} (S(U, V, X) - \beta U - (\beta P)V)$. Formulate and prove the analogous theorems for this free entropy.
+If we consider a system, surrounded by gas, inside an adiathermal piston under an atmosphere, then we can consider the following form of free energy: $\tilde s(U, \beta P, X) := \max_{V} (S(U, V, X) - \beta U - (\beta P)V)$. Formulate and prove the analogous theorems for this free entropy.
 
 :::
 
-Consider the following method of extracting non-thermodynamic energy: Connect the system to an energy-and-volume bath at prices $\beta, \beta P$, and a non-thermodynamic system of arbitrary design. The system starts at $\beta, \beta P, X_0$ and ends at $\beta, \beta P, X_1$. We have
-
-$$
-W\leq G(\beta, \beta P, X_0) - G(\beta, \beta P, X_1)
-$$
-
-where $W$ is "work", that is, the increase in internal energy of the non-thermodynamic system. If the process is reversible, then equality holds.
-
 Take-home lessons:
 
+* When a system is in contact with a $Y$-bath, then it is useful to consider the convex dual of the entropy with respect to $Y$, that is, $\max_Y (S(Y, X) - p_Y Y)$, where $p_Y$ is the marginal entropy of $Y$ of the bath.
 * Free entropy is maximized when the system equilibrates with a bath. Free energy is minimized.
-* Change in free energy is the maximal amount of work extractable when the system equilibrates with both a bath and a non-thermodynamic system. This work is actually extracted when the process is reversible.
+* Change in free energy is the maximal amount of work extractable when the system equilibrates with both a bath and a mechanical system. This work is actually extracted when the process is reversible.
 
 ### Maxwell relations
 
@@ -731,7 +817,7 @@ $$(\partial_{q_j} q_i)_{p_i} = -(\partial_{p_i}p_j)_{q_j}$$
 
 In the early 1900s, Caratheodory discovered a new way to "geometrize" thermodynamics, with the austere beauty of Euclidean geometry. Though his formulation fell into obscurity, it was reborn in neoclassical economics as utility theory.
 
-### Presentation
+### Entropy and temperature
 
 Consider a thermodynamic system with $n+1$ dimensions of state space. Give the state space coordinates $q_0, q_1, \dots, q_n$. For example, for a tank of ideal gas where the particle number is fixed, we have $q_0 = U, q_1 = V$.
 
@@ -741,21 +827,20 @@ For example, for a piston of ideal gas, the possible motions are adiabatic expan
 
 We say that $\vec q'$ is adiathermally accessible from $\vec q$ if there exists a path from $\vec q$ to $\vec q'$, such that the path is infinitesimally adiathermal[^adiathermal-terminology] at every point.
 
-[^adiathermal-terminology]: The word "adiathermal" means "heat does not pass through", while "adiabatic" has an entire history of meaning that makes it hard to say what exactly it is (see [the essay on Analytical Mechanics](TODO)). Personally, I think "adiabatic" means "zero entropy change", and all its other meanings derive from it.
+[^adiathermal-terminology]: The word "adiathermal" means "heat does not pass through", while "adiabatic" has an entire history of meaning that makes it hard to say what exactly it is (see [my essay on Analytical Mechanics](https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/)). Personally, I think "adiabatic" means "zero entropy change", and all its other meanings derive from it.
 
-AXIOM. (Caratheodory's version of the second law of thermodynamics)
+![Adiabatic accessibility in the $U, V$ diagram.](figure/adiabatic_accessibility.png)
 
-In any neighborhood of any point $\vec q$, there are points adiabatically inaccessible from it.
+Here is **Caratheodory's version of the second law of thermodynamics**:
 
-For any two points, $\vec q, \vec q'$, one of them is adiabatically accessible from the other.
-
-:::
+* In any neighborhood of any point $\vec q$, there are points adiabatically inaccessible from it.
+* Furthermore, for any two points, $\vec q, \vec q'$, at least one of them is adiabatically accessible from the other.
 
 The effect of these two axioms is that we can define a total ordering $\preceq$ on state space, where we write $\vec q \preceq \vec q'$ to mean that $\vec q$ can adiabatically access $\vec q'$, and write $\vec q \sim \vec q'$ to mean that they are mutually adiabatically accessible.
 
 Interpreted economically, we say that the system is an economic agent, each $\vec q$ is a bundle of goods, and $\vec q \preceq \vec q'$ means that $\vec q'$ is preferable to the agent, and that $\vec q \sim \vec q'$ means they are equally preferred.
 
-The total ordering partitions the state space into contour surfaces of equal accessibility, or [indifference surfaces](https://en.wikipedia.org/wiki/Indifference_curve). Assuming the state space is not designed to mess things up (pathological), these indifference surfaces will be differentiable.
+The total ordering partitions the state space into contour surfaces of equal accessibility, or [indifference surfaces](https://en.wikipedia.org/wiki/Indifference_curve). Assuming the state space is not designed to be [pathological](https://en.wikipedia.org/wiki/Pathological_(mathematics)), these indifference surfaces will be differentiable.
 
 Let us consider the indifference surface passing state $\vec q$. The indifference surface is locally a plane, so it has equations
 
@@ -765,29 +850,35 @@ $$
 
 where $\tilde p_i = (\partial_{q_i}q_0)_{q_1, \dots, q_n}$.
 
-Economically speaking, we can say that $\tilde p_i$ is the marginal worth of $q_i$ denoted in units of $q_0$. For example, we can say that $q_0$ are cowry shells, which themselves are pretty and give us some utility. However, it can also be used as a monetary unit. Then, if $i$ is bread, then $\tilde p_i$ is the marginal amount of cowry shells that we would pay for a marginal amount of bread. If we were to visit a free market where we can buy and sell items denoted in cowry shells, then we would buy bread if $\tilde p_i > \tilde p_{i, market}$, and sell bread if $\tilde p_i < \tilde p_{i, market}$. Right at the border of $\tilde p_i = \tilde p_{i, market}$, we would be indifferent about buying or selling bread. When $\tilde p_i = \tilde p_{i, market}$ for all $i$, we would be completely indifferent about the market.
+![The field of planes defined by $dq_0 - \sum_i \tilde p_i dq_i = 0$.](figure/contact_geometry_one-form.png)
+
+For example, a tank of (non-ideal) gas satisfies $dU + PdV = 0$ over its indifference curves.
 
 ::: {#thm-0}
 
 ## existence and uniqueness of temperature and entropy
 
-There exists unique functions $\beta, S$ on the state space, such that
+Let $\omega = dq_0 - \sum_i \tilde p_i dq_i$. If $\omega$ is nonzero everywhere, then there exists functions $\beta, S$ on the state space, such that $dS = \beta \omega$.
 
-$$
-dq_0 - \sum_i \tilde p_i dq_i = \beta^{-1} dS
-$$
+Furthermore, they are unique up to a monotonic transform. That is, if we have another solution $\beta', S'$, then there exists a strictly monotonic function $f$ such that $S' = f \circ S$.
 
 :::
 
 ::: {.callout-note title="Proof"}
 
-At each point $P$ the one-form $\omega(p)$ is visualized as a stack of parallel planes. The planes are quilted together, but with "uneven thickness". By scaling the one-forms just right at every point, the thickness becomes equalized, and so $\beta \omega = dg$ for two real-valued functions $\beta, g$.
+At each point $P$ the one-form $\omega(p)$ is visualized as a stack of parallel planes. The planes are quilted together, but with "uneven thickness". By scaling the one-forms just right at every point, the thickness becomes equalized, and so $\beta \omega = dg$ for two real-valued functions $\beta, S$.
 
-![Proving Caratheodory's theorem. Figure from [Wikipedia](https://en.wikipedia.org/wiki/File:Caratheodory%27s_theorem_illustration.jpg).](figure/Caratheodory_s_theorem_illustration.jpg){width=50% fig-align="center"}
+![Proving Caratheodory's theorem. Figure from [Wikipedia](https://en.wikipedia.org/wiki/File:Caratheodory%27s_theorem_illustration.jpg).](figure/Caratheodory_s_theorem_illustration.jpg){width=100% fig-align="center"}
+
+Given any other solution $\beta', S'$, both $S$ and $S'$ must have the same contour lines, so there exists some function that maps the $S$-height of a contour line to its $S'$-height.
 
 :::
 
-Economically speaking, we can say that $S$ is the utility, and $\beta$ is the marginal utility of cowry shells. The theorem tells us that just by knowing how we *order* the goods (" $S(\vec q) > S(\vec q')$ "), we can extract a *numerical value* for the goods (" $S(\vec q) - S(\vec q') = 1.34(S(\vec q'') - S(\vec q'''))$ "). Out of *ordinal utility*, we have achieved *cardinal utility*.
+### Cardinal and ordinal utilities
+
+Economically speaking, $\tilde p_i$ is the marginal worth of $q_i$ denoted in units of $q_0$. For example, we can say that $q_0$ are cowry shells, which themselves are pretty and give us some utility. However, it can also be used as a monetary unit. Then, if $i$ is bread, then $\tilde p_i$ is the marginal amount of cowry shells that we would pay for a marginal amount of bread. If we were to visit a free market where we can buy and sell items denoted in cowry shells, then we would buy bread if $\tilde p_i > \tilde p_{i, market}$, and sell bread if $\tilde p_i < \tilde p_{i, market}$. Right at the border of $\tilde p_i = \tilde p_{i, market}$, we would be indifferent about buying or selling bread. When $\tilde p_i = \tilde p_{i, market}$ for all $i$, we would be completely indifferent about the market.
+
+$S$ is the utility, and $\beta$ is the marginal utility of cowry shells. The theorem tells us that just by knowing how we *order* the goods (" $S(\vec q) > S(\vec q')$ "), we can extract a *numerical value* for the goods (" $S(\vec q) - S(\vec q') = 1.34(S(\vec q'') - S(\vec q'''))$ "). Out of *ordinal utility*, we have achieved *cardinal utility*.
 
 There used to be a debate between "ordinalists" and "cardinalists" of utility theory. The "cardinalists" were the more venerable of the two camps, tracing back to Bentham's felicific calculus and the marginalist revolution. They argued that utility is real-valued, like entropy and temperature. The "ordinalists" countered that a nobody has ever measured a utility in anyone's brain. The only thing we can observe is preferences: I prefer this over that -- I can *order* everything that can ever happen to me on a *numberless* line of preferences. Similarly, nobody can ever actually measure temperature or entropy, only that energy flows from this gas to that gas, which presumably has lower temperature, and that one chunk of gas in one state ends up in another state, which presumably has higher entropy.
 
@@ -795,7 +886,7 @@ The debate has been mostly resolved by the work of [Gérard Debreu](https://en.w
 
 [^gerard-debreu]: Out of all those famous economists I have seen, Gérard Debreu is perhaps the most mathematically austere. Reading his works, I felt like he was another G. H. Hardy, a Bourbaki of economics. He did economics not to improve the world, not to help people, and not to advance a political agenda, but to simply uncover a face of eternity.
 
-This theorem, or rather, this *family* of theorems, have several names, as befitting for such a versatile and productive family. In calculus, it's called the integrability of Pfaffian forms. In differential geometry, it's called Darboux's theorem, or Frobenius theorem. In economics, it's called the integrability of demand, or the cardinal-ordinal utility representation theorem.
+This theorem, or rather, this *family* of theorems, have several names, as befitting for such a versatile and productive family. In calculus, it's called the [integrability of Pfaffian forms](https://en.wikipedia.org/wiki/Integrability_conditions_for_differential_systems). In differential geometry, it's called [Darboux's theorem](https://en.wikipedia.org/wiki/Darboux%27s_theorem), or [Frobenius theorem](https://en.wikipedia.org/wiki/Frobenius_theorem_(differential_topology)). In economics, it's called the integrability of demand, or the cardinal-ordinal [utility representation theorem](https://en.wikipedia.org/wiki/Utility_representation_theorem).
 
 ::: {.callout-tip title="What's so special about energy, or cowry shells?"}
 
@@ -815,13 +906,44 @@ When I realized this difference, I was so incensed at this mistake that I wrote 
 
 :::
 
+### Extensive entropy
+
+While we have constructed the temperature $T$ and the entropy $S$ of an isolated system, it is not unique: we can stretch and compress the entropy function $S$ arbitrarily by a monotonic function, and as long as we modify the temperature function $T$ just right, the two modifications cancel out, and we have $TdS = T' dS'$.
+
+In order to uniquely fix an entropy function, we need further assumptions. The most commonly used method is by considering what happens to the entropy of a compound system. In general, there is no reason to expect entropy to be additive -- if we take compound two systems together, the entropy of the compound system should be the sum of the two subsystems. However, if we make some reasonable assumptions, then entropy would be uniquely fixed, and would be additive.
+
+::: {#exr-0}
+
+## von Neumann--Morgenstern entropy construction
+
+Study the statement of the [von Neumann--Morgenstern utility theorem](https://en.wikipedia.org/wiki/Von_Neumann%E2%80%93Morgenstern_utility_theorem), and translate it to thermodynamics. It should be of the following form:
+
+Assuming that a compound system's adiabatic accessibility satisfies the following properties
+
+1. ...
+2. ...  
+...
+
+then the entropy of the compound system is the sum of the entropies of its subsystems, and is unique up to adding a constant and multiplying by a positive scalar.
+
+:::
+
+Some hints:
+
+* It might help your intuition if you anthropomorphize Nature as a "vNM-rational agent".
+* The standard formulation of the vNM theorem uses lotteries of form $pM + (1-p)N$, where $p\in (0, 1)$ is a probability, and $M, N$ are bundles of goods. However, it is impossible generally to "take $0.37$ of a system $M$ and compound it with $0.63$ of system $N$". To bypass this difficulty, replace that with "take $37$ copies of system $M$ and compound them with $63$ copies of system $N$".
+
 ## Geometric thermodynamics
 
 > Although geometrical representations of propositions in the thermodynamics of fluids are in general use, and have done good service in disseminating clear notions in this science, yet they have by no means received the extension in respect to variety and generality of which they are capable.
 > 
-> Gibbs, Josiah Willard. "Graphical methods in the thermodynamics of fluids." *The Collected Works of J. Willard Gibbs, Ph. D., LL. D* (1957): 1-32.
+> [@gibbsGraphicalMethodsThermodynamics1957]
 
 ### Contact geometry
+
+> Every mathematician knows it is impossible to understand an elementary course in thermodynamics. The reason is that thermodynamics is based—as Gibbs has explicitly proclaimed -- on a rather complicated mathematical theory, on the contact geometry. Contact geometry is one of the few 'simple geometries' of the so-called Cartan’s list, but it is still mostly unknown to the physicist -- unlike the Riemannian geometry and the symplectic or Poisson geometries, whose fundamental role in physics is today generally accepted.
+> 
+> V.I. Arnol'd [@caldiProceedingsGibbsSymposium1990, page 163]
 
 To explain these mysterious remarks, we can take another look at thermodynamics. To begin, we take a plunge into abstraction. We know that a real gas has pressure, volume, temperature, entropy, etc. We know that they satisfy the differential equation:
 
@@ -848,14 +970,10 @@ With that brief look at philosophy, we return to abstract thermodynamics. We hav
 The question now comes: Why is it possible to collapse things down to this curved surface?
 
 Things are already interesting when we have just one commodity:
+
 $$dS - pdq = 0$$
 
 and we ask: Why is it possible to collapse the space of $(q, p, S)$ from 3 to 1 dimension?
-
-> Every mathematician knows it is impossible to understand an elementary course in thermodynamics. The reason is that thermodynamics is based—as Gibbs has explicitly proclaimed -- on a rather complicated mathematical theory, on the contact geometry. Contact geometry is one of the few 'simple geometries' of the so-called Cartan’s list, but it is still mostly unknown to the physicist -- unlike the Riemannian geometry and the symplectic or Poisson geometries, whose fundamental role in physics is today generally accepted.
-> 
-> V.I. Arnol'd [@caldiProceedingsGibbsSymposium1990, page 163]
-
 
 In modern geometry, an expression like $dS - \sum_i p_i dq_i = 0$ defines a field of planes in $\R^3$. That is, at each point $(q, p, S)$, we construct a plane defined by
 
@@ -871,88 +989,120 @@ Given such a field of planes $dS - \sum_{i=1}^n p_i dq_i$ in $\R^{2n+1}$, we say
 
 For example, when $n=1$, a Legendrian submanifold is a curve that winds around $\R^3$ that is always tangent to the plane at every moment.
 
-::: {#thm-0}
-
-
-
-
 Let $S(q)$ be a differentiable function. We can interpret $S(q)$ as how much money we can earn if we produce something using the bundle of raw materials $(q_1, \dots, q_n)$.
 
 Given any market price for the raw materials, $q^* = \argmax_q (S(q) - \braket{p, q})$ is the profit-maximizing production plan, and $\Pi(p) = \max_q (S(q) - \braket{p, q})$ is the profit.
 
-The "profit-maximization surface" defined by
+::: {#thm-0}
 
-$$
-p \mapsto (q^*, p, S(q^*))
-$$
+The "profit-maximization surface" defined by $p \mapsto (q^*, p, S(q^*))$ is a Legendrian submanifold.
 
-is a Legendrian submanifold.
-
-Conversely, given any Legendrian submanifold parameterized by
-
-$$p \mapsto (q(p), p, S(q(p)) )$$
-
-then $q(p)$ is profit-stationarizing. That is,
+Conversely, given any Legendrian submanifold parameterized by $p \mapsto (q(p), p, S(q(p)) )$, then $q(p)$ is profit-stationarizing. That is,
 
 $$\nabla_q (S(q) - \braket{p, q}) = 0$$
 
-at $q(p)$. If $S$ is strictly convex, then $q(p)$ is profit-maximizing.
+at $q(p)$. If $S$ is strictly concave, then $q(p)$ is profit-maximizing.
 
-::: {.callout-note title="Proof" collapse="false"}
- First part is proven by Hotelling's lemma. Second part is proven by plugging in $dS - \sum_i p_i dq_i = 0$. And if $S$ is strictly convex, then $q \mapsto S(q) - \braket{p, q}$ is also strictly convex, and so zero gradient implies global maximum.
+:::
+
+::: {.callout-note title="Proof"}
+
+The first part is proven by Hotelling's lemma.
+
+The second part is proven by plugging in $dS - \sum_i p_i dq_i = 0$. And if $S$ is strictly concave, then $q \mapsto S(q) - \braket{p, q}$ is also strictly concave, and so zero gradient implies global maximum.
 
 Economically speaking, $max_q (S(q) - \braket{p, q})$ means to maximize profit. What does it mean thermodynamically speaking? It means minimizing $\braket{p, q} - S(q)$, which is the Gibbs free entropy! Let me write it in a more familiar form, for a tank of gas:
 $$\min_{\beta, \beta P} (\beta U + (\beta P) V - S)$$
 
 Thus, maximizing profit when a factory has access to a market is the same as minimizing Gibbs free entropy when a system is in contact with a bath.
 
+:::
+
 ### Samuelson's area-ratio thermodynamics
+
+#### Philosophy
 
 In Paul Samuelson's Nobel prize lecture of 1970, among comments of classical mechanics, variational principles, and neoclassical economics, he said something curious about the analogy between classical thermodynamics and neoclassical economics:
 
 > However, if you look upon the monopolistic firm hiring 99 inputs as an example of a maximum system, you can connect up its structural relations with those that prevail for an entropy-maximizing thermodynamic system. Pressure and volume, and for that matter absolute temperature and entropy, have to each other the same conjugate or dualistic relation that the wage rate has to labor or the land rent has to acres of land. Figure 2 can now do double duty, depicting the economic relationships as well as the thermodynamic ones.
 > 
-> ![Samuelson's equal area ratio condition. In the diagram, we have $a:b = c:d$](figure/Samuelson_area_ratio_condition.png)
-> 
 > If someone challenged me to explain what the existence of [utility] implies, but refused to let me use the language of partial derivatives, I could illustrate by an equi-proportional area property... I may say that the idea for this proposition in economics came to me in connection with some amateurish researches in the field of thermodynamics. While reading Clerk Maxwell's charming introduction to thermodynamics...
 >
 > [@samuelsonMaximumPrinciplesAnalytical1971]
+
+![Samuelson's equal area ratio condition. In the diagram, we have $a:b = c:d$](figure/Samuelson_area_ratio_condition.png)
 
 This intriguing little remark piqued my interest, and after a little digging, I figured it out.[^area-ration-thermodynamics]
 
 [^area-ration-thermodynamics]: Based on research by James Bell Cooper, who seems to be the world expert in this obscure field [@cooperSurprisingUbiquitySamuelson2006; @cooperCharacterizingAreaCondition2001].
 
-Samuelson is alluding to a deep problem in economics theory: Nobody has ever seen a utility function, anymore than anybody has ever seen an entropy-meter. If this is the case, then how do we know that agents are maximizing a utility, or that systems are maximizing an entropy? In his long career, he searched for many ways to answer this, coming down to the idea that, even though we cannot measure the utility, we can measure many things, such as how firms respond to prices. Given some measurable quantities, we can then prove, mathematically, that something is being maximized. Now, we can simply call that something "utility", and continue doing economics as usual.
+Samuelson is alluding to a deep problem in economics theory: Nobody has ever seen a utility function, anymore than anybody has ever seen an entropy. If this is the case, then how do we know that agents are maximizing a utility, or that systems are maximizing an entropy? In his long career, he searched for many ways to answer this, coming down to the idea that, even though we cannot measure utility, we can measure many things, such as how firms respond to prices. Given some measurable quantities, we can then prove, mathematically, that something is being maximized. At that point, we can simply call that something "utility", and continue doing economics as usual.
 
-Philosophically, Samuelson was greatly influenced by operationalism, a philosophy of science akin to positivism. As stated by the definitive work on operationalism, "we mean by any concept nothing more than a set of operations; the concept is synonymous with the corresponding set of operations" [@bridgmanLogicModernPhysics1927].
+Philosophically, Samuelson was greatly influenced by [operationalism](https://plato.stanford.edu/entries/operationalism/), a philosophy of science akin to [logical positivism](https://plato.stanford.edu/entries/logical-empiricism/). As stated by the definitive work on operationalism, "we mean by any concept nothing more than a set of operations; the concept is synonymous with the corresponding set of operations" [@bridgmanLogicModernPhysics1927].
 
-In his early work, particularly *Foundations of Economic Analysis* (1947) and the development of revealed preference theory (1938), Samuelson embraced operationalism as a means of purging economics of non-observable, and thus scientifically meaningless, concepts like utility. He sought to rebase economic theory on purely observable behavior and measurable quantities. Revealed preference theory, for instance, aimed to eliminate the reliance on subjective utility functions by deriving consumer preferences directly from observed choices at different price levels.
+In his early work, particularly *Foundations of Economic Analysis* (1947) and the development of revealed preference theory (1938), Samuelson embraced operationalism as a means of purging economics of non-observable, and thus scientifically meaningless, concepts like utility. He sought to rebase economic theory on purely observable behavior and measurable quantities. Revealed preference theory, for instance, would eliminate utility functions, and derive a consumer's preference ordering directly from observable consumer choices at different price levels.
 
 Over time, Samuelson's stance on operationalism softened to a more pragmatic approach, recognizing the value of unobservable concepts as theoretical tools, as long as they can be based on direct observables.
 
 For example, while Samuelson initially sought to eliminate utility functions, he later argued that even if utility is not directly observable, it can be uniquely determined from observing agents' preferences, by invoking some [utility representation theorems](https://en.wikipedia.org/wiki/Utility_representation_theorem) -- provided that the preferences satisfy certain properties. [@samuelsonMyLifePhilosophy1999]
 
-::: {#exm-0}
+#### Area ratio construction
 
- (ideal gas law)
+::: {#thm-0}
 
-Suppose we know from experiment that a tank of ideal gas satisfies
+## area ratio law implies a new coordinate system
 
+Consider an open rectangle $R$ in the plane $\R^2$. Let there be two families of curves
+
+Suppose that each curvy parallelogram formed by the two families is contained in $R$, and the curves satisfy the area-ratio rule, then we can define another coordinate system $(z, w)$ on $\R^2$, such that the coordinate system preserves areas:
 $$
-PV = Const, \quad PV^\gamma = Const
+dx \wedge dy = dz \wedge dw
 $$
 
-under constant temperature and adiabatic conditions.
+and that the two families of lines are the constant $z$ and constant $w$ curves.
 
-PROP. (area ratio condition)
+The coordinate system is unique up to an affine squashing transform, that is, $(z, w) \mapsto (cz + d, w/c + e)$ for some constants $c, d, e$ with $c > 0$.
 
-
-It is tedious but simple to verify, by directly calculating the areas of the curvy parallelograms, that these two families of curves satisfy the area ratio condition.
-
-Alternatively, we can use the method of exhaustion and Eudoxus' theory of proportions to prove this, in a way that even ancient Greeks would approve.
+:::
 
 ::: {.callout-note title="Proof" collapse="false"}
 
+Fix an arbitrary point as $(z, w) = (0, 0)$. Pick an arbitrary curve in one of the families, not passing $(0, 0)$ point, and call it the $w=1$ line. By continuity, there exists a unique curve in the other family, such that their curved parallelogram has unit area. Call that other curve the $z=1$ line. Now we can label the four corners of it $(z, w) = (0, 0), (0, 1), (1, 0), (1, 1)$.
+
+For any other point, its $(z, w)$ coordinates can be constructed as shown in the picture, with
+
+$$z = a+b, \quad w = b+d$$
+
+By the area ratio law, we have $a:b = c:d$. We also have $a+b+c+d = 1$ since we picked the parallelogram to have unit area. Solving these 4 equations, we find that $b = zw, a = z(1-w), d = (1-z)w, c = (1-z)(1-w)$, as it should.
+
+Taking the derivative, we have $dx \wedge dy = dz \wedge dw$.
+
+![](figure/Samuelson_geometry_coordinate_construction.png)
+
+:::
+
+::: {#cor-0}
+
+## area ratio law implies existence of an entropy function
+
+Since $dx \wedge dy = dz \wedge dw$, we can draw any cycle $\gamma$, and integrate around the cycle:
+$$\oint_\gamma (ydx + zdw) = \iint_{\text{area in }\gamma} (dy \wedge dx + dz \wedge dw) = 0$$
+
+Thus, there exists some scalar function $S$, such that $dS = ydx + zdw$.
+
+:::
+
+And here we go again, we now have an entropy/revenue function, and from there, all of classical thermodynamics/neoclassical economics follows.
+
+#### Example: ideal gas
+
+Suppose we know from experiment that a tank of ideal gas satisfies two equations
+
+$$PV = Const, \quad PV^\gamma = Const$$
+
+under isothermal and adiabatic conditions respectively, then the $P, V$ diagram with these two families of curves satisfy the area ratio condition. It is tedious but straightforward to verify this by direct integration. Alternatively, we can use the [method of exhaustion](https://en.wikipedia.org/wiki/Method_of_exhaustion) and [Eudoxus' theory of proportions](https://en.wikipedia.org/wiki/Eudoxus_of_Cnidus) to prove this, in a way that even ancient Greeks would approve.
+
+::: {.callout-note title="Proof" collapse="false"}
 
 Notice that under the squashing map $(P, V) \mapsto (cP, V/c)$, both families of lines are preserved, and furthermore, this map preserves area, so we can calculate the area of any curvy parallelogram by tiling it with tiny strips of thin parallelograms.
 
@@ -968,17 +1118,21 @@ $$A(c) : A(d) \approx N(c) : N(d) = N(a) : N(b) \approx A(a) : A(b)$$
 
 and both sides equal at the limit.
 
-From the area ratio theorem, there exists two functions $f_T, f_S$, such that the new coordinates
+![](figure/Samuelson_geometry_Eudoxus_proof.png)
+
+:::
+
+Now, by the area ratio theorem, there exists two functions $f_T, f_S$, such that the new coordinates
 
 $$T(P, V) = f_T(PV), \quad S(P, V) = f_S(PV^\gamma)$$
 
 satisfy $dT \wedge dS = dP \wedge dV$. We can then define
+
 $$dU = TdS - PdV$$
 
 which satisfies $d^2 U = 0$, that is, it is integrable.
 
-DER.
-
+::: {.callout-note title="Derivation" collapse="true"}
 
 Simplifying, we get
 
@@ -997,66 +1151,31 @@ Integrating $dU = TdS - PdV$, we have $U = \frac{1}{\gamma-1} nRT$. We can defin
 
 $$PV = nRT, \quad S = \hat c_V n R \ln \frac{PV^{1 + 1/\hat c_V}}{P_0V_0^{1 + 1/\hat c_V}}, \quad U = \hat c_V nRT$$
 
-or equivalently,
-$$S = n R \ln \frac{U^{\hat c_V}V}{U_0^{\hat c_V} V_0}$$
+or equivalently, $S = n R \ln \frac{U^{\hat c_V}V}{U_0^{\hat c_V} V_0}$.
+
+:::
 
 Thus, we have
 
 $$PV = nRT, \quad S = \hat c_V n R \ln \frac{PV^{1 + 1/\hat c_V}}{P_0V_0^{1 + 1/\hat c_V}} = n R \ln \frac{U^{\hat c_V}V}{U_0^{\hat c_V} V_0}, \quad U = \hat c_V nRT$$
 
-Taking the derivative,
-$$dS = \beta dU + \beta PdV - \beta \mu dn$$
-
-gives
-$$\beta = 1/T, P = P, \mu = -TS/n$$
+Taking the derivative, $dS = \beta dU + \beta PdV - \beta \mu dn$ gives $\beta = 1/T, P = P, \mu = -TS/n$.
 
 We find that the chemical potential, unfortunately, has an additive constant. We should not be too surprised, however, as anything with "potential" in its name probably has an additive constant, like electric voltage.
 
 ![The equal area ratio condition.](figure/Samuelson_area_ratio_condition.png)
 
-::: {#thm-0}
+#### Economic interpretation
 
- (area ratio law implies a new coordinate system)
+When the diagram is interpreted as the thermodynamic diagram of a gas, we know what the curvy lines mean: they are the isotherms, isentropics, isobarics, etc (depending on which variables you pick for the two axes of the diagram). What do the curvy lines mean in economics?
 
-Consider an open rectangle $R$ in the plane $\R^2$. Let there be two families of curves
-
-Suppose that each curvy parallelogram formed by the two families is contained in $R$, and the curves satisfy the area-ratio rule, then we can define another coordinate system $(z, w$ ) on $\R^2$, such that the coordinate system preserves areas:
-$$
-dx \wedge dy = dz \wedge dw
-$$
-
-and that the two families of lines are the constant $z$ and constant $w$ curves.
-
-The coordinate system is unique up to an affine squashing transform, that is, $(z, w) \mapsto (cz + d, w/c + e)$ for some constants $c, d, e$ with $c > 0$.
-
-::: {.callout-note title="Proof" collapse="false"}
-
-
-
-Fix an arbitrary point as $(z, w) = (0, 0)$. Pick an arbitrary curve in one of the families, not passing $(0, 0)$ point, and call it the $w=1$ line. By continuity, there exists a unique curve in the other family, such that their curved parallelogram has unit area. Call that other curve the $z=1$ line. Now we can label the four corners of it $(z, w) = (0, 0), (0, 1), (1, 0), (1, 1)$.
-
-For any other point, its $(z, w)$ coordinates can be constructed as shown in the picture, with
-
-$$z = a+b, \quad w = b+d$$
-
-By the area ratio law, we have $a:b = c:d$. We also have $a+b+c+d = 1$ since we picked the parallelogram to have unit area. Solving these 4 equations, we find that $b = zw, a = z(1-w), d = (1-z)w, c = (1-z)(1-w)$, as it should.
-
-Taking the derivative, we have $dx \wedge dy = dz \wedge dw$.
-
-COR. (area ratio law implies existence of an entropy function)
-
-Since $dx \wedge dy = dz \wedge dw$, we can draw any cycle $\gamma$, and integrate around the cycle:
-$$\oint_\gamma (ydx + zdw) = \iint_{\text{area in }\gamma} (dy \wedge dx + dz \wedge dw) = 0$$
-
-Thus, there exists some scalar function $S$, such that $dS = ydx + zdw$.
-
-And here we go again, we now have an entropy/revenue function, and from there, all of classical thermodynamics/neoclassical economics follows.
-
-We know what the curvy lines mean in thermodynamics: they are the isotherms, isentropics, isobarics, etc (depending on how you pick the variables). What do the curvy lines mean in economics?
-
-Suppose we plot the lines of constant $p_2$ in the plane of $q_1, p_1$. What does it say? It says this: "Suppose the price of commodity $2$ is fixed, and we vary the price of commodity $1$. How much of commodity $1$, as a factory manager, would I want to purchase?" In other words, these are the demand curves for commodity $1$ when the price of commodity $2$ is fixed..
+Suppose we plot the lines of constant $p_2$ in the plane of $q_1, p_1$. What does it say? It says this: "Suppose the price of commodity $2$ is fixed, and we vary the price of commodity $1$. How much of commodity $1$, as a factory manager, would I want to purchase?" In other words, these are the demand curves for commodity $1$ when the price of commodity $2$ is fixed.
 
 Similarly, a line of constant $q_2$ is a demand curve for commodity $1$ when the *quantity* of commodity $2$ is fixed at $q_2$.
+
+![TODO](figure/Helmholtz_demand_curve.png)
+
+![TODO](figure/first-order_phase_transition_Helmholtz.png)
 
 Looking at the diagram, we see that the demand curves are steeper for fixed $q_2$ than for fixed $p_2$. In other words, the factory manager is more price-sensitive about commodity $1$ when there is a free market for commodity $2$, because there is a choice. After all, think like a factory manager. If I have no choice about how much of commodity $2$ I can put into production, I would have little resort when faced with a price hike on commodity $1$. I will buy less of it, but I mostly just have to suffer the loss in profit. But if I have a choice with a free market for commodity $2$, I would definitely buy more of commodity $2$ to substitute for some of commodity $1$ after the price hike.
 
@@ -1072,7 +1191,7 @@ This is what Paul Samuelson meant in his Nobel Prize lecture, when he said that 
 
 ### Bonus: Riemannian geometry
 
-There are other ways to study the state space of thermodynamic systems by differential geometry. For example, since the entropy function is typically a strictly convex function of the extensive parameters, $-\partial^2 S$ is positive-definite. This is then a Riemannian metric on the state space. The only places where strict convexity fails is when $S$ is "bumped downwards", which gives us a first-order phase transition, or has a flat region, which gives us a second-order phase transition. Away from regions of phase transition, we have a Riemannian geometry. In the regions of phase transitions, the geometry collapses into singularities, much as spacetime collapses in the center of a black hole.
+There are other ways to study the state space of thermodynamic systems by differential geometry. For example, since the entropy function is typically a strictly concave function of the extensive parameters, $-\partial^2 S$ is positive-definite. This is then a Riemannian metric on the state space. The only places where strict concavity fails is when $S$ is "bumped downwards", which gives us a first-order phase transition, or has a flat region, which gives us a second-order phase transition. Away from regions of phase transition, we have a Riemannian geometry. In the regions of phase transitions, the geometry collapses into singularities, much as spacetime collapses in the center of a black hole.
 
 For more on this line of research, search "Ruppeiner geometry" and "Weinhold geometry" [@weinholdThermodynamicsGeometry1976; @quevedoGeometrothermodynamics2007].
 
@@ -1099,13 +1218,13 @@ $$
 Q = \frac{[C]^c [D]^d}{[A]^a[B]^b},
 $$
 
-At this point, I was lost. It is plain to see that $Q$ has units of $(\mathrm{mol/L})^{c+d-a-b}$, and I knew from physics that you can never ever take the logarithm of something with a unit. What's worse, $\Delta G$ has units of $\mathrm{J/mol}$ when it obviously should have units of $\mathrm{J}$, because $\Delta G$ is just a difference in $G$, and since $G$ is "Gibbs free energy", both $G$ and $\Delta G$ should have the same units -- of $\mathrm{J}$.
+At this point, I was lost. It is plain to see that $Q$ has units of $(\mathrm{~mol/L})^{c+d-a-b}$, and I knew from physics that you can never ever take the logarithm of something with a unit. What's worse, $\Delta G$ has units of $\mathrm{~J/mol}$ when it obviously should have units of $\mathrm{~J}$, because $\Delta G$ is just a difference in $G$, and since $G$ is "Gibbs free energy", both $G$ and $\Delta G$ should have the same units -- of $\mathrm{~J}$.
 
 And it got even worse when I read on and found questions that asked me to calculate the "total Gibbs free energy released during the reaction". I thought, well, since you end up at an equilibrium, and the textbook said that at equilibrium, $\Delta G = 0$, obviously there is no total Gibbs free energy released. That is of course wrong.
 
 At that point, I gave up trying to understand and simply practiced until I could solve the questions without understanding.
 
-It certainly didn't help when I kept seeing both $\Delta G^\circ$ and $\Delta G^\ominus$, and sometimes even $\Delta G^{\minuso}$, which is the "standard state" when the substance is a gas -- but only for some gasses.
+It certainly didn't help when I kept seeing both $\Delta G^\circ$ and $\Delta G^\ominus$, and sometimes even $\Delta G^{\ominus}$, which is the "standard state" when the substance is a gas -- but only for some gasses.
 
 Point is, the notation is a complete mess, and the pedagogy is nonsensical. I believe it is because the teachers didn't know any better. They did not understand what they were teaching, but they were protected from their ignorance by the rigidity of the world. Much like how most physicists do not understand Hamiltonian mechanics, but still manage to calculate correctly by their well-honed physical intuition, I would wager that most chemists do not understand thermodynamics, but still manage to calculate correctly by their well-honed chemical intuition.
 
@@ -1184,7 +1303,7 @@ Existence and uniqueness
 
 By looking at the picture, we see that obviously, at least one solution exists.
 
-In most situations, the Helmholtz free energy is strictly convex, so the lines of constant $F$ are also strictly convex, and so the solution is unique on each line.
+In most situations, the Helmholtz free energy is strictly concave, so the lines of constant $F$ are also strictly concave, and so the solution is unique on each line.
 
 Edge case: reaction reaches completion
 
@@ -1194,29 +1313,26 @@ The solution might fall on one of the axes, in which case the reaction reaches c
 Edge case: first-order phase transition
 
 
-If $F$ is not strictly convex, then it might have a double tangent point with the budget line. On that critical budget, there is a first-order phase transition. The system spontaneously splits into two phases, with one side denser in species 1, and the other side denser in species 2. It could look like a mixture of water and oil suddenly condensing into two layers, with one part mostly water and the other part mostly oil.
+If $F$ is not strictly concave, then it might have a double tangent point with the budget line. On that critical budget, there is a first-order phase transition. The system spontaneously splits into two phases, with one side denser in species 1, and the other side denser in species 2. It could look like a mixture of water and oil suddenly condensing into two layers, with one part mostly water and the other part mostly oil.
 
 We can imagine adding in a little more of both chemicals at a time into a tube. Below the critical concentration, it is in the phase denser in species 1, above the critical concentration, it is in the phase denser in species 2. Right at the critical concentration, the system splits into two parts, with phase 1 shrinking while the phase 2 growing, until phase 2 takes over the entire tube. Just like the case with boiling water, where temperature remains constant as water turns to steam, in this case, pressure remains constant while phase 1 turns to phase 2.
 
 Economically speaking, if we have many households with the same utility function and budget, then at a critical budget level, the households would spontaneously split into two types, with the first type buying mostly bread, and the second type buying mostly noodles.
 
-![The reaction chamber is a sealed glass tube held under constant temperature of 298.15 K. It has the following $\xi, H$ curve. At the $\xi = 0$ side, the tube contains 2 moles of $NO_2$, and at the $\xi = 1 \mathrm{mol}$ side, the tube contains 1 mole of $N_2O_4$. [@raffSpontaneityEquilibriumWhy2014, figure 2]](figure/raff_2014_fig_2.png)
+![The reaction chamber is a sealed glass tube held under constant temperature of 298.15 K. It has the following $\xi, H$ curve. At the $\xi = 0$ side, the tube contains 2 moles of $NO_2$, and at the $\xi = 1 \mathrm{~mol}$ side, the tube contains 1 mole of $N_2O_4$. [@raffSpontaneityEquilibriumWhy2014, figure 2]](figure/raff_2014_fig_2.png)
 
 Now let's consider another example, where we have two simultaneous reactions. This is a simplified version of the NOx reactions, which is a source of air pollution.
-
 
 Consider a system with the following reactions:
 
 1. $2NO + O_2 \rightleftharpoons 2NO_2$
 2. $NO + NO_2 \rightleftharpoons N_2O_3$
 
-
 The system is in a container with constant volume $V$ and temperature $T$. Let $n_i$ represent the number of moles of species $i$. The thermodynamic state of the system is fully described by the 4-component vector $\vec n = (n_{O_2}, n_{NO}, n_{NO_2}, n_{N_2O_3})$.
 
 To make the algebra look cleaner, we rewrite them as follows:
 1. $0 \rightleftharpoons -O_2 - 2 NO + 2NO_2 + 0 N_2 O_3$
 2. $0 \rightleftharpoons  0 O_2 -NO - NO_2 + N_2O_3$
-
 
 We see that each reaction can be written as a single vector. The first has vector $\vec n_1 = (-1, -2, 2, 0)$, and the second has vector $\vec n_2 = (0, -1, -1, 1)$.
 
@@ -1226,7 +1342,6 @@ Each reaction has an associated extent of reaction, denoted by $\xi_1$ and $\xi_
 * $dn_{O_2} = -d\xi_1$
 * $dn_{NO_2} = 2d\xi_1 - d\xi_2$
 * $dn_{N_2O_3} = d\xi_2$
-
 
 At equilibrium, the Helmholtz free energy $F(T, V, \vec{n})$ is minimized under the constraints imposed by the reactions. This leads to the following conditions:
 
@@ -1247,9 +1362,9 @@ $$
 \end{cases}
 $$
 
-Geometrically speaking, the subset is the intersection between a 2-dimensional plane and a 4-dimensional pyramid, so it generally looks like either a triangle or a quadrilateral.
+Geometrically speaking, the subset is the intersection between a 2-dimensional plane and a 4-dimensional pyramid, so it generally looks like either a triangle or a quadrilateral. On this subset, the Helmholtz free energy function looks like a sequence of nested convex shells, and the point of tangency is the equilibrium point.
 
-On this subset, the Helmholtz free energy function looks like a sequence of nested convex shells, and the point of tangency is the equilibrium point.
+![The lines are the 3-dimensional contour surfaces of constant Helmholtz free energy, intersected with the 2-dimensional feasible set. The point of tangency is the point of chemical equilibrium.](figure/Helmholtz_contour_multireaction.png)
 
 Interpreted economically, this is the case of a consumer that maximizes its utility under two simultaneous budgetary constraints (because the budget set is a 2-dimensional, not 3-dimensional, subset of $\R^4$ ). Perhaps the consumer is trading with a market that simultaneously uses two kinds of currencies -- [bimetallism](https://en.wikipedia.org/wiki/Bimetallism)?
 
@@ -1257,8 +1372,7 @@ Generalizing from the above two experiences, we immediately obtain the following
 
 ::: {#thm-0}
 
- (existence and uniqueness of chemical equilibrium, at constant volume and temperature)
-
+## existence and uniqueness of chemical equilibrium, at constant volume and temperature
 
 Consider a sealed reaction chamber held in an energy bath, so that both the price of energy $\beta$, and the volume $V$, of the system is fixed.
 
@@ -1283,15 +1397,15 @@ If $F$ is not strictly concave, then there could be multiple coexisting equilibr
 
 ::: {.callout-note title="Proof" collapse="false"}
 
-
-
 Existence: $F$ is continuous, so it has at least one minimum on every compact set.
 
 Uniqueness: any local minimum of a strictly concave function is the unique global minimum.
 
-For example, for the same reaction of $NO_2$ dimerization, now put into a flabby plastic bag held under constant temperature of 298.15 K and constant pressure of 1 atm, produces the following $\xi, G$ curve. At the $\xi = 0$ side, the bag contains 2 moles of $NO_2$, and at the $\xi = 1 \mathrm{mol}$ side, the bag contains 1 mole of $N_2O_4$.
+:::
 
-![The reaction chamber is a flabby plastic bag held under constant temperature of $298.15 \mathrm{K}$ and constant pressure $1 \mathrm{atm}$. It has the following $\xi, G$ curve. At the $\xi = 0$ side, the tube contains $2 \mathrm{mol}$ of $NO_2$, and at the $\xi = 1 \mathrm{mol}$ side, the tube contains $1 \mathrm{mol}$ of $N_2O_4$. [@raffSpontaneityEquilibriumWhy2014, figure 4]](figure/raff_2014_fig_4.png)
+For example, for the same reaction of $NO_2$ dimerization, now put into a flabby plastic bag held under constant temperature of 298.15 K and constant pressure of 1 atm, produces the following $\xi, G$ curve. At the $\xi = 0$ side, the bag contains 2 moles of $NO_2$, and at the $\xi = 1 \mathrm{~mol}$ side, the bag contains 1 mole of $N_2O_4$.
+
+![The reaction chamber is a flabby plastic bag held under constant temperature of $298.15 \mathrm{~K}$ and constant pressure $1 \mathrm{~atm}$. It has the following $\xi, G$ curve. At the $\xi = 0$ side, the tube contains $2 \mathrm{~mol}$ of $NO_2$, and at the $\xi = 1 \mathrm{~mol}$ side, the tube contains $1 \mathrm{~mol}$ of $N_2O_4$. [@raffSpontaneityEquilibriumWhy2014, figure 4]](figure/raff_2014_fig_4.png)
 
 Now, we can *finally* answer the problem that defeated me in the past: What is, after all, the Gibbs free energy released per mole of reaction? The answer is in the following diagram:
 
@@ -1299,7 +1413,7 @@ $$\Delta G = \int_0^1 (\partial_\xi G)_{T, P} d\xi$$
 
 ![The true meaning of $\Delta G$ is the difference in height of the curve on two ends of the $(\xi, G)$ curve. [@glasserCorrectUseHelmholtz2016, figure 1]](figure/glasser_2016_fig_1.png)
 
-Such a situation occurs, for example, in the Haber--Bosch industrial method for producing ammonia: $N_2 + 3H_2 \to 2NH_3$. In the HB method, room-temperature (25 $^\circ C$ ) and room-pressure (1 atm) nitrogen and hydrogen continuously pipe into the chamber, and ammonia is continuously extracted out of the chamber by cooling liquefaction. When the reaction chamber is operating at a stable state, the energy released per mole of reaction is $\Delta G = -32.8 \mathrm{kJ/mol}$, as one can calculate from a table of chemical thermodynamics [@glasserCorrectUseHelmholtz2016].
+Such a situation occurs, for example, in the Haber--Bosch industrial method for producing ammonia: $N_2 + 3H_2 \to 2NH_3$. In the HB method, room-temperature (25 $^\circ C$ ) and room-pressure (1 atm) nitrogen and hydrogen continuously pipe into the chamber, and ammonia is continuously extracted out of the chamber by cooling liquefaction. When the reaction chamber is operating at a stable state, the energy released per mole of reaction is $\Delta G = -32.8 \mathrm{~kJ/mol}$, as one can calculate from a table of chemical thermodynamics [@glasserCorrectUseHelmholtz2016].
 
 ![The reaction chamber, demonstrating the concrete meaning of $\Delta G$. [@glasserCorrectUseHelmholtz2016, figure 2]](figure/glasser_2016_fig_2.png)
 
@@ -1307,7 +1421,7 @@ Such a situation occurs, for example, in the Haber--Bosch industrial method for 
 
 The above is all correct, and geometrical. If we were to be like Gibbs, then we would dust off our hands, for there is nothing left to do (well, except the theory of phase transitions). Unfortunately, chemistry is not merely applied geometry, so there is still something left to do.
 
-DEF.
+#### Defining the standard states
 
 A **chemical environment** is defined by chemical species $A_1, \dots, A_m$.
 
@@ -1318,9 +1432,11 @@ Given a standard state for a chemical environment, for any temperature $T$, and 
 $$\{A_i\} := e^{\frac{\mu_i - \mu_i^\circ}{RT}}$$
 
 where $\mu_i$ is the chemical potential of species $A_i$ at that state. That is,
+
 $$\mu_i = (\partial_{n_i} G)|_{T, P, [A_1], \dots, [A_m]}$$
 
 and $\mu_i^\circ$ is the chemical potential of species $A_i$ at the standard state:
+
 $$\mu_i^\circ = (\partial_{n_i} G)|_{T, P^\circ, [A_1]^\circ, \dots, [A_m]^\circ}$$
 
 Given a chemical reaction $0 \rightleftharpoons \sum_i a_i A_i$, its **reaction quotient** is
@@ -1334,9 +1450,11 @@ $$
 Q = \frac{\{C\}^c\{D\}^d}{\{A\}^a\{B\}^b}
 $$
 
+#### Fundamental theorem of chemical equilibrium
+
 ::: {#thm-0}
 
- (fundamental theorem of chemical equilibrium)
+## fundamental theorem of chemical equilibrium
 
 Given any chemical reaction $0 \rightleftharpoons \sum_i a_i A_i$, any standard state, and any temperature,
 $$\begin{cases}
@@ -1358,8 +1476,7 @@ for each reaction $j = 1, 2, \dots, r$
 
 :::
 
-::: {.callout-note title="Proof" collapse="false"}
-
+::: {.callout-note title="Proof" collapse="true"}
 
 $$\begin{aligned}
 (\partial_\xi F)_{T, V} &= \sum_i (\partial_\xi n_i) (\partial_{n_i} F)_{T, V, \vec n} \\
@@ -1373,7 +1490,9 @@ The proof for the other equations are very similar.
 
 :::
 
-COR. (equilibrium coefficient)
+::: {#cor-0}
+
+## equilibrium coefficient
 
 At equilibrium,
 $$
@@ -1389,32 +1508,29 @@ and similarly for the other case.
 
 :::
 
-The above equations are what my teachers meant when they so thoughtlessly wrote
+The above equations are what my teachers meant when they thoughtlessly wrote
 
 $$\Delta G = 0, \quad K_{eq} = e^{-\frac{\Delta G^\circ}{RT}}$$
 
 This, finally, answers my great confusion back then. Now everything makes sense, and life is beautiful.
 
-#### Case of ideal gases
+#### Ideal-gas-like chemistry
 
 Well, if this is all there is, then a mathematician would be able to solve any problem in analytical chemistry. Unfortunately, analytical chemistry is not about proving theorems, but about actually getting numerical answers, and numerical answers require numerical values for chemical activities.
 
 There are generally three cases:
 
+1. We have a mixture of dilute gasses, or dilute solvents in an inert solution, such that the ideal gas law is almost true.
+2. Ideal gas law fails.
+3. We are not even dealing with gasses and solutions anymore.
 
-First case: We have a mixture of dilute gasses, or dilute solvents in an inert solution, such that the ideal gas law is almost true.
-
-Second case: Ideal gas law fails.
-
-Third case: We are not even dealing with gasses and solutions anymore.
-
-The first case is typically what is taught by a first course in analytical chemistry, and since this is typically taught to non-mathematicians by non-mathematicians for non-mathematicians, the logical structure is quite upside-down and confusing to a mathematician (speaking from experience here -- I consider myself a mathematician before high school).
+The first case is typically what is taught by a first course in analytical chemistry, and since this is typically taught to non-mathematicians by non-mathematicians for non-mathematicians, the logical structure is quite upside-down and confusing to a mathematician.
 
 We will now prove the first case rigorously.
 
 ::: {#thm-0}
 
- (activity of ideal-gas-like substances)
+## activity of ideal gas mixtures
 
 For any temperature $T$ and any two pressures $P, P^\circ$, by the ideal gas laws, the chemical potential of the chemical species satisfies the equation
 
@@ -1434,7 +1550,9 @@ The chemical activity simplifies into the familiar form:
 
 $$\{A\} \approx \frac{[A]}{[A]^\circ} \approx \frac{m_A}{m_A^\circ}$$
 
-DER.
+:::
+
+::: {.callout-note title="Proof" collapse="true"}
 
 It suffices to prove the case for a pure ideal gas, as the other cases are simple corollaries.
 
@@ -1451,41 +1569,40 @@ Thus, for any $T, P, P^\circ$, we have
 
 $$\mu(T, P) = \mu(T, P^\circ) + RT \ln\frac{P}{P^\circ}$$
 
+:::
+
 ::: {#exm-0}
 
- The pH value of a solution is not $pH = -\log_{10} [H^+]$, which has the wrong units. It is not even $pH = -\log_{10} \frac{[H^+]}{[H^+]^\circ}$, since the $H^+$ particles might not behave like an ideal gas. The actually correct definition is
+The pH value of a solution is not $pH = -\log_{10} [H^+]$, which has the wrong units. It is not even $pH = -\log_{10} \frac{[H^+]}{[H^+]^\circ}$, since the $H^+$ particles might not behave like an ideal gas. The actually correct definition is [@mccartyPHParadoxesDemonstrating2006]
 
 $$pH = -\log_{10}  \{H^+\}$$
 
-[@mccartyPHParadoxesDemonstrating2006]
+:::
 
 #### Fugacity
 
-For real gases and real solutions, the chemical activity might deviate significantly from the above approximation. In this case, we typically have no recourse except by checking a table of chemical thermodynamics. They typically don't directly write down the chemical activities, but *fugacity coefficients*. There is nothing particularly deep about fugacity -- it is basically about rescaling the numbers to make the tables easier to make.
+For real gases and real solutions, the chemical activity might deviate significantly from the above approximation. In this case, we typically have no recourse except by checking a table of chemical thermodynamics. They typically don't directly write down the chemical activities, but [*fugacity coefficients*](https://en.wikipedia.org/wiki/Fugacity). There is nothing particularly deep about fugacity -- it is basically about rescaling the numbers to make the tables easier to make.
 
 Recall that the chemical potential of an ideal gas satisfies $\mu(T, P) = RT \ln\frac{P/T^{\hat c_V + 1}}{C}$, where $C$ is a constant for this gas. For a real gas, this equation only holds approximately, so we define the **fugacity** $f$ as a function of $T, P$, such that
 $$\mu(T, P) = RT \ln\frac{f/T^{\hat c_V + 1}}{C}$$
 
-In other words,
+In other words, $f(T, P) = P \phi(T, P)$, where
 
-$$f(T, P) = P \phi(T, P)$$
-
-where
-
-$$ \phi(T, P) = e^{\frac{\mu(T, P) - \mu_{ideal}(T, P)}{RT}}$$
+$$\phi(T, P) = e^{\frac{\mu(T, P) - \mu_{ideal}(T, P)}{RT}}$$
 
 is the **fugacity coefficient**.
 
 Plugging them back to the definition of activity,
+
 $$\{A\} = \frac{f}{f^\circ} = \frac{\phi P}{\phi^\circ P^\circ}$$
 
 And so, by checking a table of fugacity coefficients, chemical engineers can balance chemical reactions of real gasses, even far from ideality.
 
 ::: {.callout-warning title="Standard state"}
 
-Despite what the name "standard" might imply, a chemical species has infinitely many standard states. For example, pure gaseous oxygen has many different standard states -- one for each temperature. We have a standard state at $T = 300\mathrm{K}$ defined by $[O_2] = 1 \mathrm{mol/L}$, and another at $T = 350\mathrm{K}$ defined by $[O_2] = 1 \mathrm{mol/L}$, etc.
+Despite what the name "standard" might imply, a chemical species has infinitely many standard states. For example, pure gaseous oxygen has many different standard states -- one for each temperature. We have a standard state at $T = 300\mathrm{~K}$ defined by $[O_2] = 1 \mathrm{~mol/L}$, and another at $T = 350\mathrm{~K}$ defined by $[O_2] = 1 \mathrm{~mol/L}$, etc.
 
-Despite what the name "standard" might imply, different chemists have different standards. For example, among the biochemists, the standard state for $H^+$ in water is $[H^+]^\circ = 10^{-7} \mathrm{mol/L}$, but among the inorganic chemists, it is $[H^+]^\circ = 1 \mathrm{mol/L}$. The reason is that bodily fluids typically have $[H^+] \sim 10^{-7} \mathrm{mol/L}$.
+Despite what the name "standard" might imply, different chemists have different standards. For example, among the biochemists, the standard state for $H^+$ in water is $[H^+]^\circ = 10^{-7} \mathrm{~mol/L}$, but among the inorganic chemists, it is $[H^+]^\circ = 1 \mathrm{~mol/L}$. The reason is that bodily fluids typically have $[H^+] \sim 10^{-7} \mathrm{~mol/L}$.
 
 Despite what the name "standard temperature and pressure (STP)" might imply, it is not a "standard state", because a "standard state" of any substance does not specify its temperature.
 
@@ -1494,11 +1611,11 @@ Despite what the name "standard temperature and pressure (STP)" might imply, it 
 The point of having a standard state is like taking an electric circuit, and pointing at one point of it and say, "This is where the voltage is zero". The point is to allow relative comparisons between states, within the context of a *single* reaction. Consequently, even for a single chemical species, we can take a different standard state if we are studying a different reaction involving the species, or the same reaction in a different context.
 
 For example, if we are studying the reaction $NO_2 \rightleftharpoons N_2 O_4$ in a glass tube drenched in an ice-water bath, then we would take as our standard state
-$$T^\circ = 273.15 K, \quad [NO_2]^\circ = 1 \mathrm{mol/L}, \quad [N_2 O_4]^\circ = 1 \mathrm{mol/L}$$
+$$T^\circ = 273.15 K, \quad [NO_2]^\circ = 1 \mathrm{~mol/L}, \quad [N_2 O_4]^\circ = 1 \mathrm{~mol/L}$$
 
 For a chemical in pure gaseous form, a standard state is specified by two out of three parameters: molarity $[A] = \frac{n}{V}$, pressure $P$, temperature $T$. We must never specify all three of them, because otherwise we would break the equation of state. For example, imagine what happens when you specify that the "standard state of ideal gas" is
 
-$$T^\circ = 273.15 \mathrm{K}, P^\circ = 10^5 \mathrm{Pa}, [A]^\circ = 1 \mathrm{mol/L}$$
+$$T^\circ = 273.15 \mathrm{~K}, P^\circ = 10^5 \mathrm{~Pa}, [A]^\circ = 1 \mathrm{~mol/L}$$
 
 because they would violate the ideal gas law
 $$P = [A]RT$$
@@ -1513,35 +1630,23 @@ The short answer: because classical thermodynamics only studies systems with ext
 
 Like classical thermodynamics, and neoclassical economics, the idea of a standard state is fully committed to the idea of *homogeneous* substances. In classical thermodynamics, a cube of iron and a ball of iron are the same. A jar of water and a tank of water are the same. It does not matter what their shapes are. Moreover, two jars of water side-by-side is the same as one large jar of water. In neoclassical economics, a crowd of factories is the same as two small crowds of factories put together. They are all chunks of homogeneous stuffs.
 
-If it were not the case, then we would be unable to say that a standard state is defined by just its temperature and "moles-per-liter" of each chemical species. We would be forced to also specify a standard state volume $V^\circ$. It's conceivable that even the shape of the reaction chamber matters. We would then be forced to specify a standard shape, perhaps a box with side lengths $0.1 \mathrm{m}$. But in this extreme case, perhaps we have already left the realm of chemistry.
+If it were not the case, then we would be unable to say that a standard state is defined by just its temperature and "moles-per-liter" of each chemical species. We would be forced to also specify a standard state volume $V^\circ$. It's conceivable that even the shape of the reaction chamber matters. We would then be forced to specify a standard shape, perhaps a box with side lengths $0.1 \mathrm{~m}$. But in this extreme case, perhaps we have already left the realm of chemistry.
 
 :::
 
-DEF. official definition of "standard state" [@coxNotationStatesProcesses1982]
+#### IUAPC's definition of "standard state"
 
-At any particular temperature, we define the standard state of any liquid or solid substance to be the most stable form of that substance at a pressure of one bar.
+I have found that the [IUAPC](https://en.wikipedia.org/wiki/International_Union_of_Pure_and_Applied_Chemistry)'s definition of the "standard state" [@coxNotationStatesProcesses1982] to be precise and clarifying, though it is quite ponderous, so I summarize it as follows:
 
-For a pure substance the concept of standard state applies to the substance in a well-defined state of aggregation at a well-defined but arbitrarily chosen standard pressure.
-
-Historically, the defined pressure for the standard state, i.e., the standard-state pressure, has been 1 standard atmosphere (101 325 Pa) and most existing data use this pressure. With the growing use of SI units continued use of the atmosphere is inconvenient and in some countries now illegal. It is recommended that thermodynamic data should be reported for a defined standard-state pressure of $10^5$ Pa which is equal to 1 bar.
-
-The standard-state pressure in general is symbolized as $P^\circ$. Hitherto $P^\circ$ has customarily been taken as 1 atm. For the future it is recommended that $P^\circ$ should customarily be taken as $10^5$ Pa (1 bar). It should be understood that the present recommended change in the standard-state pressure carries no implication for "standard pressures" used in other contexts, e.g. the convention that "normal boiling points" refer to a pressure of 101 325 Pa (1 atm).
-
-Hence,the standard state for a gaseous substance, whether pure or in a gaseous mixture, is the pure substance at the standard-state pressure and in a (hypothetical) state in which it exhibits ideal-gas behaviour.
-
-The standard state for a pure liquid substance is (ordinarily) the pure liquid at the standard-state pressure.
-
-The standard state for a pure solid substance is (ordinarily) the pure solid substance at the standard-state pressure.
-
-The above definitions of standard states make no reference to fixed temperature. Hence, it is possible to have an infinite number of standard states of a substance as the temperature varies. But generally it is more convenient to complete the definition of the standard state in a particular context by choosing for the reference temperature one of a relatively small number of values, e.g., zero, $273.15 \mathrm{~K}, 293.15 \mathrm{~K}, 298.15 \mathrm{~K}$. The most favoured of these, and the one recommended for use is $298.15 \mathrm{~K}$. Because the quantity "298.15 K" is so frequently used in symbols such as $\Delta_{\mathrm{f}} \mathrm{H}^{\circ}(298.15 \mathrm{~K})$ and because it requires so much space, it is convenient to have a special symbol for this quantity... Since $T^{\circ}$ should mean a standard temperature **in general**, the use of $T^{\circ}$ to mean exclusively $298.15 \mathrm{~K}$ is **strongly discouraged**.
-
-No recommendation for a special symbol for $298.15 \mathrm{~K}$ is made at this time; any author who prefers to use a special symbol for $298.15 \mathrm{~K}$ is urged always to define it. It must be stressed, however, that there is no reason why another value (say $427.9 \mathrm{~K}$ ) should not be adopted for the reference temperature, so long as the author clearly states what has been done.
-
-For application of the concept of standard state to substances in admixture (solutions and mixtures), the composition of the system, as well as the pressure, must be defined. As one example for solutions, the standard-state molality, written as $m^\circ$ for the general case, is to be defined; customarily $m^\circ$ is taken as 1 mol/kg.
+* The standard state for a gaseous substance, whether pure or mixed, is the substance at $P^\circ$ and in a (hypothetical) state in which it exhibits ideal-gas behaviour, where $P^\circ$ is an arbitrarily fixed standard-state pressure.
+* The standard state for a pure liquid or solid substance is the pure substance at $P^\circ$.
+* The above definitions of standard states make no reference to fixed temperature. Hence, it is possible to have an infinite number of standard states of a substance as the temperature varies. But generally it is more convenient to complete the definition of the standard state in a particular context by choosing for the reference temperature one of a relatively small number of values, e.g., zero, $273.15 \mathrm{~K}, 293.15 \mathrm{~K}, 298.15 \mathrm{~K}$.
+* Since $T^{\circ}$ should mean a standard temperature **in general**, the use of $T^{\circ}$ to mean exclusively $298.15 \mathrm{~K}$ is **strongly discouraged**.
+* For application of the concept of standard state to substances in admixture (solutions and mixtures), **the composition of the system, as well as the pressure**, must be defined. As one example for solutions, the standard-state molality, written as $m^\circ$ for the general case, is to be defined; customarily $m^\circ$ is taken as $1 \mathrm{~mol/kg}$.
 
 ## Phase equilibrium
 
-Again and again, we have found some curious examples where a non-convexity leads to a jump of some kind. It would be good to study it carefully. These are all examples of first-order phase equilibrium.
+Several times, we have found some curious examples where a non-concavity in entropy leads to a jump of some kind. These are all examples of first-order phase equilibrium.
 
 ### Two phases of a gas in equilibrium
 
@@ -1593,11 +1698,11 @@ In fact, confusing the two numbers is the root of the **diamond-water paradox**.
 
 In neoclassical economics, it is the marginal value of a commodity that determines the market equilibrium, not its average value. Similarly, in thermodynamics, it is the change in Gibbs free energy when adding one more particle that determines the equilibrium state, not the average Gibbs free energy per particle.
 
-The distinction is moot in *typical books* on classical thermodynamics, which insists that entropy is extensive, so the above equation is always true. However, classical thermodynamics, much like neoclassical economics, is perfectly capable of handling non-extensive entropy, and it seems Lord Kelvin had studied this [@lavendaNonextensiveThermodynamics2010].
+The distinction is moot in *typical books* on classical thermodynamics, which insists that entropy is extensive, so the above equation is always true. However, classical thermodynamics, much like neoclassical economics, is perfectly capable of handling nonextensive entropy, and it seems Lord Kelvin had studied this [@lavendaNonextensiveThermodynamics2010].
 
 :::
 
-Now, it also happens that in most classical thermodynamics systems, such as water and steam, the marginal free Gibbs energy is identical with the average Gibbs free energy. However, classical thermodynamics is perfectly capable of handling the other cases (the phrase to search is "non-extensive entropy").
+Now, it also happens that in most classical thermodynamics systems, such as water and steam, the marginal free Gibbs energy is identical with the average Gibbs free energy. However, classical thermodynamics is perfectly capable of handling the other cases (the phrase to search is "nonextensive entropy").
 
 Assuming, as usual, that
 
@@ -1654,7 +1759,7 @@ $$\beta, \beta P, -\beta\mu_1, \dots, -\beta \mu_k$$
 
 are related by 1 equation of state.
 
-### Gibbs phase rule
+#### Gibbs phase rule
 
 ::: {#thm-0}
 
@@ -1664,13 +1769,15 @@ $$F = 2 + C - R - P$$
 
 :::
 
-We have a closed and adiathermal reaction chamber, containing $C$ different chemical species, that can undergo $R$ linearly independent chemical reactions.[^gibbs-euler-equation]
+First, we need to set up the thermodynamic system. We have a closed and adiathermal reaction chamber, containing $C$ different chemical species, that can undergo $R$ linearly independent chemical reactions.[^gibbs-euler-equation]
 
 [^gibbs-euler-equation]: The formula looks like the [Euler formula for polyhedra](https://en.wikipedia.org/wiki/Euler_characteristic), but whether this analogy is more than a coincidence is controversial. After looking into the literature for a bit, my conclusion is that it is a coincidence. However, if you wish to investigate on your own, the phrase to search is "Gibbs phase rule, Euler". This turns up some amusing examples, like [@sunGeometryHighdimensionalPhase].
 
 When the system is in an equilibrium, the chamber would contain $P$ different phases. Each phase would be homogeneous, but different from the other phases. All phases can exchange energy, volume, and particles.
 
-![Phases in equilibrium inside a chamber. [@blankschteinCriteriaPhaseEquilibria2020, figure 27.2]](../assets/image_1714623429068_0.png)
+![Phases in equilibrium inside a chamber. [@blankschteinCriteriaPhaseEquilibria2020, figure 27.2]](figure/blankschtein_fig_27_2.png)
+
+::: {.callout-note title="Case of $R = 0$" collapse="true"}
 
 First, let's consider the case where $R = 0$. That is, there can be no chemical reaction. In this case, the constrained optimization problem is
 
@@ -1715,11 +1822,15 @@ Given $T, P, \mu_1, \dots, \mu_C$, phase 1 is entirely determined: If it contain
 
 Finally, each phase contributes an equation of state, which are in general linearly independent, giving us $F = 2 + C - P$ degrees of freedom.
 
+:::
+
+::: {.callout-note title="Case of $R \geq 1$" collapse="true"}
+
 If we now allow a chemical reaction $0 \rightleftharpoons \sum_j a_j A_j$, then the constrained optimization problem becomes
 
 $$
 \begin{cases}
-\max(S_1(U_1, V_1, \vec N) + \cdots + S_P(U_P, V_P, \vec N_P) \\
+\max (S_1(U_1, V_1, \vec N) + \cdots + S_P(U_P, V_P, \vec N_P)) \\
 \sum_i U_i = U \\
 \sum_i V_i = V \\
 \sum_i \vec N_i = \vec N + \xi \vec a
@@ -1736,29 +1847,32 @@ Possibly, the system cannot satisfy $\sum_j a_j \mu_j = 0$, and so the chemical 
 
 More generally, if we impose $R$ linearly independent chemical reactions, then $F = 2 + C - P - R$.
 
+:::
+
 ::: {.callout-tip title="Beyond the Gibbs phase rule"}
 
 When the phases are not free to exchange particles, energies, volumes, etc, then the Gibbs phase rule does not apply, but the same idea of constrained minimization still applies. There are no generic rule like the Gibbs phase rule, and one must analyze each case specifically. [@blankschteinCriteriaPhaseEquilibria2020]
 
 :::
 
-| situation | components $C$ | phases in equilibrium $P$ | degrees of freedom $F = 2 + C - P$ |
-|---|---|---|---|
-| ice | 1 | 1 | 2 |
-| boiling water | 1 | 2 | 1 |
-| liquid water with a little nitrogen inside, gaseous nitrogen with a little water vapor inside | 2 | 2 | 2 |
-| triple point | 1 | 3 | 0 |
-| Nb-Ta-C alloy | 3 | 1 | 4 |
+| situation | components $C$ | phases in equilibrium $P$ | reactions $R$ | degrees of freedom $F = 2 + C - P - R$ |
+|---|---|---|---|---|
+| ice | 1 | 1 | 0 | 2 |
+| boiling water | 1 | 2 | 0 | 1 |
+| triple point | 1 | 3 | 0 | 0 |
+| liquid water with a little nitrogen inside, gaseous nitrogen with a little water vapor inside | 2 | 2 | 0 | 2 |
+| dimerization of nitrogen dioxide gas | 2 | 1 | 1 | 2 |
+| Nb-Ta-C alloy | 3 | 1 | 0 | 4 |
 
 : Some basic examples.
 
 In materials science, such as metallurgy, we often fix the pressure of the entire thing to just 1 atm, and so the phase diagrams have one less degree of freedom than what the Gibbs phase rule states.
 
-![Phase diagram for Nb-Ta-C alloy at constant pressure $P = 1 \mathrm{atm}$. [@westTernaryPhaseDiagrams2002, figure 8.1]](figure/Nb-Ta-C_phase_diagram.png)
+![3-dimensional phase diagram for Nb-Ta-C alloy at constant pressure $P = 1 \mathrm{~atm}$. [@westTernaryPhaseDiagrams2002, figure 8.1]](figure/Nb-Ta-C_phase_diagram.png)
 
-#### Boiling water in a sealed tube
+### Boiling water
 
-Boiling water in an open pot, we need to specify exactly both temperature and pressure so that both phases can coexist. The $(P, T)$ of the system would start at $(1\;\mathrm{atm}, 372\;\mathrm{K})$, then at exactly at the critical point $(1\;\mathrm{atm}, 373.15\;\mathrm{K})$ would both phases coexist, not increasing in temperature until all water has turned to steam. However, if we seal it in a tube, then the $(P, T)$ of the system would hug the line of water-steam coexistence, like a negative-feedbacked system following a predetermined path. How can we see this difference mathematically?
+When boiling water in an open pot, we need to specify exactly both temperature and pressure so that both phases can coexist. The $(P, T)$ of the system would start at $(1\;\mathrm{~atm}, 372\;\mathrm{~K})$, then at exactly at the critical point $(1\;\mathrm{~atm}, 373.15\;\mathrm{~K})$ would both phases coexist, not increasing in temperature until all water has turned to steam. However, if we seal it in a tube, then the $(P, T)$ of the system would hug the line of water-steam coexistence, like a negative-feedbacked system following a predetermined path. How can we see this difference mathematically?
 
 In the case of an open pot, the constrained optimization problem is
 
@@ -1771,7 +1885,7 @@ $$
 
 We see that the problem is very rigid: We have to minimize a linear function subject to a linear constraint. As always in linear programming, the solution is in general on an extreme vertex on the very edge of the [feasible set](https://en.wikipedia.org/wiki/Feasible_region) -- all or nothing, all liquid or all gas. Only by carefully tuning $T, P$ can we find an interior solution -- a solution that falls between the vertices, neither all liquid nor all gas.
 
-![As we increate $T$, the contours of constant Gibbs free energy are parallel lines rotating around. Only when the lines are *precisely* parallel to the $N_1 + N_2 = N$ is it possible for both phases to coexist.](figure/TODO)
+![As we increate $T$, the contours of constant Gibbs free energy are parallel lines rotating around. Only when the lines are *precisely* parallel to the $N_1 + N_2 = N$ is it possible for both phases to coexist.](figure/extensive_entropy_Gibbs_phase_rule.png)
 
 In the case of a sealed tube, assuming that Helmholtz free energy is proportional to particle number, then the equilibrium is reached at
 
@@ -1784,6 +1898,8 @@ N_1 + N_2 = N
 $$
 
 where $N$ is the total number of particles, and $v_i$ are the volume-per-particle of liquid and gaseous water. In this case, we are performing a minimization in $\R^4$, with 1 linear constraint $N_1 + N_2 = N$, and 1 nonlinear constraint $v_1 N_1 + v_2 N_2 = V$. Furthermore, the objective is also nonlinear. The result is that the solution does not in general fall on a vertex -- that is, in general, both $N_1, N_2 > 0$. And this is why when we boil water in a sealed tube, it remains boiling over a wide range of temperatures, but when we boil water in an open tube, it only boils at a single temperature.
+
+#### Nonextensive entropy
 
 Suppose that the entropy is nonextensive, then the Gibbs free energy is also nonextensive. In particular, we can no longer write
 
@@ -1809,7 +1925,7 @@ $$S(\text{two chunks of steam merged}) \neq 2 S(\text{one chunk of steam})$$
 
 The effect is that we have a nonlinear optimization problem, allowing interior solutions over a larger region of $(T, P)$ parameters. This explains our previous comment on [nonextensive Gibbs free energy](#warn-diamond-water-paradox).
 
-![As we increate $T$, the contours of constant Gibbs free energy are curved lines rotating around. Now it is possible for for both phases to coexist over an entire 2D region of $(P, T)$.](figure/TODO)
+![As we increase $T$, the contours of constant Gibbs free energy are curved lines rotating around. Now it is possible for for both phases to coexist over an entire 2D region of $(P, T)$.](figure/nonextensive_entropy_Gibbs_phase_rule.png)
 
 ## Stereodynamics {#sec-stereodynamics .appendix}
 
@@ -1843,7 +1959,7 @@ Encouraged by the discovery, legions of bubble ships journeyed forth in all dire
 
 It stood to reason that it would eventually reach zero. Using the gathered data, scientists predicted that this would happen at a distance of about 40,000 km. This led to the Open Universe Theory, where our world is a hollow rock shell, about 40,000 km thick, floating in infinite space.
 
-![In your planet of Earth, which is not hollow like ours, the density decreases according to a similar function. [@staceyEarthDensityDistribution2020]](../assets/image_1714354039582_0.png)
+![In your planet of Earth, which is not hollow like ours, the density decreases according to a similar function. [@staceyEarthDensityDistribution2020]](figure/earth_density_distribution.png)
 
 ### War of the Strata
 
@@ -1879,9 +1995,9 @@ Finally, we launched a exploration submarine. It was a hard spherical shell, pla
 
 ### Classical stereodynamics
 
-Zeroth law: If two systems are both in volumetric equilibrium with a third system, then they are in volumetric equilibrium with each other.
+The **zeroth law** of stereodynamics: If two systems are both in volumetric equilibrium with a third system, then they are in volumetric equilibrium with each other.
 
-First law: The change in volume of the system $\Delta V$ is equal to the difference between the seep-transfer $V_Q$ done to the system, and the work-transfer $V_W$ done by the system:
+The **first law** of stereodynamics: The change in volume of the system $\Delta V$ is equal to the difference between the seep-transfer $V_Q$ done to the system, and the work-transfer $V_W$ done by the system:
 
 $$\Delta V = V_Q - V_W$$
 
@@ -1895,7 +2011,7 @@ There are more complex forms of internal-volume. For example, according to Lord 
 
 The seep-transfer of volume is the other form of volume transfer. For example, it happens when one swaps a sponge-rock for a hard-rock, or when groundwater seeps from one slab of spongy rock into another slab of spongy rock.
 
-Second law: impermeable accessibility.
+The **second law** of stereodynamics: impermeable accessibility.
 
 We say that a system is "impermeable" if volume cannot pass through its boundaries.
 
@@ -1905,7 +2021,9 @@ In any neighborhood of any point $\vec q$, there are points impermeably inaccess
 
 For any two points, $\vec q, \vec q'$, one of them is impermeably accessible from the other.
 
-### Karnot Space Engine
+### Karnot space engine
+
+![One cycle of the Karnot space engine plotted in $Q, U$ space.](figure/karnot_space_engine.png)
 
 A space engine is a system that converts internal volume to mechanical volume.
 
@@ -1940,6 +2058,10 @@ V_{Q,1} = V_W + V_{Q,2} \\
 $$
 
 While originally conceived in the context of mechanical space, the concept of the space engine has been applied to various other kinds of space. It was also generalized to the concept of "generalized engine", of which "heat engine" was an example. A heat engine, like a space engine, is a system that converts internal energy to mechanical energy.
+
+The Karnot space engine is used in practice for underwater space mining. The mining team selects two sites, one site being under shallow sea, where the volumetric potential is low, and another under deep sea, where the volumetric potential is high. Over one cycle of the space engine, a large amount of space is extracted from the shallow site, some of which dissipates into the deep site, and the rest is preserved as mechanical space.
+
+![Underwater space mining (section view).](figure/space_mining.png)
 
 ### Space Death of the Universe
 
