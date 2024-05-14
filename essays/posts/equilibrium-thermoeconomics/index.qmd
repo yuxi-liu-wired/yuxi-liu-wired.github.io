@@ -27,19 +27,19 @@ importance: 5
 
 > It is to the economist, the statistician, the philosopher, and to the general reader that I commend the analysis contained herein... mathematics as applied to classical thermodynamics is beautiful: if you can't see that, you were born color-blind and are to be pitied.
 >
-> Paul Samuelson, forward to [@bicklerInvestmentPortfolioDecisionmaking1974]
+> [Paul Samuelson](https://en.wikipedia.org/wiki/Paul_Samuelson), forewords to [@bicklerInvestmentPortfolioDecisionmaking1974]
 
 ### What this essay contains
 
 Unlike my [*Analytical Mechanics* essay](https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/), this essay does not cover much of the width covered in a university course on classical thermodynamics *or* neoclassical economics. Instead, it's best described as "the conceptual foundations that a typical course does not work well on", a deep but narrow essay to supplement a shallow but wide typical textbook.
 
-Unlike analytical mechanics, which is typically taught to students intent on reaching the abstract plane of modern theoretical physics, and is thus deep but not wide, a typical course on classical thermodynamics is shallow, but very wide, and taught to a wide student base -- theoretical physicists, thermal engineers, electric engineers, chemists, biologists... When something must be taught to a wide audience, and is both wide and deep, depth is sacrificed first. This is perfectly practicable, but it leaves a small minority confused with a sinister feeling that the teachers has abused their trust in them. I am in that minority.
+Unlike analytical mechanics, which is typically taught to students intent on reaching the abstract plane of modern theoretical physics, and is thus deep but narrow, a typical course on classical thermodynamics is shallow, but very wide, and taught to a wide student base -- theoretical physicists, thermal engineers, electric engineers, chemists, biologists... When something must be taught to a wide audience, and is both deep and wide, depth is sacrificed. This is perfectly practicable, but it leaves a small minority confused with a sinister feeling that the teachers has abused their trust in them. I am in that minority.
 
 The essay contains: three laws of thermodynamics, entropy, Helmholtz and Gibbs free energy, nonextensive entropy, , Caratheodory's axiomatic thermodynamics, Vladimir Arnold's contact-geometric thermodynamics, Paul Samuelson's area-ratio thermodynamics, Le Chatelier's principle, chemical equilibrium, Gibbs phase rule and its extensions, analogies with neoclassical economics, speculative sci-fi.
 
 It does not contain: statistical mechanics, most of the "width" part of thermodynamics and economics.
 
-The prerequisites are multivariate calculus and mathematical maturity.
+The prerequisites are multivariate calculus and mathematical maturity. It's good to be familiar with basic economics as well.
 
 ### Quick reference
 
@@ -97,7 +97,7 @@ Different things can be maximized: the total entropy, or the negative Gibbs free
 
 ### Systems
 
-Systems are the main characters of the drama of thermodynamics. A thermodynamic system is something that is fully determined by a few macroscopic properties, related by equations of state. Once we know enough of its properties, we know all there is to know about such a system. There is nothing left to say about it.
+Systems are the main characters of the drama of thermodynamics. A thermodynamic system is fully determined by a few macroscopic properties, related by equations of state. Once we know enough of its properties, we know all there is to know about such a system. There is nothing left to say about it.
 
 **Everything is a thermodynamic system**. However, there are two special types: bath systems, and mechanical systems.[^anecdote-square] Any number of thermodynamic systems can be connected into a larger system -- a **compound system**.
 
@@ -107,7 +107,7 @@ The prototypical thermodynamic system is a tank of ideal gas whose number of par
 
 $$PV = k_BNT, \quad U = \frac 32 k_B NT$$
 
-If we know two out of the four of internal energy $U$, temperature $T$, volume $V$, pressure $P$, then we can solve for all the others by equations of state. The macroscopic properties fully describe the system, and nothing more can be said about it. We cannot ask more questions such as "Are there more particles on the left than on the right?" or "How long did it take for the system to reach equilibrium?", because such questions are literally *undefined* in classical thermodynamics.
+If we know two out of the four of internal energy $U$, temperature $T$, volume $V$, pressure $P$, then we can solve for all the others by equations of state. The macroscopic properties fully describe the system, and nothing more can be said about it. We cannot ask additional questions such as "Are there more particles on the left than on the right?" or "How long did it take for the system to reach equilibrium?", because such questions are literally *undefined* in classical thermodynamics.
 
 Because the properties are related by equations of state, we need only know a few of the properties in order to infer all the rest. For example, knowing the volume $V$, internal energy $U$, and particle number $N$, of a tank of ideal gas, we can infer that its pressure is $P = \frac{2U}{3V}$, and its temperature is $T = PV/k_BN$. Succinctly,
 
@@ -123,7 +123,7 @@ $$P(\omega) = f_P(U(\omega), V(\omega), N(\omega))$$
 
 :::
 
-Everything about a thermodynamical system is known once we specify how its entropy is a function of its macroscopic properties. 
+Everything about a thermodynamic system is known once we specify how its entropy is a function of its macroscopic properties. 
 For example, the ideal gas is fully specified by
 
 $$S(U, V, N) = k_B N \ln\left[\frac{V}{N}\,\left(\frac{U}{\hat{c}_V k_B N}\right)^{\hat{c}_V}\,\frac{1}{\Phi}\right]$$
@@ -134,7 +134,7 @@ As another example, the photon gas is defined by
 
 $$S(U, V) = C V^{1/4}U^{3/4}, \quad C=\left(\frac{256\pi^2 k_B^4}{1215 c^3 \hbar^3}\right)^{1/4}$$
 
-The fact that $S(U, V) \propto V^{1/4}U^{3/4}$ can be derived from 19th-century physics (and indeed, it was known to Boltzmann), but the constant $C$ has to wait for proper quantum mechanics.
+The fact that $S(U, V) \propto V^{1/4}U^{3/4}$ can be derived from 19th-century physics (indeed, it was known to Boltzmann), but the constant $C$ has to wait for proper quantum mechanics.
 
 #### Baths
 
@@ -142,7 +142,7 @@ A **bath system** is a thermodynamic system with nonzero entropy function, but i
 
 For example, if we take a copper piston and fill it with ideal gas, then immerse the piston in the bottom of an ocean, then it is a *volume-and-energy bath* with constant pressure-and-temperature. If we cover up the piston with some insulating material, then the ocean suddenly becomes merely a volume bath with constant pressure. If we use screws to fix the piston head, then the ocean suddenly becomes merely an energy bath with constant temperature.
 
-Because they are infinitely large, if you connect two baths together, something bad will happen. For example, if you connect two energy baths together, but with different temperature, what would happen? The simple answer is: "A torrent of heat will flow from the hotter to the colder bath." The more correct answer is: "Classical thermodynamics does not allow such a question to be asked. It would be like asking what happens when 'an unstoppable force meets an immovable object'. If we literally have two baths, then we cannot connect them. If we only have two giant oceans that seem like baths when compared to this little tank of gas, then if the two oceans are connected to each other, they will no longer appear as baths to each other."
+Because they are infinitely large, if you connect two baths together, something bad will happen. For example, if you connect two energy baths together, but with different temperature, what would happen? The simple answer is, "A torrent of heat will flow from the hotter to the colder bath." The more correct answer is: "Classical thermodynamics does not allow such a question to be asked. It would be like asking what happens when 'an unstoppable force meets an immovable object'. If we literally have two baths, then we cannot connect them. If we only have two giant oceans that seem like baths when compared to this little tank of gas, then if the two oceans are connected to each other, they will no longer appear as baths to each other."
 
 A heat bath, or more accurately an energy bath, is a system that you can take or dump as much energy as you want, always at constant marginal price of energy. An atmosphere, or more accurately an energy-and-volume bath, is a system that you can take or dump as much energy or volume as you want, always at constant temperature and pressure. In general, a bath is an infinite source of a conserved quantity at constant marginal entropy. We can imagine other forms of baths. For example, the surface of a lake could serve as an energy-and-area bath. A large block of salt can serve as a salt-chemical bath.
 
@@ -237,7 +237,7 @@ The gear system is designed with gear-ratio that varies as the system turns, in 
 
 ::: {.callout-tip title="Only one system"}
 
-We typically think of the tank of ideal gas itself as part of the thermodynamics, and the other parts as "the environment", but we should properly speaking consider one single compound system, of which the tank of ideal gas is merely a sub-system. This way, we can state directly that the entropy of the entire compound system is maximized.
+We typically think of the tank of ideal gas itself as part of the thermodynamics, and the other parts as "the environment", but we should consider one single compound system, properly speaking, of which the tank of ideal gas is merely a sub-system. This way, we can state directly that the entropy of the entire compound system is maximized.
 
 :::
 
@@ -247,9 +247,9 @@ We typically think of the tank of ideal gas itself as part of the thermodynamics
 
 A heat engine is a thermodynamic system that is used as a component of a larger compound system. The large system contains 4 parts: two energy baths, one heat engine, and one carefully designed mechanical system acting as energy storage.
 
-If you only want a heat engine that works, then the energy storage does not need to be carefully designed. However, if you want a Carnot heat engine, i.e. at maximal efficiency, then the energy storage must be designed to be exactly right. It must be designed to follow the exact parameters of the heat engine, as well as the two energy baths' temperatures. If any of those is ignored, the energy storage would fail to "mesh" with the rest of the compound system, and cause waste.
+If you only want a heat engine that works, then the energy storage does not need to be carefully designed. However, if you want a Carnot heat engine, i.e. at maximal efficiency, then the energy storage must be designed to be exactly right. It must be designed to follow the exact parameters of the heat engine, as well as the temperatures of the two energy baths. If any of those is ignored, the energy storage would fail to "mesh" with the rest of the compound system, and cause waste.
 
-This is why a heat engine must be a component of a larger *compound system*. Every part of it depends on every other part. The energy storage unit is just as important and precisely designed as the heat engine.
+This is why a heat engine must be a component of a larger *compound system*. Every part depends on every other part. The energy storage unit is just as important and precisely designed as the heat engine is.
 
 :::
 
@@ -259,19 +259,19 @@ This is why a heat engine must be a component of a larger *compound system*. Eve
 > 
 > Constraints set it free again.
 
-On the African savannah there lived a bunch of meerkats. Meerkats love to stand on the tallest place.
+On the African savannah, there lived a bunch of meerkats. Meerkats love to stand on the tallest place.
 
 At first, they could stand wherever they wanted, so they all stood on one single hill. It was crowded. A blind lion who had memorized the landscape came and ate all of them.
 
-Then humans came and added long walls that divided the savannah into thin stripes. Now each meerkat's location is determined by which stripe it happened to fall in. The blind lion could find the meerkat if he knew the stripe location. In other words, optimizing for height, when there is one constraint, leads to one dimension of uncertainty.
+Then humans came and added long walls that divided the savannah into thin stripes. Now each meerkat's location is determined by the stripe in which it happened to fall. The blind lion could find the meerkat if he knew the location of the stripe. In other words, optimizing for height, when there is one constraint, leads to one dimension of uncertainty.
 
-This is a subtle point, so I will say it again. If you want to optimize for a quantity, and you don't have a constraint, then you would always go to the globally best solution. The whole space of possibilities is open to you, but you don't need them. Those states are "virtual" because they are never observed, even though their existence is inferrable.
+This is a subtle point, so I will say it again. If you want to optimize for a quantity, and you don't have a constraint, then you would always go to the globally best solution. The whole space of possibilities is open to you, but you don't need them. Those states are "virtual", because they are never observed, even though their existence is inferrable.
 
 But if you have one constraint, then you have one unique solution for each possible setting of constraint. You are still not free, but at least now you have a puppet master.
 
-In classical thermodynamics, only equilibrium states are "real". Nonequilibrium states are "virtual". In Lagrangian mechanics, only stationary-action paths are real, and the other paths are virtual. You can imagine that if you throw a rock upwards, it would execute a complex figure-8 motion before returning to ground again, but that's a virtual path. The only real path is the unique virtual path that stationarizes the action integral.
+In classical thermodynamics, only equilibrium states are "real". Nonequilibrium states are "virtual". In Lagrangian mechanics, only stationary-action paths are real, and the other paths are virtual. You can imagine that if you throw a rock upwards, it might execute a complex figure-8 motion before returning to the ground again, but that's a virtual path. The only real path is the unique virtual path that stationarizes the action integral.
 
-Similarly, in classical thermodynamics, you could imagine that a tank of gas contains all its gas on the left side. Its entropy is just $S(U, V/2, N)$, but that's a virtual state that does not satisfy maximize entropy under constraint. The unique entropy-maximizing virtual state is the real state.
+Similarly, in classical thermodynamics, you could imagine that a tank of gas contains all its gas on the left side. Its entropy is just $S(U, V/2, N)$, but that's a virtual state that does not maximize entropy under constraint. The unique entropy-maximizing virtual state is the real state.
 
 For every constraint, there are many nonequilibrium states that satisfy the constraint, but only one equilibrium entropy, and so equilibrium entropy is a function of constraints, even though the entropy function itself is not. It optimizes all its complexities away, allowing us to know it through just its external constraints.
 
@@ -319,9 +319,9 @@ n = n_0
 \end{cases}
 $$
 
-That the two different problems seem to "follow one from another" is an illusion. In reality, they only appear to follow one another because this is what we observe in the real world, where one equilibrium follows another. In equilibrium thermodynamics, equilibria do not follow one another -- everyone stands alone.
+That the two different problems seem to "follow one from another" is an illusion. In reality, they only appear to follow one another because this is what we observe in the real world: one equilibrium follows another. In equilibrium thermodynamics, equilibria do not follow one another -- each stands alone.
 
-Time only appears in the following sense: We observe a real-world system, like a car engine, and notice that its motion seems to consist of a sequence of equilibria. Keeping those almost-equilibria in mind, we delve into the ocean of classical thermodynamics, until we have found some equilibria that resemble the almost-equilibria we have in mind. And so, from the bottom of the ocean, we pick up one equilibrium, then another, then another. Then we string together these little equilibria along a number line like a pearl necklace. We run our fingers over these pearls, and delight in its "motion", like flipping the pages of a stop-motion book and shouting, "Look, it is moving!".
+Time only appears in the following sense: we observe a real-world system, like a car engine, and notice that its motion seems to consist of a sequence of equilibria. Keeping those almost-equilibria in mind, we muddle around the ocean of classical thermodynamics, until we have found some equilibria that resemble the almost-equilibria we have in mind. And so, from the bottom of the ocean, we pick up one equilibrium, then another, then another. Then we string together these little equilibria along a number line like a pearl necklace. We run our fingers over these pearls and delight in their "motion", like flipping the pages of a stop-motion book and shouting, "Look, it is moving!".
 
 ![](figure/banner/2.png)
 
@@ -335,7 +335,7 @@ More accurately: one law and two non-laws.
 > 
 > [@gibbsEquilibriumHeterogeneousSubstances1878]
 
-The second law of thermodynamics is all important: maximizing entropy is all of classical thermodynamics. All other parts are just tricks for maximizing entropy.
+The second law of thermodynamics is all-important: maximizing entropy is all of classical thermodynamics. All other parts are just tricks for maximizing entropy.
 
 ### First law
 
@@ -343,10 +343,10 @@ The second law of thermodynamics is all important: maximizing entropy is all of 
 >
 > [@emdenWhyWeHave1938]
 
-The first law of thermodynamics is entirely trivial. Energy is *nothing special*! Energy is *just* a conserved quantity, one among equals, much like volume, mass, and many other things... Every conserved quantity is equally conserved,[^equally-conserved] so it does not deserve a special thermodynamic law. You might as well say "conservation of mass" is "the second-first law of thermodynamics" and "conservation of volume" is "the third-first law of thermodynamics", and "conservation of electrons" and "conservation of protons" and "conservation of length" (if you are studying a thermodynamic system restricted to move on a line) and "conservation of area" (if you are studying a thermodynamic system restricted on the surface of a lake) and so on...
+The first law of thermodynamics is entirely trivial. Energy is *nothing special*! Energy is *just* a conserved quantity, one among equals, much like volume, mass, and many other things... Every conserved quantity is equally conserved,[^equally-conserved] so it does not deserve a special thermodynamic law. You might as well say "conservation of mass" is "the second-first law of thermodynamics" and "conservation of volume" is "the third-first law of thermodynamics", and "conservation of electrons" and "conservation of protons" and "conservation of length" (if you are studying a thermodynamic system restricted to move on a line) and "conservation of area" (if you are studying a thermodynamic system restricted on the surface of a lake), and so on...
 
 [^equally-conserved]:
-    The first law of thermodynamics had always struck me as oddly out of place, almost like a joke that I could not catch, like 
+    The first law of thermodynamics had always struck me as oddly out of place, almost like a joke I could not catch, like 
 
     > All animals are equal, but some animals are more equal than others
 
@@ -354,21 +354,21 @@ The first law of thermodynamics is entirely trivial. Energy is *nothing special*
 
     > All conserved quantities are conserved, but some quantities are more conserved than others.
 
-    I kept waiting for the textbooks, or the teachers, or someone, to drop the act and confess, "Actually, we were joking -- conservation of energy really is not that special, and we were just bored with standard physics and wanted to confuse you with a cute magic trick before showing you what standard physics really is saying.". Slowly, I realized that there is no joke -- conservation of energy is unironically treated as special by not just the students, but even the teachers. I had to figure out for myself how the joke really works, and it required me to rebuild thermodynamics along my preferences.
+    I kept waiting for the textbooks, or the teachers, or someone to drop the act and confess, "Actually, we were joking -- conservation of energy really is not that special, and we were just bored with standard physics and wanted to confuse you with a cute magic trick before showing you what standard physics really is saying.". Slowly, I realized that there is no joke -- conservation of energy is unironically treated as special not just by the students but even by the teachers. I had to figure out for myself how the joke really works, and it required me to rebuild thermodynamics according to my preferences.
 
-This sounds extraordinary, but that is merely how classical thermodynamics works. The first law of thermodynamics does not deserve its title. It should be demoted to an experimental fact, not a law. Just to drive the point home, I wrote an entire [sci-fi worldbuilding sketch](#sec-stereodynamics) about an alien species, for which it is the conservation of volume that is fundamental, not energy, and which discovered stereodynamics. If you can laugh at their mistaken importance of the conservation of volume, maybe you can laugh at the mistaken importance of the conservation of energy too.
+This sounds extraordinary, but that is merely how classical thermodynamics works. The first law of thermodynamics does not deserve its title. It should be demoted to an experimental fact and not a law. Just to drive the point home, I wrote an entire [sci-fi worldbuilding sketch](#sec-stereodynamics) about an alien species for which the conservation of volume that is fundamental, not energy, and which discovered stereodynamics. If you can laugh at their mistaken importance of the conservation of volume, maybe you can laugh at the mistaken importance of the conservation of energy too.
 
 The proper place for the law of conservation of energy is not classical thermodynamics, but general physics, because energy is nothing special inside classical thermodynamics, but it is extremely special if we zoom out to consider the whole of physics. Whereas in classical thermodynamics, systems conserve energy, and volume, and mass, and electron-number, and proton-number, and... when you move outside of thermodynamics, such as when you add in electrodynamics, special relativity, and quantum mechanics, all kinds of conservations breakdown. You don't have conservation of mass, or number of electrons, or even volume, but energy is always conserved.
 
 ### Zeroth law
 
-Now that the first law has been dispelled, we can dispel the zeroth law of thermodynamics, too. If Energy falls from grace, so must its shadow, Temperature.
+Now that the first law has been dispelled, we can dispel the zeroth law of thermodynamics too. If energy falls from grace, so must its shadow, temperature.
 
 ::: {#thm-zeroth-law}
 
 ## general zeroth law
 
-If $S_1(X_1, Y) + S_(X_2, Y)$ is maximized under constraint $X_1 + X_2 = X$, then $(\partial_X S_1)_Y = (\partial_X S_2)_Y$.
+If $S_1(X_1, Y) + S_2(X_2, Y)$ is maximized under the constraint $X_1 + X_2 = X$, then $(\partial_X S_1)_Y = (\partial_X S_2)_Y$.
 
 :::
 
@@ -384,7 +384,7 @@ If $S_1(X_1, Y) + S_(X_2, Y)$ is maximized under constraint $X_1 + X_2 = X$, the
 
 ### Third law
 
-The third law is rarely if ever used in classical thermodynamics, and its precise meaning is still unclear. It seems to me that its proper place is not thermodynamics, but quantum statistical mechanics, where it states that a substance, when at the lowest possible energy (ground state), has finite entropy -- Einstein's formulation of the third law. [@klimenkoTeachingThirdLaw2012]
+The third law is rarely, if ever, used in classical thermodynamics, and its precise meaning is still unclear. It seems to me that its proper place is not thermodynamics, but quantum statistical mechanics, where it states that a substance, when at the lowest possible energy (ground state), has finite entropy -- Einstein's formulation of the third law. [@klimenkoTeachingThirdLaw2012]
 
 ### An economic interpretation
 
@@ -518,7 +518,7 @@ Equivalently, the system minimizes its Helmholtz free energy under constraint.
 
 ::: {.callout-note title="Proof" collapse="false"}
 
-If we prove the case for Helmholtz free entropy, then multiplying it by $-T$, we find that the system minimizes its Helmholtz free energy under constraint. So it remains to prove the case for Helmholtz free entropy.
+If we prove the case for Helmholtz free entropy, then by multiplying it by $-T$, we find that the system minimizes its Helmholtz free energy under constraint. So it remains to prove the case for Helmholtz free entropy.
 
 We prove the case where there is no constraint on the state of the system. The proof for the case with constraint is similar.
 
@@ -537,7 +537,7 @@ $$S_{bath} = S_{bath, 0} + \beta Q$$
 
 where $Q = U_{bath} - U_{bath, 0}$ is the amount of energy received by the bath as heat.
 
-Plugging this back, the equilibrium condition simplifies to
+Plugging this back in, the equilibrium condition simplifies to
 
 $$
 \max_U [\beta (U_0 - U) + S(\beta, U, X)]
@@ -551,7 +551,7 @@ which is the desired result.
 
 ## Helmholtz free energy difference is available for work
 
-Consider the following method of extracting mechanical energy. Connect the system to an energy bath at energy price $\beta$, and a mechanical system of arbitrary design. The system starts at $\beta, U_0, X_0$ and ends at $\beta, U_1, X_1$. No matter how the mechanical system is designed, and no matter whether the process is reversible or not, we have
+Consider the following method of extracting mechanical energy. Connect the system to an energy bath at the energy price $\beta$, and to a mechanical system of arbitrary design. The system starts at $\beta, U_0, X_0$ and ends at $\beta, U_1, X_1$. No matter how the mechanical system is designed, and no matter whether the process is reversible or not, we have
 
 $$
 W\leq F(\beta, U_0, X_0) - F(\beta, U_1, X_1)
@@ -563,22 +563,22 @@ where $W$ is "mechanical work done by the system", that is, the increase in inte
 
 ::: {.callout-note title="Proof" collapse="true"}
 
-By conservation of energy, and the second law,
+By conservation of energy and the second law,
 
 $$
 \begin{cases}
-U_1 = U_0 - (W + Q)  \\
+U_1 = U_0 - (W + Q) \\
 \beta Q + S(U_1, X_1) \geq S(U_0, X_0)
 \end{cases}
 $$
 
 which simplifies to the result.
 
-If the process is reversible, then the entropy before and after must be equal, giving us
+If the process is reversible, then the entropy before and after must be equal, which gives us
 
 $$
 \begin{cases}
-U_1 = U_0 - (W + Q)  \\
+U_1 = U_0 - (W + Q) \\
 \beta Q + S(U_1, X_1) = S(U_0, X_0)
 \end{cases}
 $$
@@ -587,18 +587,18 @@ which simplifies to the result.
 
 :::
 
-This result is typically interpreted as saying that $\Delta F = W$, that is, in a system in constant thermal equilibrium with an energy bath of constant temperature, the drop in Helmholtz energy of the system is the maximal mechanical work extractable from the system. Incidentally, this explains the odd name of "free energy" -- "free" as in "free to do work", to contrast with the other parts of internal energy, which is chained up and not free to do work.
+This result is typically interpreted as saying that $\Delta F = W$, that is, in a system in constant thermal equilibrium with an energy bath of constant temperature, the decrease in Helmholtz energy of the system is the maximal mechanical work extractable from the system. Incidentally, this explains the odd name of "free energy" -- "free" as in "free to do work" to contrast with the other parts of internal energy, which are chained up and not free to do work.
 
 ::: {#thm-envelop-helmholtz}
 
 ## envelop theorem for Helmholtz
 
-For any inverse temperature $\beta > 0$ and thermodynamic properties $X$, let $U^*$ be the optimal internal energy that maximizes Helmholtz free entropy, then
+For any inverse temperature $\beta > 0$ and thermodynamic properties $X$, let $U^*$ be the optimal internal energy that maximizes Helmholtz free entropy. We have
 
 $$
 \begin{aligned}
 \beta &= (\partial_U S)_X|_{U=U^*(\beta, X), X = X} \\
-df    &=  (\partial_X S)_U|_{U=U^*(\beta, X), X = X} dX - U^*(\beta, X) d\beta
+df    &= (\partial_X S)_U|_{U=U^*(\beta, X), X = X} dX - U^*(\beta, X) d\beta
 \end{aligned}
 $$
 
@@ -620,15 +620,15 @@ What happens if $S$ is not differentiable and strictly concave? In this case, we
 
 The first possibility is pictured as follows. There is a kink in the curve of $S(U, X)$. At that point of critical internal energy $U_c$, there is an entire interval of possible $\beta$. What we would notice is that at that critical internal energy and critical entropy, the system can be in equilibrium with *any* heat bath with *any* temperature between $[T_{c, min}, T_{c, max}]$. As far as I know, such systems do not exist, as all physically real systems have a unique temperature at all possible states.
 
-![When there is a kink in the curve of $S(U, X)$, the system has indeterminate temperature.](figure/indeterminate_temperature_SU_curve.png)
+![When there is a kink in the curve of $S(U, X)$, the system has an indeterminate temperature.](figure/indeterminate_temperature_SU_curve.png)
 
 The second possibility is pictured as follows. There is a bump in the curve, such that we can draw a double tangent over the bump, with slope $\beta_c$. At that critical inverse temperature, the system can be either at the lower tangent point, or the upper tangent point. It cannot be anywhere in-between, because as we saw, such points do not minimize $f(\beta, X)$, and thus are unstable.
 
-![When there is a double tangent in the curve of $S(U, X)$, the system has a first-order phase transition with latent entropy and energy.](figure/first_order_phase_transition_SU_curve.png)
+![When there is a double tangent in the curve of $S(U, X)$, the system undergoes a first-order phase transition with latent entropy and energy.](figure/first_order_phase_transition_SU_curve.png)
 
 For example, if we confine some liquid water in a vacuum chamber, and bathe it in a cold bath, then at its critical $\beta_c$, it would split into two parts, one part is all ice, and the other part is all water, mixed in just the right proportion to give it the correct amount of total internal energy. As it loses internal energy, the ice part grows larger, until it is all ice, at which point the system has finally gotten over the bump, and could cool down further.
 
-At the critical point, $(\partial_{\beta}f)_X$ abruptly changes. So if we plot $\beta \mapsto f(\beta, X)$, the curve would kink there.
+At the critical point, $(\partial_{\beta}f)_X$ changes abruptly. So if we plot $\beta \mapsto f(\beta, X)$, the curve will kink there.
 
 ::: {#thm-0}
 
@@ -638,7 +638,7 @@ In a first-order phase transition at a fixed temperature and varying pressure/vo
 
 $$\int PdV = P_c(V_2-V_1)$$
 
-![Maxwell's equal area rule states that the area of the regions labelled I and II are equal.](figure/maxwell_equal_area_rule.png)
+![Maxwell's equal area rule states that the areas of the regions labelled I and II are equal.](figure/maxwell_equal_area_rule.png)
 
 :::
 
@@ -649,11 +649,11 @@ Fix the system's internal energy $U$, and its temperature $T$, and plot the $V, 
 When pressure is at a critical value $P_c$, the line of slope $\beta P_c$ is tangent to the $V \mapsto S(U, V)$ curve at two different points, with volumes $V_1, V_2$. This is that first-order phase transition.
 
 Now, move the system state from the first point to the second. During the process,
-$$\int PdV = \int (TdS -dU)  = \int TdS = T \Delta S = T \beta P_c(V_2 - V_1) = P_c(V_2-V_1)$$
+$$\int PdV = \int (TdS -dU) = \int TdS = T \Delta S = T \beta P_c(V_2 - V_1) = P_c(V_2-V_1)$$
 
 :::
 
-### Other free energies
+### Other free entropies and energies
 
 Consider a thermodynamic system whose entropy function is $S(U, V, X)$, where $U$ is the internal energy and $V$ is the volume. Its **Gibbs free entropy** is
 
@@ -676,7 +676,7 @@ C(X) = 0
 \end{cases}
 $$
 
-And if $S$ is strictly concave and differentiable at that point, then $dg =  (\partial_X S)_{U, V} dX - Ud\beta - V d(\beta P)$.
+And if $S$ is strictly concave and differentiable at that point, then $dg = (\partial_X S)_{U, V} dX - Ud\beta - V d(\beta P)$.
 
 :::
 
@@ -702,9 +702,9 @@ For any inverse temperature $\beta > 0$, any pressure $P$, and other thermodynam
 
 $$
 \begin{aligned}
-\beta &= (\partial_U S)_{V, X} \\
+\beta   &= (\partial_U S)_{V, X} \\
 \beta P &= (\partial_V S)_{U, X}\\
-dg    &=  (\partial_X S)_{U, V} dX - U^* d\beta - V^* d(\beta P)
+dg      &= (\partial_X S)_{U, V} dX - U^* d\beta - V^* d(\beta P)
 \end{aligned}
 $$
 
@@ -782,7 +782,7 @@ $$
 \partial_{p_i}\partial_{q_j} \left[\max_{q_i}(S(q) - p_i q_i )\right]= -(\partial_{q_j} q_i)_{p_i} = (\partial_{p_i}p_j)_{q_j}
 $$ {#eq-maxwell-3-econ}
 
-Continuing from the previous example, if $i, j$ are noodles and bread, and we open a shop with an infinite amount of noodles always at the exact price, then I would of course buy and sell from the noodle shop until my marginal price of noodles is equal to the shop's price. Now, $(\partial_{q_j} q_i)_{p_i}$ is how much noodles I would buy if I am given a marginal unit of bread. As noodles and bread are substitutional goods, this number is negative. This then means $(\partial_{p_i}p_j)_{q_j} > 0$, meaning that if the noodle price suddenly increases a bit, then I would sell a bit of noodles until I have reached equilibrium again. At that equilibrium, since I have less noodles, I would price higher its substitutional good, bread, by an equal amount as the previous scenario.
+Continuing from the previous example, if $i, j$ are noodles and bread, and we open a shop with an infinite amount of noodles always at the exact price, then I would buy and sell from the noodle shop until my marginal price of noodles is equal to the shop's price. Now, $(\partial_{q_j} q_i)_{p_i}$ is how much noodles I would buy if I am given a marginal unit of bread. As noodles and bread are substitutional goods, this number is negative. This then means $(\partial_{p_i}p_j)_{q_j} > 0$, meaning that if the noodle price suddenly increases a bit, then I would sell a bit of noodles until I have reached equilibrium again. At that equilibrium, since I have less noodles, I would price higher its substitutional good, bread, by an equal amount as the previous scenario.
 
 Since $dg = -Ud\beta - Vd(\beta P)$, we have the fourth Maxwell relation
 
@@ -798,7 +798,7 @@ $$ {#eq-maxwell-4-econ}
 
 This is another symmetry of cross-price elasticity of demand.
 
-Continuing from the previous example, if $i, j$ are noodles and bread, and we open a shop with an infinite amount of noodles and bread, then I would of course buy and sell from the shop until my marginal prices of noodles and bread are equal to the shop's prices. Now, if the shop suddenly raises the price of bread by a small amount, I would sell off some bread until my marginal price for bread increases to the shop's new price. Now my marginal price for noodles increases too by substitutional effect, so I buy some noodles. Thus $(\partial_{p_j} q_i)_{p_i} > 0$. Switching the scenario, we find that raising the price of noodles would make me buy bread, by an equal amount as the previous scenario.
+Continuing from the previous example, if $i, j$ are noodles and bread, and we open a shop with an infinite amount of noodles and bread, then I would of course buy and sell from the shop until my marginal prices of noodles and bread are equal to the shop's prices. Now, if the shop suddenly raises the price of bread by a small amount, I would sell off some bread until my marginal price for bread increases to the shop's new price. Now my marginal price for noodles increases too by substitutional effect, so I buy some noodles. Thus $(\partial_{p_j} q_i)_{p_i} > 0$. Switching the scenario, we find that raising the price of noodles would make me buy bread by an amount equal to that in the previous scenario.
 
 ::: {.callout-note title="Alternate proof of the Maxwell relations" collapse="false"}
 
@@ -819,7 +819,7 @@ $$
 
 Now, let $(x, y)$ be an arbitrary coordinate transform. By the chain rule for Jacobians,
 $$
-\frac{\partial(p_i, q_i)}{\partial(x, y)} = \frac{\partial(p_i, q_i)}{\partial(p_j, q_j)} \frac{\partial(p_j, q_j)}{\partial(x,y)}  = -\frac{\partial(p_j, q_j)}{\partial(x,y)}
+\frac{\partial(p_i, q_i)}{\partial(x, y)} = \frac{\partial(p_i, q_i)}{\partial(p_j, q_j)} \frac{\partial(p_j, q_j)}{\partial(x,y)} = -\frac{\partial(p_j, q_j)}{\partial(x,y)}
 $$
 
 This allows us to derive all the Maxwell relations. For example, setting $(x, y) = (p_i, q_j)$ gives us the third relation
@@ -857,7 +857,7 @@ Here is **Caratheodory's version of the second law of thermodynamics**:
 
 The effect of these two axioms is that we can define a total ordering $\preceq$ on state space, where we write $\vec q \preceq \vec q'$ to mean that $\vec q$ can adiabatically access $\vec q'$, and write $\vec q \sim \vec q'$ to mean that they are mutually adiabatically accessible.
 
-Interpreted economically, we say that the system is an economic agent, each $\vec q$ is a bundle of goods, and $\vec q \preceq \vec q'$ means that $\vec q'$ is preferable to the agent, and that $\vec q \sim \vec q'$ means they are equally preferred.
+Interpreted economically, we say that the system is an economic agent, that each $\vec q$ is a bundle of goods, that $\vec q \preceq \vec q'$ means that $\vec q'$ is preferable to the agent, and that $\vec q \sim \vec q'$ means they are equally preferred.
 
 The total ordering partitions the state space into contour surfaces of equal accessibility, or [indifference surfaces](https://en.wikipedia.org/wiki/Indifference_curve). Assuming the state space is not designed to be [pathological](https://en.wikipedia.org/wiki/Pathological_(mathematics)), these indifference surfaces will be differentiable.
 
@@ -929,7 +929,7 @@ When I realized this difference, I was so incensed at this mistake that I wrote 
 
 While we have constructed the temperature $T$ and the entropy $S$ of an isolated system, it is not unique: we can stretch and compress the entropy function $S$ arbitrarily by a monotonic function, and as long as we modify the temperature function $T$ just right, the two modifications cancel out, and we have $TdS = T' dS'$.
 
-In order to uniquely fix an entropy function, we need further assumptions. The most commonly used method is by considering what happens to the entropy of a compound system. In general, there is no reason to expect entropy to be extensive -- if we take compound two systems together, the entropy of the compound system should be the sum of the two subsystems. However, if we make some assumptions on "rationality", then entropy would be uniquely fixed, and would be extensive.
+In order to uniquely fix an entropy function, we need further assumptions. The most commonly used method is by considering what happens to the entropy of a compound system. In general, there is no reason to expect entropy to be extensive -- if we take compound two systems together, the entropy of the compound system should be the sum of the two subsystems. However, if we make some assumptions on "rationality", then the entropy would be uniquely fixed, and would be extensive.
 
 ::: {#exr-0}
 
@@ -980,15 +980,15 @@ $$
 
 This formula has a clear interpretation in economics: if the marginal utility of commodity $1$ is $p_1$, and the marginal utility of commodity $2$ is $p_2$, then if we receive $\delta q_1, \delta q_2$, our utility would increase by $p_1 \delta q_1 + p_2 \delta q_2$.
 
-The difficult thing about classical thermodynamics is that there are so many quantities (temperature, volume, pressure...). The saving grace is that it turns out that there are only a few degrees of freedom.[^parthian-shot]
+The difficult thing about classical thermodynamics is that there are so many quantities, such as $T, V, N, \dots$. The saving grace is that it turns out that there are only a few degrees of freedom.[^parthian-shot]
 
 [^parthian-shot]: The Parthian shot is that now you are burdened with dozens of equations relating these quantities. I cannot remember any of the Maxwell relations, so I look at Wikipedia every time I need to calculate with them.
 
-However, why is it that a macroscopic lump of matter, whirling with $10^{23}$ molecules, turn out to be characterized by only a few degrees of freedom? Why is it that a national economy, swarming with $10^8$ people, have macroeconomic laws? For the first question, the answer is given by classical thermodynamics: the lump of matter is maximizing its entropy under constraint, so its degrees of freedom are exactly as many as the number of constraints it is laboring under. For the second question, the answer is given by neoclassical economics: the national economy behaves as if it is maximizing a social utility function under its resource constraints.
+However, why is it that a macroscopic lump of matter, whirling with $10^{23}$ molecules, turn out to be characterized by only a few degrees of freedom? Why is it that a national economy, swarming with $10^8$ people, has macroeconomic laws? For the first question, the answer is given by classical thermodynamics: the lump of matter is maximizing its entropy under constraints, so its degrees of freedom are exactly as many as the number of constraints it is laboring under. For the second question, the answer is given by neoclassical economics: the national economy behaves as if it is maximizing a social utility function under its resource constraints.
 
 With that brief look at philosophy, we return to abstract thermodynamics. We have a lump of matter (such as ideal gas in a piston), of which we can measure five different properties: $p_1, p_2, q_1, q_2, S$. In general, we expect that the space of possible measurements is 5-dimensional, but it turns out that they collapse down to a 2-dimensional curved surface. This is why we could completely fix its state knowing just its $V, U$, or just its $P, T$, etc.
 
-The question now comes: Why is it possible to collapse things down to this curved surface?
+The question now arises: Why is it possible to collapse things down to this curved surface?
 
 Things are already interesting when we have just one commodity:
 
@@ -1010,9 +1010,9 @@ For example, in three dimensions, the field of planes $dS - pdq = 0$ would look 
 
 Given such a field of planes $dS - \sum_{i=1}^n p_i dq_i$ in $\R^{2n+1}$, we say that a manifold is a **Legendrian submanifold** iff the manifold has $n$ dimensions, and is tangent to the field of planes at every point.
 
-For example, when $n=1$, a Legendrian submanifold is a curve that winds around $\R^3$ that is always tangent to the plane at every moment.
+For example, when $n=1$, a Legendrian submanifold is a curve that winds around $\R^3$ and is always tangent to the plane at every moment.
 
-Let $S(q)$ be a differentiable function. We can interpret $S(q)$ as how much money we can earn if we produce something using the bundle of raw materials $(q_1, \dots, q_n)$.
+Let $S(q)$ be a differentiable function. We can interpret $S(q)$ as the amount of money we can earn if we produce something using the bundle of raw materials $(q_1, \dots, q_n)$.
 
 Given any market price for the raw materials, $q^* = \argmax_q (S(q) - \braket{p, q})$ is the profit-maximizing production plan, and $\Pi(p) = \max_q (S(q) - \braket{p, q})$ is the profit.
 
@@ -1036,7 +1036,7 @@ The second part is proven by plugging in $dS - \sum_i p_i dq_i = 0$. And if $S$ 
 
 :::
 
-Economically speaking, $\max_q (S(q) - \braket{p, q})$ means to maximize profit. What does it mean thermodynamically speaking? It means minimizing $\braket{p, q} - S(q)$, which is the Gibbs free entropy! Maximizing profit when a factory has access to a market is the same as minimizing Gibbs free entropy when a system is in contact with a bath.
+Economically speaking, $\max_q (S(q) - \braket{p, q})$ means to maximize profit. What does it mean, thermodynamically speaking? It means minimizing $\braket{p, q} - S(q)$, which is the Gibbs free entropy! Maximizing profit when a factory has access to a market is the same as minimizing Gibbs free entropy when a system is in contact with a bath.
 
 ### Samuelson's area-ratio thermodynamics
 
@@ -1112,7 +1112,7 @@ Thus, there exists some scalar function $S$, such that $dS = ydx + zdw$.
 
 :::
 
-And with an entropy/utility function, all of classical thermodynamics/neoclassical economics follows.
+And with an entropy/utility function, all of classical thermodynamics/neoclassical economics follow.
 
 #### Example: ideal gas
 
@@ -1130,7 +1130,7 @@ As shown, we can draw a very thin parallelogram $\delta$, then use the squashing
 
 $$A(c) : A(d) = \frac{A(c)}{A(\delta)} : \frac{A(d)}{A(\delta)} \approx N(c) : N(d)$$
 
-where $A(c)$ is the area of $c$, and $N(c)$ is the number of copies of $\delta$ that is contained within $c$. By the method of exhaustion and Eudoxus' theory of proportion, at the limit of infinitely thin $\delta$, both sides are equal.
+where $A(c)$ is the area of $c$, and $N(c)$ is the number of copies of $\delta$ that are contained within $c$. By the method of exhaustion and Eudoxus' theory of proportion, at the limit of infinitely thin $\delta$, both sides are equal.
 
 Now, performing the same construction on the other half of the parallelograms, we tile $a, b$ by the same number of copies of $\delta'$. Thus we have
 
@@ -1142,7 +1142,7 @@ and both sides equal at the limit.
 
 :::
 
-Now, by the [area ratio construction](#thm-area-ratio), there exists two functions $f_T, f_S$, such that the new coordinates
+Now, by the [area ratio construction](#thm-area-ratio), there exist two functions $f_T, f_S$, such that the new coordinates
 
 $$T(P, V) = f_T(PV), \quad S(P, V) = f_S(PV^\gamma)$$
 
@@ -1158,13 +1158,13 @@ Simplifying, we get
 
 $$f'_T(PV)f_S'(PV^\gamma) = \frac{1}{(\gamma - 1) PV^\gamma}$$
 
-Let $x = PV, y = PV^\gamma$, we get a separation of variables: $f'_T(x) f'_S(y) = \frac{1}{(\gamma-1) y}$, which solves to
+Let $x = PV, y = PV^\gamma$ to separate the variables: $f'_T(x) f'_S(y) = \frac{1}{(\gamma-1) y}$, which solves to
 
 $$T = C_1 PV + C_0, \quad S = \frac{1}{(\gamma-1) C_1} \ln \frac{PV^\gamma}{P_0V_0^\gamma}$$
 
 for some constants $C_0, C_1, P_0, P_0$.
 
-Knowing that $C_0 = 0, C_1 = 1/(nR)$, we have the equations of state:
+Knowing that $C_0 = 0$ and $C_1 = 1/(nR)$, we have the equations of state:
 $$PV = nRT, \quad S = \frac{1}{\gamma-1} nR \ln \frac{PV^\gamma}{P_0V_0^\gamma}$$
 
 Integrating $dU = TdS - PdV$, we have $U = \frac{1}{\gamma-1} nRT$. We can define $\hat c_V = \frac{1}{\gamma - 1}$, which leads to
@@ -1179,7 +1179,7 @@ Thus, we have
 
 $$PV = nRT, \quad S = \hat c_V n R \ln \frac{PV^{1 + 1/\hat c_V}}{P_0V_0^{1 + 1/\hat c_V}} = n R \ln \frac{U^{\hat c_V}V}{U_0^{\hat c_V} V_0}, \quad U = \hat c_V nRT$$
 
-Taking the derivative, $dS = \beta dU + \beta PdV - \beta \mu dn$ gives $\beta = 1/T, P = P, \mu = -TS/n$.
+Taking the derivative, $dS = \beta dU + \beta PdV - \beta \mu dn$ gives $\beta = 1/T$, $P = P$, and $\mu = -TS/n$.
 
 We find that the chemical potential, unfortunately, has an additive constant. We should not be too surprised, however, as anything with "potential" in its name probably has an additive constant, like electric voltage.
 
@@ -1209,19 +1209,19 @@ which, by @thm-profit-maximization-legendrian-manifold, maximizes *like* an entr
 
 There are other ways to study the state space of thermodynamic systems by differential geometry. For example, since the entropy function is typically a strictly concave function of the extensive parameters, $-\partial^2 S$ is positive-definite. This is then a Riemannian metric on the state space.[^singular-riemannian] For more on this line of research, search "Ruppeiner geometry" and "Weinhold geometry" [@weinholdThermodynamicsGeometry1976; @quevedoGeometrothermodynamics2007].
 
-[^singular-riemannian]: The only places where strict concavity fails is when $S$ is "bumped downwards", which gives us a first-order phase transition, or has a flat region, which gives us a second-order phase transition. Away from regions of phase transition, we have a Riemannian geometry. In the regions of phase transitions, the geometry collapses into singularities, much as spacetime collapses in the center of a black hole.
+[^singular-riemannian]: The only places where strict concavity fails are when $S$ is "bumped downwards", which gives us a first-order phase transition, or has a flat region, which gives us a second-order phase transition. Away from regions of phase transition, we have a Riemannian geometry. In the regions of phase transitions, the geometry collapses into singularities, much as spacetime collapses in the center of a black hole.
 
 ![](figure/banner/6.png)
 
 ## Chemical equilibrium done right
 
-Josiah Willard Gibbs was an otherworldly figure, who thought of abstract surfaces in a 19th century America, where practical industry, not pure science, was celebrated. He was also famously obscure, and could write the most convoluted sentences that defeated everyone, from Boltzmann to Jaynes [@jaynesGibbsParadox1992]. When he was asked by his European translator to write a preface for the German translation of his thermodynamics book, he replied that he has already said everything he wanted to say about thermodynamics, so there's nothing to add. [@daisJosiahWillardGibbs2024]
+Josiah Willard Gibbs was an otherworldly figure who thought of abstract surfaces in a 19th century America, where practical industry, not pure science, was celebrated. He was also famously obscure and could write the most convoluted sentences that defeated everyone, from [Boltzmann](https://en.wikipedia.org/wiki/Boltzmann) to [Jaynes](https://en.wikipedia.org/wiki/Edwin_Thompson_Jaynes) [@jaynesGibbsParadox1992]. When he was asked by his European translator to write a preface for the German translation of his thermodynamics book, he replied that he had already said everything he wanted to say about thermodynamics, so there was nothing to add. [@daisJosiahWillardGibbs2024]
 
-Gibbs wrote his [hefty](https://en.wiktionary.org/wiki/hefty) [Heft](https://en.wiktionary.org/wiki/Heft#German) on thermodynamics, *On the Equilibrium of Heterogeneous Substances* (1876), to answer one question: Why are some "heterogeneous substances" in equilibrium, while others not? Why, when we drop a block of salt into pure water, does the block of salt become smaller, but after a while, it stops getting smaller? His answer was always the same: heterogeneous substances are in equilibrium precisely when its entropy is maximized under constraint.
+Gibbs wrote his [hefty](https://en.wiktionary.org/wiki/hefty) [Heft](https://en.wiktionary.org/wiki/Heft#German) on thermodynamics, *On the Equilibrium of Heterogeneous Substances* (1876), to answer one question: why are some "heterogeneous substances" in equilibrium, while others not? Why, when we drop a block of salt into pure water, does the block of salt become smaller, but after a while, it stops getting smaller? His answer was always the same: heterogeneous substances are in equilibrium precisely when the entropy of the total system is maximized under constraint.
 
-Paul Samuelson is a decidedly worldly economist in a 20th century America, where economists are expected to dispense advice to presidents and contribute to the public discourse. Indeed, he did both, serving as an advisor to presidents Kennedy and Johnson, and publishing a [best-selling textbook in economics](https://en.wikipedia.org/wiki/Economics_(textbook)). Although, unlike other worldly economists like Marx and Keynes, his economic achievements were highly mathematical.
+Paul Samuelson is a decidedly worldly economist in a 20th century America, where economists are expected to dispense advice to presidents and contribute to the public discourse. Indeed, he did both, serving as an advisor to presidents Kennedy and Johnson, and publishing a [best-selling textbook in economics](https://en.wikipedia.org/wiki/Economics_(textbook)). Although unlike other worldly economists like Marx and Keynes, his economic achievements were highly mathematical.
 
-Samuelson wrote his landmark book, *Foundations of Economic Analysis* (1947), to answer one question: Why are some economic systems in equilibrium, while others not? Why, when we drop a block of agents into a market, do they buy and sell things, but after a while, they stop buying and selling? His answer was always the same: a crowd of economic agents is in equilibrium precisely when some global parameter (which can be interpreted as utility, profit, etc, depending on context) is maximized under constraint.
+Samuelson wrote his landmark book, *Foundations of Economic Analysis* (1947), to answer one question: Why are some economic systems in equilibrium, while others are not? Why, when we drop a block of agents into a market, do they buy and sell things, but after a while, they stop buying and selling? His answer was always the same: a crowd of economic agents is in equilibrium precisely when some parameter of the total economic system (which can be interpreted as utility, profit, etc, depending on context) is maximized under constraint.
 
 ### Fixed volume and temperature
 
@@ -1238,7 +1238,7 @@ $$
 \begin{cases}
 \min_{n_{NO_2}, n_{N_2 O_4}} F(T, V, n_{NO_2}, n_{N_2O_4})\\
 (n_{NO_2} - n_{NO_2, 0}) = -2 \xi\\
-(n_{N_2O_4} - n_{NO_2, 0})  = \xi
+(n_{N_2O_4} - n_{NO_2, 0}) = \xi
 \end{cases}
 $$
 
@@ -1263,7 +1263,7 @@ $$
 \begin{cases}
 -2\mu_{NO_2} (T, V, n_{NO_2}, n_{N_2O_4}) + \mu_{N_2 O_4}(T, V, n_{NO_2}, n_{N_2O_4}) = 0 \\
 (n_{NO_2} - n_{NO_2, 0}) = -2 \xi\\
-(n_{N_2O_4} - n_{NO_2, 0})  = \xi
+(n_{N_2O_4} - n_{NO_2, 0}) = \xi
 \end{cases}
 $$
 
@@ -1277,7 +1277,7 @@ Economically speaking, the situation is precisely equivalent to the standard fir
 
 The answer, as we can see in the diagram, is the tangent point of the straight line of constant budget with the curved lines of constant utility.
 
-To anthropomorphize the situation, we can say that the reaction chamber is a consumer, trying to minimize its Helmholtz free energy under the "budgetary constraint" of $2 NO_2 \rightleftharpoons N_2O_4$. In this way, chemical equilibrium becomes a problem in consumer theory.
+To anthropomorphize the situation, we can say that the reaction chamber is a consumer trying to minimize its Helmholtz free energy under the "budgetary constraint" of $2 NO_2 \rightleftharpoons N_2O_4$. In this way, chemical equilibrium becomes a problem in consumer theory.
 
 #### Existence and uniqueness
 
@@ -1285,9 +1285,9 @@ We see from the diagram that at least one solution exists. In most situations, t
 
 If the budget line is tangent to a curve of constant $F$, then at the equilibrium point, both $NO_2$ and $N_2O_4$ exist. Otherwise, only one exist, and we say that the reaction is irreversible. Economically speaking, it is like when you are poor enough, you might spend all your money buying noodles, and none buying bread.
 
-![The reaction chamber is a sealed glass tube held under constant temperature of 298.15 K. It has the following $\xi, H$ curve. At the $\xi = 0$ side, the tube contains 2 moles of $NO_2$, and at the $\xi = 1 \mathrm{~mol}$ side, the tube contains 1 mole of $N_2O_4$. [@raffSpontaneityEquilibriumWhy2014, figure 2]](figure/raff_2014_fig_2.png)
+![The $\xi, H$ curve of a reaction chamber, that is a sealed glass tube held under constant temperature of 298.15 K. At the $\xi = 0$ side, the tube contains 2 moles of $NO_2$, and at the $\xi = 1 \mathrm{~mol}$ side, the tube contains 1 mole of $N_2O_4$. [@raffSpontaneityEquilibriumWhy2014, figure 2]](figure/raff_2014_fig_2.png)
 
-If $F$ is not strictly concave, then it might have a double tangent point with the budget line. In that case, we have a first-order phase transition, and the substance splits into two, with different phases. Because the two parts can exchange volumes, it is no longer convenient to analyze with Helmholtz free energy, and we had better use Gibbs free energy. This is studied in [the next section](#sec-phase-equilibrium).
+If $F$ is not strictly concave, then it might have a double tangent point with the budget line. In that case, we have a first-order phase transition, and the substance splits into two chunks with different phases. Because the two parts can exchange volumes, it is no longer convenient to analyze with Helmholtz free energy, and we had better use Gibbs free energy. This is studied in [the next section](#sec-phase-equilibrium).
 
 ### Multireaction equilibrium
 
@@ -1309,7 +1309,7 @@ To make the algebra look cleaner, we rewrite them as follows:
 $$
 \begin{aligned}
 0 &\rightleftharpoons -O_2 - 2 NO + 2NO_2 + 0 N_2 O_3\\
-0 &\rightleftharpoons  0 O_2 -NO - NO_2 + N_2O_3
+0 &\rightleftharpoons 0 O_2 -NO - NO_2 + N_2O_3
 \end{aligned}
 $$
 
@@ -1345,8 +1345,8 @@ Starting at any initial chemical composition of $\vec n_0$, the space of all pos
 
 $$
 \begin{cases}
-\vec n = \vec n_0  + \xi_1 \vec n_1+ \xi_2 \vec n_2,  \\
-\vec n \geq 0
+\vec n &= \vec n_0 + \xi_1 \vec n_1+ \xi_2 \vec n_2, \\
+\vec n &\geq 0
 \end{cases}
 $$
 
@@ -1367,7 +1367,7 @@ Consider a sealed reaction chamber held in an energy bath, so that both the pric
 The system contains a homogenous mixture of chemical species $A_1, \dots, A_k$, which might undergo the following $r$ possible chemical reactions:
 
 $$
-0  \rightleftharpoons \sum_i a_{ij} A_i, \quad j = 1, 2, \dots, r
+0 \rightleftharpoons \sum_i a_{ij} A_i, \quad j = 1, 2, \dots, r
 $$
 
 The necessary condition for chemical equilibrium is
@@ -1403,6 +1403,8 @@ For example, for the same reaction of $NO_2$ dimerization, now put into a flabby
 ![The reaction chamber is a flabby plastic bag held under constant temperature of $298.15 \mathrm{~K}$ and constant pressure $1 \mathrm{~atm}$. It has the following $\xi, G$ curve. At the $\xi = 0$ side, the tube contains $2 \mathrm{~mol}$ of $NO_2$, and at the $\xi = 1 \mathrm{~mol}$ side, the tube contains $1 \mathrm{~mol}$ of $N_2O_4$. [@raffSpontaneityEquilibriumWhy2014, figure 4]](figure/raff_2014_fig_4.png)
 
 ### The meaning of $\Delta G$
+
+<small>This section based on [@quilezFirstYearUniversityChemistry2012].</small>
 
 $\Delta G$ has two confusable meanings. The first meaning is $\frac{dG}{d\xi}$, that is, the marginal Gibbs free energy for reaction, - how much the Gibbs free energy increases if the reaction goes forward by an infinitesimal mole. The second meaning is $\int_0^1 (\partial_\xi G)_{T, P} d\xi$. Both meanings are illustrated in the diagram.
 
@@ -1537,7 +1539,7 @@ $$\mu(T, P) = \mu(T, P^\circ) + RT \ln\frac{P}{P^\circ}$$
 
 and so its activity is $\frac{P}{P^\circ}$.
 
-In a mixture of ideal gasses, the gasses do not interact, and so the activity of chemical species $A_i$ is $\{A_i\} = \frac{P_i}{P_i^\circ}$, where $P_i$ is the partial pressure of species $A_i$ in the mixed gas, and $P_i^\circ$ is the standard pressure for species $A_i$.
+In a mixture of ideal gases, the gases do not interact, and so the activity of chemical species $A_i$ is $\{A_i\} = \frac{P_i}{P_i^\circ}$, where $P_i$ is the partial pressure of species $A_i$ in the mixed gas, and $P_i^\circ$ is the standard pressure for species $A_i$.
 
 In a dilute solution, if the solvent behaves like a mixture of ideal gasses, then
 
@@ -1572,15 +1574,15 @@ $$\mu(T, P) = \mu(T, P^\circ) + RT \ln\frac{P}{P^\circ}$$
 
 ::: {#exm-0}
 
-The pH value of a solution is not $pH = -\log_{10} [H^+]$, which has the wrong units. It is not even $pH = -\log_{10} \frac{[H^+]}{[H^+]^\circ}$, since the $H^+$ particles might not behave like an ideal gas. The actually correct definition is [@mccartyPHParadoxesDemonstrating2006]
+The pH value of a solution is not $pH = -\log_{10} [H^+]$, which has the wrong units. It is not even $pH = -\log_{10} \frac{[H^+]}{[H^+]^\circ}$, since the $H^+$ particles might not behave like an ideal gas. The actual correct definition is [@mccartyPHParadoxesDemonstrating2006]
 
-$$pH = -\log_{10}  \{H^+\}$$
+$$pH = -\log_{10} \{H^+\}$$
 
 :::
 
 #### Fugacity
 
-For real gases and real solutions, the chemical activity might deviate significantly from the above approximation. In this case, we typically have no recourse except by checking a table of chemical thermodynamics. They typically don't directly write down the chemical activities, but [*fugacity coefficients*](https://en.wikipedia.org/wiki/Fugacity). There is nothing particularly deep about fugacity -- it is basically about rescaling the numbers to make the tables easier to make.
+For real gases and real solutions, the chemical activity might deviate significantly from the above approximation. In this case, we typically have no recourse except to checking a table of chemical thermodynamics. They typically do not directly write down the chemical activities, but [*fugacity coefficients*](https://en.wikipedia.org/wiki/Fugacity). There is nothing particularly deep about fugacity -- it is basically about rescaling the numbers to make the tables easier to make.
 
 Recall that the chemical potential of an ideal gas satisfies $\mu(T, P) = RT \ln\frac{P/T^{\hat c_V + 1}}{C}$, where $C$ is a constant for this gas. For a real gas, this equation only holds approximately, so we define the **fugacity** $f$ as a function of $T, P$, such that
 $$\mu(T, P) = RT \ln\frac{f/T^{\hat c_V + 1}}{C}$$
@@ -1623,13 +1625,13 @@ For non-ideal gas, we still have an equation of state between $P, [A], T$, meani
 
 ::: {.callout-tip title="Intensive quantities"}
 
- Why is a standard state defined by intensive quantities like temperature, pressure, or molarity? Why isn't it defined by extensive quantities like volume, mass, and moles?
+ Why is a standard state defined by intensive quantities like temperature, pressure, or molarity? Why isn't it defined by extensive quantities such as volume, mass, and moles?
 
 The short answer: because traditional chemistry only studies systems with extensive entropies. For those systems, chemical equilibrium is determined by intensive quantities. This is not because classical thermodynamics cannot handle nonextensive entropy, but because chemists had no use for systems with nonextensive entropy.
 
-Like classical thermodynamics, and neoclassical economics, the idea of a standard state is fully committed to the idea of *homogeneous* substances. In classical thermodynamics, a cube of iron and a ball of iron are the same. A jar of water and a tank of water are the same. It does not matter what their shapes are. Moreover, two jars of water side-by-side is the same as one large jar of water. In neoclassical economics, a crowd of factories is the same as two small crowds of factories put together. They are all chunks of homogeneous stuffs.
+Like classical thermodynamics and neoclassical economics, the idea of a standard state is fully committed to the idea of *homogeneous* substances. In classical thermodynamics, a cube of iron and a ball of iron are the same. A jar of water and a tank of water are the same. It does not matter what their shapes are. Moreover, two jars of water side-by-side is the same as one large jar of water. In neoclassical economics, a crowd of factories is the same as two small crowds of factories put together. They are all chunks of homogeneous stuffs.
 
-If it were not the case, then we would be unable to say that a standard state is defined by just the temperature and molar concentration of each chemical species. We would be forced to also specify a standard state volume $V^\circ$. It's conceivable that even the shape of the reaction chamber matters. We would then be forced to specify a standard shape, perhaps a box with side lengths $0.1 \mathrm{~m}$. But in this extreme case, perhaps we have already left the realm of chemistry.
+If this were not the case, then we would be unable to say that a standard state is defined by just the temperature and molar concentration of each chemical species. We would be forced to also specify a standard state volume $V^\circ$. It is conceivable that even the shape of the reaction chamber matters. We would then be forced to specify a standard shape, perhaps a box with side lengths $0.1 \mathrm{~m}$. But in this extreme case, perhaps we have already left the realm of chemistry.
 
 For spherical particles, doubling the volume would double the mass, but only $2^{2/3} \approx 1.59 \times$ the surface area. Consequently, if the surface between phases has a non-negligible entropy ("surface effect"), then entropy would be nonextensive. While IUAPC is silent on the issue, nonextensive entropy is taken up in earnest by chemists who work with small spherical particles [@letellierSolubilityNanoparticlesNonextensive2007].
 
@@ -1676,7 +1678,7 @@ $$
 
 where we, instead of writing $S(U_1, V_1, N_1) + S(U_2, V_2, N_2)$, write $S_{\red{1}}(U_1, V_1, N_1) + S_{\red{2}}(U_2, V_2, N_2)$, to emphasize that we now have two thermodynamic systems that might have very different behavior, like water vs ice.
 
-Differentiating, we find that the marginal value of each asset is equal in both subsidiaries:
+Differentiating, we find that the marginal values of each asset are equal in both subsidiaries:
 
 $$
 \begin{cases}
@@ -1735,9 +1737,9 @@ Therefore, we can trace the pressure-volume diagram with our finger, from high p
 
 #### Degrees of thermodynamic freedom
 
-Consider a chunk of (ideal or not) gas. We know everything there is to know about it if we know its $(U, V, N)$. Every other thermodynamic quantity can be computed by its entropy function $S(U, V, N)$. Thus, we have a system with three degrees of thermodynamic freedom... or do we?
+Consider a chunk of gas (ideal or not). We know everything there is to know about it if we know its $(U, V, N)$. Every other thermodynamic quantity can be computed by its entropy function $S(U, V, N)$. Thus, we have a system with three degrees of thermodynamic freedom... or do we?
 
-The problem is that entropy of gas, and just about every other system studied in classical thermodynamics, is extensive. Therefore, we have
+The problem is that the entropy of gas, and just about every other system studied in classical thermodynamics, is extensive. Therefore, we have
 
 $$S(U, V, N) \propto N$$
 
@@ -1883,7 +1885,7 @@ $$
 
 We see that the problem is very rigid: We have to minimize a linear function subject to a linear constraint. As always in linear programming, the solution is in general on an extreme vertex on the very edge of the [feasible set](https://en.wikipedia.org/wiki/Feasible_region) -- all or nothing, all liquid or all gas. Only by carefully tuning $T, P$ can we find an interior solution -- a solution that falls between the vertices, neither all liquid nor all gas.
 
-![As we increate $T$, the contours of constant Gibbs free energy are parallel lines rotating around. Only when the lines are *precisely* parallel to the $N_1 + N_2 = N$ is it possible for both phases to coexist.](figure/extensive_entropy_Gibbs_phase_rule.png)
+![As we increase $T$, the contours of constant Gibbs free energy are parallel lines rotating around. Only when the lines are *precisely* parallel to the $N_1 + N_2 = N$ is it possible for both phases to coexist.](figure/extensive_entropy_Gibbs_phase_rule.png)
 
 In the case of a sealed tube, assuming that Helmholtz free energy is proportional to particle number, then the equilibrium is reached at
 
@@ -1951,11 +1953,11 @@ The search for other bubbles began in earliest antiquity. We had spun many fasci
 
 Every mission meant a bubble ship-sized pile of debris in our core space and we would have to wait for the ship to return before we could return those rocks into the wall. If the bubble ship failed to return, this small pile would mean another small piece of space lost to us forever. Soon, exploration was forbidden on pain of death by short-circuiting. Despite this, the urge for space drove many to secretly sail off illegally.
 
-One day, an illegally launched bubble ship returned after eight years of voyage. The ship had dug 200 km deep into the rock, a world record. It returned with rock samples labelled by depth. By measuring the mass of the rocks on an inertial balance, scientists discovered that the rocks' density decreased. Encouraged by the discovery, legions of bubble ships journeyed forth in all directions, penetrating deeper than ever, and returned with rock samples. It turned out that rock density decreased as a function of depth, and independent of direction.
+One day, an illegally launched bubble ship returned after eight years of voyage. The ship had dug 200 km deep into the rock, a world record. It returned with rock samples labelled by depth. By measuring the mass of the rocks on an inertial balance, scientists discovered that the density of the rocks decreased. Encouraged by the discovery, legions of bubble ships journeyed forth in all directions. Penetrating deeper than ever, they returned with rock samples. It turned out that rock density decreased as a function of depth and was independent of direction.
 
-It stood to reason that it would eventually reach zero. Using the gathered data, scientists predicted that this would happen at a distance of about 40,000 km. This led to the Open Universe Theory, where our world is a hollow rock shell, about 40,000 km thick, floating in infinite space.
+It stood to reason that the density would eventually reach zero. Using the gathered data, scientists predicted that this would happen at a distance of about 40,000 km. This led to the Open Universe Theory, where our world is a hollow rock shell about 40,000 km thick, floating in infinite space.
 
-![In your planet of Earth, which is not hollow like ours, the density decreases according to a similar function. [@staceyEarthDensityDistribution2020]](figure/earth_density_distribution.png)
+![On your planet Earth, which is not hollow like ours, the density decreases according to a similar function. [@staceyEarthDensityDistribution2020]](figure/earth_density_distribution.png)
 
 ### War of the Strata
 
@@ -1965,7 +1967,7 @@ Our cities floated in space, with no defensible geographical separations. Becaus
 
 A battleship was built to be very long and thin. Long, because the longer it is, the more volume it can contain. Thin, because the thinner it is, the smaller the area of rock that the ship would need to dig through, and the faster the ship would be able to move.
 
-When a ship encountered the enemy, its first course of action was to dig out a wide bow, to present the largest possible front of weaponry to bear. It could also split out into multiple sections, like a nail-head with needles on top, to attack from multiple directions at once.
+When a ship encountered the enemy, its first course of action was to dig out a wide bow to present the largest possible front of weaponry to bear. It could also split out into multiple sections, like a nail-head with needles on top, to attack from multiple directions at once.
 
 Every warship could separate at will, transforming into multiple smaller ships. Ships could also combine to a single, giant ship. Whenever opposing battle groups met, the question whether to form up or split up was an object of profound tactical analysis.
 
@@ -1975,19 +1977,19 @@ Being outmatched by the warships launched by the World Government, the explorers
 
 ### The Starry Sky
 
-After the battle, the Explorer Alliance gathered all the space left over by the battle into a single sphere 100 km in diameter. In this new space the Alliance declared its independence from the Bubble World. A constant stream of explorer ships left the core to join the Alliance, bringing considerable amounts of space with them. In this way, our world split into two worlds. The Alliance launched more ships, coming closer and closer to the predicted edge of the rock shell.
+After the battle, the Explorer Alliance gathered all the space left over by the battle into a single sphere 100 km in diameter. In this new space the Alliance declared its independence from the Bubble World. A constant stream of explorer ships left the core to join the Alliance, bringing considerable amounts of space with them. In this way, our world was split into two. The Alliance launched more ships, coming closer and closer to the predicted edge of the rock shell.
 
 Finally, a bubble ship *Helix* was the first to pierce the shell. However, back at home, we only received a strange sound before the seismic communication channel abruptly ended. It was the sound of tons upon tons of water bursting into the vacuum of the Helix. We had never come into contact with water before. The powerful electric current produced by short-circuiting life and equipment vaporized everything.
 
-Following this event, the Alliance sent more than a dozen bubble ships to fan out in many directions, but all met a similar fate when they reached that apparently impenetrable height. Bubble ships following these missions attempted to scan what lay above with their seismoscopes found that their instruments showed only mangled data; the returning seismic waves indicated that what lay above was neither space nor rock.
+Following this event, the Alliance sent more than a dozen bubble ships to fan out in many directions, but all met a similar fate when they reached that apparently impenetrable height. Bubble ships following these missions attempted to scan what lay above with their seismoscopes, but their instruments showed only mangled data, indicating that what lay above was neither space nor rock.
 
-These discoveries shook the Open Universe Theory to its core and academic circles began discussing the possibility of a new model. This new model stipulated that outside the rock shell was void, which is inert when in contact with rock, but upon contact with space, converts space into more void.
+These discoveries shook the Open Universe Theory to its core and academic circles began discussing the possibility of a new model. This new model stipulated that outside the rock shell was a void, which is inert when in contact with rock but upon contact with space, converts space into more void.
 
 To explore the void, a bubble ship very slowly approached the edge of the rock shell, and by a stroke of luck, its roof had a tiny crack that allowed water to shoot in. It took over an hour for the water to fully fill the ship, and in the mean time, data transmitted back to the Alliance world allowed scientists to confirm that it was not void, but liquid.
 
-Scientists had already predicted, by condensed matter physics, the theoretical possibility of liquids. Now, in those transmitted images, they clearly saw it with their own eyes. It took many lives, but eventually we developed the sealant technology to safely handle liquid.
+Scientists had already predicted the theoretical possibility of liquids by condensed matter physics. Now, in those transmitted images, they clearly saw it with their own eyes. It took many lives, but eventually we developed the sealant technology to safely handle liquid.
 
-Finally, we launched a exploration submarine. It was a hard spherical shell, placed in the middle of an empty chamber under the ocean floor. The astronaut Gagarin was secured in a seat in the shell. The chamber ceiling was pierced, and as water rushed in, the submarine floated, faster and faster, until it shot out of the ocean surface like a cannonball. Gagarin carefully opened a door on the shell, and looked upon the half-infinite water and half-infinite space. Up there in half-infinite space, tiny specks blinked.
+Finally, we launched an exploration submarine. It was encased in a hard spherical shell, placed in the center of an empty chamber under the ocean floor. The astronaut Gagarin was secured in a seat in the shell. The ceiling was pierced, and as water rushed in, the submarine floated, faster and faster, until it shot out of the ocean surface like a cannonball. Gagarin carefully opened a door on the shell and looked out upon the half-infinite water and half-infinite space. Up there in half-infinite space, tiny specks blinked.
 
 ### Classical stereodynamics
 
@@ -2061,9 +2063,11 @@ The Karnot space engine is used in practice for underwater space mining. The min
 
 ### Space Death of the Universe
 
-The idea of space death stems from the second law of stereodynamics, of which one version states that entropy tends to increase in an isolated system. From this, the hypothesis implies that if the universe is of finite size, and lasts for a sufficient time, it will asymptotically approach a state where the volumetric potential field becomes completely flat, which is a state of maximal entropy. At that point, no further change is possible, as entropy cannot decrease. In other words, there is a tendency in nature towards the dissipation (space transformation) of mechanical space (motion) into subtle space. Eventually, the mechanical movement of the universe will run down as all useable space is converted to subtle space.
+The idea of space death originated from the second law of stereodynamics, of which one version states that entropy tends to increase in an isolated system. From this, the hypothesis implies that if the universe is of finite size, and lasts for a sufficient time, it will asymptotically approach a state where the volumetric potential field becomes completely flat, which is a state of maximal entropy. At that point, no further change is possible, as entropy cannot decrease. In other words, there is a tendency in nature towards the dissipation (space transformation) of mechanical space (motion) into subtle space. Eventually, the mechanical movement of the universe will run down as all useable space is converted to subtle space.
 
-The conjecture that all mechanical space in the universe seeps off, eventually becoming too subtle to support life, seems to have been first put forward by the geologist Jean Sylvain Hailly in 32777 in his writings on the history of geology and in the ensuing correspondence with Coltaire. In Hailly's view, the universe is in constant volumetric transform. Large cavities can suddenly open up as a "swelling" of volumetric potential field causes neighboring subtle space to seep out into mechanical space. However, due to the gravitational effect of empty spaces (he was working in the immediate years after Newton's discovery of gravity, before it was understood that rock, not cavities, are gravitationally attracting), all mechanical rooms eventually causes the neighboring rocks to collapse back onto themselves, dissipating the mechanical space back to subtle space.
+The conjecture that all mechanical space in the universe seeps off, eventually becoming too subtle to support life, seems to have been first put forward by the geologist Jean Sylvain Hailly in 32777 in his writings on the history of geology and in the ensuing correspondence with Coltaire. In Hailly's view, the universe is in constant volumetric transform. Large cavities can suddenly open up as a "swelling" of volumetric potential field causes neighboring subtle space to seep out into mechanical space. However, due to the gravitational effect of empty spaces,[^hailly-gravity] all mechanical rooms eventually causes the neighboring rocks to collapse back onto themselves, dissipating the mechanical space back to subtle space.
+
+[^hailly-gravity]: He was working in the immediate years after Newton's discovery of gravity, before it was understood that rock, not cavities, are gravitationally attracting.
 
 While the theory of cyclic creation and destruction had been proposed before by the Epicureans, Hailly's view differs in that he assumed each cycle increases the ratio of subtle space to mechanical space. The final state, in this view, is described as one of "equilibrium" in which all space becomes equally subtle, and no mechanical space will exist anywhere in the universe anymore.
 
@@ -2109,31 +2113,31 @@ And there was room --
 
 <small>I don't think these appendices are any good, even though I had fun writing them. Thus, they are buried here to avoid wasting the readers' time.</small>
 
-The most common breakdown of extensivity is in gravitational systems. If we pute two astronomically-large boxes of "planet-particle gas" side-by-side, then their sum-total entropy is not equal to the sum of entropy of each box in isolation.
+The most common breakdown of extensivity occurs in gravitational systems. We can imagine a galaxy as a "gas", where each particle is a star. If we put two boxes of galaxy-gases side-by-side, we obtain a system whose total entropy is not equal to the sum of entropy of each box in isolation. This is a general lesson: if the entropy is nonextensive, then it is quite meaningless to even talk about the "entropy of the subsystem 1", just like it would talk about the "consciousness of the temporal lobe".
 
-In fact, a finite number of particles bounded within a ball of fixed radius can have unlimited phase space volume, and thus unlimited entropy. In high school, I was studying physics with a standard textbook in Chinese universities. It had a curious section on the second law of thermodynamics. I could not find it again, but the gist is as follows: The heat death of the universe is an unjustified implication of the second law, on two grounds. One, gravitational systems allow for unlimited entropy production. Two, it is against the historical science of dialectical materialism, where every development creates its own contradiction and sublation, endlessly. I will always remember this comment, as the only intrusion of religious sentiment in an otherwise sober textbook.
+In fact, a finite number of particles bounded within a ball of fixed radius can have unlimited phase space volume, and thus unlimited entropy. In high school, I was studying physics with a standard textbook used in Chinese universities. It had a curious section on the second law of thermodynamics. I could not find it again, but the gist is as follows: The heat death of the universe is an unjustified implication of the second law, on two grounds. First, gravitational systems allow for unlimited entropy production. Second, it opposes the historical science of dialectical materialism, where every development creates its own contradiction and sublation, endlessly. I will always remember this comment, as the only intrusion of religious sentiment in an otherwise sober textbook.
 
-Actually, since we are on the topic of Marxism and science in China, here is another amusing anecdote: In 1981, there was a sci-fi novel *Dream of Comfort Country* (温柔之乡的梦, by 魏雅华). It was a cautionary story about a robotic wife, who was so obedient as to cause the protagonist degenerate into a tyrannical person. Just a standard pro-human-relationship morality play. During the [campaign against spiritual pollution](https://en.wikipedia.org/wiki/Campaign_against_spiritual_pollution) of 1983, sci-fi novels were denounced, causing a 15-year-long draught of sci-fi. The particular novel was denounced for the following reason: The robotic wives were supposedly reading all kinds of books -- then why didn't they read Marx's and Lenin's books? [@LiuZuiZaoDeYuZhouZuiHaoDeDiQiu2015, page 87]
+Actually, since we are on the topic of Marxism and science in China, here is another amusing anecdote: In 1981, there was a sci-fi novel *Dream of Comfort Country* (温柔之乡的梦, by 魏雅华). It was a cautionary story about a robotic wife, who was so obedient as to cause the protagonist degenerate into a tyrannical person. Just a standard pro-human-relationship morality play. During the [campaign against spiritual pollution](https://en.wikipedia.org/wiki/Campaign_against_spiritual_pollution) of 1983, sci-fi novels were denounced, causing a 15-year-long draught in sci-fi. The particular novel was denounced for the following reason: The robotic wives were supposedly reading all kinds of books -- then why didn't they read Marx's and Lenin's books? [@LiuZuiZaoDeYuZhouZuiHaoDeDiQiu2015, page 87]
 
-Marx, for all his interest in changing the world instead of describing it, did attempt to mathematically model aspects of a capitalist economy, though it is only of historical interest now. Samuelson wrote several papers trying to update Marx's theory into modern mathematical language, and thought of Marx the mathematical economist as a "minor post-Ricardian". [@bronfenbrennerSamuelsonMarxTheir1973]
+Marx, for all his interest in changing the world instead of describing it, did attempt to mathematically model aspects of a capitalist economy, though it is only of historical interest now. Samuelson wrote several papers trying to update Marx's theory into modern mathematical language, and described Marx -- qua mathematical economist -- as a "minor post-Ricardian". [@bronfenbrennerSamuelsonMarxTheir1973]
 
-Meanwhile in the USSR, "economics" meant only political economy, and mathematical economics was merely a minor branch of political economy, and the mathematical economists had to frame their research as "critique of bourgeois economic thought". [@boldyrevCulturesMathematicalEconomics2017] It is instructive to think that the great mathematical economist, Leonid Kantorovich, discovered linear programming and accidentally improved efficiency too much and almost ended up in jail:
+Meanwhile in the USSR, "economics" meant only political economy, and mathematical economics was merely a minor branch of political economy, with mathematical economists having to frame their research as a "critique of bourgeois economic thought". [@boldyrevCulturesMathematicalEconomics2017] It is instructive to think that the great mathematical economist, Leonid Kantorovich, discovered linear programming and accidentally improved efficiency so much that he almost ended up in jail.
 
 > After introducing Kantorovich's solution technique to the problem of minimizing waste, officials were able to reduce the amount of scrap by 50 percent. This had the unfortunate side effect of greatly reducing the amount of scrap metal available to steel plants in the region, and Kantorovich was ordered to appear at Leningrad party headquarters for allegedly sabotaging the economy. In this instance, he was rescued by the military, which needed him for its atomic program.
 > 
-> According to Stalin, the planned economy of the USSR was already "dizzy with success"; hence any criticism of it was anti-Soviet propaganda, a serious crime. In particular, anyone openly suggesting that waste could be cut substantially was at great personal risk. Nevertheless, Kantorovich ... wrote a letter to Gosplan suggesting a reform of the price system used in planning. 
+> According to Stalin, the planned economy of the USSR was already "[dizzy with success](https://ru.wikipedia.org/wiki/Головокружение_от_успехов)"; hence any criticism of it was anti-Soviet propaganda, a serious crime. In particular, anyone openly suggesting that waste could be cut substantially was at great personal risk. Nevertheless, Kantorovich ... wrote a letter to Gosplan suggesting a reform of the price system used in planning. 
 > 
 > [@gardnerLVKantorovichPrice1990]
 
 ## Appendix: How confusingly thermodynamics is astaught {.appendix}
 
-During my high school Physics Olympiad days, we learned some basic thermodynamics, but it was limited to mindless tasks like integrating around the $(P, V)$ diagram for various engine cycles. We never understood the conceptual foundations, like the difference between $\delta Q$ and $dU$. I also passed the AP Chemistry course, which also contained some basic and deeply confusing thermodynamics, especially with the statement "chemical equilibrium is reached at $\Delta = 0$".
+During my high school Physics Olympiad days, we learned some basic thermodynamics, but it was limited to mindless tasks like integrating around the $(P, V)$ diagram for various engine cycles. We never understood the conceptual foundations, like the difference between $\delta Q$ and $dU$. I also passed the AP Chemistry course, which also contained some basic and deeply confusing thermodynamics, especially with the statement "chemical equilibrium is reached at $\Delta G = 0$".
 
 During my undergraduate years, special relativity was simple enough, electrodynamics difficult but sensible, analytical mechanics confusing to no end, and I didn't even try thermodynamics. In graduate studies, I had to wrestle with statistical mechanics and thermodynamics after all, to deal with modern AI methods like diffusion models.
 
 By pure serendipity, at the same time as diffusion models rose to prominence, I had just worked through a rigorous course on general equilibrium theory, the "standard model" for neoclassical economics [@starrGeneralEquilibriumTheory2011]. This gave me the conceptual foundation for looking past the textbooks' errors. Everything fell into place, and I saw through thermodynamics.
 
-And just like when I rediscovered Wigner rotation, as soon as I have figured out everything for myself, I knew the right words to search, and found that, of course, someone else has written this before [@smithClassicalThermodynamicsEconomic2008], repeatedly [@candealUtilityEntropy2001]. So why spend all this time to write another one? I think I have written this pedagogically. I don't care if it is not new, or that it has been said before with more symbols and theorems. I have a thing to say, so I will say it well.
+And just like when I rediscovered [Wigner rotation](https://yuxi-liu-wired.github.io/essays/posts/wigner-rotation), as soon as I have figured out everything for myself, I knew the right words to search. Putting the fateful words "Gibbs delta G free energy equilibrium" into Google Scholar, I found that, of course, someone else had written this before, repeatedly [@quilezFirstYearUniversityChemistry2012; @smithClassicalThermodynamicsEconomic2008; @candealUtilityEntropy2001]. So, why spend all this time to write another one? I think I have written this pedagogically. I don't care if it is not new, or that it has been said before with more symbols and theorems. I have a thing to say, so I will say it well.
 
 As an enlightened one, I see classical thermodynamics as the worst-taught subject out of all of undergraduate physics education.[^physics-education] Imagine my surprise when I realized that it is not about the conservation of energy ("thermo-"), not about change ("-dynamics"), not about statistical mechanics, not about time... but just about constrained optimization, and nothing more than that! To really understand it, one must unlearn a lot of the nonsense. Indeed, I hope that with this essay I will have slain all those mistakes, which is why the essay is filled with warnings against this and that error.
 
