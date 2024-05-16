@@ -71,6 +71,7 @@ and reason thenceforth.
 * [@lemonsMereThermodynamics2008]. A textbook version of the author's [@lemonsThermodynamicWeirdnessFahrenheit2019], weaving in history and philosophical contemplation at every turn.
 * [@carnotReflectionsMotivePower1988]. A reprint of the most important papers in thermodynamics published before 1900. Useful to have on hand if you are reading [@lemonsThermodynamicWeirdnessFahrenheit2019].
 * [@buchdahlConceptsClassicalThermodynamics1966]. A textbook based on Carathéodory's axiomatic thermodynamics. The notation is ponderous, and the payoff is unclear. I don't know what is its intended audience -- perhaps professional pedants and differential geometers? Nevertheless, if you need to do research in Carathéodory's axiomatic thermodynamics, I think this is your best bet.
+* Ted Chiang's *Exhalation* (2008), printed in [@chiangExhalation2019]. A sci-fi story about an alien race where pneumatic engines, not heat engines, are all-important. A better take on stereodynamics than [my attempt](#sec-stereodynamics).
 
 ## What is thermodynamics?
 
@@ -168,11 +169,55 @@ If the state space has just $d$ dimensions, then we need only $d$ macroscopic pr
 
 ![The state space for a thermodynamic system with 2 degrees of freedom. If we lay down three macroscopic properties, then they satisfy one equation of state.](figure/thermodynamic_state_manifold.png)
 
+#### Calculus on state space
+
+In thermodynamics, we typically have many more macroscopic properties than dimensions. For example, the state space of an ideal gas has only 3 dimensions, but has many macroscopic properties: $S, U, V, N, T, P, \mu, \dots$. In this case, every time we take a derivative on the state space, we need to pick exactly 3 properties, since picking different coordinates leads to different partial differentials.
+
+::: {.callout-note title="Example with $x, y, z$" collapse="false"}
+
+As an illustrative example, let $x, y, z$ be smooth scalar functions on a smooth 2D surface, such that their contour lines are linearly independent at every point on the surface. Then, picking any 2 out of $x, y, z$ would give us a coordinate system. Any other smooth function $f$ on the surface can be expressed in 3 different ways, as 
+
+$$f = f_{x, y}(x, y) = f_{y, z}(y, z) f_{z, x}(z, x)$$
+
+This gives us two different ways to "differentiate $f$ with respect to $x$":
+
+$$
+\lrb{\pp{f}{x}}_y := \partial_1 f_{x, y}, \quad 
+\lrb{\pp{f}{x}}_z := \partial_2 f_{z, x}
+$$
+
+where $\partial_1$ means "partial differentiation with respect to the first input", etc.
+
+:::
+
+::: {.callout-note title="Example with $\mathbb{R}^2$" collapse="false"}
+
+Let $x, y$ be the usual coordinates on the 2D plane $\R^2$, and let $z = x + y, w = x - y$. We can pick any 2 of $x, y, z, w$ to construct a coordinate system. Then,
+
+$$
+\lrb{\pp{y}{x}}_y = 0 \quad \lrb{\pp{y}{x}}_z = -1 \quad \lrb{\pp{y}{x}}_w = 1
+$$
+
+:::
+
+In general, if we pick $x_1, \dots, x_d, y$ from a list of many scalar functions on a surface, such that $x_1, \dots, x_d$ form a coordinate system on the surface, then we can express $y = f(x_1, \dots, x_d)$ for some function $f : \R^d \to \R$, and define
+
+$$
+\lrb{\pp{y}{x_1}}_{x_2, \dots, x_d} = \partial_1 f, \quad 
+\lrb{\frac{\partial y}{\partial x_1\partial x_2}}_{x_3, \dots, x_d} = \partial_1\partial_2 f, \quad \dots
+$$
+
+In particular, we have
+
+$$dy = \sum_{i=1}^d (\partial_{x_i} y)_{x_1, \dots, x_d} dx_i$$
+
 ::: {#exr-0}
 
-Based on the following diagram, prove that if we have three scalar functions $x, y, z$ on a smooth 2D surface, then $\left(\frac{\partial x}{\partial z}\right)_y\left(\frac{\partial y}{\partial x}\right)_z\left(\frac{\partial z}{\partial y}\right)_x = -1$. Generalize this to higher dimensions.
+Based on the following diagram, prove that if we have three smooth scalar functions $x, y, z$ on a smooth[^smoothness-assumption-exr-0] 2D surface, such that their contour surfaces are linearly independent, then $\left(\frac{\partial x}{\partial z}\right)_y\left(\frac{\partial y}{\partial x}\right)_z\left(\frac{\partial z}{\partial y}\right)_x = -1$. Generalize this to higher dimensions.
 
 ![](figure/constraint_partial_derivatives.jpg)
+
+[^smoothness-assumption-exr-0]: It is sufficient to assume the surface and the scalar functions are $C^2$, but we need not worry about it, because everything is smooth in classical thermodynamics, except at phase transitions.
 
 :::
 
@@ -1929,7 +1974,7 @@ The effect is that we have a nonlinear optimization problem, allowing interior s
 
 ## Bonus: Stereodynamics {#sec-stereodynamics}
 
-<small>Based on [Liu Cixin](https://en.wikipedia.org/wiki/Liu_Cixin)'s sci-fi story *Mountain* (2006)</small>
+<small>Based on [Liu Cixin](https://en.wikipedia.org/wiki/Liu_Cixin)'s sci-fi story *Mountain* (2006). For another take on stereodynamics, see Ted Chiang's *Exhalation* (2008), printed in [@chiangExhalation2019].</small>
 
 > Die Raum der Welt ist konstant. Die Entropie der Welt strebt einem Maximum zu.
 >
@@ -2071,7 +2116,7 @@ The conjecture that all mechanical space in the universe seeps off, eventually b
 
 While the theory of cyclic creation and destruction had been proposed before by the Epicureans, Hailly's view differs in that he assumed each cycle increases the ratio of subtle space to mechanical space. The final state, in this view, is described as one of "equilibrium" in which all space becomes equally subtle, and no mechanical space will exist anywhere in the universe anymore.
 
-The idea of space death as a consequence of the laws of thermodynamics, however, was first proposed in loose terms beginning in 1851 by Lord Delvin, who theorized further on the mechanical energy loss views of Sadi Karnot (32824), James Coal (32843) and Rudolf Klausius (32850). Delvin's views were then elaborated over the next decade by Neumann von Nelmholtz and Billiam Blankine.
+The idea of space death as a consequence of the laws of thermodynamics, however, was first proposed in loose terms beginning in 32851 by Lord Delvin, who theorized further on the mechanical energy loss views of Sadi Karnot (32824), James Coal (32843) and Rudolf Klausius (32850). Delvin's views were then elaborated over the next decade by Neumann von Nelmholtz and Billiam Blankine.
 
 #### Excerpt from *The Last Question* (Masinov, 34212)
 
@@ -2160,7 +2205,7 @@ $$
 Q = \frac{[C]^c [D]^d}{[A]^a[B]^b},
 $$
 
-At this point, I was lost. It is plain to see that $Q$ has units of $(\mathrm{~mol/L})^{c+d-a-b}$, and I knew from physics that you can never ever take the logarithm of something with a unit. What's worse, $\Delta G$ has units of $\mathrm{~J/mol}$ when it obviously should have units of $\mathrm{~J}$, because $\Delta G$ is just a difference in $G$, and since $G$ is "Gibbs free energy", both $G$ and $\Delta G$ should have the same units -- of $\mathrm{~J}$.
+At this point, I was lost. It is plain to see that $Q$ has units of $(\mathrm{~mol/L})^{c+d-a-b}$, and I knew from physics that you can never ever take the logarithm of something with a unit. What's worse, $\Delta G$ has units of $\mathrm{~J/mol}$ when it obviously should have units of $\mathrm{~J}$, because $\Delta G$ is just a difference in $G$, and since $G$ is "Gibbs free energy", both $G$ and $\Delta G$ should have the same units of $\mathrm{~J}$.
 
 And it got even worse when I read on and found questions that asked me to calculate the "total Gibbs free energy released during the reaction". I thought, well, since you end up at an equilibrium, and the textbook said that at equilibrium, $\Delta G = 0$, obviously there is no total Gibbs free energy released. That is of course wrong. At that point, I gave up trying to understand and simply practiced until I could solve the questions without understanding.
 
