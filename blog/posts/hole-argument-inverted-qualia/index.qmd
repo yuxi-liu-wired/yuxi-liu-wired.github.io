@@ -1,0 +1,291 @@
+---
+title: "Hole Argument and Inverted Qualia"
+author: "Yuxi Liu"
+date: "2023-11"
+date-modified: "2024-01-20"
+categories: [fun, philosophy, math, physics]
+format:
+  html:
+    toc: true
+description: "TODO description."
+
+# image: "figure/banner.png"
+status: "draft"
+confidence: "low"
+importance: 2
+---
+
+## Introduction
+
+## The hole argument
+
+[@nortonHoleArgument1999]
+
+The hole argument, in Norton's formulation
+
+* Given two distributions of metric and material fields, related by a hole transformation, they are indeterminant by both observation and theory, since
+  * The two distributions are observationally identical.
+The laws of the theory cannot pick between the two developments of the fields into the hole.
+  * But by manifold substantivalism, they represent distinct physical systems.
+* Therefore, manifold substantivalism has a problematic metaphysics.
+
+### Responses to the hole argument
+
+**Relationalism**. This is Einstein's response, and also the typical response nowadays.
+
+This line of thought can be traced back to Leibniz's theory of relative space against Newton's theory of absolute space. In Leibniz's third paper during the [Leibniz--Clarke correspondence](https://en.wikipedia.org/wiki/Leibniz%E2%80%93Clarke_correspondence) [@clarkeCollectionPapersWhich1717], Leibniz proposed the "inverted space" thought experiment: Suppose at the moment of creation, God were to switch between East and West, nothing would act different. Since God must have created the world according to the principle of sufficient reason, God must have had no such degree of freedom in the first place. Ergo, space is relational, not absolute.
+
+While God or the principle of sufficient reason is no longer so assured, Leibniz's thought experiment remains potent.
+
+**Gauge freedom**. If two criteria are true, then it is a gauge freedom, and indeterminancy in it is no longer an issue.
+
+(i) verifiability—changes in the candidate surplus structure make no difference to what can be verified in observation;
+
+(ii) determinism—the laws of the theory are unable to fix the candidate surplus structure.
+
+**Metric essentialism**. Maudlin (1990) urges that each spacetime event carries its metrical properties essentially; that is, it would not be that very event if (after redistribution of the fields) we tried to assign different metrical properties to it.
+
+**Non-duality**. It is quite possible to regard smooth manifold as derivative, and Riemannian manifold as original. Indeed, we may construct a smooth manifold by starting with $\R^N$, then quotienting out smooth deformations.
+
+The point is this: mathematically speaking, there is no necessary division between substance and property, though it is a very useful intuition. Physically speaking, the division has led to errors, such as Einstein's failed 1914 attempt at non-relativistic theory of gravity.
+
+This is especially true in the case of general relativity, because it developed from 19th century differential geometry, which tended to be understood as about geometry of deformable surfaces -
+
+where there is literally an unchanging *substance* (a rubber sheet) with changeable *property* (the strain field).
+
+## The geometry of color
+
+### The manifold of colors
+
+[@logvinenkoGeometricStructureColor2015] 
+
+Spectral sensitivity and response
+
+$$I_L = \int S_L(\lambda) R(\lambda) d\lambda$$
+
+$I_L$ is the **response intensity** of long-wavelength-type cone cells, in units of neural spike per second.
+
+$R(\lambda)$ is the spectral radiance at wavelength $\lambda$, or **spectrum** for short. It has units of watt per square-nanometer (of retinal area) per nanometer (of wavelength).
+
+$S_L$ is the **spectral sensitivity** function of the long-type cone cells.
+
+We can similarly define $I_M, I_S$, for the other two cone cell types (medium and short). They are approximately bell curves.
+
+![Schematic diagram of human cone cell sensitivity. Each curve is "normalized", meaning that it is multiplied by a positive real number, so that its maximal value is exactly 1.](figure/cone_cell_sensitivity.svg)
+
+If we ignore the rod cells, and assume no adaptation to darkness ("scotopic vision"), then human color vision is just a deterministic function that maps a spectrum to three real numbers:
+
+$$C(P) := (I_S(P), I_M(P), I_L(P))$$
+
+with type $(\R^+ \to \R^+) \to (\R^+)^3$, where $\R^+ = [0, \infty)$ is the space of non-negative real numbers. Define this as the $(I_S, I_M, I_L)$ as the **neural color space**.[^sense-data] Furthermore, the biochemical limit on neural firing is 1000 Hz [@NeuronFiringRates2015], thus the neural color space is bounded within a cube.
+
+[^sense-data]: This seems as close to "sense data" [@hatfieldSenseData2021] as it gets in science.
+
+Because $C$ is a linear functional, and any two colors can be mixed to give a third color, neural color space is a convex cone. On the tip of the cone is $(0, 0, 0)$, the color of pure darkness.
+
+Consider a wall painted with a "pure reflective" layer, in the sense that it reflects exactly light at wavelength $500 \;\mathrm{nm}$, and nothing else. Then, under any illumination, the color of the wall would fall on the same line in neural color space (at least until it saturates the firing rates).
+
+Pure spectral colors are special colors, in the following diagram, on the edge of the cone are lines of pure spectral color, each produced by a spectrum that is concentrated at just one wavelength.
+
+![The pure spectral colors in neural color space. The rainbow curve represents the spectrum of visible light, from violet to red. Each point on this curve corresponds to a specific wavelength of light and its unique combination of stimulations to the three types of cone cells. For each point on the spectral curve, we can draw a straight line to the origin. Each point on the line has the same color, but appears increasingly bright.](figure/neural_color_space_3d.svg)
+
+Because the cone shape is uninteresting, the color space is typically represented by chopping off the cone midway, producing a roughly horseshoe-shaped region on $\R^2$, named the **gamut**. Mathematically, it is the projective transform:
+$$(s, m, l) := \left(\frac{I_S}{I_S + I_M + I_L}, \frac{I_M}{I_S + I_M + I_L}, \frac{I_L}{I_S + I_M + I_L} \right)$$
+
+The curving edge of the gamut are points of pure spectral colors, from pure 700 nm line on the red end, to the pure 400 nm line on the purple end. Every point inside the gamut can be mixed by two pure spectral colors.
+
+![[@schrodingerGrundlinienTheorieFarbenmetrik1920, figure 3]](figure/schrodinger_1920_spektralkegel.png)
+
+For any three spectra $P_1, P_2, P_3$, we can take any convex sum, and create a mixed color. The space of all colors created by their convex sum is the convex sum of $C(P_1), C(P_2), C(P_3)$, which looks like a triangular cone. It intersects the gamut at a triangle. Every color inside the triangle can be created by mixing the three spectra, but any color outside cannot.
+
+![Different depictions of the same color space. Figure from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Color_solid_comparison_hsl_hsv_cube_cylinder_cone.png)](figure/Color_solid_comparison_hsl_hsv_cube_cylinder_cone.png)
+
+### Linear geometry
+
+Grassmann, famous for originating linear algebra, studied color theory and applied linear algebra to it. Essentially, he discovered that the human color vision function $C$, defined previously, is a linear function. He discovered this by color-mixing experiments, in the style of 19th century psychophysics. Considering it was 50 years before the [neuron doctrine](https://en.wikipedia.org/wiki/Neuron_doctrine) became accepted, and 100 years before cone cells were observed, he did very well.
+
+For any three spectra $I_1, I_2, I_3$, we can define their colors as $C_i := C(I_i)$. Since $C$ is a linear function, as long as $\{C_1, C_2, C_3\}$ are linearly independent, we can represent any color as $C(x_1 I_1 + x_2 I_2 + x_3 I_3)$ for some $(x_1, x_2, x_3) \in \R^3$.
+
+For example, we can go to a scientific standard shop and buy a set of standard lamps, which when plugged into a standard plug, viewed in a standard room, at a standard distance and a standard angle, by a standard observer,[^standard-observer] will create a standard red, a standard green, and a standard blue. Then, using opaque to cover up parts of the lamp, and combining the lights, we can create any color $C(x_1 I_1 + x_2 I_2 + x_3 I_3)$, for any $(x_1, x_2, x_3) \in [0, 1]^3$. By buying more lamps, we can create all colors with $(x_1, x_2, x_3) \in (\R^+)^3$.
+
+[^standard-observer]: Because humans are resistant to standardization, the standard observer is obtained by taking data from real observers in good health that are physiologically similar, and their average. The methodology resembles *l'homme moyen* ("the average man") of [Adolphe Quetelet](https://en.wikipedia.org/wiki/Adolphe_Quetelet), a fanatic for anthropometry. Also, the standard observer is not required to drink [standard cups of tea](https://en.wikipedia.org/wiki/ISO_3103).
+
+Here, we notice a difficulty: we can't take a negative amount of lamp. Fortunately, we can bypass the difficulty by adding a fourth lamp, a "standard white" lamp emitting a spectrum $I_0$. Then, for any other spectrum $I$, there exists $(x_1, x_2, x_3, x_4) \in (\R^+)^4$, such that
+
+$$
+C(I) + C(x_0 I_0) = C(x_1 I_1 + x_2 I_2 + x_3 I_3)
+$$
+
+which allows us to place the color of $I$ at the unique point. Of course, the choice of $(x_1, x_2, x_3, x_4)$ is not unique. However, since color space is linear, the sum $C(x_1 I_1 + x_2 I_2 + x_3 I_3 - x_0 I_0)$ is unique. Once $C(I_0)$ is itself constructed as a linear sum of $C(\sum_{i=1}^3 x_{i0}I_i)$, we would have located $C(I)$ in color space.
+
+This is essentially the state of the art of colorimetry in 1931, when CIE 1931 was constructed by color-mixing experiments. An observer is seated in a standard room, and sees two light sources. On the left, a to-be-measured light $I$ is mixed with a standard white light $I_0$, and on the right, are three standard blue, green, red lights $I_1, I_2, I_3$. The observer turns the 4 knobs until two sides look indistinguishable. This was repeated for many observers, over many days, for many light sources. The result is a table with three columns, and many rows. Each row is an industrially important light source, and the three columns are the standard red, standard green, standard blue. It schematically looks like this (I made up the data):
+
+| color | standard red | standard green | standard blue |
+|---|---|---|---|
+| standard red | 1.000 | 0.000 | 0.000 |
+| standard green | 0.000 | 1.000 | 0.000 |
+| standard blue | 0.000 | 0.000 | 1.000 |
+| standard white | 0.334 | 0.334 | 0.332 |
+| ... | ... | ... | ... |
+
+::: {.callout-note title="Technically"}
+
+Technically, the CIE 1931 color of a spectrum $I$ is a point in $\R^3$ defined by
+
+$$
+C_{\text{CIE 1931}}(I) := \left(\int I(\lambda) \bar r(\lambda) d\lambda , \int I(\lambda) \bar g(\lambda) d\lambda , \int I(\lambda) \bar b(\lambda) d\lambda \right)
+$$
+
+where $\bar r, \bar g, \bar b$ are "standard observer color matching functions". They are not any real observer's sensitivities, because they have negative values. Note that this means the CIE 1931 coordinates of standard red is not $(1, 0, 0)$.
+
+Of course, the two definitions had better agree. This they tried to do so, using the spectroscopy of the time.
+
+:::
+
+### Riemannian geometry
+
+> Magnitude-notions are only possible where there is an antecedent general notion which admits of different specialisations... the only simple notions whose specialisations form a multiply extended manifoldness are the positions of perceived objects and colours. More frequent occasions for the creation and development of these notions occur first in the higher mathematic.
+>
+> Riemann's Habilitation dissertation, 1854 [@riemannHypothesesWhichLie2016]
+
+The [MacAdam ellipses](https://en.wikipedia.org/wiki/MacAdam_ellipse) ...
+
+... of course, since color space is 3D, we really should be concerned with MacAdam *ellipsoids*. However, those are hard to map and hard to plot.
+
+![MacAdam ellipses the CIE 1931 $xy$-diagram, 10× actual size. Figure from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CIExy1931_MacAdam.png).](figure/CIExy1931_MacAdam.png)
+
+![[@dafonsecaDerivationHumanChromatic2016, Figure 8b]](figure/Fonseca_2016_fig_8b.png)
+
+From the $S_S, S_M, S_L$ curves, we can use information theory to predict the JND in color space.
+
+CIELAB color space is a smooth mapping from CIE 1931 color space to $\R^3$, such that the MacAdam ellipses are stretched roughly spherical, meaning the metric is mostly Euclidean. This is impossible to do perfectly, as color space is curved, in the same sense that a space containing a black hole is curved. However, since color space is not too curved, the CIELAB color space can be treated as Euclidean in practice.
+
+[@dafonsecaDerivationHumanChromatic2016] explain ~87% of the variance of human color discrimination ability
+
+Imagine a hiker navigating a mountain path equipped only with an altimeter and a detailed altitude map. The hiker's ability to pinpoint their location on the map relies on sensing altitude changes. In regions where the terrain is steep (representing high sensitivity), even a small step forward (change in stimulus intensity) will register a noticeable altitude change on the altimeter (change in perceived sensation). This allows for precise localization – a small JND. However, along flatter sections of the trail (low sensitivity), the hiker might need to traverse a longer distance to observe a meaningful altitude difference, leading to a larger JND and greater uncertainty about their position on the map.
+
+If the phenomenology of color is but the metric geometry of color space, then we have not only dispelled the inverted qualia problem, but also have dispelled the problem of other minds. We should be able to construct the phenomenal geometry of color from retinal measurements. By comparing my retina and your retina, we can objectively determine whether my green is the same as yours.
+
+If the inverted qualia problem is dissolved by the hole argument, then the hard problem of color perception is gone as well. What remains is merely determining the metric of color space. In this way, the biophysics of the eye-brain system would mostly solve the easy problem of color perception.
+
+Note that, while color space is locally Riemannian, this is not so over longer distances. That is, once we are measuring the subjective distances between pairs of far-different colors, the data no longer behave like distances on a curved 3D space. [@bujackNonRiemannianNaturePerceptual2022] reported that there is "diminishing returns" in color distances.[^color-divergence]
+
+[^color-divergence]: According to CIE, the color difference $\Delta E$, is [not symmetric](https://en.wikipedia.org/wiki/Color_difference#CIELAB_%CE%94E*), meaning that if we ask a subject "How far is color 1 from color 2?" and then ask the opposite direction, we usually get a different answer. This reminds me of [KL divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence). I don't know if anyone has studied this in detail, but it ought to interest the [information geometers](https://en.wikipedia.org/wiki/Information_geometry).
+
+![All visible colors, plotted in CIELAB color space. Figure from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Visible_gamut_within_CIELAB_color_space_D65_whitepoint_mesh.png)](figure/Visible_gamut_within_CIELAB_color_space_D65_whitepoint_mesh.png)
+
+## Inverted qualia
+
+[@byrneInvertedQualia2004]
+
+The inverted qualia thought experiment has been used, like the philosophical zombie, in a whole host of arguments. Let's deal with functionalism, which seems rather urgent these days, what with the advent of AI and all.
+
+Argument against functionalism
+
+The following spectrum inversion scenario is possible: Invert and Nonvert are functionally alike, and are both looking at a tomato.
+
+Thus, the mental does not supervene on functional organization.
+
+Thus, functionalism is false.
+
+According to functionalism, mental states are functional states: states defined by their causal role with respect to inputs, outputs, and other states. So, according to functionalism, necessarily, two creatures who are functionally alike are also mentally alike.
+
+### Precursors to the inverted qualia problem
+
+[@eastwoodAlhazenLeonardoLatemedieval1986]
+
+Alhazen had considered the theory that the eye works like a camera obscura, and he had pronounced it impossible, as it would create an inverted image. Similarly, da Vinci developed no less than 8 different hypothetical mechanisms inside the eye to invert the image again, so that the image would land on the retina right-side-up.
+
+![Leonardo da Vinci's drawings comparing the eye to a camera obscura. From *Codex Atlanticus* (1490-1495). Figure from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:1490-95_da_vinci_-_codex_atlanticus.jpg).](figure/1490-95_da_vinci_-_codex_atlanticus.jpg)
+
+> ... certain extravagant situations are to be avoided, as they would create 'monstrosities', or disfigurations. The concern about hypothetical monstrous results occurs at four points in the description. (1) If the refracting surface of the vitreous were not completely regular and spherical, a monstrous visual form would appear, (2) If the refracting surface of the vitreous were the surface of a small sphere, causing the intersection of rays before even reaching the centre of curvature of the cornea and the anterior glacial surface, once again there could occur a monstrous visual form. Presumably the disfiguration anticipated here by Alhazen is simply the inverted image after intersection, but he does not say.  
+
+## Problem of consciousness
+
+
+[@metzingerBeingNoOne2004, chapter TODO; @rodenPosthumanLifePhilosophy2015, chapter 4]
+
+The just noticeable difference (JND) in color perception possibly shows that we see metric, not colors themselves.
+
+So what do those color words do? They might be special "landmarks" in the geometry of color space, much like on a map, the peaks and troughs are local maxima of curvature, and the mountain passes are local minima of curvature [@griffinCategoricalColourGeometry2019]. 
+
+The meta-problem of consciousness [@chalmersMetaproblemConsciousness2018] is TODO
+
+The inverted polarization spectrum for mantis shrimps. Why would they be confused?
+
+[@kleinlogelSecretWorldShrimps2008]
+
+The mantis shrimp species *Gonodactylus smithii* can detect polarization of light over the entire 3-dimensional Poincare sphere. It performs this by building 3 kinds of ommatidia, each specialized for two kinds of polarization. One is specialized for the horizontal-vertical, one for the diagonal-antidiagonal, and one for the clockwise-anticlockwise.
+
+Now, a Gonodactylus philosopher might propose the following inverted qualia problem: What if my qualia on the Poincare sphere is inverted compared to yours? When you see a horizontally polarized light, you feel the same way as I see a vertically polarized light, etc.
+
+## The meta-problem
+
+We have Type 1 and Type 2 cognitive processes for judging if something is conscious.
+
+Type 1 processes
+
+
+[@fialaPsychologicalOriginsDualism2012]
+
+fast, domain-specific, automatic (the authors don't argue if they are also associative)
+
+Three apparent features reliably produce AGENT categorization:
+
+has eye-like shapes on a head-like bump;
+
+reacts to the environment unpredictably;
+
+moves on its own, not a slave to mere inertia.
+
+Confirmed by judgment-speed experiments
+
+> ... presented subjects with a sequence of Object/Attribution pairs (e.g., ant/feels pain), and the subjects were asked to respond as quickly as possible (Yes or No) whether the object had the attribute... Participants responded significantly more slowly when they denied conscious states to objects that do have the superficial AGENCY cues, namely, insects. This result is neatly explained by our hypothesis that insects automatically activate the low road to consciousness attribution; in order to deny that insects have conscious states, subjects had to “override” the low-road output, which explains why reaction times are slower in such cases.  
+
+Type 2 processes
+
+rational deliberation, theory application, or conscious reasoning
+
+Any brain-based physical theory of consciousness can at most convince Type 2 process, not the Type 1 process.
+
+The brain doesn't have eyes
+
+The brain seems to do nothing by itself, stewing alone in a dark cave;
+
+The brain doesn't display any motion, let alone non-inertial motion.
+
+> Since the two systems generate the same answer in typical cases, there is typically no resistance to the idea that other people are conscious. However, when we consider the mass of grey matter that composes the human brain (and on which the majority of physicalist reductions of consciousness will focus), the result is altogether different.  
+
+> Jenny might believe that consciousness is identical to populations of neurons firing in synchrony at a rate between 40Hz and 60Hz; on this basis she could infer (using the high road) that specific brain regions that are firing synchronously are conscious experiences. (Crick & Koch, 1990). If Jenny knew that Jimmy’s brain had regions that were firing synchronously between 40-60Hz, she could infer (using the high road) that Jimmy’s brain states are conscious experiences. But since this description of Jimmy’s brain does not advert to any of the featural cues that trigger AGENCY categorization, Jenny’s low road is not activated, and thus remains silent on whether the synchronously firing neurons are conscious  
+
+Alternative physicalist theory of consciousness designed to satisfy Type 1 process won't satisfy Type 2 process.
+
+The eyes are clearly unnecessary, as even eyeless people (Anophthalmia) can be conscious.
+
+And lock-in syndrome people don't interact and don't display noninertial motions.
+
+Evolutionary origin of the dual process
+
+Only very recently is it possible to see neurons firing. So for millions of years, humans could have only inferred consciousness through external features, such as eye motion, non-inertial motion, etc.
+
+Thus arose Type 1 process for detecting consciousness, which is incompatible with modern neuroscience.
+
+The Type 2 process is a general process for understanding abstract theories, not for consciousness specifically.
+
+(Non-)Analogies
+
+The authors thought that there is no Type 1 intuition for general relativity, so there's no explanatory gap there. But I beg to differ.
+
+General Relativity is acceptable to Type 2 processes, but not to Type 1 processes, which has an intuitive understanding of the world as having Newtonian spacetime. Consequently, there is a persistent "explanatory gap", as a nagging feeling "but how do we know which one is the *real* spacetime manifold? The theory is incomplete because it doesn't tell us that.".
+
+This is probably what made the hole argument so perplexing even to Einstein. The hole argument appeals to the Type 1 intuition that there's a unique spacetime structure.
+
+As another example, Bergson famously debated Einstein over the nature of time.
+
+Intentionality explanatory gap.
+
+Some philosophers did propose an explanatory gap.
+
+Although most people seem to have no difficulty granting intentionality to computers and other things they regard as unconscious.
+
+This would be explainable if the Type 1 process for intentionality-attribution happens to fit well with modern physics.
