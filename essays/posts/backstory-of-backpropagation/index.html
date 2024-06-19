@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,6 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -103,7 +104,12 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -112,6 +118,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -121,10 +128,37 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <meta property="og:title" content="Yuxi on the Wired - The Backstory of Backpropagation">
 <meta property="og:description" content="Why backprop was resisted for 20 years: assumption of discretely spiking neurons, goal of synthesizing Boolean logic, fear of local optima, and bad luck. Werbos has the best claim for invention.">
 <meta property="og:image" content="https://yuxi-liu-wired.github.io/essays/posts/backstory-of-backpropagation/figure/banner_cropped.png">
-<meta property="og:site-name" content="Yuxi on the Wired">
+<meta property="og:site_name" content="Yuxi on the Wired">
 <meta property="og:image:height" content="652">
 <meta property="og:image:width" content="1024">
 <meta property="og:image:alt" content="Stylized illustration of a computational graph, with gibberish text that resemble vector calculus, thick and thin lines representing the flow of numbers in the graph. In the center of the vaguely octagonal graph is a letter D, D for derivative. High contrast, monochromatic, minimalistic, in the style of vector svg art.">
@@ -140,10 +174,10 @@ div.csl-indent {
 <body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
     </a>
@@ -158,46 +192,46 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../essays/index.html" rel="" target="">
- <span class="menu-text">Essays</span></a>
+    <a class="nav-link" href="../../../essays/index.html"> 
+<span class="menu-text">Essays</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../sketches/index.html" rel="" target="">
- <span class="menu-text">Sketches</span></a>
+    <a class="nav-link" href="../../../sketches/index.html"> 
+<span class="menu-text">Sketches</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../projects/index.html" rel="" target="">
- <span class="menu-text">Projects</span></a>
+    <a class="nav-link" href="../../../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../notes/index.html" rel="" target="">
- <span class="menu-text">Notes</span></a>
+    <a class="nav-link" href="../../../notes/index.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../docs/index.html" rel="" target="">
- <span class="menu-text">Docs</span></a>
+    <a class="nav-link" href="../../../docs/index.html"> 
+<span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../about/index.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about/index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://bair.berkeley.edu/" rel="" target=""><i class="bi bi-folder-symlink" role="img">
+    <a class="nav-link" href="https://bair.berkeley.edu/"> <i class="bi bi-folder-symlink" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -249,7 +283,7 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
@@ -273,12 +307,13 @@ div.csl-indent {
   </ul>
 </nav>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -302,9 +337,9 @@ div.csl-indent {
 <section id="the-backpropagation-algorithm" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-backpropagation-algorithm">The backpropagation algorithm</h2>
 <p>To set the stage, we should at least quickly derive the backpropagation algorithm. In one sentence, backpropagation is an algorithm that calculates the gradient of every parameter in an acyclic directed graph with respect to a single final parameter.</p>
-<div class="page-columns page-full"><p>The graph can be finite or infinite, but in all cases, its acyclic directedness allows us to assign a “logical time” to each node.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Some nodes are independent variables: they point to other nodes, but no nodes point to <em>them</em>. Other nodes are dependent. If we know the independent variables, we can propagate their values <em>forward</em> in logical time and determine the values of every node. This is the “forward pass”. Backpropagation goes backwards in logical time.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;An existence proof that anything we might care about must have a logical time: Anything that happens, happens in the real world. The real world has a single direction in time. Therefore, any computation that can happen, must have a logical time that is identical with physical time.</p>
-<p>Note that logical time does not have to coincide with physical time. For example, to model goal-directed behavior, it might be better to put the physical future into the logical past.</p></li></div></div>
-<p>We use the convention of putting derivatives on the rows. So for example, for <span class="math inline">\(f: \mathbb{R}^2\to\mathbb{R}^2\)</span>, we have</p>
+<p>The graph can be finite or infinite, but in all cases, its acyclic directedness allows us to assign a “logical time” to each node.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Some nodes are independent variables: they point to other nodes, but no nodes point to <em>them</em>. Other nodes are dependent. If we know the independent variables, we can propagate their values <em>forward</em> in logical time and determine the values of every node. This is the “forward pass”. Backpropagation goes backwards in logical time.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;An existence proof that anything we might care about must have a logical time: Anything that happens, happens in the real world. The real world has a single direction in time. Therefore, any computation that can happen, must have a logical time that is identical with physical time.</p>
+<p>Note that logical time does not have to coincide with physical time. For example, to model goal-directed behavior, it might be better to put the physical future into the logical past.</p></div></div><p>We use the convention of putting derivatives on the rows. So for example, for <span class="math inline">\(f: \mathbb{R}^2\to\mathbb{R}^2\)</span>, we have</p>
 <p><span class="math display">\[
 \nabla_x f = \frac{df}{dx} = \begin{bmatrix}
 \frac{df_1}{dx_1} &amp; \frac{df_1}{dx_2} \\
@@ -352,8 +387,8 @@ x_t = (\text{location at time }t, \text{velocity at time }t)
 <p><span class="math display">\[
 \dot x_t = f(x_t, u_t)
 \]</span></p>
-<div class="page-columns page-full"><p>where <span class="math inline">\(f(x_t, u_t) = (x_{t, 1}, -\mu x_{t, 1} + u_t)\)</span> is the dynamics equation of the system, and <span class="math inline">\(\mu\)</span> is the friction coefficient.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;To allow for time-varying dynamics, simply replace <span class="math inline">\(f(x_t, u_t)\)</span> with <span class="math inline">\(f(t, x_t, u_t)\)</span>. This clutters the notation without involving new ideas.</p></li></div></div>
-<p>Now, we can draw the computation graph as before. The computation graph has a continuum of nodes, but it has a very simple structure. The graph has two kinds of nodes: the <span class="math inline">\(x_t\)</span> nodes and the <span class="math inline">\(u_t\)</span> nodes. Its independent variables are <span class="math inline">\(x_0\)</span> and all the <span class="math inline">\(u_t\)</span> nodes. Each <span class="math inline">\(x_{t+dt}\)</span> depends on only <span class="math inline">\(x_{t}\)</span> and <span class="math inline">\(u_t\)</span>. This makes the two propagations particularly simple.</p>
+<p>where <span class="math inline">\(f(x_t, u_t) = (x_{t, 1}, -\mu x_{t, 1} + u_t)\)</span> is the dynamics equation of the system, and <span class="math inline">\(\mu\)</span> is the friction coefficient.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;To allow for time-varying dynamics, simply replace <span class="math inline">\(f(x_t, u_t)\)</span> with <span class="math inline">\(f(t, x_t, u_t)\)</span>. This clutters the notation without involving new ideas.</p></div></div><p>Now, we can draw the computation graph as before. The computation graph has a continuum of nodes, but it has a very simple structure. The graph has two kinds of nodes: the <span class="math inline">\(x_t\)</span> nodes and the <span class="math inline">\(u_t\)</span> nodes. Its independent variables are <span class="math inline">\(x_0\)</span> and all the <span class="math inline">\(u_t\)</span> nodes. Each <span class="math inline">\(x_{t+dt}\)</span> depends on only <span class="math inline">\(x_{t}\)</span> and <span class="math inline">\(u_t\)</span>. This makes the two propagations particularly simple.</p>
 <p>The forward propagation is obtained by integration, which we can unwrap into a form resembling the case of the discrete logical time:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -386,8 +421,8 @@ g_T &amp;= I \\
 </section>
 <section id="hybrid-logical-time" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="hybrid-logical-time">Hybrid logical time</h3>
-<div class="page-columns page-full"><p>When the computation graph has both nodes with discrete logical times and nodes with continuous logical times, we call such a system as having hybrid logical time.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;The name “hybrid” comes from “<a href="https://en.wikipedia.org/wiki/Hybrid_system">hybrid control theory</a>”, which are systems with both discrete changes, or jumps, and continuous changes, or flow. They appear whenever a digital device is used to control a continuous system, such as a computer piloting an airplane.</p></li></div></div>
-<p>The idea can be illustrated by the fundamental problem in control theory: how to optimize control? You cannot optimize without optimizing a real number, so we write down the number as <span class="math inline">\(J\)</span>, representing the “cost” of the trajectory. For example, in driving a car, we might want to optimize comfort, time-until-arrival, and fuel cost. We can then write <span class="math inline">\(J\)</span> down as something like</p>
+<p>When the computation graph has both nodes with discrete logical times and nodes with continuous logical times, we call such a system as having hybrid logical time.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;The name “hybrid” comes from “<a href="https://en.wikipedia.org/wiki/Hybrid_system">hybrid control theory</a>”, which are systems with both discrete changes, or jumps, and continuous changes, or flow. They appear whenever a digital device is used to control a continuous system, such as a computer piloting an airplane.</p></div></div><p>The idea can be illustrated by the fundamental problem in control theory: how to optimize control? You cannot optimize without optimizing a real number, so we write down the number as <span class="math inline">\(J\)</span>, representing the “cost” of the trajectory. For example, in driving a car, we might want to optimize comfort, time-until-arrival, and fuel cost. We can then write <span class="math inline">\(J\)</span> down as something like</p>
 <p><span class="math display">\[
 J = \underbrace{(x_{T, 0} - x_{goal})^2}_{\text{location should be at the goal location at the end time}}
     + \underbrace{(x_{T, 1} - 0)^2}_{\text{speed should be zero at the end time}} + \int_0^T u_t^2 dt
@@ -445,8 +480,8 @@ J = A(x_T) + \int_0^T L(x_t, u_t)dt
 <p><span class="math display">\[
 H(x_t, u_t, \lambda_t) := L(x_t, u_t) + \lambda_t f(x_t, u_t)
 \]</span></p>
-<div class="page-columns page-full"><p>The letters are meaningful. <span class="math inline">\(L\)</span> is the “Lagrangian”, and <span class="math inline">\(H\)</span> is the “Hamiltonian”. Indeed, classical Hamiltonian mechanics is a special case of optimal<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> control theory.</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;To be completely precise, it is a necessary but insufficient condition for optimality. Just like how a function can have zero derivatives on the peaks, valleys and shoulders, a trajectory can have zero functional derivative, even if it is the best, the worst, and the … shouldered? In jargon, we say that those conditions are <strong>first order optimality conditions</strong>, since they use only the derivative, not the second-derivative.</p></li></div></div>
-<p>If we interpret economically the quantities, then <span class="math inline">\(J\)</span> is the cost of the entire trajectory, <span class="math inline">\(\lambda_t\)</span> is the marginal cost of the point <span class="math inline">\(x_t\)</span> in the trajectory, and <span class="math inline">\(L(x_t, u_t)\)</span> is the cost-rate at time <span class="math inline">\(t\)</span>. The second equation of optimality <span class="math inline">\(\nabla_{u_t} H(x_t, u_t, \lambda_t) = 0\)</span> states that when the trajectory is optimal, the marginal cost of control is zero: there is no saving in perturbing the control in any direction.</p>
+<p>The letters are meaningful. <span class="math inline">\(L\)</span> is the “Lagrangian”, and <span class="math inline">\(H\)</span> is the “Hamiltonian”. Indeed, classical Hamiltonian mechanics is a special case of optimal<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> control theory.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;To be completely precise, it is a necessary but insufficient condition for optimality. Just like how a function can have zero derivatives on the peaks, valleys and shoulders, a trajectory can have zero functional derivative, even if it is the best, the worst, and the … shouldered? In jargon, we say that those conditions are <strong>first order optimality conditions</strong>, since they use only the derivative, not the second-derivative.</p></div></div><p>If we interpret economically the quantities, then <span class="math inline">\(J\)</span> is the cost of the entire trajectory, <span class="math inline">\(\lambda_t\)</span> is the marginal cost of the point <span class="math inline">\(x_t\)</span> in the trajectory, and <span class="math inline">\(L(x_t, u_t)\)</span> is the cost-rate at time <span class="math inline">\(t\)</span>. The second equation of optimality <span class="math inline">\(\nabla_{u_t} H(x_t, u_t, \lambda_t) = 0\)</span> states that when the trajectory is optimal, the marginal cost of control is zero: there is no saving in perturbing the control in any direction.</p>
 <p>Therefore, define the “optimized” Hamiltonian and the optimized control relative to it:</p>
 <p><span class="math display">\[
 \begin{cases}
@@ -473,8 +508,8 @@ u^*(x_t, \lambda_t) &amp;:= \mathop{\mathrm{argmin}}_{u_t}H(x_t, u_t, \lambda_t)
 <p>it does not matter, whether or no the letters <span class="math inline">\(x, y, z\)</span> have any known relation, for this can be substituted afterward.</p>
 </blockquote>
 <p>In mathematical notation, he found that <span class="math inline">\(dy = dx \frac{dy}{dx}\)</span>, or in his notation, <span class="math inline">\(\overline{dy} = \overline{dx} \frac{dy}{dx}\)</span>, where the overbar denotes the thing to be differentiated. You can read it as a bracket: <span class="math inline">\(d(y) = d(x) \frac{dy}{dx}\)</span>.</p>
-<div class="page-columns page-full"><p>He then gave the following examples<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;Yes, there is a sign error. No, I’m not going to fix it. He just has to live with his mistakes.</p></li></div></div>
-<p><span class="math display">\[
+<p>He then gave the following examples<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>:</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;Yes, there is a sign error. No, I’m not going to fix it. He just has to live with his mistakes.</p></div></div><p><span class="math display">\[
 \begin{aligned}
 &amp; \overline{d \sqrt[2]{a+b z+c}} z^2 \text {. Let } a+b z+c z^2=x \text {; } \\
 \text{Then} \quad  &amp; \overline{d \sqrt[2]{x}}=-\frac{1}{2 \sqrt{x}} \text {, and } \frac{d x}{d z}=b+2 c z \text {; } \\
@@ -490,29 +525,35 @@ u^*(x_t, \lambda_t) &amp;:= \mathop{\mathrm{argmin}}_{u_t}H(x_t, u_t, \lambda_t)
 <p>Because of the “all-or-none” character of nervous activity, neural events and the relations among them can be treated by means of propositional logic. It is found that the behavior of every net can be described in these terms, with the addition of more complicated logical means for nets containing circles; and that for any logical expression satisfying certain conditions, one can find a net behaving in the fashion it describes.</p>
 </blockquote>
 <p>The McCulloch and Pitts paper is difficult to read, and is rooted in early 20th century mathematical logic. In fact, it uses the same abstruse notations of the <a href="https://en.wikipedia.org/wiki/Principia_Mathematica"><em>Principia Mathematica</em></a>, which is cited in the paper.</p>
-<div class="quarto-layout-panel page-columns page-full">
-<div class="quarto-layout-row quarto-layout-valign-top page-columns page-full">
-<div class="quarto-layout-cell page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
+<div>
+
+</div>
+<div class="quarto-layout-panel page-columns page-full" data-layout-ncol="2">
+<div class="quarto-layout-row page-full">
+<div class="quarto-layout-cell page-columns page-full" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/principia_mathematica.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">The infamous proof of 1+1=2 in Principia Mathematica</figcaption>
+<figcaption class="margin-caption">The infamous proof of 1+1=2 in Principia Mathematica</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-layout-cell page-columns page-full" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/principia_mathematica_McCulloch_and_Pitts.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">The same notation is used by McCulloch and Pitts</figcaption>
+<figcaption class="margin-caption">The same notation is used by McCulloch and Pitts</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <p>The McCulloch and Pitts paper, like the <em>Perceptrons</em> book, is something often cited but rarely read. The best introduction to the McCulloch and Pitts neural network is still <span class="citation" data-cites="minskyComputationFiniteInfinite1967">(<a href="#ref-minskyComputationFiniteInfinite1967" role="doc-biblioref">Minsky 1967, chap. 3</a>)</span>, which explicitly designs, neuron by neuron, threshold by threshold, how to construct neural networks that perform various tasks, such as simulating arbitrary Turing machines, process signals, perform additions, etc.</p>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="figure/minsky_1976_finite_state_machine.png" class="img-fluid"></p>
 </div>
@@ -531,8 +572,8 @@ u^*(x_t, \lambda_t) &amp;:= \mathop{\mathrm{argmin}}_{u_t}H(x_t, u_t, \lambda_t)
 <p><span class="math display">\[
 f(x) = \theta\left(b^{R} + \sum_i w^{AR}_i \theta\left((w^{SA, i})^T x + b^{A}_i\right)\right)
 \]</span></p>
-<div class="page-columns page-full"><p>Rosenblatt proved some mathematical theorems, the most important of which is the <a href="https://en.wikipedia.org/wiki/Perceptron#Learning_algorithm_for_a_single-layer_perceptron">perceptron convergence theorem</a>, which shows that assuming the dataset is linearly separable, then the perceptron learning algorithm converges after making a bounded number of errors<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. He also performed experiments on the Mark I Perceptron machine, IBM computers, and some other computers.</p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;There is another technical assumption on the dataset, but it is omitted for space. Suffice to say it is satisfied for all finite datasets.</p></li></div></div>
-<p>His theorems and experiments were exhaustively documented in his book <span class="citation" data-cites="rosenblattPrinciplesNeurodynamicsPerceptrons1962">(<a href="#ref-rosenblattPrinciplesNeurodynamicsPerceptrons1962" role="doc-biblioref">Rosenblatt 1962</a>)</span>. Its breadth is quite astonishing. It contains:</p>
+<p>Rosenblatt proved some mathematical theorems, the most important of which is the <a href="https://en.wikipedia.org/wiki/Perceptron#Learning_algorithm_for_a_single-layer_perceptron">perceptron convergence theorem</a>, which shows that assuming the dataset is linearly separable, then the perceptron learning algorithm converges after making a bounded number of errors<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. He also performed experiments on the Mark I Perceptron machine, IBM computers, and some other computers.</p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;There is another technical assumption on the dataset, but it is omitted for space. Suffice to say it is satisfied for all finite datasets.</p></div></div><p>His theorems and experiments were exhaustively documented in his book <span class="citation" data-cites="rosenblattPrinciplesNeurodynamicsPerceptrons1962">(<a href="#ref-rosenblattPrinciplesNeurodynamicsPerceptrons1962" role="doc-biblioref">Rosenblatt 1962</a>)</span>. Its breadth is quite astonishing. It contains:</p>
 <ul>
 <li>perceptrons with continuous activation functions (section 10.2);</li>
 <li>perceptron convergence theorem for perceptrons with continuous activation functions that are also monotonic and sign-preserving (page 249);</li>
@@ -548,13 +589,13 @@ f(x) = \theta\left(b^{R} + \sum_i w^{AR}_i \theta\left((w^{SA, i})^T x + b^{A}_i
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/rosenblatt_figure_58.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption class="figure-caption margin-caption">Figure 58. The first multimodal neural network?</figcaption>
+<figcaption class="margin-caption">Figure 58. The first multimodal neural network?</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/rosenblatt_figure_42.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption class="figure-caption margin-caption">Figure 42. The dashed lines denote variable weights, and the solid lines denote fixed weights. This is the residual connection.</figcaption>
+<figcaption class="margin-caption">Figure 42. The dashed lines denote variable weights, and the solid lines denote fixed weights. This is the residual connection.</figcaption>
 </figure>
 </div>
 <p>What is even more astonishing is that, as far as I can see, he did not make use of gradient descent learning at all, not even on a single layer like Widrow and Hoff. The perceptron learning rule converges, but only for a single-layered perceptron network on linearly separable data. Thus, when it came to two-layered perceptron networks, he randomly wired the first layer, then froze it, and only adapted the second layer. This would prove to be a turning point in the “<a href="https://yuxi-liu-wired.github.io/essays/posts/backstory-of-backpropagation/neural-network-winter">perceptron controversy</a>”.</p>
@@ -576,21 +617,24 @@ f(x) = \theta(w^T x + b)
 w \leftarrow w - \alpha (w^T x + b - y) w, \quad b \leftarrow b - \alpha (w^T x + b - y) b
 \]</span></p>
 <p>The first ADALINE machine was a box that learned to classify binary patterns on a <span class="math inline">\(4 \times 4\)</span> grid. It was pretty amusing, as everything was done manually. The patterns were inputted by flipping 16 switches by hand. The error <span class="math inline">\(w^T x + b - y\)</span> was read from a voltmeter, and the parameters <span class="math inline">\(w, b\)</span> were individually adjusted by turning knobs controlling rheostats inside the box. They then automated the knob-turning process using electrochemical devices called memistors, though the pattern input <span class="math inline">\(x\)</span> and the desired output <span class="math inline">\(y\)</span> were still entered by manual switches.</p>
-<div class="quarto-layout-panel page-columns page-full" width="80%">
-<div class="quarto-layout-row quarto-layout-valign-top page-columns page-full">
-<div class="quarto-layout-cell page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
+<div>
+
+</div>
+<div class="quarto-layout-panel page-columns page-full" data-layout-nrow="1" data-layout-ncol="2" width="80%">
+<div class="quarto-layout-row page-full">
+<div class="quarto-layout-cell page-columns page-full" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="figure/widrow_2022_memistor_adaline.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">A memistor ADALINE with glass-sealed memistors. <span class="citation" data-cites="widrowAncientHistory2023">(<a href="#ref-widrowAncientHistory2023" role="doc-biblioref">Widrow 2023, fig. 26.12</a>)</span></figcaption>
+<p><img src="figure/widrow_2022_memistor_adaline.jpg" class="img-fluid figure-img" style="width:40.0%"></p>
+<figcaption class="margin-caption">A memistor ADALINE with glass-sealed memistors. <span class="citation" data-cites="widrowAncientHistory2023">(<a href="#ref-widrowAncientHistory2023" role="doc-biblioref">Widrow 2023, fig. 26.12</a>)</span></figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-layout-cell page-columns page-full" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="figure/widrow_2022_learning_curve.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">Test patterns, and a learning curve, for the ADALINE machine. <span class="citation" data-cites="widrowAncientHistory2023">(<a href="#ref-widrowAncientHistory2023" role="doc-biblioref">Widrow 2023, fig. 26.4</a>)</span></figcaption>
+<p><img src="figure/widrow_2022_learning_curve.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<figcaption class="margin-caption">Test patterns, and a learning curve, for the ADALINE machine. <span class="citation" data-cites="widrowAncientHistory2023">(<a href="#ref-widrowAncientHistory2023" role="doc-biblioref">Widrow 2023, fig. 26.4</a>)</span></figcaption>
 </figure>
 </div>
 </div>
@@ -601,12 +645,12 @@ w \leftarrow w - \alpha (w^T x + b - y) w, \quad b \leftarrow b - \alpha (w^T x 
 <p>I just put the pattern in and the Adaline went “phut,” and the needle was reading to the right or to the left. So I just held the adapt button down so some of the cells are plating while others are deplating, depending on the direction of the error signal. Rosenblatt’s students put the pattern into the perceptron. You could see it in the lights on the perceptron. You could hear the potentiometers grinding away. We put another pattern into the Adaline, and it went “blip ,” and there it was, adapted. They put it in the perceptron, and it’s still grinding away. We put in a couple more patterns. Then we test the Adaline and test the perceptron to see whether the patterns are still in there.</p>
 <p>They’re in the Adaline. In the perceptron, they’re all gone. I don’t know whether the machine was temperamental or what, but it was difficult to train. I argued with Rosenblatt about that first random layer. I said, “You’d be so much better off if you just took the signal from the pixels and ran them straight into the weights of the second layer.” He insisted that a perceptron had to be built this way because the human retina is built that way. That is, there’s a first layer that’s randomly connected to the retina. He said the reason why you can get something to interpret and make sense of random connections is because it’s adaptive. You can unravel all this random scrambling. What I was trying to do was to not model nature. I was trying to do some engineering.</p>
 </blockquote>
-<div class="page-columns page-full"><p>After the ADALINE showed good behavior, they went on and on trying to train a two-layered ADALINE (“MADALINE”, or “many ADALINE”), which of course could not be trained by gradient descent, because the hidden layer ADALINE units used the Heaviside step function! It is almost inconceivable nowadays, but they simply refused to use a continuous activation function and tried every other trick <em>except</em> that. They ended up with the <a href="https://en.wikipedia.org/wiki/ADALINE#MADALINE">MADALINE I rule</a>. In short, it was a heuristic rule for synthesizing supervision signals for the hidden layer, much like <a href="#frank-rosenblatt">Rosenblatt’s heuristic rule</a>.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;The MADALINE I machine consists of multiple hidden ADALINE units, and a single output layer consisting of a single unit. The output unit merely takes the majority vote from the hidden units. If the desired output is <span class="math inline">\(+1\)</span>, but the actual output is <span class="math inline">\(-1\)</span>, then the machine picks those ADALINE units that are negative, but closest to being positive, and make them update their weights, according to the ADALINE learning rule. It was thought of as a form of “minimal disturbance principle”.</p></li></div></div>
-<div class="page-columns page-full"><p>Frustrated by the difficulty, they left neural network research. Hoff went to Intel to co-invent the microprocessor, and Widrow set about applying the ADALINE to small problems that it could solve well<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, such as adaptive antennas, adaptive noise filtering in telephone lines, adaptive filtering in medical scanning, etc. Even with just a single ADALINE, he brought breakthroughs to those fields.</p><div class="no-row-height column-margin column-container"><li id="fn8"><p><sup>8</sup>&nbsp;Marvin Minsky would approve.</p>
+<p>After the ADALINE showed good behavior, they went on and on trying to train a two-layered ADALINE (“MADALINE”, or “many ADALINE”), which of course could not be trained by gradient descent, because the hidden layer ADALINE units used the Heaviside step function! It is almost inconceivable nowadays, but they simply refused to use a continuous activation function and tried every other trick <em>except</em> that. They ended up with the <a href="https://en.wikipedia.org/wiki/ADALINE#MADALINE">MADALINE I rule</a>. In short, it was a heuristic rule for synthesizing supervision signals for the hidden layer, much like <a href="#frank-rosenblatt">Rosenblatt’s heuristic rule</a>.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;The MADALINE I machine consists of multiple hidden ADALINE units, and a single output layer consisting of a single unit. The output unit merely takes the majority vote from the hidden units. If the desired output is <span class="math inline">\(+1\)</span>, but the actual output is <span class="math inline">\(-1\)</span>, then the machine picks those ADALINE units that are negative, but closest to being positive, and make them update their weights, according to the ADALINE learning rule. It was thought of as a form of “minimal disturbance principle”.</p></div><div id="fn8"><p><sup>8</sup>&nbsp;Marvin Minsky would approve.</p>
 <blockquote class="blockquote">
 <p>[The perceptron] is such a simple machine that it would be astonishing if nature did not make use of it somewhere. It may be that one of the best things a neuron can have is a tiny Perceptron, since you get so much from it for so little. You can’t get one big Perceptron to do very much, but for some things it remains one of the most elegant and simple learning devices I know of.” <span class="citation" data-cites="bernsteinMarvinMinskyVision1981">(<a href="#ref-bernsteinMarvinMinskyVision1981" role="doc-biblioref">Bernstein 1981</a>)</span></p>
 </blockquote>
-</li></div></div>
+</div></div><p>Frustrated by the difficulty, they left neural network research. Hoff went to Intel to co-invent the microprocessor, and Widrow set about applying the ADALINE to small problems that it could solve well<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, such as adaptive antennas, adaptive noise filtering in telephone lines, adaptive filtering in medical scanning, etc. Even with just a single ADALINE, he brought breakthroughs to those fields.</p>
 <blockquote class="blockquote">
 <p>Engineers at Apple have told me that every iPhone, since the iPhone 5, uses the LMS algorithm all over the device. They could not tell me where because, if they did, they would have to shoot me. Apple keeps secrets. <span class="citation" data-cites="widrowCyberneticsGeneralTheory2022">(<a href="#ref-widrowCyberneticsGeneralTheory2022" role="doc-biblioref">Widrow 2022</a>, preface, page xix)</span></p>
 </blockquote>
@@ -638,12 +682,12 @@ w \leftarrow w - \alpha (w^T x + b - y) w, \quad b \leftarrow b - \alpha (w^T x 
 <blockquote class="blockquote">
 <p>… I was still working on the Boltzmann machine and was beginning to do simulations using backprop. I discovered very rapidly that backprop was about an order of magnitude faster than anything you could do with the Boltzmann machine. And if you let it run longer, it was more accurate, so you could get better solutions. <span class="citation" data-cites="rosenfeldTalkingNetsOral2000">(<a href="#ref-rosenfeldTalkingNetsOral2000" role="doc-biblioref">Rosenfeld and Anderson 2000, chap. 14</a>)</span></p>
 </blockquote>
-<div class="page-columns page-full"><p>This was vitally important later, when Sejnowski used backpropagation to train <a href="https://en.wikipedia.org/wiki/NETtalk_(artificial_neural_network)">NETtalk</a>, a <em>huge</em> network with 18,629 parameters.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> The model was a popular hit and appeared on prime-time television.<span class="citation" data-cites="sejnowskiDeepLearningRevolution2018">(<a href="#ref-sejnowskiDeepLearningRevolution2018" role="doc-biblioref">Sejnowski 2018, 112–15</a>)</span></p><div class="no-row-height column-margin column-container"><li id="fn9"><p><sup>9</sup>&nbsp;People told him that it had too many parameters and would hopelessly overfit, but the network just needed enough data and it generalized uncannily well. It really does seem like scaling skepticism is a researcher universal, if not a human universal.</p>
+<p>This was vitally important later, when Sejnowski used backpropagation to train <a href="https://en.wikipedia.org/wiki/NETtalk_(artificial_neural_network)">NETtalk</a>, a <em>huge</em> network with 18,629 parameters.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> The model was a popular hit and appeared on prime-time television.<span class="citation" data-cites="sejnowskiDeepLearningRevolution2018">(<a href="#ref-sejnowskiDeepLearningRevolution2018" role="doc-biblioref">Sejnowski 2018, 112–15</a>)</span></p>
+<div class="no-row-height column-margin column-container"><div id="fn9"><p><sup>9</sup>&nbsp;People told him that it had too many parameters and would hopelessly overfit, but the network just needed enough data and it generalized uncannily well. It really does seem like scaling skepticism is a researcher universal, if not a human universal.</p>
 <blockquote class="blockquote">
 <p>There were 18,629 weights in the network, a large number by the standards of 1986, and impossibly large by the standards of mathematical statistics of the time. With that many parameters, we were told that we would overfit the training set, and the network would not be able to generalize. <span class="citation" data-cites="sejnowskiDeepLearningRevolution2018">(<a href="#ref-sejnowskiDeepLearningRevolution2018" role="doc-biblioref">Sejnowski 2018, 113</a>)</span></p>
 </blockquote>
-</li></div></div>
-</section>
+</div></div></section>
 <section id="geoffrey-hinton" class="level2">
 <h2 class="anchored" data-anchor-id="geoffrey-hinton">Geoffrey Hinton</h2>
 <p>The interview with Geoffrey Hinton is hilarious, mostly about how he <em>spent an entire year refusing to use backpropagation</em>. This section is mostly made of quotations from <span class="citation" data-cites="rosenfeldTalkingNetsOral2000">(<a href="#ref-rosenfeldTalkingNetsOral2000" role="doc-biblioref">Rosenfeld and Anderson 2000, chap. 16</a>)</span>.</p>
@@ -747,26 +791,38 @@ w \leftarrow w - \alpha (w^T x + b - y) w, \quad b \leftarrow b - \alpha (w^T x 
 </blockquote>
 <p>Out of curiosity, I looked up the “Rosenblith” book <span class="citation" data-cites="rosenblithSensoryCommunicationContributions2012">(<a href="#ref-rosenblithSensoryCommunicationContributions2012" role="doc-biblioref">Rosenblith 2012</a>)</span> that Werbos mentioned, and indeed there were a few tracings that show continuously varying neural activation.</p>
 <div id="fig-rosenblith" class="quarto-layout-panel page-columns page-full">
-<p></p><figcaption>Figure&nbsp;1: Rosenblith images.</figcaption><p></p>
-<figure class="figure page-columns page-full">
-<div class="quarto-layout-row quarto-layout-valign-top page-columns page-full">
-<div class="quarto-layout-cell quarto-layout-cell-subref page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-however" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="figure/no_bg_beidler_2.png" class="img-fluid figure-img" data-ref-parent="fig-rosenblith"></p>
-<figcaption class="figure-caption margin-caption">(a) Page 146 of the book. <em>Mechanisms of gustatory and olfactory receptor stimulation</em>, Figure 2.</figcaption>
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-rosenblith-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rosenblith" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-however" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-however-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figure/no_bg_beidler_2.png" class="img-fluid figure-img" data-ref-parent="fig-rosenblith">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-subfloat-caption quarto-subfloat-fig" id="fig-however-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Page 146 of the book. <em>Mechanisms of gustatory and olfactory receptor stimulation</em>, Figure 2.
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell quarto-layout-cell-subref page-columns page-full" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-whatever" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="figure/no_bg_goldsmith_4.png" class="img-fluid figure-img" data-ref-parent="fig-rosenblith"></p>
-<figcaption class="figure-caption margin-caption">(b) Page 366 of the book. <em>The physiological basis of wavelength discrimination in the eye of the honeybee</em>, Figure 4.</figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-rosenblith" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-whatever" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-whatever-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figure/no_bg_goldsmith_4.png" class="img-fluid figure-img" data-ref-parent="fig-rosenblith">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-subfloat-caption quarto-subfloat-fig" id="fig-whatever-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Page 366 of the book. <em>The physiological basis of wavelength discrimination in the eye of the honeybee</em>, Figure 4.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-rosenblith-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Rosenblith images.
+</figcaption>
 </figure>
 </div>
 <p>Then Minsky dunked on reinforcement learning as well, because he had an unpublished “jitters machine” that failed to optimize its reward. Presumably the name “jitters machine” refers to how it would jitter in place, not able to move towards the goal.</p>
@@ -813,7 +869,7 @@ w \leftarrow w - \alpha (w^T x + b - y) w, \quad b \leftarrow b - \alpha (w^T x 
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/werbos_2009.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">The text at the end of the arrow says “quantum and collective intelligence (Jung, Dao, Atman…)?”.</figcaption>
+<figcaption class="margin-caption">The text at the end of the arrow says “quantum and collective intelligence (Jung, Dao, Atman…)?”.</figcaption>
 </figure>
 </div>
 
@@ -824,7 +880,7 @@ w \leftarrow w - \alpha (w^T x + b - y) w, \quad b \leftarrow b - \alpha (w^T x 
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-ackleyLearningAlgorithmBoltzmann1985" class="csl-entry" role="listitem">
 Ackley, David H., Geoffrey E. Hinton, and Terrence J. Sejnowski. 1985. <span>“A Learning Algorithm for <span>Boltzmann</span> Machines.”</span> <em>Cognitive Science</em> 9 (1): 147–69. <a href="https://www.sciencedirect.com/science/article/pii/S0364021385800124">https://www.sciencedirect.com/science/article/pii/S0364021385800124</a>.
 </div>
@@ -947,6 +1003,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -1013,13 +1096,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1149,10 +1234,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1162,8 +1264,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1175,7 +1286,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1219,6 +1453,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1244,6 +1479,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1952,13 +2213,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left"><span class="faux-block">Yuxi on the Wired</span></div>   
+    <div class="nav-footer-left">
+<p><span class="faux-block">Yuxi on the Wired</span></p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
-    <div class="nav-footer-right"><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></p>
+</div>
   </div>
 </footer>
+
 
 
 

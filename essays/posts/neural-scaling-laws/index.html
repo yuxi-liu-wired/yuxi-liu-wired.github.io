@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,6 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -103,7 +104,12 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -112,6 +118,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -121,10 +128,37 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <meta property="og:title" content="Yuxi on the Wired - Fermi Estimation for Neural Networks">
 <meta property="og:description" content="The bitter lesson in bite-sized packets.">
 <meta property="og:image" content="https://yuxi-liu-wired.github.io/essays/posts/neural-scaling-laws/figure/banner_5_adjusted.png">
-<meta property="og:site-name" content="Yuxi on the Wired">
+<meta property="og:site_name" content="Yuxi on the Wired">
 <meta property="og:image:height" content="1024">
 <meta property="og:image:width" content="1792">
 <meta property="og:image:alt" content="Brutalist architecture representing a neural network. A vaguely hexagonal 3D array of concrete blocks connected by thin 'walkways', small thin steel 'lampposts' topped with balls, and balls rolling around.">
@@ -140,10 +174,10 @@ div.csl-indent {
 <body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
     </a>
@@ -158,46 +192,46 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../essays/index.html" rel="" target="">
- <span class="menu-text">Essays</span></a>
+    <a class="nav-link" href="../../../essays/index.html"> 
+<span class="menu-text">Essays</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../sketches/index.html" rel="" target="">
- <span class="menu-text">Sketches</span></a>
+    <a class="nav-link" href="../../../sketches/index.html"> 
+<span class="menu-text">Sketches</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../projects/index.html" rel="" target="">
- <span class="menu-text">Projects</span></a>
+    <a class="nav-link" href="../../../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../notes/index.html" rel="" target="">
- <span class="menu-text">Notes</span></a>
+    <a class="nav-link" href="../../../notes/index.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../docs/index.html" rel="" target="">
- <span class="menu-text">Docs</span></a>
+    <a class="nav-link" href="../../../docs/index.html"> 
+<span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../about/index.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about/index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://bair.berkeley.edu/" rel="" target=""><i class="bi bi-folder-symlink" role="img">
+    <a class="nav-link" href="https://bair.berkeley.edu/"> <i class="bi bi-folder-symlink" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -247,7 +281,7 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
@@ -274,12 +308,13 @@ div.csl-indent {
   </ul>
 </nav>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -367,8 +402,8 @@ Now, 50 A100 GPUs has a running cost of about 100 USD/hr, but not such a terribl
 </details>
 <section id="memory-cost" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="memory-cost">Memory cost</h3>
-<div class="page-columns page-full"><p>This table<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> gives the price per megabyte of different storage technology, in price per megabyte (2010 dollars), up to 2018.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;Source: <a href="https://cs61.seas.harvard.edu/site/2018/Storage2/">Storage 2: Cache model – CS 61 2018</a>.</p></li></div></div>
-<table class="table">
+<p>This table<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> gives the price per megabyte of different storage technology, in price per megabyte (2010 dollars), up to 2018.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Source: <a href="https://cs61.seas.harvard.edu/site/2018/Storage2/">Storage 2: Cache model – CS 61 2018</a>.</p></div></div><table class="table">
 <thead>
 <tr class="header">
 <th style="text-align: right;">Year</th>
@@ -549,10 +584,10 @@ Solution
 <p>At the MIT event, Altman was asked if training GPT-4 cost $100 million; he replied, “It’s more than that.”</p>
 </blockquote>
 </details>
-<div class="page-columns page-full"><p>In reality, the GPU cannot be worked to their full speed, and we only use about 30% of its theoretical peak FLOP/s (so for example, for A100, we only get 0.1 petaFLOP/s, instead of 0.3 petaFLOP/s).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> For this question, we assume that the utilization rate is 100%.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;The utilization rate of 30% is <a href="https://epochai.org/blog/estimating-training-compute">according to EpochAI</a>.</p></li></div></div>
-<p>Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2× to 3×.</p>
-<div class="page-columns page-full"><p>For context, here are the costs of <em>development</em> of various items<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;Sorry, not adjusted for inflation to the same year, but they are roughly in the range of 2000–2020 USD.</p></li></div></div>
-<ul>
+<p>In reality, the GPU cannot be worked to their full speed, and we only use about 30% of its theoretical peak FLOP/s (so for example, for A100, we only get 0.1 petaFLOP/s, instead of 0.3 petaFLOP/s).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> For this question, we assume that the utilization rate is 100%.</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;The utilization rate of 30% is <a href="https://epochai.org/blog/estimating-training-compute">according to EpochAI</a>.</p></div></div><p>Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2× to 3×.</p>
+<p>For context, here are the costs of <em>development</em> of various items<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Sorry, not adjusted for inflation to the same year, but they are roughly in the range of 2000–2020 USD.</p></div></div><ul>
 <li><a href="https://web.archive.org/web/20150213101032/http://archive.wired.com/gadgets/wireless/magazine/16-02/ff_iphone?currentPage=all">iPhone 1: 150 million USD</a>.</li>
 <li><a href="https://www.mckinsey.com/industries/industrials-and-electronics/our-insights/semiconductor-design-and-manufacturing-achieving-leading-edge-capabilities">A typical 5 nm chip: 0.5 billion USD</a>.</li>
 <li>Airbus A380: 18 billion USD. <span class="citation" data-cites="bowenEconomicGeographyAir2010">(<a href="#ref-bowenEconomicGeographyAir2010" role="doc-biblioref">Bowen 2010</a>, Table 4.3)</span></li>
@@ -637,13 +672,9 @@ Solution
 About one essay per person on earth, or 10 essays per person in America… is that too much to ask?
 </details>
 <p>Moore’s law applies to both CPU and GPU. From 2006 to 2021, GPU FLOP/s per dollar has been doubling every 2.5 years. We can fairly well assume that the price of petaFLOP-day also decreases at the same rate.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://epochai.org/blog/trends-in-gpu-price-performance"><img src="figure/epoch_empirical_gpu_flops_per_dollar.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
-<div class="page-columns page-full"><p>Assuming Moore’s law continues to hold indefinitely, and that there will be no algorithmic progress. When would GPT-3 become as cheap as a typical hobbyist project, say, 1000 USD?<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;Since a 2006 GPU and a 2020 GPU both have the same lifespan (1–4 years usually), and their cost of electricity is only a small proportion of their running expense, the price of GPU FLOP/s per dollar at the point of purchase is roughly proportional to the rental rate of GPU.</p></li></div></div>
-<details>
+<p><a href="https://epochai.org/blog/trends-in-gpu-price-performance"><img src="figure/epoch_empirical_gpu_flops_per_dollar.png" class="img-fluid"></a></p>
+<p>Assuming Moore’s law continues to hold indefinitely, and that there will be no algorithmic progress. When would GPT-3 become as cheap as a typical hobbyist project, say, 1000 USD?<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;Since a 2006 GPU and a 2020 GPU both have the same lifespan (1–4 years usually), and their cost of electricity is only a small proportion of their running expense, the price of GPU FLOP/s per dollar at the point of purchase is roughly proportional to the rental rate of GPU.</p></div></div><details>
 <summary>
 Solution
 </summary>
@@ -703,17 +734,17 @@ Solution
 <p>113 grams of beef emits about 5.6 kg of CO<sub>2</sub>, so GPT-3 emits about (552 ton)/(5.6 kg) = 90,000 burgers. It is about the same amount as 250 people eating one burger everyday, for a whole year.</p>
 38 kg of beef gives about 2 tCO<sub>2</sub> emission. So the emission of GPT-3 is equal to the emission due to beef consumption of 276 American persons.
 </details>
-<div class="page-columns page-full"><p>This strongly argues against the idea that we need “Green AI”<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>:</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;Green AI is such a ridiculous term. Consider AAA games, or Hollywood movies; every one of them cost more than the GPT-4 training run. When are we going to make <em>those</em> green?</p></li></div></div>
-<blockquote class="blockquote">
+<p>This strongly argues against the idea that we need “Green AI”<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>:</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;Green AI is such a ridiculous term. Consider AAA games, or Hollywood movies; every one of them cost more than the GPT-4 training run. When are we going to make <em>those</em> green?</p></div></div><blockquote class="blockquote">
 <p>To help reduce the carbon footprint of ML, we believe energy usage and CO<sub>2</sub>e should be a key metric in evaluating models, and we are collaborating with MLPerf developers to include energy usage during training and inference in this industry standard benchmark… We believe such new incentives could lead to a virtuous cycle where ML practitioners compete to increase accuracy while lowering energy consumption and CO<sub>2</sub>e that could bend the curve of ML carbon footprint growth for computationally intensive NLP models. <span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span></p>
 </blockquote>
 <p>One, the carbon footprint of ML is already minimal, compared to the cost of just making all the GPUs.</p>
-<div class="page-columns page-full"><p>Two, accounting for CO<sub>2</sub> is a dreadfully boring business,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and should be done by the civil servants – what else are they hired for, if not to deal with the boring stuffs? The ML practitioners are not climate economists or accountants, and they should not be burdened by accounting for climate change. If the price is right, then they simply need to budget how much money they want to spend on the training run, and the market would optimize the rest, including optimizing the right level of climate change<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;If you don’t believe me, try reading <span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>.</p></li><li id="fn7"><p><sup>7</sup>&nbsp;The right level of climate change is not “none”, but rather “when the marginal cost equals the marginal benefit”. This might sound controversial, but it is just introductory economics.</p>
+<p>Two, accounting for CO<sub>2</sub> is a dreadfully boring business,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and should be done by the civil servants – what else are they hired for, if not to deal with the boring stuffs? The ML practitioners are not climate economists or accountants, and they should not be burdened by accounting for climate change. If the price is right, then they simply need to budget how much money they want to spend on the training run, and the market would optimize the rest, including optimizing the right level of climate change<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;If you don’t believe me, try reading <span class="citation" data-cites="pattersonCarbonEmissionsLarge2021">(<a href="#ref-pattersonCarbonEmissionsLarge2021" role="doc-biblioref">Patterson et al. 2021</a>)</span>.</p></div><div id="fn7"><p><sup>7</sup>&nbsp;The right level of climate change is not “none”, but rather “when the marginal cost equals the marginal benefit”. This might sound controversial, but it is just introductory economics.</p>
 <blockquote class="blockquote">
 <p>Luckily, at this point the orthodoxy of the academic economists is very much a minority position among intellectuals in general; one can seem to be a courageous maverick, boldly challenging the powers that be, by reciting the contents of a standard textbook. <span class="citation" data-cites="krugmanRicardoDifficultIdea2002">(<a href="#ref-krugmanRicardoDifficultIdea2002" role="doc-biblioref">Krugman 2002</a>)</span></p>
 </blockquote>
-</li></div></div>
-<p>In one sentence: <strong>There need be no new incentive other than the profit motive.</strong></p>
+</div></div><p>In one sentence: <strong>There need be no new incentive other than the profit motive.</strong></p>
 
 
 <!-- -->
@@ -722,7 +753,7 @@ Solution
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bartoljrNanoconnectomicUpperBound2015" class="csl-entry" role="listitem">
 Bartol Jr, Thomas M., Cailey Bromer, Justin Kinney, Michael A. Chirillo, Jennifer N. Bourne, Kristen M. Harris, and Terrence J. Sejnowski. 2015. <span>“Nanoconnectomic Upper Bound on the Variability of Synaptic Plasticity.”</span> <em>Elife</em> 4: e10778. <a href="https://elifesciences.org/articles/10778">https://elifesciences.org/articles/10778</a>.
 </div>
@@ -783,6 +814,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -851,13 +909,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -987,10 +1047,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1000,8 +1077,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1013,7 +1099,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1057,6 +1266,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1082,6 +1292,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1209,8 +1445,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>Solve the above equations symbolically to find $N_{opt}, D_{opt}$ as a function of $C, C_0, \alpha, \beta, A, B$. Then, plug in the numerical values of the parameters, to find a numerical expression for $N_{opt}, D_{opt}$ as a function of $C$.</span>
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    Since $C = C_0 ND$, we have $N = \frac{C}{C_0 D}$. Plug it into $\min_{N, D} L = \frac{A}{N^\alpha} + \frac{B}{D^{\beta}} + L_0$, we obtain</span>
 <span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="in">    $$\min_{D} L = \frac{A}{(\frac{C}{C_0 D})^\alpha} + \frac{B}{D^{\beta}} + L_0.$$</span></span>
@@ -1227,7 +1463,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="in">        L_{opt}(C) = 1070 \; C^{-0.154} + 1.7</span></span>
 <span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="in">    \end{cases}</span></span>
 <span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="in">    $$</span></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>In the same paper, they also performed a *direct* statistical fitting, to find the optimal $N, D$ for a given $C$, without going through the intermediate steps above. This gives a slightly different result (only slightly different -- as you would know after solving the previous problem):</span>
@@ -1238,19 +1474,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>Suppose we decide that our next AI should have 1 trillion ($N = 10^{12}$) parameters, and we use Chinchilla scaling laws. How much compute would it cost to train, and how many tokens would its training dataset have?</span>
 <span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>$N = 0.1 \times C^{0.5} = 10^{12}$, so $C= 10^{26}$ FLOP, and $D = 1.7 \times 10^{13}$, or 17 trillion tokens.</span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dataset size</span></span>
 <span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>Assuming each English word cost about 1.4 tokens, how many English words would 10 trillion tokens be? Assuming each page has 400 words, and each book has 300 pages, how many books is that? To put it into context, look up the size of Library of Congress, and <span class="co">[</span><span class="ot">Google Books</span><span class="co">](https://en.wikipedia.org/wiki/Google_Books)</span>, and compare with the number we just calculated.</span>
 <span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>  $10 / 1.4 = 7$ trillion words. If each book has $400 \times 300 = 0.12$ million words, then that is 60 million books, if they were all in English.</span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>Since humans are kind of the same everywhere, book lengths should be kind of the same everywhere -- information-dense languages would naturally have books with lower apparent word-count, but the same information (measured in bytes).</span>
 <span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a></span>
@@ -1261,12 +1497,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>Given that each parameter is a 16-bit floating point number, how much memory does it cost to store a model with 1 billion parameters? How about our hypothetical GPT-5, which has 1 trillion parameters? How many A100 GPU (VRAM = 40 GB) would be required to contain the full GPT-5 model?</span>
 <span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>  1 billion parameters is 2 billion bytes, or 2 GB. Our hypothetical GPT-5 would take up 2 TB. It would take 50 A100 to contain it.</span>
 <span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a> Now, 50 A100 GPUs has a running cost of about 100 USD/hr, but not such a terrible problem, but then, during training, you would have to run an optimizer like Adam, which would need three floating point numbers per parameter (gradient, momentum, scale), instantly increasing the memory requirement to 200 A100 GPUs. </span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a> <span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a> &lt;/details&gt;</span>
 <span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### Memory cost</span></span>
 <span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
@@ -1296,8 +1532,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>Suppose long-term memory storage can last 1 year before being replaced. How much money does it cost per year to store a 1 trillion parameter model on an SSD, the most expensive form of long-term storage? How much money does it cost to store a 1 trillion parameter model on DRAM memory? Use 2018 prices.</span>
 <span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="in">    SSD cost 0.00015 USD/MB in 2018, or 0.15 USD/GB. 1 trillion parameters</span></span>
 <span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a><span class="in">    cost 2000 GB of storage, or about 300 USD. So the total cost of storage</span></span>
@@ -1310,7 +1546,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="in">    cost of DRAM is about $\frac{12000}{20000\times 50} = 1\%$ of the total cost of GPU.</span></span>
 <span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
 <span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a><span class="in">    So what is the limit? The memory bandwidth, which we will see in the next question.</span></span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a><span class="fu">### Memory bandwidth and latency</span></span>
 <span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
@@ -1324,8 +1560,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>Since we are just trying to compute an order-of-magnitude estimate, let's assume for the problem that the model fits onto a single DRAM on a single GPU. You can also ignore the need to read/write model activations and optimizer states.</span>
 <span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>    Since the model takes up 2 TB of memory, it would take at least 1.3 seconds to even load the model from DRAM, during a single forward pass.</span>
 <span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a><span class="in">    Autoregression means that the next token cannot be generated until the previous one is already generated, so the model can only generate one token per 1.3 seconds, or 46 tokens per minute. A Chat-GPT5 would be a very slow talker!</span></span>
@@ -1334,7 +1570,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a><span class="in">    GPT-3 with 175 billion parameters would run 1000/175 times faster, at 262 tokens per minute, about the speed of a fast human talker. This corresponds well with the general impression that ChatGPT types about 200 words a minute.</span></span>
 <span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a><span class="fu">### Batch inference</span></span>
 <span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a></span>
@@ -1350,15 +1586,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>Concretely, we can estimate what is a good batch size for GPT-3 175B. It has 96 attention layers, each with 96×128-dimension heads. It is typically run with 16-bit precision floating point numbers. For a single token, how many megabytes would all the floating point activations cost?</span>
 <span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>  A single token would cost $96 \times 96 \times 128$ floating point activations, or about 2.4 MB.</span>
-<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a>The model itself has 175 billion 16-bit floating point parameters, taking up about 350 GB. How many tokens do we need to put into a batch, before the activations occupy the same amount of memory as the model parameters?</span>
 <span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>    In order for the activations of tokens to occupy the same memory as the</span>
 <span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a>    GPT-3 parameters itself, we need about $\frac{350 \;\mathrm{GB}}{2.4 \;\mathrm{MB}} = 0.15 \text{million tokens}$.</span>
 <span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a></span>
@@ -1367,7 +1603,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
 <span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a><span class="in">    This explains why during training, the batch sizes of the largest models</span></span>
 <span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a><span class="in">    typically are on the order of 1 million tokens. It also shows why there is a natural drive towards scale -- only the largest companies can expect to regularly run 0.2 million chats simultaneously.</span></span>
-<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a><span class="fu">## Training cost</span></span>
 <span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a></span>
@@ -1383,20 +1619,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a>In the literature about the largest AI models, the training cost is often reported in units of "petaFLOP-day", which is equal to 1 petaFLOP/second x 1 day. How many FLOP is 1 petaFLOP-day? What is the equivalent number of A100-hour? If we were to buy 1 petaFLOP-day of compute with rented A100 GPU, how much would it cost?</span>
 <span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a>    1 petaFLOP-day = 1 petaFLOP/second x 1 day = 1E15 FLOP/s x 8.64E4 s =</span>
 <span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>    8.64E19 FLOP.</span>
 <span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a><span class="in">    Since 1 A100 can run at 0.3 petaFLOP/s, getting 1 petaFLOP-day requires</span></span>
 <span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a><span class="in">    us to run 1/0.3 A100 for 1 day, or 80 A100-hours. At the price of 2</span></span>
 <span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a><span class="in">    USD/hr, it would cost 160 USD.</span></span>
-<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>The largest model of GPT-3 cost 3640 petaFLOP-days to train (according to <span class="co">[</span><span class="ot">Table D.1 of the report</span><span class="co">](https://arxiv.org/pdf/2005.14165v4.pdf#page=46)</span>). How much would it cost if it were trained with A100? How much money does it cost to train our hypothetical GPT-5?</span>
 <span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>    2E25 FLOP = 0.2 amount of GPT-5 = 17 million A100-hours = 33 million USD.</span>
 <span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>And accounting for the utilization rate of 30%, that would give us 110 million USD.</span>
@@ -1405,7 +1641,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; At the MIT event, Altman was asked if training GPT-4 cost $100 million; he replied, "It's more than that."</span></span>
 <span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>In reality, the GPU cannot be worked to their full speed, and we only use about 30% of its theoretical peak FLOP/s (so for example, for A100, we only get 0.1 petaFLOP/s, instead of 0.3 petaFLOP/s).<span class="ot">[^utilization-rate-30]</span> For this question, we assume that the utilization rate is 100%.</span>
 <span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a></span>
@@ -1426,10 +1662,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>Comment on the cost of our hypothetical GPT-5. Is it on the order of a large commercial actor like Google, or a state actor like China?</span>
 <span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>  The cost is on the order of 1 billion USD, which is roughly the largest projects undertaken by private corporations. Larger models, as those contemplated by AGI projects in Google, OpenAI, etc, have historically been undertaken by state actors only.</span>
-<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a>Here is another way to estimate. Building a large AI model, according to accountancy, would be investment into a production machine, and thus part of "capital expenditure" ("CapEx"). We can find out what proportion is 1 billion USD in their total CapEx. I looked it up <span class="co">[</span><span class="ot">here</span><span class="co">](https://finbox.com/NASDAQGS:GOOG.L/explorer/capex/)</span>.</span>
 <span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a></span>
@@ -1448,10 +1684,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a>The largest companies, like Microsoft have GPU on the order of 10000 A100. What is the wall clock hour of training GPT-5, assuming you have 10000 A100, perfect utilization, and no interruptions?</span>
 <span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a>    83 million hours / 10000 = 350 days. Almost exactly 1 year.</span>
-<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a><span class="fu">### The difficulty of large-scale training</span></span>
 <span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a></span>
@@ -1486,22 +1722,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a>Given that GPT-3.5 has 175 billion parameters, how many FLOPs would it take to infer on 1 million tokens? How much money would it cost if it were run with A100?</span>
 <span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a>    $175 \;\mathrm{billion} \times 1 \;\mathrm{million} \times 2 = 4\times 10^{17} \;\mathrm{FLOPs}$. Now one A100-hour is $8.64\times 10^{19} \;\mathrm{FLOPs}$, so that is 1/200 A100-hour, or about 0.01 USD.</span>
 <span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a><span class="in">    [The price offered by OpenAI](https://openai.com/pricing) is 2 USD per 1 million tokens, so it's a very profitable business... but see next question.</span></span>
 <span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">The price offered by OpenAI</span><span class="co">](https://openai.com/pricing)</span> is 2 USD per 1 million tokens. Assuming that GPT-3.5 cost 10 million USD to develop and train, how many tokens must be sold, just to recoup the cost? Assuming each English word cost about 1.4 tokens, and each essay is 1000 words, how many essays would it be equivalent to?</span>
 <span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a>    Since the cost is almost negligible (1/200 of the revenue), we can pretend it's all profit. So, the profit is 2 USD per 1 million tokens. We need to recoup 10 million USD, so we need $10 \;\mathrm{million} / 2 \times 1 \;\mathrm{million} = 5\times 10^{12} \;\mathrm{tokens}$, or 4 billion essays. </span>
 <span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a><span class="in">    About one essay per person on earth, or 10 essays per person in America... is that too much to ask?</span></span>
-<span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a>Moore's law applies to both CPU and GPU. From 2006 to 2021, GPU FLOP/s per dollar has been doubling every 2.5 years. We can fairly well assume that the price of petaFLOP-day also decreases at the same rate.</span>
 <span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a></span>
@@ -1511,10 +1747,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a><span class="ot">[^electricity-rental-rate-gpu]: </span>Since a 2006 GPU and a 2020 GPU both have the same lifespan (1--4 years usually), and their cost of electricity is only a small proportion of their running expense, the price of GPU FLOP/s per dollar at the point of purchase is roughly proportional to the rental rate of GPU.</span>
 <span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a>  GPT-3 cost 6 million USD to train. For it to cost just 1000 USD, we need to drop its price 6000-fold. Now, $\log_2(6000) \times 2.5\; \mathrm{year} = 30 \; \mathrm{year}$. So it would be around 2050.</span>
-<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-375"><a href="#cb1-375" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-376"><a href="#cb1-376" aria-hidden="true" tabindex="-1"></a><span class="fu">## Energetic cost</span></span>
 <span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a></span>
@@ -1524,12 +1760,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a>Given this, what is the minimal energy required for performing one FLOP? What is the minimal power (in Watts) required to perform 300 TFLOP/s, as in A100 GPU? Compared this to the actual value of 300 Watts.</span>
 <span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a>    The energy per FLOP is $E_{FLOP} = 32 \times 3\times 10^{-21} J = 10^{-19} J$. At 300 TFLOP/s, we need $P_{A100} = 3\times 10^{14} E_{FLOP}/s = 3\times 10^{-5}W$. The actual value of 300 Watts is 10 million times more than the theoretical minimum.</span>
 <span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-388"><a href="#cb1-388" aria-hidden="true" tabindex="-1"></a><span class="in">    There is still [plenty of room at the bottom](https://en.wikipedia.org/wiki/There's_Plenty_of_Room_at_the_Bottom)!</span></span>
-<span id="cb1-389"><a href="#cb1-389" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-389"><a href="#cb1-389" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-390"><a href="#cb1-390" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-391"><a href="#cb1-391" aria-hidden="true" tabindex="-1"></a>For context, the equivalent FLOP/s for the human brain is controversial, but a brief scan through <span class="co">[</span><span class="ot">the review article</span><span class="co">](https://aiimpacts.org/brain-performance-in-flops/)</span> says that it should be about 1E18 FLOP/s.&nbsp;The energetic power of the brain is well-known: about 30 Watts. This means the brain is about 30000x more energy-efficient than A100 GPU, but still 300x less efficient than the theoretical minimum.</span>
 <span id="cb1-392"><a href="#cb1-392" aria-hidden="true" tabindex="-1"></a></span>
@@ -1544,21 +1780,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-401"><a href="#cb1-401" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-402"><a href="#cb1-402" aria-hidden="true" tabindex="-1"></a><span class="fu">## Environmental cost</span></span>
 <span id="cb1-403"><a href="#cb1-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-404"><a href="#cb1-404" aria-hidden="true" tabindex="-1"></a>According to "Carbon emissions and large neural network training"<span class="co">[</span><span class="ot">@pattersonCarbonEmissionsLarge2021</span><span class="co">]</span>, the carbon emission of training GPT-3 is 552 tCO<span class="kw">&lt;sub&gt;</span>2<span class="kw">&lt;/sub&gt;</span>. According to a <span class="co">[</span><span class="ot">2021 poll of climate economists</span><span class="co">](https://www.reuters.com/business/cop/carbon-needs-cost-least-100tonne-now-reach-net-zero-by-2050-2021-10-25/)</span>, 1 tCO<span class="kw">&lt;sub&gt;</span>2<span class="kw">&lt;/sub&gt;</span> emission should cost somewhere between 50 and 250 USD. Let's take their geometric average of 112 USD.</span>
+<span id="cb1-404"><a href="#cb1-404" aria-hidden="true" tabindex="-1"></a>According to "Carbon emissions and large neural network training"<span class="co">[</span><span class="ot">@pattersonCarbonEmissionsLarge2021</span><span class="co">]</span>, the carbon emission of training GPT-3 is 552 tCO&lt;sub&gt;2&lt;/sub&gt;. According to a <span class="co">[</span><span class="ot">2021 poll of climate economists</span><span class="co">](https://www.reuters.com/business/cop/carbon-needs-cost-least-100tonne-now-reach-net-zero-by-2050-2021-10-25/)</span>, 1 tCO&lt;sub&gt;2&lt;/sub&gt; emission should cost somewhere between 50 and 250 USD. Let's take their geometric average of 112 USD.</span>
 <span id="cb1-405"><a href="#cb1-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-406"><a href="#cb1-406" aria-hidden="true" tabindex="-1"></a>If we add all the tCO<span class="kw">&lt;sub&gt;</span>2<span class="kw">&lt;/sub&gt;</span> cost to the training of GPT-3, how much more expensive would it be? Compare that with its A100-GPU cost of training.</span>
+<span id="cb1-406"><a href="#cb1-406" aria-hidden="true" tabindex="-1"></a>If we add all the tCO&lt;sub&gt;2&lt;/sub&gt; cost to the training of GPT-3, how much more expensive would it be? Compare that with its A100-GPU cost of training.</span>
 <span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a>  &lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a>    $112 \times 552 = 62,000 \;\mathrm{USD}$.</span>
 <span id="cb1-411"><a href="#cb1-411" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-412"><a href="#cb1-412" aria-hidden="true" tabindex="-1"></a><span class="in">    Previously, we calculated the GPU cost of training to be around 6 million USD. So fully carbon-pricing the emission would make it 1% more expensive.</span></span>
 <span id="cb1-413"><a href="#cb1-413" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-414"><a href="#cb1-414" aria-hidden="true" tabindex="-1"></a><span class="in">    Generally, adding in the tCO&lt;sub&gt;2&lt;/sub&gt; cost of training the largest models increase the cost by about 1 to 2 % (I have computed it in several ways). Since the global GDP increases by about 2% a year, this shows that fully accounting for the carbon cost of AI would delay it by perhaps 1 year.</span></span>
-<span id="cb1-415"><a href="#cb1-415" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-415"><a href="#cb1-415" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-416"><a href="#cb1-416" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-417"><a href="#cb1-417" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-418"><a href="#cb1-418" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>Side note for economics students<span class="kw">&lt;/summary&gt;</span> </span>
+<span id="cb1-417"><a href="#cb1-417" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-418"><a href="#cb1-418" aria-hidden="true" tabindex="-1"></a>    &lt;summary&gt;Side note for economics students&lt;/summary&gt; </span>
 <span id="cb1-419"><a href="#cb1-419" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb1-420"><a href="#cb1-420" aria-hidden="true" tabindex="-1"></a><span class="in">    You might argue that fully carbon-taxing the global economy would raise not just electricity prices, but also the price of production, etc. For example, the global shipping industry uses fuel that has a high carbon emission.</span></span>
 <span id="cb1-421"><a href="#cb1-421" aria-hidden="true" tabindex="-1"></a></span>
@@ -1571,31 +1807,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-428"><a href="#cb1-428" aria-hidden="true" tabindex="-1"></a><span class="in">    In other words, properly pricing carbon emissions would only increase the price of AI by up to 5%, even as it doubles the price of food. AI is already green (within 5%), but food is far from green. That's even before we get to the subsidies! We don't have GPU subsidies, but we certainly have corn subsidies...</span></span>
 <span id="cb1-429"><a href="#cb1-429" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-430"><a href="#cb1-430" aria-hidden="true" tabindex="-1"></a><span class="in">    In this regard, it's not "Green AI" that is important, but Green Corn, Green Timber, and all the other bulk commodities.</span></span>
-<span id="cb1-431"><a href="#cb1-431" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-431"><a href="#cb1-431" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-432"><a href="#cb1-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-433"><a href="#cb1-433" aria-hidden="true" tabindex="-1"></a>To put the number in another context, compare it with some typical American food. According to <span class="co">[</span><span class="ot">Our World in Data</span><span class="co">](https://ourworldindata.org/carbon-footprint-food-methane)</span>, it cost about 50 kg of CO<span class="kw">&lt;sub&gt;</span>2<span class="kw">&lt;/sub&gt;</span> emission per 1 kg of beef.</span>
+<span id="cb1-433"><a href="#cb1-433" aria-hidden="true" tabindex="-1"></a>To put the number in another context, compare it with some typical American food. According to <span class="co">[</span><span class="ot">Our World in Data</span><span class="co">](https://ourworldindata.org/carbon-footprint-food-methane)</span>, it cost about 50 kg of CO&lt;sub&gt;2&lt;/sub&gt; emission per 1 kg of beef.</span>
 <span id="cb1-434"><a href="#cb1-434" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-435"><a href="#cb1-435" aria-hidden="true" tabindex="-1"></a>Also, <span class="co">[</span><span class="ot">an average American person (*not* household) consumed 38 kg of beef in 2020</span><span class="co">](https://web.archive.org/web/20231006035327/https://farmdocdaily.illinois.edu/2021/05/an-overview-of-meat-consumption-in-the-united-states.html)</span>.</span>
 <span id="cb1-436"><a href="#cb1-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-437"><a href="#cb1-437" aria-hidden="true" tabindex="-1"></a>Compare the CO<span class="kw">&lt;sub&gt;</span>2<span class="kw">&lt;/sub&gt;</span> emission of GPT-3 and CO<span class="kw">&lt;sub&gt;</span>2<span class="kw">&lt;/sub&gt;</span> emission from beef consumption. Assuming each burger ("quarter pounder") contains 1/4 pound (113 grams) of beef. How many burgers would be equivalent to the CO<span class="kw">&lt;sub&gt;</span>2<span class="kw">&lt;/sub&gt;</span> emission of GPT-3?</span>
+<span id="cb1-437"><a href="#cb1-437" aria-hidden="true" tabindex="-1"></a>Compare the CO&lt;sub&gt;2&lt;/sub&gt; emission of GPT-3 and CO&lt;sub&gt;2&lt;/sub&gt; emission from beef consumption. Assuming each burger ("quarter pounder") contains 1/4 pound (113 grams) of beef. How many burgers would be equivalent to the CO&lt;sub&gt;2&lt;/sub&gt; emission of GPT-3?</span>
 <span id="cb1-438"><a href="#cb1-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-439"><a href="#cb1-439" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb1-440"><a href="#cb1-440" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span> </span>
+<span id="cb1-439"><a href="#cb1-439" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb1-440"><a href="#cb1-440" aria-hidden="true" tabindex="-1"></a>    &lt;summary&gt;Solution&lt;/summary&gt; </span>
 <span id="cb1-441"><a href="#cb1-441" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-442"><a href="#cb1-442" aria-hidden="true" tabindex="-1"></a><span class="in">    113 grams of beef emits about 5.6 kg of CO&lt;sub&gt;2&lt;/sub&gt;, so GPT-3 emits about (552 ton)/(5.6 kg) = 90,000 burgers. It is about the same amount as 250 people eating one burger everyday, for a whole year.</span></span>
 <span id="cb1-443"><a href="#cb1-443" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-444"><a href="#cb1-444" aria-hidden="true" tabindex="-1"></a><span class="in">    38 kg of beef gives about 2 tCO&lt;sub&gt;2&lt;/sub&gt; emission. So the emission of GPT-3 is equal to the emission due to beef consumption of 276 American persons.</span></span>
-<span id="cb1-445"><a href="#cb1-445" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb1-445"><a href="#cb1-445" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb1-446"><a href="#cb1-446" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-447"><a href="#cb1-447" aria-hidden="true" tabindex="-1"></a>This strongly argues against the idea that we need "Green AI"<span class="ot">[^green-ai]</span>:</span>
 <span id="cb1-448"><a href="#cb1-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-449"><a href="#cb1-449" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; To help reduce the carbon footprint of ML, we believe energy usage and CO</span><span class="kw">&lt;sub&gt;</span><span class="at">2</span><span class="kw">&lt;/sub&gt;</span><span class="at">e should be a key metric in evaluating models, and we are collaborating with MLPerf developers to include energy usage during training and inference in this industry standard benchmark... We believe such new incentives could lead to a virtuous cycle where ML practitioners compete to increase accuracy while lowering energy consumption and CO</span><span class="kw">&lt;sub&gt;</span><span class="at">2</span><span class="kw">&lt;/sub&gt;</span><span class="at">e that could bend the curve of ML carbon footprint growth for computationally intensive NLP models. </span><span class="co">[</span><span class="ot">@pattersonCarbonEmissionsLarge2021</span><span class="co">]</span></span>
+<span id="cb1-449"><a href="#cb1-449" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; To help reduce the carbon footprint of ML, we believe energy usage and CO</span>&lt;sub&gt;<span class="at">2</span>&lt;/sub&gt;<span class="at">e should be a key metric in evaluating models, and we are collaborating with MLPerf developers to include energy usage during training and inference in this industry standard benchmark... We believe such new incentives could lead to a virtuous cycle where ML practitioners compete to increase accuracy while lowering energy consumption and CO</span>&lt;sub&gt;<span class="at">2</span>&lt;/sub&gt;<span class="at">e that could bend the curve of ML carbon footprint growth for computationally intensive NLP models. </span><span class="co">[</span><span class="ot">@pattersonCarbonEmissionsLarge2021</span><span class="co">]</span></span>
 <span id="cb1-450"><a href="#cb1-450" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-451"><a href="#cb1-451" aria-hidden="true" tabindex="-1"></a><span class="ot">[^green-ai]: </span>Green AI is such a ridiculous term. Consider AAA games, or Hollywood movies; every one of them cost more than the GPT-4 training run. When are we going to make *those* green?</span>
 <span id="cb1-452"><a href="#cb1-452" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-453"><a href="#cb1-453" aria-hidden="true" tabindex="-1"></a>One, the carbon footprint of ML is already minimal, compared to the cost of just making all the GPUs.</span>
 <span id="cb1-454"><a href="#cb1-454" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-455"><a href="#cb1-455" aria-hidden="true" tabindex="-1"></a>Two, accounting for CO<span class="kw">&lt;sub&gt;</span>2<span class="kw">&lt;/sub&gt;</span> is a dreadfully boring business,<span class="ot">[^CO2-is-boring]</span> and should be done by the civil servants -- what else are they hired for, if not to deal with the boring stuffs? The ML practitioners are not climate economists or accountants, and they should not be burdened by accounting for climate change. If the price is right, then they simply need to budget how much money they want to spend on the training run, and the market would optimize the rest, including optimizing the right level of climate change<span class="ot">[^right-level]</span></span>
+<span id="cb1-455"><a href="#cb1-455" aria-hidden="true" tabindex="-1"></a>Two, accounting for CO&lt;sub&gt;2&lt;/sub&gt; is a dreadfully boring business,<span class="ot">[^CO2-is-boring]</span> and should be done by the civil servants -- what else are they hired for, if not to deal with the boring stuffs? The ML practitioners are not climate economists or accountants, and they should not be burdened by accounting for climate change. If the price is right, then they simply need to budget how much money they want to spend on the training run, and the market would optimize the rest, including optimizing the right level of climate change<span class="ot">[^right-level]</span></span>
 <span id="cb1-456"><a href="#cb1-456" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-457"><a href="#cb1-457" aria-hidden="true" tabindex="-1"></a><span class="ot">[^CO2-is-boring]: </span>If you don't believe me, try reading <span class="co">[</span><span class="ot">@pattersonCarbonEmissionsLarge2021</span><span class="co">]</span>.</span>
 <span id="cb1-458"><a href="#cb1-458" aria-hidden="true" tabindex="-1"></a></span>
@@ -1609,13 +1845,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left"><span class="faux-block">Yuxi on the Wired</span></div>   
+    <div class="nav-footer-left">
+<p><span class="faux-block">Yuxi on the Wired</span></p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
-    <div class="nav-footer-right"><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></p>
+</div>
   </div>
 </footer>
+
 
 
 

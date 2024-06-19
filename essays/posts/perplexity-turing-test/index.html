@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,6 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -103,7 +104,12 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -112,6 +118,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -121,10 +128,37 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <meta property="og:title" content="Yuxi on the Wired - Predicting AGI by the Turing Test">
 <meta property="og:description" content="Minimizing log-perplexity loss is equivalent to maximizing survival length in a Turing test. Assuming compute-loss scaling law, a scaled-up GPT that produces human-like science papers would cost ~200 years of global GDP.">
 <meta property="og:image" content="https://yuxi-liu-wired.github.io/essays/posts/perplexity-turing-test/figure/banner_4_edit.png">
-<meta property="og:site-name" content="Yuxi on the Wired">
+<meta property="og:site_name" content="Yuxi on the Wired">
 <meta property="og:image:height" content="1024">
 <meta property="og:image:width" content="1792">
 <meta property="og:image:alt" content="An abstract representation of the Turing test. On the left is a dark city of obelisks over a bright background, and on the right is the same thing, mirrored and inverted, but with subtle differences due to the randomness of the art generator. It represents the abstract idea of the Turing test: duality, subtle differences, same contours, and complex object made of simple parts. High contrast, monochromatic, minimalistic, in the style of vector svg art.">
@@ -140,10 +174,10 @@ div.csl-indent {
 <body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
     </a>
@@ -158,46 +192,46 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../essays/index.html" rel="" target="">
- <span class="menu-text">Essays</span></a>
+    <a class="nav-link" href="../../../essays/index.html"> 
+<span class="menu-text">Essays</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../sketches/index.html" rel="" target="">
- <span class="menu-text">Sketches</span></a>
+    <a class="nav-link" href="../../../sketches/index.html"> 
+<span class="menu-text">Sketches</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../projects/index.html" rel="" target="">
- <span class="menu-text">Projects</span></a>
+    <a class="nav-link" href="../../../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../notes/index.html" rel="" target="">
- <span class="menu-text">Notes</span></a>
+    <a class="nav-link" href="../../../notes/index.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../docs/index.html" rel="" target="">
- <span class="menu-text">Docs</span></a>
+    <a class="nav-link" href="../../../docs/index.html"> 
+<span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../about/index.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about/index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://bair.berkeley.edu/" rel="" target=""><i class="bi bi-folder-symlink" role="img">
+    <a class="nav-link" href="https://bair.berkeley.edu/"> <i class="bi bi-folder-symlink" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -248,7 +282,7 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
@@ -279,7 +313,7 @@ div.csl-indent {
   </ul>
 </nav>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
@@ -289,10 +323,11 @@ div.csl-indent {
 
 
 
+
 <section id="abstract" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
-<div class="page-columns page-full"><p>This essay explains <em>the Direct Approach</em> proposed by <span class="citation" data-cites="barnettScalingTransformativeAutoregressive2023">(<a href="#ref-barnettScalingTransformativeAutoregressive2023" role="doc-biblioref">Barnett and Besiroglu 2023a</a>)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I encourage you to play with the <a href="https://epochai.org/blog/direct-approach-interactive-model"><em>Direct Approach Interactive Model</em></a> to explore an interactive simulation using the approach.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;The thing is released in a scattered way, typical for an internet-native publication. There is the report <span class="citation" data-cites="barnettScalingTransformativeAutoregressive2023">(<a href="#ref-barnettScalingTransformativeAutoregressive2023" role="doc-biblioref">Barnett and Besiroglu 2023a</a>)</span>, in the form of a paper – clearly meant to be cited, despite being hard to read. There is the website <span class="citation" data-cites="barnettDirectApproach2023">(<a href="#ref-barnettDirectApproach2023" role="doc-biblioref">Barnett and Besiroglu 2023b</a>)</span>, in the form of a blog post – clearly meant to be read, despite not being upper-class enough to be cited in journal papers. Finally there is the <a href="https://epochai.org/blog/direct-approach-interactive-model">interactive model</a> which looks like an optional add-on to the blog post.</p></li></div></div>
-<blockquote class="blockquote">
+<p>This essay explains <em>the Direct Approach</em> proposed by <span class="citation" data-cites="barnettScalingTransformativeAutoregressive2023">(<a href="#ref-barnettScalingTransformativeAutoregressive2023" role="doc-biblioref">Barnett and Besiroglu 2023a</a>)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I encourage you to play with the <a href="https://epochai.org/blog/direct-approach-interactive-model"><em>Direct Approach Interactive Model</em></a> to explore an interactive simulation using the approach.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;The thing is released in a scattered way, typical for an internet-native publication. There is the report <span class="citation" data-cites="barnettScalingTransformativeAutoregressive2023">(<a href="#ref-barnettScalingTransformativeAutoregressive2023" role="doc-biblioref">Barnett and Besiroglu 2023a</a>)</span>, in the form of a paper – clearly meant to be cited, despite being hard to read. There is the website <span class="citation" data-cites="barnettDirectApproach2023">(<a href="#ref-barnettDirectApproach2023" role="doc-biblioref">Barnett and Besiroglu 2023b</a>)</span>, in the form of a blog post – clearly meant to be read, despite not being upper-class enough to be cited in journal papers. Finally there is the <a href="https://epochai.org/blog/direct-approach-interactive-model">interactive model</a> which looks like an optional add-on to the blog post.</p></div></div><blockquote class="blockquote">
 <p>The Direct Approach framework bounds the compute requirements for transformative AI by extrapolating neural scaling laws. We combine those estimates with simple models of future progress in algorithms, investment, and compute costs to produce a user-adjustable forecast over the date at which TAI will be achieved. <span class="citation" data-cites="barnettDirectApproach2023">(<a href="#ref-barnettDirectApproach2023" role="doc-biblioref">Barnett and Besiroglu 2023b</a>)</span></p>
 </blockquote>
 <p>From the POV of the judge, a Turing test is a sequential test for two statistical hypotheses – “is human” and “is machine”. Under reasonable assumptions, halving the (reducible part of) log-perplexity loss of the language model would double the time it can survive in a Turing test.</p>
@@ -329,9 +364,9 @@ div.csl-indent {
 <p>The second term is negative log-likelihood loss per token. This is what language models are trained to minimize. We write it as <span class="math inline">\(L\)</span>.</p>
 <p>The third term is the entropy rate of the human. It is how random the human is. We write it as <span class="math inline">\(L_\infty\)</span>, because it is the theoretical minimal loss that the language model can reach.</p>
 <p>If the machine is a perfect replica of the human, then the second term is zero, and the first term equals the third term.</p>
-<div class="page-columns page-full"><p>Assuming that the human is an ergodic speakers of English,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> we can sample an infinite stream <span class="math inline">\(X_{1:\infty}\)</span> from the human, then call up the <a href="#sec-smb-theorem">Shannon–McMillan–Breiman theorem</a> and find that</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;In short, an ergodic speaker is someone who has only one speech. If you hear it speak once for a very long time, then hear it speak again for a very long time, then you can take the first and shift it around, so that it looks like the second over a very long sub-segment. Ergodic speakers allow you to take the average over a single very long speech, and be assured that it is close to the average over all possible speeches.</p>
-<p>In long, see <a href="#sec-ergodic-theory">the appendix on ergodic theory</a>.</p></li></div></div>
-<p><span class="math display">\[
+<p>Assuming that the human is an ergodic speakers of English,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> we can sample an infinite stream <span class="math inline">\(X_{1:\infty}\)</span> from the human, then call up the <a href="#sec-smb-theorem">Shannon–McMillan–Breiman theorem</a> and find that</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;In short, an ergodic speaker is someone who has only one speech. If you hear it speak once for a very long time, then hear it speak again for a very long time, then you can take the first and shift it around, so that it looks like the second over a very long sub-segment. Ergodic speakers allow you to take the average over a single very long speech, and be assured that it is close to the average over all possible speeches.</p>
+<p>In long, see <a href="#sec-ergodic-theory">the appendix on ergodic theory</a>.</p></div></div><p><span class="math display">\[
 \frac 1n \ln\frac{Pr(X_{1:n}|H_0)}{Pr(X_{1:n}|H_1)} \to L - L_\infty
 \]</span></p>
 <p>On the other hand, if the machine is also an ergodic speaker of English, then we can sample an infinite stream <span class="math inline">\(X_{1:\infty}\)</span> from the machine, then call up the SMB theorem and find that</p>
@@ -344,7 +379,7 @@ L' := \lim_n \frac 1n
 \mathbb{E}_{X \sim Pr(\cdot | H_1)}\left[\ln\frac{1}{Pr(X_{1:n}|H_0)}\right], \quad L_\infty' := \lim_n \frac 1n
 \mathbb{E}_{X \sim Pr(\cdot | H_1)}\left[\ln\frac{1}{Pr(X_{1:n}|H_1)}\right]
 \]</span></p>
-<p>We can interpret them as the loss of the human at imitating the machine, and the entropy rate of the machine itself. When the machine is close enough to the human, we can take the approximation <span class="math inline">\(L' \approx L, L_\infty' \approx L_\infty\)</span>.</p>
+<p>We can interpret them as the loss of the human at imitating the machine, and the entropy rate of the machine itself. When the machine is close enough to the human, we can take the approximation <span class="math inline">\(L' \approx L,  L_\infty' \approx L_\infty\)</span>.</p>
 <p>Now, define the log-ratio at step <span class="math inline">\(n\)</span> to be <span class="math inline">\(r_n := \frac{Pr(X_{1:n}|H_0)}{Pr(X_{1:n}|H_1)}\)</span>. During a Turing test, the judge calculates</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -394,8 +429,8 @@ r_2 &amp;= r_1 + \frac{Pr(X_{1:2}|X_{1:1}, H_0)}{Pr(X_{1:2}|X_{1:1}, H_1)} \\
 </section>
 <section id="human-or-not" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="human-or-not">Human-or-not</h4>
-<div class="page-columns page-full"><p>There was one large-scale attempt at the Turing test in early 2023, in a game called “Human or Not?” <span class="citation" data-cites="jannaiHumanNotGamified2023">(<a href="#ref-jannaiHumanNotGamified2023" role="doc-biblioref">Jannai et al. 2023</a>)</span>. Human participants took 2-minute conversations, and at the end, had to decide whether they were talking to a human or a bot.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;There was no mention of whether the bots had to decide the same question.</p></li></div></div>
-<blockquote class="blockquote">
+<p>There was one large-scale attempt at the Turing test in early 2023, in a game called “Human or Not?” <span class="citation" data-cites="jannaiHumanNotGamified2023">(<a href="#ref-jannaiHumanNotGamified2023" role="doc-biblioref">Jannai et al. 2023</a>)</span>. Human participants took 2-minute conversations, and at the end, had to decide whether they were talking to a human or a bot.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;There was no mention of whether the bots had to decide the same question.</p></div></div><blockquote class="blockquote">
 <p>The conversations have a “ping-pong” structure that prevents players from sending two consecutive messages without a response, in order to ensure a balanced and dynamic exchange. Each message, limited to a maximum of 100 characters, has to be composed and sent within a 20-second window, and the chat ends after 2 minutes, usually consisting of 4-5 messages from each side. This ensures that players don’t have to wait for too long, so they can remain engaged with the game and a constant suspense is kept. Once the conversation is over, players are prompted to guess whether their conversational partner was a fellow human or an AI bot. <span class="citation" data-cites="jannaiHumanNotGamified2023">(<a href="#ref-jannaiHumanNotGamified2023" role="doc-biblioref">Jannai et al. 2023</a>)</span></p>
 </blockquote>
 <p>I counted that during a typical message, each side sends <span class="math inline">\([20, 40]\)</span> English words in total, or <span class="math inline">\([30, 50]\)</span> tokens. In <span class="math inline">\([60\%, 70\%]\)</span> of trials, the human participant judged correctly. This suggests that the log-ratio achieved after <span class="math inline">\([30, 50]\)</span> tokens is around the range of <span class="math inline">\([\pm \ln 6/4, \pm \ln 7/3]\)</span>. In other words, the average log-ratio per token is</p>
@@ -411,7 +446,7 @@ r_2 &amp;= r_1 + \frac{Pr(X_{1:2}|X_{1:1}, H_0)}{Pr(X_{1:2}|X_{1:1}, H_1)} \\
 </section>
 <section id="entropy-of-natural-languages" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="entropy-of-natural-languages">Entropy of natural languages</h2>
-<p>In <a href="#eq-sprt">Equation&nbsp;1</a>, we argued that <span class="math inline">\(L_\infty\)</span> <em>should</em> be interpreted as the entropy rate of the source, usually human-generated English. Unfortunately, unlike that of coin flips or Markov chains, the entropy rate of English cannot be calculated, only estimated. Fortunately, it can be estimated in several ways, and we can check their agreement.</p>
+<p>In <a href="#eq-sprt" class="quarto-xref">Equation&nbsp;1</a>, we argued that <span class="math inline">\(L_\infty\)</span> <em>should</em> be interpreted as the entropy rate of the source, usually human-generated English. Unfortunately, unlike that of coin flips or Markov chains, the entropy rate of English cannot be calculated, only estimated. Fortunately, it can be estimated in several ways, and we can check their agreement.</p>
 <p>Since tokenizers are temporary, but English is permanent, we convert all units to <span class="math inline">\(\;\rm{bit/character}\)</span> for easy comparison.</p>
 <section id="sec-chinchilla-scaling" class="level3">
 <h3 class="anchored" data-anchor-id="sec-chinchilla-scaling">Chinchilla scaling</h3>
@@ -439,9 +474,9 @@ r_2 &amp;= r_1 + \frac{Pr(X_{1:2}|X_{1:1}, H_0)}{Pr(X_{1:2}|X_{1:1}, H_1)} \\
 <p><span class="math display">\[
 \sum_{k=1}^N k(p_k - p_{k+1}) \ln k \leq H \leq - \sum_{k=1}^N p_k \ln p_k
 \]</span></p>
-<div class="page-columns page-full"><p>The upper bound is proved by <a href="https://en.wikipedia.org/wiki/Shannon's_source_coding_theorem">Shannon’s source coding theorem</a>. Taking a human subject, copy it, then they can be used as an encoder-decoder pair.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> The lower bound is not only tricky to prove, but also <strong>wrong</strong> in general. It is only correct when the human subject is <em>the optimal</em> <span class="math inline">\(N\)</span>-gram predictor, <em>and</em> when the language <em>is</em> exactly generated by an <span class="math inline">\(N\)</span>-gram model.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;It still works even if the humans are pseudorandom. We just have to whisper the same <abbr title="Random Number Generator">RNG</abbr> seed into both humans’ ears, and then they would behave in the same pseudorandom way.</p></li><li id="fn5"><p><sup>5</sup>&nbsp;The simplest counterexample: Suppose the source is binary, and satisfies <span class="math inline">\(X_{n+1} = X_{n} + 1 \mod 2\)</span>, so it has zero entropy. Nevertheless, the human intentionally guesses wrong the first time. Therefore, we have <span class="math inline">\(p_2 = 1\)</span>, and we have violated the lower bound by <span class="math inline">\(2\ln 2 &gt; 0\)</span>.</p>
-<p>This source can be made ergodic by adding an <span class="math inline">\(\epsilon\)</span> amount of coin-flip noise: <span class="math inline">\(X_{n+1} = X_{n} + 1 \mod 2\)</span> with probability <span class="math inline">\(1-\epsilon\)</span>. This would still give us <span class="math inline">\(2\ln 2 + O(\epsilon) &gt; O(\epsilon \ln \epsilon)\)</span>.</p></li></div></div>
-<p><span class="citation" data-cites="burtonLongrangeConstraintsStatistical1955">(<a href="#ref-burtonLongrangeConstraintsStatistical1955" role="doc-biblioref">Burton and Licklider 1955</a>)</span> uses the same method as Shannon, but with longer contexts and texts from more books (Shannon sampled all passages from just one book). They found that English has “redundancy” in <span class="math inline">\([0.6, 0.8]\)</span>, meaning that English has entropy rate <span class="math inline">\(\ln 27 \times (1- [0.6, 0.8]) = [0.7, 1.3] \;\rm{bit/character}\)</span>.</p>
+<p>The upper bound is proved by <a href="https://en.wikipedia.org/wiki/Shannon's_source_coding_theorem">Shannon’s source coding theorem</a>. Taking a human subject, copy it, then they can be used as an encoder-decoder pair.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> The lower bound is not only tricky to prove, but also <strong>wrong</strong> in general. It is only correct when the human subject is <em>the optimal</em> <span class="math inline">\(N\)</span>-gram predictor, <em>and</em> when the language <em>is</em> exactly generated by an <span class="math inline">\(N\)</span>-gram model.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;It still works even if the humans are pseudorandom. We just have to whisper the same <abbr title="Random Number Generator">RNG</abbr> seed into both humans’ ears, and then they would behave in the same pseudorandom way.</p></div><div id="fn5"><p><sup>5</sup>&nbsp;The simplest counterexample: Suppose the source is binary, and satisfies <span class="math inline">\(X_{n+1} = X_{n} + 1 \mod 2\)</span>, so it has zero entropy. Nevertheless, the human intentionally guesses wrong the first time. Therefore, we have <span class="math inline">\(p_2 = 1\)</span>, and we have violated the lower bound by <span class="math inline">\(2\ln 2 &gt; 0\)</span>.</p>
+<p>This source can be made ergodic by adding an <span class="math inline">\(\epsilon\)</span> amount of coin-flip noise: <span class="math inline">\(X_{n+1} = X_{n} + 1 \mod 2\)</span> with probability <span class="math inline">\(1-\epsilon\)</span>. This would still give us <span class="math inline">\(2\ln 2 + O(\epsilon) &gt; O(\epsilon \ln \epsilon)\)</span>.</p></div></div><p><span class="citation" data-cites="burtonLongrangeConstraintsStatistical1955">(<a href="#ref-burtonLongrangeConstraintsStatistical1955" role="doc-biblioref">Burton and Licklider 1955</a>)</span> uses the same method as Shannon, but with longer contexts and texts from more books (Shannon sampled all passages from just one book). They found that English has “redundancy” in <span class="math inline">\([0.6, 0.8]\)</span>, meaning that English has entropy rate <span class="math inline">\(\ln 27 \times (1- [0.6, 0.8]) = [0.7, 1.3] \;\rm{bit/character}\)</span>.</p>
 <p>Over the years, others devised other methods to estimate this entropy. For example, <span class="citation" data-cites="coverConvergentGamblingEstimate1978">(<a href="#ref-coverConvergentGamblingEstimate1978" role="doc-biblioref">T. Cover and King 1978</a>)</span> used a gambling game estimation, in the style of the <a href="https://en.wikipedia.org/wiki/Kelly_criterion">Kelly criterion</a>. Subjects were required to divide their entire bankroll into 27 differently-sized bets over 27 possibilities (26 letters and 1 whitespace). The right bet pays back 27-fold, and the other bets are lost. Let <span class="math inline">\(S_n\)</span> be the size of bankroll after <span class="math inline">\(n\)</span> rounds of betting, then</p>
 <p><span class="math display">\[
 H \leq \ln 27 - \limsup_n \frac 1n \ln S_n
@@ -558,12 +593,12 @@ L - L_\infty = \frac{1070}{(C/\;\rm{FLOP})^{0.154}} \;\rm{nat/token}
 <p><span class="math display">\[T^* \approx 170 \text{ tokens} \approx 150 \text{ words}\]</span></p>
 <p>meaning it has a good chance of passing the Turing test if limited to only 150 words. For context, the <em>Attention is All You Need</em> paper has an abstract that’s 200 tokens long.</p>
 <p>A typical scientific paper is about 4000 words long, which is <span class="math inline">\(27\times\)</span> that of 150 words, so it would need <span class="math inline">\(27^{1/0.153} = (2\times 10^9)\times\)</span> that of compute. Assuming that GPT-4 cost 10 million USD to train, this hypothetical AI would cost <span class="math inline">\(2\times 10^{16}\)</span> USD, or 200 years of global GDP<sub>2023</sub>.</p>
-<div class="page-columns page-full"><p>This implies that the first AGI will not be a scaled-up GPT – autoregressive transformer generatively pretrained on a lightly filtered text dataset. It has to include something else, perhaps multimodal data, high-quality data, better architecture, etc. Even if we were to attempt to merely scale it up, turning earth into a GPT-factory,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> with even 50% of global GDP devoted,<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> and with 2% growth rate forever, it would still take 110 years,<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> arriving at year 2133. Whole brain emulation would likely take less time.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;Consider this anecdote from <a href="https://en.wikipedia.org/wiki/Edward_Teller">Edward Teller</a>:</p>
+<p>This implies that the first AGI will not be a scaled-up GPT – autoregressive transformer generatively pretrained on a lightly filtered text dataset. It has to include something else, perhaps multimodal data, high-quality data, better architecture, etc. Even if we were to attempt to merely scale it up, turning earth into a GPT-factory,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> with even 50% of global GDP devoted,<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> and with 2% growth rate forever, it would still take 110 years,<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> arriving at year 2133. Whole brain emulation would likely take less time.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;Consider this anecdote from <a href="https://en.wikipedia.org/wiki/Edward_Teller">Edward Teller</a>:</p>
 <blockquote class="blockquote">
 <p>The possibilities of developing an atomic weapon and the desirability of doing it secretly were discussed at a Princeton University conference in which I participated in March 1939… Bohr said this rare variety could not be separated from common uranium except by turning the country into a gigantic factory. Bohr was worried that this could be done and that an atomic bomb could be developed–but he hoped that neither could be accomplished. Years later, when Bohr came to Los Alamos, I was prepared to say, “You see…” But before I could open my mouth, he said: “You see, I told you it couldn’t be done without turning the whole country into a factory. You have done just that.” <span class="citation" data-cites="tellerLegacyHiroshima1975">(<a href="#ref-tellerLegacyHiroshima1975" role="doc-biblioref">Teller and Brown 1975</a>)</span></p>
 </blockquote>
-</li><li id="fn7"><p><sup>7</sup>&nbsp;Only in a life-or-death situation does 50% of GDP get devoted to one purpose. For example, that is about the level of GDP devoted to war production during WWII in the major combatant countries. The USA spent 4 trillion USD<sub>2011</sub> over 6 years out of an annual GDP of 1.3 trillion USD<sub>2011</sub>.</p></li><li id="fn8"><p><sup>8</sup>&nbsp;Solve for <span class="math inline">\(x\)</span> in <span class="math inline">\(200 = \sum_{k=0}^x 0.5 \times 1.02^k\)</span>.</p></li><li id="fn9"><p><sup>9</sup>&nbsp;<iframe src="https://www.metaculus.com/questions/question_embed/2813/?theme=dark" style="height:430px; width:100%; max-width:550px"></iframe></p></li></div></div>
-</section>
+</div><div id="fn7"><p><sup>7</sup>&nbsp;Only in a life-or-death situation does 50% of GDP get devoted to one purpose. For example, that is about the level of GDP devoted to war production during WWII in the major combatant countries. The USA spent 4 trillion USD<sub>2011</sub> over 6 years out of an annual GDP of 1.3 trillion USD<sub>2011</sub>.</p></div><div id="fn8"><p><sup>8</sup>&nbsp;Solve for <span class="math inline">\(x\)</span> in <span class="math inline">\(200 = \sum_{k=0}^x 0.5 \times 1.02^k\)</span>.</p></div><div id="fn9"><p><sup>9</sup>&nbsp;<iframe src="https://www.metaculus.com/questions/question_embed/2813/?theme=dark" style="height:430px; width:100%; max-width:550px"></iframe></p></div></div></section>
 <section id="sec-ergodic-theory" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sec-ergodic-theory">Appendix: Ergodic theory</h2>
 <p>Since we used ergodic theory during the essay, we should quickly explain what it is about. This section is foundational, but the full complexity is not necessary.</p>
@@ -571,12 +606,12 @@ L - L_\infty = \frac{1070}{(C/\;\rm{FLOP})^{0.154}} \;\rm{nat/token}
 <h3 class="anchored" data-anchor-id="measure-theoretic-pov">Measure-theoretic POV</h3>
 <p>I know, you know too, nobody really likes measure theory any more than pianists like practicing scales hundreds of times. Still, it is at the right level of abstraction for many theories, including probability.</p>
 <p>We omit all mentions of “almost-everywhere”, “except on a set of measure zero”, and similar annoying phrases. As long as you never make a union of uncountable many subsets, you will not be hurt by this omission.</p>
-<div class="page-columns page-full"><p>A <a href="https://en.wikipedia.org/wiki/Probability_space">probability space</a> is a measurable space with a measure of <span class="math inline">\(1\)</span>. We write it as <span class="math inline">\((\Omega, \mathcal B, Pr)\)</span>, where <span class="math inline">\(\mathcal B\)</span> is the sigma-algebra of measurable sets, and <span class="math inline">\(Pr\)</span> is the probability measure. We also write <span class="math inline">\(\mu\)</span> for the measure.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn10"><p><sup>10</sup>&nbsp;Pronounced “mu” – it is a pun because both “mu” and “measure” starts with “m”.</p></li></div></div>
-<p>We consider a single measurable function <span class="math inline">\(T : \Omega \to \Omega\)</span>, and call it the <strong>shift map</strong>.</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Probability_space">probability space</a> is a measurable space with a measure of <span class="math inline">\(1\)</span>. We write it as <span class="math inline">\((\Omega, \mathcal B, Pr)\)</span>, where <span class="math inline">\(\mathcal B\)</span> is the sigma-algebra of measurable sets, and <span class="math inline">\(Pr\)</span> is the probability measure. We also write <span class="math inline">\(\mu\)</span> for the measure.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn10"><p><sup>10</sup>&nbsp;Pronounced “mu” – it is a pun because both “mu” and “measure” starts with “m”.</p></div></div><p>We consider a single measurable function <span class="math inline">\(T : \Omega \to \Omega\)</span>, and call it the <strong>shift map</strong>.</p>
 <p>We demand that <span class="math inline">\(T\)</span> <em>must</em> <strong>preserve measure</strong>. That is, <span class="math inline">\(\forall S \in \mathcal B\)</span>, we have <span class="math inline">\(Pr(T^{-1}(S)) = Pr(S)\)</span>.</p>
 <p>A subset is <strong>measurable</strong> iff it is an element of <span class="math inline">\(\mathcal B\)</span>. A measurable set is also called an <strong>event</strong>.</p>
-<div class="page-columns page-full"><p>A subset <span class="math inline">\(S \in \mathcal B\)</span> is <span class="math inline">\(T\)</span>-invariant iff <span class="math inline">\(T^{-1}(S) = S\)</span> almost everywhere.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> Let <span class="math inline">\(\mathcal I\)</span> be the set of all <span class="math inline">\(T\)</span>-invariant subsets:</p><div class="no-row-height column-margin column-container"><li id="fn11"><p><sup>11</sup>&nbsp;That is, except on a subset of measure zero: <span class="math inline">\(Pr(T^{-1}(S) - S) = 0\)</span> and <span class="math inline">\(Pr(S - T^{-1}(S)) = 0\)</span>. This is the last time we will measure this.</p></li></div></div>
-<p><span class="math display">\[
+<p>A subset <span class="math inline">\(S \in \mathcal B\)</span> is <span class="math inline">\(T\)</span>-invariant iff <span class="math inline">\(T^{-1}(S) = S\)</span> almost everywhere.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> Let <span class="math inline">\(\mathcal I\)</span> be the set of all <span class="math inline">\(T\)</span>-invariant subsets:</p>
+<div class="no-row-height column-margin column-container"><div id="fn11"><p><sup>11</sup>&nbsp;That is, except on a subset of measure zero: <span class="math inline">\(Pr(T^{-1}(S) - S) = 0\)</span> and <span class="math inline">\(Pr(S - T^{-1}(S)) = 0\)</span>. This is the last time we will measure this.</p></div></div><p><span class="math display">\[
 \mathcal I := \{S \in \mathcal B : T^{-1}(S) = S\}
 \]</span></p>
 <p>Now, obviously any set of measure zero or one are <span class="math inline">\(T\)</span>-invariant. We say that those are <em>trivially</em> <span class="math inline">\(T\)</span>-invariant. We say that <span class="math inline">\(T\)</span> is <strong>ergodic</strong> iff <span class="math inline">\(\mathcal I\)</span> has only such trivial subsets. In other words, <span class="math inline">\(T\)</span> is ergodic iff it cannot be factored into two nontrivial chunks:</p>
@@ -584,9 +619,9 @@ L - L_\infty = \frac{1070}{(C/\;\rm{FLOP})^{0.154}} \;\rm{nat/token}
 S, S' \text{ partitions } \Omega,\quad \text{such that } T^{-1}(S) = S ,\; T^{-1}(S') = S',\; Pr(S) &gt; 0 ,\; Pr(S') &gt; 0
 \]</span></p>
 <p>We <em>usually</em> ask <span class="math inline">\(T\)</span> to also be ergodic, though sometimes we don’t need that.</p>
-<div class="page-columns page-full"><p>Ergodic maps have many very good properties. We will use the following one. For the theorem, you can picture it as the real space <span class="math inline">\(\mathbb{R}^n\)</span> with the gaussian probability distribution, but in fact, it applies for just about everything we would care about, such as the space of English texts, <a href="https://en.wikipedia.org/wiki/Queueing_theory">queuing jobs</a>, <a href="https://en.wikipedia.org/wiki/Wiener_process">random walks</a>, etc.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn12"><p><sup>12</sup>&nbsp;Except pathological examples constructed by logicians who have nothing better to do than to care about the continuum hypothesis, large cardinals, and the arithmetic hierarchy. Those who desire the rigor-mortis of logic, let them have it.</p></li></div></div>
-<div id="thm-ergodic-dense-orbit" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1 (Dense orbits) </strong></span>If the state space is a <a href="https://en.wikipedia.org/wiki/Second-countable_space">topological space with a countable basis</a>, and any nonempty open set has positive measure, then almost any <span class="math inline">\(X\in\Omega\)</span> has a dense orbit.</p>
+<p>Ergodic maps have many very good properties. We will use the following one. For the theorem, you can picture it as the real space <span class="math inline">\(\mathbb{R}^n\)</span> with the gaussian probability distribution, but in fact, it applies for just about everything we would care about, such as the space of English texts, <a href="https://en.wikipedia.org/wiki/Queueing_theory">queuing jobs</a>, <a href="https://en.wikipedia.org/wiki/Wiener_process">random walks</a>, etc.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn12"><p><sup>12</sup>&nbsp;Except pathological examples constructed by logicians who have nothing better to do than to care about the continuum hypothesis, large cardinals, and the arithmetic hierarchy. Those who desire the rigor-mortis of logic, let them have it.</p></div></div><div id="thm-ergodic-dense-orbit" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Dense orbits)</strong></span> If the state space is a <a href="https://en.wikipedia.org/wiki/Second-countable_space">topological space with a countable basis</a>, and any nonempty open set has positive measure, then almost any <span class="math inline">\(X\in\Omega\)</span> has a dense orbit.</p>
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Proof</em>. </span>Let <span class="math inline">\(U\)</span> be a nonempty open set.</p>
@@ -595,7 +630,7 @@ S, S' \text{ partitions } \Omega,\quad \text{such that } T^{-1}(S) = S ,\; T^{-1
 </div>
 <p>Finally, there is a common theme in ergodic theory. There are rigorous versions of it, but instead of going for rigor, the spirit is more important:</p>
 <div id="thm-ergodic-decomposition" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2 (ergodic decomposition) </strong></span>Any interesting map is a partition/sum/integral of ergodic maps.</p>
+<p><span class="theorem-title"><strong>Theorem 2 (ergodic decomposition)</strong></span> Any interesting map is a partition/sum/integral of ergodic maps.</p>
 </div>
 <p>For example, the shear map on the unit square <span class="math inline">\([0, 1]^2\)</span> defined by</p>
 <p><span class="math display">\[
@@ -621,7 +656,7 @@ T(\dots, X_{-1}, X_0, X_1, \dots) := (\dots, X_0, X_1, X_2, \dots)
 <p>A probability distribution over <span class="math inline">\(\Omega\)</span> describes the probability of observing various kinds of text streams.</p>
 <p>If we can partition <span class="math inline">\(\Omega\)</span> into two subsets <span class="math inline">\(P, Q\)</span>, with probabilities <span class="math inline">\(\epsilon &gt; 0, 1-\epsilon &gt; 0\)</span>, then it means that any text from <span class="math inline">\(P\)</span> is different from any text from <span class="math inline">\(Q\)</span>, after any shift. It is as if there are two languages, and each text can be exclusively written in one language only.</p>
 <p>We wish to consider only texts created by some imaginary “universal English speaker”. In particular, we do not want it to get stuck in one sub-language of English, then never escape from it. That is, we assume the universal speaker is <strong>ergodic</strong>.</p>
-<p>Now imagine that we randomly sample two pieces of text generated by the universal speaker, and we shift the first text around to match it against the second. By <a href="#thm-ergodic-dense-orbit">Theorem&nbsp;1</a>, the orbit of the first text is dense in the space of all possible English texts spoken by the universal speaker. We can gamify this situation thus:</p>
+<p>Now imagine that we randomly sample two pieces of text generated by the universal speaker, and we shift the first text around to match it against the second. By <a href="#thm-ergodic-dense-orbit" class="quarto-xref">Theorem&nbsp;1</a>, the orbit of the first text is dense in the space of all possible English texts spoken by the universal speaker. We can gamify this situation thus:</p>
 <ul>
 <li>Prover: “I take one piece of text <span class="math inline">\(x\)</span>, then another piece <span class="math inline">\(x'\)</span>.”.</li>
 <li>Challenger: “I challenge you to find a stretch of text from <span class="math inline">\(x\)</span> that matches the <span class="math inline">\(-1000:1000\)</span> stretch in <span class="math inline">\(x'\)</span>.”.</li>
@@ -652,7 +687,7 @@ T(\dots, X_{-1}, X_0, X_1, \dots) := (\dots, X_0, X_1, X_2, \dots)
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-atkinsonDirectApproachInteractive2023" class="csl-entry" role="listitem">
 Atkinson, David. 2023. <span>“Direct <span>Approach Interactive Model</span>.”</span> <em>Epoch</em>. <a href="https://epochai.org/blog/direct-approach-interactive-model">https://epochai.org/blog/direct-approach-interactive-model</a>.
 </div>
@@ -742,6 +777,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -808,13 +870,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -944,10 +1008,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -957,8 +1038,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -970,7 +1060,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1014,6 +1227,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1039,6 +1253,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1334,7 +1574,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@burtonLongrangeConstraintsStatistical1955</span><span class="co">]</span> uses the same method as Shannon, but with longer contexts and texts from more books (Shannon sampled all passages from just one book). They found that English has "redundancy" in $<span class="co">[</span><span class="ot">0.6, 0.8</span><span class="co">]</span>$, meaning that English has entropy rate $\ln 27 \times (1- <span class="co">[</span><span class="ot">0.6, 0.8</span><span class="co">]</span>) = <span class="co">[</span><span class="ot">0.7, 1.3</span><span class="co">]</span> \;\rm{bit/character}$.</span>
 <span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="ot">[^rng-human]: </span>It still works even if the humans are pseudorandom. We just have to whisper the same <span class="kw">&lt;abbr</span> <span class="er">title</span><span class="ot">=</span><span class="st">"Random Number Generator"</span><span class="kw">&gt;</span>RNG<span class="kw">&lt;/abbr&gt;</span> seed into both humans' ears, and then they would behave in the same pseudorandom way.</span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="ot">[^rng-human]: </span>It still works even if the humans are pseudorandom. We just have to whisper the same &lt;abbr title="Random Number Generator"&gt;RNG&lt;/abbr&gt; seed into both humans' ears, and then they would behave in the same pseudorandom way.</span>
 <span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a><span class="ot">[^wrong-shannon]</span>:</span>
 <span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a>    The simplest counterexample: Suppose the source is binary, and satisfies $X_{n+1} = X_{n} + 1 \mod 2$, so it has zero entropy. Nevertheless, the human intentionally guesses wrong the first time. Therefore, we have $p_2 = 1$, and we have violated the lower bound by $2\ln 2 &gt; 0$.</span>
@@ -1418,15 +1658,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a>meaning it has a good chance of passing the Turing test if limited to only 150 words. For context, the *Attention is All You Need* paper has an abstract that's 200 tokens long. </span>
 <span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a>A typical scientific paper is about 4000 words long, which is $27\times$ that of 150 words, so it would need $27^{1/0.153} = (2\times 10^9)\times$ that of compute. Assuming that GPT-4 cost 10 million USD to train, this hypothetical AI would cost $2\times 10^{16}$ USD, or 200 years of global GDP<span class="kw">&lt;sub&gt;</span>2023<span class="kw">&lt;/sub&gt;</span>.</span>
+<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a>A typical scientific paper is about 4000 words long, which is $27\times$ that of 150 words, so it would need $27^{1/0.153} = (2\times 10^9)\times$ that of compute. Assuming that GPT-4 cost 10 million USD to train, this hypothetical AI would cost $2\times 10^{16}$ USD, or 200 years of global GDP&lt;sub&gt;2023&lt;/sub&gt;.</span>
 <span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a>This implies that the first AGI will not be a scaled-up GPT -- autoregressive transformer generatively pretrained on a lightly filtered text dataset. It has to include something else, perhaps multimodal data, high-quality data, better architecture, etc. Even if we were to attempt to merely scale it up, turning earth into a GPT-factory,<span class="ot">[^gpt-factory]</span> with even 50\% of global GDP devoted,<span class="ot">[^50-percent-gdp]</span> and with 2\% growth rate forever, it would still take 110 years,<span class="ot">[^110-years]</span> arriving at year 2133. Whole brain emulation would likely take less time.<span class="ot">[^wbe-timeline]</span></span>
 <span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a><span class="ot">[^110-years]: </span>Solve for $x$ in $200 = \sum_{k=0}^x 0.5 \times 1.02^k$.</span>
 <span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a><span class="ot">[^50-percent-gdp]: </span>Only in a life-or-death situation does 50\% of GDP get devoted to one purpose. For example, that is about the level of GDP devoted to war production during WWII in the major combatant countries. The USA spent 4 trillion USD<span class="kw">&lt;sub&gt;</span>2011<span class="kw">&lt;/sub&gt;</span> over 6 years out of an annual GDP of 1.3 trillion USD<span class="kw">&lt;sub&gt;</span>2011<span class="kw">&lt;/sub&gt;</span>.</span>
+<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a><span class="ot">[^50-percent-gdp]: </span>Only in a life-or-death situation does 50\% of GDP get devoted to one purpose. For example, that is about the level of GDP devoted to war production during WWII in the major combatant countries. The USA spent 4 trillion USD&lt;sub&gt;2011&lt;/sub&gt; over 6 years out of an annual GDP of 1.3 trillion USD&lt;sub&gt;2011&lt;/sub&gt;.</span>
 <span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a><span class="ot">[^wbe-timeline]: </span><span class="kw">&lt;iframe</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://www.metaculus.com/questions/question_embed/2813/?theme=dark"</span> <span class="er">style</span><span class="ot">=</span><span class="st">"height:430px; width:100%; max-width:550px"</span><span class="kw">&gt;&lt;/iframe&gt;</span></span>
+<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a><span class="ot">[^wbe-timeline]: </span>&lt;iframe src="https://www.metaculus.com/questions/question_embed/2813/?theme=dark" style="height:430px; width:100%; max-width:550px"&gt;&lt;/iframe&gt;</span>
 <span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a><span class="ot">[^gpt-factory]</span>:</span>
 <span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a>    Consider this anecdote from <span class="co">[</span><span class="ot">Edward Teller</span><span class="co">](https://en.wikipedia.org/wiki/Edward_Teller)</span>:</span>
@@ -1570,13 +1810,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left"><span class="faux-block">Yuxi on the Wired</span></div>   
+    <div class="nav-footer-left">
+<p><span class="faux-block">Yuxi on the Wired</span></p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
-    <div class="nav-footer-right"><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></p>
+</div>
   </div>
 </footer>
+
 
 
 
