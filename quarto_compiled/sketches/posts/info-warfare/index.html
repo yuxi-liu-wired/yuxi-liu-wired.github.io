@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,6 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -103,7 +104,12 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -112,6 +118,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -121,10 +128,37 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <meta property="og:title" content="Yuxi on the Wired - Information Warfare">
 <meta property="og:description" content="A mosaic view of the info-battleground: information for anti-informative goals. Intentionally useless errors, diplomatic speech, Chinese censorship, spam campaign, stock market arbitrage, continental philosophy, etc.">
 <meta property="og:image" content="https://yuxi-liu-wired.github.io/sketches/posts/info-warfare/figure/banner_2.png">
-<meta property="og:site-name" content="Yuxi on the Wired">
+<meta property="og:site_name" content="Yuxi on the Wired">
 <meta property="og:image:height" content="1024">
 <meta property="og:image:width" content="1792">
 <meta property="og:image:alt" content="A swarm of mechanical insects moving to the right. Moving along with the insects are arrows with shafts made of barbed wires. It invokes the feeling of swarm warfare. High contrast, monochromatic, minimalistic, in the style of vector svg art.">
@@ -140,10 +174,10 @@ div.csl-indent {
 <body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
     </a>
@@ -158,46 +192,46 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../essays/index.html" rel="" target="">
- <span class="menu-text">Essays</span></a>
+    <a class="nav-link" href="../../../essays/index.html"> 
+<span class="menu-text">Essays</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../sketches/index.html" rel="" target="">
- <span class="menu-text">Sketches</span></a>
+    <a class="nav-link" href="../../../sketches/index.html"> 
+<span class="menu-text">Sketches</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../projects/index.html" rel="" target="">
- <span class="menu-text">Projects</span></a>
+    <a class="nav-link" href="../../../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../notes/index.html" rel="" target="">
- <span class="menu-text">Notes</span></a>
+    <a class="nav-link" href="../../../notes/index.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../docs/index.html" rel="" target="">
- <span class="menu-text">Docs</span></a>
+    <a class="nav-link" href="../../../docs/index.html"> 
+<span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../about/index.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about/index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://bair.berkeley.edu/" rel="" target=""><i class="bi bi-folder-symlink" role="img">
+    <a class="nav-link" href="https://bair.berkeley.edu/"> <i class="bi bi-folder-symlink" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -249,7 +283,7 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
@@ -281,12 +315,13 @@ div.csl-indent {
   </ul>
 </nav>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -320,8 +355,8 @@ div.csl-indent {
 <section id="game-theory-and-evolution" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="game-theory-and-evolution">Game theory and evolution</h2>
 <p>In game theory, information warfare would be studied as a kind of <strong>signaling game</strong> <span class="citation" data-cites="sobelSignalingGames2020">(<a href="#ref-sobelSignalingGames2020" role="doc-biblioref">Sobel 2020</a>)</span>. We would explain how creatures actually use their symbols by assuming that they are playing a certain kind of game, then solve for the Nash equilibria. If there are only a few Nash equilibria, and those are the ones we observe, then we declare the theory a success.</p>
-<div class="page-columns page-full"><p>Whereas in classical game theory, every agent is basically picking one strategy at a time to maximize its own utility, in evolutionary game theory, there are no agents. There are still individuals that fight or flee, but they no longer choose to. Each individual acts out its strategy until it dies without adapting.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> The population learns and adapts, and increases fitness of the individuals, but if we were to call the population an agent, it is an odd one. It plans by stochastic gradient ascent, and only increases the relative fitness, not absolute – which might not even exist.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;More sophisticated evolutionary game theory would allow individuals that <em>do</em> adapt, learn, and calculate the optimal strategy. However, this quickly becomes intractable, and this level of generality is too powerful for this essay anyway.</p></li></div></div>
-<p>For example, if the population can contain only three kinds of individuals, in a game of rock-paper-scissors, and only the winners can reproduce with very low mutation rates, then the population serenely turn around the length-3 cycle, chasing its tail, never increasing absolute fitness. Indeed, there is no absolute fitness, like how there is no absolute height in Escher’s staircase.</p>
+<p>Whereas in classical game theory, every agent is basically picking one strategy at a time to maximize its own utility, in evolutionary game theory, there are no agents. There are still individuals that fight or flee, but they no longer choose to. Each individual acts out its strategy until it dies without adapting.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> The population learns and adapts, and increases fitness of the individuals, but if we were to call the population an agent, it is an odd one. It plans by stochastic gradient ascent, and only increases the relative fitness, not absolute – which might not even exist.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;More sophisticated evolutionary game theory would allow individuals that <em>do</em> adapt, learn, and calculate the optimal strategy. However, this quickly becomes intractable, and this level of generality is too powerful for this essay anyway.</p></div></div><p>For example, if the population can contain only three kinds of individuals, in a game of rock-paper-scissors, and only the winners can reproduce with very low mutation rates, then the population serenely turn around the length-3 cycle, chasing its tail, never increasing absolute fitness. Indeed, there is no absolute fitness, like how there is no absolute height in Escher’s staircase.</p>
 <blockquote class="blockquote">
 <p>[The earth] breathes like a great lung; when it exhales, delicate and graceful life teems out of its pores, and all the creatures stretch out their arms to the sun; but when it takes in its breath, a rustle of fragile spirits breaking sweeps through the multitudes, and their corpses lash the ground like showers of hail. <span class="citation" data-cites="zapffeLastMessiah2004">(<a href="#ref-zapffeLastMessiah2004" role="doc-biblioref">Zapffe 2004</a>)</span></p>
 </blockquote>
@@ -384,15 +419,15 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/china-noise-injection-tweet.jpeg" class="img-fluid figure-img" style="width:90.0%"></p>
-<figcaption class="figure-caption margin-caption">Figure from <a href="https://twitter.com/AirMovingDevice/status/1597070892021862400">a subsequent post</a> <span class="citation" data-cites="air-movingdeviceGreatSuggestionControl2022">(<a href="#ref-air-movingdeviceGreatSuggestionControl2022" role="doc-biblioref">Air-Moving Device 2022a</a>)</span>.</figcaption>
+<figcaption class="margin-caption">Figure from <a href="https://twitter.com/AirMovingDevice/status/1597070892021862400">a subsequent post</a> <span class="citation" data-cites="air-movingdeviceGreatSuggestionControl2022">(<a href="#ref-air-movingdeviceGreatSuggestionControl2022" role="doc-biblioref">Air-Moving Device 2022a</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
 <section id="public-opinion-guidance" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="public-opinion-guidance">Public opinion guidance</h3>
 <p><a href="https://en.wikipedia.org/wiki/Ma_(negative_space)">間 (<em>Ma</em>)</a> is the Japanese term for negative space, the art of speaking with and listening for what is not there.</p>
-<div class="page-columns page-full"><p>Imagine a space of political ideologies, such as the Political Compass. In an Internet without censorship, we can put a dot on each website espousing a position, and end up with a pointillistic landscape of the political Internet. Now imagine an all-powerful censor comes in and erases whatever it does not accept. It would leave behind a blotted painting. The censor did not paint a single point, but its eraser is a paintbrush too! Reading what is not said is the art of <em>Ma</em>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;Gwern proposed a <a href="https://gwern.net/idea#chinese-censorship-audit">Chinese Censorship Audit</a>. The idea is to compare the Chinese Wikipedia with a Chinese fork for overt erasures. Those are undeniable results of censorship.</p></li></div></div>
-<p>Any opinion with an extensive following on the Chinese Internet is the negative space of censorship, and any opinion that should have a following online, but not, is the negative space of speech. This gives us four layers of Chinese opinions:</p>
+<p>Imagine a space of political ideologies, such as the Political Compass. In an Internet without censorship, we can put a dot on each website espousing a position, and end up with a pointillistic landscape of the political Internet. Now imagine an all-powerful censor comes in and erases whatever it does not accept. It would leave behind a blotted painting. The censor did not paint a single point, but its eraser is a paintbrush too! Reading what is not said is the art of <em>Ma</em>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;Gwern proposed a <a href="https://gwern.net/idea#chinese-censorship-audit">Chinese Censorship Audit</a>. The idea is to compare the Chinese Wikipedia with a Chinese fork for overt erasures. Those are undeniable results of censorship.</p></div></div><p>Any opinion with an extensive following on the Chinese Internet is the negative space of censorship, and any opinion that should have a following online, but not, is the negative space of speech. This gives us four layers of Chinese opinions:</p>
 <ul>
 <li>Officially endorsed opinion, as declared in published documents. This includes items such as Xi Jinping Thought, anti-historical nihilism, etc.</li>
 <li>Officially allowed opinion, the negative space of censorship.</li>
@@ -411,8 +446,8 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="external-attacks">External attacks</h3>
 <p>The Chinese government maintains its stability by targeting the information received by Chinese citizens. To do this, it mainly censors the Internet inside China, and produces noise outside, but occasionally, it directly attacks the outside.</p>
 <p>Since 2015, the Chinese government has employed <a href="https://web.archive.org/web/20231214165158/https://cybersecurity.att.com/blogs/labs-research/the-great-cannon-has-been-deployed-again">the Great Cannon</a> multiple times to perform <a href="https://en.wikipedia.org/wiki/Denial-of-service_attack">DDoS attacks</a> on websites it wants to censor, such as a certain GitHub page hosting softwares for bypassing the Great Firewall.</p>
-<div class="page-columns page-full"><p>The Great Cannon is a <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> DDoS attack. When an external IP address requests for certain JavaScript files hosted on certain servers located inside the Great Firewall<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, as the packet crosses the Great Firewall, a program makes a statistical decision. If the decision rule triggers, it replaces the innocuous JavaScript with a malicious JavaScript, which would rapidly send requests to a list of targeted servers. <span class="citation" data-cites="marczakAnalysisChinaGreat2015">(<a href="#ref-marczakAnalysisChinaGreat2015" role="doc-biblioref">Marczak et al. 2015</a>)</span></p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;<a href="https://en.wikipedia.org/wiki/Mandarin_(bureaucrat)">mandarin</a>-in-the-middle?</p></li><li id="fn4"><p><sup>4</sup>&nbsp;Typically, those are Baidu infrastructure servers that host commonly used analytics, social, or advertising scripts.</p></li></div></div>
-<p>The two main parties in Taiwan are the DPP and the KMT. The older party, KMT, used to be pro-unification, with <em>them</em> being the unifier, not the CCP. It still is interested in <em>eventual</em> unification at some future date, probably after mainland China becomes democratic. In contrast, the DPP, being the newer party, is more interested in independence. During the 2000–2024 period, the KMT had 1 president and the DPP had 3, and the CCP had been significantly more hostile against the DPP presidents than against the KMT. Speaking from personal experience, the internal propaganda painted the DPP presidents as paper tigers with villainous faces, who would bring an apocalyptic war to Taiwan for a few votes.</p>
+<p>The Great Cannon is a <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> DDoS attack. When an external IP address requests for certain JavaScript files hosted on certain servers located inside the Great Firewall<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, as the packet crosses the Great Firewall, a program makes a statistical decision. If the decision rule triggers, it replaces the innocuous JavaScript with a malicious JavaScript, which would rapidly send requests to a list of targeted servers. <span class="citation" data-cites="marczakAnalysisChinaGreat2015">(<a href="#ref-marczakAnalysisChinaGreat2015" role="doc-biblioref">Marczak et al. 2015</a>)</span></p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;<a href="https://en.wikipedia.org/wiki/Mandarin_(bureaucrat)">mandarin</a>-in-the-middle?</p></div><div id="fn4"><p><sup>4</sup>&nbsp;Typically, those are Baidu infrastructure servers that host commonly used analytics, social, or advertising scripts.</p></div></div><p>The two main parties in Taiwan are the DPP and the KMT. The older party, KMT, used to be pro-unification, with <em>them</em> being the unifier, not the CCP. It still is interested in <em>eventual</em> unification at some future date, probably after mainland China becomes democratic. In contrast, the DPP, being the newer party, is more interested in independence. During the 2000–2024 period, the KMT had 1 president and the DPP had 3, and the CCP had been significantly more hostile against the DPP presidents than against the KMT. Speaking from personal experience, the internal propaganda painted the DPP presidents as paper tigers with villainous faces, who would bring an apocalyptic war to Taiwan for a few votes.</p>
 <p>During the lead-up to the <a href="https://en.wikipedia.org/wiki/2024_Taiwanese_presidential_election">2024 Taiwanese presidential election</a>, the Chinese government has used generative-AI to smear the pro-independence DPP candidate. <span class="citation" data-cites="hungHowChinaCognitive2022">(<a href="#ref-hungHowChinaCognitive2022" role="doc-biblioref">Hung and Hung 2022</a>)</span></p>
 <blockquote class="blockquote">
 <p>The key message being spread from the pro-China camp is that William Lai, the candidate from the DPP, is a dictator in the wings who will start a war with his reckless pursuit of Taiwanese independence. … Beijing-backed bots routinely flood the social media accounts of leading DPP candidates with pro-China propaganda.</p>
@@ -490,15 +525,15 @@ Speculative content follows
 <section id="fictional" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="fictional">Fictional</h2>
 <p>In fiction, there have been cases of “cognitohazard”. However, their purported effects are much more overt than the somewhat subtle effects described in the essay. Whereas the information objects described in the essay redirect, confuse, camouflage, and waste the opponents’ time, cognitohazards typically directly destroy the information-processing hardware of the opponents. In general, cognitohazards differ from the other examples, because they operate by breaking the abstraction layer. They are digital operations that causes analog operations that destroy the hardware. On the digital layer, the underlying hardware is assumed to be always there, like air before the discovery of vacuum. Cognitohazards pull out the air of the digital world and exposes the vacuum, destroying digital life in the process.</p>
-<div class="page-columns page-full"><p>The short story <a href="https://web.archive.org/web/20231119155432/https://www.infinityplus.co.uk/stories/blit.htm"><em>BLIT</em></a> <span class="citation" data-cites="langfordCOMPBASILISKFAQ1999">(<a href="#ref-langfordCOMPBASILISKFAQ1999" role="doc-biblioref">Langford 1999</a>)</span> is a common reference point for speculations on cognitohazards, although the namesake of BLIT itself does not break the software-hardware abstraction barrier, and therefore is not a cognitohazard according to our definition. In the story, a human mind is a software running on a brain-hardware, and upon “Gödelian shock inputs”<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, the software falls into “vicious circles” from which it cannot recover to a working state, although the hardware seems to remain just fine. Many BLITs were discovered, with the first one resembling a fractal parrot.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;The story does not elaborate, but it is common knowledge among mathematical logicians that anything powerful enough for Peano arithmetics is powerful enough to be hacked. For example, <span class="citation" data-cites="dowlingThereAreNo1989">(<a href="#ref-dowlingThereAreNo1989" role="doc-biblioref">Dowling 1989</a>)</span> is a one-page proof that shows that “no program can both test its input for the presence of a virus and simultaneously be guaranteed not to spread a virus itself”, by translating this statement into math, then quote <a href="https://en.wikipedia.org/wiki/Rice's_theorem">Rice’s theorem</a>. The same argument can be used to show that “Gödelian shock inputs” must exist, assuming that human minds are softwares that can process arbitrary formulas in Peano arithmetics.</p></li><li id="fn6"><blockquote class="blockquote"><sup>6</sup>&nbsp;
+<p>The short story <a href="https://web.archive.org/web/20231119155432/https://www.infinityplus.co.uk/stories/blit.htm"><em>BLIT</em></a> <span class="citation" data-cites="langfordCOMPBASILISKFAQ1999">(<a href="#ref-langfordCOMPBASILISKFAQ1999" role="doc-biblioref">Langford 1999</a>)</span> is a common reference point for speculations on cognitohazards, although the namesake of BLIT itself does not break the software-hardware abstraction barrier, and therefore is not a cognitohazard according to our definition. In the story, a human mind is a software running on a brain-hardware, and upon “Gödelian shock inputs”<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, the software falls into “vicious circles” from which it cannot recover to a working state, although the hardware seems to remain just fine. Many BLITs were discovered, with the first one resembling a fractal parrot.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;The story does not elaborate, but it is common knowledge among mathematical logicians that anything powerful enough for Peano arithmetics is powerful enough to be hacked. For example, <span class="citation" data-cites="dowlingThereAreNo1989">(<a href="#ref-dowlingThereAreNo1989" role="doc-biblioref">Dowling 1989</a>)</span> is a one-page proof that shows that “no program can both test its input for the presence of a virus and simultaneously be guaranteed not to spread a virus itself”, by translating this statement into math, then quote <a href="https://en.wikipedia.org/wiki/Rice's_theorem">Rice’s theorem</a>. The same argument can be used to show that “Gödelian shock inputs” must exist, assuming that human minds are softwares that can process arbitrary formulas in Peano arithmetics.</p></div><div id="fn6"><blockquote class="blockquote"><sup>6</sup>&nbsp;
 <p>… so called because its outline, when processed for non-hazardous viewing, is generally considered to resemble that of the bird. A processed (anamorphically elongated) partial image appears in Appendix 3 of this report, page A3-ii. THE STATED PAGE MUST NOT BE VIEWED THROUGH ANY FORM OF CYLINDRICAL LENS. PROLONGED VIEWING IS STRONGLY DISRECOMMENDED. PLEASE READ PAGE A3-i BEFORE PROCEEDING.</p>
 <p>2-6. This first example of the Berryman Logical Image Technique (hence the usual acronym BLIT) evolved from AI work at the Cambridge IV supercomputer facility, now discontinued. V.Berryman and C.M.Turner [3] hypothesized that pattern-recognition programs of sufficient complexity might be vulnerable to “Gödelian shock input” in the form of data incompatible with internal representation. Berryman went further and suggested that the existence of such a potential input was a logical necessity …</p>
 </blockquote>
-</li></div></div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
+</div></div><div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/blit_parrot.jpeg" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption margin-caption">The BLIT emerging from AI work at the Cambridge IV supercomputer facility.</figcaption>
+<figcaption class="margin-caption">The BLIT emerging from AI work at the Cambridge IV supercomputer facility.</figcaption>
 </figure>
 </div>
 <p>Real-life analogs of cognitohazards are extremely rare, and their status as “cognitohazards” is controversial. Nevertheless, here are some possible analogs.</p>
@@ -598,8 +633,8 @@ Speculative content follows
 </tbody>
 </table>
 <p>By repeatedly butting into any fashionable controversy of the day, continental philosophy keeps itself from falling into oblivion like modern set theory. By not losing the rhetorical game, it keeps itself from being debunked like old quantum theory. However, to complete its social reproduction, continental philosophy still has to protect itself from challenges from within.</p>
-<div class="page-columns page-full"><p>Euclid’s <em>Elements</em> was a compilation and cleaning-up of geometry books that came before it. It was of such fine quality that it destroyed the works upon which it was based.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Back then, books were expensive and required frequent copying by hand. Faced with a choice between copying Euclid’s <em>Elements</em> or the books that it obsoleted, the ancients chose to copy Euclid instead of the previous works that were of historical interest only, historical interest that the ancients could not afford.</p><div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;This is a cartoon sketch. The actual textual history of Euclid’s <em>Elements</em> is studied only by historians of mathematics. Working mathematicians typically hold it at a respectful distance and actively try not to not get too close to it, since an accurate view of the history of mathematics is harmful to the actual practice of mathematics (I speak from personal experience), because the real history of mathematics is not a mathematical textbook written for its educational content. History of mathematics is useful only as a carefully sketched cartoon, omitting almost all the real details, and completely violating historical truth sometimes, because some truths are not adaptive.</p></li></div></div>
-<p>To reproduce itself, continental philosophy must keep itself from being explained or clarified, especially by insiders. To educate new continental philosophers, the old continental philosophers would write simple explainers and summaries, like <em>The Edinburgh Dictionary of Continental Philosophy</em>. However, such reference books risk becoming substitutes for the original source material, starting a slippery slope into clarity. This prevents the old confusions from being cleared up. “textual deference”, and “there is no substitute for reading the masters” <span class="citation" data-cites="smithTextualDeference1991">(<a href="#ref-smithTextualDeference1991" role="doc-biblioref">Smith 1991</a>)</span>.</p>
+<p>Euclid’s <em>Elements</em> was a compilation and cleaning-up of geometry books that came before it. It was of such fine quality that it destroyed the works upon which it was based.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Back then, books were expensive and required frequent copying by hand. Faced with a choice between copying Euclid’s <em>Elements</em> or the books that it obsoleted, the ancients chose to copy Euclid instead of the previous works that were of historical interest only, historical interest that the ancients could not afford.</p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;This is a cartoon sketch. The actual textual history of Euclid’s <em>Elements</em> is studied only by historians of mathematics. Working mathematicians typically hold it at a respectful distance and actively try not to not get too close to it, since an accurate view of the history of mathematics is harmful to the actual practice of mathematics (I speak from personal experience), because the real history of mathematics is not a mathematical textbook written for its educational content. History of mathematics is useful only as a carefully sketched cartoon, omitting almost all the real details, and completely violating historical truth sometimes, because some truths are not adaptive.</p></div></div><p>To reproduce itself, continental philosophy must keep itself from being explained or clarified, especially by insiders. To educate new continental philosophers, the old continental philosophers would write simple explainers and summaries, like <em>The Edinburgh Dictionary of Continental Philosophy</em>. However, such reference books risk becoming substitutes for the original source material, starting a slippery slope into clarity. This prevents the old confusions from being cleared up. “textual deference”, and “there is no substitute for reading the masters” <span class="citation" data-cites="smithTextualDeference1991">(<a href="#ref-smithTextualDeference1991" role="doc-biblioref">Smith 1991</a>)</span>.</p>
 <p>To throw such textual deference into stark relief, consider how scientists treat their history. Working scientists have only the most cartoonish knowledge of the history of their fields. Classical papers are rarely read, except in fields so immature that they do not have good textbooks yet and the only way to proceed is reading the original papers. In fact, one can measure the maturity of a field by the ignorance of its practitioners about its original sources, and the lack of bibliography in textbooks. A textbook on electrodynamics does not refer to Coulomb or Maxwell’s original books. A course in relativity does not attempt to explicate the original papers by Einstein. The original sources are typically fumbling and barely comprehensible, a target for improvement, then swiftly relegated to mere history.</p>
 <p>How does continental philosophy protect itself from progress? The easiest method is to simply declare some sources as original and all else derivative, to freeze the great canonical works for all times. However, this is not sustainable, as new philosophers are not content to merely read the great canons, but want their own chance at joining the great canons. Thus we arrive at the tradition of “the Great Conversation”:</p>
 <blockquote class="blockquote">
@@ -615,7 +650,7 @@ Speculative content follows
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-adlerGreatConversationRevisited1990" class="csl-entry" role="listitem">
 Adler, Mortimer. 1990. <span>“The Great Conversation Revisited.”</span> <em>The Great Conversation: A Peoples Guide to Great Books of the Western World</em>.
 </div>
@@ -720,6 +755,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -786,13 +848,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -922,10 +986,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -935,8 +1016,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -948,7 +1038,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -992,6 +1205,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1017,6 +1231,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1095,7 +1335,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="an">importance:</span><span class="co"> 7</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;small&gt;</span>This essay is unfinished, but it is already interesting to read. I plan to grow this substantially as I find more examples and theories.<span class="kw">&lt;/small&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>&lt;small&gt;This essay is unfinished, but it is already interesting to read. I plan to grow this substantially as I find more examples and theories.&lt;/small&gt;</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
@@ -1173,7 +1413,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>Internally, there are several types of operations <span class="co">[</span><span class="ot">@kingHowChineseGovernment2017</span><span class="co">]</span>:</span>
 <span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Direct content silencing: As all Chinese websites and <span class="kw">&lt;abbr</span> <span class="er">title</span><span class="ot">=</span><span class="st">"Internet Service Provider"</span><span class="kw">&gt;</span>ISP<span class="kw">&lt;/abbr&gt;</span>s are registered with the local government, essentially any content on the Chinese Internet can be silenced at will by the Chinese government. This weapon can be as precise as disallowing replies to a single post for a limited period, or as blunt as deleting entire websites.</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Direct content silencing: As all Chinese websites and &lt;abbr title="Internet Service Provider"&gt;ISP&lt;/abbr&gt;s are registered with the local government, essentially any content on the Chinese Internet can be silenced at will by the Chinese government. This weapon can be as precise as disallowing replies to a single post for a limited period, or as blunt as deleting entire websites.</span>
 <span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Direct account silencing: As a simple extension of direct content silencing, any account can be silenced at will. This can be as precise as muting a single account for a week, or as blunt as deleting all accounts that has used hashtags from a list.</span>
 <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The Great Firewall: The most famous of all. This blocks certain connections between the Chinese Internet and the external Internet.</span>
 <span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Noise injection: This is a blunt instrument. Like a cuttlefish injecting ink, people employed by the Chinese government or the social media websites post "noise" to dilute potentially dangerous information to a low level.</span>
@@ -1447,13 +1687,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left"><span class="faux-block">Yuxi on the Wired</span></div>   
+    <div class="nav-footer-left">
+<p><span class="faux-block">Yuxi on the Wired</span></p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
-    <div class="nav-footer-right"><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></p>
+</div>
   </div>
 </footer>
+
 
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -84,7 +84,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -93,6 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -102,21 +108,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <meta property="og:title" content="Yuxi on the Wired - Notes on Web Design">
 <meta property="og:description" content="My quick reference for designing content for the Internet.">
-<meta property="og:site-name" content="Yuxi on the Wired">
+<meta property="og:image" content="https://yuxi-liu-wired.github.io/sketches/posts/web-design-notes/img/blog icon.jpg">
+<meta property="og:site_name" content="Yuxi on the Wired">
 <meta name="twitter:title" content="Yuxi on the Wired - Notes on Web Design">
 <meta name="twitter:description" content="My quick reference for designing content for the Internet.">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/sketches/posts/web-design-notes/img/blog icon.jpg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
     </a>
@@ -131,46 +166,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../essays/index.html" rel="" target="">
- <span class="menu-text">Essays</span></a>
+    <a class="nav-link" href="../../../essays/index.html"> 
+<span class="menu-text">Essays</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../sketches/index.html" rel="" target="">
- <span class="menu-text">Sketches</span></a>
+    <a class="nav-link" href="../../../sketches/index.html"> 
+<span class="menu-text">Sketches</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../projects/index.html" rel="" target="">
- <span class="menu-text">Projects</span></a>
+    <a class="nav-link" href="../../../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../notes/index.html" rel="" target="">
- <span class="menu-text">Notes</span></a>
+    <a class="nav-link" href="../../../notes/index.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../docs/index.html" rel="" target="">
- <span class="menu-text">Docs</span></a>
+    <a class="nav-link" href="../../../docs/index.html"> 
+<span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../about/index.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about/index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://bair.berkeley.edu/" rel="" target=""><i class="bi bi-folder-symlink" role="img">
+    <a class="nav-link" href="https://bair.berkeley.edu/"> <i class="bi bi-folder-symlink" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -219,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
@@ -243,12 +278,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul>
 </nav>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -279,8 +315,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="tips-for-fast-loading">Tips for fast loading</h3>
 <p>Use <code>&lt;img decoding="async" loading="lazy" ...&gt;</code> for images, to allow the rest of the page to load before the images are loaded. To avoid <a href="https://web.dev/articles/cls">Cumulative Layout Shift (CLS)</a>, I think something like</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>img {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">max-width</span>: <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span>: <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <!-- ### `<meta>`
 
@@ -325,8 +361,8 @@ They are not untyped multisets, because:
 * I have in my backyard a jujube tree and sing.
   Backyard = {(jujube tree, 1), (sing, 1)}</code></pre>
 <p>The “and” before the last item on the list seems to be necessary in speech, as in “Heads up! The list is about to be over!”, even though it is not necessary in writing.</p>
-<div class="page-columns page-full"><p>The “Oxford comma” is a rather odd hack that allows a tiny amount of nesting. In fact, English does not have recursion, and 2 seems to be the deepest nesting we can get. <a href="https://en.wikipedia.org/wiki/Serial_comma#Arguments_for_and_against">According to Wikipedia</a>, the most common arguments for/against the Oxford comma are: convention, disambiguation. As for convention, it cannot be argued with, only dealt with. As for disambiguation, I recommend using brackets.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;It seems like a lot of weird English syntax is centered around an abhorrence of brackets. Like, I understand why brackets can get annoying (as anyone can see by looking at LISP code), but there is no reason to avoid brackets when you really need to disambiguate something. For example, instead of requiring the Oxford comma, why not just put in a freaking bracket? Don’t say that “oh you can’t speak brackets” like damn you you can’t speak commas either!</p></li></div></div>
-<pre class="text"><code>No Oxford comma:
+<p>The “Oxford comma” is a rather odd hack that allows a tiny amount of nesting. In fact, English does not have recursion, and 2 seems to be the deepest nesting we can get. <a href="https://en.wikipedia.org/wiki/Serial_comma#Arguments_for_and_against">According to Wikipedia</a>, the most common arguments for/against the Oxford comma are: convention, disambiguation. As for convention, it cannot be argued with, only dealt with. As for disambiguation, I recommend using brackets.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;It seems like a lot of weird English syntax is centered around an abhorrence of brackets. Like, I understand why brackets can get annoying (as anyone can see by looking at LISP code), but there is no reason to avoid brackets when you really need to disambiguate something. For example, instead of requiring the Oxford comma, why not just put in a freaking bracket? Don’t say that “oh you can’t speak brackets” like damn you you can’t speak commas either!</p></div></div><pre class="text"><code>No Oxford comma:
 To my parents, Ayn Rand and God.
 To my mother, Ayn Rand, and God.
 
@@ -493,6 +529,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -559,13 +622,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -695,10 +760,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -708,8 +790,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -721,7 +812,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -765,6 +979,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -790,6 +1005,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -905,213 +1146,218 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`&lt;img decoding="async" loading="lazy" ...&gt;`</span> for images, to allow the rest of the page to load before the images are loaded. To avoid <span class="co">[</span><span class="ot">Cumulative Layout Shift (CLS)</span><span class="co">](https://web.dev/articles/cls)</span>, I think something like </span>
 <span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="in">```css</span></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>img <span class="op">{</span></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>  max<span class="op">-</span>width<span class="op">:</span> <span class="dv">100</span><span class="op">%;</span></span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  height<span class="op">:</span> auto<span class="op">;</span></span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>img {</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>  <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- </span><span class="al">###</span><span class="co"> `&lt;meta&gt;`</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>&lt;!-- ### `&lt;meta<span class="op">&gt;</span>`</span>
 <span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="co">## CSS </span></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>## CSS </span>
 <span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="co">## JavaScript --&gt;</span></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>## JavaScript --<span class="op">&gt;</span></span>
 <span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## Punctuation</span></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>## Punctuation</span>
 <span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comma</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>### Comma</span>
 <span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>The comma separates parts with equal syntax roles.</span>
 <span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="in">Equal noun-phrases.</span></span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="in">  I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.</span></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>```text</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>Equal noun-phrases.</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>  I have 3 trees in my backyard<span class="in">:</span> a jujube tree<span class="op">,</span> a jujube tree<span class="op">,</span> and a peach tree.</span>
 <span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="in">Equal adjectives.</span></span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="in">  He is a strong, healthy man.</span></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>Equal adjectives.</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>  He is a strong<span class="op">,</span> healthy man.</span>
 <span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="in">Adjectives at unequal levels.</span></span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="in">* We stayed at an expensive, summer resort.</span></span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="in">  We stayed at an {expensive {summer resort}}.</span></span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>Adjectives at unequal levels.</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> We stayed at an expensive<span class="op">,</span> summer resort.</span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>  We stayed at an {expensive {summer resort}}.</span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>They denote typed multisets.</span>
 <span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="in">They are typed multisets, as in:</span></span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="in">I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.</span></span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="in">=&gt;</span></span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="in">I have {(jujube tree, 2), (peach tree, 1)} in my backyard.</span></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>```text</span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>They are typed multisets<span class="op">,</span> as in<span class="in">:</span></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>I have 3 trees in my backyard<span class="in">:</span> a jujube tree<span class="op">,</span> a jujube tree<span class="op">,</span> and a peach tree.</span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>=<span class="op">&gt;</span></span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>I have {(jujube tree<span class="op">,</span> 2)<span class="op">,</span> <span class="in">(</span>peach tree<span class="op">,</span> 1<span class="in">)</span>} in my backyard.</span>
 <span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="in">They are not typed sets, because:</span></span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a><span class="in">I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.</span></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="in">=/=&gt;</span></span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a><span class="in">I have {jujube tree, peach tree} in my backyard.</span></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>They are not typed sets<span class="op">,</span> because<span class="in">:</span></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>I have 3 trees in my backyard<span class="in">:</span> a jujube tree<span class="op">,</span> a jujube tree<span class="op">,</span> and a peach tree.</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>=/=<span class="op">&gt;</span></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>I have {jujube tree<span class="op">,</span> peach tree} in my backyard.</span>
 <span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a><span class="in">They are not typed lists, because:</span></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="in">I have 3 trees in my backyard: a jujube tree, a jujube tree, and a peach tree.</span></span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="in">=</span></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a><span class="in">I have 3 trees in my backyard: a jujube tree, a peach tree, and a jujube tree.</span></span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a><span class="in">but</span></span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a><span class="in">(jujube tree, jujube tree, peach tree) =/= (jujube tree, peach tree, jujube tree)</span></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>They are not typed lists<span class="op">,</span> because<span class="in">:</span></span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>I have 3 trees in my backyard<span class="in">:</span> a jujube tree<span class="op">,</span> a jujube tree<span class="op">,</span> and a peach tree.</span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>=</span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>I have 3 trees in my backyard<span class="in">:</span> a jujube tree<span class="op">,</span> a peach tree<span class="op">,</span> and a jujube tree.</span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>but</span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a><span class="in">(</span>jujube tree<span class="op">,</span> jujube tree<span class="op">,</span> peach tree<span class="in">)</span> =/= <span class="in">(</span>jujube tree<span class="op">,</span> peach tree<span class="op">,</span> jujube tree<span class="in">)</span></span>
 <span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a><span class="in">They are not untyped multisets, because:</span></span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="in">* I have in my backyard a jujube tree and sing.</span></span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="in">  Backyard = {(jujube tree, 1), (sing, 1)}</span></span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>They are not untyped multisets<span class="op">,</span> because<span class="in">:</span></span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> I have in my backyard a jujube tree and sing.</span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>  Backyard = {(jujube tree<span class="op">,</span> 1)<span class="op">,</span> <span class="in">(</span>sing<span class="op">,</span> 1<span class="in">)</span>}</span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>The "and" before the last item on the list seems to be necessary in speech, as in "Heads up! The list is about to be over!", even though it is not necessary in writing.</span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>The "and" before the last item on the list seems to be necessary in speech<span class="op">,</span> as in "Heads up! The list is about to be over!"<span class="op">,</span> even though it is not necessary in writing.</span>
 <span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>The "Oxford comma" is a rather odd hack that allows a tiny amount of nesting. In fact, English does not have recursion, and 2 seems to be the deepest nesting we can get. <span class="co">[</span><span class="ot">According to Wikipedia</span><span class="co">](https://en.wikipedia.org/wiki/Serial_comma#Arguments_for_and_against)</span>, the most common arguments for/against the Oxford comma are: convention, disambiguation. As for convention, it cannot be argued with, only dealt with. As for disambiguation, I recommend using brackets.<span class="ot">[^oxford-comma-rant]</span></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>The "Oxford comma" is a rather odd hack that allows a tiny amount of nesting. In fact<span class="op">,</span> English does not have recursion<span class="op">,</span> and 2 seems to be the deepest nesting we can get. <span class="ex">[</span><span class="ss">According to Wikipedia</span><span class="ex">]</span><span class="in">(</span>https<span class="in">:</span><span class="er">//en.wikipedia.org/wiki/Serial_comma#Arguments_for_and_against), the most common arguments for/against the Oxford comma are: convention, disambiguation. As for convention, it cannot be argued with, only dealt with. As for disambiguation, I recommend using brackets.[^oxford-comma-rant]</span></span>
 <span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a><span class="ot">[^oxford-comma-rant]: </span>It seems like a lot of weird English syntax is centered around an abhorrence of brackets. Like, I understand why brackets can get annoying (as anyone can see by looking at LISP code), but there is no reason to avoid brackets when you really need to disambiguate something. For example, instead of requiring the Oxford comma, why not just put in a freaking bracket? Don't say that "oh you can't speak brackets" like damn you you can't speak commas either!</span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="op">^</span><span class="ss">oxford-comma-rant</span><span class="ex">]</span><span class="in">:</span> It seems like a lot of weird English syntax is centered around an abhorrence of brackets. Like<span class="op">,</span> I understand why brackets can get annoying <span class="in">(</span>as anyone can see by looking at LISP code<span class="in">)</span><span class="op">,</span> but there is no reason to avoid brackets when you really need to disambiguate something. For example<span class="op">,</span> instead of requiring the Oxford comma<span class="op">,</span> why not just put in a freaking bracket? Don't say that "oh you can't speak brackets" like damn you you can't speak commas either!</span>
 <span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="in">No Oxford comma:</span></span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a><span class="in">To my parents, Ayn Rand and God.</span></span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a><span class="in">To my mother, Ayn Rand, and God.</span></span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>```text</span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a>No Oxford comma<span class="in">:</span></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>To my parents<span class="op">,</span> Ayn Rand and God.</span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>To my mother<span class="op">,</span> Ayn Rand<span class="op">,</span> and God.</span>
 <span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a><span class="in">Oxford comma:</span></span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a><span class="in">To my parents, Ayn Rand, and God.</span></span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a><span class="in">To my mother, Ayn Rand and God.</span></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>Oxford comma<span class="in">:</span></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>To my parents<span class="op">,</span> Ayn Rand<span class="op">,</span> and God.</span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>To my mother<span class="op">,</span> Ayn Rand and God.</span>
 <span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="in">Mathematics:</span></span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a><span class="in">To {my parents, Ayn Rand, God}.</span></span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a><span class="in">To {my mother Ayn Rand, God}.</span></span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a><span class="in">To {my mother, Ayn Rand, God}.</span></span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>Mathematics<span class="in">:</span></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>To <span class="er">{</span>my parents<span class="op">,</span> Ayn Rand<span class="op">,</span> God}.</span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>To {my mother Ayn Rand<span class="op">,</span> God}.</span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>To {my mother<span class="op">,</span> Ayn Rand<span class="op">,</span> God}.</span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>For clauses, commas are weird. There is no clear rule.</span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>For clauses<span class="op">,</span> commas are weird. There is no clear rule.</span>
 <span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a><span class="in">Equal clauses.</span></span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a><span class="in">  He walked all the way home, and he shut the door.</span></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>```text</span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>Equal clauses.</span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a>  He walked all the way home<span class="op">,</span> and he shut the door.</span>
 <span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a><span class="in">Equal clauses, though the second lost the pronoun.</span></span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="in">  I saw that she was busy, and [I] prepared to leave.</span></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>Equal clauses<span class="op">,</span> though the second lost the pronoun.</span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>  I saw that she was busy<span class="op">,</span> and <span class="ex">[</span><span class="ss">I</span><span class="ex">]</span> prepared to leave.</span>
 <span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a><span class="in">Dependent clause (except that-clause).</span></span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="in">  Because I could not stop for Death, He kindly stopped for me.</span></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>Dependent clause <span class="in">(</span>except that-clause<span class="in">)</span>.</span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a>  Because I could not stop for Death<span class="op">,</span> He kindly stopped for me.</span>
 <span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="in">No comma between that-clause and main-clause, or vice versa.</span></span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="in">* We paused before a House, that seemed a swelling of the Ground</span></span>
-<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a><span class="in">  We paused before a House that seemed a swelling of the Ground</span></span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="in">* That is not dead, which can eternal lie.</span></span>
-<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="in">  That is not dead which can eternal lie.</span></span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>No comma between that-clause and main-clause<span class="op">,</span> or vice versa.</span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> We paused before a House<span class="op">,</span> that seemed a swelling of the Ground</span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>  We paused before a House that seemed a swelling of the Ground</span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> That is not dead<span class="op">,</span> which can eternal lie.</span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a>  That is not dead which can eternal lie.</span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>A pair of commas can replace a pair of parentheses, though there is no benefit, other than avoiding the wrath of English teachers.</span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>A pair of commas can replace a pair of parentheses<span class="op">,</span> though there is no benefit<span class="op">,</span> other than avoiding the wrath of English teachers.</span>
 <span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>A comma, like an em-dash <span class="in">`---`</span>, can indicate pauses and stutters in quotations, such as "Daisy, Daisy... give me---e--- your, ans, ser, do...". This is an edge case and there are no fixed rules here. If you ever have to write something like this, use your imagination.</span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>A comma<span class="op">,</span> like an em-dash `---`<span class="op">,</span> can indicate pauses and stutters in quotations<span class="op">,</span> such as "Daisy<span class="op">,</span> Daisy... give me---e--- your<span class="op">,</span> ans<span class="op">,</span> ser<span class="op">,</span> do...". This is an edge case and there are no fixed rules here. If you ever have to write something like this<span class="op">,</span> use your imagination.</span>
 <span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="fu">### Quotation</span></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>### Quotation</span>
 <span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>English quotation standards are extremely annoying, because while theoretically quotation is meant to be verbatim, it is anything but. I recommend verbatim quotation. It is consistent with usage in computer programming and formal logic. In particular, the English quotation method would be a syntax error in computer programming, and would also break the proofs of Gödel's incompleteness theorems, which use the <span class="co">[</span><span class="ot">Quine quotation</span><span class="co">](https://en.wikipedia.org/wiki/Quasi-quotation)</span>.</span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>English quotation standards are extremely annoying<span class="op">,</span> because while theoretically quotation is meant to be verbatim<span class="op">,</span> it is anything but. I recommend verbatim quotation. It is consistent with usage in computer programming and formal logic. In particular<span class="op">,</span> the English quotation method would be a syntax error in computer programming<span class="op">,</span> and would also break the proofs of Gödel's incompleteness theorems<span class="op">,</span> which use the <span class="ex">[</span><span class="ss">Quine quotation</span><span class="ex">]</span><span class="in">(</span>https<span class="in">:</span><span class="er">//en.wikipedia.org/wiki/Quasi-quotation).</span></span>
 <span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>For nested quotations, alternate between double <span class="in">`"`</span> and single <span class="in">`'`</span> quotation marks. In other words, inside a level-$n$ writing, use <span class="in">`"`</span> if $n \equiv 0\mod 2$, and <span class="in">`'`</span> otherwise. It is context-free, and its quotient by <span class="in">`{" ~ '}`</span> is the <span class="co">[</span><span class="ot">Dyck language</span><span class="co">](https://en.wikipedia.org/wiki/Dyck_language)</span>.</span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>For nested quotations<span class="op">,</span> alternate between double `"` and single `'` quotation marks. In other words<span class="op">,</span> inside a level-$n$ writing<span class="op">,</span> use `"` if $n \equiv 0\mod 2$<span class="op">,</span> and `'` otherwise. It is context-free<span class="op">,</span> and its quotient by `<span class="er">{</span>" <span class="op">~</span> '}` is the <span class="ex">[</span><span class="ss">Dyck language</span><span class="ex">]</span><span class="in">(</span>https<span class="in">:</span><span class="er">//en.wikipedia.org/wiki/Dyck_language).</span></span>
 <span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>However, if you need to pass the Turing test, then study carefully the following edge cases:</span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>However<span class="op">,</span> if you need to pass the Turing test<span class="op">,</span> then study carefully the following edge cases<span class="in">:</span></span>
 <span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a><span class="in">* Did Hal say "Good morning, Dave."?</span></span>
-<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a><span class="in">  Did Hal say, "Good morning, Dave"?</span></span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> Did Hal say "Good morning<span class="op">,</span> Dave."?</span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>  Did Hal say<span class="op">,</span> "Good morning<span class="op">,</span> Dave"?</span>
 <span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a><span class="in">* No, he said "Where are you, Dave?".</span></span>
-<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a><span class="in">  No, he said, "Where are you, Dave?"</span></span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> No<span class="op">,</span> he said "Where are you<span class="op">,</span> Dave?".</span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>  No<span class="op">,</span> he said<span class="op">,</span> "Where are you<span class="op">,</span> Dave?"</span>
 <span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="in">  To be perfectly exact, I heard "Wh--- are you, Da---".</span></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a>  To be perfectly exact<span class="op">,</span> I heard "Wh--- are you<span class="op">,</span> Da---".</span>
 <span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a><span class="in">* "cat" is in lowercase.</span></span>
-<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a><span class="in">* "Cat" is in lowercase.</span></span>
-<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a><span class="in">* "Cat" is in uppercase.</span></span>
-<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a><span class="in">  "Cat" is capitalized.</span></span>
-<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a><span class="in">* In lowercase "cat" is.</span></span>
-<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="in">* "cat" is in lowercase, while "CAT" is in uppercase.</span></span>
-<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a><span class="in">  "CAT" is in uppercase, while "cat" is in lowercase.</span></span>
-<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="in">  What we cannot speak about we must pass over in silence.</span></span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "cat" is in lowercase.</span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "Cat" is in lowercase.</span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "Cat" is in uppercase.</span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>  "Cat" is capitalized.</span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> In lowercase "cat" is.</span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "cat" is in lowercase<span class="op">,</span> while "CAT" is in uppercase.</span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a>  "CAT" is in uppercase<span class="op">,</span> while "cat" is in lowercase.</span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>  What we cannot speak about we must pass over in silence.</span>
 <span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a><span class="in">* "sed" ("stream editor") is a Unix utility that parses and transforms text.</span></span>
-<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a><span class="in">* "Sed" ("stream editor") is a Unix utility that parses and transforms text.</span></span>
-<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a><span class="in">  The Unix utility "sed" parses and transforms text.</span></span>
-<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "sed" <span class="in">(</span>"stream editor"<span class="in">)</span> is a Unix utility that parses and transforms text.</span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "Sed" <span class="in">(</span>"stream editor"<span class="in">)</span> is a Unix utility that parses and transforms text.</span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>  The Unix utility "sed" parses and transforms text.</span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a>The two senses of verbatim (verbatim verbal speech, verbatim written text) are inconsistent with the capitalization constraint:</span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a>The two senses of verbatim <span class="in">(</span>verbatim verbal speech<span class="op">,</span> verbatim written text<span class="in">)</span> are inconsistent with the capitalization constraint<span class="in">:</span></span>
 <span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="in">This violates "first letter capitalization".</span></span>
-<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved'. 'sed' stands for 'stream editor'. ..." </span></span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a>This violates "first letter capitalization".</span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "... 'Vim' stands for 'vi improved'. 'sed' stands for 'stream editor'. ..." </span>
 <span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a><span class="in">This violates "verbatim written text".</span></span>
-<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved'. 'Sed' stands for 'stream editor'. ..."</span></span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a>This violates "verbatim written text".</span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "... 'Vim' stands for 'vi improved'. 'Sed' stands for 'stream editor'. ..."</span>
 <span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="in">This violates "verbatim verbal speech".</span></span>
-<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved', whereas 'sed' stands for 'stream editor'. ..."</span></span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a>This violates "verbatim verbal speech".</span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "... 'Vim' stands for 'vi improved'<span class="op">,</span> whereas 'sed' stands for 'stream editor'. ..."</span>
 <span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a><span class="in">This violates the constraint of grammar.</span></span>
-<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a><span class="in">* "... 'Vim' stands for 'vi improved', 'sed' stands for 'stream editor'. ..."</span></span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a>This violates the constraint of grammar.</span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "... 'Vim' stands for 'vi improved'<span class="op">,</span> 'sed' stands for 'stream editor'. ..."</span>
 <span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a><span class="in">This works, but only by a dubious insertion.</span></span>
-<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a><span class="in">  "... 'Vim' stands for 'vi improved'[, whereas] 'sed' stands for 'stream editor'. ..."</span></span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>This works<span class="op">,</span> but only by a dubious insertion.</span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a>  "... 'Vim' stands for 'vi improved'<span class="ex">[</span><span class="op">,</span> whereas] 'sed' stands for 'stream editor'. ..."</span>
 <span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="in">This works, but just barely.</span></span>
-<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a><span class="in">  "... 'Vim' stands for 'vi improved'; 'sed' stands for 'stream editor'. ..."</span></span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a>This works<span class="op">,</span> but just barely.</span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>  "... 'Vim' stands for 'vi improved'; 'sed' stands for 'stream editor'. ..."</span>
 <span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="in">It would not work if the two sentences are not "closely related".</span></span>
-<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a><span class="in">* "... The Unix coreutils were written mostly in the 1970s; 'sed',</span></span>
-<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a><span class="in">       which stands for 'stream editor', was written by Lee McMahon in 1973. ..."</span></span>
-<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a>It would not work if the two sentences are not "closely related".</span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> "... The Unix coreutils were written mostly in the 1970s; 'sed'<span class="op">,</span></span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a>       which stands for 'stream editor'<span class="op">,</span> was written by Lee McMahon in 1973. ..."</span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a><span class="fu">### Whitespace</span></span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a>### Whitespace</span>
 <span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a>For most cases, the single whitespace works.</span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a>For most cases<span class="op">,</span> the single whitespace works.</span>
 <span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a><span class="in">` `</span> (U+00A0 <span class="co">[</span><span class="ot">no-break space</span><span class="co">]</span>{.smallcaps}) says: "Do not break line here.". Similarly for <span class="in">`&amp;NoBreak;`</span> (U+2060 <span class="co">[</span><span class="ot">word joiner</span><span class="co">]</span>{.smallcaps}). The opposite is <span class="in">`&lt;wbr&gt;`</span> (U+200B <span class="co">[</span><span class="ot">zero width space</span><span class="co">]</span>{.smallcaps}), which says: "You can break line here.".</span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a>` ` <span class="in">(</span>U<span class="op">+</span>00A0 <span class="ex">[</span><span class="ss">no-break space</span><span class="ex">]</span><span class="er">{</span><span class="fu">.smallcaps</span>}) says<span class="in">:</span> "Do not break line here.". Similarly for `<span class="op">&amp;</span>NoBreak;` <span class="in">(</span>U<span class="op">+</span>2060 <span class="ex">[</span><span class="ss">word joiner</span><span class="ex">]</span><span class="er">{</span><span class="fu">.smallcaps</span>}). The opposite is `&lt;wbr<span class="op">&gt;</span>` <span class="in">(</span>U<span class="op">+</span>200B <span class="ex">[</span><span class="ss">zero width space</span><span class="ex">]</span><span class="er">{</span><span class="fu">.smallcaps</span>})<span class="op">,</span> which says<span class="in">:</span> "You can break line here.".</span>
 <span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="in">` `</span> (U+2007 <span class="co">[</span><span class="ot">figure space</span><span class="co">]</span>{.smallcaps}), <span class="in">` `</span> (U+2008 <span class="co">[</span><span class="ot">punctuation space</span><span class="co">]</span>{.smallcaps}), are only for numerical tabulations, to ensure alignment across rows.</span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a>` ` <span class="in">(</span>U<span class="op">+</span>2007 <span class="ex">[</span><span class="ss">figure space</span><span class="ex">]</span><span class="er">{</span><span class="fu">.smallcaps</span>})<span class="op">,</span> ` ` <span class="in">(</span>U<span class="op">+</span>2008 <span class="ex">[</span><span class="ss">punctuation space</span><span class="ex">]</span><span class="er">{</span><span class="fu">.smallcaps</span>})<span class="op">,</span> are only for numerical tabulations<span class="op">,</span> to ensure alignment across rows.</span>
 <span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>The thin space and hair space are not used except by fastidious typographers.</span>
 <span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a><span class="fu">### Connecting words</span></span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a>### Connecting words</span>
 <span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`-`</span> to connect two non-equal parts into a compound noun-phrase, except when one of the parts is an open compound, in which case, use <span class="in">`--`</span>.</span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a>Use `-` to connect two non-equal parts into a compound noun-phrase<span class="op">,</span> except when one of the parts is an open compound<span class="op">,</span> in which case<span class="op">,</span> use `--`.</span>
 <span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`--`</span> to connect two equal parts into a compound noun-phrase.</span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>Use `--` to connect two equal parts into a compound noun-phrase.</span>
 <span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`pre-WWII, pre--World War Two, ex--Prime Minister, water-based solution, non--water-based solution, the anti-choice--anti-life debate`</span></span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> `pre-WWII<span class="op">,</span> pre--World War Two<span class="op">,</span> ex--Prime Minister<span class="op">,</span> water-based solution<span class="op">,</span> non--water-based solution<span class="op">,</span> the anti-choice--anti-life debate`</span>
 <span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="fu">### Interruptions</span></span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a>### Interruptions</span>
 <span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a>Use em-dash <span class="in">`---`</span> without spacing.</span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a>Use em-dash `---` without spacing.</span>
 <span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`I---no, YOU son of a---`</span></span>
-<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`---and as I was saying---`</span></span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> `I---no<span class="op">,</span> YOU son of a---`</span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> `---and as I was saying---`</span>
 <span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a><span class="fu">### Deletions</span></span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a>### Deletions</span>
 <span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>To cut out letters or words by redaction, use the em-dash <span class="in">`---`</span>. Imagine that you wrote out the text normally, then you replace the section to be redacted with a single <span class="in">`---`</span>, and in this way you will find the right spacing. However, I recommend the black block character <span class="in">`█`</span>, which looks just like real redactions on secret documents.</span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>To cut out letters or words by redaction<span class="op">,</span> use the em-dash `---`. Imagine that you wrote out the text normally<span class="op">,</span> then you replace the section to be redacted with a single `---`<span class="op">,</span> and in this way you will find the right spacing. However<span class="op">,</span> I recommend the black block character `█`<span class="op">,</span> which looks just like real redactions on secret documents.</span>
 <span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`That f--- son of a b███!`</span></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> `That f--- son of a b███!`</span>
 <span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>The ellipsis symbol can be done either with <span class="in">`...`</span> or with a single <span class="in">`…`</span> (U+2026 <span class="co">[</span><span class="ot">horizontal ellipsis</span><span class="co">]</span>{.smallcaps}). It is used with spacing on both ends, except that there is no space between it and the quotation mark.</span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>The ellipsis symbol can be done either with `...` or with a single `…` <span class="in">(</span>U<span class="op">+</span>2026 <span class="ex">[</span><span class="ss">horizontal ellipsis</span><span class="ex">]</span><span class="er">{</span><span class="fu">.smallcaps</span>}). It is used with spacing on both ends<span class="op">,</span> except that there is no space between it and the quotation mark.</span>
 <span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`"Consider this ... , and no more ... be said. ... and so on and so forth ...", said Mr. ---.`</span></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> `"Consider this ... <span class="op">,</span> and no more ... be said. ... and so on and so forth ..."<span class="op">,</span> said Mr. ---.`</span>
 <span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a><span class="fu">### Arithmetics</span></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>### Arithmetics</span>
 <span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>If you cannot use LaTeX, then you could use the hyphen <span class="in">`-`</span> for minus sign, though it's more correct to use <span class="in">`−`</span>. Similarly, the letter <span class="in">`x`</span> can work, though <span class="in">`×`</span> is better.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>If you cannot use LaTeX<span class="op">,</span> then you could use the hyphen `-` for minus sign<span class="op">,</span> though it's more correct to use `−`. Similarly<span class="op">,</span> the letter `x` can work<span class="op">,</span> though `×` is better.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left"><span class="faux-block">Yuxi on the Wired</span></div>   
+    <div class="nav-footer-left">
+<p><span class="faux-block">Yuxi on the Wired</span></p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
-    <div class="nav-footer-right"><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></p>
+</div>
   </div>
 </footer>
+
 
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,6 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -103,7 +104,12 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -112,6 +118,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -124,10 +131,37 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <meta property="og:title" content="Yuxi on the Wired - The Wigner Rotation in Special Relativity via Hyperbolic Geometry">
 <meta property="og:description" content="The other special relativity paradox that you have never heard of.">
 <meta property="og:image" content="https://yuxi-liu-wired.github.io/essays/posts/wigner-rotation/figure/discrete_lorentz_rapidity_0.1_boosts_17.png">
-<meta property="og:site-name" content="Yuxi on the Wired">
+<meta property="og:site_name" content="Yuxi on the Wired">
 <meta property="og:image:height" content="600">
 <meta property="og:image:width" content="600">
 <meta property="og:image:alt" content="A picture of iterating the same Lorentz boost for many times on a plus-sign with unit-length arms, creating the outlines of a hyperbola.">
@@ -143,10 +177,10 @@ div.csl-indent {
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
     </a>
@@ -161,46 +195,46 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../essays/index.html" rel="" target="">
- <span class="menu-text">Essays</span></a>
+    <a class="nav-link" href="../../../essays/index.html"> 
+<span class="menu-text">Essays</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../sketches/index.html" rel="" target="">
- <span class="menu-text">Sketches</span></a>
+    <a class="nav-link" href="../../../sketches/index.html"> 
+<span class="menu-text">Sketches</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../projects/index.html" rel="" target="">
- <span class="menu-text">Projects</span></a>
+    <a class="nav-link" href="../../../projects/index.html"> 
+<span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../notes/index.html" rel="" target="">
- <span class="menu-text">Notes</span></a>
+    <a class="nav-link" href="../../../notes/index.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../docs/index.html" rel="" target="">
- <span class="menu-text">Docs</span></a>
+    <a class="nav-link" href="../../../docs/index.html"> 
+<span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../about/index.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about/index.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://bair.berkeley.edu/" rel="" target=""><i class="bi bi-folder-symlink" role="img">
+    <a class="nav-link" href="https://bair.berkeley.edu/"> <i class="bi bi-folder-symlink" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com" rel="" target=""><i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -256,6 +290,7 @@ div.csl-indent {
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -327,7 +362,7 @@ div.csl-indent {
 <li>Transformations can be combined one after another, and they can be reversed. That is, they make up a group, named the <strong>symmetry group of spacetime</strong>.</li>
 <li>The symmetry group is smooth and connected, meaning that starting with the “do-nothing” identity transformation, you can combine it with tiny transformations, and end up at any other transformation.</li>
 </ul>
-<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;In jargon, it is isomorphic as a smooth manifold to <span class="math inline">\(\mathbb{R}^{n+1}\)</span>, or diffeomorphic to <span class="math inline">\(\mathbb{R}^{n+1}\)</span>.</p></li></div><p>Do not worry if some terms were used without a precise definition. You can start with your best intuitive guess, and sculpt them as we go.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;In jargon, it is isomorphic as a smooth manifold to <span class="math inline">\(\mathbb{R}^{n+1}\)</span>, or diffeomorphic to <span class="math inline">\(\mathbb{R}^{n+1}\)</span>.</p></div></div><p>Do not worry if some terms were used without a precise definition. You can start with your best intuitive guess, and sculpt them as we go.</p>
 <p>We will follow the spirit of Erlangen program, which states clearly what our target is <span class="citation" data-cites="kleinComparativeReviewRecent1893">(<a href="#ref-kleinComparativeReviewRecent1893" role="doc-biblioref">Klein 1893</a>)</span>:</p>
 <blockquote class="blockquote">
 <p>Given a manifoldness [smooth space] and a group of transformations of the same; to develop theory of invariants relating to that group. This is the general problem, and it comprehends not alone ordinary geometry, but also and in particular the more recent geometrical theories which we propose to discuss, and the different methods of treating manifoldnesses of <span class="math inline">\(n\)</span> dimensions.</p>
@@ -398,7 +433,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/three-infinitesimal-boosts-output-1.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption class="figure-caption margin-caption">Three infinitesimal boosts</figcaption>
+<figcaption class="margin-caption">Three infinitesimal boosts</figcaption>
 </figure>
 </div>
 </section>
@@ -478,8 +513,8 @@ const discreteLorentz1D = (p) => {
 
 new p5(discreteLorentz1D, 'discrete-lorentz-1d');
 </script>
-<div class="page-columns page-full"><p>In the diagram, <span class="math inline">\(v\)</span> is “rapidity”<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. We apply the Lorentz boost with the given <span class="math inline">\(v\)</span> repeatedly forwards and backwards. The resulting image is beautiful and suggestive: it looks like the unit hyperbolas!</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;The reason for calling it “rapidity”, instead of “velocity” would be soon clear.</p></li></div></div>
-<div style="display: flex; justify-content: center;">
+<p>In the diagram, <span class="math inline">\(v\)</span> is “rapidity”<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. We apply the Lorentz boost with the given <span class="math inline">\(v\)</span> repeatedly forwards and backwards. The resulting image is beautiful and suggestive: it looks like the unit hyperbolas!</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;The reason for calling it “rapidity”, instead of “velocity” would be soon clear.</p></div></div><div style="display: flex; justify-content: center;">
     <img src="figure/discrete_lorentz_rapidity_0.1_boosts_17.png" style="width: 400px; height: 400px;">
 </div>
 <p>Having guessed the answer, we proceed with the explicit integral to confirm our guess.</p>
@@ -536,7 +571,7 @@ new p5(discreteLorentz1D, 'discrete-lorentz-1d');
 <p><span class="math display">\[
 \braket{s', (v, 1)} = 0; \braket{s', s'} = 1
 \]</span></p>
-<p>which are <span class="math inline">\(s' = (-1, v), (1, v)\)</span>. By continuity, <span class="math inline">\((1, 0)\)</span> cannot have been boosted to <span class="math inline">\((-1, v)\)</span>, so it must be boosted to <span class="math inline">\((1, v)\)</span>. This gives us <a href="#eq-1d-lorentz-infinitesimal">Equation&nbsp;1</a>.</p>
+<p>which are <span class="math inline">\(s' = (-1, v), (1, v)\)</span>. By continuity, <span class="math inline">\((1, 0)\)</span> cannot have been boosted to <span class="math inline">\((-1, v)\)</span>, so it must be boosted to <span class="math inline">\((1, v)\)</span>. This gives us <a href="#eq-1d-lorentz-infinitesimal" class="quarto-xref">Equation&nbsp;1</a>.</p>
 </section>
 </section>
 <section id="relativity-in-21-dimensions" class="level2">
@@ -550,7 +585,7 @@ new p5(discreteLorentz1D, 'discrete-lorentz-1d');
 </div>
 <p>Suppose we perform an infinitesimal boost by <span class="math inline">\((v_x, 0)\)</span>, then, by the same picture as in the 1+1 dimension case, we know that the clock-tick <span class="math inline">\((0, 0, 1)\)</span> is boosted to <span class="math inline">\((v_x, 0, 1)\)</span>, and the space circle is boosted to the ellipse with long semiaxis <span class="math inline">\((1, 0, v_x)\)</span> and short semiaxis <span class="math inline">\((0, 1, 0)\)</span>. Where should each point on the space circle go to? Since the space circle is rigid, if we know where <em>one</em> point must go to, we know where <em>all</em> points must go to.</p>
 <p>The semiaxis <span class="math inline">\((0, 1, 0)\)</span> is both on the original space circle and the boosted space circle. It stands to reason that the simplest pick would preserve it after the infinitesimal boost. That is, we should not “twist” the space circle under boosting. With this choice, we are forced to pick <span class="math inline">\((1, 0, v_x)\)</span> as the boosted <span class="math inline">\((1, 0, 0)\)</span>, since it is the unique unit vector that is perpendicular to <span class="math inline">\((0, 1, 0), (v_x, 0, 1)\)</span>, and infinitesimally close to <span class="math inline">\((1, 0, 0)\)</span>.</p>
-<p>Alternatively, we can think of Lorentz transformation in 2+1 dimensions as the same with Lorentz transformation in 1+1 dimensions, but with an extra dimension. Therefore, we can minimally modify <a href="#eq-1d-lorentz-infinitesimal">Equation&nbsp;1</a> to:</p>
+<p>Alternatively, we can think of Lorentz transformation in 2+1 dimensions as the same with Lorentz transformation in 1+1 dimensions, but with an extra dimension. Therefore, we can minimally modify <a href="#eq-1d-lorentz-infinitesimal" class="quarto-xref">Equation&nbsp;1</a> to:</p>
 <p><span class="math display">\[
 \begin{bmatrix} x' \\ y' \\ t' \end{bmatrix} =
 \begin{bmatrix} 1 &amp; 0 &amp; v_x \\ 0 &amp; 1 &amp; 0 \\ v_x &amp; 0 &amp; 1 \end{bmatrix}
@@ -588,7 +623,7 @@ Four ways to derive it
 </section>
 <section id="fermiwalker-transport" class="level3">
 <h3 class="anchored" data-anchor-id="fermiwalker-transport">Fermi–Walker transport</h3>
-<p><a href="#eq-2d-lorentz-infinitesimal">Equation&nbsp;3</a> is correct, but it is still not geometric. We must convert it with only quantities that are invariant under Lorentz transformations – that is, the inner product.</p>
+<p><a href="#eq-2d-lorentz-infinitesimal" class="quarto-xref">Equation&nbsp;3</a> is correct, but it is still not geometric. We must convert it with only quantities that are invariant under Lorentz transformations – that is, the inner product.</p>
 <p>Denote the 4-velocity vector <span class="math inline">\((0, 0, 1)\)</span> by the letter <span class="math inline">\(u\)</span>, and the infinitesimal boost <span class="math inline">\((v_x, v_y, 0)\)</span> by <span class="math inline">\(\delta u\)</span>. Then, an arbitrary vector <span class="math inline">\(e\)</span> is boosted to <span class="math inline">\(e + \delta e\)</span>, Where</p>
 <p><span class="math display">\[
 \delta e =
@@ -608,7 +643,7 @@ Four ways to derive it
 </section>
 <section id="general-lorentz-transformations" class="level3">
 <h3 class="anchored" data-anchor-id="general-lorentz-transformations">General Lorentz transformations</h3>
-<p>The Lorentz transformation in 2+1 dimensions can be derived similarly to how <a href="#eq-1d-lorentz">Equation&nbsp;2</a> was derived. Let the rapidity vector <span class="math inline">\(\vec{w}\)</span> be equal to <span class="math inline">\(w (n_x, n_y)\)</span>, where <span class="math inline">\((n_x, n_y)\)</span> is a unit vector (the direction of rapidity). Then the Lorentz transformation is found by performing another matrix exponentiation:</p>
+<p>The Lorentz transformation in 2+1 dimensions can be derived similarly to how <a href="#eq-1d-lorentz" class="quarto-xref">Equation&nbsp;2</a> was derived. Let the rapidity vector <span class="math inline">\(\vec{w}\)</span> be equal to <span class="math inline">\(w (n_x, n_y)\)</span>, where <span class="math inline">\((n_x, n_y)\)</span> is a unit vector (the direction of rapidity). Then the Lorentz transformation is found by performing another matrix exponentiation:</p>
 <p><span class="math display">\[\exp\left(\begin{bmatrix} 0 &amp; 0 &amp; n_x \\ 0 &amp; 0 &amp; n_y \\ n_x &amp; n_y &amp; 0 \end{bmatrix} w\right)\]</span></p>
 <p>To be more succinct, we define the matrices</p>
 <p><span class="math display">\[K_x := \begin{bmatrix} 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}, \quad K_y := \begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 \end{bmatrix}\]</span></p>
@@ -643,7 +678,7 @@ Deriving <span class="math inline">\((\vec{n} \cdot \vec{K})^3 = \vec{n} \cdot \
 <h2 class="anchored" data-anchor-id="wigner-rotation">Wigner rotation</h2>
 <p>We are ready to derive a rarely discussed effect in special relativity: the Wigner rotation. Although it is as fundamental as time dilation and space contraction, it often goes unmentioned in undergraduate textbooks I have encountered.</p>
 <div id="thm-wigner-rotation" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1 (Wigner rotation) </strong></span>When three boosts are made in a cycle, such as <span class="math inline">\(p_1 \to p_2 \to p_3 \to p_1\)</span>, the result is a rotation. The angle of rotation is equal to the hyperbolic area of the triangle <span class="math inline">\(p_1 p_2 p_3\)</span>, but in the opposite direction. Furthermore, the hyperbolic area is equal to the angle defect of the triangle.</p>
+<p><span class="theorem-title"><strong>Theorem 1 (Wigner rotation)</strong></span> When three boosts are made in a cycle, such as <span class="math inline">\(p_1 \to p_2 \to p_3 \to p_1\)</span>, the result is a rotation. The angle of rotation is equal to the hyperbolic area of the triangle <span class="math inline">\(p_1 p_2 p_3\)</span>, but in the opposite direction. Furthermore, the hyperbolic area is equal to the angle defect of the triangle.</p>
 </div>
 <p>The phrase “in the opposite direction” means that, if, looking from the <span class="math inline">\(+t\)</span>-direction down at the origin, you see the three 3-velocities make a counterclockwise cycle in the disk <span class="math inline">\(\{(v_x, v_y, 1) : v_x^2 + v_y^2 = 1\}\)</span>, then you would see that the Wigner rotation angle is in the clockwise direction, and <em>vice versa</em>. The phrase “angle defect” means <span class="math inline">\(\pi - (\angle{p_1 p_2 p_3} + \angle{p_2 p_3 p_1} + \angle{p_3 p_1 p_2})\)</span>.</p>
 <section id="step-by-step-demonstration-of-the-wigner-rotation" class="level3">
@@ -653,8 +688,11 @@ Deriving <span class="math inline">\((\vec{n} \cdot \vec{K})^3 = \vec{n} \cdot \
     <img src="figure/wigner_rotation_3-velocity_cycle_1.png" alt="Spacetime Diagram" style="max-width: 100%; height: auto;">
 </div>
 <p>Tracing out the trajectory of every point on the space circle gives the following sequence:</p>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="3">
+<div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
 <p><img src="figure/wigner_rotation_4-velocity_1.png" class="img-fluid"></p>
 </div>
@@ -769,16 +807,16 @@ Deriving the Thomas precession formula
 <p><span class="math display">\[
 \frac{\gamma^2}{\gamma + 1} \delta\vec{v} \times \vec{v}
 \]</span></p>
-<div class="page-columns page-full"><p>To emphasize again: the Thomas precession formula only works in one frame. It is neither Lorentz invariant nor geometrically meaningful. It cannot be geometrically meaningful, because it is made of 3-vectors <span class="math inline">\(\vec{v}, \vec{a}, \vec{\omega}\)</span>, and 3-vectors are geometrically meaningless in special relativity.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;Or as I like to say, 3-vectors are inherently violent in special relativity, and anything involving anything inherently violent is also inherently violent.</p></li></div></div>
-</section>
+<p>To emphasize again: the Thomas precession formula only works in one frame. It is neither Lorentz invariant nor geometrically meaningful. It cannot be geometrically meaningful, because it is made of 3-vectors <span class="math inline">\(\vec{v}, \vec{a}, \vec{\omega}\)</span>, and 3-vectors are geometrically meaningless in special relativity.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Or as I like to say, 3-vectors are inherently violent in special relativity, and anything involving anything inherently violent is also inherently violent.</p></div></div></section>
 </section>
 <section id="relativity-in-31-dimensions" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="relativity-in-31-dimensions">Relativity in 3+1 dimensions</h2>
 <p>We began our study of special relativity in 1+1 dimensions and discovered the Lorentz transformations, then proceeded to 2+1 dimensions and discovered Wigner rotation. In 3+1 dimensions, Wigner rotation still occurs, but there is something new: rotations are no longer describable by a single number.</p>
-<div class="page-columns page-full"><p>This is not a place to get into the details; suffice to say that the space of rotations in <span class="math inline">\(\mathbb{R}^3\)</span> is much harder to understand than the space of rotations in <span class="math inline">\(\mathbb{R}^2\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> We must be more careful here.</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;The space of rotations in <span class="math inline">\(\mathbb{R}^3\)</span> is <span class="math inline">\(SO(3)\)</span> and that in <span class="math inline">\(\mathbb{R}^2\)</span> is <span class="math inline">\(SO(2)\)</span>. While <span class="math inline">\(SO(2)\)</span> is just the circle and can be easily represented by a real number or an angle, <span class="math inline">\(SO(3)\)</span> is the projective 3-space <span class="math inline">\(\mathbb{PR}^3\)</span> and best represented by quaternions.</p></li></div></div>
-<p>Suppose we have four frames: <span class="math inline">\(0, 1, 2, 3\)</span>. We start with a tripod in frame <span class="math inline">\(0\)</span>, then boost it successively to frames <span class="math inline">\(1, 2, 3, and 0\)</span>, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle <span class="math inline">\(0120\)</span> with the Wigner rotation around the cycle <span class="math inline">\(0230\)</span>. The full rotation is composed of two rotations, first rotation in the plane of the triangle <span class="math inline">\(012\)</span>, and the second one in the plane of the triangle <span class="math inline">\(023\)</span>.</p>
-<div class="page-columns page-full"><p>The Wigner rotation coming from an arbitrary sequence of boosts can be calculated easily with the Thomas precession formula, if we are willing to use violence.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Without violence, we have to do spherical trigonometry, much harder than adding 2-dimensional rotation angles. My intuition is that it should most naturally involve the <a href="https://en.wikipedia.org/wiki/Connection_(principal_bundle)">principal <span class="math inline">\(G\)</span>-connections</a>, where <span class="math inline">\(G = SO(n, 1)\)</span> is the group of Lorentz transformations.</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;Since this usage of “violence” comes directly from Hermann Weyl, perhaps we can call it <em>Weylence</em>?</p></li></div></div>
-</section>
+<p>This is not a place to get into the details; suffice to say that the space of rotations in <span class="math inline">\(\mathbb{R}^3\)</span> is much harder to understand than the space of rotations in <span class="math inline">\(\mathbb{R}^2\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> We must be more careful here.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;The space of rotations in <span class="math inline">\(\mathbb{R}^3\)</span> is <span class="math inline">\(SO(3)\)</span> and that in <span class="math inline">\(\mathbb{R}^2\)</span> is <span class="math inline">\(SO(2)\)</span>. While <span class="math inline">\(SO(2)\)</span> is just the circle and can be easily represented by a real number or an angle, <span class="math inline">\(SO(3)\)</span> is the projective 3-space <span class="math inline">\(\mathbb{PR}^3\)</span> and best represented by quaternions.</p></div></div><p>Suppose we have four frames: <span class="math inline">\(0, 1, 2, 3\)</span>. We start with a tripod in frame <span class="math inline">\(0\)</span>, then boost it successively to frames <span class="math inline">\(1, 2, 3, and 0\)</span>, how much does it rotate? To discover this, we need to compose the Wigner rotation around the cycle <span class="math inline">\(0120\)</span> with the Wigner rotation around the cycle <span class="math inline">\(0230\)</span>. The full rotation is composed of two rotations, first rotation in the plane of the triangle <span class="math inline">\(012\)</span>, and the second one in the plane of the triangle <span class="math inline">\(023\)</span>.</p>
+<p>The Wigner rotation coming from an arbitrary sequence of boosts can be calculated easily with the Thomas precession formula, if we are willing to use violence.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Without violence, we have to do spherical trigonometry, much harder than adding 2-dimensional rotation angles. My intuition is that it should most naturally involve the <a href="https://en.wikipedia.org/wiki/Connection_(principal_bundle)">principal <span class="math inline">\(G\)</span>-connections</a>, where <span class="math inline">\(G = SO(n, 1)\)</span> is the group of Lorentz transformations.</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;Since this usage of “violence” comes directly from Hermann Weyl, perhaps we can call it <em>Weylence</em>?</p></div></div></section>
 <section id="velocity-space-is-hyperbolic-geometry" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="velocity-space-is-hyperbolic-geometry">Velocity space is hyperbolic geometry</h2>
 <p>It is time to fulfill the promise in the title, that hyperbolic geometry is involved.</p>
@@ -822,8 +860,8 @@ ds^2 = dx^2 + dy^2 - dt^2 = \| (dx, dy, dt) \|^2
 <section id="interpreting-the-hyperbolic-geometry" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="interpreting-the-hyperbolic-geometry">Interpreting the hyperbolic geometry</h3>
 <p>Now we can connect concepts between hyperbolic geometry and special relativity.</p>
-<div class="page-columns page-full"><p>When <span class="math inline">\(v\)</span> is small, the Wigner rotation for a full cycle, <span class="math inline">\((\gamma - 1)2\pi\)</span>, is <span class="math inline">\(\pi v^2 + O(v^4)\)</span>, coinciding with the area enclosed by the cycle. Therefore, since both area and Wigner rotation are additive, we have proven <a href="#thm-wigner-rotation">Theorem&nbsp;1</a>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;This is not a handwaved proof, but fully rigorous. The Wigner rotation of a full cycle is <span class="math inline">\(\pi v^2 + O(v^4)\)</span>, and the area enclosed by the cycle is also <span class="math inline">\(\pi v^2 + O(v^4)\)</span>. Therefore, we can integrate over an arbitrary area, to find that the Wigner rotation angle is equal to the area enclosed, up to an infinitesimal term of <span class="math inline">\(O(v^2) \to 0\)</span>.</p></li></div></div>
-<p>In rocketry, if we trace out the trajectory of the rocket’s velocity on a graph paper, we obtain a <a href="https://en.wikipedia.org/wiki/Hodograph">hodograph</a>. Similarly, in relativistic rocketry, a path in the velocity space is a hodograph. The length of a hodograph is the total <a href="https://en.wikipedia.org/wiki/Delta-v">delta-v</a> of the rocket.</p>
+<p>When <span class="math inline">\(v\)</span> is small, the Wigner rotation for a full cycle, <span class="math inline">\((\gamma - 1)2\pi\)</span>, is <span class="math inline">\(\pi v^2 + O(v^4)\)</span>, coinciding with the area enclosed by the cycle. Therefore, since both area and Wigner rotation are additive, we have proven <a href="#thm-wigner-rotation" class="quarto-xref">Theorem&nbsp;1</a>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;This is not a handwaved proof, but fully rigorous. The Wigner rotation of a full cycle is <span class="math inline">\(\pi v^2 + O(v^4)\)</span>, and the area enclosed by the cycle is also <span class="math inline">\(\pi v^2 + O(v^4)\)</span>. Therefore, we can integrate over an arbitrary area, to find that the Wigner rotation angle is equal to the area enclosed, up to an infinitesimal term of <span class="math inline">\(O(v^2) \to 0\)</span>.</p></div></div><p>In rocketry, if we trace out the trajectory of the rocket’s velocity on a graph paper, we obtain a <a href="https://en.wikipedia.org/wiki/Hodograph">hodograph</a>. Similarly, in relativistic rocketry, a path in the velocity space is a hodograph. The length of a hodograph is the total <a href="https://en.wikipedia.org/wiki/Delta-v">delta-v</a> of the rocket.</p>
 <p>A straight line in hyperbolic space is the hodograph of the most fuel-efficient control-trajectory for a rocket to get from one velocity to another.</p>
 <p>If a rocket explodes with spherical symmetry, the velocities of its debris will lie on a hyperbolic sphere centered at the rocket’s original velocity.</p>
 </section>
@@ -845,16 +883,16 @@ ds^2 = dx^2 + dy^2 - dt^2 = \| (dx, dy, dt) \|^2
 <p>Therefore, by adding them up, we find that after driving around an arbitrary cycle on the Earth, the pendulum would have turned by</p>
 <p><span class="math display">\[4\pi\frac{\text{area of the cycle}}{\text{surface area of the Earth}}\]</span></p>
 <p>We can turn this insight into a formula for Fermi–Walker transport on the Earth.</p>
-<div class="page-columns page-full"><p>First, we scale the Earth so that its radius is one. Now set up the coordinate system <span class="math inline">\(\phi, \theta\)</span>, where <span class="math inline">\(\phi\)</span> is the latitude (zero at equator, <span class="math inline">\(\pi/2\)</span> at the North Pole) and <span class="math inline">\(\theta\)</span> the longitude. At each point on the Earth (except the two poles) we set up a local frame with two unit vectors <span class="math inline">\(\hat\phi, \hat\theta\)</span>. One very important fact is that this local frame is not parallel-transported<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. If you try to drive in a small circle around the North Pole, while always pointing in the direction of <span class="math inline">\(\hat\theta\)</span>, you would feel a strong centrifugal force pushing against your steering wheel. Centrifugal forces and all other “inertial forces” are nature’s way of telling you that you are not being parallel-transported.</p><div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;Indeed, there is no way to cover the space with parallel-transported local frames, because the space is curved, and therefore if you try to transport a local frame in a cycle back to its starting point, it would have rotated against itself. To be a curved space is <em>equivalent</em> to have no system of parallel-transported local frame, and curvature measures the amount of rotation-against-itself that happens when you transport a local frame in an infinitesimal circle.</p></li></div></div>
-<div class="page-columns page-full"><p>Consider two infinitesimally close points on the Earth, <span class="math inline">\(p_1 = (\phi, \theta)\)</span> and <span class="math inline">\(p_2 = (\phi + \delta \phi, \theta + \delta\phi)\)</span>. Since the surface area of a spherical cap around latitude <span class="math inline">\(\theta\)</span> is <span class="math inline">\(\frac{1 -\sin\theta}{2}\)</span> that of the whole sphere<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, the area of a thin spherical triangle with vertices <span class="math inline">\(p_1, p_2, N\)</span> is</p><div class="no-row-height column-margin column-container"><li id="fn8"><p><sup>8</sup>&nbsp;This is immediate from <a href="https://mathworld.wolfram.com/ArchimedesHat-BoxTheorem.html">Archimedes’ hat-box theorem</a>, which is the basis of the <a href="https://en.wikipedia.org/wiki/Lambert_cylindrical_equal-area_projection">Lambert cylindrical equal-area projection</a>.</p></li></div></div>
+<p>First, we scale the Earth so that its radius is one. Now set up the coordinate system <span class="math inline">\(\phi, \theta\)</span>, where <span class="math inline">\(\phi\)</span> is the latitude (zero at equator, <span class="math inline">\(\pi/2\)</span> at the North Pole) and <span class="math inline">\(\theta\)</span> the longitude. At each point on the Earth (except the two poles) we set up a local frame with two unit vectors <span class="math inline">\(\hat\phi, \hat\theta\)</span>. One very important fact is that this local frame is not parallel-transported<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. If you try to drive in a small circle around the North Pole, while always pointing in the direction of <span class="math inline">\(\hat\theta\)</span>, you would feel a strong centrifugal force pushing against your steering wheel. Centrifugal forces and all other “inertial forces” are nature’s way of telling you that you are not being parallel-transported.</p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;Indeed, there is no way to cover the space with parallel-transported local frames, because the space is curved, and therefore if you try to transport a local frame in a cycle back to its starting point, it would have rotated against itself. To be a curved space is <em>equivalent</em> to have no system of parallel-transported local frame, and curvature measures the amount of rotation-against-itself that happens when you transport a local frame in an infinitesimal circle.</p></div><div id="fn8"><p><sup>8</sup>&nbsp;This is immediate from <a href="https://mathworld.wolfram.com/ArchimedesHat-BoxTheorem.html">Archimedes’ hat-box theorem</a>, which is the basis of the <a href="https://en.wikipedia.org/wiki/Lambert_cylindrical_equal-area_projection">Lambert cylindrical equal-area projection</a>.</p></div></div><p>Consider two infinitesimally close points on the Earth, <span class="math inline">\(p_1 = (\phi, \theta)\)</span> and <span class="math inline">\(p_2 = (\phi + \delta \phi, \theta + \delta\phi)\)</span>. Since the surface area of a spherical cap around latitude <span class="math inline">\(\theta\)</span> is <span class="math inline">\(\frac{1 -\sin\theta}{2}\)</span> that of the whole sphere<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, the area of a thin spherical triangle with vertices <span class="math inline">\(p_1, p_2, N\)</span> is</p>
 <p><span class="math display">\[4\pi\frac{1 -\sin\theta}{2} \times \frac{\delta\phi}{2\pi} = (1-\sin\theta)\delta\phi\]</span></p>
 <p>Thus, if we parallel transport a vector <em>clockwise</em> in the order <span class="math inline">\(p_1 \to N \to p_2 \to p_1\)</span>, then the vector would turn <em>counterclockwise</em> by <span class="math inline">\(-(1 -\sin\theta) \delta\phi\)</span>.</p>
-<div class="page-columns page-full"><p>Now, consider two ways to move the pendulum from <span class="math inline">\(p_1\)</span> to <span class="math inline">\(p_2\)</span>. We can transport it directly, or detour through the North Pole. If we detour through the North Pole like <span class="math inline">\(p_1 \to N \to p_2\)</span>, then by the same argument as the “polar bear puzzle”<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, you see that the pendulum has rotated counterclockwise <em>relative to the local frame</em> by <span class="math inline">\(-\delta\phi\)</span>. Then we complete its journey with <span class="math inline">\(p_2 \to p_1\)</span>, to create an <em>absolute</em><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> full <span class="math inline">\(-(1 -\sin\theta) \delta\phi\)</span> rotation. Therefore, moving it <span class="math inline">\(p_2 \to p_1\)</span> has created a rotation <em>relative</em> to the local frame by <span class="math inline">\(\sin\theta \delta\phi\)</span>. Since we are actually moving it <span class="math inline">\(p_1 \to p_2\)</span>, we reverse the sign, and obtain our Fermi–Walker transport equation (the Earthbound version):</p><div class="no-row-height column-margin column-container"><li id="fn9"><p><sup>9</sup>&nbsp;You walk 1 km south, 1 km east, and 1 km north, and ended up at the same point. You see a bear. Why is the bear white?</p></li><li id="fn10"><p><sup>10</sup>&nbsp;Relative rotation means that we are measuring the orientation of the vector relative to the local frame. However, since the frames themselves are not parallel-transports of each other, relative rotation is arbitrary and not a fact of geometry, but a fact of convenience. If you move the vector back to its starting point, however, there is absolutely no dispute about how much it has rotated, and it does not depend on any system of local frames. You just have to compare the vector against itself.</p></li></div></div>
-<p><span id="eq-fermi-walker-sphere"><span class="math display">\[
+<p>Now, consider two ways to move the pendulum from <span class="math inline">\(p_1\)</span> to <span class="math inline">\(p_2\)</span>. We can transport it directly, or detour through the North Pole. If we detour through the North Pole like <span class="math inline">\(p_1 \to N \to p_2\)</span>, then by the same argument as the “polar bear puzzle”<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, you see that the pendulum has rotated counterclockwise <em>relative to the local frame</em> by <span class="math inline">\(-\delta\phi\)</span>. Then we complete its journey with <span class="math inline">\(p_2 \to p_1\)</span>, to create an <em>absolute</em><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> full <span class="math inline">\(-(1 -\sin\theta) \delta\phi\)</span> rotation. Therefore, moving it <span class="math inline">\(p_2 \to p_1\)</span> has created a rotation <em>relative</em> to the local frame by <span class="math inline">\(\sin\theta \delta\phi\)</span>. Since we are actually moving it <span class="math inline">\(p_1 \to p_2\)</span>, we reverse the sign, and obtain our Fermi–Walker transport equation (the Earthbound version):</p>
+<div class="no-row-height column-margin column-container"><div id="fn9"><p><sup>9</sup>&nbsp;You walk 1 km south, 1 km east, and 1 km north, and ended up at the same point. You see a bear. Why is the bear white?</p></div><div id="fn10"><p><sup>10</sup>&nbsp;Relative rotation means that we are measuring the orientation of the vector relative to the local frame. However, since the frames themselves are not parallel-transports of each other, relative rotation is arbitrary and not a fact of geometry, but a fact of convenience. If you move the vector back to its starting point, however, there is absolutely no dispute about how much it has rotated, and it does not depend on any system of local frames. You just have to compare the vector against itself.</p></div></div><p><span id="eq-fermi-walker-sphere"><span class="math display">\[
 \delta(\text{vector angle}) = -\sin\theta \delta\phi
 \tag{9}\]</span></span></p>
-<div class="page-columns page-full"><p>Applied to the Foucault pendulum problem, we find that it rotates clockwise by <span class="math inline">\(2\pi \sin\theta\)</span> every day, and it takes <span class="math inline">\(\frac{1}{\sin\theta}\)</span> days<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> to make a full rotation. At the Paris Observatory, the original place where Foucault made his experiment in 1851, we have</p><div class="no-row-height column-margin column-container"><li id="fn11"><p><sup>11</sup>&nbsp;To be precise, this is a sidereal day, the time it takes for the Earth to rotate one cycle relative to distant stars. It is shorter than a solar day.</p></li></div></div>
-<p><span class="math display">\[\theta = \mathrm{48^\circ 52' N}, \quad \text{period} = \frac{\mathrm{23h56'}}{\sin \theta} \approx \mathrm{31\,h\,50\,min}\]</span></p>
+<p>Applied to the Foucault pendulum problem, we find that it rotates clockwise by <span class="math inline">\(2\pi \sin\theta\)</span> every day, and it takes <span class="math inline">\(\frac{1}{\sin\theta}\)</span> days<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> to make a full rotation. At the Paris Observatory, the original place where Foucault made his experiment in 1851, we have</p>
+<div class="no-row-height column-margin column-container"><div id="fn11"><p><sup>11</sup>&nbsp;To be precise, this is a sidereal day, the time it takes for the Earth to rotate one cycle relative to distant stars. It is shorter than a solar day.</p></div></div><p><span class="math display">\[\theta = \mathrm{48^\circ 52' N}, \quad \text{period} = \frac{\mathrm{23h56'}}{\sin \theta} \approx \mathrm{31\,h\,50\,min}\]</span></p>
 <p>If a museum visitor can stay for 5 minutes at the pendulum, then they would see the pendulum complete <span class="math inline">\(\approx 1/382\)</span> of a cycle. Typical museums would put up about 400 wooden blocks in a cycle, to be knocked down by the pendulum. This allows each visitor to see at least one block being knocked down.</p>
 </section>
 </section>
@@ -968,12 +1006,12 @@ document.querySelectorAll('.diamond-sketch').forEach((elem) => {
 <p>In general, if you have a Lorentz-transformed rocket, you can apply a carefully aimed boost so that it comes to rest, then apply Wigner rotation to return it back to the starting position.</p>
 <p>With a cycle of three boosts, the Wigner rotation angle is equal to the angle defect of the hyperbolic triangle, which can take any value in <span class="math inline">\((0, \pi)\)</span> (you can’t have one with zero inner angle sum, but you can get arbitrarily close). With a cycle of four boosts, we can cover the <span class="math inline">\(\pi\)</span> case as well, since a hyperbolic square can have any angle defect in <span class="math inline">\((0, 2\pi)\)</span>.</p>
 <p>In summary: almost any Lorentz transformation can be obtained in four boosts, except those requiring a 180-degree rotation, which need five boosts.</p>
-<div class="page-columns page-full"><p>In fact, the result can be improved by one boost: every Lorentz transformation can be done in three boosts, except “180-degree screws”, which require four. The solution given in <span class="citation" data-cites="lightmanProblemBookRelativity1975">(<a href="#ref-lightmanProblemBookRelativity1975" role="doc-biblioref">Lightman et al. 1975, 153–58</a>)</span> uses matrix algebra in <span class="math inline">\(\mathbb{C}^{2\times 2}\)</span>, which is too algebraic for me<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>. However, I have never found a satisfactory geometric method to demonstrate this, despite thinking on and off about it several times over the years.</p><div class="no-row-height column-margin column-container"><li id="fn12"><blockquote class="blockquote"><sup>12</sup>&nbsp;
+<p>In fact, the result can be improved by one boost: every Lorentz transformation can be done in three boosts, except “180-degree screws”, which require four. The solution given in <span class="citation" data-cites="lightmanProblemBookRelativity1975">(<a href="#ref-lightmanProblemBookRelativity1975" role="doc-biblioref">Lightman et al. 1975, 153–58</a>)</span> uses matrix algebra in <span class="math inline">\(\mathbb{C}^{2\times 2}\)</span>, which is too algebraic for me<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>. However, I have never found a satisfactory geometric method to demonstrate this, despite thinking on and off about it several times over the years.</p>
+<div class="no-row-height column-margin column-container"><div id="fn12"><blockquote class="blockquote"><sup>12</sup>&nbsp;
 <p>In these days the angel of topology and the devil of abstract algebra fight for the soul of each individual mathematical domain.</p>
 <p>— Hermann Weyl</p>
 </blockquote>
-</li></div></div>
-<blockquote class="blockquote">
+</div></div><blockquote class="blockquote">
 <p>Problem 1.28. What is the least number of pure boosts which generate an arbitrary Lorentz transformation? Note: This is a difficult problem! <span class="citation" data-cites="lightmanProblemBookRelativity1975">(<a href="#ref-lightmanProblemBookRelativity1975" role="doc-biblioref">Lightman et al. 1975</a>)</span></p>
 </blockquote>
 
@@ -985,7 +1023,7 @@ document.querySelectorAll('.diamond-sketch').forEach((elem) => {
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-borelTheorieRelativiteCinematique1913" class="csl-entry" role="listitem">
 Borel, Émile. 1913. <span>“La Th<span>é</span>orie de La Relativit<span>é</span> Et La Cin<span>é</span>matique.”</span> <em>Comptes Rendus Des s<span>é</span>ances de l’Acad<span>é</span>mie Des Sciences</em> 156: 215–17.
 </div>
@@ -1084,6 +1122,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -1150,13 +1215,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1286,10 +1353,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1299,8 +1383,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1312,7 +1405,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1356,6 +1572,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1381,6 +1598,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1793,7 +2036,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a>In plane geometry, we know that although $x, y, x', y'$ are geometrically meaningless, the norm-squared $(x-x')^2 + (y-y')^2$ is meaningful, because that quantity is not changed (invariant) if you apply the rotation matrix $\begin{bmatrix}\cos\theta &amp; \sin\theta <span class="sc">\\</span> -\sin\theta &amp; \cos\theta \end{bmatrix}$ to it. What would be an invariant for spacetime?</span>
 <span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>Looking at the picture of the Lorentz transformation in 1+1 dimensions, we can see that the intersection of the two light cones appears to have a constant area. In particular, the upper rectangle <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"figure/sparkline_upper_square_shaded.png"</span> <span class="er">style</span><span class="ot">=</span><span class="st">"vertical-align: middle; height: 1em;"</span><span class="kw">&gt;</span> has constant area. That is, the quantity $(x-t)(x+t)$ is preserved.</span>
+<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>Looking at the picture of the Lorentz transformation in 1+1 dimensions, we can see that the intersection of the two light cones appears to have a constant area. In particular, the upper rectangle &lt;img src="figure/sparkline_upper_square_shaded.png" style="vertical-align: middle; height: 1em;"&gt; has constant area. That is, the quantity $(x-t)(x+t)$ is preserved.</span>
 <span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
 <span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div style="display: flex; justify-content: center; width: 80%; margin: auto;"&gt;</span></span>
@@ -1998,7 +2241,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-558"><a href="#cb1-558" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-559"><a href="#cb1-559" aria-hidden="true" tabindex="-1"></a>The left picture represents the $xy$ plane, and the right picture represents the $xyt$ spacetime.</span>
 <span id="cb1-560"><a href="#cb1-560" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-561"><a href="#cb1-561" aria-hidden="true" tabindex="-1"></a>You can drag the black dot on the left, which represents the 3-velocity. The 3-velocity is restricted to have maximal norm $0.8$, to keep the app numerically stable. The <span class="kw">&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color: #7887ab;"</span><span class="kw">&gt;</span>blue<span class="kw">&lt;/span&gt;</span> ellipse is the projection of the space circle to the $xy$ plane. A fixed point on the space circle is distinguished by a big <span class="kw">&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color: red;"</span><span class="kw">&gt;</span>red<span class="kw">&lt;/span&gt;</span> dot, so that you can see how the space circle Wigner-rotates as you drag the 3-velocity around.</span>
+<span id="cb1-561"><a href="#cb1-561" aria-hidden="true" tabindex="-1"></a>You can drag the black dot on the left, which represents the 3-velocity. The 3-velocity is restricted to have maximal norm $0.8$, to keep the app numerically stable. The &lt;span style="color: #7887ab;"&gt;blue&lt;/span&gt; ellipse is the projection of the space circle to the $xy$ plane. A fixed point on the space circle is distinguished by a big &lt;span style="color: red;"&gt;red&lt;/span&gt; dot, so that you can see how the space circle Wigner-rotates as you drag the 3-velocity around.</span>
 <span id="cb1-562"><a href="#cb1-562" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-563"><a href="#cb1-563" aria-hidden="true" tabindex="-1"></a>In the right picture, the forward and backward light cones intersect at the space circle. You can drag and scroll to adjust the camera.</span>
 <span id="cb1-564"><a href="#cb1-564" aria-hidden="true" tabindex="-1"></a></span>
@@ -2359,13 +2602,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left"><span class="faux-block">Yuxi on the Wired</span></div>   
+    <div class="nav-footer-left">
+<p><span class="faux-block">Yuxi on the Wired</span></p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
-    <div class="nav-footer-right"><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Everything © <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a></span></p>
+</div>
   </div>
 </footer>
+
 
 
 
