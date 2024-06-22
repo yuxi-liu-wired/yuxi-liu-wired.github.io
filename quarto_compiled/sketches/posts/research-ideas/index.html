@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Yuxi Liu">
+<meta name="dcterms.date" content="2024-06-11">
+<meta name="description" content="Ideas for research. Free for a good home.">
 
-<title>Yuxi on the Wired - Sketches</title>
+<title>Yuxi on the Wired - Research ideas</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,29 +23,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../img/favicon.ico" rel="icon">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../img/favicon.ico" rel="icon">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,73 +104,15 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-image','listing-title','listing-categories','listing-description','listing-reading-time','listing-date','listing-file-modified',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<meta property="og:title" content="Yuxi on the Wired - Sketches">
-<meta property="og:description" content="Personal website of Yuxi Liu">
-<meta property="og:image" content="https://yuxi-liu-wired.github.io/sketches/img/blog icon.jpg">
+<meta property="og:title" content="Yuxi on the Wired - Research ideas">
+<meta property="og:description" content="Ideas for research. Free for a good home.">
+<meta property="og:image" content="https://yuxi-liu-wired.github.io/sketches/posts/research-ideas/img/blog icon.jpg">
 <meta property="og:site_name" content="Yuxi on the Wired">
-<meta name="twitter:title" content="Yuxi on the Wired - Sketches">
-<meta name="twitter:description" content="Personal website of Yuxi Liu">
-<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/sketches/img/blog icon.jpg">
+<meta name="twitter:title" content="Yuxi on the Wired - Research ideas">
+<meta name="twitter:description" content="Ideas for research. Free for a good home.">
+<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/sketches/posts/research-ideas/img/blog icon.jpg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -146,10 +123,10 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../img/favicon.ico" alt="" class="navbar-logo">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Yuxi on the Wired</span>
     </a>
   </div>
@@ -160,27 +137,27 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../essays/index.html"> 
+    <a class="nav-link" href="../../../essays/index.html"> 
 <span class="menu-text">Essays</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../sketches/index.html" aria-current="page"> 
+    <a class="nav-link" href="../../../sketches/index.html"> 
 <span class="menu-text">Sketches</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../projects/index.html"> 
+    <a class="nav-link" href="../../../projects/index.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../notes/index.html"> 
+    <a class="nav-link" href="../../../notes/index.html"> 
 <span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../docs/index.html"> 
+    <a class="nav-link" href="../../../docs/index.html"> 
 <span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about/index.html"> 
+    <a class="nav-link" href="../../../about/index.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -206,364 +183,68 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Sketches</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Research ideas</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          Ideas for research. Free for a good home.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">fun</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Yuxi Liu </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 11, 2024</p>
+      </div>
+    </div>
     
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">June 11, 2024</p>
+      </div>
+    </div>
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    
+</nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(8)</span></div><div class="category" data-category="AI">AI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="NN">NN <span class="quarto-category-count">(1)</span></div><div class="category" data-category="evolution">evolution <span class="quarto-category-count">(1)</span></div><div class="category" data-category="fiction">fiction <span class="quarto-category-count">(1)</span></div><div class="category" data-category="fun">fun <span class="quarto-category-count">(4)</span></div><div class="category" data-category="math">math <span class="quarto-category-count">(1)</span></div><div class="category" data-category="philosophy">philosophy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="physics">physics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="programming">programming <span class="quarto-category-count">(2)</span></div><div class="category" data-category="scaling">scaling <span class="quarto-category-count">(2)</span></div><div class="category" data-category="sociology">sociology <span class="quarto-category-count">(1)</span></div><div class="category" data-category="wip">wip <span class="quarto-category-count">(1)</span></div></div></div>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
-<p>I make my writing in a simple 3-stage process: private draft, public draft, public finished essay.</p>
-<p>The private draft is a collection of works in progress and lightly edited notes, and are not generally useful. The public finished essays are good enough for general reader (“publication quality”). Private draft is private because others are unlikely to benefit from reading it, unless they are trying to impersonate the writer and enter their private world (<a href="https://en.wikipedia.org/wiki/What_Is_It_Like_to_Be_a_Bat%3F">“What is it like to be Person X?”</a>). Published essays are public because others are likely to benefit from it without entering the outside. They are pallets of information, like encapsulated software objects. You do not need to know how they were made to use them well.</p>
-<p>The public draft is an interesting intermediate case. Sometimes there are things that are not already in a good enough shape to benefit others, but not good enough to count as a finished essay. They are like as public alphas of games. You can already play with them and have some fun with it, though only in bits and pieces; level 3 is followed by level 6; one NPC has a full personality while the other is a cardboard cutout. Similarly, a public draft is something that looks like an essay, except with pieces of it missing, the other pieces in the wrong place, some sentences missing their clauses, and some paragraphs missing their conclusions.</p>
-<hr>
 
 
+<!-- -->
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="fun,fiction" data-listing-date-sort="1718089200000" data-listing-file-modified-sort="1718927572821" data-listing-date-modified-sort="1718089200000" data-listing-reading-time-sort="11" data-listing-word-count-sort="2028">
-<div class="thumbnail">
-<p><a href="../sketches/posts/fictional-ideas/index.html" class="no-external"></a></p><a href="../sketches/posts/fictional-ideas/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../sketches/posts/fictional-ideas/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../sketches/posts/fictional-ideas/index.html" class="no-external">Fictional ideas</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../sketches/posts/fictional-ideas/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('fun'); return false;">
-fun
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('fiction'); return false;">
-fiction
-</div>
-</div>
-<div class="listing-description">
-<a href="../sketches/posts/fictional-ideas/index.html" class="no-external">Ideas for stories, fictions, etc.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../sketches/posts/fictional-ideas/index.html" class="no-external">
-<div class="listing-date">
-2024-06-11
-</div>
-<div class="listing-reading-time">
-11 min
-</div>
-<div class="metadata-value listing-file-modified">
-2024-06-20
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="math,physics,scaling" data-listing-date-sort="1712818800000" data-listing-file-modified-sort="1714959876548" data-listing-date-modified-sort="1712818800000" data-listing-reading-time-sort="23" data-listing-word-count-sort="4535">
-<div class="thumbnail">
-<p><a href="../sketches/posts/field-theory-how-to/index.html" class="no-external"></a></p><a href="../sketches/posts/field-theory-how-to/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../sketches/posts/field-theory-how-to/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../sketches/posts/field-theory-how-to/index.html" class="no-external">How to do field-theoretic calculations</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../sketches/posts/field-theory-how-to/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('math'); return false;">
-math
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('physics'); return false;">
-physics
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('scaling'); return false;">
-scaling
-</div>
-</div>
-<div class="listing-description">
-<a href="../sketches/posts/field-theory-how-to/index.html" class="no-external">I teach you how to do probability calculations and gigantic integrals in the ‘field-theoretic style’, done in exhaustive details. I aim for clarity, pointing out every pitfall that I have fallen into so that you don’t have to.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../sketches/posts/field-theory-how-to/index.html" class="no-external">
-<div class="listing-date">
-2024-04-11
-</div>
-<div class="listing-reading-time">
-23 min
-</div>
-<div class="metadata-value listing-file-modified">
-2024-05-05
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="fun,wip,evolution,sociology" data-listing-date-sort="1702713600000" data-listing-file-modified-sort="1708385426863" data-listing-date-modified-sort="1705478400000" data-listing-reading-time-sort="38" data-listing-word-count-sort="7443">
-<div class="thumbnail">
-<p><a href="../sketches/posts/info-warfare/index.html" class="no-external"></a></p><a href="../sketches/posts/info-warfare/index.html" class="no-external">
-<p><img src="../sketches/posts/info-warfare/figure/banner_2.png" class="thumbnail-image" alt="A swarm of mechanical insects moving to the right. Moving along with the insects are arrows with shafts made of barbed wires. It invokes the feeling of swarm warfare. High contrast, monochromatic, minimalistic, in the style of vector svg art."></p>
-</a><p><a href="../sketches/posts/info-warfare/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../sketches/posts/info-warfare/index.html" class="no-external">Information Warfare</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../sketches/posts/info-warfare/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('fun'); return false;">
-fun
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('wip'); return false;">
-wip
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('evolution'); return false;">
-evolution
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('sociology'); return false;">
-sociology
-</div>
-</div>
-<div class="listing-description">
-<a href="../sketches/posts/info-warfare/index.html" class="no-external">A mosaic view of the info-battleground: information for anti-informative goals. Intentionally useless errors, diplomatic speech, Chinese censorship, spam campaign, stock market arbitrage, continental philosophy, etc.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../sketches/posts/info-warfare/index.html" class="no-external">
-<div class="listing-date">
-2023-12-16
-</div>
-<div class="listing-reading-time">
-38 min
-</div>
-<div class="metadata-value listing-file-modified">
-2024-02-19
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="programming" data-listing-date-sort="1670659200000" data-listing-file-modified-sort="1705541662623" data-listing-date-modified-sort="1702281600000" data-listing-reading-time-sort="10" data-listing-word-count-sort="1965">
-<div class="thumbnail">
-<p><a href="../sketches/posts/linux-notes/index.html" class="no-external"></a></p><a href="../sketches/posts/linux-notes/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../sketches/posts/linux-notes/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../sketches/posts/linux-notes/index.html" class="no-external">Notes on Using Linux</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../sketches/posts/linux-notes/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
-programming
-</div>
-</div>
-<div class="listing-description">
-<a href="../sketches/posts/linux-notes/index.html" class="no-external">My quick reference for using Linux for doing things.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../sketches/posts/linux-notes/index.html" class="no-external">
-<div class="listing-date">
-2022-12-10
-</div>
-<div class="listing-reading-time">
-10 min
-</div>
-<div class="metadata-value listing-file-modified">
-2024-01-17
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="AI,scaling,NN" data-listing-date-sort="1705564800000" data-listing-file-modified-sort="1706070127848" data-listing-date-modified-sort="1705737600000" data-listing-reading-time-sort="14" data-listing-word-count-sort="2729">
-<div class="thumbnail">
-<p><a href="../sketches/posts/neural-network-scrapbook/index.html" class="no-external"></a></p><a href="../sketches/posts/neural-network-scrapbook/index.html" class="no-external">
-<p class="card-img-top"><img src="posts\neural-network-scrapbook\figure\kanal_1964_fig_tank_nontank_mosaic.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="../sketches/posts/neural-network-scrapbook/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../sketches/posts/neural-network-scrapbook/index.html" class="no-external">A Scrapbook of Neural Network Lores</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../sketches/posts/neural-network-scrapbook/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
-AI
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('scaling'); return false;">
-scaling
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('NN'); return false;">
-NN
-</div>
-</div>
-<div class="listing-description">
-<a href="../sketches/posts/neural-network-scrapbook/index.html" class="no-external">Lightly curated list of stories, anecdotes, and other various bits from neural network research.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../sketches/posts/neural-network-scrapbook/index.html" class="no-external">
-<div class="listing-date">
-2024-01-18
-</div>
-<div class="listing-reading-time">
-14 min
-</div>
-<div class="metadata-value listing-file-modified">
-2024-01-23
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="fun,philosophy" data-listing-date-sort="1718521200000" data-listing-file-modified-sort="1719003423530" data-listing-date-modified-sort="1718521200000" data-listing-reading-time-sort="5" data-listing-word-count-sort="943">
-<div class="thumbnail">
-<p><a href="../sketches/posts/philosophical-sketches/index.html" class="no-external"></a></p><a href="../sketches/posts/philosophical-sketches/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../sketches/posts/philosophical-sketches/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../sketches/posts/philosophical-sketches/index.html" class="no-external">Philosophical Sketches</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../sketches/posts/philosophical-sketches/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('fun'); return false;">
-fun
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('philosophy'); return false;">
-philosophy
-</div>
-</div>
-<div class="listing-description">
-<a href="../sketches/posts/philosophical-sketches/index.html" class="no-external">Short philosophical writings, often poking fun at philosophers.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../sketches/posts/philosophical-sketches/index.html" class="no-external">
-<div class="listing-date">
-2024-06-16
-</div>
-<div class="listing-reading-time">
-5 min
-</div>
-<div class="metadata-value listing-file-modified">
-2024-06-21
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="fun" data-listing-date-sort="1718089200000" data-listing-file-modified-sort="1718943980352" data-listing-date-modified-sort="1718089200000" data-listing-reading-time-sort="1" data-listing-word-count-sort="4">
-<div class="thumbnail">
-<p><a href="../sketches/posts/research-ideas/index.html" class="no-external"></a></p><a href="../sketches/posts/research-ideas/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../sketches/posts/research-ideas/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../sketches/posts/research-ideas/index.html" class="no-external">Research ideas</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../sketches/posts/research-ideas/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('fun'); return false;">
-fun
-</div>
-</div>
-<div class="listing-description">
-<a href="../sketches/posts/research-ideas/index.html" class="no-external">Ideas for research. Free for a good home.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../sketches/posts/research-ideas/index.html" class="no-external">
-<div class="listing-date">
-2024-06-11
-</div>
-<div class="listing-reading-time">
-1 min
-</div>
-<div class="metadata-value listing-file-modified">
-2024-06-20
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="programming" data-listing-date-sort="1702195200000" data-listing-file-modified-sort="1705541662826" data-listing-date-modified-sort="1702195200000" data-listing-reading-time-sort="9" data-listing-word-count-sort="1688">
-<div class="thumbnail">
-<p><a href="../sketches/posts/web-design-notes/index.html" class="no-external"></a></p><a href="../sketches/posts/web-design-notes/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../sketches/posts/web-design-notes/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../sketches/posts/web-design-notes/index.html" class="no-external">Notes on Web Design</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../sketches/posts/web-design-notes/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('programming'); return false;">
-programming
-</div>
-</div>
-<div class="listing-description">
-<a href="../sketches/posts/web-design-notes/index.html" class="no-external">My quick reference for designing content for the Internet.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../sketches/posts/web-design-notes/index.html" class="no-external">
-<div class="listing-date">
-2023-12-10
-</div>
-<div class="listing-reading-time">
-9 min
-</div>
-<div class="metadata-value listing-file-modified">
-2024-01-17
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -787,6 +468,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
@@ -1116,7 +848,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Research ideas"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Yuxi Liu"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-06-11"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> "2024-06-11"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [fun]</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    resources:</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">        - "figure/**"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Ideas for research. Free for a good home."</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># image: "figure/banner.png"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="an">status:</span><span class="co"> "draft"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="an">confidence:</span><span class="co"> "certain"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="an">importance:</span><span class="co"> 3</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../../../utils/blog_utils/_macros.tex &gt;}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
