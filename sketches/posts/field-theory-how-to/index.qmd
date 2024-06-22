@@ -2,7 +2,7 @@
 title: "How to do field-theoretic calculations"
 author: "Yuxi Liu"
 date: "2024-04-11"
-date-modified: "2024-04-11"
+date-modified: "2024-06-20"
 categories: [math, physics, scaling]
 format:
   html:
@@ -551,9 +551,58 @@ where the rate function is
 
 $$S[Q] = \frac 12 \ln \det Q$$
 
-## Bonus: Cramér's theorem
+## Easy results
 
-As a bonus, we prove a common result from large deviation theory called Cramér's theorem [@demboLargeDeviationsTechniques2009, theorem 2.2.30].
+Now that you have gone through that effort learning field-theoretic calculations, enjoy some quick and simple results
+
+### Asymptotics of spherical volumes
+
+Let $S^{N-1}(r)$ be the sphere of radius $r$ in $\R^N$, then 
+
+$$|S^{N-1}(\sqrt N)| \sim (2\pi e)^{N/2}$$
+
+::: {.callout-note title="Proof" collapse="true"}
+
+$$\begin{aligned}
+	  |S^{N-1}(\sqrt N)| &= \int_{\R^N} \delta(x^T x- N )dx \\
+	  &=_{\ln} \int_{\R^N} \int_\R e^{iq(x^T x- N )} dqdx \\
+	  &= \int_{\R} dq \; e^{-iqN} \left[\int_{\R^N} e^{iqx^T x} dx\right] \\
+	  &= \int_{\R} dq \; e^{-iqN} \left[\int_{\R} e^{iqx^2} dx\right]^N \\
+	  &= \int_{\R} dq \; e^{-iqN} (e^{i\pi/4}\sqrt{\pi/q})^N \\
+	  \end{aligned}$$	- Thus, $\frac 1N \ln |S^{N-1}(\sqrt N)|$ converges to the stationary point of
+$$-iq + \frac{i\pi}{4} + \frac 12 \ln \pi - \frac 12 \ln q$$
+
+which occurs at $q^* = i/2$. Plugging it in, we obtain  
+
+$$\frac 1N \ln |S^{N-1}(\sqrt N)| \to \ln\sqrt{2\pi e}$$ 
+
+:::
+
+::: {.callout-note title="Probabilistic interpretation" collapse="true"}
+
+As is well-known, in high-dimensions, everything looks like a gaussian. Specifically, the standard gaussian distribution $\mathcal N(0, I_N)$ in $\R^N$ space is strongly concentrated around the spherical shell of radius $\sqrt N$, by the law of large numbers. Therefore, the log-surface area of $S^{N-1}(\sqrt N)$ converges to the entropy of the $\mathcal N(0, I_N)$, which is just $N$ times the entropy of $\mathcal N(0, 1)$.
+
+In more detail, we can sample from $\mathcal N(0, I_N)$ in two ways: Either directly sample $N$ standard normal variables independently, or sample a point on $S^{N-1}(\sqrt N)$, before shifting it along the radius by an independently sampled displacement. Both ways give us exactly the same entropy. Now, because the radius of $x \sim \mathcal N(0, I_N)$ is distributed as the square-root of the [chi-squared distribution](https://en.wikipedia.org/wiki/Chi-squared_distribution) $\chi^2_N$, we have 
+
+$$r^2 = \|x\|^2 \sim \chi^2_N \approx \mathcal(N, 2N)$$
+
+When $N$ is large, we can write $r^2 \approx N + \sqrt{2N} z$ where $z \sim \mathcal(0, 1)$, so $r \approx \sqrt N + 2^{-1/2}z$. Therefore, the amount of radial displacement is roughly constant, and we have
+
+$$
+\mathrm{Ent}\mathcal N(0, I_N) \approx \ln |S^{N-1}(\sqrt N)| + \mathrm{Ent}\mathcal N(0, 1/2)
+$$
+
+giving us the second term in the Stirling approximation:
+
+$$
+\frac 1N \ln |S^{N-1}(\sqrt N)| = \ln\sqrt{2\pi e} + \frac{\ln\sqrt{\pi e}}{N} + O(N^{-2})
+$$
+
+:::
+
+### Cramér's theorem
+
+The most commonly used result from large deviation theory is Cramér's theorem [@demboLargeDeviationsTechniques2009, theorem 2.2.30].
 
 ::: {#thm-cramer}
 
