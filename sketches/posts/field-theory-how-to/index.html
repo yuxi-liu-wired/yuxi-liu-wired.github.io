@@ -267,7 +267,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">April 11, 2024</p>
+        <p class="date-modified">June 20, 2024</p>
       </div>
     </div>
       
@@ -294,7 +294,11 @@ window.Quarto = {
   <li><a href="#field-theoretic-interpretation-1" id="toc-field-theoretic-interpretation-1" class="nav-link" data-scroll-target="#field-theoretic-interpretation-1">Field-theoretic interpretation</a></li>
   <li><a href="#field-theoretic-calculation-1" id="toc-field-theoretic-calculation-1" class="nav-link" data-scroll-target="#field-theoretic-calculation-1">Field-theoretic calculation</a></li>
   </ul></li>
-  <li><a href="#bonus-cramérs-theorem" id="toc-bonus-cramérs-theorem" class="nav-link" data-scroll-target="#bonus-cramérs-theorem">Bonus: Cramér’s theorem</a></li>
+  <li><a href="#easy-results" id="toc-easy-results" class="nav-link" data-scroll-target="#easy-results">Easy results</a>
+  <ul class="collapse">
+  <li><a href="#asymptotics-of-spherical-volumes" id="toc-asymptotics-of-spherical-volumes" class="nav-link" data-scroll-target="#asymptotics-of-spherical-volumes">Asymptotics of spherical volumes</a></li>
+  <li><a href="#cramérs-theorem" id="toc-cramérs-theorem" class="nav-link" data-scroll-target="#cramérs-theorem">Cramér’s theorem</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -863,16 +867,13 @@ Pr(\bar Q =_\epsilon Q) =_{\ln} \frac{\exp\left(\frac N2(k+ k \ln(2\pi) + \ln \d
 <p><span class="math display">\[S[Q] = \frac 12 \ln \det Q\]</span></p>
 </section>
 </section>
-<section id="bonus-cramérs-theorem" class="level2">
-<h2 class="anchored" data-anchor-id="bonus-cramérs-theorem">Bonus: Cramér’s theorem</h2>
-<p>As a bonus, we prove a common result from large deviation theory called Cramér’s theorem <span class="citation" data-cites="demboLargeDeviationsTechniques2009">(<a href="#ref-demboLargeDeviationsTechniques2009" role="doc-biblioref">Dembo and Zeitouni 2009</a>, theorem 2.2.30)</span>.</p>
-<div id="thm-cramer" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2 (Cramér)</strong></span> Given a vector function <span class="math inline">\(M: X \to \mathbb{R}^m\)</span> and a distribution on <span class="math inline">\(X\)</span>, its rate function is the convex transform of its cumulant generating function:</p>
-<p><span class="math display">\[I_X(x) := \sup_{k \in \mathbb{R}^m}(\braket{k,x} - \ln \mathbb{E}_x[e^{\braket{k, M(x)}}])\]</span></p>
-<p>That is, for any compact subset <span class="math inline">\(A \subset \mathbb{R}^m\)</span>, the rate function over the whole subset is just the highest possible rate:</p>
-<p><span class="math display">\[\lim_N\frac 1N \ln Pr\left(\frac 1N \sum_{i=1}^N M(x_i) \in A\right) = \sup_{x\in A} -I_X(x)\]</span></p>
-<p>where <span class="math inline">\(x_1, ..., x_N\)</span> are IID samples from the same distribution.</p>
-</div>
+<section id="easy-results" class="level2">
+<h2 class="anchored" data-anchor-id="easy-results">Easy results</h2>
+<p>Now that you have gone through that effort learning field-theoretic calculations, enjoy some quick and simple results</p>
+<section id="asymptotics-of-spherical-volumes" class="level3">
+<h3 class="anchored" data-anchor-id="asymptotics-of-spherical-volumes">Asymptotics of spherical volumes</h3>
+<p>Let <span class="math inline">\(S^{N-1}(r)\)</span> be the sphere of radius <span class="math inline">\(r\)</span> in <span class="math inline">\(\mathbb{R}^N\)</span>, then</p>
+<p><span class="math display">\[|S^{N-1}(\sqrt N)| \sim (2\pi e)^{N/2}\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -884,6 +885,67 @@ Proof
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\begin{aligned}
+      |S^{N-1}(\sqrt N)| &amp;= \int_{\mathbb{R}^N} \delta(x^T x- N )dx \\
+      &amp;=_{\ln} \int_{\mathbb{R}^N} \int_\mathbb{R}e^{iq(x^T x- N )} dqdx \\
+      &amp;= \int_{\mathbb{R}} dq \; e^{-iqN} \left[\int_{\mathbb{R}^N} e^{iqx^T x} dx\right] \\
+      &amp;= \int_{\mathbb{R}} dq \; e^{-iqN} \left[\int_{\mathbb{R}} e^{iqx^2} dx\right]^N \\
+      &amp;= \int_{\mathbb{R}} dq \; e^{-iqN} (e^{i\pi/4}\sqrt{\pi/q})^N \\
+      \end{aligned}\]</span> - Thus, <span class="math inline">\(\frac 1N \ln |S^{N-1}(\sqrt N)|\)</span> converges to the stationary point of <span class="math display">\[-iq + \frac{i\pi}{4} + \frac 12 \ln \pi - \frac 12 \ln q\]</span></p>
+<p>which occurs at <span class="math inline">\(q^* = i/2\)</span>. Plugging it in, we obtain</p>
+<p><span class="math display">\[\frac 1N \ln |S^{N-1}(\sqrt N)| \to \ln\sqrt{2\pi e}\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Probabilistic interpretation">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Probabilistic interpretation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>As is well-known, in high-dimensions, everything looks like a gaussian. Specifically, the standard gaussian distribution <span class="math inline">\(\mathcal N(0, I_N)\)</span> in <span class="math inline">\(\mathbb{R}^N\)</span> space is strongly concentrated around the spherical shell of radius <span class="math inline">\(\sqrt N\)</span>, by the law of large numbers. Therefore, the log-surface area of <span class="math inline">\(S^{N-1}(\sqrt N)\)</span> converges to the entropy of the <span class="math inline">\(\mathcal N(0, I_N)\)</span>, which is just <span class="math inline">\(N\)</span> times the entropy of <span class="math inline">\(\mathcal N(0, 1)\)</span>.</p>
+<p>In more detail, we can sample from <span class="math inline">\(\mathcal N(0, I_N)\)</span> in two ways: Either directly sample <span class="math inline">\(N\)</span> standard normal variables independently, or sample a point on <span class="math inline">\(S^{N-1}(\sqrt N)\)</span>, before shifting it along the radius by an independently sampled displacement. Both ways give us exactly the same entropy. Now, because the radius of <span class="math inline">\(x \sim \mathcal N(0, I_N)\)</span> is distributed as the square-root of the <a href="https://en.wikipedia.org/wiki/Chi-squared_distribution">chi-squared distribution</a> <span class="math inline">\(\chi^2_N\)</span>, we have</p>
+<p><span class="math display">\[r^2 = \|x\|^2 \sim \chi^2_N \approx \mathcal(N, 2N)\]</span></p>
+<p>When <span class="math inline">\(N\)</span> is large, we can write <span class="math inline">\(r^2 \approx N + \sqrt{2N} z\)</span> where <span class="math inline">\(z \sim \mathcal(0, 1)\)</span>, so <span class="math inline">\(r \approx \sqrt N + 2^{-1/2}z\)</span>. Therefore, the amount of radial displacement is roughly constant, and we have</p>
+<p><span class="math display">\[
+\mathrm{Ent}\mathcal N(0, I_N) \approx \ln |S^{N-1}(\sqrt N)| + \mathrm{Ent}\mathcal N(0, 1/2)
+\]</span></p>
+<p>giving us the second term in the Stirling approximation:</p>
+<p><span class="math display">\[
+\frac 1N \ln |S^{N-1}(\sqrt N)| = \ln\sqrt{2\pi e} + \frac{\ln\sqrt{\pi e}}{N} + O(N^{-2})
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="cramérs-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="cramérs-theorem">Cramér’s theorem</h3>
+<p>The most commonly used result from large deviation theory is Cramér’s theorem <span class="citation" data-cites="demboLargeDeviationsTechniques2009">(<a href="#ref-demboLargeDeviationsTechniques2009" role="doc-biblioref">Dembo and Zeitouni 2009</a>, theorem 2.2.30)</span>.</p>
+<div id="thm-cramer" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (Cramér)</strong></span> Given a vector function <span class="math inline">\(M: X \to \mathbb{R}^m\)</span> and a distribution on <span class="math inline">\(X\)</span>, its rate function is the convex transform of its cumulant generating function:</p>
+<p><span class="math display">\[I_X(x) := \sup_{k \in \mathbb{R}^m}(\braket{k,x} - \ln \mathbb{E}_x[e^{\braket{k, M(x)}}])\]</span></p>
+<p>That is, for any compact subset <span class="math inline">\(A \subset \mathbb{R}^m\)</span>, the rate function over the whole subset is just the highest possible rate:</p>
+<p><span class="math display">\[\lim_N\frac 1N \ln Pr\left(\frac 1N \sum_{i=1}^N M(x_i) \in A\right) = \sup_{x\in A} -I_X(x)\]</span></p>
+<p>where <span class="math inline">\(x_1, ..., x_N\)</span> are IID samples from the same distribution.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>It suffices to prove it for <span class="math inline">\(A\)</span> being really small, essentially just a single point, because we can then cut up the whole of <span class="math inline">\(A\)</span> into many pieces like that, and then run the result on each piece. The rate difference is such that only the highest rate can survive, as it races pass every other piece exponentially fast: <span class="math inline">\(N^{-1} \ln (e^{-Na} + e^{-Nb}) \to \max(-a, -b)\)</span>, and even if two pieces have the exact same rate, then their combined rate gains a negligible factor of <span class="math inline">\(N^{-1}\ln 2 \to 0\)</span>.</p>
 <p>So, we once again repeat the same calculation:</p>
@@ -907,6 +969,7 @@ Pr\left(\frac 1N \sum_{i=1}^N M(x_i) =_\epsilon m\right) &amp;=_{\ln}  \mathbb{E
 <!-- -->
 
 
+</section>
 </section>
 
 
@@ -1535,7 +1598,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "How to do field-theoretic calculations"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Yuxi Liu"</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-04-11"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> "2024-04-11"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> "2024-06-20"</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [math, physics, scaling]</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
@@ -2084,50 +2147,99 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-551"><a href="#cb1-551" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-552"><a href="#cb1-552" aria-hidden="true" tabindex="-1"></a>$$S<span class="co">[</span><span class="ot">Q</span><span class="co">]</span> = \frac 12 \ln \det Q$$</span>
 <span id="cb1-553"><a href="#cb1-553" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-554"><a href="#cb1-554" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bonus: Cramér's theorem</span></span>
+<span id="cb1-554"><a href="#cb1-554" aria-hidden="true" tabindex="-1"></a><span class="fu">## Easy results</span></span>
 <span id="cb1-555"><a href="#cb1-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-556"><a href="#cb1-556" aria-hidden="true" tabindex="-1"></a>As a bonus, we prove a common result from large deviation theory called Cramér's theorem <span class="co">[</span><span class="ot">@demboLargeDeviationsTechniques2009, theorem 2.2.30</span><span class="co">]</span>.</span>
+<span id="cb1-556"><a href="#cb1-556" aria-hidden="true" tabindex="-1"></a>Now that you have gone through that effort learning field-theoretic calculations, enjoy some quick and simple results</span>
 <span id="cb1-557"><a href="#cb1-557" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-558"><a href="#cb1-558" aria-hidden="true" tabindex="-1"></a>::: {#thm-cramer}</span>
+<span id="cb1-558"><a href="#cb1-558" aria-hidden="true" tabindex="-1"></a><span class="fu">### Asymptotics of spherical volumes</span></span>
 <span id="cb1-559"><a href="#cb1-559" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-560"><a href="#cb1-560" aria-hidden="true" tabindex="-1"></a><span class="fu"># Cramér</span></span>
+<span id="cb1-560"><a href="#cb1-560" aria-hidden="true" tabindex="-1"></a>Let $S^{N-1}(r)$ be the sphere of radius $r$ in $\R^N$, then </span>
 <span id="cb1-561"><a href="#cb1-561" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-562"><a href="#cb1-562" aria-hidden="true" tabindex="-1"></a>Given a vector function $M: X \to \R^m$ and a distribution on $X$, its rate function is the convex transform of its cumulant generating function:</span>
+<span id="cb1-562"><a href="#cb1-562" aria-hidden="true" tabindex="-1"></a>$$|S^{N-1}(\sqrt N)| \sim (2\pi e)^{N/2}$$</span>
 <span id="cb1-563"><a href="#cb1-563" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-564"><a href="#cb1-564" aria-hidden="true" tabindex="-1"></a>$$I_X(x) := \sup_{k \in \R^m}(\braket{k,x} - \ln \E_x<span class="co">[</span><span class="ot">e^{\braket{k, M(x)}}</span><span class="co">]</span>)$$</span>
+<span id="cb1-564"><a href="#cb1-564" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Proof" collapse="true"}</span>
 <span id="cb1-565"><a href="#cb1-565" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-566"><a href="#cb1-566" aria-hidden="true" tabindex="-1"></a>That is, for any compact subset $A \subset \R^m$, the rate function over the whole subset is just the highest possible rate:</span>
-<span id="cb1-567"><a href="#cb1-567" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-568"><a href="#cb1-568" aria-hidden="true" tabindex="-1"></a>$$\lim_N\frac 1N \ln Pr\left(\frac 1N \sum_{i=1}^N M(x_i) \in A\right) = \sup_{x\in A} -I_X(x)$$</span>
-<span id="cb1-569"><a href="#cb1-569" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-570"><a href="#cb1-570" aria-hidden="true" tabindex="-1"></a>where $x_1, ..., x_N$ are IID samples from the same distribution.</span>
-<span id="cb1-571"><a href="#cb1-571" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-572"><a href="#cb1-572" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-573"><a href="#cb1-573" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-574"><a href="#cb1-574" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Proof" collapse="true"}</span>
-<span id="cb1-575"><a href="#cb1-575" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-576"><a href="#cb1-576" aria-hidden="true" tabindex="-1"></a>It suffices to prove it for $A$ being really small, essentially just a single point, because we can then cut up the whole of $A$ into many pieces like that, and then run the result on each piece. The rate difference is such that only the highest rate can survive, as it races pass every other piece exponentially fast: $N^{-1} \ln (e^{-Na} + e^{-Nb}) \to \max(-a, -b)$, and even if two pieces have the exact same rate, then their combined rate gains a negligible factor of $N^{-1}\ln 2 \to 0$.</span>
-<span id="cb1-577"><a href="#cb1-577" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-578"><a href="#cb1-578" aria-hidden="true" tabindex="-1"></a>So, we once again repeat the same calculation:</span>
-<span id="cb1-579"><a href="#cb1-579" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-580"><a href="#cb1-580" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-581"><a href="#cb1-581" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb1-582"><a href="#cb1-582" aria-hidden="true" tabindex="-1"></a>Pr\left(\frac 1N \sum_{i=1}^N M(x_i) =_\epsilon m\right) &amp;=_{\ln}  \E_x \left<span class="co">[</span><span class="ot">\delta^{(m)}\left(\sum_i M(x_i) - Nm\right)\right</span><span class="co">]</span> &amp; \text{ only $m$ terms in the Dirac delta}<span class="sc">\\</span></span>
-<span id="cb1-583"><a href="#cb1-583" aria-hidden="true" tabindex="-1"></a>&amp;=   \E_x \left<span class="co">[</span><span class="ot">\int_{\R^m} dq e^{i\braket{iq, \sum_i M(x_i) - Nm}}\right</span><span class="co">]</span>  &amp; \text{Dirac delta Fourier transform} <span class="sc">\\</span></span>
-<span id="cb1-584"><a href="#cb1-584" aria-hidden="true" tabindex="-1"></a>&amp;= \int_{\R^m} dq e^{-N \braket{iq, m}}\E_x<span class="co">[</span><span class="ot">e^{\braket{iq, M}}</span><span class="co">]</span>^N&amp; \text{IID assumption} <span class="sc">\\</span></span>
-<span id="cb1-585"><a href="#cb1-585" aria-hidden="true" tabindex="-1"></a>&amp;= \int_{\R^m}dq e^{N(-\braket{iq, m} + \ln \E_x<span class="co">[</span><span class="ot">e^{\braket{iq, M}}</span><span class="co">]</span>)}</span>
-<span id="cb1-586"><a href="#cb1-586" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb1-587"><a href="#cb1-587" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-566"><a href="#cb1-566" aria-hidden="true" tabindex="-1"></a>$$\begin{aligned}</span>
+<span id="cb1-567"><a href="#cb1-567" aria-hidden="true" tabindex="-1"></a>      |S^{N-1}(\sqrt N)| &amp;= \int_{\R^N} \delta(x^T x- N )dx <span class="sc">\\</span></span>
+<span id="cb1-568"><a href="#cb1-568" aria-hidden="true" tabindex="-1"></a>      &amp;=_{\ln} \int_{\R^N} \int_\R e^{iq(x^T x- N )} dqdx <span class="sc">\\</span></span>
+<span id="cb1-569"><a href="#cb1-569" aria-hidden="true" tabindex="-1"></a>      &amp;= \int_{\R} dq \; e^{-iqN} \left<span class="co">[</span><span class="ot">\int_{\R^N} e^{iqx^T x} dx\right</span><span class="co">]</span> <span class="sc">\\</span></span>
+<span id="cb1-570"><a href="#cb1-570" aria-hidden="true" tabindex="-1"></a>      &amp;= \int_{\R} dq \; e^{-iqN} \left<span class="co">[</span><span class="ot">\int_{\R} e^{iqx^2} dx\right</span><span class="co">]</span>^N <span class="sc">\\</span></span>
+<span id="cb1-571"><a href="#cb1-571" aria-hidden="true" tabindex="-1"></a>      &amp;= \int_{\R} dq \; e^{-iqN} (e^{i\pi/4}\sqrt{\pi/q})^N <span class="sc">\\</span></span>
+<span id="cb1-572"><a href="#cb1-572" aria-hidden="true" tabindex="-1"></a>      \end{aligned}$$   - Thus, $\frac 1N \ln |S^{N-1}(\sqrt N)|$ converges to the stationary point of</span>
+<span id="cb1-573"><a href="#cb1-573" aria-hidden="true" tabindex="-1"></a>$$-iq + \frac{i\pi}{4} + \frac 12 \ln \pi - \frac 12 \ln q$$</span>
+<span id="cb1-574"><a href="#cb1-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-575"><a href="#cb1-575" aria-hidden="true" tabindex="-1"></a>which occurs at $q^* = i/2$. Plugging it in, we obtain  </span>
+<span id="cb1-576"><a href="#cb1-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-577"><a href="#cb1-577" aria-hidden="true" tabindex="-1"></a>$$\frac 1N \ln |S^{N-1}(\sqrt N)| \to \ln\sqrt{2\pi e}$$ </span>
+<span id="cb1-578"><a href="#cb1-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-579"><a href="#cb1-579" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-580"><a href="#cb1-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-581"><a href="#cb1-581" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Probabilistic interpretation" collapse="true"}</span>
+<span id="cb1-582"><a href="#cb1-582" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-583"><a href="#cb1-583" aria-hidden="true" tabindex="-1"></a>As is well-known, in high-dimensions, everything looks like a gaussian. Specifically, the standard gaussian distribution $\mathcal N(0, I_N)$ in $\R^N$ space is strongly concentrated around the spherical shell of radius $\sqrt N$, by the law of large numbers. Therefore, the log-surface area of $S^{N-1}(\sqrt N)$ converges to the entropy of the $\mathcal N(0, I_N)$, which is just $N$ times the entropy of $\mathcal N(0, 1)$.</span>
+<span id="cb1-584"><a href="#cb1-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-585"><a href="#cb1-585" aria-hidden="true" tabindex="-1"></a>In more detail, we can sample from $\mathcal N(0, I_N)$ in two ways: Either directly sample $N$ standard normal variables independently, or sample a point on $S^{N-1}(\sqrt N)$, before shifting it along the radius by an independently sampled displacement. Both ways give us exactly the same entropy. Now, because the radius of $x \sim \mathcal N(0, I_N)$ is distributed as the square-root of the <span class="co">[</span><span class="ot">chi-squared distribution</span><span class="co">](https://en.wikipedia.org/wiki/Chi-squared_distribution)</span> $\chi^2_N$, we have </span>
+<span id="cb1-586"><a href="#cb1-586" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-587"><a href="#cb1-587" aria-hidden="true" tabindex="-1"></a>$$r^2 = \|x\|^2 \sim \chi^2_N \approx \mathcal(N, 2N)$$</span>
 <span id="cb1-588"><a href="#cb1-588" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-589"><a href="#cb1-589" aria-hidden="true" tabindex="-1"></a>The last equation is again dominated by the stationary point. This would give us</span>
+<span id="cb1-589"><a href="#cb1-589" aria-hidden="true" tabindex="-1"></a>When $N$ is large, we can write $r^2 \approx N + \sqrt{2N} z$ where $z \sim \mathcal(0, 1)$, so $r \approx \sqrt N + 2^{-1/2}z$. Therefore, the amount of radial displacement is roughly constant, and we have</span>
 <span id="cb1-590"><a href="#cb1-590" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-591"><a href="#cb1-591" aria-hidden="true" tabindex="-1"></a>$$=_{\ln}\mathrm{stat}_{q\in \mathbb C^m} e^{N(-\braket{q, m} + \ln \E_x<span class="co">[</span><span class="ot">e^{\braket{q, M}}</span><span class="co">]</span>)}$$</span>
-<span id="cb1-592"><a href="#cb1-592" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-593"><a href="#cb1-593" aria-hidden="true" tabindex="-1"></a>We still don't know *which* stationary point we should pick. However, in large deviation theory, we usually pick the global minimum, and most often, the global minimum is the unique stationary point in the real space. Assuming that, we have</span>
+<span id="cb1-591"><a href="#cb1-591" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-592"><a href="#cb1-592" aria-hidden="true" tabindex="-1"></a>\mathrm{Ent}\mathcal N(0, I_N) \approx \ln |S^{N-1}(\sqrt N)| + \mathrm{Ent}\mathcal N(0, 1/2)</span>
+<span id="cb1-593"><a href="#cb1-593" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-594"><a href="#cb1-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-595"><a href="#cb1-595" aria-hidden="true" tabindex="-1"></a>$$\frac 1N \ln Pr\left(\frac 1N \sum_{i=1}^N M(x_i)\right) \to -\sup_{q\in \mathbb R^m} (\braket{q, m} - \ln \E_x<span class="co">[</span><span class="ot">e^{\braket{q, M}}</span><span class="co">]</span>)$$ </span>
+<span id="cb1-595"><a href="#cb1-595" aria-hidden="true" tabindex="-1"></a>giving us the second term in the Stirling approximation:</span>
 <span id="cb1-596"><a href="#cb1-596" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-597"><a href="#cb1-597" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-597"><a href="#cb1-597" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-598"><a href="#cb1-598" aria-hidden="true" tabindex="-1"></a>\frac 1N \ln |S^{N-1}(\sqrt N)| = \ln\sqrt{2\pi e} + \frac{\ln\sqrt{\pi e}}{N} + O(N^{-2})</span>
+<span id="cb1-599"><a href="#cb1-599" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-600"><a href="#cb1-600" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-601"><a href="#cb1-601" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-602"><a href="#cb1-602" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-603"><a href="#cb1-603" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cramér's theorem</span></span>
+<span id="cb1-604"><a href="#cb1-604" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-605"><a href="#cb1-605" aria-hidden="true" tabindex="-1"></a>The most commonly used result from large deviation theory is Cramér's theorem <span class="co">[</span><span class="ot">@demboLargeDeviationsTechniques2009, theorem 2.2.30</span><span class="co">]</span>.</span>
+<span id="cb1-606"><a href="#cb1-606" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-607"><a href="#cb1-607" aria-hidden="true" tabindex="-1"></a>::: {#thm-cramer}</span>
+<span id="cb1-608"><a href="#cb1-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-609"><a href="#cb1-609" aria-hidden="true" tabindex="-1"></a><span class="fu"># Cramér</span></span>
+<span id="cb1-610"><a href="#cb1-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-611"><a href="#cb1-611" aria-hidden="true" tabindex="-1"></a>Given a vector function $M: X \to \R^m$ and a distribution on $X$, its rate function is the convex transform of its cumulant generating function:</span>
+<span id="cb1-612"><a href="#cb1-612" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-613"><a href="#cb1-613" aria-hidden="true" tabindex="-1"></a>$$I_X(x) := \sup_{k \in \R^m}(\braket{k,x} - \ln \E_x<span class="co">[</span><span class="ot">e^{\braket{k, M(x)}}</span><span class="co">]</span>)$$</span>
+<span id="cb1-614"><a href="#cb1-614" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-615"><a href="#cb1-615" aria-hidden="true" tabindex="-1"></a>That is, for any compact subset $A \subset \R^m$, the rate function over the whole subset is just the highest possible rate:</span>
+<span id="cb1-616"><a href="#cb1-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-617"><a href="#cb1-617" aria-hidden="true" tabindex="-1"></a>$$\lim_N\frac 1N \ln Pr\left(\frac 1N \sum_{i=1}^N M(x_i) \in A\right) = \sup_{x\in A} -I_X(x)$$</span>
+<span id="cb1-618"><a href="#cb1-618" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-619"><a href="#cb1-619" aria-hidden="true" tabindex="-1"></a>where $x_1, ..., x_N$ are IID samples from the same distribution.</span>
+<span id="cb1-620"><a href="#cb1-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-621"><a href="#cb1-621" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-622"><a href="#cb1-622" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-623"><a href="#cb1-623" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Proof" collapse="true"}</span>
+<span id="cb1-624"><a href="#cb1-624" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-625"><a href="#cb1-625" aria-hidden="true" tabindex="-1"></a>It suffices to prove it for $A$ being really small, essentially just a single point, because we can then cut up the whole of $A$ into many pieces like that, and then run the result on each piece. The rate difference is such that only the highest rate can survive, as it races pass every other piece exponentially fast: $N^{-1} \ln (e^{-Na} + e^{-Nb}) \to \max(-a, -b)$, and even if two pieces have the exact same rate, then their combined rate gains a negligible factor of $N^{-1}\ln 2 \to 0$.</span>
+<span id="cb1-626"><a href="#cb1-626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-627"><a href="#cb1-627" aria-hidden="true" tabindex="-1"></a>So, we once again repeat the same calculation:</span>
+<span id="cb1-628"><a href="#cb1-628" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-629"><a href="#cb1-629" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-630"><a href="#cb1-630" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-631"><a href="#cb1-631" aria-hidden="true" tabindex="-1"></a>Pr\left(\frac 1N \sum_{i=1}^N M(x_i) =_\epsilon m\right) &amp;=_{\ln}  \E_x \left<span class="co">[</span><span class="ot">\delta^{(m)}\left(\sum_i M(x_i) - Nm\right)\right</span><span class="co">]</span> &amp; \text{ only $m$ terms in the Dirac delta}<span class="sc">\\</span></span>
+<span id="cb1-632"><a href="#cb1-632" aria-hidden="true" tabindex="-1"></a>&amp;=   \E_x \left<span class="co">[</span><span class="ot">\int_{\R^m} dq e^{i\braket{iq, \sum_i M(x_i) - Nm}}\right</span><span class="co">]</span>  &amp; \text{Dirac delta Fourier transform} <span class="sc">\\</span></span>
+<span id="cb1-633"><a href="#cb1-633" aria-hidden="true" tabindex="-1"></a>&amp;= \int_{\R^m} dq e^{-N \braket{iq, m}}\E_x<span class="co">[</span><span class="ot">e^{\braket{iq, M}}</span><span class="co">]</span>^N&amp; \text{IID assumption} <span class="sc">\\</span></span>
+<span id="cb1-634"><a href="#cb1-634" aria-hidden="true" tabindex="-1"></a>&amp;= \int_{\R^m}dq e^{N(-\braket{iq, m} + \ln \E_x<span class="co">[</span><span class="ot">e^{\braket{iq, M}}</span><span class="co">]</span>)}</span>
+<span id="cb1-635"><a href="#cb1-635" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-636"><a href="#cb1-636" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-637"><a href="#cb1-637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-638"><a href="#cb1-638" aria-hidden="true" tabindex="-1"></a>The last equation is again dominated by the stationary point. This would give us</span>
+<span id="cb1-639"><a href="#cb1-639" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-640"><a href="#cb1-640" aria-hidden="true" tabindex="-1"></a>$$=_{\ln}\mathrm{stat}_{q\in \mathbb C^m} e^{N(-\braket{q, m} + \ln \E_x<span class="co">[</span><span class="ot">e^{\braket{q, M}}</span><span class="co">]</span>)}$$</span>
+<span id="cb1-641"><a href="#cb1-641" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-642"><a href="#cb1-642" aria-hidden="true" tabindex="-1"></a>We still don't know *which* stationary point we should pick. However, in large deviation theory, we usually pick the global minimum, and most often, the global minimum is the unique stationary point in the real space. Assuming that, we have</span>
+<span id="cb1-643"><a href="#cb1-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-644"><a href="#cb1-644" aria-hidden="true" tabindex="-1"></a>$$\frac 1N \ln Pr\left(\frac 1N \sum_{i=1}^N M(x_i)\right) \to -\sup_{q\in \mathbb R^m} (\braket{q, m} - \ln \E_x<span class="co">[</span><span class="ot">e^{\braket{q, M}}</span><span class="co">]</span>)$$ </span>
+<span id="cb1-645"><a href="#cb1-645" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-646"><a href="#cb1-646" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
