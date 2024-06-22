@@ -912,10 +912,10 @@ Probabilistic interpretation
 <div class="callout-body-container callout-body">
 <p>As is well-known, in high-dimensions, everything looks like a gaussian. Specifically, the standard gaussian distribution <span class="math inline">\(\mathcal N(0, I_N)\)</span> in <span class="math inline">\(\mathbb{R}^N\)</span> space is strongly concentrated around the spherical shell of radius <span class="math inline">\(\sqrt N\)</span>, by the law of large numbers. Therefore, the log-surface area of <span class="math inline">\(S^{N-1}(\sqrt N)\)</span> converges to the entropy of the <span class="math inline">\(\mathcal N(0, I_N)\)</span>, which is just <span class="math inline">\(N\)</span> times the entropy of <span class="math inline">\(\mathcal N(0, 1)\)</span>.</p>
 <p>In more detail, we can sample from <span class="math inline">\(\mathcal N(0, I_N)\)</span> in two ways: Either directly sample <span class="math inline">\(N\)</span> standard normal variables independently, or sample a point on <span class="math inline">\(S^{N-1}(\sqrt N)\)</span>, before shifting it along the radius by an independently sampled displacement. Both ways give us exactly the same entropy. Now, because the radius of <span class="math inline">\(x \sim \mathcal N(0, I_N)\)</span> is distributed as the square-root of the <a href="https://en.wikipedia.org/wiki/Chi-squared_distribution">chi-squared distribution</a> <span class="math inline">\(\chi^2_N\)</span>, we have</p>
-<p><span class="math display">\[r^2 = \|x\|^2 \sim \chi^2_N \approx \mathcal(N, 2N)\]</span></p>
+<p><span class="math display">\[r^2 = \|x\|^2 \sim \chi^2_N \approx \mathcal N(N, 2N)\]</span></p>
 <p>When <span class="math inline">\(N\)</span> is large, we can write <span class="math inline">\(r^2 \approx N + \sqrt{2N} z\)</span> where <span class="math inline">\(z \sim \mathcal(0, 1)\)</span>, so <span class="math inline">\(r \approx \sqrt N + 2^{-1/2}z\)</span>. Therefore, the amount of radial displacement is roughly constant, and we have</p>
 <p><span class="math display">\[
-\mathrm{Ent}\mathcal N(0, I_N) \approx \ln |S^{N-1}(\sqrt N)| + \mathrm{Ent}\mathcal N(0, 1/2)
+\mathrm{Ent}[\mathcal N(0, I_N)] \approx \ln |S^{N-1}(\sqrt N)| + \mathrm{Ent}[\mathcal N(0, 1/2)]
 \]</span></p>
 <p>giving us the second term in the Stirling approximation:</p>
 <p><span class="math display">\[
@@ -2180,12 +2180,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-584"><a href="#cb1-584" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-585"><a href="#cb1-585" aria-hidden="true" tabindex="-1"></a>In more detail, we can sample from $\mathcal N(0, I_N)$ in two ways: Either directly sample $N$ standard normal variables independently, or sample a point on $S^{N-1}(\sqrt N)$, before shifting it along the radius by an independently sampled displacement. Both ways give us exactly the same entropy. Now, because the radius of $x \sim \mathcal N(0, I_N)$ is distributed as the square-root of the <span class="co">[</span><span class="ot">chi-squared distribution</span><span class="co">](https://en.wikipedia.org/wiki/Chi-squared_distribution)</span> $\chi^2_N$, we have </span>
 <span id="cb1-586"><a href="#cb1-586" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-587"><a href="#cb1-587" aria-hidden="true" tabindex="-1"></a>$$r^2 = \|x\|^2 \sim \chi^2_N \approx \mathcal(N, 2N)$$</span>
+<span id="cb1-587"><a href="#cb1-587" aria-hidden="true" tabindex="-1"></a>$$r^2 = \|x\|^2 \sim \chi^2_N \approx \mathcal N(N, 2N)$$</span>
 <span id="cb1-588"><a href="#cb1-588" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-589"><a href="#cb1-589" aria-hidden="true" tabindex="-1"></a>When $N$ is large, we can write $r^2 \approx N + \sqrt{2N} z$ where $z \sim \mathcal(0, 1)$, so $r \approx \sqrt N + 2^{-1/2}z$. Therefore, the amount of radial displacement is roughly constant, and we have</span>
 <span id="cb1-590"><a href="#cb1-590" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-591"><a href="#cb1-591" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-592"><a href="#cb1-592" aria-hidden="true" tabindex="-1"></a>\mathrm{Ent}\mathcal N(0, I_N) \approx \ln |S^{N-1}(\sqrt N)| + \mathrm{Ent}\mathcal N(0, 1/2)</span>
+<span id="cb1-592"><a href="#cb1-592" aria-hidden="true" tabindex="-1"></a>\mathrm{Ent}<span class="co">[</span><span class="ot">\mathcal N(0, I_N)</span><span class="co">]</span> \approx \ln |S^{N-1}(\sqrt N)| + \mathrm{Ent}<span class="co">[</span><span class="ot">\mathcal N(0, 1/2)</span><span class="co">]</span></span>
 <span id="cb1-593"><a href="#cb1-593" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb1-594"><a href="#cb1-594" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-595"><a href="#cb1-595" aria-hidden="true" tabindex="-1"></a>giving us the second term in the Stirling approximation:</span>
