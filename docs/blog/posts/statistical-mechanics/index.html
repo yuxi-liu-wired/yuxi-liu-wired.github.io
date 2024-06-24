@@ -237,7 +237,7 @@ window.Quarto = {
   <li><a href="#max-ent-statistical-mechanics" id="toc-max-ent-statistical-mechanics" class="nav-link" data-scroll-target="#max-ent-statistical-mechanics">Max-ent statistical mechanics</a></li>
   <li><a href="#using-the-partition-function" id="toc-using-the-partition-function" class="nav-link" data-scroll-target="#using-the-partition-function">Using the partition function</a></li>
   <li><a href="#free-entropies" id="toc-free-entropies" class="nav-link" data-scroll-target="#free-entropies">Free entropies</a></li>
-  <li><a href="#conditional-entropies" id="toc-conditional-entropies" class="nav-link" data-scroll-target="#conditional-entropies">conditional entropies</a></li>
+  <li><a href="#conditional-entropies" id="toc-conditional-entropies" class="nav-link" data-scroll-target="#conditional-entropies">Conditional entropies</a></li>
   <li><a href="#fluctuation-relations" id="toc-fluctuation-relations" class="nav-link" data-scroll-target="#fluctuation-relations">Fluctuation relations</a>
   <ul class="collapse">
   <li><a href="#fluctuation-of-observables" id="toc-fluctuation-of-observables" class="nav-link" data-scroll-target="#fluctuation-of-observables">Fluctuation of observables</a></li>
@@ -248,6 +248,8 @@ window.Quarto = {
   <li><a href="#markov-chains" id="toc-markov-chains" class="nav-link" data-scroll-target="#markov-chains">Markov chains</a></li>
   <li><a href="#diffusion" id="toc-diffusion" class="nav-link" data-scroll-target="#diffusion">diffusion</a></li>
   <li><a href="#fluctuation-dissipation-relations" id="toc-fluctuation-dissipation-relations" class="nav-link" data-scroll-target="#fluctuation-dissipation-relations">Fluctuation-dissipation relations</a></li>
+  <li><a href="#equality-before-the-law" id="toc-equality-before-the-law" class="nav-link" data-scroll-target="#equality-before-the-law">Equality before the law</a></li>
+  <li><a href="#one-dimensional-fdr" id="toc-one-dimensional-fdr" class="nav-link" data-scroll-target="#one-dimensional-fdr">One-dimensional FDR</a></li>
   </ul></li>
   <li><a href="#crooks-fluctuation-theorem" id="toc-crooks-fluctuation-theorem" class="nav-link" data-scroll-target="#crooks-fluctuation-theorem">Crooks fluctuation theorem</a>
   <ul class="collapse">
@@ -287,7 +289,6 @@ window.Quarto = {
 <section id="max-ent-statistical-mechanics" class="level2">
 <h2 class="anchored" data-anchor-id="max-ent-statistical-mechanics">Max-ent statistical mechanics</h2>
 <p>The idea of Gibbsian statistical mechanics is to study the evolution of an entire probability distribution over all possible states.</p>
-<p>SETUP.</p>
 <p>We have a state space <span class="math inline">\(X\)</span>, which by default is the phase space.</p>
 <p>We study probability distributions (ensembles) over the state space.</p>
 <p>The entropy of a probability distribution <span class="math inline">\(\rho\)</span> is <span class="math display">\[S[\rho] := -\int dx\; \rho(x) \ln \rho(x)\]</span></p>
@@ -458,7 +459,6 @@ Tip
 <h2 class="anchored" data-anchor-id="free-entropies">Free entropies</h2>
 <p>In the above, the only constraint we have imposed is constant energy, yielding the microcanonical ensemble. We can allow more constraints, yielding the fully general Gibbsian statistical mechanics.</p>
 <p>A common trick in statistical mechanics is to characterize the same equilibrium in many different perspectives. For example, the canonical ensemble has three characterizations at least.</p>
-<p>SETUP.</p>
 <p>We have a state space <span class="math inline">\(X\)</span>, and probability distributions <span class="math inline">\(\rho\)</span> over <span class="math inline">\(X\)</span>.</p>
 <p>Macroscopic observables <span class="math inline">\(A, B, C, \dots\)</span> are functions of type <span class="math inline">\(X \to \mathbb{R}\)</span>.</p>
 <p>A constraint can be an equality or inequality on observables. For example, if we have a tube of jelly in a box of volume <span class="math inline">\(10\)</span>, then the constraint is <span class="math inline">\(0 \leq V(x) \leq 10\)</span>.</p>
@@ -501,9 +501,9 @@ Tip
 </div>
 </section>
 <section id="conditional-entropies" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="conditional-entropies">conditional entropies</h2>
-<div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2 (conditional entropy)</strong></span> Given any random variable <span class="math inline">\(X\)</span>, and an “observable” variable <span class="math inline">\(Y\)</span> that is determined by <span class="math inline">\(X\)</span>, if <span class="math inline">\(X\)</span> is the maximal entropy distribution under constraint with entropy <span class="math inline">\(S_X^*\)</span>, then the observable <span class="math inline">\(Y\)</span> follows a Boltzmann distribution, as <span class="math display">\[\rho_Y^*(y) = e^{S_{X|y}^* - S_X^*}\]</span></p>
+<h2 class="anchored" data-anchor-id="conditional-entropies">Conditional entropies</h2>
+<div id="thm-cond-ent" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (Conditional entropy)</strong></span> Given any random variable <span class="math inline">\(X\)</span>, and an “observable” variable <span class="math inline">\(Y\)</span> that is determined by <span class="math inline">\(X\)</span>, if <span class="math inline">\(X\)</span> is the maximal entropy distribution under constraint with entropy <span class="math inline">\(S_X^*\)</span>, then the observable <span class="math inline">\(Y\)</span> follows a Boltzmann distribution, as <span class="math display">\[\rho_Y^*(y) = e^{S_{X|y}^* - S_X^*}\]</span></p>
 <p>where <span class="math inline">\(S_{X|y}^*\)</span> is the maximal entropy for <span class="math inline">\(X\)</span> conditional on the same constraints, plus the constraint that <span class="math inline">\(Y = y\)</span>.</p>
 <p>Furthermore, <span class="math display">\[e^{S_X^*} = \int dy\; e^{S_{X|y}^*}\]</span></p>
 </div>
@@ -575,7 +575,6 @@ Tip
 (\partial_{E_i} S_i)_{A_i} = \beta
 \]</span></p>
 <p>for some number <span class="math inline">\(\beta\)</span>. This is the zeroth law of thermodynamics.</p>
-<p>DER.</p>
 <p>However, we are in statistical mechanics, so the compound system actually does not stay exactly at the optimal point. Instead, the energy levels fluctuate.</p>
 <p>Let us write the fluctuation vector as</p>
 <p><span class="math display">\[Y = (\Delta E_1, \dots, \Delta E_n)\]</span></p>
@@ -605,7 +604,6 @@ Tip
 <p>In general, maximal caliber statistical mechanics is like maximal entropy statistical mechanics. You write down a formula for path-space entropy, and a constraint on allowed paths. Maximize the entropy under constraint, and you would obtain a Boltzmann distribution in path space.</p>
 <section id="markov-chains" class="level3">
 <h3 class="anchored" data-anchor-id="markov-chains">Markov chains</h3>
-<p>SETUP.</p>
 <p><span class="math inline">\(N\)</span> timesteps in total.</p>
 <p><span class="math inline">\(s_t\)</span> is the state of timestep <span class="math inline">\(t\)</span>.</p>
 <p>There are <span class="math inline">\(m\)</span> states in total.</p>
@@ -675,25 +673,66 @@ S = S[x_0] + E[S[x_1 | x_0]] + E[S[x_2 | x_{0:1}]] + \dots + E[S[x_N | x_{0:N-1}
 </section>
 <section id="fluctuation-dissipation-relations" class="level3">
 <h3 class="anchored" data-anchor-id="fluctuation-dissipation-relations">Fluctuation-dissipation relations</h3>
-<p>Imagine if you have a weird liquid. You put a piece of pollen into it, and watch it undergo Brownian motion. Now I flip a switch and suddenly all friction disappears from the liquid. What would happen? The pollen is still being hit by random pieces of molecules, so its velocity is still getting pushed this and that way. However, without friction, the velocity at time <span class="math inline">\(t\)</span> is now obtained by integrating all past impulses, with no dissipation whatsoever. Consequently, its velocity undergoes a random walk, and its position undergoes <span class="math inline">\(\int_0^t W_s ds\)</span>, This is very different from what we actually observe, which is that its position undergoes a random walk, not a time-integral of it.</p>
-<p>In order to reproduce the actual observed behavior, each fluctuation of its velocity must be quickly dissipated by friction, in a perfect balance such that <span class="math inline">\(\frac 12 m \braket{v^2} = k_BT\)</span> exactly. This perfect conspiracy is the fluctuation-dissipation theorem.</p>
-<p>SETUP. Now we set up a one-dimensional fluctuation-dissipation problem.</p>
-<p>We have a particle in a sticky fluid, moving on the number line. The particle starts at <span class="math inline">\(x = 0, t = 0\)</span>, and at each time-step of <span class="math inline">\(\Delta t\)</span>, it moves by <span class="math inline">\(\Delta x\)</span> to the left or the right. We define <span class="math inline">\(D = \frac{\Delta x^2}{\Delta t}\)</span> to be the “diffusion constant”.</p>
+<p>Imagine if you have a weird liquid. You put a piece of pollen into it, and watch it undergo Brownian motion. Now I flip a switch and suddenly all friction disappears from the liquid. What would happen? The pollen is still being hit by random pieces of molecules, so its velocity is still getting pushed this and that way. However, without friction, the velocity at time <span class="math inline">\(t\)</span> is now obtained by integrating all past impulses, with no dissipation whatsoever. Consequently, its velocity undergoes a random walk, and its position undergoes <span class="math inline">\(\int_0^t W_s ds\)</span>. This is very different from what we actually observe, which is that its position undergoes a random walk, not a time-integral of it.</p>
+<p>In order to reproduce the actual observed behavior, each fluctuation of its velocity must be quickly dissipated by friction, in a perfect balance such that <span class="math inline">\(\frac 12 m \braket{v^2} = k_BT\)</span> exactly. This perfect conspiracy is the fluctuation-dissipation relation (FDR), or rather, the <em>family</em> of FDRs, because there have been so many of those.</p>
+<p>Each FDR is a mathematical equation of form</p>
+<p><span class="math display">\[
+\text{something about fluctuation} = \text{something about dissipation}
+\]</span></p>
+<p>The prototypical FDR is the <a href="https://en.wikipedia.org/wiki/Einstein_relation_(kinetic_theory)">Einstein relation</a>, to be derived below:</p>
+<p><span class="math display">\[
+\underbrace{(\beta D)^{-1}}_{\text{fluctuation}} = \underbrace{\gamma}_{\text{dissipation}}
+\]</span></p>
+<p>where the left side can be interpreted as the strength of molecular noise, and the right side as the strength of molecular damping.</p>
+</section>
+<section id="equality-before-the-law" class="level3">
+<h3 class="anchored" data-anchor-id="equality-before-the-law">Equality before the law</h3>
+<p>Why should there be a mathematical relation between fluctuation and dissipation? I think the deep reason is “equality before the second law”.</p>
+<p>If we pause and think about it, then isn’t it strange that, despite the molecular storm happening within a placid cup of water, it does not actually fall out of equilibrium? That, despite every molecule of water rushing this way and that, the cup of water as a whole continues to stay without a ripple? What is this second law, the invisible hand pushing it towards statistical equilibrium and keeping it stable? And that is not a question I’m going to answer here. Perhaps calling it an “invisible hand” is already a bad metaphor. Nevertheless, the second law requires the stability of equilibrium distributions (if equilibria exist).</p>
+<p>Now, a system in a statistical equilibrium would, once in a while, deviate significantly from the maximally likely state, just like how we might occasionally flip 10 heads in a row. Nevertheless, if the second law is to be upheld, then significant deviations must be pushed back. In other words, fluctuation is dissipated.</p>
+<p>Assuming that in equilibrium, the system is undergoing a random walk, then by the theory of random walks, internally generated fluctuation must be dissipated according to a mathematical law. The law does not need any further input from physics. Indeed, it has no dependence on any physical observations, and belongs to the pure mathematical theory of random walks.</p>
+<p>For example, a little pollen in a dish of water might occasionally have a large momentum, but it is very rare. Because it is rare, if we do observe it, we can predict that the next time we look at a pollen, it would have a much lower momentum.</p>
+<p>Now, when physicists use the word “dissipation”, they mean the restoring effect of a system under <em>external</em> dissipation, such as pulling on a pollen by an electrostatic field. However, physical laws are equal, so internal dissipation is external dissipation.</p>
+<p>Thus, we see that each FDR manifests as an “equality before the law”:</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\text{fluctuation} \\
+\underbrace{=}_{\text{random walk theory}} &amp;\text{dissipation (of internal fluctuations)} \\
+\underbrace{=}_{\text{equality before the law}} &amp;\text{dissipation (of external fluctuations)}
+\end{aligned}
+\]</span></p>
+</section>
+<section id="one-dimensional-fdr" class="level3">
+<h3 class="anchored" data-anchor-id="one-dimensional-fdr">One-dimensional FDR</h3>
+<p>Consider a simple model of Brownian motion. We have a particle in a sticky fluid, moving on a line. The particle starts at <span class="math inline">\(x = 0, t = 0\)</span>, and at each time-step of <span class="math inline">\(\Delta t\)</span>, it moves by <span class="math inline">\(\Delta x\)</span> to the left or the right.</p>
 <p>The fluid is at temperature <span class="math inline">\(\beta^{-1}\)</span>, and we pull on the particle at constant force <span class="math inline">\(F\)</span>. We expect that <span class="math inline">\(F = \gamma \braket{v}\)</span>, where <span class="math inline">\(v\)</span> is the ensemble-average velocity of the particle, and <span class="math inline">\(\gamma\)</span> is the viscosity constant.</p>
 <p>Now, we let the particle move for a time <span class="math inline">\(t = N\Delta t\)</span>, where <span class="math inline">\(N\)</span> is a large number. The particle would have arrived at some point <span class="math inline">\(x\)</span>, which is a random variable. The particle’s time-averaged velocity is <span class="math inline">\(v = x/t\)</span>.</p>
-<p>DER.</p>
 <p>The number of possible paths that connect <span class="math inline">\((0, 0)\)</span> with <span class="math inline">\((t, x)\)</span> is <span class="math inline">\(\binom{N}{\frac N2 - \frac{x}{2\Delta x}}\)</span>, therefore, the path-space entropy is</p>
-<p><span class="math display">\[S_{path} = \ln \binom{N}{\frac N2 - \frac{x}{2\Delta x}}\]</span></p>
+<p><span class="math display">\[S_{path} = \ln \binom{N}{\frac N2 - \frac{x}{2\Delta x}} \approx N \left(\ln 2 - \left(\frac{x}{N\Delta x}\right)^2\right)\]</span></p>
+<p>where the approximation is either by Stirling’s approximation, or the binary entropy function.</p>
 <p>Because the external force performs work <span class="math inline">\(Fx\)</span>, which is dissipated into the sticky liquid at temperature <span class="math inline">\(\beta\)</span>, we also have</p>
-<p><span class="math display">\[S_{work} = \beta Fx\]</span></p>
+<p><span class="math display">\[S_{work} = \beta F x\]</span></p>
 <p>Because <span class="math inline">\(N\)</span> is large, <span class="math inline">\(\braket{x}\)</span> should be highly concentrated around the point of maximal entropy. That is, we should have</p>
 <p><span class="math display">\[
 \braket{x} \approx \mathop{\mathrm{argmax}}_x (S_{path} + S_{work})
 \]</span></p>
-<p>Notice how this is the exact same problem as the case where we have a rubber band. By routine calculation, this simplifies to</p>
-<p><span class="math display">\[\braket{x} = \beta FN(\Delta x)^2\]</span></p>
-<p>which gives us, after further simplification, the Einstein relation:</p>
+<p>Notice how this is the exact same problem as the case where we have a rubber band.</p>
+<p>The equation on the right is quadratic in <span class="math inline">\(\braket{x}\)</span>, and achieves maximum at <span class="math inline">\(2\braket{x} = \beta FN(\Delta x)^2\)</span>, which simplifies to the Einstein relation</p>
 <p><span class="math display">\[\beta D \gamma = 1\]</span></p>
+<p>where <span class="math inline">\(D = \frac{\Delta x^2}{2\Delta t}\)</span> is the diffusion coefficient.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We can calculate not just the mean <span class="math inline">\(\braket{x}\)</span>, but also its variance <span class="math inline">\(\braket{x^2}\)</span> if we expand <span class="math inline">\(S_{path} + S_{work}\)</span> to second order around its maximum, then apply <a href="#thm-cond-ent" class="quarto-xref">Theorem&nbsp;2</a>.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="crooks-fluctuation-theorem" class="level2 page-columns page-full">
@@ -869,7 +908,7 @@ equilibrium Helmholtz
 </div>
 <section id="worked-example-bouncing-ball" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="worked-example-bouncing-ball">Worked example: bouncing ball</h3>
-<p>This example is from <span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021</a>, exercise 4.8)</span>, which itself derives from <span class="citation" data-cites="luaPracticalApplicabilityJarzynski2005">(<a href="#ref-luaPracticalApplicabilityJarzynski2005" role="doc-biblioref">Lua and Grosberg 2005</a>)</span>. See also <span class="citation" data-cites="hijarJarzynskiEqualityIllustrated2010">(<a href="#ref-hijarJarzynskiEqualityIllustrated2010" role="doc-biblioref">Híjar and de Zárate 2010</a>)</span> for another solved example, of a chest expander with mass points stuck in the middle of the springs. You might need to read my post on <a href="https://yuxi-liu-wired.github.io/sketches/posts/field-theory-how-to/">field-theoretic calculations</a> before attempting that example.</p>
+<p>This example is from <span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021</a>, exercise 4.8)</span>, which itself derives from <span class="citation" data-cites="luaPracticalApplicabilityJarzynski2005">(<a href="#ref-luaPracticalApplicabilityJarzynski2005" role="doc-biblioref">Lua and Grosberg 2005</a>)</span>. See also <span class="citation" data-cites="hijarJarzynskiEqualityIllustrated2010">(<a href="#ref-hijarJarzynskiEqualityIllustrated2010" role="doc-biblioref">Híjar and de Zárate 2010</a>)</span> for another solved example, of a chest expander with mass points stuck in the middle of the springs. You might need to read my tutorial on <a href="https://yuxi-liu-wired.github.io/sketches/posts/field-theory-how-to/">field-theoretic calculations</a> before attempting that example.</p>
 <p>We have a one-dimensional system, of a single ball bounding between two walls of a piston. The only control we have is that we can move one of the piston heads. At the start, the piston has length <span class="math inline">\(L\)</span>, and the system is in thermal equilibrium at inverse temperature <span class="math inline">\(\beta\)</span>. We plunge the piston head at velocity <span class="math inline">\(v\)</span> for time <span class="math inline">\(\Delta L / v\)</span>, then immediately reverse it, taking another <span class="math inline">\(\Delta L / v\)</span>. We explicitly calculate that <span class="math inline">\(\braket{e^{-\beta W}} = 1\)</span>.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -939,17 +978,15 @@ Note
 <p>It is more familiarly written as <span class="math display">\[\mu = D\beta\]</span></p>
 <p>where <span class="math inline">\(D = \frac 12 \sigma_W^2\)</span> is the fluctuation coefficient, and <span class="math inline">\(\mu = (\braket{W} - \Delta F^*)\)</span> is the dissipation coefficient.</p>
 </div>
+<p>For periodic forcing, the CFT has a simpler form.</p>
+<p>Consider a time-reversible dynamical system immersed in an energy bath with inverse temperature <span class="math inline">\(\beta\)</span> , driven by periodically varying constraints. For example, a pendulum in a sticky fluid subjected to a periodic driving torque, or a water-cooled electric circuit driven by a periodic voltage.</p>
+<p>Such a system will settle into a “dynamical equilibrium” ensemble, much like a canonical ensemble. If it is driven by the same process time-reversed, then, it will settle into another dynamical equilibrium ensemble.</p>
 <div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 9 (Gallavotti–Cohen fluctuation theorem)</strong></span> A system in an energy bath, and driven by periodically varying its constraints (such as a pendulum in a sticky fluid subjected to a driving force), will settle into a “dynamical equilibrium” ensemble, much like a canonical ensemble.</p>
-<p>If it is driven by the same process time-reversed, then, it will settle into another dynamical equilibrium ensemble.</p>
-<p><span class="math display">\[\frac{\rho(S)}{\rho'(-S)} = e^{S}\]</span></p>
-<p>where <span class="math inline">\(\rho(S)\)</span> is the probability density for a forward cycle producing entropy <span class="math inline">\(S\)</span>, and <span class="math inline">\(\rho'(S)\)</span> is for the backward cycle.</p>
-<p>More generally, since at the dynamical equilibrium, the system’s microstates are changing as a Markov chain, we have <span class="math inline">\(\rho(i \to j)\)</span>, which are basically <span class="math display">\[\frac{\rho(i\to j)}{\rho'(j \to i)} = e^{S[i \to j]}\]</span></p>
-<p>where <span class="math inline">\(i, j\)</span> are microstates.</p>
+<p><span class="theorem-title"><strong>Theorem 9 (Gallavotti–Cohen fluctuation theorem)</strong></span> <span class="math display">\[\frac{\rho(Q)}{\rho'(-Q)} = e^{\beta Q}\]</span></p>
+<p>where <span class="math inline">\(\rho(Q)\)</span> is the probability density that a forward cycle, randomly sampled from the dynamical equilibrium ensemble, emits energy <span class="math inline">\(Q\)</span> into the energy bath. Similarly, <span class="math inline">\(\rho'\)</span> is for the backward cycle.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>(sketch)</p>
-<p>Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for <span class="math inline">\(NT\)</span> time where <span class="math inline">\(N\)</span> is a large integer, then remove the driving. At the <span class="math inline">\(N\to\infty\)</span> limit, the CFT reduces to the theorem.</p>
+<p><span class="proof-title"><em>Proof</em>. </span>Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for <span class="math inline">\(NT\)</span> time where <span class="math inline">\(N\)</span> is a large integer, then remove the driving. At the <span class="math inline">\(N\to\infty\)</span> limit, the CFT reduces to the result.</p>
 </div>
 </section>
 <section id="arrow-of-time" class="level3">

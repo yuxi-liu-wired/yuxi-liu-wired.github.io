@@ -30,7 +30,6 @@ importance: 7
 
 The idea of Gibbsian statistical mechanics is to study the evolution of an entire probability distribution over all possible states.
 
-SETUP.
 
 We have a state space $X$, which by default is the phase space.
 
@@ -303,7 +302,6 @@ In the above, the only constraint we have imposed is constant energy, yielding t
 
 A common trick in statistical mechanics is to characterize the same equilibrium in many different perspectives. For example, the canonical ensemble has three characterizations at least.
 
-SETUP.
 
 We have a state space $X$, and probability distributions $\rho$ over $X$.
 
@@ -368,11 +366,11 @@ $$
 
 :::
 
-## conditional entropies
+## Conditional entropies
 
-::: {#thm-todo}
+::: {#thm-cond-ent}
 
-## conditional entropy
+## Conditional entropy
 
 Given any random variable $X$, and an "observable" variable $Y$ that is determined by $X$, if $X$ is the maximal entropy distribution under constraint with entropy $S_X^*$, then the observable $Y$ follows a Boltzmann distribution, as
 $$\rho_Y^*(y) = e^{S_{X|y}^* - S_X^*}$$
@@ -505,7 +503,6 @@ $$
 
 for some number $\beta$. This is the zeroth law of thermodynamics.  
 
-DER.
 
 However, we are in statistical mechanics, so the compound system actually does not stay exactly at the optimal point. Instead, the energy levels fluctuate.
 
@@ -554,7 +551,6 @@ In general, maximal caliber statistical mechanics is like maximal entropy statis
 
 ### Markov chains
 
-SETUP.
 
 $N$ timesteps in total.
 
@@ -672,27 +668,65 @@ Other results, such as the Green-Kubo relation, the Onsager reciprocal relations
 
 ### Fluctuation-dissipation relations
 
-Imagine if you have a weird liquid. You put a piece of pollen into it, and watch it undergo Brownian motion. Now I flip a switch and suddenly all friction disappears from the liquid. What would happen? The pollen is still being hit by random pieces of molecules, so its velocity is still getting pushed this and that way. However, without friction, the velocity at time $t$ is now obtained by integrating all past impulses, with no dissipation whatsoever. Consequently, its velocity undergoes a random walk, and its position undergoes $\int_0^t W_s ds$, This is very different from what we actually observe, which is that its position undergoes a random walk, not a time-integral of it.
+Imagine if you have a weird liquid. You put a piece of pollen into it, and watch it undergo Brownian motion. Now I flip a switch and suddenly all friction disappears from the liquid. What would happen? The pollen is still being hit by random pieces of molecules, so its velocity is still getting pushed this and that way. However, without friction, the velocity at time $t$ is now obtained by integrating all past impulses, with no dissipation whatsoever. Consequently, its velocity undergoes a random walk, and its position undergoes $\int_0^t W_s ds$. This is very different from what we actually observe, which is that its position undergoes a random walk, not a time-integral of it.
 
-In order to reproduce the actual observed behavior, each fluctuation of its velocity must be quickly dissipated by friction, in a perfect balance such that $\frac 12 m \braket{v^2} = k_BT$ exactly. This perfect conspiracy is the fluctuation-dissipation theorem.
+In order to reproduce the actual observed behavior, each fluctuation of its velocity must be quickly dissipated by friction, in a perfect balance such that $\frac 12 m \braket{v^2} = k_BT$ exactly. This perfect conspiracy is the fluctuation-dissipation relation (FDR), or rather, the *family* of FDRs, because there have been so many of those.
 
-SETUP. Now we set up a one-dimensional fluctuation-dissipation problem.
+Each FDR is a mathematical equation of form
 
-We have a particle in a sticky fluid, moving on the number line. The particle starts at $x = 0, t = 0$, and at each time-step of $\Delta t$, it moves by $\Delta x$ to the left or the right. We define $D = \frac{\Delta x^2}{\Delta t}$ to be the "diffusion constant".
+$$
+\text{something about fluctuation} = \text{something about dissipation}
+$$
+
+The prototypical FDR is the [Einstein relation](https://en.wikipedia.org/wiki/Einstein_relation_(kinetic_theory)), to be derived below:
+
+$$
+\ub{(\beta D)^{-1}}{fluctuation} = \ub{\gamma}{dissipation}
+$$
+
+where the left side can be interpreted as the strength of molecular noise, and the right side as the strength of molecular damping.
+
+### Equality before the law
+
+Why should there be a mathematical relation between fluctuation and dissipation? I think the deep reason is "equality before the second law".
+
+If we pause and think about it, then isn't it strange that, despite the molecular storm happening within a placid cup of water, it does not actually fall out of equilibrium? That, despite every molecule of water rushing this way and that, the cup of water as a whole continues to stay without a ripple? What is this second law, the invisible hand pushing it towards statistical equilibrium and keeping it stable? And that is not a question I'm going to answer here. Perhaps calling it an "invisible hand" is already a bad metaphor. Nevertheless, the second law requires the stability of equilibrium distributions (if equilibria exist).
+
+Now, a system in a statistical equilibrium would, once in a while, deviate significantly from the maximally likely state, just like how we might occasionally flip 10 heads in a row. Nevertheless, if the second law is to be upheld, then significant deviations must be pushed back. In other words, fluctuation is dissipated.
+
+Assuming that in equilibrium, the system is undergoing a random walk, then by the theory of random walks, internally generated fluctuation must be dissipated according to a mathematical law. The law does not need any further input from physics. Indeed, it has no dependence on any physical observations, and belongs to the pure mathematical theory of random walks.
+
+For example, a little pollen in a dish of water might occasionally have a large momentum, but it is very rare. Because it is rare, if we do observe it, we can predict that the next time we look at a pollen, it would have a much lower momentum.
+
+Now, when physicists use the word "dissipation", they mean the restoring effect of a system under *external* dissipation, such as pulling on a pollen by an electrostatic field. However, physical laws are equal, so internal dissipation is external dissipation.
+
+Thus, we see that each FDR manifests as an "equality before the law":
+
+$$
+\begin{aligned}
+&\text{fluctuation} \\
+\ub{=}{random walk theory} &\text{dissipation (of internal fluctuations)} \\
+\ub{=}{equality before the law} &\text{dissipation (of external fluctuations)}
+\end{aligned}
+$$
+
+### One-dimensional FDR
+
+Consider a simple model of Brownian motion. We have a particle in a sticky fluid, moving on a line. The particle starts at $x = 0, t = 0$, and at each time-step of $\Delta t$, it moves by $\Delta x$ to the left or the right.
 
 The fluid is at temperature $\beta^{-1}$, and we pull on the particle at constant force $F$. We expect that $F = \gamma \braket{v}$, where $v$ is the ensemble-average velocity of the particle, and $\gamma$ is the viscosity constant.
 
 Now, we let the particle move for a time $t = N\Delta t$, where $N$ is a large number. The particle would have arrived at some point $x$, which is a random variable. The particle's time-averaged velocity is $v = x/t$.
 
-DER.
-
 The number of possible paths that connect $(0, 0)$ with $(t, x)$ is $\binom{N}{\frac N2 - \frac{x}{2\Delta x}}$, therefore, the path-space entropy is
 
-$$S_{path} = \ln \binom{N}{\frac N2 - \frac{x}{2\Delta x}}$$
+$$S_{path} = \ln \binom{N}{\frac N2 - \frac{x}{2\Delta x}} \approx N \lrb{\ln 2 - \lrb{\frac{x}{N\Delta x}}^2}$$
+
+where the approximation is either by Stirling's approximation, or the binary entropy function.
 
 Because the external force performs work $Fx$, which is dissipated into the sticky liquid at temperature $\beta$, we also have
 
-$$S_{work} = \beta Fx$$
+$$S_{work} = \beta F x$$
 
 Because $N$ is large, $\braket{x}$ should be highly concentrated around the point of maximal entropy. That is, we should have
 
@@ -700,14 +734,19 @@ $$
 \braket{x} \approx \argmax_x (S_{path} + S_{work})
 $$
 
-Notice how this is the exact same problem as the case where we have a rubber band. By routine calculation, this simplifies to
+Notice how this is the exact same problem as the case where we have a rubber band.
 
-$$\braket{x} = \beta FN(\Delta x)^2$$
-
-which gives us, after further simplification, the Einstein relation:
+The equation on the right is quadratic in $\braket{x}$, and achieves maximum at $2\braket{x} = \beta FN(\Delta x)^2$, which simplifies to the Einstein relation 
 
 $$\beta D \gamma = 1$$
 
+where $D = \frac{\Delta x^2}{2\Delta t}$ is the diffusion coefficient. 
+
+::: {.callout-tip}
+
+We can calculate not just the mean $\braket{x}$, but also its variance $\braket{x^2}$ if we expand $S_{path} + S_{work}$ to second order around its maximum, then apply @thm-cond-ent.
+
+:::
 
 ## Crooks fluctuation theorem
 
@@ -859,8 +898,6 @@ Integrate over all forward microtrajectories $y$ satisfying $W[x, y] \in [W, W+\
 
 :::
 
-
-
 ### Other ensembles
 
 Looking at the proof for Crooks theorem for the canonical ensemble, we immediately obtain many other possible Crooks theorems, one per free entropy.
@@ -1000,30 +1037,25 @@ where $D = \frac 12 \sigma_W^2$ is the fluctuation coefficient, and $\mu = (\bra
 
 :::
 
+For periodic forcing, the CFT has a simpler form.
+
+Consider a time-reversible dynamical system immersed in an energy bath with inverse temperature $\beta$ , driven by periodically varying constraints. For example, a pendulum in a sticky fluid subjected to a periodic driving torque, or a water-cooled electric circuit driven by a periodic voltage.
+
+Such a system will settle into a "dynamical equilibrium" ensemble, much like a canonical ensemble. If it is driven by the same process time-reversed, then, it will settle into another dynamical equilibrium ensemble.
+
 ::: {#thm-todo}
 
 ## Gallavotti--Cohen fluctuation theorem
 
-A system in an energy bath, and driven by periodically varying its constraints (such as a pendulum in a sticky fluid subjected to a driving force), will settle into a "dynamical equilibrium" ensemble, much like a canonical ensemble.
+$$\frac{\rho(Q)}{\rho'(-Q)} = e^{\beta Q}$$
 
-If it is driven by the same process time-reversed, then, it will settle into another dynamical equilibrium ensemble.
-
-$$\frac{\rho(S)}{\rho'(-S)} = e^{S}$$
-
-where $\rho(S)$ is the probability density for a forward cycle producing entropy $S$, and $\rho'(S)$ is for the backward cycle.  
-
-More generally, since at the dynamical equilibrium, the system's microstates are changing as a Markov chain, we have $\rho(i \to j)$, which are basically
-$$\frac{\rho(i\to j)}{\rho'(j \to i)} = e^{S[i \to j]}$$
-
-where $i, j$ are microstates.
+where $\rho(Q)$ is the probability density that a forward cycle, randomly sampled from the dynamical equilibrium ensemble, emits energy $Q$ into the energy bath. Similarly, $\rho'$ is for the backward cycle.
 
 :::
 
 ::: {.proof}
 
-(sketch)
-
-Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for $NT$ time where $N$ is a large integer, then remove the driving. At the $N\to\infty$ limit, the CFT reduces to the theorem.
+Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for $NT$ time where $N$ is a large integer, then remove the driving. At the $N\to\infty$ limit, the CFT reduces to the result.
 
 :::
 
