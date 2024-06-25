@@ -251,6 +251,10 @@ window.Quarto = {
   <li><a href="#equality-before-the-law" id="toc-equality-before-the-law" class="nav-link" data-scroll-target="#equality-before-the-law">Equality before the law</a></li>
   <li><a href="#one-dimensional-fdr" id="toc-one-dimensional-fdr" class="nav-link" data-scroll-target="#one-dimensional-fdr">One-dimensional FDR</a></li>
   </ul></li>
+  <li><a href="#arrhenius-equation" id="toc-arrhenius-equation" class="nav-link" data-scroll-target="#arrhenius-equation">Arrhenius equation</a>
+  <ul class="collapse">
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications">Applications</a></li>
+  </ul></li>
   <li><a href="#crooks-fluctuation-theorem" id="toc-crooks-fluctuation-theorem" class="nav-link" data-scroll-target="#crooks-fluctuation-theorem">Crooks fluctuation theorem</a>
   <ul class="collapse">
   <li><a href="#in-a-closed-system-microcanonical" id="toc-in-a-closed-system-microcanonical" class="nav-link" data-scroll-target="#in-a-closed-system-microcanonical">In a closed system (microcanonical)</a></li>
@@ -735,6 +739,67 @@ Tip
 </div>
 </section>
 </section>
+<section id="arrhenius-equation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="arrhenius-equation">Arrhenius equation</h2>
+<p>Often in chemistry and biology, we have a particle that is stuck in a shallow potential well. If it ever gets over an energetic barrier, then it can drop to a much deeper minimum. If the particle is in thermal equilibrium with a bath, then it will eventually gain enough energy by random chance to get over the barrier. Of course, conversely, a particle in the deeper minimum would occasionally gain enough energy to go back to the shallow well.</p>
+<p>The point is that “getting over a potential barrier” is inherently a non-equilibrium phenomenon, and therefore does not logically belong to an essay on <em>equilibrium</em> statistical mechanics. Still, if we are willing to approximate, then we can derive it easily.</p>
+<p>We model a particle in a shallow potential well as a simple harmonic oscillator. If it ever gains more than <span class="math inline">\(\Delta E\)</span> of energy, then it would escape the well. Thus, we can take a look at the particle. If it has yet to escape, then we wait for time <span class="math inline">\(\tau\)</span> (relaxation time) until the particle has reached thermal equilibrium again with the bath, and take another look. The time-until-escape is <span class="math inline">\(N \tau\)</span>, where <span class="math inline">\(N\)</span> is the number of times we look at the system.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/metastable_potential_well.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">Getting over a potential well.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Relaxation time">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Relaxation time
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When we look at the oscillator, its state is totally fixed at some <span class="math inline">\((q, p)\)</span>. If we immediately look again, we would not find it in a Boltzmann distribution over phase space, but still at <span class="math inline">\((q, p)\)</span>. How long must we wait? That is beyond the scope. Suffice to say that we should wait a while, not too short, called relaxation time <span class="math inline">\(\tau\)</span>, after which the system is close enough to equilibrium. But, here’s the key – we cannot wait for too long, because in the long run, the particle would have escaped the potential well. Formalizing all these things requires a proper stochastic calculus, which I might write about later.</p>
+</div>
+</div>
+<p>Let the oscillator have <span class="math inline">\(n\)</span> dimensions, then its energy function is <span class="math inline">\(H = \sum_{i=1}^n \frac{p_i^2}{2m_i} + \frac{k_i q_i^2}{2}\)</span>, where <span class="math inline">\(q_i, p_i\)</span> are the generalized position and momentum, and <span class="math inline">\(m_i, k_i\)</span> are the effective masses and elastic constants. The Boltzmann distribution is <span class="math inline">\(\rho(q, p) = Z^{-1} e^{-\beta H}\)</span>, and the probability that it has enough energy to overcome the barrier is</p>
+<p><span class="math display">\[
+P = \frac{\int_{H \geq \Delta E} \rho(q, p)dqdp}{\int_{H \geq 0} \rho(q, p)dqdp}
+\]</span></p>
+<p>Notice that the proportionality constant <span class="math inline">\(Z\)</span> is removed. After a change of variables by <span class="math inline">\(x_i = \frac{p_i}{\sqrt{2m_i}}, y_i = \sqrt{\frac{k_i}{2}} q_i\)</span>, we get</p>
+<p><span class="math display">\[
+P = \frac{\int_{\sum_i x_i^2 + y_i^2 \geq \Delta E} e^{-\beta \sum_i (x_i^2 + y_i^2)} dxdy}{\int_{\sum_i x_i^2 + y_i^2 \geq 0} e^{-\beta \sum_i (x_i^2 + y_i^2)} dxdy}
+\]</span></p>
+<p>Integrating in spherical coordinates, and simplifying, we get <span class="math inline">\(P = e^{-\beta \Delta E}\)</span>. Thus, the expected time until escape is</p>
+<p><span class="math display">\[
+T = \braket{N}\tau = \frac{1}{P}\tau = \tau e^{\beta \Delta E}
+\]</span></p>
+<p>the Arrhenius equation. The same calculation, for a system held in contact with an energy-and-volume bath, gives us <span class="math inline">\(T = \tau e^{\beta \Delta G}\)</span>, where <span class="math inline">\(\Delta G\)</span> is the Gibbs free energy barrier.</p>
+<p>In practice, the Arrhenius equation is used in the form of <span class="math inline">\(\ln f = - a T^{-1} + Const\)</span>, where <span class="math inline">\(f = 1/T\)</span> is the “reaction rate” or “characteristic frequency”, and <span class="math inline">\(a = \frac{\Delta E}{k_B}\)</span> is the slope of the <span class="math inline">\(T^{-1} - \ln f\)</span> plot (“the Arrhenius plot”).</p>
+<section id="applications" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="applications">Applications</h3>
+<p>The argument given above for the Arrhenius equation is quite generic. It only assumes there is a system that is stuck in some kind of potential well, and is held at a constant temperature somehow. There is no requirement for the system to be an actual particle in an actual well. The “particle” can very well be the 100-dimensional configuration of a protein during folding, or even the simultaneous position of <span class="math inline">\(10^{23}\)</span> helium atoms in a helium gas. Indeed, the Arrhenius equation pops up everywhere as the time until a system escapes an energy barrier.</p>
+<p>In a glass of water held at constant temperature <span class="math inline">\(300 \;\mathrm{K}\)</span>, each water molecule might occasionally reach enough energy to escape into open air. This is evaporation. By this argument, the rate of evaporation follows the Arrhenius law, and indeed it does. I suspect that Arrhenius law holds for the spontaneous crystallization of <a href="https://en.wikipedia.org/wiki/Supercooling">supercooled liquid</a> and spontaneous conversion of <a href="https://en.wikipedia.org/wiki/Disappearing_polymorphs">disappearing polymorphs</a>, but I cannot find good data on this.</p>
+<p>In the simplest model for biochemical process, we just have one chemical reaction following another, until it is complete. If there is a single biochemical step that is much slower than the other steps, then the waiting time for that step dominates, and the total reaction should depend on the temperature by an Arrhenius law. This might explain the observed Arrhenius-law-like dependence on temperature in biological phenomena like tree cricket chirping, alpha brain wave frequency, etc.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/arrhenius_plots.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">(1) Tree cricket chirping frequency. (2) Firefly flashing frequency. (3) Terrapin heartbeat frequency. (4) Human silent counting rate <span class="citation" data-cites="hoaglandPhysiologicalControlJudgments1933">(<a href="#ref-hoaglandPhysiologicalControlJudgments1933" role="doc-biblioref">Hoagland 1933</a>)</span>. These figures are reproduced in <span class="citation" data-cites="laidlerUnconventionalApplicationsArrhenius1972">(<a href="#ref-laidlerUnconventionalApplicationsArrhenius1972" role="doc-biblioref">Laidler 1972</a>)</span>. (5) evaporation rate of octane <span class="citation" data-cites="brennanEvaporationLiquidsKinetic1974">(<a href="#ref-brennanEvaporationLiquidsKinetic1974" role="doc-biblioref">Brennan, Shapiro, and Watton 1974</a>)</span>. (6) Alpha frequency of brains of normal, <a href="https://en.wikipedia.org/wiki/General_paresis_of_the_insane">syphilitic paretic</a>, and <em>very</em> paretic humans <span class="citation" data-cites="hoaglandPacemakersHumanBrain1936">(<a href="#ref-hoaglandPacemakersHumanBrain1936" role="doc-biblioref">Hoagland 1936</a>)</span>.</figcaption>
+</figure>
+</div>
+<p>While writing this, I suddenly recognized <span class="citation" data-cites="hoaglandPhysiologicalControlJudgments1933">(<a href="#ref-hoaglandPhysiologicalControlJudgments1933" role="doc-biblioref">Hoagland 1933</a>)</span> from when I read Feynman’s book all those years ago!</p>
+<blockquote class="blockquote">
+<p>When I was in graduate school at Princeton [1939–1942] a kind of dumb psychology paper came out that stirred up a lot of discussion. The author had decided that the thing controlling the “time sense” in the brain is a chemical reaction involving iron… his wife had a chronic fever which went up and down a lot. Somehow he got the idea to test her sense of time. He had her count seconds to herself (without looking at a clock), and checked how long it took her to count up to 60. He had her counting – the poor woman – all during the day: when her fever went up, he found she counted quicker; when her fever went down, she counted slower… he tried to find a chemical reaction whose rates varied with temperature in the same amounts as his wife’s counting did. He found that iron reactions fit the pattern best… it all seemed like a lot of baloney to me – there were so many things that could go wrong in his long chain of reasoning.</p>
+<p><span class="citation" data-cites="feynmanWhatYouCare1989">(<a href="#ref-feynmanWhatYouCare1989" role="doc-biblioref">Feynman 1989, 55</a>)</span></p>
+</blockquote>
+<p>And yes, that is the one!</p>
+<blockquote class="blockquote">
+<p>My wife, having fallen ill with influenza, was used in the first of several experiments. Without, in any way, hinting to her the nature of the experiment, she was asked to count 60 seconds to herself at what she believed to be a rate of 1 per second. Simultaneously the actual duration of the count was observed with a stop-watch.</p>
+<p><span class="citation" data-cites="hoaglandPhysiologicalControlJudgments1933">(<a href="#ref-hoaglandPhysiologicalControlJudgments1933" role="doc-biblioref">Hoagland 1933</a>)</span></p>
+</blockquote>
+</section>
+</section>
 <section id="crooks-fluctuation-theorem" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="crooks-fluctuation-theorem">Crooks fluctuation theorem</h2>
 <section id="in-a-closed-system-microcanonical" class="level3 page-columns page-full">
@@ -1006,6 +1071,12 @@ Note
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-brennanEvaporationLiquidsKinetic1974" class="csl-entry" role="listitem">
+Brennan, J. F., J. S. Shapiro, and E. C. Watton. 1974. <span>“Evaporation of Liquids: <span>A</span> Kinetic Approach.”</span> <em>Journal of Chemical Education</em> 51 (4): 276. <a href="https://doi.org/10.1021/ed051p276">https://doi.org/10.1021/ed051p276</a>.
+</div>
+<div id="ref-feynmanWhatYouCare1989" class="csl-entry" role="listitem">
+Feynman, Richard P. 1989. <em>"<span>What</span> Do You Care What Other People Think?": Further Adventures of a Curious Character</em>. Edited by Ralph Leighton. New York: Bantam Books.
+</div>
 <div id="ref-ghoshTeachingPrinciplesStatistical2006" class="csl-entry" role="listitem">
 Ghosh, Kingshuk, Ken A. Dill, Mandar M. Inamdar, Effrosyni Seitaridou, and Rob Phillips. 2006. <span>“Teaching the Principles of Statistical Dynamics.”</span> <em>American Journal of Physics</em> 74 (2): 123–33.
 </div>
@@ -1018,8 +1089,17 @@ Hazoglou, Michael J., Valentin Walther, Purushottam D. Dixit, and Ken A. Dill. 2
 <div id="ref-hijarJarzynskiEqualityIllustrated2010" class="csl-entry" role="listitem">
 Híjar, Humberto, and José M. Ortiz de Zárate. 2010. <span>“Jarzynski’s Equality Illustrated by Simple Examples.”</span> <em>European Journal of Physics</em> 31 (5): 1097.
 </div>
+<div id="ref-hoaglandPhysiologicalControlJudgments1933" class="csl-entry" role="listitem">
+Hoagland, Hudson. 1933. <span>“The <span>Physiological Control</span> of <span>Judgments</span> of <span>Duration</span>: <span>Evidence</span> for a <span>Chemical Clock</span>.”</span> <em>The Journal of General Psychology</em> 9 (2): 267–87. <a href="https://doi.org/10.1080/00221309.1933.9920937">https://doi.org/10.1080/00221309.1933.9920937</a>.
+</div>
+<div id="ref-hoaglandPacemakersHumanBrain1936" class="csl-entry" role="listitem">
+———. 1936. <span>“Pacemakers of Human Brain Waves in Normals and in General Paretics.”</span> <em>American Journal of Physiology-Legacy Content</em> 116 (3): 604–15. <a href="https://doi.org/10.1152/ajplegacy.1936.116.3.604">https://doi.org/10.1152/ajplegacy.1936.116.3.604</a>.
+</div>
 <div id="ref-jarzynskiEqualitiesInequalitiesIrreversibility2011" class="csl-entry" role="listitem">
 Jarzynski, Christopher. 2011. <span>“Equalities and <span>Inequalities</span>: <span>Irreversibility</span> and the <span>Second Law</span> of <span>Thermodynamics</span> at the <span>Nanoscale</span>.”</span> <em>Annual Review of Condensed Matter Physics</em> 2 (Volume 2, 2011): 329–51. <a href="https://doi.org/10.1146/annurev-conmatphys-062910-140506">https://doi.org/10.1146/annurev-conmatphys-062910-140506</a>.
+</div>
+<div id="ref-laidlerUnconventionalApplicationsArrhenius1972" class="csl-entry" role="listitem">
+Laidler, Keith J. 1972. <span>“Unconventional Applications of the <span>Arrhenius</span> Law.”</span> <em>Journal of Chemical Education</em> 49 (5): 343. <a href="https://doi.org/10.1021/ed049p343">https://doi.org/10.1021/ed049p343</a>.
 </div>
 <div id="ref-luaPracticalApplicabilityJarzynski2005" class="csl-entry" role="listitem">
 Lua, Rhonald C., and Alexander Y. Grosberg. 2005. <span>“Practical <span>Applicability</span> of the <span>Jarzynski Relation</span> in <span>Statistical Mechanics</span>:  <span>A Pedagogical Example</span>.”</span> <em>The Journal of Physical Chemistry B</em> 109 (14): 6805–11. <a href="https://doi.org/10.1021/jp0455428">https://doi.org/10.1021/jp0455428</a>.
