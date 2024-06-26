@@ -234,16 +234,27 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#quick-reference" id="toc-quick-reference" class="nav-link" data-scroll-target="#quick-reference">Quick reference</a></li>
   </ul></li>
-  <li><a href="#max-ent-statistical-mechanics" id="toc-max-ent-statistical-mechanics" class="nav-link" data-scroll-target="#max-ent-statistical-mechanics">Max-ent statistical mechanics</a></li>
-  <li><a href="#using-the-partition-function" id="toc-using-the-partition-function" class="nav-link" data-scroll-target="#using-the-partition-function">Using the partition function</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#philosophical-comments" id="toc-philosophical-comments" class="nav-link" data-scroll-target="#philosophical-comments">Philosophical comments</a></li>
+  <li><a href="#principles-of-statistical-mechanics" id="toc-principles-of-statistical-mechanics" class="nav-link" data-scroll-target="#principles-of-statistical-mechanics">Principles of statistical mechanics</a></li>
+  <li><a href="#differential-entropy-depends-on-coordinates-choice" id="toc-differential-entropy-depends-on-coordinates-choice" class="nav-link" data-scroll-target="#differential-entropy-depends-on-coordinates-choice">Differential entropy depends on coordinates choice</a></li>
+  </ul></li>
+  <li><a href="#mathematical-developments" id="toc-mathematical-developments" class="nav-link" data-scroll-target="#mathematical-developments">Mathematical developments</a>
+  <ul class="collapse">
+  <li><a href="#fundamental-theorems" id="toc-fundamental-theorems" class="nav-link" data-scroll-target="#fundamental-theorems">Fundamental theorems</a></li>
+  <li><a href="#microcanonical-ensembles" id="toc-microcanonical-ensembles" class="nav-link" data-scroll-target="#microcanonical-ensembles">Microcanonical ensembles</a></li>
+  <li><a href="#canonical-ensembles" id="toc-canonical-ensembles" class="nav-link" data-scroll-target="#canonical-ensembles">Canonical ensembles</a></li>
   <li><a href="#free-entropies" id="toc-free-entropies" class="nav-link" data-scroll-target="#free-entropies">Free entropies</a></li>
+  <li><a href="#the-partition-function" id="toc-the-partition-function" class="nav-link" data-scroll-target="#the-partition-function">The partition function</a></li>
   <li><a href="#conditional-entropies" id="toc-conditional-entropies" class="nav-link" data-scroll-target="#conditional-entropies">Conditional entropies</a></li>
-  <li><a href="#fluctuation-relations" id="toc-fluctuation-relations" class="nav-link" data-scroll-target="#fluctuation-relations">Fluctuation relations</a>
+  </ul></li>
+  <li><a href="#thermodynamic-limit" id="toc-thermodynamic-limit" class="nav-link" data-scroll-target="#thermodynamic-limit">Thermodynamic limit</a>
   <ul class="collapse">
   <li><a href="#fluctuation-of-observables" id="toc-fluctuation-of-observables" class="nav-link" data-scroll-target="#fluctuation-of-observables">Fluctuation of observables</a></li>
   <li><a href="#density-fluctuation-in-the-canonical-ensemble" id="toc-density-fluctuation-in-the-canonical-ensemble" class="nav-link" data-scroll-target="#density-fluctuation-in-the-canonical-ensemble">Density fluctuation in the canonical ensemble</a></li>
   </ul></li>
-  <li><a href="#maximum-caliber-statistical-mechanics" id="toc-maximum-caliber-statistical-mechanics" class="nav-link" data-scroll-target="#maximum-caliber-statistical-mechanics">Maximum caliber statistical mechanics</a>
+  <li><a href="#maximum-caliber" id="toc-maximum-caliber" class="nav-link" data-scroll-target="#maximum-caliber">Maximum caliber</a>
   <ul class="collapse">
   <li><a href="#markov-chains" id="toc-markov-chains" class="nav-link" data-scroll-target="#markov-chains">Markov chains</a></li>
   <li><a href="#diffusion" id="toc-diffusion" class="nav-link" data-scroll-target="#diffusion">diffusion</a></li>
@@ -290,112 +301,342 @@ window.Quarto = {
 </ul>
 </section>
 </section>
-<section id="max-ent-statistical-mechanics" class="level2">
-<h2 class="anchored" data-anchor-id="max-ent-statistical-mechanics">Max-ent statistical mechanics</h2>
-<p>The idea of Gibbsian statistical mechanics is to study the evolution of an entire probability distribution over all possible states.</p>
-<p>We have a state space <span class="math inline">\(X\)</span>, which by default is the phase space.</p>
-<p>We study probability distributions (ensembles) over the state space.</p>
-<p>The entropy of a probability distribution <span class="math inline">\(\rho\)</span> is <span class="math display">\[S[\rho] := -\int dx\; \rho(x) \ln \rho(x)\]</span></p>
-<div id="prp-todo" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 1 (compound entropy)</strong></span> <span class="math inline">\(S_{X,Y} = S_Y + \braket{S_{X|y}}_y\)</span></p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Consider a compound system in ensemble <span class="math inline">\(\rho(x, y)\)</span>. Its entropy is <span class="math display">\[S[\rho] = -\int dxdy \; \rho(x, y) \ln \rho(x, y)\]</span></p>
-<p>We can take the calculation in two steps: <span class="math display">\[S[\rho] = -\int dxdy \; \rho(x|y)\rho(y) (\ln \rho(x|y) + \ln  \rho(y)) = S[\rho_Y] + \mathbb{E}_y[S[\rho_{X|y}]]\]</span></p>
-<p>Here, <span class="math display">\[S[\rho_Y] = -\int dy \; \rho(y) \ln \rho(y)\]</span></p>
-<p>is the entropy of system <span class="math inline">\(Y\)</span>,<br>
-<span class="math display">\[S[\rho_{X | y}] = -\int dx \; \rho(x|y) \ln \rho(x|y)\]</span></p>
-<p>is the entropy of system <span class="math inline">\(X\)</span> conditional on the state of system <span class="math inline">\(Y\)</span> being equal to <span class="math inline">\(y\)</span>, and<br>
-<span class="math display">\[\mathbb{E}_y\]</span></p>
-<p>means taking expectation over the state of system <span class="math inline">\(Y\)</span>.</p>
-<p>More succinctly, <span class="math inline">\(S_{X,Y} = S_Y + \braket{S_{X|y}}_y\)</span>.</p>
-</div>
-<p>ASSM. (maximum entropy distribution under constraint)</p>
-<p>In most systems, everything measurable can be found by studying it as if it has the maximum entropy distribution under constraint.</p>
-<section id="differential-entropy-depends-on-coordinates-choice" class="level4">
-<h4 class="anchored" data-anchor-id="differential-entropy-depends-on-coordinates-choice">Differential entropy depends on coordinates choice</h4>
-<p>Consider the uniform distribution on <span class="math inline">\([0, 1]\)</span>. It is the maxent distribution on <span class="math inline">\([0, 1]\)</span>… relative to the Lebesgue measure.</p>
+<section id="overview" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<section id="philosophical-comments" class="level3">
+<h3 class="anchored" data-anchor-id="philosophical-comments">Philosophical comments</h3>
+<p>It is fair to say that, although it originated in the 19th century like all other classical fields of physics, statistical mechanics is unsettled.</p>
+<p>Trajectory-centric statistical mechanics. In this view, we start with the equations of motion for a physical system, then study statistical properties of individual trajectories, or collections of them. For example, if we have a pendulum hanging in air, being hit by air molecules all the time, we would study the total trajectory <span class="math inline">\((\theta, x_1, y_1, z_1, x_2, y_2, z_2, \dots)\)</span>, where <span class="math inline">\(\theta\)</span> is the angle of the pendulum swing, and <span class="math inline">\((x_i, y_i, z_i)\)</span> is the location of the <span class="math inline">\(i\)</span>-th air molecule. Then we may ask that, over a long enough period, how frequent would the pendulum visit a certain angle range of <span class="math inline">\([\theta_0, \theta_0 + \delta\theta]\)</span>:</p>
+<p><span class="math display">\[
+Pr(\theta \in [\theta_0, \theta_0 + \delta\theta]) = \lim_{T \to \infty} \frac{1}{2T} \int_{-T}^{+T} 1[\theta \in [\theta_0, \theta_0 + \delta\theta]] dt
+\]</span></p>
+<p>In the trajectory-centric view, there are the following issues:</p>
+<ul>
+<li>Problem of ergodicity: When does time-average equal ensemble-average? A system is called “ergodic” iff for almost all starting conditions, the time-average of the trajectory is the ensemble-average over all trajectories.</li>
+<li>Problem of entropy: How is entropy defined <em>on a single trajectory</em>?</li>
+<li>H-theorem: In what sense, and under what conditions, does entropy increase?</li>
+<li>Problem of equilibrium: What does it mean to say that a trajectory is <em>in equilibrium</em>?</li>
+<li>Approach to equilibrium: In what sense, and under what conditions, does the trajectory converge to an equilibrium?</li>
+<li>Reversibility problem (<em>Umkehreinwand</em>): If individual trajectories are reversible, why does entropy increase instead of decrease?</li>
+</ul>
+<p>While these philosophical problems are quite diverting, we will avoid them as much as possible, because we will be working with the ensemble-centric equilibrium statistical mechanics. This is the statmech that every working physicist uses, and this is what we will present. If you are interested in the philosophical issues, read the <a href="https://plato.stanford.edu/entries/statphys-statmech/">Stanford Encyclopedia entry on the <em>Philosophy of Statistical Mechanics</em></a>.</p>
+</section>
+<section id="principles-of-statistical-mechanics" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="principles-of-statistical-mechanics">Principles of statistical mechanics</h3>
+<ul>
+<li>A <strong>physical system</strong> is a classical system with a state space, evolving according to some equation of motion.</li>
+<li>An <strong>ensemble</strong> of that system is a probability distribution over its state space.</li>
+<li>The idea of (ensemble-centric) statistical mechanics is to study the evolution of an entire probability distribution over all possible states.</li>
+<li>The <strong>entropy</strong> of a probability distribution <span class="math inline">\(\rho\)</span> is</li>
+</ul>
+<p><span class="math display">\[S[\rho] := -\int dx\; \rho(x) \ln \rho(x)\]</span></p>
+<ul>
+<li>Under any constraint, there exists a unique ensemble, named the <strong>equilibrium ensemble</strong>, which maximizes entropy under constraint.</li>
+</ul>
+<p>Most of the times, the state space is a phase space, and the equation of motion is described by a Hamiltonian function. However, the machinery of statistical mechanics, as given above, is purely mathematical. It can be used to study any problem in probability whatsoever, even those with no physical meaning.</p>
+<p>Believe it or not, the above constitutes the entirety of equilibrium statistical mechanics. So far, it is a purely mathematical theory, with no falsifiability (Popperians shouting in the background). To make it falsifiable, we need to add one more assumption, necessarily fuzzy:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><blockquote class="blockquote"><sup>1</sup>&nbsp;
+<p>As far as the laws of mathematics refer to reality, they are not certain; and as far as they are certain, they do not refer to reality.</p>
+<p>— Albert Einstein, <em>Address to Prussian Academy of Sciences</em> (1921)</p>
+</blockquote>
+</div></div><ul>
+<li>The equilibrium ensemble is physically meaningful and describes the observable behavior of physical systems.</li>
+</ul>
+<p>In other words, when a physical system is <em>at equilibrium</em>, then everything observable can be found by studying it <em>as if</em> it has the maximum entropy distribution under constraint.</p>
+<p>Of course, just what that “is physically meaningful” means, is another source of endless philosophical arguments. I would trust that you will know what is physically meaningful, and leave it at that, while those who have a taste for philosophy can grapple with the <a href="https://plato.stanford.edu/entries/scientific-underdetermination/">Duhem–Quine thesis</a>.</p>
+</section>
+<section id="differential-entropy-depends-on-coordinates-choice" class="level3">
+<h3 class="anchored" data-anchor-id="differential-entropy-depends-on-coordinates-choice">Differential entropy depends on coordinates choice</h3>
+<p>There is a well-known secret among information theorists: differential entropy is not well-defined.</p>
+<p>Consider the uniform distribution on <span class="math inline">\([0, 1]\)</span>. It is the maxent distribution on <span class="math inline">\([0, 1]\)</span> – relative to the Lebesgue measure. However, why should we pick the Lebesgue measure, and what happens if we don’t?</p>
 <p>Suppose we now stretch the <span class="math inline">\([0, 1]\)</span> interval nonlinearly, by <span class="math inline">\(f(x) = x^2\)</span>, then the maxent distribution relative to <em>that</em> would no longer be the uniform distribution on <span class="math inline">\([0, 1]\)</span>. Instead, it would be the uniform distribution after stretching.</p>
-<p>The problem is essentially this: if we change the coordinates, we change the base measure, and the differential entropy changes.</p>
-<p>To fix this, we can use the KL-divergence, which is invariant under a change of base measure, as in <span class="math display">\[-D_{KL}(\rho \| \mu) := - \int dx\; \rho(x) \ln\frac{\rho(x)}{\mu(x)}\]</span></p>
+<p>The problem is this: Differential entropy is not coordinate-free. If we change the coordinates, we change the base measure, and the differential entropy changes as well.</p>
+<p>To fix this, we need to use the KL-divergence, which is invariant under a change of base measure, as in <span class="math display">\[-D_{KL}(\rho \| \mu) := - \int dx\; \rho(x) \ln\frac{\rho(x)}{\mu(x)}\]</span></p>
 <p>In typical situations, we don’t need to worry ourselves with KL-divergence, as we just pick the uniform distribution <span class="math inline">\(\mu\)</span>. When the state space is infinite in volume, the uniform distribution is not a probability measure, but it will work. Bayesians say that it is an <em>improper prior</em>.</p>
 <p>In this interpretation, the principle of “maximum entropy distribution under constraint” becomes the principle of “minimal KL-divergence under constraint”, which <em>is</em> Bayesian inference, with exactly the same formulas.</p>
-<p>In almost all cases, we use the uniform prior over phase space. This is how Gibbs did it, and he didn’t really justify it other than saying that <em>it just works</em>, and suggesting it has something to do with Liouville’s theorem. Now with a century of hindsight, we know that it works because of quantum mechanics: we should use the uniform prior over phase space, because phase space volumes have a natural unit of measurement: <span class="math inline">\(h\)</span>, Planck’s constant. Planck’s constant is a universal constant, so we should weight all of the phase space equally, giving a uniform prior.</p>
-<p>DEF. extensivity</p>
+<p>In almost all cases, we use the uniform prior over phase space. This is how Gibbs did it, and he didn’t really justify it other than saying that <em>it just works</em>, and suggesting it has something to do with Liouville’s theorem. Now with a century of hindsight, we know that it works because of quantum mechanics: We <em>should use</em> the uniform prior over phase space, because phase space volume has a natural unit of measurement: <span class="math inline">\(h^N\)</span>, where <span class="math inline">\(h\)</span> is Planck’s constant, and <span class="math inline">\(2N\)</span> is the dimension of phase space. As Planck’s constant is a universal constant, independent of where we are in phase space, we should weight all of the phase space equally, resulting in a uniform prior.</p>
+</section>
+</section>
+<section id="mathematical-developments" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="mathematical-developments">Mathematical developments</h2>
+<section id="fundamental-theorems" class="level3">
+<h3 class="anchored" data-anchor-id="fundamental-theorems">Fundamental theorems</h3>
+<div id="thm-liouville" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Liouville’s theorem)</strong></span> For any phase space and any Hamiltonian over it (which can change with time), phase-space volume is conserved under motion.</p>
+<p>For any probability distribution <span class="math inline">\(\rho_0\)</span>, if after time <span class="math inline">\(t\)</span>, it evolves to <span class="math inline">\(\rho_t\)</span>, and a point <span class="math inline">\(x(0)\)</span> evolves to <span class="math inline">\(x(t)\)</span>, then <span class="math inline">\(\rho_0(x(0)) = \rho_t(x(t))\)</span>.</p>
+</div>
+<p>The proof is found in any textbook, and also <a href="https://en.wikipedia.org/wiki/Liouville's_theorem_(Hamiltonian)">Wikipedia</a>. Since it is already simple enough, and I can’t really improve upon it, I won’t.</p>
+<div id="cor-conservation-entropy" class="theorem corollary">
+<p><span class="theorem-title"><strong>Corollary 1 (conservation of entropy)</strong></span> For a Hamiltonian system, with any Hamiltonian (which can change with time), for any probability distribution <span class="math inline">\(\rho\)</span> over its phase space, its entropy is conserved over time.</p>
+</div>
+<p>In particular, we have the following corollary:</p>
+<div id="cor-ensemble-conservation" class="theorem corollary">
+<p><span class="theorem-title"><strong>Corollary 2</strong></span> Given any set of constraints, if the Hamiltonian preserves these constraints over time, then any constrained-maximal entropy distribution remains constrained-maximal under time-evolution.</p>
+</div>
+<p>In most cases, the constraint is of a particular form: the expectation is known. In that case, we have the following theorem:</p>
+<div id="thm-constrained-optimization" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (maximal entropy under linear constraints)</strong></span> For the following constrained optimization problem</p>
+<p><span class="math display">\[
+\begin{cases}
+\max_\rho S[\rho] \\
+\int A_1(x) \rho(x) &amp;= \bar A_1 \\
+\cdots &amp;= \cdots \\
+\int A_n(x) \rho(x) &amp;= \bar A_n \\
+\end{cases}
+\]</span></p>
+<p>Consider the following ansatz</p>
+<p><span class="math display">\[
+\rho(x) = \frac{1}{Z(a_1, \dots, a_n)} e^{-\sum_i a_i A_i(x)}
+\]</span></p>
+<p>where <span class="math inline">\(Z(a_1, \dots, a_n) = \int e^{-\sum_i a_i A_i(x)} dx\)</span>, and <span class="math inline">\(a_1, \dots, a_n\)</span> are chosen such that the constraints <span class="math inline">\(\int A_i(x) \rho(x) = \bar A_i\)</span> are satisfied.</p>
+<p><em>If</em> the ansatz exists, then it is the unique solution.</p>
+</div>
+<p>The ansatz solution is what you get by Lagrangian multipliers. For a refresher, see the <a href="https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/index.html#lagranges-devil-at-disneyland"><em>Analytical Mechanics</em>#Lagrange’s devil at Disneyland</a>. The theorem shows that the solution is unique – provided that it exists. Does it exist? Yes, in physics. If it doesn’t exist, then we are clearly not modelling a physically real phenomenon.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In physics, these are “Boltzmann distributions” or “Gibbs distributions”. In statistics, these are <a href="https://en.wikipedia.org/wiki/Exponential_family">exponential families</a>. Because they are everywhere, they have many names.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Define a distribution <span class="math inline">\(\rho\)</span> as given in the statement of the theorem. That is,</p>
+<p><span class="math display">\[
+\rho(x) = \frac{1}{Z(a_1, \dots, a_n)} e^{-\sum_i a_i A_i(x)}
+\]</span></p>
+<p>etc.</p>
+<p>Now, it remains to prove that for any other <span class="math inline">\(\rho'\)</span> that satisfies the constraints, we have <span class="math inline">\(S[\rho] \geq S[\rho']\)</span>.</p>
+<p>By routine calculation, for any probability distribution <span class="math inline">\(\rho'\)</span>,</p>
+<p><span class="math display">\[
+D_{KL}(\rho' \| \rho) = -S[\rho'] + \sum_i a_i \braket{A_i}_{\rho'} + \ln Z(a_1, \dots, a_n)
+\]</span></p>
+<p>If <span class="math inline">\(\rho'\)</span> satisfies the given constraints, then <span class="math inline">\(D_{KL}(\rho' \| \rho) = -S[\rho'] + Const\)</span> where the constant does not depend on <span class="math inline">\(\rho'\)</span>, as long as it satisfies the constraints. Therefore, <span class="math inline">\(S[\rho']\)</span> is maximized when <span class="math inline">\(D_{KL}(\rho' \| \rho)\)</span> is minimized, which is exactly <span class="math inline">\(\rho\)</span>.</p>
+</div>
+</div>
+</div>
+<p>The following proposition is often used when we want to maximize entropy in a two-step process:</p>
+<div id="thm-compound-entropy" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3 (compound entropy)</strong></span> If <span class="math inline">\(\rho_{X,Y}\)</span> is a probability distribution over two variables <span class="math inline">\((X, Y)\)</span>, then</p>
+<p><span class="math display">\[S[\rho_{X,Y}] = S[\rho_Y] + \braket{S[\rho_{X|y}]}_y\]</span></p>
+<p>or more succinctly,</p>
+<p><span class="math display">\[S_{X,Y} = S_Y + \braket{S_{X|y}}_y\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Notations">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Notations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\rho_Y\)</span> is the probability distribution over <span class="math inline">\(Y\)</span>, after we integrate/marginalize <span class="math inline">\(X\)</span> away:</p>
+<p><span class="math display">\[
+\rho_Y(y) := \int \rho_{X,Y}(x,y)dx
+\]</span></p>
+<p><span class="math inline">\(\rho_{X|y}\)</span> is the conditional probability distribution over <span class="math inline">\(X\)</span>, conditional on <span class="math inline">\(Y=y\)</span>:</p>
+<p><span class="math display">\[
+\rho_{X|y}(x) := \frac{\rho_{X,Y}(x,y)}{\int \rho_{X,Y}(x,y) dx}
+\]</span></p>
+<p><span class="math inline">\(\braket{\cdot}_y\)</span> is the expectation over <span class="math inline">\(\rho_Y\)</span>:</p>
+<p><span class="math display">\[
+\braket{S_{X|y}}_y := \int S_{X|y} \rho_Y(y)dy
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Consider a compound system in ensemble <span class="math inline">\(\rho(x, y)\)</span>. Its entropy is</p>
+<p><span class="math display">\[S[\rho] = -\int dxdy \; \rho(x, y) \ln \rho(x, y)\]</span></p>
+<p>We can take the calculation in two steps:</p>
+<p><span class="math display">\[S[\rho] = -\int dxdy \; \rho(x|y)\rho(y) (\ln \rho(x|y) + \ln  \rho(y)) = S[\rho_Y] + \mathbb{E}_y[S[\rho_{X|y}]]\]</span></p>
+</div>
+</div>
+</div>
+<p>Intuitively, what does <span class="math inline">\(S_{X,Y} = S_Y + \braket{S_{X|y}}_y\)</span> mean? It means that the entropy in <span class="math inline">\((X, Y)\)</span> can be decomposed into two parts: the part due to <span class="math inline">\(Y\)</span>, and the part remaining after we know <span class="math inline">\(Y\)</span>, but not yet knowing <span class="math inline">\(X\)</span>. In the language of information theory, the total information in <span class="math inline">\((X, Y)\)</span> is equal to the information in <span class="math inline">\(Y\)</span>, plus the information of <span class="math inline">\(X\)</span> conditional over <span class="math inline">\(Y\)</span>:</p>
+<p><span class="math display">\[
+I(X, Y) = I(Y) + I(X|Y)
+\]</span></p>
+</section>
+<section id="microcanonical-ensembles" class="level3">
+<h3 class="anchored" data-anchor-id="microcanonical-ensembles">Microcanonical ensembles</h3>
+<p>If the only constraint is the constant-energy constraint <span class="math inline">\(H(x) = E\)</span>, then the maximal entropy distribution is the uniform distribution on the shell of constant energy <span class="math inline">\(H = E\)</span>. It is uniform, because once we enforce <span class="math inline">\(H(x) = E\)</span>, there are no other constraints, and so by <a href="#thm-constrained-optimization" class="quarto-xref">Theorem&nbsp;2</a>, the distribution is uniform.</p>
+<p>Thus, we obtain the <strong>microcanonical ensemble</strong>:</p>
+<p><span class="math display">\[\rho_E(x) \propto 1_{H(x) = E}\]</span></p>
+<p>It is sometimes necessary to deal with the “thickness” of the energy shell. In that case, <span class="math inline">\(\rho_E(x) \propto \delta(H(x) - E)\)</span>, where <span class="math inline">\(\delta\)</span> is the Dirac delta function.</p>
+<p>By <a href="#thm-constrained-optimization" class="quarto-xref">Theorem&nbsp;2</a>, the microcanonical ensemble is the unique maximizer of entropy under the constraint of constant energy. In particular, if the Hamiltonian does not change over time, then any microcanonical ensemble is preserved over time. In words, if we uniformly “dust” the energy shell of <span class="math inline">\(H(x) = E\)</span> with a cloud of system states, and let all of them evolve over time, then though the dust particles move about, the cloud remains exactly the same.</p>
+<p>More generally, we can impose more (in)equality constraints, and still obtain a microcanonical ensemble. For example, consider a ball flying around in an empty room with no gravity. The Hamiltonian is <span class="math inline">\(H(q, p) = \frac{p^2}{2m}\)</span>, and its microcanonical ensemble is <span class="math inline">\(\rho(q, p) \propto \delta(p = \sqrt{2mE})1[p \in \text{the room}]\)</span>. That is, its velocity is on the energy shell, while its position is uniform over the entire room.</p>
+<p>If we want to specify the number of particles for each chemical species, then that can be incorporated into the microcanonical ensemble as well. For example, if we want the number of species <span class="math inline">\(i\)</span> be exactly <span class="math inline">\(N_{i0}\)</span>, then we multiply <span class="math inline">\(\rho\)</span> by <span class="math inline">\(1[N_i = N_{i0}]\)</span>.</p>
+</section>
+<section id="canonical-ensembles" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="canonical-ensembles">Canonical ensembles</h3>
+<p>If we have a small system connected to a large system, then we typically don’t care about the large system, and only want to study the ensemble of the small system. In this case, we would first find the microcanonical ensemble for the total system, then integrate out of the large system, resulting in an ensemble over just the small system, as in</p>
+<p><span class="math display">\[\rho_{\text{small}}(x) = \int \rho_{\text{total}}(x, y) dy\]</span></p>
+<p>where <span class="math inline">\(x\)</span> ranges over the states of the small system, and <span class="math inline">\(y\)</span> of the large system.</p>
+<p>Assuming that the energy of the compound system is extensive, we obtain the canonical ensemble. Assuming that the energy and volume are both extensive, we obtain the grand canonical ensemble, etc. The following table would be very useful</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>extensive constraint</th>
+<th>ensemble</th>
+<th>free entropy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>none</td>
+<td>microcanonical</td>
+<td>entropy</td>
+</tr>
+<tr class="even">
+<td>energy</td>
+<td>canonical</td>
+<td>Helmholtz free entropy</td>
+</tr>
+<tr class="odd">
+<td>energy, volume</td>
+<td>?</td>
+<td>Gibbs free entropy</td>
+</tr>
+<tr class="even">
+<td>energy, particle count</td>
+<td>grand canonical</td>
+<td>Landau free entropy</td>
+</tr>
+<tr class="odd">
+<td>energy, volume, particle count</td>
+<td>?</td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+<p>There are some question marks in the above table, because there are no consensus names for those question marks. What is more surprising is that there is no name for the ensemble of constrained energy and volume. I would have expected something like the “Gibbs ensemble”, but history isn’t nice to us like that. Well, then I will name it first, as the <em>big canonical ensemble</em>. And while we’re at it, let’s fill the last row as well:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>extensive constraint</th>
+<th>ensemble</th>
+<th>free entropy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>none</td>
+<td>microcanonical</td>
+<td>entropy</td>
+</tr>
+<tr class="even">
+<td>energy</td>
+<td>canonical</td>
+<td>Helmholtz free entropy</td>
+</tr>
+<tr class="odd">
+<td>energy, volume</td>
+<td>big canonical</td>
+<td>Gibbs free entropy</td>
+</tr>
+<tr class="even">
+<td>energy, particle count</td>
+<td>grand canonical</td>
+<td>Landau free entropy</td>
+</tr>
+<tr class="odd">
+<td>energy, volume, particle count</td>
+<td>gross canonical</td>
+<td>EVN free energy</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled" title="Extensivity">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Extensivity
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>In classical thermodynamics, extensivity means that entropy of the compound system can be calculated in a two-step process: calculate the entropy of each subsystem, then add them up. The important fact is that a subsystem still has enough independence to have its own entropy.</p>
 <p>This is not always obvious. If we have two galaxies of stars, we can think of each as a “cosmic gas” where each particle is a star. Now, if we put them near each other, then the gravity between the two galaxies would mean it is no longer meaningful to speak of “the entropy of galaxy 1”, but only “the entropy of galaxy-compound 1-2”.</p>
-<p>In statistical mechanics, extensivity <em>usually</em> means the Hamiltonian of each subsystem is unaffected by the state of the other subsystems, and the total Hamiltonian is the sum of all the Hamiltonians. However, other definitions exist.</p>
-<p>SETUP. the microcanonical ensemble</p>
-<p>If the only constraint is the energy <span class="math inline">\(E\)</span>, then the maximal entropy distribution is the uniform distribution on the shell of constant energy <span class="math inline">\(H = E\)</span>. This is the <strong>microcanonical ensemble</strong>:</p>
-<p><span class="math display">\[\rho_E(x) \propto 1_{H(x) = E}\]</span></p>
-<p>If we have a small system connected to a large system, then we typically don’t care about the large system, and only want to study the ensemble of the small system. In this case, we would first find the microcanonical ensemble for the total system, then integrate out of the large system, resulting in an ensemble over just the small system, like</p>
-<p><span class="math display">\[\rho_{small}(x) = \int \rho_{total}(x, y) dy\]</span></p>
-<p>where <span class="math inline">\(x\)</span> ranges over the state of the small system, and <span class="math inline">\(y\)</span> that of the large system.</p>
-<p>If we further assume that the compound system is extensive, then we can derive all the other ensembles – canonical, grand canonical, etc – depending on how the two systems are connected.</p>
-<p>In the following theorem, we assume that the total system is extensive, and is already in the maximal entropy distribution (microcanonical ensemble). We derive the distribution of the small system by marginalizing out the large system.</p>
-<div id="prp-todo" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 2 (Entropy is preserved in Hamiltonian systems)</strong></span> If a system is a Hamiltonian system with any Hamiltonian (which can change with time), then for any probability distribution <span class="math inline">\(\rho\)</span> over its phase space, its entropy is conserved over time.</p>
-<p>The microcanonical ensemble is the unique maximizer of entropy under the constraint of constant energy.</p>
+<p>In statistical mechanics, extensivity means a certain property of each subsystem is unaffected by the state of the other subsystems, and the total is the sum of them. So for example, if <span class="math inline">\(A\)</span> is an extensive property, then it means</p>
+<p><span class="math display">\[
+A(x_1, \dots, x_n) = A_1(x_1) + \dots + A_n(x_n)
+\]</span></p>
+<p>Like most textbooks, we assume extensivity by default, although as we noted in <a href="https://yuxi-liu-wired.github.io/essays/posts/equilibrium-thermoeconomics/"><em>Classical Thermodynamics and Economics</em></a>, both classical thermodynamics and statistical mechanics do not require extensivity. We assume extensivity because it is mathematically convenient, and good enough for most applications.</p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>The first result is by Liouville’s theorem.</p>
-<p>Let <span class="math inline">\(\rho\)</span> be the microcanonical distribution on the energy shell of <span class="math inline">\(H = E\)</span>. Given any other distribution <span class="math inline">\(\rho'\)</span>, we have <span class="math display">\[S[\rho'] = S[\rho] - D_{KL}(\rho' \| \rho)\]</span></p>
-<p>which is maximized at only <span class="math inline">\(\rho' = \rho\)</span>.</p>
 </div>
-<div id="cor-todo" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corollary 1</strong></span> Constrained maxent distributions are preserved in Hamiltonian systems</p>
-<p>That is, given any set of constraints, if the Hamiltonian preserves these constraints over time, then any maximal entropy distribution satisfying those constraints is preserved by time-evolution under the Hamiltonian. In particular, if the Hamiltonian is constant over time, then any microcanonical ensemble is preserved by time-evolution.</p>
-</div>
-<div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1 (Canonical ensembles)</strong></span> If the two systems are in energy-contact, then the small system has the <strong>canonical ensemble</strong></p>
+<p>In the following theorem, we assume that the total system is extensive, and is already in the maximal entropy distribution (microcanonical ensemble)</p>
+<div id="thm-canonical-ensembles" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 4</strong></span> If the two systems are in energy-contact, and energy is conserved, and energy is extensive, and the compound system is in a microcanonical ensemble, the small system is in a <strong>canonical ensemble</strong></p>
 <p><span class="math display">\[
 \rho(x) \propto e^{-\beta H(x)}
 \]</span></p>
 <p>where <span class="math inline">\(\beta\)</span> is the marginal entropy of energy of the large system:</p>
 <p><span class="math display">\[\beta := \partial_E S[\rho_{bath, E}]\]</span></p>
-</div>
 <p>Similarly, if the two systems are in energy-and-particle-contact, then the small system has the <strong>grand canonical ensemble</strong></p>
 <p><span class="math display">\[
 \rho(x) \propto e^{-(\beta H(x) + (-\beta \mu) N(x))}
 \]</span></p>
 <p>where <span class="math inline">\(-\beta\mu\)</span> is the marginal entropy of particle of the large system:</p>
 <p><span class="math display">\[-\beta\mu := (\partial_N S[\rho_{bath, E, N}])_{E}\]</span></p>
-<p>More generally, if the two systems are in <span class="math inline">\(q_1, \dots, q_m\)</span> contact, then <span class="math display">\[\rho(x) \propto e^{-\sum_i p_i q_i(x)}\]</span></p>
-<p>where <span class="math inline">\(p_i = (\partial_{q_i} S[\rho_{bath, q}])_{q}\)</span> is the marginal entropy for conserved quantity <span class="math inline">\(q_i\)</span>.</p>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>We prove the case for the energy-contact. The other cases are similar.</p>
+<p>Most generally, if the two systems are in <span class="math inline">\(q_1, \dots, q_m\)</span> contact, and <span class="math inline">\(q_1, \dots, q_m\)</span> are conserved and extensive quantity, then</p>
+<p><span class="math display">\[\rho(x) \propto e^{-\sum_i p_i q_i(x)}\]</span></p>
+<p>where <span class="math inline">\(p_i = (\partial_{q_i} S[\rho_{bath, q}])_{q}\)</span> is the marginal entropy of <span class="math inline">\(q_i\)</span> of the large system.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We prove the case for the canonical ensemble. The other cases are similar.</p>
 <p>Since the total distribution of the whole system is the maximal entropy distribution, we are faced with a constrained maximization problem:</p>
 <p><span class="math display">\[\max_\rho S[\rho]\]</span></p>
-<p>The entropy of the compound system satisfies</p>
-<p><span class="math display">\[S = S_{system} + \braket{S_{bath|system}}_{system}\]</span></p>
-<p>Since the bath is so much larger than the system, we can take just the first Taylor expansion:</p>
-<p><span class="math display">\[S_{bath|system} = S_{bath}(E) - \beta E_{system}\]</span></p>
-<p>where <span class="math inline">\(E\)</span> is the total energy, and <span class="math inline">\(E_{system}\)</span> is the energy of the system.</p>
-<p>This gives us the constraint maximization problem of</p>
-<p><span class="math display">\[\max (S_{system} - \beta \braket{E_{system}})\]</span></p>
-<p>This is the statistical mechanics analog of the “maximize Helmholtz free entropy” problem.</p>
-<p>In detail, we have a problem of variational calculus: <span class="math display">\[
-\begin{cases}
-  \min\int dx\; &amp;\rho(x)(\ln\rho(x) + \beta E_{system}(x)) \\
-      \int dx\; &amp;\rho (x) = 1
-\end{cases}
-\]</span></p>
-<p>which by using the Lagrange multiplier, gives us the solution.</p>
+<p>By <a href="#thm-compound-entropy" class="quarto-xref">Theorem&nbsp;3</a>,</p>
+<p><span class="math display">\[S = S_{system}(E_{system}) + \braket{S_{bath|system}(E_{total} - E_{system})}_{system}\]</span></p>
+<p>Since the bath is so much larger than the system, we can take just the first term in its Taylor expansion:</p>
+<p><span class="math display">\[S_{bath|system}(E_{total} - E_{system}) = S_{bath}(E_{total}) - \beta E_{system}\]</span></p>
+<p>where <span class="math inline">\(E_{total}\)</span> is the total energy for the compound system, <span class="math inline">\(\beta = \partial_E S_{bath}|_{E = E_{total}}\)</span> is the marginal entropy per energy, and <span class="math inline">\(E_{system}\)</span> is the energy of the system.</p>
+<p>This gives us the linearly constrained maximization problem of</p>
+<p><span class="math display">\[\max_{\rho_{system}} (S_{system} - \beta \braket{E_{system}}_{\rho_{system}})\]</span></p>
+<p>and we apply Lagrange multipliers to finish the proof.</p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Alternatively, we don’t need the Lagrange multiplier. <strong>Define</strong> the Boltzmann distribution as</p>
-<p><span class="math display">\[\rho_B(x) = Z(\beta)^{-1} e^{-\beta E_{system}(x)}\]</span></p>
-<p>where <span class="math inline">\(Z(\beta)\)</span> is the normalization constant (partition function), defined by<br>
-<span class="math display">\[Z(\beta) = \int dx\; e^{-\beta E_{system}(x)}\]</span></p>
-<p>It remains to prove that <span class="math inline">\(\rho = \rho_B\)</span>.</p>
-<p>By routine calculation, the optimization problem is equivalent to</p>
-<p><span class="math display">\[
-\min \left(\int dx\; \rho(x) \ln\frac{\rho(x)}{\rho_B(x)} - \ln Z(\beta)\right)
-\]</span></p>
-<p>and since <span class="math inline">\(Z(\beta)\)</span> is independent of <span class="math inline">\(\rho\)</span>, we just need to solve</p>
-<p><span class="math display">\[
-\min \int dx\; \rho(x) \ln\frac{\rho(x)}{\rho_B(x)} = \min D_{KL}(\rho \| \rho_B)
-\]</span> which is just the KL-divergence, and is minimized exactly at <span class="math inline">\(\rho = \rho_B\)</span>.</p>
+</div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="extensivity">
 <div class="callout-header d-flex align-content-center">
@@ -426,58 +667,57 @@ Tip
 <p>which reminds me of Sanov theorem and large deviation theory…</p>
 </div>
 </div>
-<p>EXR. Try deriving some other ensembles.</p>
-<p>For example, what if we have a system in volume-contact, but not thermal-contact? This might happen when the system is a flexible bag of gas held in an atmosphere, but the bag is made of thermally insulation. Notice that in this case, energy exchange still occurs, so you should solve</p>
-<p>As another example, what if we have a system in particle-contact, but not energy-contact? I don’t know when this might happen, but it could happen!</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="Enthalpic ensemble">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+Enthalpic ensemble
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In statistics, such ensemble are called <strong>exponential families</strong>, so we can abstractly describe this as follows:</p>
-<p>If a small system is in contact with a large system, and the total system is in the microcanonical ensemble, then the marginal distribution of the small system is a distribution from an exponential family.</p>
+<p>What if we have a system in volume-contact, but not thermal-contact? This might happen when the system is a flexible bag of gas held in an atmosphere, but the bag is thermally insulating. Notice that in this case, the small system still exchanges energy with the large system via <span class="math inline">\(d\braket{E} = -Pd\braket{V}\)</span>. We don’t have <span class="math inline">\(E = -PdV\)</span>, because the small system might get unlucky. During a moment of weakness, all its particles has abandoned their frontier posts, and the bath has taken advantage of this by encroaching on its land. The system loses volume by <span class="math inline">\(\delta V\)</span>, without earning a compensating <span class="math inline">\(\delta E = P \delta V\)</span>. In short, the thermodynamic equality <span class="math inline">\(E = -PdV\)</span> is inexact in statistical mechanics, and only holds true on the ensemble average.</p>
+<p>In this case, because pressure is a constant, we have <span class="math inline">\(d(E + PV) = 0\)</span>, and so we have the enthalpic ensemble <span class="math inline">\(\rho \propto e^{-\beta H}\)</span>, where <span class="math inline">\(H := E + PV\)</span> is the <a href="https://en.wikipedia.org/wiki/Enthalpy">enthalpy</a>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>Specifically, if you work through the same argument, you would end up with the following constrained maximization problem:</p>
+<p><span class="math display">\[
+\begin{cases}
+\max_{\rho_{system}} (S_{system} - \beta \braket{E_{system}}_{\rho_{system}} - \beta P \braket{V}) \\
+\braket{E_{system}} + P\braket{V_{system}} = Const
+\end{cases}
+\]</span></p>
+<p>yielding the enthalpic ensemble (or the <a href="https://en.wikipedia.org/wiki/Isoenthalpic%E2%80%93isobaric_ensemble">isoenthalpic-isobaric ensemble</a>).</p>
 </div>
 </div>
-</section>
-</section>
-<section id="using-the-partition-function" class="level2">
-<h2 class="anchored" data-anchor-id="using-the-partition-function">Using the partition function</h2>
-<p>DEF. Let <span class="math inline">\(Z = \int dx\; e^{-\beta E(x)}\)</span> be the partition function, and let <span class="math inline">\(f^* := \ln Z\)</span>.</p>
-<p><span class="math inline">\(Z\)</span> is a function of <span class="math inline">\(\beta\)</span>, and other possible constraints that might directly change the energy levels of the system. We can more explicitly write it as <span class="math display">\[Z(\beta; c) = \int dx \; e^{-\beta E_c(x)}\]</span></p>
-<p>where <span class="math inline">\(c\)</span> stands for the other constraints on the system, such as the size of the container, the number of particles, etc.</p>
-<div id="prp-todo" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 3 (The partition function generates all moments of energy)</strong></span> Let a system be in canonical ensemble with inverse temperature <span class="math inline">\(\beta\)</span>, and let <span class="math inline">\(K(t) := \ln \braket{e^{tE}}\)</span> be the cumulant generating function of its energy, then <span class="math display">\[K(t) = \ln Z(\beta-t) - \ln Z(\beta)\]</span></p>
-<p>In particular, the <span class="math inline">\(n\)</span>-th cumulant of energy is<br>
-<span class="math display">\[\kappa_n(E) = K^{(n)}(t) |_{t=0} = (-\partial_\beta)^n (\ln Z)\]</span></p>
-<p>For example, the first two cumulants are the mean and variance: <span class="math display">\[\braket{E} = (-\partial_\beta) (\ln Z), \quad \mathrm{Var}(E) = \partial_\beta^2 (\ln Z)\]</span></p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;Sorry, I know this is not Hamiltonian, but we are running out of letters.</p></div></div></section>
+<section id="free-entropies" class="level3">
+<h3 class="anchored" data-anchor-id="free-entropies">Free entropies</h3>
+<p>Just like in thermodynamics, it is useful to consider free entropies, which are the convex duals of the entropy:</p>
+<ul>
+<li>Helmholtz free entropy: <span class="math inline">\(f[\rho] := S[\rho] - \beta \braket{E} = \int dx \; \rho(x) (-\ln \rho(x) - \beta E(x))\)</span>;</li>
+<li>Gibbs free entropy: <span class="math inline">\(g[\rho] = S[\rho] - \beta \braket{E} - \beta P \braket{V}\)</span>;</li>
+<li>Landau free entropy: <span class="math inline">\(\omega[\rho] = S[\rho] - \beta \braket{E} + \beta \mu \braket{N}\)</span>;</li>
+</ul>
+<p>etc. Of those, we would mostly use the Helmholtz free energy, so I will write it down again:</p>
+<p><span class="math display">\[
+f[\rho] := S[\rho] - \beta \braket{E} = \int dx \; \rho(x) (-\ln \rho(x) - \beta E(x))
+\]</span></p>
+<div id="thm-chain-rule" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 5 (chain rule for free entropies)</strong></span> <span class="math inline">\(f_X = S_Y + \braket{f_{X|y}}_y\)</span>, and similarly <span class="math inline">\(g_X = S_Y + \braket{g_{X|y}}_y\)</span>, and similarly for all other free entropies.</p>
 </div>
-<p>In typical systems made of <span class="math inline">\(N\)</span> particles, where <span class="math inline">\(N\)</span> is large, we have <span class="math inline">\(\ln Z \propto N\)</span>, thus showing that <span class="math inline">\(\sqrt{\mathrm{Var}(E)}/\braket{E} \propto N^{-1/2}\)</span>, meaning that the distribution of energy converges to the average value as <span class="math inline">\(N \to \infty\)</span>.</p>
-<p>A similar proposition applies for the grand canonical ensemble, etc.</p>
-</section>
-<section id="free-entropies" class="level2">
-<h2 class="anchored" data-anchor-id="free-entropies">Free entropies</h2>
-<p>In the above, the only constraint we have imposed is constant energy, yielding the microcanonical ensemble. We can allow more constraints, yielding the fully general Gibbsian statistical mechanics.</p>
-<p>A common trick in statistical mechanics is to characterize the same equilibrium in many different perspectives. For example, the canonical ensemble has three characterizations at least.</p>
-<p>We have a state space <span class="math inline">\(X\)</span>, and probability distributions <span class="math inline">\(\rho\)</span> over <span class="math inline">\(X\)</span>.</p>
-<p>Macroscopic observables <span class="math inline">\(A, B, C, \dots\)</span> are functions of type <span class="math inline">\(X \to \mathbb{R}\)</span>.</p>
-<p>A constraint can be an equality or inequality on observables. For example, if we have a tube of jelly in a box of volume <span class="math inline">\(10\)</span>, then the constraint is <span class="math inline">\(0 \leq V(x) \leq 10\)</span>.</p>
-<p>A constraint can also be an equality or inequality on the distribution. For example, we can specify that the average energy is exactly 1, by <span class="math display">\[\int dx\; \rho(x) E(x) = 1\]</span></p>
-<p>The equilibrium distribution under constraint is the maximal entropy distribution satisfying the constraints.</p>
-<p>DEF. (free entropies)</p>
-<p>Just like in thermodynamics, we can take convex duals of the entropy function, to obtain various free entropies.</p>
-<p>Helmholtz free entropy: <span class="math display">\[f[\rho] := S[\rho] - \beta \braket{E} = \int dx \; \rho(x) (-\ln \rho(x) - \beta E(x))\]</span></p>
-<p>Gibbs free entropy: <span class="math display">\[g[\rho] = S[\rho] - \beta \braket{E} - \beta P \braket{V}\]</span></p>
-<p>And similarly for others.</p>
-<div id="prp-todo" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 4 (The chain rule for free entropies)</strong></span> <span class="math inline">\(f_X = S_Y + \braket{f_{X|y}}_y\)</span>, and similarly <span class="math inline">\(g_X = S_Y + \braket{g_{X|y}}_y\)</span>, and similarly for all other convex duals of the entropy.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span><span class="math display">\[
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
 \begin{aligned}
   f_X &amp;= S_X - \beta \braket{E}_x  \\
   &amp;= S_Y + \braket{S_{X|y}}_y - \beta \braket{\braket{E}_{x \sim X|y}}_y \\
@@ -485,17 +725,30 @@ Tip
 \end{aligned}
 \]</span></p>
 </div>
-<div id="prp-todo" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 5 (4 characterizations of the canonical ensemble)</strong></span> &nbsp;</p>
+</div>
+</div>
+<p>A common trick in statistical mechanics is to characterize the same equilibrium in many different perspectives. For example, the canonical ensemble has at least 4 characterizations at least. “Muscle memory” in statistical mechanics would allow you to nimbly applying the most suitable one for any occasion.</p>
+<div id="thm-canonical-characterization" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 6 (4 characterizations of the canonical ensemble)</strong></span> &nbsp;</p>
 <ol type="1">
 <li>(total entropy under fixed energy constraint) The canonical ensemble maximizes total entropy when the system is in contact with an energy bath that satisfies <span class="math inline">\(\partial_E S_{bath} = \beta\)</span>, and the total energy is fixed.</li>
 <li>(entropy under mean energy constraint) A system maximizes its entropy under constraint <span class="math inline">\(\braket{E} = E_0\)</span> when it assumes the canonical ensemble with <span class="math inline">\(\beta\)</span> that is the unique solution to <span class="math inline">\(\int dx \; e^{-\beta E(x)} = E_0\)</span>.</li>
 <li>(thermodynamic limit): Take <span class="math inline">\(N\)</span> copies of a system, and connect them by energy-contacts. Inject the system with total energy <span class="math inline">\(NE_0\)</span>, and let the system reach its microcanonical ensemble. Then at the thermodynamic limit of <span class="math inline">\(N\to \infty\)</span>, the distribution of a single system is the canonical distribution with <span class="math inline">\(\beta\)</span> that is the unique solution to <span class="math inline">\(\int dx \; e^{-\beta E(x)} = E_0\)</span>.</li>
-<li>(free entropy) A system maximizes its Helmholtz free entropy when it assumes the canonical ensemble. At that point, the maximal Helmholtz free entropy is <span class="math inline">\(f^* = \ln Z\)</span>, where <span class="math inline">\(Z = \int dx \; e^{-\beta E(x)}\)</span> is the partition function.</li>
+<li>(free entropy) A system maximizes its Helmholtz free entropy when it assumes the canonical ensemble. At the optimal distribution <span class="math inline">\(\rho^*\)</span>, the maximal Helmholtz free entropy is <span class="math inline">\(f[\rho^*] = \ln Z\)</span>, where <span class="math inline">\(Z = \int dx \; e^{-\beta E(x)}\)</span> is the partition function.</li>
 </ol>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ol type="1">
 <li>We already proved this.</li>
 <li>Use the Lagrange multiplier.</li>
@@ -503,23 +756,57 @@ Tip
 <li><span class="math inline">\(f[\rho] = \ln Z - D_{KL}(\rho \| \rho_B)\)</span>.</li>
 </ol>
 </div>
-</section>
-<section id="conditional-entropies" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="conditional-entropies">Conditional entropies</h2>
-<div id="thm-cond-ent" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2 (Conditional entropy)</strong></span> Given any random variable <span class="math inline">\(X\)</span>, and an “observable” variable <span class="math inline">\(Y\)</span> that is determined by <span class="math inline">\(X\)</span>, if <span class="math inline">\(X\)</span> is the maximal entropy distribution under constraint with entropy <span class="math inline">\(S_X^*\)</span>, then the observable <span class="math inline">\(Y\)</span> follows a Boltzmann distribution, as <span class="math display">\[\rho_Y^*(y) = e^{S_{X|y}^* - S_X^*}\]</span></p>
-<p>where <span class="math inline">\(S_{X|y}^*\)</span> is the maximal entropy for <span class="math inline">\(X\)</span> conditional on the same constraints, plus the constraint that <span class="math inline">\(Y = y\)</span>.</p>
-<p>Furthermore, <span class="math display">\[e^{S_X^*} = \int dy\; e^{S_{X|y}^*}\]</span></p>
 </div>
-<div class="proof page-columns page-full">
-<p><span class="proof-title"><em>Proof</em>. </span>By assumption, <span class="math inline">\(X\)</span> is the unique solution to the constrained optimization problem</p>
+</div>
+</section>
+<section id="the-partition-function" class="level3">
+<h3 class="anchored" data-anchor-id="the-partition-function">The partition function</h3>
+<p>When the system is in a canonical ensemble, we can define a convenient variable <span class="math inline">\(Z = \int dx\; e^{-\beta E(x)}\)</span> called the <strong>partition function</strong>. As proven in <a href="#thm-canonical-characterization" class="quarto-xref">Theorem&nbsp;6</a>, the partition function is equal to <span class="math inline">\(e^f\)</span>, where <span class="math inline">\(f\)</span> is the Helmholtz free entropy of the canonical ensemble.</p>
+<div id="thm-partition-cumulant" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 7 (the partition function is the cumulant generating function of energy)</strong></span> Let a system be in canonical ensemble with inverse temperature <span class="math inline">\(\beta\)</span>, and let <span class="math inline">\(K(t) := \ln \braket{e^{tE}}\)</span> be the <a href="https://en.wikipedia.org/wiki/Cumulant">cumulant generating function</a> of its energy, then <span class="math display">\[K(t) = \ln Z(\beta-t) - \ln Z(\beta)\]</span></p>
+<p>In particular, the <span class="math inline">\(n\)</span>-th cumulant of energy is<br>
+<span class="math display">\[\kappa_n(E) = K^{(n)}(t) |_{t=0} = (-\partial_\beta)^n (\ln Z)\]</span></p>
+<p>A similar proposition applies for the other ensembles and their free entropies.</p>
+</div>
+<p>The proof is by direct computation.</p>
+<p>For example, the first two cumulants are the mean and variance:</p>
+<p><span class="math display">\[\braket{E} = (-\partial_\beta) (\ln Z), \quad \mathrm{Var}(E) = \partial_\beta^2 (\ln Z)\]</span></p>
+<p>Typical systems are made of <span class="math inline">\(N\)</span> particles, where <span class="math inline">\(N\)</span> is large, and that these particles are only weakly interacting. In this case, the total Helmholtz free entropy per particle converges at the thermodynamic limit of <span class="math inline">\(N \to \infty\)</span>:</p>
+<p><span class="math display">\[
+\lim_N \frac 1N \ln Z \to \bar f_\beta
+\]</span></p>
+<p>Thus, for large but finite <span class="math inline">\(N\)</span>, we have</p>
+<p><span class="math display">\[\braket{E} \approx -N \partial_\beta \bar f_\beta, \quad \mathrm{Var}(E) = N\partial_\beta^2 \bar f_\beta\]</span></p>
+<p>In particular, the relative fluctuation scales like <span class="math inline">\(\frac{\sqrt{\mathrm{Var}(E)}}{\braket{E}} \sim N^{-1/2}\)</span>.</p>
+</section>
+<section id="conditional-entropies" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="conditional-entropies">Conditional entropies</h3>
+<p>Given any two random variable <span class="math inline">\(X, Y\)</span>, and an “observable” variable <span class="math inline">\(Y\)</span> that is determined by <span class="math inline">\(X\)</span> by some function <span class="math inline">\(h\)</span>, such that <span class="math inline">\(Y = h(X)\)</span>. If we know <span class="math inline">\(X\)</span>, we would know <span class="math inline">\(Y\)</span>, but it is not so conversely, as multiple <span class="math inline">\(X\)</span> may correspond to the same <span class="math inline">\(Y\)</span>. Typically, we use <span class="math inline">\(Y\)</span> as a “summary statistic” for the more detailed, but more complicated <span class="math inline">\(X\)</span>. For example, we might have multiple particles in a box, such that <span class="math inline">\(X\)</span> is their individual locations, while <span class="math inline">\(Y\)</span> is their center of mass.</p>
+<div id="thm-cond-ent" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 8 (conditional entropy)</strong></span> Given any random variable <span class="math inline">\(X\)</span>, and an “observable” variable <span class="math inline">\(Y\)</span> that is determined by <span class="math inline">\(X\)</span>, and some constraints <span class="math inline">\(c\)</span> on <span class="math inline">\(X\)</span>, if <span class="math inline">\(X\)</span> is the distribution that maximizes entropy under constraints <span class="math inline">\(c\)</span>, with entropy <span class="math inline">\(S_X^*\)</span>, then the observable <span class="math inline">\(Y\)</span> is distributed as</p>
+<p><span class="math display">\[\rho_Y^*(y) = e^{S_{X|y}^* - S_X^*}, \quad e^{S_X^*} = \int dy\; e^{S_{X|y}^*}\]</span></p>
+<p>where <span class="math inline">\(S_{X|y}^*\)</span> is the maximal entropy for <span class="math inline">\(X\)</span> conditional on the same constraints, plus the extra constraint that <span class="math inline">\(Y = y\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>By assumption, <span class="math inline">\(X\)</span> is the unique solution to the constrained optimization problem</p>
 <p><span class="math display">\[
 \begin{cases}
     \max S_X \\
     \text{constraints on $x$}
 \end{cases}
 \]</span></p>
-<p>Because <span class="math inline">\(S_X = S_Y + \braket{S_{X|y}}_{y \sim Y}\)</span>, we realize that solving that <em>one</em> constrained optimization problem is really solving an entire family of constrained optimization problems. In particular, it also solves the problem</p>
+<p>By <a href="#thm-compound-entropy" class="quarto-xref">Theorem&nbsp;3</a>, the problem is equivalent to:</p>
 <p><span class="math display">\[
 \begin{cases}
     \max S_Y + \braket{S_{X|y}}_{y\sim Y} \\
@@ -534,33 +821,56 @@ Tip
     \text{$x$ must be chosen such that the observable $Y = y$}
 \end{cases}
 \]</span></p>
-<p>Then, each such problem gives us a maximal conditional<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> entropy <span class="math inline">\(S_{X|y}^*\)</span>, and we can solve for <span class="math inline">\(Y\)</span> by</p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;If you’re a pure mathematician, you can formalize this using <a href="https://en.wikipedia.org/wiki/Disintegration_theorem">measure disintegration</a>.</p></div></div><p><span class="math display">\[\max(S_Y + \braket{S_{X|y}^*}_{y \sim Y})\]</span></p>
+<p>Then, each such problem gives us a maximal conditional<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> entropy <span class="math inline">\(S_{X|y}^*\)</span>, and we can follow it up by solving for <span class="math inline">\(Y\)</span> with</p>
+<p><span class="math display">\[\max\left(S_Y + \braket{S_{X|y}^*}_{y \sim Y}\right)\]</span></p>
 <p>Again, the solution is immediate once we see it is just the KL-divergence:</p>
 <p><span class="math display">\[S_Y + \braket{S_{X|y}^*}_{y \sim Y} = - \int dy \; \rho_Y(y) \ln\frac{\rho_Y(y)}{e^{S_{X|y}^*}} = \ln Z - D_{KL}(\rho_Y \| \rho_Y^*)\]</span></p>
 <p>where</p>
 <p><span class="math display">\[Z = \int dy\; e^{S_{X|y}^*}, \quad \rho_Y^*(y) = \frac{e^{S_{X|y}^*}}{Z}\]</span></p>
 <p>At the optimal point, the entropy for <span class="math inline">\(X\)</span> is maximized at <span class="math inline">\(S_X^* = \ln Z - 0\)</span>, so <span class="math inline">\(Z = e^{S_X^*}\)</span>.</p>
 </div>
-<p>EXP. the canonical ensemble again</p>
-<p>Consider a small system with energy states <span class="math inline">\(E_1, E_2, \dots\)</span> and a large bath system, in energy contact. We can set <span class="math inline">\(X\)</span> to be the combined state of the whole system, and <span class="math inline">\(Y\)</span> to be the state of the small system.</p>
-<p>Once we observe <span class="math inline">\(y\)</span>, we have fully determined the small system, so the small system has zero entropy, and so all the entropy comes from the bath system: <span class="math display">\[S_{X|y}^* = S_{bath} = S_{bath}(E_{total}) - \beta E_y\]</span></p>
-<p>Consequently, the distribution of the small system is <span class="math display">\[\rho_Y(y) \propto e^{-\beta E_y}\]</span></p>
-<p>which is the Boltzmann distribution, as expected.</p>
-<p>Similar calculation gives us the grand canonical ensemble, etc.</p>
-<p>The above theorem can be generalized to conditional free entropies.</p>
-<div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3 (conditional free entropy)</strong></span> Given any random variable <span class="math inline">\(X\)</span>, and an “observable” variable <span class="math inline">\(Y\)</span> that is determined by <span class="math inline">\(X\)</span>, if <span class="math inline">\(X\)</span> is the distribution that maximizes Helmholtz free entropy under constraint with Helmholtz free entropy <span class="math inline">\(f_X^*\)</span>, then the observable <span class="math inline">\(Y\)</span> is distributed as <span class="math display">\[\rho_Y^*(y) = e^{f_{X|y}^* - f_X^*}\]</span></p>
+</div>
+</div>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;If you’re a pure mathematician, you can formalize this using <a href="https://en.wikipedia.org/wiki/Disintegration_theorem">measure disintegration</a>.</p></div></div><div class="callout callout-style-default callout-note callout-titled" title="deriving the canonical ensemble yet again">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+deriving the canonical ensemble yet again
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider a small system with energy states <span class="math inline">\(E_1, E_2, \dots\)</span> and a large bath system, in energy contact. We can set <span class="math inline">\(X\)</span> to be the combined state of the whole system, and <span class="math inline">\(Y\)</span> to be the state of the small system. Once we observe <span class="math inline">\(y\)</span>, we have fully determined the small system, so the small system has zero entropy, and so all the entropy comes from the bath system: <span class="math display">\[S_{X|y}^* = S_{bath} = S_{bath}(E_{total}) - \beta E_y\]</span></p>
+<p>Consequently, the distribution of the small system is <span class="math inline">\(\rho_Y(y) \propto e^{-\beta E_y}\)</span>, as we expect.</p>
+<p>A similar calculation gives us the grand canonical ensemble, etc.</p>
+</div>
+</div>
+<div id="thm-cond-free-ent" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 9 (conditional free entropy)</strong></span> Given any random variable <span class="math inline">\(X\)</span>, and an “observable” variable <span class="math inline">\(Y\)</span> that is determined by <span class="math inline">\(X\)</span>, and some constraints <span class="math inline">\(c\)</span> on <span class="math inline">\(X\)</span>, if <span class="math inline">\(X\)</span> is the distribution that maximizes Helmholtz free entropy under constraints <span class="math inline">\(c\)</span>, with Helmholtz free entropy <span class="math inline">\(f_X^*\)</span>, then the observable <span class="math inline">\(Y\)</span> is distributed as <span class="math display">\[\rho_Y^*(y) = e^{f_{X|y}^* - f_X^*}, \quad e^{f_X^*} = \int dy\; e^{f_{X|y}^*}\]</span></p>
 <p>where <span class="math inline">\(f_{X|y}^*\)</span> is the maximal Helmholtz free entropy for <span class="math inline">\(X\)</span> conditional on the same constraints, plus the constraint that <span class="math inline">\(Y = y\)</span>.</p>
-<p>Furthermore, <span class="math display">\[e^{f_X^*} = \int dy\; e^{f_{X|y}^*}\]</span></p>
 <p>Similarly for Gibbs free entropy, and all other free entropies.</p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>First note that <span class="math inline">\(f_X = S_Y + \braket{f_{X|y}}_y\)</span>. Then we proceed to argue in the same way.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>First note that <span class="math inline">\(f_X = S_Y + \braket{f_{X|y}}_y\)</span>, then argue in the same way.</p>
+</div>
+</div>
 </div>
 </section>
-<section id="fluctuation-relations" class="level2">
-<h2 class="anchored" data-anchor-id="fluctuation-relations">Fluctuation relations</h2>
+</section>
+<section id="thermodynamic-limit" class="level2">
+<h2 class="anchored" data-anchor-id="thermodynamic-limit">Thermodynamic limit</h2>
 <section id="fluctuation-of-observables" class="level3">
 <h3 class="anchored" data-anchor-id="fluctuation-of-observables">Fluctuation of observables</h3>
 <p>Suppose we have a tank of oxygen gas, and it is in the equilibrium distribution (Maxwell-Boltzmann). Now, if we sample its pressure <span class="math inline">\(P\)</span>, then every time we sample it, we sample a particular microstate <span class="math inline">\(x\)</span> from its equilibrium distribution, and each corresponds to a different pressure <span class="math inline">\(P(x)\)</span>. We know that these particular pressures should be tightly bunched around its average value – the thermodynamic pressure <span class="math inline">\(\braket{P}\)</span>… but how bunched-up is it?</p>
@@ -570,10 +880,12 @@ Tip
 <p>The system has total entropy <span class="math display">\[S = \sum_i S_i(E_i, A_i)\]</span></p>
 <p>where <span class="math inline">\(A_i\)</span> stand for the other state variables we don’t care about, because they are held constant</p>
 <p>There is a single constraint of constant total energy: <span class="math display">\[E = \sum_i E_i\]</span></p>
-<p>In the thermodynamical limit, the compound system reaches the maximal entropy state <span class="math inline">\(E_1^*, \dots, E_n^*\)</span>, which solves the following constrained maximization <span class="math display">\[\begin{cases}
+<p>In the thermodynamical limit, the compound system reaches the maximal entropy state <span class="math inline">\(E_1^*, \dots, E_n^*\)</span>, which solves the following constrained maximization <span class="math display">\[
+\begin{cases}
     \max \sum_i S_i(E_i, A_i)\\
     E = \sum_i E_i
-\end{cases}\]</span></p>
+\end{cases}
+\]</span></p>
 <p>By calculus, at the optimal point, all systems satisfy</p>
 <p><span class="math display">\[
 (\partial_{E_i} S_i)_{A_i} = \beta
@@ -602,20 +914,30 @@ Tip
 <p>TODO sethna section 6.7</p>
 </section>
 </section>
-<section id="maximum-caliber-statistical-mechanics" class="level2">
-<h2 class="anchored" data-anchor-id="maximum-caliber-statistical-mechanics">Maximum caliber statistical mechanics</h2>
-<p><span class="citation" data-cites="ghoshTeachingPrinciplesStatistical2006 ghoshMaximumCaliberVariational2020">(<a href="#ref-ghoshTeachingPrinciplesStatistical2006" role="doc-biblioref">Ghosh et al. 2006</a>; <a href="#ref-ghoshMaximumCaliberVariational2020" role="doc-biblioref">Ghosh et al. 2020</a>)</span></p>
-<p>In general, maximal caliber statistical mechanics is like maximal entropy statistical mechanics. You write down a formula for path-space entropy, and a constraint on allowed paths. Maximize the entropy under constraint, and you would obtain a Boltzmann distribution in path space.</p>
+<section id="maximum-caliber" class="level2">
+<h2 class="anchored" data-anchor-id="maximum-caliber">Maximum caliber</h2>
+<p>In typical developments, statistical mechanics is a “static” theory: It deals with the ensemble of states, but not with how the states change over time. Maximal caliber statistical mechanics handles trajectories in the most obvious way: Collect all paths into a “path space”, define a measure over path space, then study constrained entropy maximization over path space. Jaynes, who proposed the idea, called entropy in path space “caliber”, so the name “maximum caliber” stuck, even though it is really just another instance of maximum entropy.</p>
 <section id="markov-chains" class="level3">
 <h3 class="anchored" data-anchor-id="markov-chains">Markov chains</h3>
 <p><span class="math inline">\(N\)</span> timesteps in total.</p>
 <p><span class="math inline">\(s_t\)</span> is the state of timestep <span class="math inline">\(t\)</span>.</p>
 <p>There are <span class="math inline">\(m\)</span> states in total.</p>
 <div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 4</strong></span> If we fix the singleton probability <span class="math inline">\(p_i\)</span> of each state, then the maximum entropy distribution is the Markov chain with uniform initial probability and <span class="math inline">\(p_{i\to j} = p_i p_j\)</span>.</p>
+<p><span class="theorem-title"><strong>Theorem 10</strong></span> If we fix the singleton probability <span class="math inline">\(p_i\)</span> of each state, then the maximum entropy distribution is the Markov chain with uniform initial probability and <span class="math inline">\(p_{i\to j} = p_i p_j\)</span>.</p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>By Lagrange multipliers.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>By Lagrange multipliers.</p>
 <p>If we fix the singleton probability of each state, then the problem is a constrained maximization problem</p>
 <p><span class="math display">\[
 \begin{cases}
@@ -629,13 +951,28 @@ Tip
 <span class="math display">\[\rho(s_t=k) \propto e^{-\sum_{k=1}^m\frac{\lambda_k}{N}(1[s_t =k] - p_k)} \propto e^{-\frac{\lambda_k}{N}}\]</span></p>
 <p>The multiplier <span class="math inline">\(\lambda_k\)</span> can be found by the typical method of solving <span class="math inline">\(p_k = -\partial_{\lambda_k}\ln Z\)</span>, or we can take the shortcut and notice that <span class="math inline">\(\rho(s_t=k) = p_k\)</span>, and be done with it.</p>
 </div>
+</div>
+</div>
 <div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 5</strong></span> If we fix the transition probability <span class="math inline">\(p_{i \to j}\)</span> of each state-pair, then the maximum entropy distribution is the Markov chain with uniform initial probability. If we fix the initial probability, then it’s still the Markov chain with the same transition probabilities.</p>
+<p><span class="theorem-title"><strong>Theorem 11</strong></span> If we fix the transition probability <span class="math inline">\(p_{i \to j}\)</span> of each state-pair, then the maximum entropy distribution is the Markov chain with uniform initial probability. If we fix the initial probability, then it’s still the Markov chain with the same transition probabilities.</p>
 <p>And more generally, if we fix <span class="math inline">\(n\)</span>-th order transition probability <span class="math inline">\(p_{i_1, \dots, i_n \to j}\)</span>, then we obtain an <span class="math inline">\(n\)</span>-th order Markov chain model.</p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Similarly as above, the path-space distribution is <span class="math display">\[\rho(s_1, \dots, s_N) \propto \prod_{t=1}^{N-1} e^{-\sum_{k, k' \in 1:m} \frac{\lambda_{k, k'}}{N} 1[s_t = k, s_{t+1} = k']} \propto \prod_{t=1}^{N-1} p_{s_t \to s_{t+1}}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Similarly as above, the path-space distribution is <span class="math display">\[\rho(s_1, \dots, s_N) \propto \prod_{t=1}^{N-1} e^{-\sum_{k, k' \in 1:m} \frac{\lambda_{k, k'}}{N} 1[s_t = k, s_{t+1} = k']} \propto \prod_{t=1}^{N-1} p_{s_t \to s_{t+1}}\]</span></p>
 <p>Because the distribution does not specify <span class="math inline">\(s_1\)</span>, it is uniformly distributed on <span class="math inline">\(s_1\)</span>. Otherwise, we can constrain <span class="math inline">\(s_1\)</span> with yet another set of Lagrange multipliers and obtain <span class="math inline">\(\rho(s_1, \dots, s_N) \propto \rho(s_1) \times_{t=1}^{N-1} \rho(s_t, s_{t+1})\)</span>. Similarly for higher orders.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="diffusion" class="level3">
@@ -734,7 +1071,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>We can calculate not just the mean <span class="math inline">\(\braket{x}\)</span>, but also its variance <span class="math inline">\(\braket{x^2}\)</span> if we expand <span class="math inline">\(S_{path} + S_{work}\)</span> to second order around its maximum, then apply <a href="#thm-cond-ent" class="quarto-xref">Theorem&nbsp;2</a>.</p>
+<p>We can calculate not just the mean <span class="math inline">\(\braket{x}\)</span>, but also its variance <span class="math inline">\(\braket{x^2}\)</span> if we expand <span class="math inline">\(S_{path} + S_{work}\)</span> to second order around its maximum, then apply <a href="#thm-cond-ent" class="quarto-xref">Theorem&nbsp;8</a>.</p>
 </div>
 </div>
 </section>
@@ -843,7 +1180,7 @@ Warning
 <p>where <span class="math inline">\(\rho(y | x)\)</span> is a probability density over path-space. In particular, <span class="math inline">\(\rho(y | x) = 0\)</span> identically, unless <span class="math inline">\(y(0)\)</span> is on the energy shell <span class="math inline">\([E_1, E_1 + \delta E_1]\)</span>.</p>
 <p>Running the argument backwards, we can define <span class="math inline">\(\rho'(y' | x')\)</span>, another probability density over paths. This one satisfies <span class="math inline">\(\rho'(y'| x') = 0\)</span> unless <span class="math inline">\(y'(0)\)</span> is on the energy shell <span class="math inline">\([E_2, E_2 + \delta E_2]\)</span>.</p>
 <div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 6 (Crooks fluctuation theorem (microcanonical))</strong></span> For any trajectory <span class="math inline">\(y\)</span> such that it starts on the <span class="math inline">\([E_1, E_1 + \delta E_1]\)</span> energy shell, and ends on the <span class="math inline">\([E_2, E_2 + \delta E_2]\)</span> energy shell,</p>
+<p><span class="theorem-title"><strong>Theorem 12 (Crooks fluctuation theorem (microcanonical))</strong></span> For any trajectory <span class="math inline">\(y\)</span> such that it starts on the <span class="math inline">\([E_1, E_1 + \delta E_1]\)</span> energy shell, and ends on the <span class="math inline">\([E_2, E_2 + \delta E_2]\)</span> energy shell,</p>
 <p><span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} = e^{\Delta S}\]</span></p>
 <p>where <span class="math inline">\(\Delta S= \ln\Omega_2 - \ln\Omega_1\)</span>, <span class="math inline">\(\Omega_1\)</span> is the phase space volume of the first energy shell, and <span class="math inline">\(\Omega_2\)</span> the second.</p>
 </div>
@@ -860,18 +1197,31 @@ Note
 <p>If <span class="math inline">\(y\)</span> does not start on the first energy shell, or does not end on the second energy shell, then either the nominator or the denominator is zero, and so the equation fails to hold.</p>
 </div>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>In the forward process, the probability of going along that trajectory is <span class="math display">\[\rho(x|y) D[x] = \frac{\delta V}{\Omega_1}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In the forward process, the probability of going along that trajectory is <span class="math display">\[\rho(x|y) D[x] = \frac{\delta V}{\Omega_1}\]</span></p>
 <p>where <span class="math inline">\(\delta V\)</span> is the phase-space volume of the shaded set.</p>
 <p>In the backward process, the probability of reversing that trajectory is <span class="math display">\[\rho'(x'|y') D[x']= \frac{\delta V'}{\Omega_2}\]</span></p>
 <p><span class="math inline">\(\delta V' = \delta V\)</span> by Liouville’s theorem, and <span class="math inline">\(D[x] = D[x']\)</span> because <span class="math inline">\(x'\)</span> is just <span class="math inline">\(x\)</span> time-reversed.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="in-an-energy-bath-canonical" class="level3">
 <h3 class="anchored" data-anchor-id="in-an-energy-bath-canonical">In an energy bath (canonical)</h3>
 <p>Now, suppose we take the same piston of gas, and put it in energy-contact with an energy bath, then at thermal equilibrium, the piston of gas would have the Boltzmann distribution <span class="math inline">\(\propto e^{-\beta E}\)</span>. We can then give the piston head a push, which would cause it to undergo</p>
 <div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 7 (Crooks fluctuation theorem)</strong></span> <span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] - \Delta F^*)}\]</span></p>
+<p><span class="theorem-title"><strong>Theorem 13 (Crooks fluctuation theorem)</strong></span> <span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] - \Delta F^*)}\]</span></p>
 <p>where <span class="math inline">\(S[x, y]\)</span> is the entropy produced during the forward process, after the system has equilibrated, and <span class="math inline">\(\Delta F^* = F^*_2 - F^*_2\)</span> is the increase in <em>equilibrium</em> Helmholtz free energy of the system.</p>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -904,8 +1254,19 @@ equilibrium Helmholtz
 <p>This is vitally important, because at time <span class="math inline">\(\tau\)</span>, when the constraints have just reached their new values, the system is <em>not</em> in equilibrium. We would have to hold the constraints constant for a while for the system to return to equilibrium with the energy bath. Despite this, Crooks fluctuation theorem uses <span class="math inline">\(\Delta F^*\)</span>, which is computed at equilibrium.</p>
 </div>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Apply the microcanonical version of Crooks theorem to the entire compound system that includes both the bath and the system, then integrate over all possible microstate trajectories of the bath <span class="math inline">\(y_{bath}\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Apply the microcanonical version of Crooks theorem to the entire compound system that includes both the bath and the system, then integrate over all possible microstate trajectories of the bath <span class="math inline">\(y_{bath}\)</span>.</p>
 <p><span class="math display">\[\begin{aligned}
   S[x, y] &amp;= \Delta S_{bath} + \Delta S_{system} \\
   &amp;= \beta \Delta E_{bath} + \Delta S_{system} \\
@@ -924,12 +1285,27 @@ equilibrium Helmholtz
   &amp;=  e^{S[x,y]} \rho'(y'|x')
 \end{aligned}\]</span></p>
 </div>
+</div>
+</div>
 <div id="cor-todo" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corollary 2</strong></span> <span class="math display">\[\frac{\rho(W | x)}{\rho'(-W | x')} =  e^{\beta (W - \Delta F^*)}\]</span></p>
+<p><span class="theorem-title"><strong>Corollary 3</strong></span> <span class="math display">\[\frac{\rho(W | x)}{\rho'(-W | x')} =  e^{\beta (W - \Delta F^*)}\]</span></p>
 <p>where <span class="math inline">\(\rho(W|x)\)</span> is the probability density of expending work <span class="math inline">\(W\)</span> in the forward process.</p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Integrate over all forward microtrajectories <span class="math inline">\(y\)</span> satisfying <span class="math inline">\(W[x, y] \in [W, W+\delta W]\)</span>. By reversibility, <span class="math inline">\(W[x', y'] = [-W - \delta W, -W]\)</span> for such microtrajectories.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Integrate over all forward microtrajectories <span class="math inline">\(y\)</span> satisfying <span class="math inline">\(W[x, y] \in [W, W+\delta W]\)</span>. By reversibility, <span class="math inline">\(W[x', y'] = [-W - \delta W, -W]\)</span> for such microtrajectories.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="other-ensembles" class="level3">
@@ -947,19 +1323,45 @@ equilibrium Helmholtz
 <h2 class="anchored" data-anchor-id="jarzynski-equality">Jarzynski equality</h2>
 <p>Let <span class="math inline">\(W\)</span> be the total work we expended by changing the constraints during the interval <span class="math inline">\([0, \tau]\)</span>. Since the work expended depends on the details of the heat bath and the starting state of the system at <span class="math inline">\(t=0\)</span>, this is a random variable.</p>
 <div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 8 (Jarzynski equality)</strong></span> <span class="math display">\[\braket{e^{-\beta W}} = e^{-\beta \Delta F^*}\]</span></p>
+<p><span class="theorem-title"><strong>Theorem 14 (Jarzynski equality)</strong></span> <span class="math display">\[\braket{e^{-\beta W}} = e^{-\beta \Delta F^*}\]</span></p>
 <p>where the expectation is taken over many repeats of the same experiment (ensemble average).</p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Integrate Crooks over all forward trajectories <span class="math inline">\(D[x]\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Integrate Crooks over all forward trajectories <span class="math inline">\(D[x]\)</span>.</p>
 <p><span class="math display">\[\rho(y | x) e^{-\beta W[x, y] } = \rho'(y' | x') e^{-\beta\Delta F}\]</span></p>
 <p>now integrate over <span class="math inline">\(\int D[y]\)</span>, using the fact that <span class="math inline">\(D[y] = D[y']\)</span>.</p>
 </div>
-<div id="cor-todo" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corollary 3 (violation of second law is exponentially unlikely)</strong></span> <span class="math display">\[Pr((W - \Delta F^*) \leq - \delta W) \leq e^{-\beta \delta W}\]</span></p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Apply Markov’s inequality.</p>
+</div>
+<div id="cor-todo" class="theorem corollary">
+<p><span class="theorem-title"><strong>Corollary 4 (violation of second law is exponentially unlikely)</strong></span> <span class="math display">\[Pr((W - \Delta F^*) \leq - \delta W) \leq e^{-\beta \delta W}\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Apply Markov’s inequality.</p>
+</div>
+</div>
 </div>
 <p>EXP. high probability of work extraction</p>
 <p>Classically, if we have a single system in thermal equilibrium with a single energy-bath, and we perform a cyclic operation on it, then we can’t extract work, lest we violate the second law.</p>
@@ -1038,7 +1440,7 @@ Note
 <section id="fluctuation-dissipation-relations-1" class="level3">
 <h3 class="anchored" data-anchor-id="fluctuation-dissipation-relations-1">Fluctuation-dissipation relations</h3>
 <div id="cor-todo" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corollary 4 (Fluctuation-dissipation relations)</strong></span> Since <span class="math inline">\(e^t\)</span> is convex, we have <span class="math inline">\(\Delta F^* \leq \braket{W}\)</span>, meaning that the average work expended is more than the increase in Helmholtz free energy. This has better be true, else we would be violating the second law of thermodynamics on average.</p>
+<p><span class="theorem-title"><strong>Corollary 5 (Fluctuation-dissipation relations)</strong></span> Since <span class="math inline">\(e^t\)</span> is convex, we have <span class="math inline">\(\Delta F^* \leq \braket{W}\)</span>, meaning that the average work expended is more than the increase in Helmholtz free energy. This has better be true, else we would be violating the second law of thermodynamics on average.</p>
 <p>Since <span class="math inline">\(\Delta F^* = -\frac{1}{\beta} \ln\braket{e^{-\beta W}}\)</span>, we find that to second order, <span class="math display">\[\underbrace{\braket{W} - \Delta F^*}_{\text{work dissipation}} = \frac 12 \beta \underbrace{\sigma_W^2}_{\text{work fluctuation}}\]</span></p>
 <p>It is more familiarly written as <span class="math display">\[\mu = D\beta\]</span></p>
 <p>where <span class="math inline">\(D = \frac 12 \sigma_W^2\)</span> is the fluctuation coefficient, and <span class="math inline">\(\mu = (\braket{W} - \Delta F^*)\)</span> is the dissipation coefficient.</p>
@@ -1047,11 +1449,24 @@ Note
 <p>Consider a time-reversible dynamical system immersed in an energy bath with inverse temperature <span class="math inline">\(\beta\)</span> , driven by periodically varying constraints. For example, a pendulum in a sticky fluid subjected to a periodic driving torque, or a water-cooled electric circuit driven by a periodic voltage.</p>
 <p>Such a system will settle into a “dynamical equilibrium” ensemble, much like a canonical ensemble. If it is driven by the same process time-reversed, then, it will settle into another dynamical equilibrium ensemble.</p>
 <div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 9 (Gallavotti–Cohen fluctuation theorem)</strong></span> <span class="math display">\[\frac{\rho(Q)}{\rho'(-Q)} = e^{\beta Q}\]</span></p>
+<p><span class="theorem-title"><strong>Theorem 15 (Gallavotti–Cohen fluctuation theorem)</strong></span> <span class="math display">\[\frac{\rho(Q)}{\rho'(-Q)} = e^{\beta Q}\]</span></p>
 <p>where <span class="math inline">\(\rho(Q)\)</span> is the probability density that a forward cycle, randomly sampled from the dynamical equilibrium ensemble, emits energy <span class="math inline">\(Q\)</span> into the energy bath. Similarly, <span class="math inline">\(\rho'\)</span> is for the backward cycle.</p>
 </div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for <span class="math inline">\(NT\)</span> time where <span class="math inline">\(N\)</span> is a large integer, then remove the driving. At the <span class="math inline">\(N\to\infty\)</span> limit, the CFT reduces to the result.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for <span class="math inline">\(NT\)</span> time where <span class="math inline">\(N\)</span> is a large integer, then remove the driving. At the <span class="math inline">\(N\to\infty\)</span> limit, the CFT reduces to the result.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="arrow-of-time" class="level3">
@@ -1076,12 +1491,6 @@ Brennan, J. F., J. S. Shapiro, and E. C. Watton. 1974. <span>“Evaporation of L
 </div>
 <div id="ref-feynmanWhatYouCare1989" class="csl-entry" role="listitem">
 Feynman, Richard P. 1989. <em>"<span>What</span> Do You Care What Other People Think?": Further Adventures of a Curious Character</em>. Edited by Ralph Leighton. New York: Bantam Books.
-</div>
-<div id="ref-ghoshTeachingPrinciplesStatistical2006" class="csl-entry" role="listitem">
-Ghosh, Kingshuk, Ken A. Dill, Mandar M. Inamdar, Effrosyni Seitaridou, and Rob Phillips. 2006. <span>“Teaching the Principles of Statistical Dynamics.”</span> <em>American Journal of Physics</em> 74 (2): 123–33.
-</div>
-<div id="ref-ghoshMaximumCaliberVariational2020" class="csl-entry" role="listitem">
-Ghosh, Kingshuk, Purushottam D. Dixit, Luca Agozzino, and Ken A. Dill. 2020. <span>“The <span>Maximum Caliber Variational Principle</span> for <span>Nonequilibria</span>.”</span> <em>Annual Review of Physical Chemistry</em> 71 (1): 213–38. <a href="https://doi.org/10.1146/annurev-physchem-071119-040206">https://doi.org/10.1146/annurev-physchem-071119-040206</a>.
 </div>
 <div id="ref-hazoglouCommunicationMaximumCaliber2015" class="csl-entry" role="listitem">
 Hazoglou, Michael J., Valentin Walther, Purushottam D. Dixit, and Ken A. Dill. 2015. <span>“Communication: <span>Maximum</span> Caliber Is a General Variational Principle for Nonequilibrium Statistical Mechanics.”</span> <em>The Journal of Chemical Physics</em> 143 (5): 051104. <a href="https://doi.org/10.1063/1.4928193">https://doi.org/10.1063/1.4928193</a>.

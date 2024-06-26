@@ -26,128 +26,286 @@ importance: 7
 
 * Liouville's theorem: Hamiltonian dynamics preserves density in phase space.
 
-## Max-ent statistical mechanics
+## Overview
 
-The idea of Gibbsian statistical mechanics is to study the evolution of an entire probability distribution over all possible states.
+### Philosophical comments
 
+It is fair to say that, although it originated in the 19th century like all other classical fields of physics, statistical mechanics is unsettled. 
 
-We have a state space $X$, which by default is the phase space.
+Trajectory-centric statistical mechanics. In this view, we start with the equations of motion for a physical system, then study statistical properties of individual trajectories, or collections of them. For example, if we have a pendulum hanging in air, being hit by air molecules all the time, we would study the total trajectory $(\theta, x_1, y_1, z_1, x_2, y_2, z_2, \dots)$, where $\theta$ is the angle of the pendulum swing, and $(x_i, y_i, z_i)$ is the location of the $i$-th air molecule. Then we may ask that, over a long enough period, how frequent would the pendulum visit a certain angle range of $[\theta_0, \theta_0 + \delta\theta]$:
 
-We study probability distributions (ensembles) over the state space.
+$$
+Pr(\theta \in [\theta_0, \theta_0 + \delta\theta]) = \lim_{T \to \infty} \frac{1}{2T} \int_{-T}^{+T} 1[\theta \in [\theta_0, \theta_0 + \delta\theta]] dt
+$$
 
-The entropy of a probability distribution $\rho$ is
+In the trajectory-centric view, there are the following issues:
+
+* Problem of ergodicity: When does time-average equal ensemble-average? A system is called "ergodic" iff for almost all starting conditions, the time-average of the trajectory is the ensemble-average over all trajectories.
+* Problem of entropy: How is entropy defined *on a single trajectory*?
+* H-theorem: In what sense, and under what conditions, does entropy increase?
+* Problem of equilibrium: What does it mean to say that a trajectory is *in equilibrium*?
+* Approach to equilibrium: In what sense, and under what conditions, does the trajectory converge to an equilibrium?
+* Reversibility problem (*Umkehreinwand*): If individual trajectories are reversible, why does entropy increase instead of decrease?
+
+While these philosophical problems are quite diverting, we will avoid them as much as possible, because we will be working with the ensemble-centric equilibrium statistical mechanics. This is the statmech that every working physicist uses, and this is what we will present. If you are interested in the philosophical issues, read the [Stanford Encyclopedia entry on the *Philosophy of Statistical Mechanics*](https://plato.stanford.edu/entries/statphys-statmech/).
+
+### Principles of statistical mechanics
+
+* A **physical system** is a classical system with a state space, evolving according to some equation of motion.
+* An **ensemble** of that system is a probability distribution over its state space.
+* The idea of (ensemble-centric) statistical mechanics is to study the evolution of an entire probability distribution over all possible states.
+* The **entropy** of a probability distribution $\rho$ is
+
 $$S[\rho] := -\int dx\; \rho(x) \ln \rho(x)$$
 
-::: {#prp-todo}
+* Under any constraint, there exists a unique ensemble, named the **equilibrium ensemble**, which maximizes entropy under constraint.
 
-## compound entropy
+Most of the times, the state space is a phase space, and the equation of motion is described by a Hamiltonian function. However, the machinery of statistical mechanics, as given above, is purely mathematical. It can be used to study any problem in probability whatsoever, even those with no physical meaning.
 
-$S_{X,Y} = S_Y + \braket{S_{X|y}}_y$
+Believe it or not, the above constitutes the entirety of equilibrium statistical mechanics. So far, it is a purely mathematical theory, with no falsifiability (Popperians shouting in the background). To make it falsifiable, we need to add one more assumption, necessarily fuzzy:[^einstein-quote-reality]
 
-:::
+* The equilibrium ensemble is physically meaningful and describes the observable behavior of physical systems.
 
-::: {.proof}
+In other words, when a physical system is *at equilibrium*, then everything observable can be found by studying it *as if* it has the maximum entropy distribution under constraint.
 
-Consider a compound system in ensemble $\rho(x, y)$. Its entropy is
-$$S[\rho] = -\int dxdy \; \rho(x, y) \ln \rho(x, y)$$
+[^einstein-quote-reality]: 
+    > As far as the laws of mathematics refer to reality, they are not certain; and as far as they are certain, they do not refer to reality. 
+    > 
+    > --- Albert Einstein, *Address to Prussian Academy of Sciences* (1921)
 
-We can take the calculation in two steps:
-$$S[\rho] = -\int dxdy \; \rho(x|y)\rho(y) (\ln \rho(x|y) + \ln  \rho(y)) = S[\rho_Y] + \E_y[S[\rho_{X|y}]]$$
+Of course, just what that "is physically meaningful" means, is another source of endless philosophical arguments. I would trust that you will know what is physically meaningful, and leave it at that, while those who have a taste for philosophy can grapple with the [Duhem--Quine thesis](https://plato.stanford.edu/entries/scientific-underdetermination/).
 
-Here, 
-$$S[\rho_Y] = -\int dy \; \rho(y) \ln \rho(y)$$
+### Differential entropy depends on coordinates choice
 
-is the entropy of system $Y$,  
-$$S[\rho_{X | y}] = -\int dx \; \rho(x|y) \ln \rho(x|y)$$
+There is a well-known secret among information theorists: differential entropy is not well-defined.
 
-is the entropy of system $X$ conditional on the state of system $Y$ being equal to $y$, and  
-$$\E_y$$
-
-means taking expectation over the state of system $Y$.  
-
-More succinctly, $S_{X,Y} = S_Y + \braket{S_{X|y}}_y$.
-
-:::
-
-ASSM. (maximum entropy distribution under constraint)
-
-In most systems, everything measurable can be found by studying it as if it has the maximum entropy distribution under constraint.
-
-#### Differential entropy depends on coordinates choice
-
-Consider the uniform distribution on $[0, 1]$. It is the maxent distribution on $[0, 1]$... relative to the Lebesgue measure.
+Consider the uniform distribution on $[0, 1]$. It is the maxent distribution on $[0, 1]$ -- relative to the Lebesgue measure. However, why should we pick the Lebesgue measure, and what happens if we don't?
 
 Suppose we now stretch the $[0, 1]$ interval nonlinearly, by $f(x) = x^2$, then the maxent distribution relative to *that* would no longer be the uniform distribution on $[0, 1]$. Instead, it would be the uniform distribution after stretching.
 
-The problem is essentially this: if we change the coordinates, we change the base measure, and the differential entropy changes.
+The problem is this: Differential entropy is not coordinate-free. If we change the coordinates, we change the base measure, and the differential entropy changes as well.
 
-To fix this, we can use the KL-divergence, which is invariant under a change of base measure, as in
+To fix this, we need to use the KL-divergence, which is invariant under a change of base measure, as in
 $$-D_{KL}(\rho \| \mu) := - \int dx\; \rho(x) \ln\frac{\rho(x)}{\mu(x)}$$
 
 In typical situations, we don't need to worry ourselves with KL-divergence, as we just pick the uniform distribution $\mu$. When the state space is infinite in volume, the uniform distribution is not a probability measure, but it will work. Bayesians say that it is an *improper prior*.
 
 In this interpretation, the principle of "maximum entropy distribution under constraint" becomes the principle of "minimal KL-divergence under constraint", which *is* Bayesian inference, with exactly the same formulas.
 
-In almost all cases, we use the uniform prior over phase space. This is how Gibbs did it, and he didn't really justify it other than saying that *it just works*, and suggesting it has something to do with Liouville's theorem. Now with a century of hindsight, we know that it works because of quantum mechanics: we should use the uniform prior over phase space, because phase space volumes have a natural unit of measurement: $h$, Planck's constant. Planck's constant is a universal constant, so we should weight all of the phase space equally, giving a uniform prior.
+In almost all cases, we use the uniform prior over phase space. This is how Gibbs did it, and he didn't really justify it other than saying that *it just works*, and suggesting it has something to do with Liouville's theorem. Now with a century of hindsight, we know that it works because of quantum mechanics: We *should use* the uniform prior over phase space, because phase space volume has a natural unit of measurement: $h^N$, where $h$ is Planck's constant, and $2N$ is the dimension of phase space. As Planck's constant is a universal constant, independent of where we are in phase space, we should weight all of the phase space equally, resulting in a uniform prior.
 
-DEF. extensivity
+## Mathematical developments
+
+### Fundamental theorems
+
+::: {#thm-liouville}
+
+## Liouville's theorem
+
+For any phase space and any Hamiltonian over it (which can change with time), phase-space volume is conserved under motion.
+
+For any probability distribution $\rho_0$, if after time $t$, it evolves to $\rho_t$, and a point $x(0)$ evolves to $x(t)$, then $\rho_0(x(0)) = \rho_t(x(t))$.
+
+:::
+
+The proof is found in any textbook, and also [Wikipedia](https://en.wikipedia.org/wiki/Liouville's_theorem_(Hamiltonian)). Since it is already simple enough, and I can't really improve upon it, I won't.
+
+::: {#cor-conservation-entropy}
+
+## conservation of entropy
+
+For a Hamiltonian system, with any Hamiltonian (which can change with time), for any probability distribution $\rho$ over its phase space, its entropy is conserved over time.
+
+::: 
+
+In particular, we have the following corollary:
+
+::: {#cor-ensemble-conservation}
+
+Given any set of constraints, if the Hamiltonian preserves these constraints over time, then any constrained-maximal entropy distribution remains constrained-maximal under time-evolution.
+
+:::
+
+In most cases, the constraint is of a particular form: the expectation is known. In that case, we have the following theorem:
+
+::: {#thm-constrained-optimization}
+
+## maximal entropy under linear constraints
+
+For the following constrained optimization problem
+
+$$
+\begin{cases}
+\max_\rho S[\rho] \\
+\int A_1(x) \rho(x) &= \bar A_1 \\
+\cdots &= \cdots \\
+\int A_n(x) \rho(x) &= \bar A_n \\
+\end{cases}
+$$
+
+Consider the following ansatz
+
+$$
+\rho(x) = \frac{1}{Z(a_1, \dots, a_n)} e^{-\sum_i a_i A_i(x)}
+$$
+
+where $Z(a_1, \dots, a_n) = \int e^{-\sum_i a_i A_i(x)} dx$, and $a_1, \dots, a_n$ are chosen such that the constraints $\int A_i(x) \rho(x) = \bar A_i$ are satisfied.
+
+*If* the ansatz exists, then it is the unique solution.
+
+:::
+
+The ansatz solution is what you get by Lagrangian multipliers. For a refresher, see the [*Analytical Mechanics*#Lagrange's devil at Disneyland](https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/index.html#lagranges-devil-at-disneyland). The theorem shows that the solution is unique -- provided that it exists. Does it exist? Yes, in physics. If it doesn't exist, then we are clearly not modelling a physically real phenomenon.
+
+::: {.callout-tip}
+
+In physics, these are "Boltzmann distributions" or "Gibbs distributions". In statistics, these are [exponential families](https://en.wikipedia.org/wiki/Exponential_family). Because they are everywhere, they have many names.
+
+:::
+
+::: {.callout-note title="Proof" collapse="true"}
+
+Define a distribution $\rho$ as given in the statement of the theorem. That is,
+
+$$
+\rho(x) = \frac{1}{Z(a_1, \dots, a_n)} e^{-\sum_i a_i A_i(x)}
+$$
+
+etc. 
+
+Now, it remains to prove that for any other $\rho'$ that satisfies the constraints, we have $S[\rho] \geq S[\rho']$.
+
+By routine calculation, for any probability distribution $\rho'$,
+
+$$
+D_{KL}(\rho' \| \rho) = -S[\rho'] + \sum_i a_i \braket{A_i}_{\rho'} + \ln Z(a_1, \dots, a_n)
+$$
+
+If $\rho'$ satisfies the given constraints, then $D_{KL}(\rho' \| \rho) = -S[\rho'] + Const$ where the constant does not depend on $\rho'$, as long as it satisfies the constraints. Therefore, $S[\rho']$ is maximized when $D_{KL}(\rho' \| \rho)$ is minimized, which is exactly $\rho$.
+
+::: 
+
+The following proposition is often used when we want to maximize entropy in a two-step process:
+
+::: {#thm-compound-entropy}
+
+## compound entropy
+
+If $\rho_{X,Y}$ is a probability distribution over two variables $(X, Y)$, then
+
+$$S[\rho_{X,Y}] = S[\rho_Y] + \braket{S[\rho_{X|y}]}_y$$
+
+or more succinctly,
+
+$$S_{X,Y} = S_Y + \braket{S_{X|y}}_y$$
+
+:::
+
+::: {.callout-note title="Notations"}
+
+$\rho_Y$ is the probability distribution over $Y$, after we integrate/marginalize $X$ away:
+
+$$
+\rho_Y(y) := \int \rho_{X,Y}(x,y)dx
+$$
+
+$\rho_{X|y}$ is the conditional probability distribution over $X$, conditional on $Y=y$:
+
+$$
+\rho_{X|y}(x) := \frac{\rho_{X,Y}(x,y)}{\int \rho_{X,Y}(x,y) dx}
+$$
+
+$\braket{\cdot}_y$ is the expectation over $\rho_Y$:
+
+$$
+\braket{S_{X|y}}_y := \int S_{X|y} \rho_Y(y)dy
+$$
+
+:::
+
+::: {.callout-note title="Proof" collapse="true"}
+
+Consider a compound system in ensemble $\rho(x, y)$. Its entropy is
+
+$$S[\rho] = -\int dxdy \; \rho(x, y) \ln \rho(x, y)$$
+
+We can take the calculation in two steps:
+
+$$S[\rho] = -\int dxdy \; \rho(x|y)\rho(y) (\ln \rho(x|y) + \ln  \rho(y)) = S[\rho_Y] + \E_y[S[\rho_{X|y}]]$$
+
+:::
+
+Intuitively, what does $S_{X,Y} = S_Y + \braket{S_{X|y}}_y$ mean? It means that the entropy in $(X, Y)$ can be decomposed into two parts: the part due to $Y$, and the part remaining after we know $Y$, but not yet knowing $X$. In the language of information theory, the total information in $(X, Y)$ is equal to the information in $Y$, plus the information of $X$ conditional over $Y$:
+
+$$
+I(X, Y) = I(Y) + I(X|Y)
+$$
+
+### Microcanonical ensembles
+
+If the only constraint is the constant-energy constraint $H(x) = E$, then the maximal entropy distribution is the uniform distribution on the shell of constant energy $H = E$. It is uniform, because once we enforce $H(x) = E$, there are no other constraints, and so by @thm-constrained-optimization, the distribution is uniform. 
+
+Thus, we obtain the **microcanonical ensemble**:
+
+$$\rho_E(x) \propto 1_{H(x) = E}$$
+
+It is sometimes necessary to deal with the "thickness" of the energy shell. In that case, $\rho_E(x) \propto \delta(H(x) - E)$, where $\delta$ is the Dirac delta function.
+
+By @thm-constrained-optimization, the microcanonical ensemble is the unique maximizer of entropy under the constraint of constant energy. In particular, if the Hamiltonian does not change over time, then any microcanonical ensemble is preserved over time. In words, if we uniformly "dust" the energy shell of $H(x) = E$ with a cloud of system states, and let all of them evolve over time, then though the dust particles move about, the cloud remains exactly the same.
+
+More generally, we can impose more (in)equality constraints, and still obtain a microcanonical ensemble. For example, consider a ball flying around in an empty room with no gravity. The Hamiltonian is $H(q, p) = \frac{p^2}{2m}$, and its microcanonical ensemble is $\rho(q, p) \propto \delta(p = \sqrt{2mE})1[p \in \text{the room}]$. That is, its velocity is on the energy shell, while its position is uniform over the entire room.
+
+If we want to specify the number of particles for each chemical species, then that can be incorporated into the microcanonical ensemble as well. For example, if we want the number of species $i$ be exactly $N_{i0}$, then we multiply $\rho$ by $1[N_i = N_{i0}]$.
+
+### Canonical ensembles
+
+If we have a small system connected to a large system, then we typically don't care about the large system, and only want to study the ensemble of the small system. In this case, we would first find the microcanonical ensemble for the total system, then integrate out of the large system, resulting in an ensemble over just the small system, as in
+
+$$\rho_{\text{small}}(x) = \int \rho_{\text{total}}(x, y) dy$$
+
+where $x$ ranges over the states of the small system, and $y$ of the large system.  
+
+Assuming that the energy of the compound system is extensive, we obtain the canonical ensemble. Assuming that the energy and volume are both extensive, we obtain the grand canonical ensemble, etc. The following table would be very useful
+
+| extensive constraint | ensemble | free entropy |
+| --- | --- | --- |
+| none | microcanonical | entropy |
+| energy | canonical | Helmholtz free entropy |
+| energy, volume | ? | Gibbs free entropy |
+| energy, particle count | grand canonical | Landau free entropy |
+| energy, volume, particle count | ? | ? |
+
+There are some question marks in the above table, because there are no consensus names for those question marks. What is more surprising is that there is no name for the ensemble of constrained energy and volume. I would have expected something like the "Gibbs ensemble", but history isn't nice to us like that. Well, then I will name it first, as the *big canonical ensemble*. And while we're at it, let's fill the last row as well:
+
+| extensive constraint | ensemble | free entropy |
+| --- | --- | --- |
+| none | microcanonical | entropy |
+| energy | canonical | Helmholtz free entropy |
+| energy, volume | big canonical | Gibbs free entropy |
+| energy, particle count | grand canonical | Landau free entropy |
+| energy, volume, particle count | gross canonical | EVN free energy |
+
+::: {.callout-tip title="Extensivity"}
 
 In classical thermodynamics, extensivity means that entropy of the compound system can be calculated in a two-step process: calculate the entropy of each subsystem, then add them up. The important fact is that a subsystem still has enough independence to have its own entropy.
 
 This is not always obvious. If we have two galaxies of stars, we can think of each as a "cosmic gas" where each particle is a star. Now, if we put them near each other, then the gravity between the two galaxies would mean it is no longer meaningful to speak of "the entropy of galaxy 1", but only "the entropy of galaxy-compound 1-2".
 
-In statistical mechanics, extensivity *usually* means the Hamiltonian of each subsystem is unaffected by the state of the other subsystems, and the total Hamiltonian is the sum of all the Hamiltonians. However, other definitions exist.
+In statistical mechanics, extensivity means a certain property of each subsystem is unaffected by the state of the other subsystems, and the total is the sum of them. So for example, if $A$ is an extensive property, then it means
 
-SETUP. the microcanonical ensemble
+$$
+A(x_1, \dots, x_n) = A_1(x_1) + \dots + A_n(x_n)
+$$
 
-If the only constraint is the energy $E$, then the maximal entropy distribution is the uniform distribution on the shell of constant energy $H = E$. This is the **microcanonical ensemble**:
-
-$$\rho_E(x) \propto 1_{H(x) = E}$$
-
-If we have a small system connected to a large system, then we typically don't care about the large system, and only want to study the ensemble of the small system. In this case, we would first find the microcanonical ensemble for the total system, then integrate out of the large system, resulting in an ensemble over just the small system, like
-
-$$\rho_{small}(x) = \int \rho_{total}(x, y) dy$$
-
-where $x$ ranges over the state of the small system, and $y$ that of the large system.  
-
-If we further assume that the compound system is extensive, then we can derive all the other ensembles -- canonical, grand canonical, etc -- depending on how the two systems are connected.
-
-In the following theorem, we assume that the total system is extensive, and is already in the maximal entropy distribution (microcanonical ensemble). We derive the distribution of the small system by marginalizing out the large system.
-
-::: {#prp-todo}
-
-## Entropy is preserved in Hamiltonian systems
-
-If a system is a Hamiltonian system with any Hamiltonian (which can change with time), then for any probability distribution $\rho$ over its phase space, its entropy is conserved over time.
-
-The microcanonical ensemble is the unique maximizer of entropy under the constraint of constant energy.
-
-::: 
-
-::: {.proof}
-
-The first result is by Liouville's theorem.
-
-Let $\rho$ be the microcanonical distribution on the energy shell of $H = E$. Given any other distribution $\rho'$, we have
-$$S[\rho'] = S[\rho] - D_{KL}(\rho' \| \rho)$$
-
-which is maximized at only $\rho' = \rho$.  
+Like most textbooks, we assume extensivity by default, although as we noted in [*Classical Thermodynamics and Economics*](https://yuxi-liu-wired.github.io/essays/posts/equilibrium-thermoeconomics/), both classical thermodynamics and statistical mechanics do not require extensivity. We assume extensivity because it is mathematically convenient, and good enough for most applications.
 
 :::
 
-::: {#cor-todo}
+In the following theorem, we assume that the total system is extensive, and is already in the maximal entropy distribution (microcanonical ensemble)
 
-Constrained maxent distributions are preserved in Hamiltonian systems
+::: {#thm-canonical-ensembles}
 
-That is, given any set of constraints, if the Hamiltonian preserves these constraints over time, then any maximal entropy distribution satisfying those constraints is preserved by time-evolution under the Hamiltonian. In particular, if the Hamiltonian is constant over time, then any microcanonical ensemble is preserved by time-evolution.
-
-:::
-
-::: {#thm-todo}
-
-## Canonical ensembles
-
-If the two systems are in energy-contact, then the small system has the **canonical ensemble**
+If the two systems are in energy-contact, and energy is conserved, and energy is extensive, and the compound system is in a microcanonical ensemble, the small system is in a **canonical ensemble**
 
 $$
 \rho(x) \propto e^{-\beta H(x)}
@@ -156,8 +314,6 @@ $$
 where $\beta$ is the marginal entropy of energy of the large system:   
 
 $$\beta := \partial_E S[\rho_{bath, E}]$$
-
-::: 
 
 Similarly, if the two systems are in energy-and-particle-contact, then the small system has the **grand canonical ensemble**
 
@@ -169,72 +325,39 @@ where $-\beta\mu$ is the marginal entropy of particle of the large system:
 
 $$-\beta\mu := (\partial_N S[\rho_{bath, E, N}])_{E}$$
 
-More generally, if the two systems are in $q_1, \dots, q_m$ contact, then
+Most generally, if the two systems are in $q_1, \dots, q_m$ contact, and $q_1, \dots, q_m$ are conserved and extensive quantity, then
+
 $$\rho(x) \propto e^{-\sum_i p_i q_i(x)}$$
 
-where $p_i = (\partial_{q_i} S[\rho_{bath, q}])_{q}$ is the marginal entropy for conserved quantity $q_i$.  
+where $p_i = (\partial_{q_i} S[\rho_{bath, q}])_{q}$ is the marginal entropy of $q_i$ of the large system.
 
-::: {.proof}
+:::
 
-We prove the case for the energy-contact. The other cases are similar.
+::: {.callout-note title="Proof" collapse="true"}
+
+We prove the case for the canonical ensemble. The other cases are similar.
 
 Since the total distribution of the whole system is the maximal entropy distribution, we are faced with a constrained maximization problem:
 
 $$\max_\rho S[\rho]$$
 
-The entropy of the compound system satisfies
+By @thm-compound-entropy, 
 
-$$S = S_{system} + \braket{S_{bath|system}}_{system}$$
+$$S = S_{system}(E_{system}) + \braket{S_{bath|system}(E_{total} - E_{system})}_{system}$$
 
-Since the bath is so much larger than the system, we can take just the first Taylor expansion:
+Since the bath is so much larger than the system, we can take just the first term in its Taylor expansion:
 
-$$S_{bath|system} = S_{bath}(E) - \beta E_{system}$$
+$$S_{bath|system}(E_{total} - E_{system}) = S_{bath}(E_{total}) - \beta E_{system}$$
 
-where $E$ is the total energy, and $E_{system}$ is the energy of the system.  
+where $E_{total}$ is the total energy for the compound system, $\beta = \partial_E S_{bath}|_{E = E_{total}}$ is the marginal entropy per energy, and $E_{system}$ is the energy of the system.  
 
-This gives us the constraint maximization problem of
+This gives us the linearly constrained maximization problem of
 
-$$\max (S_{system} - \beta \braket{E_{system}})$$
+$$\max_{\rho_{system}} (S_{system} - \beta \braket{E_{system}}_{\rho_{system}})$$
 
-This is the statistical mechanics analog of the "maximize Helmholtz free entropy" problem.  
-
-In detail, we have a problem of variational calculus:
-$$
-\begin{cases}
-  \min\int dx\; &\rho(x)(\ln\rho(x) + \beta E_{system}(x)) \\
-      \int dx\; &\rho (x) = 1
-\end{cases}
-$$
-
-which by using the Lagrange multiplier, gives us the solution.  
+and we apply Lagrange multipliers to finish the proof.
 
 :::
-
-::: {.proof}
-
-Alternatively, we don't need the Lagrange multiplier. **Define** the Boltzmann distribution as 
-
-$$\rho_B(x) = Z(\beta)^{-1} e^{-\beta E_{system}(x)}$$
-
-where $Z(\beta)$ is the normalization constant (partition function), defined by   
-$$Z(\beta) = \int dx\; e^{-\beta E_{system}(x)}$$
-
-It remains to prove that $\rho = \rho_B$.  
-
-By routine calculation, the optimization problem is equivalent to
-
-$$
-\min \left(\int dx\; \rho(x) \ln\frac{\rho(x)}{\rho_B(x)} - \ln Z(\beta)\right)
-$$
-
-and since $Z(\beta)$ is independent of $\rho$, we just need to solve  
-
-$$
-\min \int dx\; \rho(x) \ln\frac{\rho(x)}{\rho_B(x)} = \min D_{KL}(\rho \| \rho_B)
-$$
-which is just the KL-divergence, and is minimized exactly at $\rho = \rho_B$.  
-
-::: 
 
 ::: {.callout-note title="extensivity"}
 
@@ -254,87 +377,50 @@ which reminds me of Sanov theorem and large deviation theory...
 
 :::
 
-EXR. Try deriving some other ensembles.
+::: {.callout-note title="Enthalpic ensemble"}
 
-For example, what if we have a system in volume-contact, but not thermal-contact? This might happen when the system is a flexible bag of gas held in an atmosphere, but the bag is made of thermally insulation. Notice that in this case, energy exchange still occurs, so you should solve
+What if we have a system in volume-contact, but not thermal-contact? This might happen when the system is a flexible bag of gas held in an atmosphere, but the bag is thermally insulating. Notice that in this case, the small system still exchanges energy with the large system via $d\braket{E} = -Pd\braket{V}$. We don't have $E = -PdV$, because the small system might get unlucky. During a moment of weakness, all its particles has abandoned their frontier posts, and the bath has taken advantage of this by encroaching on its land. The system loses volume by $\delta V$, without earning a compensating $\delta E = P \delta V$. In short, the thermodynamic equality $E = -PdV$ is inexact in statistical mechanics, and only holds true on the ensemble average.
 
-As another example, what if we have a system in particle-contact, but not energy-contact? I don't know when this might happen, but it could happen!
+In this case, because pressure is a constant, we have $d(E + PV) = 0$, and so we have the enthalpic ensemble $\rho \propto e^{-\beta H}$, where $H := E + PV$ is the [enthalpy](https://en.wikipedia.org/wiki/Enthalpy),[^enthalpy-confusion].
 
-::: {.callout-tip}
+Specifically, if you work through the same argument, you would end up with the following constrained maximization problem:
 
-In statistics, such ensemble are called **exponential families**, so we can abstractly describe this as follows:
+$$
+\begin{cases}
+\max_{\rho_{system}} (S_{system} - \beta \braket{E_{system}}_{\rho_{system}} - \beta P \braket{V}) \\
+\braket{E_{system}} + P\braket{V_{system}} = Const
+\end{cases}
+$$
 
-If a small system is in contact with a large system, and the total system is in the microcanonical ensemble, then the marginal distribution of the small system is a distribution from an exponential family.
+yielding the enthalpic ensemble (or the [isoenthalpic-isobaric ensemble](https://en.wikipedia.org/wiki/Isoenthalpic%E2%80%93isobaric_ensemble)).
 
-:::
-
-## Using the partition function
-
-DEF. Let $Z = \int dx\; e^{-\beta E(x)}$ be the partition function, and let $f^* := \ln Z$.
-
-$Z$ is a function of $\beta$, and other possible constraints that might directly change the energy levels of the system. We can more explicitly write it as
-$$Z(\beta; c) = \int dx \; e^{-\beta E_c(x)}$$
-
-where $c$ stands for the other constraints on the system, such as the size of the container, the number of particles, etc.  
-
-::: {#prp-todo}
-
-## The partition function generates all moments of energy
-
-Let a system be in canonical ensemble with inverse temperature $\beta$, and let $K(t) := \ln \braket{e^{tE}}$ be the cumulant generating function of its energy, then
-$$K(t) = \ln Z(\beta-t) - \ln Z(\beta)$$
-
-In particular, the $n$-th cumulant of energy is  
-$$\kappa_n(E) = K^{(n)}(t) |_{t=0} = (-\partial_\beta)^n (\ln Z)$$
-
-For example, the first two cumulants are the mean and variance:
-$$\braket{E} = (-\partial_\beta) (\ln Z), \quad \mathrm{Var}(E) = \partial_\beta^2 (\ln Z)$$
+[^enthalpy-confusion]: Sorry, I know this is not Hamiltonian, but we are running out of letters.
 
 :::
 
-In typical systems made of $N$ particles, where $N$ is large, we have $\ln Z \propto N$, thus showing that $\sqrt{\mathrm{Var}(E)}/\braket{E} \propto N^{-1/2}$, meaning that the distribution of energy converges to the average value as $N \to \infty$.
+### Free entropies
 
-A similar proposition applies for the grand canonical ensemble, etc.
+Just like in thermodynamics, it is useful to consider free entropies, which are the convex duals of the entropy:
 
-## Free entropies
+* Helmholtz free entropy: $f[\rho] := S[\rho] - \beta \braket{E} = \int dx \; \rho(x) (-\ln \rho(x) - \beta E(x))$;
+* Gibbs free entropy: $g[\rho] = S[\rho] - \beta \braket{E} - \beta P \braket{V}$;
+* Landau free entropy: $\omega[\rho] = S[\rho] - \beta \braket{E} + \beta \mu \braket{N}$;
 
-In the above, the only constraint we have imposed is constant energy, yielding the microcanonical ensemble. We can allow more constraints, yielding the fully general Gibbsian statistical mechanics.
+etc. Of those, we would mostly use the Helmholtz free energy, so I will write it down again:
 
-A common trick in statistical mechanics is to characterize the same equilibrium in many different perspectives. For example, the canonical ensemble has three characterizations at least.
+$$
+f[\rho] := S[\rho] - \beta \braket{E} = \int dx \; \rho(x) (-\ln \rho(x) - \beta E(x))
+$$
 
+::: {#thm-chain-rule}
 
-We have a state space $X$, and probability distributions $\rho$ over $X$.
+## chain rule for free entropies
 
-Macroscopic observables $A, B, C, \dots$ are functions of type $X \to \R$.
-
-A constraint can be an equality or inequality on observables. For example, if we have a tube of jelly in a box of volume $10$, then the constraint is $0 \leq V(x) \leq 10$.
-
-A constraint can also be an equality or inequality on the distribution. For example, we can specify that the average energy is exactly 1, by
-$$\int dx\; \rho(x) E(x) = 1$$
-
-The equilibrium distribution under constraint is the maximal entropy distribution satisfying the constraints.
-
-DEF. (free entropies)
-
-Just like in thermodynamics, we can take convex duals of the entropy function, to obtain various free entropies.
-
-Helmholtz free entropy:
-$$f[\rho] := S[\rho] - \beta \braket{E} = \int dx \; \rho(x) (-\ln \rho(x) - \beta E(x))$$
-
-Gibbs free entropy:
-$$g[\rho] = S[\rho] - \beta \braket{E} - \beta P \braket{V}$$
-
-And similarly for others.
-
-::: {#prp-todo}
-
-## The chain rule for free entropies
-
-$f_X = S_Y + \braket{f_{X|y}}_y$, and similarly $g_X = S_Y + \braket{g_{X|y}}_y$, and similarly for all other convex duals of the entropy.
+$f_X = S_Y + \braket{f_{X|y}}_y$, and similarly $g_X = S_Y + \braket{g_{X|y}}_y$, and similarly for all other free entropies.
 
 :::
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 $$
 \begin{aligned}
@@ -346,18 +432,20 @@ $$
 
 :::
 
-::: {#prp-todo}
+A common trick in statistical mechanics is to characterize the same equilibrium in many different perspectives. For example, the canonical ensemble has at least 4 characterizations at least. "Muscle memory" in statistical mechanics would allow you to nimbly applying the most suitable one for any occasion.
+
+::: {#thm-canonical-characterization}
 
 ## 4 characterizations of the canonical ensemble
 
 1. (total entropy under fixed energy constraint) The canonical ensemble maximizes total entropy when the system is in contact with an energy bath that satisfies $\partial_E S_{bath} = \beta$, and the total energy is fixed.
 2. (entropy under mean energy constraint) A system maximizes its entropy under constraint $\braket{E} = E_0$ when it assumes the canonical ensemble with $\beta$ that is the unique solution to $\int dx \; e^{-\beta E(x)} = E_0$.
 3. (thermodynamic limit): Take $N$ copies of a system, and connect them by energy-contacts. Inject the system with total energy $NE_0$, and let the system reach its microcanonical ensemble. Then at the thermodynamic limit of $N\to \infty$, the distribution of a single system is the canonical distribution with $\beta$ that is the unique solution to $\int dx \; e^{-\beta E(x)} = E_0$.
-4. (free entropy) A system maximizes its Helmholtz free entropy when it assumes the canonical ensemble. At that point, the maximal Helmholtz free entropy is $f^* = \ln Z$, where $Z = \int dx \; e^{-\beta E(x)}$ is the partition function.  
+4. (free entropy) A system maximizes its Helmholtz free entropy when it assumes the canonical ensemble. At the optimal distribution $\rho^*$, the maximal Helmholtz free entropy is $f[\rho^*] = \ln Z$, where $Z = \int dx \; e^{-\beta E(x)}$ is the partition function.  
 
 ::::
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 1. We already proved this.
 2. Use the Lagrange multiplier.
@@ -366,23 +454,59 @@ $$
 
 :::
 
-## Conditional entropies
+### The partition function
+
+When the system is in a canonical ensemble, we can define a convenient variable $Z = \int dx\; e^{-\beta E(x)}$ called the **partition function**. As proven in @thm-canonical-characterization, the partition function is equal to $e^f$, where $f$ is the Helmholtz free entropy of the canonical ensemble.
+
+::: {#thm-partition-cumulant}
+
+## the partition function is the cumulant generating function of energy
+
+Let a system be in canonical ensemble with inverse temperature $\beta$, and let $K(t) := \ln \braket{e^{tE}}$ be the [cumulant generating function](https://en.wikipedia.org/wiki/Cumulant) of its energy, then
+$$K(t) = \ln Z(\beta-t) - \ln Z(\beta)$$
+
+In particular, the $n$-th cumulant of energy is  
+$$\kappa_n(E) = K^{(n)}(t) |_{t=0} = (-\partial_\beta)^n (\ln Z)$$
+
+A similar proposition applies for the other ensembles and their free entropies.
+
+:::
+
+The proof is by direct computation.
+
+For example, the first two cumulants are the mean and variance:
+
+$$\braket{E} = (-\partial_\beta) (\ln Z), \quad \mathrm{Var}(E) = \partial_\beta^2 (\ln Z)$$
+
+Typical systems are made of $N$ particles, where $N$ is large, and that these particles are only weakly interacting. In this case, the total Helmholtz free entropy per particle converges at the thermodynamic limit of $N \to \infty$:
+
+$$
+\lim_N \frac 1N \ln Z \to \bar f_\beta
+$$
+
+Thus, for large but finite $N$, we have
+
+$$\braket{E} \approx -N \partial_\beta \bar f_\beta, \quad \mathrm{Var}(E) = N\partial_\beta^2 \bar f_\beta$$
+
+In particular, the relative fluctuation scales like $\frac{\sqrt{\mathrm{Var}(E)}}{\braket{E}} \sim N^{-1/2}$.
+
+### Conditional entropies
+
+Given any two random variable $X, Y$, and an "observable" variable $Y$ that is determined by $X$ by some function $h$, such that $Y = h(X)$. If we know $X$, we would know $Y$, but it is not so conversely, as multiple $X$ may correspond to the same $Y$. Typically, we use $Y$ as a "summary statistic" for the more detailed, but more complicated $X$. For example, we might have multiple particles in a box, such that $X$ is their individual locations, while $Y$ is their center of mass.
 
 ::: {#thm-cond-ent}
 
-## Conditional entropy
+## conditional entropy
 
-Given any random variable $X$, and an "observable" variable $Y$ that is determined by $X$, if $X$ is the maximal entropy distribution under constraint with entropy $S_X^*$, then the observable $Y$ follows a Boltzmann distribution, as
-$$\rho_Y^*(y) = e^{S_{X|y}^* - S_X^*}$$
+Given any random variable $X$, and an "observable" variable $Y$ that is determined by $X$, and some constraints $c$ on $X$, if $X$ is the distribution that maximizes entropy under constraints $c$, with entropy $S_X^*$, then the observable $Y$ is distributed as
 
-where $S_{X|y}^*$ is the maximal entropy for $X$ conditional on the same constraints, plus the constraint that $Y = y$.  
+$$\rho_Y^*(y) = e^{S_{X|y}^* - S_X^*}, \quad e^{S_X^*} = \int dy\; e^{S_{X|y}^*}$$
 
-Furthermore,
-$$e^{S_X^*} = \int dy\; e^{S_{X|y}^*}$$
+where $S_{X|y}^*$ is the maximal entropy for $X$ conditional on the same constraints, plus the extra constraint that $Y = y$.
 
 ::: 
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 By assumption, $X$ is the unique solution to the constrained optimization problem
 
@@ -393,7 +517,7 @@ $$
 \end{cases}
 $$
 
-Because $S_X = S_Y + \braket{S_{X|y}}_{y \sim Y}$, we realize that solving that *one* constrained optimization problem is really solving an entire family of constrained optimization problems. In particular, it also solves the problem  
+By @thm-compound-entropy, the problem is equivalent to:
 
 $$
 \begin{cases}
@@ -412,9 +536,9 @@ $$
 \end{cases}
 $$
 
-Then, each such problem gives us a maximal conditional[^measure-disintegration] entropy $S_{X|y}^*$, and we can solve for $Y$ by  
+Then, each such problem gives us a maximal conditional[^measure-disintegration] entropy $S_{X|y}^*$, and we can follow it up by solving for $Y$ with
 
-$$\max(S_Y + \braket{S_{X|y}^*}_{y \sim Y})$$
+$$\max\lrb{S_Y + \braket{S_{X|y}^*}_{y \sim Y}}$$
 
 [^measure-disintegration]: If you're a pure mathematician, you can formalize this using [measure disintegration](https://en.wikipedia.org/wiki/Disintegration_theorem).
 
@@ -430,46 +554,37 @@ At the optimal point, the entropy for $X$ is maximized at $S_X^* = \ln Z - 0$, s
 
 :::
 
-EXP. the canonical ensemble again
+::: {.callout-note title="deriving the canonical ensemble yet again"}
 
-Consider a small system with energy states $E_1, E_2, \dots$ and a large bath system, in energy contact. We can set $X$ to be the combined state of the whole system, and $Y$ to be the state of the small system.
-
-Once we observe $y$, we have fully determined the small system, so the small system has zero entropy, and so all the entropy comes from the bath system:
+Consider a small system with energy states $E_1, E_2, \dots$ and a large bath system, in energy contact. We can set $X$ to be the combined state of the whole system, and $Y$ to be the state of the small system. Once we observe $y$, we have fully determined the small system, so the small system has zero entropy, and so all the entropy comes from the bath system:
 $$S_{X|y}^* = S_{bath} = S_{bath}(E_{total}) - \beta E_y$$
 
-Consequently, the distribution of the small system is
-$$\rho_Y(y) \propto e^{-\beta E_y}$$
+Consequently, the distribution of the small system is $\rho_Y(y) \propto e^{-\beta E_y}$, as we expect.
 
-which is the Boltzmann distribution, as expected.  
+A similar calculation gives us the grand canonical ensemble, etc.
 
-Similar calculation gives us the grand canonical ensemble, etc.
+:::
 
-The above theorem can be generalized to conditional free entropies.
-
-::: {#thm-todo}
+::: {#thm-cond-free-ent}
 
 ## conditional free entropy
 
-Given any random variable $X$, and an "observable" variable $Y$ that is determined by $X$, if $X$ is the distribution that maximizes Helmholtz free entropy under constraint with Helmholtz free entropy $f_X^*$, then the observable $Y$ is distributed as
-$$\rho_Y^*(y) = e^{f_{X|y}^* - f_X^*}$$
+Given any random variable $X$, and an "observable" variable $Y$ that is determined by $X$, and some constraints $c$ on $X$, if $X$ is the distribution that maximizes Helmholtz free entropy under constraints $c$, with Helmholtz free entropy $f_X^*$, then the observable $Y$ is distributed as
+$$\rho_Y^*(y) = e^{f_{X|y}^* - f_X^*}, \quad e^{f_X^*} = \int dy\; e^{f_{X|y}^*}$$
 
 where $f_{X|y}^*$ is the maximal Helmholtz free entropy for $X$ conditional on the same constraints, plus the constraint that $Y = y$.  
-
-Furthermore,
-$$e^{f_X^*} = \int dy\; e^{f_{X|y}^*}$$
 
 Similarly for Gibbs free entropy, and all other free entropies.
 
 :::
 
+::: {.callout-note title="Proof" collapse="true"}
 
-::: {.proof}
-
-First note that $f_X = S_Y + \braket{f_{X|y}}_y$. Then we proceed to argue in the same way.
+First note that $f_X = S_Y + \braket{f_{X|y}}_y$, then argue in the same way.
 
 :::
 
-## Fluctuation relations
+## Thermodynamic limit
 
 ### Fluctuation of observables
 
@@ -490,10 +605,12 @@ There is a single constraint of constant total energy:
 $$E = \sum_i E_i$$
 
 In the thermodynamical limit, the compound system reaches the maximal entropy state $E_1^*, \dots, E_n^*$, which solves the following constrained maximization
-$$\begin{cases}
+$$
+\begin{cases}
     \max \sum_i S_i(E_i, A_i)\\
     E = \sum_i E_i
-\end{cases}$$
+\end{cases}
+$$
 
 By calculus, at the optimal point, all systems satisfy  
 
@@ -501,8 +618,7 @@ $$
 (\partial_{E_i} S_i)_{A_i} = \beta
 $$
 
-for some number $\beta$. This is the zeroth law of thermodynamics.  
-
+for some number $\beta$. This is the zeroth law of thermodynamics.
 
 However, we are in statistical mechanics, so the compound system actually does not stay exactly at the optimal point. Instead, the energy levels fluctuate.
 
@@ -543,14 +659,11 @@ That is, a typical fluctuation energy is only $N^{-1/2}$ that of the mean energy
 TODO sethna section 6.7
 
 
-## Maximum caliber statistical mechanics
+## Maximum caliber
 
-[@ghoshTeachingPrinciplesStatistical2006; @ghoshMaximumCaliberVariational2020]
-
-In general, maximal caliber statistical mechanics is like maximal entropy statistical mechanics. You write down a formula for path-space entropy, and a constraint on allowed paths. Maximize the entropy under constraint, and you would obtain a Boltzmann distribution in path space.
+In typical developments, statistical mechanics is a "static" theory: It deals with the ensemble of states, but not with how the states change over time. Maximal caliber statistical mechanics handles trajectories in the most obvious way: Collect all paths into a "path space", define a measure over path space, then study constrained entropy maximization over path space. Jaynes, who proposed the idea, called entropy in path space "caliber", so the name "maximum caliber" stuck, even though it is really just another instance of maximum entropy.
 
 ### Markov chains
-
 
 $N$ timesteps in total.
 
@@ -564,7 +677,7 @@ If we fix the singleton probability $p_i$ of each state, then the maximum entrop
 
 :::
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 By Lagrange multipliers.
 
@@ -598,7 +711,7 @@ And more generally, if we fix $n$-th order transition probability $p_{i_1, \dots
 
 :::
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 Similarly as above, the path-space distribution is
 $$\rho(s_1, \dots, s_N) \propto \prod_{t=1}^{N-1} e^{-\sum_{k, k' \in 1:m} \frac{\lambda_{k, k'}}{N} 1[s_t = k, s_{t+1} = k']} \propto \prod_{t=1}^{N-1} p_{s_t \to s_{t+1}}$$
@@ -867,7 +980,7 @@ If $y$ does not start on the first energy shell, or does not end on the second e
 
 :::
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 In the forward process, the probability of going along that trajectory is 
 $$\rho(x|y) D[x] = \frac{\delta V}{\Omega_1}$$
@@ -915,7 +1028,7 @@ This is vitally important, because at time $\tau$, when the constraints have jus
 
 :::
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 Apply the microcanonical version of Crooks theorem to the entire compound system that includes both the bath and the system, then integrate over all possible microstate trajectories of the bath $y_{bath}$.
 
@@ -952,7 +1065,7 @@ where $\rho(W|x)$ is the probability density of expending work $W$ in the forwar
 
 :::
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 Integrate over all forward microtrajectories $y$ satisfying $W[x, y] \in [W, W+\delta W]$. By reversibility, $W[x', y'] = [-W - \delta W, -W]$ for such microtrajectories.
 
@@ -988,7 +1101,7 @@ where the expectation is taken over many repeats of the same experiment (ensembl
 
 :::
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 Integrate Crooks over all forward trajectories $D[x]$.
 
@@ -1006,7 +1119,7 @@ $$Pr((W - \Delta F^*) \leq - \delta W) \leq e^{-\beta \delta W}$$
 
 :::
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 Apply Markov's inequality.
 
@@ -1113,7 +1226,7 @@ where $\rho(Q)$ is the probability density that a forward cycle, randomly sample
 
 :::
 
-::: {.proof}
+::: {.callout-note title="Proof" collapse="true"}
 
 Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for $NT$ time where $N$ is a large integer, then remove the driving. At the $N\to\infty$ limit, the CFT reduces to the result.
 
