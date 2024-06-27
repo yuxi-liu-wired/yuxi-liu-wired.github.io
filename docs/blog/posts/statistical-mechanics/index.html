@@ -238,7 +238,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#philosophical-comments" id="toc-philosophical-comments" class="nav-link" data-scroll-target="#philosophical-comments">Philosophical comments</a></li>
   <li><a href="#principles-of-statistical-mechanics" id="toc-principles-of-statistical-mechanics" class="nav-link" data-scroll-target="#principles-of-statistical-mechanics">Principles of statistical mechanics</a></li>
-  <li><a href="#differential-entropy-depends-on-coordinates-choice" id="toc-differential-entropy-depends-on-coordinates-choice" class="nav-link" data-scroll-target="#differential-entropy-depends-on-coordinates-choice">Differential entropy depends on coordinates choice</a></li>
+  <li><a href="#sec-differential-entropy-ill-defined" id="toc-sec-differential-entropy-ill-defined" class="nav-link" data-scroll-target="#sec-differential-entropy-ill-defined">Differential entropy depends on coordinates choice</a></li>
   </ul></li>
   <li><a href="#mathematical-developments" id="toc-mathematical-developments" class="nav-link" data-scroll-target="#mathematical-developments">Mathematical developments</a>
   <ul class="collapse">
@@ -248,6 +248,26 @@ window.Quarto = {
   <li><a href="#free-entropies" id="toc-free-entropies" class="nav-link" data-scroll-target="#free-entropies">Free entropies</a></li>
   <li><a href="#the-partition-function" id="toc-the-partition-function" class="nav-link" data-scroll-target="#the-partition-function">The partition function</a></li>
   <li><a href="#conditional-entropies" id="toc-conditional-entropies" class="nav-link" data-scroll-target="#conditional-entropies">Conditional entropies</a></li>
+  </ul></li>
+  <li><a href="#kinetic-gas-theory" id="toc-kinetic-gas-theory" class="nav-link" data-scroll-target="#kinetic-gas-theory">Kinetic gas theory</a>
+  <ul class="collapse">
+  <li><a href="#ideal-gas" id="toc-ideal-gas" class="nav-link" data-scroll-target="#ideal-gas">Ideal gas</a></li>
+  <li><a href="#ideal-gas-again" id="toc-ideal-gas-again" class="nav-link" data-scroll-target="#ideal-gas-again">Ideal gas (again)</a></li>
+  <li><a href="#hard-ball-gas-dilute-gas-limit" id="toc-hard-ball-gas-dilute-gas-limit" class="nav-link" data-scroll-target="#hard-ball-gas-dilute-gas-limit">Hard ball gas (dilute gas limit)</a></li>
+  <li><a href="#soft-ball-gas-high-temperature-and-dilute-gas-limit" id="toc-soft-ball-gas-high-temperature-and-dilute-gas-limit" class="nav-link" data-scroll-target="#soft-ball-gas-high-temperature-and-dilute-gas-limit">Soft ball gas (high temperature and dilute gas limit)</a></li>
+  </ul></li>
+  <li><a href="#other-classical-examples" id="toc-other-classical-examples" class="nav-link" data-scroll-target="#other-classical-examples">Other classical examples</a>
+  <ul class="collapse">
+  <li><a href="#countably-many-states" id="toc-countably-many-states" class="nav-link" data-scroll-target="#countably-many-states">Countably many states</a></li>
+  <li><a href="#blackbody-radiation" id="toc-blackbody-radiation" class="nav-link" data-scroll-target="#blackbody-radiation">Blackbody radiation</a></li>
+  </ul></li>
+  <li><a href="#even-more-examples" id="toc-even-more-examples" class="nav-link" data-scroll-target="#even-more-examples">Even more examples</a>
+  <ul class="collapse">
+  <li><a href="#rubber-bands" id="toc-rubber-bands" class="nav-link" data-scroll-target="#rubber-bands">rubber bands</a></li>
+  <li><a href="#combinatorics" id="toc-combinatorics" class="nav-link" data-scroll-target="#combinatorics">Combinatorics</a></li>
+  <li><a href="#how-elastic-is-the-skin-of-red-blood-cell" id="toc-how-elastic-is-the-skin-of-red-blood-cell" class="nav-link" data-scroll-target="#how-elastic-is-the-skin-of-red-blood-cell">How elastic is the skin of red blood cell?</a></li>
+  <li><a href="#unzipping-rna-hairpins" id="toc-unzipping-rna-hairpins" class="nav-link" data-scroll-target="#unzipping-rna-hairpins">Unzipping RNA hairpins</a></li>
+  <li><a href="#hungry-hungry-bacteria" id="toc-hungry-hungry-bacteria" class="nav-link" data-scroll-target="#hungry-hungry-bacteria">Hungry hungry bacteria</a></li>
   </ul></li>
   <li><a href="#thermodynamic-limit" id="toc-thermodynamic-limit" class="nav-link" data-scroll-target="#thermodynamic-limit">Thermodynamic limit</a>
   <ul class="collapse">
@@ -319,7 +339,7 @@ Pr(\theta \in [\theta_0, \theta_0 + \delta\theta]) = \lim_{T \to \infty} \frac{1
 <li>Approach to equilibrium: In what sense, and under what conditions, does the trajectory converge to an equilibrium?</li>
 <li>Reversibility problem (<em>Umkehreinwand</em>): If individual trajectories are reversible, why does entropy increase instead of decrease?</li>
 </ul>
-<p>While these philosophical problems are quite diverting, we will avoid them as much as possible, because we will be working with the ensemble-centric equilibrium statistical mechanics. This is the statmech that every working physicist uses, and this is what we will present. If you are interested in the philosophical issues, read the <a href="https://plato.stanford.edu/entries/statphys-statmech/">Stanford Encyclopedia entry on the <em>Philosophy of Statistical Mechanics</em></a>.</p>
+<p>While these philosophical problems are quite diverting, we will avoid them as much as possible, because we will be working with the ensemble-centric equilibrium statistical mechanics. This is the statistical mechanics that every working physicist uses, and this is what we will present. If you are interested in the philosophical issues, read the <a href="https://plato.stanford.edu/entries/statphys-statmech/">Stanford Encyclopedia entry on the <em>Philosophy of Statistical Mechanics</em></a>.</p>
 </section>
 <section id="principles-of-statistical-mechanics" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="principles-of-statistical-mechanics">Principles of statistical mechanics</h3>
@@ -345,9 +365,9 @@ Pr(\theta \in [\theta_0, \theta_0 + \delta\theta]) = \lim_{T \to \infty} \frac{1
 <p>In other words, when a physical system is <em>at equilibrium</em>, then everything observable can be found by studying it <em>as if</em> it has the maximum entropy distribution under constraint.</p>
 <p>Of course, just what that “is physically meaningful” means, is another source of endless philosophical arguments. I would trust that you will know what is physically meaningful, and leave it at that, while those who have a taste for philosophy can grapple with the <a href="https://plato.stanford.edu/entries/scientific-underdetermination/">Duhem–Quine thesis</a>.</p>
 </section>
-<section id="differential-entropy-depends-on-coordinates-choice" class="level3">
-<h3 class="anchored" data-anchor-id="differential-entropy-depends-on-coordinates-choice">Differential entropy depends on coordinates choice</h3>
-<p>There is a well-known secret among information theorists: differential entropy is not well-defined.</p>
+<section id="sec-differential-entropy-ill-defined" class="level3">
+<h3 class="anchored" data-anchor-id="sec-differential-entropy-ill-defined">Differential entropy depends on coordinates choice</h3>
+<p>There is a well-known secret among information theorists: differential entropy is ill-defined.</p>
 <p>Consider the uniform distribution on <span class="math inline">\([0, 1]\)</span>. It is the maxent distribution on <span class="math inline">\([0, 1]\)</span> – relative to the Lebesgue measure. However, why should we pick the Lebesgue measure, and what happens if we don’t?</p>
 <p>Suppose we now stretch the <span class="math inline">\([0, 1]\)</span> interval nonlinearly, by <span class="math inline">\(f(x) = x^2\)</span>, then the maxent distribution relative to <em>that</em> would no longer be the uniform distribution on <span class="math inline">\([0, 1]\)</span>. Instead, it would be the uniform distribution after stretching.</p>
 <p>The problem is this: Differential entropy is not coordinate-free. If we change the coordinates, we change the base measure, and the differential entropy changes as well.</p>
@@ -869,6 +889,423 @@ Proof
 </div>
 </section>
 </section>
+<section id="kinetic-gas-theory" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="kinetic-gas-theory">Kinetic gas theory</h2>
+<p>Kinetic gas theory is <em>the</em> paradigm for pre-1930 statistical mechanics. Boltzmann devoted his best years to kinetic gas theory. The connection between kinetic gas theory and statistical mechanics was so strong that it was often confused as one. Modern statistical mechanics has grown to be so much more than this, so we will only settle for deriving the van der Waals equation. This strikes a balance between triviality (the ideal gas equation could be derived in literally two lines) and complication (Boltzmann’s monumental <em>Lectures on Gas Theory</em> has 500 pages <span class="citation" data-cites="boltzmannLecturesGasTheory2011">(<a href="#ref-boltzmannLecturesGasTheory2011" role="doc-biblioref">Boltzmann 2011</a>)</span>).</p>
+<p>To review, the van der Waals gas equation is</p>
+<p><span class="math display">\[P = \frac{N/\beta}{V- bN} - \frac{cN^2}{V^2}\]</span></p>
+<p>where <span class="math inline">\(b, c\)</span> are real numbers that depend on the precise properties of the gas molecules. The term <span class="math inline">\(V - bN\)</span> accounts for the fact that each gas molecule excludes some volume, so that, as <span class="math inline">\(N\)</span> grows, it corrects for the ideal gas pressure <span class="math inline">\(P_{ideal}\)</span> by <span class="math inline">\(\sim P_{ideal}\frac{bN}{V}\)</span>. The term <span class="math inline">\(\frac{cN^2}{V^2}\)</span> accounts for overall interaction energy between gas molecules. Suppose the interaction is overall attractive, then we would have <span class="math inline">\(c &gt; 0\)</span>, and otherwise <span class="math inline">\(c &lt; 0\)</span>.</p>
+<section id="ideal-gas" class="level3">
+<h3 class="anchored" data-anchor-id="ideal-gas">Ideal gas</h3>
+<p>Consider a tank of ideal gas consisting of <span class="math inline">\(N\)</span> point-masses, flying around in a free space with volume <span class="math inline">\(V\)</span>. The tank of gas has inverse temperature <span class="math inline">\(\beta\)</span>, so its phase-space distribution is</p>
+<p><span class="math display">\[
+\rho(q_{1:N}, p_{1:N}) = \prod_{i\in 1:N} \rho(q_i, p_i), \quad \rho(q, p) = \underbrace{\frac{1}{V}}_{\text{free space}} \times \underbrace{\frac{e^{-\beta \frac{\|p_i\|^2}{2m}}}{(2\pi m/\beta)^{3/2}}}_{\text{Boltzmann momentum distribution}}
+\]</span></p>
+<p>The total energy of the gas has no positional term, so it is all due to momentum. Because the momenta coordinates <span class="math inline">\(p_{1,x}, p_{1,y}, \dots, p_{N,y}, p_{N,z}\)</span> do not interact, their kinetic energies simply sum, giving</p>
+<p><span class="math display">\[
+U = 3N \times \int_{\mathbb{R}}dp\; \frac{p^2}{2m} \frac{e^{-\frac{p^2}{2m/\beta}}}{\sqrt{2\pi m/\beta}} = \frac{3N}{2\beta}
+\]</span></p>
+<p>This is the same as Boltzmann’s derivation so far. However, although entropy is exactly defined when there are only finitely or countably many possible states, as <span class="math inline">\(\sum_{j \in \mathbb{N}} -p_j \ln p_j\)</span>, this is not so when state space is uncountably large, like <span class="math inline">\(\mathbb{R}^{6N}\)</span>. When Boltzmann encountered the issue, he solved it by discretizing the phase space into <em>arbitrary but small</em> cubes. The effect is that he could rederive the ideal gas laws, but the entropy has an additive constant that depends on the exact choice of the cube size. This was not a problem for Boltzmann, who was trying to found classical thermodynamics upon statistical mechanics, and in classical thermodynamics, entropy <em>does</em> have an indeterminant additive constant.</p>
+<p>Later, Planck in his derivation of the blackbody radiation law, used the same trick. Ironically, Planck did not believe in atoms nor quantized light, but he did make the correct assumption that there is a natural unit of measurement for phase space area, which he called <span class="math inline">\(h\)</span>, and which we know as Planck’s constant. <span class="citation" data-cites="duncanConstructingQuantumMechanics2019">(<a href="#ref-duncanConstructingQuantumMechanics2019" role="doc-biblioref">Duncan and Janssen 2019, chap. 2</a>)</span>.</p>
+<p>Following Planck, we discretize the phase space into little cubes of size <span class="math inline">\(h^{3N}\)</span>, and continue:</p>
+<p><span class="math display">\[
+\begin{aligned}
+    S &amp;= -\sum_{i \in\text{Little cubes}} p_i \ln p_i \\
+    &amp;\approx -\sum_{i \in\text{Little cubes}} (\rho(i) h^{3N}) \ln (\rho(i) h^{3N}) \\
+    &amp;\approx -\int_{\mathbb{R}^{6N}} dp_{1:N}dq_{1:N} \; \rho(p_{1:N}, q_{1:N}) \ln (\rho(p_{1:N}, q_{1:N}) h^{3N}) \\
+    &amp;= -\int_{\mathbb{R}^{6N}} dp_{1:N}dq_{1:N} \; \rho(p_{1:N}, q_{1:N}) \ln \rho(p_{1:N}, q_{1:N}) - 3N \ln h \\
+    &amp;= -\underbrace{N\int_{\mathbb{R}^{6}} dpdq \; \rho(p, q) \ln \rho(p, q)}_{\text{non-interacting particles}} - 3N \ln h
+\end{aligned}
+\]</span></p>
+<p>Now, the entropy of a single atom <span class="math inline">\(\int_{\mathbb{R}^{6}} dpdq \; \rho(p, q) \ln \rho(p, q)\)</span> factors again into one position space and three momentum spaces:</p>
+<p><span class="math display">\[
+\begin{aligned}
+    -\int_{\mathbb{R}^{6}} dpdq \; \rho(p, q) \ln \rho(p, q) &amp;= -\int_{\mathbb{R}^3} dq \rho(q) \ln \rho(q) - \sum_{i = x, y, z} \int_{\mathbb{R}} dp_i \ln \rho(p_i) \\
+    &amp;= \ln V + 3 \times \underbrace{(\text{entropy of }\mathcal N(0, m/\beta))}_{\text{check Wikipedia}} \\
+    &amp;= \ln V + \frac 32 \ln(2\pi m/\beta) + \frac 32 \\
+\end{aligned}
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Does this remind you of our previous discussion about how <a href="#sec-differential-entropy-ill-defined">differential entropy is ill-defined</a>? Finally that discussion is paying off! The choice of a natural unit of measurement in phase space is <em>equivalent</em> to fixing a natural base measure on phase space, such that differential entropy becomes well-defined.</p>
+</div>
+</div>
+<p>The above is not yet correct, because permuting the atoms does not matter. That is, we have grossly inflated the state space. For example, if <span class="math inline">\(N = 2\)</span>, then we have counted the state <span class="math inline">\((q_1, p_1, q_2, p_2)\)</span>, then <span class="math inline">\((q_2, p_2, q_1, p_1)\)</span>, as if they are different, but they must be counted as the same. We must remove this redundancy by “quotienting out” the permutation group over the particles. The effect is dividing the phase space by <span class="math inline">\(\ln N!\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+    \frac SN &amp;= \ln V + \frac 32 \ln(2\pi m/\beta) + \frac 32 - 3 \ln h - \underbrace{\frac 1N \ln N!}_{\text{Stirling's approximation}} \\
+    &amp;= \ln\left[\frac{V}{N} \left(\frac{2\pi m}{\beta h^2}\right)^{\frac 32}\right] + \frac 52
+\end{aligned}
+\]</span></p>
+<p>giving us the <strong>Sackur–Tetrode formula</strong>:</p>
+<p><span class="math display">\[
+S(U, V, N) = \ln\left[\frac{V}{N} \left(\frac{4\pi m U}{3N h^2}\right)^{\frac 32}\right] + \frac 52
+\]</span></p>
+<p>All other thermodynamic quantities can then be derived from this. For example, the pressure is</p>
+<p><span class="math display">\[P = \beta^{-1}(\partial_V S)_{U, N} = \frac{1}{\beta V}\]</span></p>
+<p>more conventionally written as <span class="math inline">\(PV = \beta^{-1} = Nk_BT\)</span>, the <strong>ideal gas equation</strong>, where we have re-inserted the Boltzmann constant in respect for tradition.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="How Tetrode measured $h$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+How Tetrode measured <span class="math inline">\(h\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In early 1900s, Walther Nernst proposed the third law of thermodynamics. The history is rather messy, but suffice to say that the version we are going to care about says, “At the absolute zero of temperature the entropy of every chemically homogeneous solid or liquid body has a zero value.”. In support, he studied experimentally the thermodynamic properties of many materials at temperatures approaching absolute zero. He had a hydrogen liquefier and could reach around <span class="math inline">\(20 \;\mathrm{K}\)</span>.</p>
+<p>Working on the assumption that <span class="math inline">\(S = 0\)</span> in any chemical at <span class="math inline">\(T = 0\)</span>, he could measure the entropy of any substance by slowing heating up a substance (or cooling down), measuring its heat capacity at all temperatures, then take an integral:</p>
+<p><span class="math display">\[
+k_B S = \int \frac{CdT}{T}
+\]</span></p>
+<p>The low-temperature data for mercury was the most available (mercury was also the substance with which Onnes discovered superconductivity). However, mercury is mostly in a liquid form at low temperatures. Fortunately, the latent heat of vaporization <span class="math inline">\(\Delta L\)</span> can be measured, and then we can get</p>
+<p><span class="math display">\[
+S_{\text{vapor}} = S_{\text{liquid}} + \frac{\Delta L}{k_BT}
+\]</span></p>
+<p>Back then, <span class="math inline">\(k_B = \frac{\text{Gas constant}}{\text{Avogadro constant}}\)</span>, and the <span class="math inline">\(S_{\text{liquid}}, \Delta L\)</span> of mercury were all measured, so combining these, Tetrode calculated a value of <span class="math inline">\(h\)</span> that is within <span class="math inline">\(30\%\)</span> of modern measurement. <span class="citation" data-cites="grimus100thAnniversarySackur2013">(<a href="#ref-grimus100thAnniversarySackur2013" role="doc-biblioref">Grimus 2013</a>)</span></p>
+</div>
+</div>
+</section>
+<section id="ideal-gas-again" class="level3">
+<h3 class="anchored" data-anchor-id="ideal-gas-again">Ideal gas (again)</h3>
+<p>We rederive the thermodynamic properties of ideal monoatomic gas via Helmholtz free entropy.</p>
+<p><span class="math display">\[Z = \int e^{-\beta E} = \underbrace{\frac{1}{N!}}_{\text{identical particles}} \underbrace{V^N}_{\text{position}} \underbrace{(2\pi m/\beta )^{\frac 32 N}}_{\text{momentum}}\]</span></p>
+<p>By the same formula from classical thermodynamics,</p>
+<p><span class="math display">\[
+d\ln Z = -\braket{E}d\beta + \beta\braket{P} dV \implies
+\begin{cases}
+    \braket{E}   &amp;= \frac 32 \frac{N}{\beta} \\
+    \braket{P}V  &amp;= \frac{N}{\beta}
+\end{cases}
+\]</span></p>
+<p>Notice how the <span class="math inline">\(\ln N!\)</span> part simply does not matter in this case.</p>
+</section>
+<section id="hard-ball-gas-dilute-gas-limit" class="level3">
+<h3 class="anchored" data-anchor-id="hard-ball-gas-dilute-gas-limit">Hard ball gas (dilute gas limit)</h3>
+<p>In order to refine the approach, we need to account for two effects.</p>
+<ol type="1">
+<li>Each particle takes up finite volume, which forces the total volume of positional space to be smaller than <span class="math inline">\(V^N\)</span>.</li>
+<li>Particle pairs have interactions, which changes the Boltzmann distribution.</li>
+</ol>
+<p>The first effect can be modelled by assuming each atom is a hard ball of radius <span class="math inline">\(r\)</span>. The particles still have no interaction <em>except</em> that their positions cannot come closer than <span class="math inline">\(2r\)</span>.</p>
+<p>Because there is no potential energy, the Boltzmann distribution on momentum space is the same, and so the Helmholtz free entropy <span class="math inline">\(\ln Z\)</span> still splits into the sum of positional entropy and momentous entropy. The momentum part is still <span class="math inline">\(\frac 32 N \ln\frac{2\pi}{\beta m}\)</span>, as the hard balls do not interfere with each other’s momentum, but the position part is smaller, because the balls mutually exclude each other.</p>
+<p>Let <span class="math inline">\(a = 8V_{ball} = \frac{32}{3}\pi r^3\)</span> be a constant for the gas.</p>
+<p>To measure the volume of the diminished position space, we can add one hard ball at a time. The first hard ball can take one of <span class="math inline">\(V\)</span> possible positions, as before. The next ball’s center cannot be within <span class="math inline">\(2r\)</span> of the center of the first ball, so its position can only take one of <span class="math inline">\((V - a)\)</span> positions, where <span class="math inline">\(a = 8V_{ball} = \frac{32}{3}\pi r^3\)</span> is a constant that depends on the shape of the hard balls. We continue this argument, obtaining the total volume in position space:</p>
+<p><span class="math display">\[V(V- a) \cdots (V - (N-1)a) \approx V^N e^{0 -\frac{a}{V}-2\frac{a}{V} -\dots -(N-1)\frac{a}{V}} \approx V^N\left(1- \frac{N^2 a}{2V} \right)\]</span></p>
+<p>This gives us</p>
+<p><span class="math display">\[\braket{E} = \frac{3N}{2\beta}, \quad \braket{P}V \approx \frac N\beta \left(1 + \frac{a N}{2V}\right) \approx \frac{N/\beta}{V - \frac a2 N}\]</span></p>
+<p>The second equation is the van der Waals equation when the term <span class="math inline">\(c = 0\)</span>, meaning there is neither attraction nor repulsion between particles.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="virial expansion">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+virial expansion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the above derivation, we are assuming that only pairwise exclusion matters. That is, we ignore the possibility that three or more balls may simultaneously intersecting each other. We can make a more accurate counting argument via the <a href="https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle">inclusion-exclusion principle</a>, which would lead us to a <a href="https://en.wikipedia.org/wiki/Virial_expansion">virial expansion</a> for gas.</p>
+<p>Specifically, if the balls <span class="math inline">\(A, B\)</span> are intersecting, which has probability <span class="math inline">\(a/V\)</span>, and <span class="math inline">\(B, C\)</span> are also intersecting, also with probability <span class="math inline">\(a/V\)</span>, then <span class="math inline">\(A, C\)</span> are quite likely to be also intersecting, with probability much higher than <span class="math inline">\(a/V\)</span>. Therefore, if we have excluded the cases where <span class="math inline">\(A, B\)</span> are intersecting by subtracting with <span class="math inline">\(a/V\)</span>, and the cases where <span class="math inline">\(B, C\)</span> are intersecting by subtracting another <span class="math inline">\(a/V\)</span>, then we should be subtracting with something less than <span class="math inline">\(a/V\)</span>. The cluster expansion principle makes this precise. Unfortunately, it requires some difficult combinatorics. The interested reader should study <span class="citation" data-cites="andersenClusterMethodsEquilibrium1977">(<a href="#ref-andersenClusterMethodsEquilibrium1977" role="doc-biblioref">Andersen 1977</a>)</span>.</p>
+</div>
+</div>
+</section>
+<section id="soft-ball-gas-high-temperature-and-dilute-gas-limit" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="soft-ball-gas-high-temperature-and-dilute-gas-limit">Soft ball gas (high temperature and dilute gas limit)</h3>
+<p>In the above derivation, we got one part of van der Waals equation right – the part where particles take up space. However, we have not yet accounted for the force between particles. We expect that if the particles attract each other, then <span class="math inline">\(P\)</span> should be smaller, and if the particles repel each other, then <span class="math inline">\(P\)</span> should be larger.</p>
+<p>Let’s assume the gas is made of balls that has a hard core and a soft aura. That is, they repulse or attract each other at a distance, and when a pair comes too close. We also assume the force law depends only on the distances between particles.</p>
+<p>That is, we can write such a system as having a gas potential energy <span class="math inline">\(V(q_1, \dots, q_N) = \sum_{i &lt; j} V(\|q_i - q_j\|)\)</span>. To enforce the hard core, we should have <span class="math inline">\(V(r) = \infty\)</span> when <span class="math inline">\(r \in [0, r_0]\)</span>.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/Lennard-Jones_potential.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">Example potential energy field. This is the <a href="https://en.wikipedia.org/wiki/Lennard-Jones_potential">Lennard-Jones potential</a>, with a hard (not perfectly hard, but hard enough!) exclusive core, a soft repelling middle, and an attraction when far away. Figure from <a href="https://commons.wikimedia.org/wiki/File:Graph_of_Lennard-Jones_potential.png">Wikimedia Commons</a></figcaption>
+</figure>
+</div>
+<p>Now, the partition function becomes</p>
+<p><span class="math display">\[
+Z = \int e^{-\beta\sum_i \frac{p_i^2}{2m} - \beta\sum_{i &lt; j}V(\|q_i - q_j\|)} dqdp
+\]</span></p>
+<p>The momentum part is still the same <span class="math inline">\((2\pi/\beta m)^{\frac 32 N}\)</span>, but the position part is more difficult now. Still, we hope it will be close to <span class="math inline">\(V^N\)</span>.</p>
+<p>That is, we need to calculate:</p>
+<p><span class="math display">\[Z = \underbrace{V^N (2\pi/\beta m)^{\frac 32 N} \frac{1}{V^N}}_{\text{ideal gas}} \int_{V^N} e^{ - \beta\sum_{i &lt; j}V(\|q_i - q_j\|)} dq\]</span></p>
+<p>The integral <span class="math inline">\(\int_{V^N} e^{ - \beta\sum_{i &lt; j}V(\|q_i - q_j\|)} dq\)</span> can be evaluated piece-by-piece: <span class="math display">\[
+\int_{V^N} e^{ - \beta\sum_{i &lt; j}V(\|q_i - q_j\|)} dq = \int dq_1 \left(\int dq_2 \; e^{-\beta V(\| q_1 - q_2 \|)} \left(\int dq_3 \; e^{-\beta (V(\| q_1 - q_3 \|) + V(\| q_2 - q_3 \|))} \cdots\right)\right)
+\]</span></p>
+<p>Because the chamber is so much larger than the molecular force-field, it is basically infinite. So for almost all of <span class="math inline">\(q_1\)</span> (except when it is right at the walls of the chamber), <span class="math inline">\(\int dq_2 \; e^{-\beta V(\| q_1 - q_2 \|)} \approx V - \delta\)</span>, where <span class="math inline">\(\delta\)</span> is some residual volume:</p>
+<p><span class="math display">\[\delta := \int_{V} dq_2 \; (1 - e^{-\beta V(\|q_2 \|)})\]</span></p>
+<p>Furthermore, because we are dealing with a dilute gas, the higher-order interactions don’t matter (see previous remark about the virial expansion). Therefore, the integral <span class="math display">\[\int_{V} dq_3 \; e^{-\beta (V(\| q_1 - q_3 \|) + V(\| q_2 - q_3 \|))} \approx \int_{V_1 \cup V_2 \cup V_3} dq_3 \; e^{-\beta (V(\| q_1 - q_3 \|) + V(\| q_2 - q_3 \|))} \]</span></p>
+<p>where <span class="math inline">\(V_1\)</span> is the “turf” of particle <span class="math inline">\(1\)</span>, and <span class="math inline">\(V_2\)</span> is the turf of particle <span class="math inline">\(2\)</span>, and <span class="math inline">\(V_3\)</span> is the rest of the volume. Because the gas is dilute, we have basically <span class="math inline">\(V_1\)</span> disjoint from <span class="math inline">\(V_2\)</span>, giving us<br>
+<span class="math display">\[\approx \sum_{j = 1, 2, 3}\int_{V_j} dq_3\; e^{-\beta V(\| q_j - q_3 \|)} \approx V - 2\delta\]</span></p>
+<p>Together, we have <span class="math display">\[\int_{V^N} e^{ - \beta\sum_{i &lt; j}V(\|q_i - q_j\|)} dq  \approx V(V-\delta) \cdots(V - (N-1)\delta)\]</span></p>
+<p>Giving us <span class="math display">\[\ln Z \approx \ln Z_{\text{ideal}} - \frac{N^2 \delta}{2V}\]</span></p>
+<p>It remains to calculate the residual volume. It has two parts, one due to the hard core and one due to the soft halo: <span class="math display">\[\delta = \int_{\|q_2 \| \leq r_0} dq_2 \; (1 - e^{-\infty}) + \int_{\|q_2 \| &gt; r_0} dq_2 \; (1 - e^{-\beta V(\|q_2\|)})\]</span></p>
+<p>The first part is just <span class="math inline">\(a\)</span>, as calculated previously. The second part depends on the exact shape of the potential well. However, when temperature is high, <span class="math inline">\(\beta\)</span> would be very small, so the second part is approximately <span class="math inline">\(\int dq_2 (\beta V)\)</span>, which is a constant times <span class="math inline">\(\beta\)</span>.</p>
+<p>Thus, we have <span class="math display">\[\ln Z \approx \ln Z_{\text{ideal}} - \frac{N^2}{V}(a + b \beta)\]</span></p>
+<p>for some constants <span class="math inline">\(a, b\)</span>. This gives us the van der Waals equation: <span class="math display">\[\braket{P} V = \frac{N}{\beta} + \frac{N^2}{\beta V}a + \frac{N^2}{V} b\]</span></p>
+</section>
+</section>
+<section id="other-classical-examples" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="other-classical-examples">Other classical examples</h2>
+<section id="countably-many-states" class="level3">
+<h3 class="anchored" data-anchor-id="countably-many-states">Countably many states</h3>
+<p>In a surprising number of applications, we have a single system in an energy bath. The system has finitely many, or countably infinitely many, distinguishable states, each with a definite energy: <span class="math inline">\(E_0 \leq E_1 \leq E_2 \leq \cdots\)</span>. In particular, this covers most of the basic examples from quantum mechanics. In such a system, the probability of being in state <span class="math inline">\(i\)</span> is <span class="math inline">\(p_i = \frac 1Z e^{-\beta E_i}\)</span> where</p>
+<p><span class="math display">\[
+Z = \sum_i e^{-\beta E_i}
+\]</span></p>
+<p>Because I don’t like sections that are literally two paragraphs long, I will reformulate this as multinomial regression in mathematical statistics.</p>
+<p>In the problem of classification, we observe some vector <span class="math inline">\(\vec X\)</span>, and we need to classify it into one of finitely many states <span class="math inline">\(\{1, 2, \dots\}\)</span>. With multinomial regression, we construct one vector <span class="math inline">\(\vec b_i\)</span> for each possible state <span class="math inline">\(i\)</span>, and then declare that the probability of being in state <span class="math inline">\(k\)</span> is</p>
+<p><span class="math display">\[
+Pr(i | X) = \frac{e^{-\vec X \cdot \vec b_i}}{Z(X)}, \quad Z(\vec X) = \sum_j e^{-\vec b_j \cdot \vec X}
+\]</span></p>
+<p>To make the parallel clearer:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{log probability} &amp; &amp; \text{observable } &amp; &amp;\text{ feature} &amp; &amp; \text{normalization constant} \\
+    \ln p(i | \beta) &amp;=&amp; -\beta &amp; \; &amp; E_i &amp; &amp; - \ln Z \\
+    \ln Pr(i | \vec X) &amp;=&amp;    -\vec X     &amp; \cdot &amp; \vec b_i &amp; &amp; - \ln Z
+\end{aligned}
+\]</span></p>
+<p>We can make the analogy exact by adding multiple observables. Specifically, if we solve the following constrained optimization problem</p>
+<p><span class="math display">\[
+\begin{cases}
+\max S \\
+\braket{\vec b} = \vec b_0
+\end{cases}
+\]</span></p>
+<p>then the solution is a multinomial classifier, with <span class="math inline">\(\vec X\)</span> playing the role of <span class="math inline">\(\beta\)</span>.</p>
+<p>Interpreting the physics as statistics, we can think of <span class="math inline">\(\beta\)</span> as an “observable”. It is as if we are asking the physical system “What state are you in?” but we can only ask a very crude question “What is your energy on average?” Knowing that, we can make a reasonable guess by using the maximal entropy compatible with that answer.</p>
+<p>Interpreting the statistics as physics, we can think of the observable <span class="math inline">\(\vec X\)</span> as “entropic forces”, trying to push the system towards the distribution of maximal entropy. At the equilibrium of zero entropic force, we have a multinomial classifier. This is the prototypical idea of <a href="https://en.wikipedia.org/wiki/Energy-based_model">energy-based statistical modelling</a>.</p>
+</section>
+<section id="blackbody-radiation" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="blackbody-radiation">Blackbody radiation</h3>
+<p>Planck’s derivation of the blackbody radiation is the first great success of quantum statistical mechanics. We give a brief presentation here that tracks Planck’s original argument.</p>
+<p>Consider a hollow cubic box with side lengths <span class="math inline">\(L\)</span>. The box has perfectly reflecting walls. At thermal equilibrium, the box is full of standing electromagnetic waves. Each standing EM wave has form <span class="math inline">\(\vec E(x, y, z, t) = \vec E_0 \sin(\omega t)\sin(\frac{n_x \pi x}{L})\sin(\frac{n_y \pi y}{L})\sin(\frac{n_z \pi z}{L})\)</span>, for some positive integers <span class="math inline">\(n_x, n_y, n_z\)</span>. Each wave has wavevectors <span class="math inline">\(\vec k = (n_x, n_y, n_z) \frac{\pi}{L}\)</span>. If we draw a region of volume <span class="math inline">\(\delta K\)</span> in the space of wavevectors, then the region would contain about <span class="math inline">\(\delta K \frac{L^3}{\pi^3}\)</span> valid wavevectors. Thus, we say that the wavevector space is <span class="math inline">\([0, +\infty)^3\)</span>, and has <strong>density of states</strong> <span class="math inline">\(\frac{L^3}{\pi^3}\)</span>. We can picture it as <span class="math inline">\([0, +\infty)^3\)</span> with a rectangular grid of points being the valid wavevectors, such that the numerical density of such grid points is <span class="math inline">\(\frac{L^3}{\pi^3}\)</span>.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/density_of_states.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">The rectangular grid of valid wavevectors in the space of possible wavevectors.</figcaption>
+</figure>
+</div>
+<p>At this point, we depart from Planck’s derivation. Instead of considering standing waves in a perfectly reflecting chamber, we consider planar waves in a chamber with periodic boundaries. That is, we imagine that we have opened 6 portals, so that its top wall is “ported” to the bottom, etc. In this case, the planar waves have valid wavevectors <span class="math inline">\(\vec k = (n_x, n_y, n_z) \frac{2\pi}{L}\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Wait, the numerical density of grid points is now just <span class="math inline">\(\frac{L^3}{8\pi^3}\)</span>, which is <span class="math inline">\(1/8\)</span> of what we found previously?</p>
+<p>Yes, indeed, but it will work out correctly, because whereas the density of states has dropped to just <span class="math inline">\(1/8\)</span> of previously, the state space has increased <span class="math inline">\(8\times\)</span>, from <span class="math inline">\([0, +\infty)^3\)</span> to <span class="math inline">\(\mathbb{R}^3\)</span>.</p>
+</div>
+</div>
+<p>Now, we need to allow <em>two</em> states at each valid wavevector, to account for polarization.</p>
+<p>At this point, we have decomposed the state space into a composition of oscillators. Because there is no interaction between these oscillators,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> it remains to calculate the partition function of each oscillator.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;That is, two photons do not interact, except when the energy levels are so high that you would need a quantum field theorist to know what is going on.</p>
+<p>Light resembles ghosts and spirits in that they are massless, untouchable, moving very fast, bright, and vaguely associated with good feelings. During the 19th century, the best scientific theory for light, that of ether theory, became the foundation of many spiritualist world systems. <span class="citation" data-cites="aspremPonderingImponderablesOccultism2011">(<a href="#ref-aspremPonderingImponderablesOccultism2011" role="doc-biblioref">Asprem 2011</a>)</span> The connection of electromagnetism with <a href="https://en.wikipedia.org/wiki/Animal_magnetism">animal magnetism</a> did not help. Whereas modern spiritualists talk of electromagnetic fields and quantum vibrations, a century ago they talked of subatomic structures and ether vibrations.</p></div></div><p>Planck considered an ensemble of <span class="math inline">\(N\)</span> oscillators, all at the same wavevector and polarization. If they have average energy <span class="math inline">\(\braket{E}\)</span>, the question is to find the total entropy for the whole system, which, when divided by <span class="math inline">\(N\)</span>, should yield the entropy of a single oscillator. Here he used the celebrated <em>quantum hypothesis</em>: The energy levels are divided into integer levels of <span class="math inline">\(nh\nu\)</span>, where <span class="math inline">\(n = 0, 1, 2, \dots\)</span>. By the stars and bars argument, there are <span class="math inline">\(\binom{N + M-1}{M}\)</span> ways do distribute these energy-quanta between these oscillators, where <span class="math inline">\(M = \frac{N\braket{E}}{h\nu}\)</span>.</p>
+<p><span class="math display">\[S = \frac 1N \ln \binom{N+M-1}{M} \underbrace{\approx}_{\text{Stirling}} (1 + a) \ln (1+a) - a \ln a, \quad a = \frac{\braket{E}}{h\nu}\]</span></p>
+<p>Given the entropy function, he then matched <span class="math inline">\(\braket{E}\)</span> to temperature <span class="math inline">\(\beta\)</span> by the equality <span class="math inline">\(\beta = \partial_{\braket{E}} S\)</span>, giving</p>
+<p><span class="math display">\[
+\braket{E} = \left(\frac{h\nu}{e^{\beta h\nu}-1}\right)
+\]</span></p>
+<p>The rest of the derivation is fairly obvious. I will just point out one more interesting fact.</p>
+<p>According to Kirchhoff’s law of thermal radiation, a chunk of matter is exactly as absorptive as it is emissive. A black body absorbs all light, and conversely it emits light at the maximal level. A white body absorbs no light, and conversely it does not emit light. This can be understood as a consequence of the second law: If a body emits more light than it absorbs, then it would spontaneously get colder when placed inside a black body radiation chamber.</p>
+<p>However, much more can be said than this. Not only is it exactly as absorptive as it is emissive, it is as absorptive as it is emissive at <em>any angle</em>, at any wavelength, and any polarization. So for example, if a piece of leaf is not absorptive when viewed from an angle, at the green light wavelength, of clockwise polarization, then it is not emissive under the same angle, wavelength, polarization.</p>
+<p>Why is that? The standard argument <span class="citation" data-cites="reifFundamentalsStatisticalThermal1998">(<a href="#ref-reifFundamentalsStatisticalThermal1998" role="doc-biblioref">Reif 1998, chap. 9.15</a>)</span> uses a time-reversal argument, but I like to think of it as yet more instances of protecting the second law. If you look inside a black body radiation chamber, you would see a maximal entropy state. Light rushes in all directions equally, at all polarizations equally, and the energy is distributed optimally across the spectrum to maximize entropy (because <span class="math inline">\(\beta\)</span> is constant across the whole spectrum). If we have a material that takes in blue light and outputs green light, then it would spontaneously decrease entropy. Similarly, if it can absorb vertically polarized light to emit diagonally polarized light, it would also spontaneously decrease entropy, etc.</p>
+</section>
+</section>
+<section id="even-more-examples" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="even-more-examples">Even more examples</h2>
+<section id="rubber-bands" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="rubber-bands">rubber bands</h3>
+<p>SETUP.</p>
+<p>We have a long chain molecule with <span class="math inline">\(N\)</span> joints. Each joint can go forward or backward, with equal energy. Each link between two joints has length <span class="math inline">\(d\)</span>.</p>
+<p>The total length of the system is <span class="math inline">\(L\)</span>.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/rubber_band.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">Rubber band.</figcaption>
+</figure>
+</div>
+<p>The entropy of the system, conditional on <span class="math inline">\(L\)</span>, is</p>
+<p><span class="math display">\[S = \ln \binom{N}{\frac{N + L/d}{2}}\]</span></p>
+<p>The thermodynamic equation for the rubber band is <span class="math display">\[0 = TdS + FdL\]</span></p>
+<p>because the internal energy of the rubber band is constant, no matter how the joint turns.</p>
+<p>Therefore, the elastic force is <span class="math display">\[F = -T \partial_L S \approx -T \frac{S(L+2d) - S(L)}{2d} \approx \frac{T}{2d }\ln\frac{Nd+L}{Nd - L}\]</span></p>
+<p>When <span class="math inline">\(Nd \gg L\)</span>, that is, we have not stretched it close to the breaking point, the elastic force is <span class="math display">\[F \approx \frac{TL}{Nd^2} = k L\]</span></p>
+<p>where <span class="math inline">\(k = \frac{T}{Nd^2}\)</span> is the elastic constant, proportional to temperature.</p>
+<p>Why does the rubber band stiffen when temperature rise? We can interpret it as follows. When we place the rubber band in a chamber of hot air, the air particles would often collide with the links in the rubber band, flipping it. When there are more links going to the right than the left, then the air particles would tend to flip the links to the left, decreasing <span class="math inline">\(L\)</span>, and conversely. The net force is zero only when there are an equal number of links going either way, which is when <span class="math inline">\(L = 0\)</span>.</p>
+<p>DER. ensemble of lengths</p>
+<p>Because the rubber band has <span class="math inline">\(dE = TdS + FdL\)</span>, the corresponding free entropy is <span class="math display">\[S + \beta F\braket{L}\]</span></p>
+<p>and under the canonical distribution, that free entropy is maximized, meaning that under canonical distribution,<br>
+<span class="math display">\[\rho(x) = \frac{1}{Z}e^{\beta FL(x)}\]</span></p>
+<p>where <span class="math inline">\(x\)</span> is a microstate of the rubber band (i.e.&nbsp;the precise position of each link), and <span class="math inline">\(L(x)\)</span> is the corresponding length (macrostate).</p>
+<p>Since for each <span class="math inline">\(L\)</span> there are <span class="math inline">\(\binom{N}{\frac{N + L/d}{2}}\)</span> possible microstates, we have <span class="math display">\[\rho(L) \propto  \binom{N}{\frac{N + L/d}{2}} e^{\beta F L}\]</span></p>
+<p>When <span class="math inline">\(Nd \gg L\)</span>, the binomial coefficient is approximately <span class="math inline">\(\exp{[N H_2(\frac 12 + \frac{L}{2dN})]}\)</span>, where <span class="math inline">\(H_2\)</span> is the binary entropy function, therefore <span class="math display">\[\ln \rho(L) \approx \beta F L + NH_2\left(\frac 12 + \frac{L}{2dN}\right) + Const \approx \beta FL - \frac{L^2}{2Nd^2} + Const\]</span></p>
+<p>In particular, we see that <span class="math inline">\(\ln \rho(L)\)</span> is maximized at <span class="math inline">\(\braket{L} = \beta F Nd^2\)</span>, exactly what we have found previously. But this time we have also the variance: <span class="math display">\[\sigma_L^2 = \frac{(Nd)^2}{N}\]</span></p>
+<p>which again is an example of the general result that <span class="math inline">\(\sigma \propto N^{-1/2}\)</span>.</p>
+</section>
+<section id="combinatorics" class="level3">
+<h3 class="anchored" data-anchor-id="combinatorics">Combinatorics</h3>
+<section id="multinomials" class="level4">
+<h4 class="anchored" data-anchor-id="multinomials">Multinomials</h4>
+<p>Let <span class="math inline">\(p_1, \dots, p_k\)</span> be a discrete probability distribution, and let <span class="math inline">\(n_1, \dots, n_k\)</span> be integers that depend on <span class="math inline">\(N\)</span>, such that</p>
+<p><span class="math display">\[\lim_{N \to \infty}n_i/N = p_i\]</span></p>
+<p>then we have</p>
+<p><span class="math display">\[\lim_{N \to \infty}\frac 1N \ln \binom{N}{n_1, \dots, n_k} = -\sum_i p_i \ln p_i\]</span></p>
+<p>Imagine we have a system made of a single ball that can go into one out of <span class="math inline">\(k\)</span> labelled boxes. Now, let us copy paste the system <span class="math inline">\(N\)</span> times, so we have <span class="math inline">\(N\)</span> balls and <span class="math inline">\(kN\)</span> boxes. Then we can interpret <span class="math display">\[\frac 1N \ln \binom{N}{n_1, \dots, n_k}\]</span></p>
+<p>as the maximal average entropy per ball under the following constraints: There are exactly <span class="math inline">\(n_1\)</span> balls in boxes labelled <span class="math inline">\(1\)</span>, etc.</p>
+<p>Thinking thermodynamically, we can pick one ball as the system, and put it in contact with a bath made of <span class="math inline">\(N\)</span> balls. Once we calculate the marginal entropies of the bath, we can infer the Boltzmann distribution for the system, and thus the marginal entropy of the system.</p>
+<p>Now, here is the non-rigorous part: We <em>hope</em> that as <span class="math inline">\(N \to \infty\)</span>, all correlations (pairwise, triple-wise, etc) between balls decay fast enough, such that the interaction-entropy between the balls drop to zero, leaving <span class="math display">\[\text{average entropy per ball} = \text{marginal entropy of a ball}\]</span></p>
+<p>Justifying this rigorously is generally very difficult, and in fact, the assumption is false at phase transitions, where correlations <em>do not</em> decay fast enough.</p>
+<p>If this is so, then we need to only show that the marginal distribution of a single ball converges to <span class="math inline">\((p_1, \dots, p_k)\)</span>.</p>
+<p>Suppose we move the ball from box <span class="math inline">\(i\)</span> to box <span class="math inline">\(j\)</span>, then it would force the bath to change all its balls, changing its entropy by <span class="math display">\[
+\ln\binom{N}{n_1', \dots, n_k'} -\ln \binom{N}{n_1, \dots, n_k}
+\]</span></p>
+<p>where <span class="math inline">\(n_i' = n_i + 1, n_j' = n_j - 1\)</span>, and otherwise unchanged.</p>
+<p>By definition of multinomials, this is equal to</p>
+<p><span class="math display">\[\ln n_j - \ln(n_i+1)\]</span></p>
+<p>which converges to <span class="math inline">\((\ln p_j - \ln p_i)\)</span> at large enough <span class="math inline">\(N\)</span>.</p>
+<p>Let <span class="math inline">\(X\)</span> stand for the total state, including the bath and the singled-out system, and let <span class="math inline">\(Y\)</span> stand for the state of the singled-out system. By the conditional entropy theorem, when the entire system is at the maximal entropy distribution, the distribution of the singled-out system is</p>
+<p><span class="math display">\[\rho^*_Y(y) \propto e^{S_{X|y}^*}\]</span></p>
+<p>From the previous calculation, we have <span class="math display">\[S_{X|j}^* - S_{X|j}^* = \ln p_j - \ln p_i\]</span></p>
+<p>yielding <span class="math inline">\(S_{X|i}^* = S_0 + \ln p_i\)</span> for some constant <span class="math inline">\(S_0\)</span>, and so <span class="math inline">\(\rho^*_Y(y) \propto p_i\)</span>, finishing the proof.</p>
+</section>
+<section id="sanov-theorem" class="level4">
+<h4 class="anchored" data-anchor-id="sanov-theorem">Sanov theorem</h4>
+<p>Consider a population of particles, all in energy-contact with an energy bath of <span class="math inline">\(\beta = 1\)</span>. Each particle has <span class="math inline">\(n\)</span> states, with state <span class="math inline">\(i\)</span> having energy <span class="math inline">\(-\ln p_i\)</span>. Thus, at the Boltzmann distribution, each particle is precisely sampled from the categorical distribution <span class="math inline">\((p_1, \dots, p_n)\)</span>.</p>
+<p>Let <span class="math inline">\(X\)</span> stand for the state of the entire population of particles. That is, <span class="math inline">\(X\)</span> describes the precise state of each particle. Let <span class="math inline">\(Y\)</span> stand for the vector of <span class="math inline">\(N_1, \dots, N_n\)</span>. That is, it counts the number of particles in each state.</p>
+<p>The free entropy of a single particle is <span class="math display">\[\bar f_X^* = S - \beta \braket{E} = \sum_i (-p_i \ln p_i) - \sum_i p_i E_i = 0\]</span></p>
+<p>Because the particles have no interaction energy, the total free entropy of <span class="math inline">\(X\)</span> is <span class="math inline">\(f_X^* = N \bar f_X^* = 0\)</span>.</p>
+<p>By the conditional free entropy theorem, <span class="math display">\[\rho^*_Y(N_1, \dots, N_n) = e^{f_{X|N_1, \dots, N_n}^*}\]</span></p>
+<p>where <span class="math inline">\(f_{X|N_1, \dots, N_n}^*\)</span> is the maximal free entropy of the entire system conditional on <span class="math inline">\(Y = (N_1, \dots, N_n)\)</span>.</p>
+<p>Now, by definition of <span class="math inline">\(f_{X|N_1, \dots, N_n}^*\)</span>, it is the maximal free entropy under constraint: <span class="math display">\[
+\begin{cases}
+\max_\rho \sum_{(s_1, \dots, s_N) \in n^N} \rho(s) (-\ln \rho(s) - \beta E(s))  \\
+Y = (N_1, \dots, N_n)
+\end{cases}
+\]</span></p>
+<p>where <span class="math inline">\(s_i\)</span> is the state of particle <span class="math inline">\(i\)</span>.</p>
+<p>For any <span class="math inline">\(\rho\)</span> that satisfies the constraint of <span class="math inline">\(Y = (N_1, \dots, N_n)\)</span>, the term is a constant</p>
+<p><span class="math display">\[E(s) = \sum_{i=1}^n N_i E_i\]</span></p>
+<p>Therefore, the problem reduces to maximizing just the entropy under constraint of <span class="math inline">\(Y = (N_1, \dots, N_n)\)</span>, which is a “microcanonical distribution”, the uniform distribution over all possible <span class="math inline">\(\binom{N}{N_1, \dots, N_n}\)</span> ways to satisfy the <span class="math inline">\(Y = (N_1, \dots, N_n)\)</span> constraint.</p>
+<p>Therefore, <span class="math display">\[f_{X|N_1, \dots, N_n}^* = \ln \binom{N}{N_1, \dots, N_n} + \sum_i N_i \ln p_i \approx -ND_{KL}(q \| p)\]</span></p>
+<p>where <span class="math inline">\(q = (N_1/N, \dots, N_n/N)\)</span> is the empirical distribution.</p>
+<p>Therefore, <span class="math display">\[
+\frac 1N \ln \rho^*_Y(N_1, \dots, N_n) \to D_{KL}(q \| p)
+\]</span></p>
+</section>
+<section id="surface-area-of-high-dimensional-spheres" class="level4">
+<h4 class="anchored" data-anchor-id="surface-area-of-high-dimensional-spheres">Surface area of high-dimensional spheres</h4>
+<p>Let the surface area of a sphere of radius <span class="math inline">\(\sqrt N\)</span> in dimension <span class="math inline">\(N\)</span> be <span class="math inline">\(\Omega_N\)</span>, then</p>
+<p><span class="math display">\[\ln\Omega_N = \frac N2 \ln (2\pi e)-\frac 12 \ln (\pi e) + O(N^{-1})\]</span></p>
+<p>Let <span class="math inline">\(x_1, \dots, x_N\)</span> be sampled IID from <span class="math inline">\(\mathcal N(0, 1)\)</span>, and let <span class="math inline">\(r_N^2 = \sum_i x_i^2\)</span>. By routine calculation, <span class="math inline">\(\mathbb{E}[r_N^2] = N\)</span>, and <span class="math inline">\(\mathbb{E}[r_N^4] = 2N + N^2\)</span>. Therefore, <span class="math inline">\(r_N^2\)</span> is approximately distributed as <span class="math inline">\(\mathcal N(N, 2N)\)</span>, and so <span class="math inline">\(r_N\)</span> is approximately distributed as <span class="math inline">\(\mathcal N(\sqrt N, 1/2)\)</span>.</p>
+<p>Now consider two distributions on <span class="math inline">\(\mathbb{R}^N\)</span>. The first is a microcanonical ensemble: <span class="math inline">\(x_{1:N}\)</span> is distributed uniformly on the thin energy shell of <span class="math inline">\(r_N^2 \in [N, N + \delta N]\)</span>. The second is a canonical ensemble: each <span class="math inline">\(x_i\)</span> is distributed independently according to <span class="math inline">\(\mathcal N(0, 1)\)</span>.</p>
+<p>We can think of them as particles in a potential well of form <span class="math inline">\(V(x) = \frac 12 x^2\)</span>. The first ensemble is the microcanonical ensemble where the total energy is fixed, and the second is the canonical ensemble at temperature <span class="math inline">\(\beta = 1\)</span>.</p>
+<p>We can calculate the entropy of the canonical ensemble in two ways. We can calculate it by adding up the entropy of each particle, which are the same since there is no interaction energy between particles. We can also calculate it indirectly, by first sampling a random radius, then a random point from the microcanonical ensemble, then multiplying them together.</p>
+<p>Because the canonical ensemble is spherically symmetric, the radius and the direction of the vector <span class="math inline">\(x_{1:N}\)</span> are independent. Therefore,</p>
+<p><span class="math display">\[S_{\text{canonical}} = S_{\text{microcanonical}} + S_{\text{radius}}\]</span></p>
+<p>or</p>
+<p><span class="math display">\[\ln \Omega_N = S_{\text{canonical}} - S_{\text{radius}}\]</span></p>
+<p>Because the entropy of <span class="math inline">\(\mathcal N(0, \sigma^2)\)</span> is <span class="math inline">\(\frac 12 \ln(2\pi e \sigma^2)\)</span>, we plug them in and obtain the result.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is an example of a general pattern: the microcanonical ensemble and the canonical ensemble become indistinguishable when the number of particles goes infinite.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="how-elastic-is-the-skin-of-red-blood-cell" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="how-elastic-is-the-skin-of-red-blood-cell">How elastic is the skin of red blood cell?</h3>
+<p>In 2000, Discher set out to measure the elasticity of the red blood cell’s skin. To a good approximation, it is just a 2D spring, following Hooke’s law. He attached a tiny particle to the surface of a red blood cell, and measured its thermal motion.</p>
+<p>As usual, in the microscopic world, inertia might as well not exist, so the oscillator’s energy is entirely elastic. Let it be of form <span class="math inline">\(\frac 12 k(x^2 + y^2)\)</span>. By equipartition of energy, we would have</p>
+<p><span class="math display">\[\frac 12 k\braket{x^2} = \frac 12 \beta^{-1}\]</span></p>
+<p>But just to be sure, I checked the original numbers: It is a particle of diameter <span class="math inline">\(40 \;\mathrm{nm}\)</span>, and moving at about <span class="math inline">\(100 \;\mathrm{nm/s}\)</span>, so its kinetic energy is <span class="math inline">\(\sim 10^{-33}\;\mathrm{J}\)</span>.</p>
+<p>The data shows that <span class="math inline">\(\braket{x^2} = (35 \;\mathrm{nm})^2\)</span> at temperature <span class="math inline">\(T = 310 \;\mathrm{K}\)</span>, giving us an effective elastic constant of <span class="math inline">\(k \sim 0.004 \;\mathrm{pN/nm}\)</span>.</p>
+<p>A red blood cell has diameter <span class="math inline">\(10^4 \;\mathrm{nm}\)</span>, so dragging a patch of its skin all across the surface would take only about <span class="math inline">\(40 \;\mathrm{pN}\)</span>. This is about the force output of 10 kinesins working in concert. Thus we can say that the skin of red blood cell is very slack.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/red_blood_cell_discher_2000.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption"><span class="citation" data-cites="discherNewInsightsErythrocyte2000">(<a href="#ref-discherNewInsightsErythrocyte2000" role="doc-biblioref">Discher 2000, fig. 6</a>)</span></figcaption>
+</figure>
+</div>
+</section>
+<section id="unzipping-rna-hairpins" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="unzipping-rna-hairpins">Unzipping RNA hairpins</h3>
+<p><span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021</a>, exercise 6.4)</span></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/rna_hairpin.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">RNA hairpin. Figure from <a href="https://commons.wikimedia.org/wiki/File:Stem-loop.svg">Wikimedia Commons</a></figcaption>
+</figure>
+</div>
+<p><span class="citation" data-cites="liphardtReversibleUnfoldingSingle2001">(<a href="#ref-liphardtReversibleUnfoldingSingle2001" role="doc-biblioref">Liphardt et al. 2001</a>)</span></p>
+<p>The RNA hairpin is a statistical mechanical system that should correspond to a thermodynamic system satisfying <span class="math display">\[dE = TdS + F dx\]</span></p>
+<p>Looking at this, we see that the correct canonical ensemble to use is the free entropy with respect to constant temperature and constant pulling force:<br>
+<span class="math display">\[\rho = Z(\beta, \beta F)^{-1} e^{-\beta E + \beta F x}\]</span></p>
+<p>Let <span class="math inline">\(x_0\)</span> be the length of a single RNA unit, <span class="math inline">\(n\)</span> be the number of zipped RNA basepairs, <span class="math inline">\(N\)</span> be the total number of RNA basepairs, and <span class="math inline">\(-E_0\)</span> be the bonding energy of a basepair (assume that the two kinds of basepairs have the same bonding energy).</p>
+<p>This gives us <span class="math display">\[\rho(n) =Z^{-1}e^{\beta( E_0 - 2Fx_0)n}, \quad 0 \leq 2n \leq N\]</span></p>
+<p>where<br>
+<span class="math display">\[Z= \frac{1-a^{floor(N/2)}}{1-a}, \quad a = e^{-\beta |E_0 - 2Fx_0|}\]</span></p>
+<p>We see that when <span class="math inline">\(F = E_0/2x_0\)</span>, the bonding force and the pulling force are exactly balanced, and the hairpin is equally likely to be in any state. When the pulling force is larger, then it tends to be unzipped. When <span class="math inline">\(F \gg E_0/2x_0\)</span>, then <span class="math inline">\(\rho(n)\)</span></p>
+</section>
+<section id="hungry-hungry-bacteria" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="hungry-hungry-bacteria">Hungry hungry bacteria</h3>
+<p>This example came from <span class="citation" data-cites="bergRandomWalksBiology1993">(<a href="#ref-bergRandomWalksBiology1993" role="doc-biblioref">Howard C. Berg 1993, chap. 6</a>)</span></p>
+<p>Consider a bacteria swimming in water. A typical one, such as E coli, is roughly a rod with length <span class="math inline">\(a = 10^{-6}m\)</span> and swimming at <span class="math inline">\(v = 2\times 10^{-5} m/s\)</span>. That is, it swims 20 body-lengths a second.</p>
+<p>Water has density <span class="math inline">\(\rho = 10^3 kg/m^3\)</span> and viscosity <span class="math inline">\(\eta = 10^{-3} kg/m\cdot s\)</span>. As is well-known, the <a href="https://en.wikipedia.org/wiki/Reynolds_number">Reynold number</a> of the system is</p>
+<p><span class="math display">\[Re = \frac{\rho v a}{\eta} = 2 \times 10^{-5}\]</span></p>
+<p>meaning that as soon as the bacteria stops powering itself, its motion ceases after coasting for a length of <span class="math inline">\(\approx 0.1 a \cdot Re = 2\times 10^{-12}m\)</span>, less than the length of an atom! Thus, the bacteria lives in an essentially inertia-less world.</p>
+<p>Assuming that a bacteria is a sphere, then its swimming dissipates power at</p>
+<p><span class="math display">\[P = Fv = 6\pi \eta a v^2 \approx 8\times 10^{-18}W \approx 2000 k_BT/s\]</span></p>
+<p>where <span class="math inline">\(T = 300 K\)</span> is the standard temperature for biology. Since each glucose at complete metabolism produces <span class="math inline">\(686 kcal/mol \approx 1000 k_BT\)</span>, the bacteria just needs to eat 2 molecules of glucose per second to power its swimming.</p>
+<p>By the FDR, the diffusion constant for the bacteria is</p>
+<p><span class="math display">\[D = \frac{k_BT}{6\pi \eta a} = 2 \times 10^{-13} m^2/s\]</span></p>
+<p>meaning that within 1 second, the bacteria diffuses a distance of <span class="math inline">\(\sim \sqrt{2 D \Delta t} \sim a\)</span>, about 1 body length. This shows that the swimming motion is 20 times faster than its thermal motion.</p>
+<p>However, if we look at the trajectory of a bacterium under the microscope, we would notice its direction jumping around rapidly. This is due to the thermal motion of its orientation on the rotational group <span class="math inline">\(SO(3)\)</span>. Just like how each translational degree of freedom gets <span class="math inline">\(\frac 12 k_BT\)</span> of thermal energy, each rotational degree of freedom gets it as well, although, because the space of rotations is not a vector space, making this precise is tricky.</p>
+<p>Still, once we make it precise, the FDR is still the same, gives us <span class="math inline">\(D_{rotational} = \frac{k_B T}{\gamma_{rotational}}\)</span>. Assuming the bacterium is still a sphere of radius <span class="math inline">\(a\)</span>, then <span class="math inline">\(\gamma_{rotational} = 8\pi \eta a^3\)</span>, giving <span class="math inline">\(D_{rotational} = 0.2 rad^2/s\)</span>.</p>
+<p>Now, a swimming bacterium does not care about rotation around its velocity axis (“longitude”), but does care about the other two rotational freedoms. The variation in “latitude” angle is the sum:</p>
+<p><span class="math display">\[\braket{\theta^2} = 2 \times (2D_{rotational}\Delta t)\]</span></p>
+<p>for small time <span class="math inline">\(\Delta t\)</span>. This is false for large <span class="math inline">\(\Delta t\)</span>, because otherwise we would get <span class="math inline">\(\braket{\theta^2} &gt; \pi^2\)</span>, which is absurd because <span class="math inline">\(\theta \in [0, \pi]\)</span>.</p>
+<p>This implies that the bacteria veers by about <span class="math inline">\(\braket{\theta^2} \approx (50^\circ)^2\)</span> after a second of swimming. The actual observation gives <span class="math inline">\(\braket{\theta^2} \approx (30^\circ)^2\)</span>. In particular, the bacteria cannot keep a direction for more than about 3 seconds, as at that point its velocity vector would have diffused by about 90 degrees. As the bacteria has no “vestibular organ”, it essentially “forgets its heading” within a few seconds. Any sense of direction must come from the outside world, such as a chemical gradient.</p>
+<p>The standard strategy for E coli hunting is the “run and tumble” strategy. During the “run” phase, the bacterium keeps swimming forward for 1 – 10 seconds, curving gently due to rotational diffusion. At a random point it stops and tumbles for about 0.1 seconds, changing its direction randomly. Tumbling essentially samples a random direction for the next run, close but not quite uniformly on the sphere. It remembers the average chemical concentration during the first second and last second of each run. If the chemical concentration seem to increase, it would tumble less often (thus going on longer runs). Otherwise, it would tumble more often. The net effect is an extremely simple homing missile that diffuses up the chemical gradient.</p>
+<p>There is no point for it to swim more than 10 seconds, because it would have totally lost its heading due to diffusion. There is no point in swimming less than 1 second, because it needs to average the chemical concentration over at least a second to overcome the statistical noise. And so, by simple physics, we have explained an E coli’s hunting strategy.</p>
+<p>See <span class="citation" data-cites="bergPhysicsChemoreception1977 bergMotileBehaviorBacteria2000">(<a href="#ref-bergPhysicsChemoreception1977" role="doc-biblioref">H. C. Berg and Purcell 1977</a>; <a href="#ref-bergMotileBehaviorBacteria2000" role="doc-biblioref">Howard C. Berg 2000</a>)</span> for a detailed look at how bacteria optimally forage for food molecules.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/bacterial_swimming_berg_1993.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">A spherical bacterium is propelled by spinning flagella. <span class="citation" data-cites="bergRandomWalksBiology1993">(<a href="#ref-bergRandomWalksBiology1993" role="doc-biblioref">Howard C. Berg 1993, fig. 6.6</a>)</span></figcaption>
+</figure>
+</div>
+<p>The spherical bacterium swims along the <span class="math inline">\(x\)</span> -axis. Its rotational state diffuses along three possible degrees of freedom. Of those, the one around <span class="math inline">\(x\)</span>-axis is irrelevant, and the ones around <span class="math inline">\(y\)</span>- and <span class="math inline">\(z\)</span>-axes are relevant.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/bacterial_trajectory_berg_1972.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">A single 3D trajectory of a single bacterium, projected into the <span class="math inline">\(xy, yz, xz\)</span> planes. Gently winding runs alternate with the tight tumbles. <span class="citation" data-cites="bergChemotaxisEscherichiaColi1972">(<a href="#ref-bergChemotaxisEscherichiaColi1972" role="doc-biblioref">Howard C. Berg and Brown 1972, fig. 1</a>)</span></figcaption>
+</figure>
+</div>
+<p>Trajectory of an E coli in a liquid that is 3 times more viscous than water. The bacterium alternates between swimming and tumbling. During the swimming phase, the angular diffusion has a diffusion constant of <span class="math inline">\(0.06 rad^2/s\)</span>, as theoretically predicted. <span class="citation" data-cites="bergChemotaxisEscherichiaColi1972">(<a href="#ref-bergChemotaxisEscherichiaColi1972" role="doc-biblioref">Howard C. Berg and Brown 1972</a>)</span></p>
+</section>
+</section>
 <section id="thermodynamic-limit" class="level2">
 <h2 class="anchored" data-anchor-id="thermodynamic-limit">Thermodynamic limit</h2>
 <section id="fluctuation-of-observables" class="level3">
@@ -926,7 +1363,7 @@ Proof
 <p><span class="theorem-title"><strong>Theorem 10</strong></span> If we fix the singleton probability <span class="math inline">\(p_i\)</span> of each state, then the maximum entropy distribution is the Markov chain with uniform initial probability and <span class="math inline">\(p_{i\to j} = p_i p_j\)</span>.</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -935,7 +1372,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>By Lagrange multipliers.</p>
 <p>If we fix the singleton probability of each state, then the problem is a constrained maximization problem</p>
@@ -958,7 +1395,7 @@ Proof
 <p>And more generally, if we fix <span class="math inline">\(n\)</span>-th order transition probability <span class="math inline">\(p_{i_1, \dots, i_n \to j}\)</span>, then we obtain an <span class="math inline">\(n\)</span>-th order Markov chain model.</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -967,7 +1404,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Similarly as above, the path-space distribution is <span class="math display">\[\rho(s_1, \dots, s_N) \propto \prod_{t=1}^{N-1} e^{-\sum_{k, k' \in 1:m} \frac{\lambda_{k, k'}}{N} 1[s_t = k, s_{t+1} = k']} \propto \prod_{t=1}^{N-1} p_{s_t \to s_{t+1}}\]</span></p>
 <p>Because the distribution does not specify <span class="math inline">\(s_1\)</span>, it is uniformly distributed on <span class="math inline">\(s_1\)</span>. Otherwise, we can constrain <span class="math inline">\(s_1\)</span> with yet another set of Lagrange multipliers and obtain <span class="math inline">\(\rho(s_1, \dots, s_N) \propto \rho(s_1) \times_{t=1}^{N-1} \rho(s_t, s_{t+1})\)</span>. Similarly for higher orders.</p>
@@ -1087,17 +1524,43 @@ Tip
 <figcaption class="margin-caption">Getting over a potential well.</figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Relaxation time">
+<div class="callout callout-style-default callout-tip callout-titled" title="relaxation time">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Relaxation time
+relaxation time
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>When we look at the oscillator, its state is totally fixed at some <span class="math inline">\((q, p)\)</span>. If we immediately look again, we would not find it in a Boltzmann distribution over phase space, but still at <span class="math inline">\((q, p)\)</span>. How long must we wait? That is beyond the scope. Suffice to say that we should wait a while, not too short, called relaxation time <span class="math inline">\(\tau\)</span>, after which the system is close enough to equilibrium. But, here’s the key – we cannot wait for too long, because in the long run, the particle would have escaped the potential well. Formalizing all these things requires a proper stochastic calculus, which I might write about later.</p>
+<p>When we look at the oscillator, its state is totally fixed at some <span class="math inline">\((q, p)\)</span>. If we immediately look again, we would not find it in a Boltzmann distribution over phase space, but still at <span class="math inline">\((q, p)\)</span>. How long must we wait before the oscillator state has reasonably “relaxed” from a pointy distribution to the serene bell-shape of the Boltzmann distribution?</p>
+<p>That is beyond the scope. Suffice to say that we should wait a while, not too short, after which the system is close enough to equilibrium. But we cannot wait for too long either, because in the long run, the particle would have escaped the potential well. So there is a time-scale, neither too long nor too short, which we call the relaxation time <span class="math inline">\(\tau\)</span>.</p>
+<p>Formalizing all these things requires stochastic calculus, which I might write about later.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Goldilocks and the three chefs">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Goldilocks and the three chefs
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Goldilocks, with a rumbling stomach, stumbles upon the house of the three chefs. Each chef is holding a pan in one hand and a bottle of Brownian batter in the other. “Excuse me, might I have some pancakes?”</p>
+<p>“Of course!” exclaims the first chef, whose pan holds a small, quivering mound. “It’s just been poured, still brimming with energy!”</p>
+<p>Goldilocks frowns. “It hasn’t even reached the edges! This batter needs more time to settle.”</p>
+<p>The second chef, whose pan appears curiously empty, sighs. “And what of mine? I’ve given it all the time in the world, allowed it to explore every corner of its potential.” He gestures at the pan, now bereft of batter, a few crumbs clinging to the edges.</p>
+<p>“But… there’s nothing left!” exclaims Goldilocks, aghast. “Given too much time, the batter has vanished completely!”</p>
+<p>The third chef, whose batter has flowed smoothly to coat the pan, smiles warmly. “Perhaps this will be more to your liking. Given much time, but not too much, it’s achieved perfect consistency.”</p>
+<p>“Ah, this is perfect!” exclaims Goldilocks, taking a bite of the fluffy pancake. “It’s had enough time to spread evenly, but not so long that it’s dried out.”</p>
+<p>“Indeed,” said the second chef, “timing is everything. Too brief, and the batter remains confined to its starting point, unable to fulfill its pan-sized destiny. But too long, it would have escaped the edge of the pan to reach its true destiny – on the ground. Not too short, not too long, just right… that is meta-stability.”</p>
+<p>— Guest entry written by <code>Gemini-1.5-Pro</code>.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <p>Let the oscillator have <span class="math inline">\(n\)</span> dimensions, then its energy function is <span class="math inline">\(H = \sum_{i=1}^n \frac{p_i^2}{2m_i} + \frac{k_i q_i^2}{2}\)</span>, where <span class="math inline">\(q_i, p_i\)</span> are the generalized position and momentum, and <span class="math inline">\(m_i, k_i\)</span> are the effective masses and elastic constants. The Boltzmann distribution is <span class="math inline">\(\rho(q, p) = Z^{-1} e^{-\beta H}\)</span>, and the probability that it has enough energy to overcome the barrier is</p>
@@ -1198,7 +1661,7 @@ Note
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1207,7 +1670,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In the forward process, the probability of going along that trajectory is <span class="math display">\[\rho(x|y) D[x] = \frac{\delta V}{\Omega_1}\]</span></p>
 <p>where <span class="math inline">\(\delta V\)</span> is the phase-space volume of the shaded set.</p>
@@ -1236,7 +1699,7 @@ Warning
 <div class="callout-body-container callout-body">
 <p>In both forward and backward cases, we start with a thermal equilibrium, and end with a thermal <em>dis</em>equilibrium.</p>
 <p>For example, suppose we have a small tank of a few gas molecules in thermal equilibrium with a large energy bath.</p>
-<p>Now, we <em>quicky</em> push the piston head in according to the function <span class="math inline">\(x(t)\)</span>. The trajectory of the system would go through is <span class="math inline">\(y(t)\)</span>, which is <em>determined</em> by both <span class="math inline">\(x(t)\)</span> and the initial state of both the system and the energy bath.</p>
+<p>Now, we <em>quickly</em> push the piston head in according to the function <span class="math inline">\(x(t)\)</span>. The trajectory of the system would go through is <span class="math inline">\(y(t)\)</span>, which is <em>determined</em> by both <span class="math inline">\(x(t)\)</span> and the initial state of both the system and the energy bath.</p>
 <p>Now, we <em>wait a long time</em>, until the tank is in thermal equilibrium again. Then we pull the piston head out with time-reversed trajectory. Because the forward trajectory was quick, the backward trajectory was also quick.</p>
 </div>
 </div>
@@ -1255,7 +1718,7 @@ equilibrium Helmholtz
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1264,7 +1727,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div id="callout-30" class="callout-30-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Apply the microcanonical version of Crooks theorem to the entire compound system that includes both the bath and the system, then integrate over all possible microstate trajectories of the bath <span class="math inline">\(y_{bath}\)</span>.</p>
 <p><span class="math display">\[\begin{aligned}
@@ -1292,7 +1755,7 @@ Proof
 <p>where <span class="math inline">\(\rho(W|x)\)</span> is the probability density of expending work <span class="math inline">\(W\)</span> in the forward process.</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1301,7 +1764,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Integrate over all forward microtrajectories <span class="math inline">\(y\)</span> satisfying <span class="math inline">\(W[x, y] \in [W, W+\delta W]\)</span>. By reversibility, <span class="math inline">\(W[x', y'] = [-W - \delta W, -W]\)</span> for such microtrajectories.</p>
 </div>
@@ -1327,7 +1790,7 @@ Proof
 <p>where the expectation is taken over many repeats of the same experiment (ensemble average).</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1336,7 +1799,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div id="callout-32" class="callout-32-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Integrate Crooks over all forward trajectories <span class="math inline">\(D[x]\)</span>.</p>
 <p><span class="math display">\[\rho(y | x) e^{-\beta W[x, y] } = \rho'(y' | x') e^{-\beta\Delta F}\]</span></p>
@@ -1348,7 +1811,7 @@ Proof
 <p><span class="theorem-title"><strong>Corollary 4 (violation of second law is exponentially unlikely)</strong></span> <span class="math display">\[Pr((W - \Delta F^*) \leq - \delta W) \leq e^{-\beta \delta W}\]</span></p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1357,7 +1820,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Apply Markov’s inequality.</p>
 </div>
@@ -1395,7 +1858,7 @@ Proof
 <p>If at <span class="math inline">\(t=0\)</span>, the ball is in the phase space region labelled “in region”, then it will be hit in the in-stroke. If at <span class="math inline">\(t=\Delta L/v\)</span>, the ball is in the phase space region labelled “out region”, then it will be hit in the out-stroke. Otherwise, it will not be hit.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="figure/Jarzynski_bouncing_ball_1.jpg" class="img-fluid figure-img"></p>
+<p><img src="figure/Jarzynski_bouncing_ball_1.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption class="margin-caption">Jarzynski_bouncing_ball_1.jpg</figcaption>
 </figure>
 </div>
@@ -1453,7 +1916,7 @@ Note
 <p>where <span class="math inline">\(\rho(Q)\)</span> is the probability density that a forward cycle, randomly sampled from the dynamical equilibrium ensemble, emits energy <span class="math inline">\(Q\)</span> into the energy bath. Similarly, <span class="math inline">\(\rho'\)</span> is for the backward cycle.</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1462,7 +1925,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div id="callout-35" class="callout-35-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for <span class="math inline">\(NT\)</span> time where <span class="math inline">\(N\)</span> is a large integer, then remove the driving. At the <span class="math inline">\(N\to\infty\)</span> limit, the CFT reduces to the result.</p>
 </div>
@@ -1486,11 +1949,41 @@ Proof
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-andersenClusterMethodsEquilibrium1977" class="csl-entry" role="listitem">
+Andersen, Hans C. 1977. <span>“Cluster <span>Methods</span> in <span>Equilibrium Statistical Mechanics</span> of <span>Fluids</span>.”</span> In <em>Statistical <span>Mechanics</span>: <span>Part A</span>: <span>Equilibrium Techniques</span></em>, edited by Bruce J. Berne, 1–45. Boston, MA: Springer US. <a href="https://doi.org/10.1007/978-1-4684-2553-6_1">https://doi.org/10.1007/978-1-4684-2553-6_1</a>.
+</div>
+<div id="ref-aspremPonderingImponderablesOccultism2011" class="csl-entry" role="listitem">
+Asprem, Egil. 2011. <span>“Pondering <span>Imponderables</span>: <span>Occultism</span> in the Mirror of Late Classical Physics.”</span> <em>Aries-Journal for the Study of Western Esotericism</em> 11 (2): 129.
+</div>
+<div id="ref-bergPhysicsChemoreception1977" class="csl-entry" role="listitem">
+Berg, H C, and E M Purcell. 1977. <span>“<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1473391">Physics of Chemoreception.</a>”</span> <em>Biophysical Journal</em> 20 (2): 193–219.
+</div>
+<div id="ref-bergRandomWalksBiology1993" class="csl-entry" role="listitem">
+Berg, Howard C. 1993. <em>Random Walks in Biology</em>. Expanded ed. Princeton, N.J: Princeton University Press.
+</div>
+<div id="ref-bergMotileBehaviorBacteria2000" class="csl-entry" role="listitem">
+———. 2000. <span>“Motile <span>Behavior</span> of <span>Bacteria</span>.”</span> <em>Physics Today</em> 53 (1): 24–29. <a href="https://doi.org/10.1063/1.882934">https://doi.org/10.1063/1.882934</a>.
+</div>
+<div id="ref-bergChemotaxisEscherichiaColi1972" class="csl-entry" role="listitem">
+Berg, Howard C., and Douglas A. Brown. 1972. <span>“Chemotaxis in <span>Escherichia</span> Coli Analysed by <span class="nocase">Three-dimensional Tracking</span>.”</span> <em>Nature</em> 239 (5374): 500–504. <a href="https://doi.org/10.1038/239500a0">https://doi.org/10.1038/239500a0</a>.
+</div>
+<div id="ref-boltzmannLecturesGasTheory2011" class="csl-entry" role="listitem">
+Boltzmann, Ludwig. 2011. <em>Lectures on <span>Gas Theory</span></em>. Reprint edition. New York: Dover Publications.
+</div>
 <div id="ref-brennanEvaporationLiquidsKinetic1974" class="csl-entry" role="listitem">
 Brennan, J. F., J. S. Shapiro, and E. C. Watton. 1974. <span>“Evaporation of Liquids: <span>A</span> Kinetic Approach.”</span> <em>Journal of Chemical Education</em> 51 (4): 276. <a href="https://doi.org/10.1021/ed051p276">https://doi.org/10.1021/ed051p276</a>.
 </div>
+<div id="ref-discherNewInsightsErythrocyte2000" class="csl-entry" role="listitem">
+Discher, Dennis E. 2000. <span>“New Insights into Erythrocyte Membrane Organization and Microelasticity.”</span> <em>Current Opinion in Hematology</em> 7 (2): 117.
+</div>
+<div id="ref-duncanConstructingQuantumMechanics2019" class="csl-entry" role="listitem">
+Duncan, Anthony, and Michel Janssen. 2019. <em>Constructing Quantum Mechanics. <span>Volume</span> 1: <span>The</span> Scaffold 1900-1923</em>. First edition. Oxford, United Kingdom ; New York, NY: Oxford University Press.
+</div>
 <div id="ref-feynmanWhatYouCare1989" class="csl-entry" role="listitem">
 Feynman, Richard P. 1989. <em>"<span>What</span> Do You Care What Other People Think?": Further Adventures of a Curious Character</em>. Edited by Ralph Leighton. New York: Bantam Books.
+</div>
+<div id="ref-grimus100thAnniversarySackur2013" class="csl-entry" role="listitem">
+Grimus, Walter. 2013. <span>“100th Anniversary of the <span>Sackur</span>–<span>Tetrode</span> Equation.”</span> <em>Annalen Der Physik</em> 525 (3). <a href="https://doi.org/10.1002/andp.201300720">https://doi.org/10.1002/andp.201300720</a>.
 </div>
 <div id="ref-hazoglouCommunicationMaximumCaliber2015" class="csl-entry" role="listitem">
 Hazoglou, Michael J., Valentin Walther, Purushottam D. Dixit, and Ken A. Dill. 2015. <span>“Communication: <span>Maximum</span> Caliber Is a General Variational Principle for Nonequilibrium Statistical Mechanics.”</span> <em>The Journal of Chemical Physics</em> 143 (5): 051104. <a href="https://doi.org/10.1063/1.4928193">https://doi.org/10.1063/1.4928193</a>.
@@ -1510,6 +2003,9 @@ Jarzynski, Christopher. 2011. <span>“Equalities and <span>Inequalities</span>:
 <div id="ref-laidlerUnconventionalApplicationsArrhenius1972" class="csl-entry" role="listitem">
 Laidler, Keith J. 1972. <span>“Unconventional Applications of the <span>Arrhenius</span> Law.”</span> <em>Journal of Chemical Education</em> 49 (5): 343. <a href="https://doi.org/10.1021/ed049p343">https://doi.org/10.1021/ed049p343</a>.
 </div>
+<div id="ref-liphardtReversibleUnfoldingSingle2001" class="csl-entry" role="listitem">
+Liphardt, Jan, Bibiana Onoa, Steven B. Smith, Ignacio Tinoco, and Carlos Bustamante. 2001. <span>“Reversible <span>Unfolding</span> of <span>Single RNA Molecules</span> by <span>Mechanical Force</span>.”</span> <em>Science</em> 292 (5517): 733–37. <a href="https://doi.org/10.1126/science.1058498">https://doi.org/10.1126/science.1058498</a>.
+</div>
 <div id="ref-luaPracticalApplicabilityJarzynski2005" class="csl-entry" role="listitem">
 Lua, Rhonald C., and Alexander Y. Grosberg. 2005. <span>“Practical <span>Applicability</span> of the <span>Jarzynski Relation</span> in <span>Statistical Mechanics</span>:  <span>A Pedagogical Example</span>.”</span> <em>The Journal of Physical Chemistry B</em> 109 (14): 6805–11. <a href="https://doi.org/10.1021/jp0455428">https://doi.org/10.1021/jp0455428</a>.
 </div>
@@ -1518,6 +2014,9 @@ Maillet, Olivier, Paolo A. Erdman, Vasco Cavina, Bibek Bhandari, Elsa T. Mannila
 </div>
 <div id="ref-parrondoThermodynamicsInformation2015" class="csl-entry" role="listitem">
 Parrondo, Juan M. R., Jordan M. Horowitz, and Takahiro Sagawa. 2015. <span>“Thermodynamics of Information.”</span> <em>Nature Physics</em> 11 (2): 131–39. <a href="https://doi.org/10.1038/nphys3230">https://doi.org/10.1038/nphys3230</a>.
+</div>
+<div id="ref-reifFundamentalsStatisticalThermal1998" class="csl-entry" role="listitem">
+Reif, Frederick. 1998. <em>Fundamentals of Statistical and Thermal Physics</em>. 43. [pr.]. <span>McGraw-Hill</span> Series in Fundamentals of Physics. New York: McGraw-Hill.
 </div>
 <div id="ref-sethnaStatisticalMechanicsEntropy2021" class="csl-entry" role="listitem">
 Sethna, James P. 2021. <em>Statistical Mechanics: Entropy, Order Parameters, and Complexity</em>. Second Edition. Oxford Master Series in Statistical, Computational, and Theoretical Physics. Oxford, United Kingdom ; New York, NY: Oxford University Press.
