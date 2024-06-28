@@ -1744,23 +1744,15 @@ Integrate over all forward microtrajectories $y$ satisfying $W[x, y] \in [W, W+\
 
 Looking at the proof for Crooks theorem for the canonical ensemble, we immediately obtain many other possible Crooks theorems, one per free entropy.
 
-EXP. Crooks theorem for Gibbs free energy $G$
-
-Suppose we have a piston of magnetic gas in energy-and-volume contact with a bath. Now suppose the gas is in equilibrium with the bath, and we vary the external magnetic field over a trajectory $x$. Over the microstate trajectory $x$, the external world would expend both some energy $W[x, y]$ and some volume $V[x, y]$.
+Suppose we have a piston of magnetic gas in energy-and-volume contact with a bath. Now suppose the gas is in equilibrium with the bath, and we vary the external magnetic field over a trajectory $x$. Over the microstate trajectory $x$, the external world would expend both some energy $W[x, y]$ and some volume $V[x, y]$. Thus, we obtain the Crooks theorem for Gibbs free energy $G$:
 
 $$\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] + PV[x, y] - \Delta G^*)}$$
 
-EXP. Crooks theorem for Landau free energy $\Omega$
-
-Suppose we have a chemical reaction chamber of fixed volume, and in energy-and-particle contact with a bath with chemical potentials $\mu_i$.
+Similarly, suppose we have a chemical reaction chamber of fixed volume, and in energy-and-particle contact with a bath with chemical potentials $\mu_i$, we have Crooks theorem for Landau free energy $\Omega$:
 
 $$\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] -  \sum_i \mu_i N_i[x, y] - \Delta \Omega^*)}$$
 
-### Application
-
-[@liphardtReversibleUnfoldingSingle2001; @collinVerificationCrooksFluctuation2005]
-
-## Jarzynski equality
+### Jarzynski equality
 
 Let $W$ be the total work we expended by changing the constraints during the interval $[0, \tau]$. Since the work expended depends on the details of the heat bath and the starting state of the system at $t=0$, this is a random variable.
 
@@ -1798,7 +1790,55 @@ Apply Markov's inequality.
 
 :::
 
-EXP. high probability of work extraction
+### Fluctuation-dissipation relations
+
+::: {#cor-todo}
+
+## Fluctuation-dissipation relations
+
+Since $e^t$ is convex, we have $\Delta F^* \leq \braket{W}$, meaning that the average work expended is more than the increase in Helmholtz free energy. This has better be true, else we would be violating the second law of thermodynamics on average.
+
+Since $\Delta F^* = -\frac{1}{\beta} \ln\braket{e^{-\beta W}}$, we find that to second order,
+$$\underbrace{\braket{W} - \Delta F^*}_{\text{work dissipation}} = \frac 12 \beta \underbrace{\sigma_W^2}_{\text{work fluctuation}}$$
+
+It is more familiarly written as
+$$\mu = D\beta$$
+
+where $D = \frac 12 \sigma_W^2$ is the fluctuation coefficient, and $\mu = (\braket{W} - \Delta F^*)$ is the dissipation coefficient.  
+
+:::
+
+For periodic forcing, the CFT has a simpler form.
+
+Consider a time-reversible dynamical system immersed in an energy bath with inverse temperature $\beta$ , driven by periodically varying constraints. For example, a pendulum in a sticky fluid subjected to a periodic driving torque, or a water-cooled electric circuit driven by a periodic voltage.
+
+Such a system will settle into a "dynamical equilibrium" ensemble, much like a canonical ensemble. If it is driven by the same process time-reversed, then, it will settle into another dynamical equilibrium ensemble.
+
+::: {#thm-gallavotti-cohen}
+
+## Gallavotti--Cohen fluctuation theorem
+
+$$\frac{\rho(Q)}{\rho'(-Q)} = e^{\beta Q}$$
+
+where $\rho(Q)$ is the probability density that a forward cycle, randomly sampled from the dynamical equilibrium ensemble, emits energy $Q$ into the energy bath. Similarly, $\rho'$ is for the backward cycle.
+
+:::
+
+::: {.callout-note title="Proof" collapse="true"}
+
+Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for $NT$ time where $N$ is a large integer, then remove the driving. At the $N\to\infty$ limit, the CFT reduces to the result.
+
+:::
+
+## Applications of CFT
+
+### Molecular machines
+
+[@liphardtReversibleUnfoldingSingle2001; @collinVerificationCrooksFluctuation2005]
+
+![[@collinVerificationCrooksFluctuation2005, figure 1]](figure/RNA_unfolding_collin_2005.png)
+
+![[@collinVerificationCrooksFluctuation2005, figure 3]](figure/CFT_mutant_collin_2005.png)
 
 Classically, if we have a single system in thermal equilibrium with a single energy-bath, and we perform a cyclic operation on it, then we can't extract work, lest we violate the second law.
 
@@ -1864,46 +1904,6 @@ Because the "in-out' region" is symmetric across the $p = mv$ line, we can refle
 $$
 = \frac{1}{L\sqrt{2\pi m/\beta}} \left(\int_{in, out'} e^{-\frac{\beta}{2m}p^2} dpdx + \int_{other} e^{-\frac{\beta}{2m}p^2} dpdx\right) = 1
 $$
-
-### Fluctuation-dissipation relations
-
-::: {#cor-todo}
-
-## Fluctuation-dissipation relations
-
-Since $e^t$ is convex, we have $\Delta F^* \leq \braket{W}$, meaning that the average work expended is more than the increase in Helmholtz free energy. This has better be true, else we would be violating the second law of thermodynamics on average.
-
-Since $\Delta F^* = -\frac{1}{\beta} \ln\braket{e^{-\beta W}}$, we find that to second order,
-$$\underbrace{\braket{W} - \Delta F^*}_{\text{work dissipation}} = \frac 12 \beta \underbrace{\sigma_W^2}_{\text{work fluctuation}}$$
-
-It is more familiarly written as
-$$\mu = D\beta$$
-
-where $D = \frac 12 \sigma_W^2$ is the fluctuation coefficient, and $\mu = (\braket{W} - \Delta F^*)$ is the dissipation coefficient.  
-
-:::
-
-For periodic forcing, the CFT has a simpler form.
-
-Consider a time-reversible dynamical system immersed in an energy bath with inverse temperature $\beta$ , driven by periodically varying constraints. For example, a pendulum in a sticky fluid subjected to a periodic driving torque, or a water-cooled electric circuit driven by a periodic voltage.
-
-Such a system will settle into a "dynamical equilibrium" ensemble, much like a canonical ensemble. If it is driven by the same process time-reversed, then, it will settle into another dynamical equilibrium ensemble.
-
-::: {#thm-gallavotti-cohen}
-
-## Gallavotti--Cohen fluctuation theorem
-
-$$\frac{\rho(Q)}{\rho'(-Q)} = e^{\beta Q}$$
-
-where $\rho(Q)$ is the probability density that a forward cycle, randomly sampled from the dynamical equilibrium ensemble, emits energy $Q$ into the energy bath. Similarly, $\rho'$ is for the backward cycle.
-
-:::
-
-::: {.callout-note title="Proof" collapse="true"}
-
-Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for $NT$ time where $N$ is a large integer, then remove the driving. At the $N\to\infty$ limit, the CFT reduces to the result.
-
-:::
 
 ### Arrow of time
 
