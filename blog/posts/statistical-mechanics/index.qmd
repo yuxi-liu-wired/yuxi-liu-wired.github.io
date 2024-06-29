@@ -3,7 +3,7 @@ title: "Statistical Mechanics"
 author: "Yuxi Liu"
 date: "2024-07-01"
 date-modified: "2024-07-01"
-categories: [math, physics, philosophy, probability]
+categories: [math, physics, probability]
 format:
   html:
     toc: true
@@ -93,6 +93,33 @@ In typical situations, we don't need to worry ourselves with KL-divergence, as w
 In this interpretation, the principle of "maximum entropy distribution under constraint" becomes the principle of "minimal KL-divergence under constraint", which *is* Bayesian inference, with exactly the same formulas.
 
 In almost all cases, we use the uniform prior over phase space. This is how Gibbs did it, and he didn't really justify it other than saying that *it just works*, and suggesting it has something to do with Liouville's theorem. Now with a century of hindsight, we know that it works because of quantum mechanics: We *should use* the uniform prior over phase space, because phase space volume has a natural unit of measurement: $h^N$, where $h$ is Planck's constant, and $2N$ is the dimension of phase space. As Planck's constant is a universal constant, independent of where we are in phase space, we should weight all of the phase space equally, resulting in a uniform prior.
+
+### Jaynes' epistemological interpretation
+
+If one constraint $C_1$ is looser than the other constraint $C_2$, in the sense that satisfying $C_2$ implies satisfying $C_1$, then trivially, we have
+$$\max_{\rho \text{ satisfies constraints }C_1}S[\rho] \leq \max_{\rho \text{ satisfies constraints }C_2} S[\rho]$$
+
+E. T. Jaynes interpreted statistical mechanics as a Bayesian theory of knowledge. That is, probability is not out there in the world, but in here in our minds. Macroscopic properties are evidences, and the ensemble $\rho$ is the posterior after we incorporate the evidences.
+
+TODO: quote that example about [@jaynesGibbsParadox1992]
+
+An alternative viewpoint argues that it is not the entropy that is fundamental, but the argmax of *something* that is fundamental. In this view, if we replaced the entropy function $S[\cdot]$ with a... kentropy function $K[\cdot]$, such that any scientist who uses reasons about experiments on a system using 
+$$\rho^* = \argmax_{\rho: \rho\text{ satisfies constraints }C}K[\rho]$$
+
+would be "rational", according to certain axioms of rationality.  
+
+In this vein, there is a certain Shore-Johnson theorem which shows that if the scientist is "rational", according to certain axioms of rationality, then
+$$\argmax_{\rho: \rho\text{ satisfies constraints }C}S[\rho] = \argmax_{\rho: \rho\text{ satisfies constraints }C}K[\rho]$$
+
+This is in the style of those Bayes-theological theorems proving that any rational being must use the Bayes update. [@pressePrinciplesMaximumEntropy2013]
+
+Shoot some hard balls through a bumpy region. The balls would be scattered. It would increase the entropy of the system... unless we reflect them via a corner mirror, then the balls would be reflected right back through the bumpy region, and return to the previous zero-entropy state!
+
+Did we violate the second law? Not so, if we think of entropy as a measure of our actionable ignorance. Without a corner mirror, we cannot use the detailed information of the scattered ball beam, and have to treat it as essentially random. However, all the detailed information is still there, in the bumpy region and in the scattered beam, and it takes a corner mirror to "unlock" the information for us.
+
+Thus, with a corner mirror, the scattered beam still has zero entropy, but without it, the scattered beam has positive entropy.
+
+![[@sethnaStatisticalMechanicsEntropy2021, Figure 5.27]](figure/Jaynes_irreversible_scattering.png)
 
 ## Mathematical developments
 
@@ -373,7 +400,7 @@ The proof showed something extra: If the small system is in distribution $\rho$ 
 
 $$S = S_{max} - D_{KL}(\rho \| \rho_B)$$
 
-which is related to of Sanov theorem and large deviation theory, though I don't know how to make this precise.
+which is related to of Sanov's theorem and large deviation theory, though I don't know how to make this precise.
 
 :::
 
@@ -909,7 +936,7 @@ At this point, we have decomposed the state space into a composition of oscillat
 
     Light resembles ghosts and spirits in that they are massless, untouchable, moving very fast, bright, and vaguely associated with good feelings. During the 19th century, the best scientific theory for light, that of ether theory, became the foundation of many spiritualist world systems. [@aspremPonderingImponderablesOccultism2011] The connection of electromagnetism with [animal magnetism](https://en.wikipedia.org/wiki/Animal_magnetism) did not help. Whereas modern spiritualists talk of electromagnetic fields and quantum vibrations, a century ago they talked of subatomic structures and ether vibrations.
 
-Planck considered an ensemble of $N$ oscillators, all at the same wavevector and polarization. If they have average energy $\braket{E}$, the question is to find the total entropy for the whole system, which, when divided by $N$, should yield the entropy of a single oscillator. Here he used the celebrated *quantum hypothesis*: The energy levels are divided into integer levels of $nh\nu$, where $n = 0, 1, 2, \dots$. By the stars and bars argument, there are $\binom{N + M-1}{M}$ ways do distribute these energy-quanta between these oscillators, where $M = \frac{N\braket{E}}{h\nu}$.
+Planck considered an ensemble of $N$ oscillators, all at the same wavevector and polarization. If they have average energy $\braket{E}$, the question is to find the total entropy for the whole system, which, when divided by $N$, should yield the entropy of a single oscillator. Here he used the celebrated *quantum hypothesis*: The energy levels are divided into integer levels of $nh\nu$, where $n = 0, 1, 2, \dots$. By the [stars and bars](https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)) argument, there are $\binom{N + M-1}{M}$ ways do distribute these energy-quanta between these oscillators, where $M = \frac{N\braket{E}}{h\nu}$.
 
 $$S = \frac 1N \ln \binom{N+M-1}{M} \ub{\approx}{Stirling} (1 + a) \ln (1+a) - a \ln a, \quad a = \frac{\braket{E}}{h\nu}$$
 
@@ -919,9 +946,9 @@ $$
 \braket{E} = \lrb{\frac{h\nu}{e^{\beta h\nu}-1}}
 $$
 
-The rest of the derivation is fairly obvious. I will just point out one more interesting fact.
+The rest of the derivation is fairly obvious and may be found in any textbook. I will just point out one more interesting fact.
 
-According to Kirchhoff's law of thermal radiation, a chunk of matter is exactly as absorptive as it is emissive. A black body absorbs all light, and conversely it emits light at the maximal level. A white body absorbs no light, and conversely it does not emit light. This can be understood as a consequence of the second law: If a body emits more light than it absorbs, then it would spontaneously get colder when placed inside a black body radiation chamber. 
+According to [Kirchhoff's law of thermal radiation](https://en.wikipedia.org/wiki/Kirchhoff's_law_of_thermal_radiation), a chunk of matter is exactly as absorptive as it is emissive. A black body absorbs all light, and conversely it emits light at the maximal level. A white body absorbs no light, and conversely it does not emit light. This can be understood as a consequence of the second law: If a body emits more light than it absorbs, then it would spontaneously get colder when placed inside a black body radiation chamber. 
 
 However, much more can be said than this. Not only is it exactly as absorptive as it is emissive, it is as absorptive as it is emissive at *any angle*, at any wavelength, and any polarization. So for example, if a piece of leaf is not absorptive when viewed from an angle, at the green light wavelength, of clockwise polarization, then it is not emissive under the same angle, wavelength, polarization.
 
@@ -929,7 +956,7 @@ Why is that? The standard argument [@reifFundamentalsStatisticalThermal1998, cha
 
 ::: {.callout-note title="Relativistic gas?"}
 
-A chamber full of black body radiation is also called a photon gas. The photon gas is sometimes treated as the limit of "ultrarelativistic gas". Start with the relativistic energy function $E = \sqrt{m^2 c^4 + \|p\|^2 c^2}$, derive its Boltzmann distribution $\rho(q, p) \propto e^{-\beta \sqrt{m^2 c^4 + \|p\|^2 c^2}}$, then take the $m \to 0$ limit. This gives some correct results, such as the $U = 3PV$.
+A box full of black body radiation is also called a photon gas. The photon gas is sometimes treated as the limit of "ultrarelativistic gas". Start with the relativistic energy function $E = \sqrt{m^2 c^4 + \|p\|^2 c^2}$, derive its [Boltzmann distribution](https://en.wikipedia.org/wiki/Maxwell-J%C3%BCttner_distribution) $\rho(q, p) \propto e^{-\beta \sqrt{m^2 c^4 + \|p\|^2 c^2}}$, then take the $m \to 0$ limit. This gives some correct results, such as the $U = 3PV$.
 
 However, accounting for the entropy of photon gas, as well as deriving the black body radiation, hinges critically on the photon quantization $E = h\nu, 2h\nu, \dots$. I guess it can be done correctly by relativistic quantum mechanics, but it is of course beyond the world of classical mechanics.
 
@@ -937,9 +964,13 @@ However, accounting for the entropy of photon gas, as well as deriving the black
 
 ### Rubber bands {#sec-rubber-band}
 
-We have a long chain molecule with $N$ joints. Each joint can go forward or backward, with equal energy. Each link between two joints has length $d$. The total length of the system is $L$.
+It turns out that rubber bands, and generally things made of long polymers, *contract* when heated up, instead of expanding. This is the [Gough--Joule effect](https://en.wikipedia.org/wiki/Gough%E2%80%93Joule_effect). Roughly speaking, this is because elasticity in long polymer material (like rubber) is very different from elasticity in short molecule solids (like copper and ice). In rubber, elasticity is an entropic force, while in copper, it is an electrostatic force caused by attraction between molecules.
+
+To model a rubber band, consider a long chain molecule with $N$ joints. Each joint can go forward or backward, with equal energy. Each link between two joints has length $d$. The total length of the system is $L$. 
 
 ![A sample shape from the ensemble of all rubber band shapes.](figure/rubber_band.png)
+
+#### Direct argument (microcanonical)
 
 The entropy of the system, conditional on $L$, is 
 
@@ -967,133 +998,111 @@ where $k = \frac{T}{Nd^2}$ is the elastic constant, proportional to temperature.
 
 Why does the rubber band stiffen when temperature rise? We can interpret it as follows. When we place the rubber band in a chamber of hot air, the air particles would often collide with the links in the rubber band, flipping it. When there are more links going to the right than the left, then the air particles would tend to flip the links to the left, decreasing $L$, and conversely. The net force is zero only when there are an equal number of links going either way, which is when $L = 0$.
 
-::: {.callout-note title="ensemble of lengths"}
+#### Via free entropy (canonical)
 
-Because the rubber band has $dE = TdS + FdL$, the corresponding free entropy is
+Because the rubber band has $dE = TdS + FdL$, the corresponding free entropy is $S - \beta \braket{E} + \beta F \braket{L}$. Under the canonical distribution, that free entropy is maximized, meaning that $\rho(x) \propto e^{\beta FL(x)}$ where $x$ is a microstate of the rubber band (i.e. the precise position of each link), and $L(x)$ is the corresponding length (macrostate).  
 
-$$S + \beta F\braket{L}$$
+The trick of using the free entropy is that it decomposes the entire rubber band into atomic individuals. Like how opening an energy market converts consumers trying to coordinate their energy use into consumers each individually buying and selling energy, and thus simplifying the calculation problem. Like how [Laplace's devil](https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/index.html#lagranges-devil-at-disneyland) allows you to calculate the optimal way to schedule your day. Microcanonical ensembles are true, but canonical ensembles are almost just as true, and much easier to use. The idea is that the canonical ensemble and the microcanonical ensemble are essentially the same because the fluctuation is so tiny.
 
-and under the canonical distribution, that free entropy is maximized, meaning that under canonical distribution,
+Back to the rubber band. Each individual link in the rubber band now is freed from the collective responsibility of reaching exactly length $L$. It is now an atomized individual, maximizing its own free entropy $S - \beta \braket{E} + \beta F \braket{L}$. Let $p$ be its probability of going up, then its free entropy is
 
-$$\rho(x) = \frac{1}{Z}e^{\beta FL(x)}$$
+$$
+\ub{-p\ln p - (1-p) \ln(1-p) }{$S$} - 0 + \beta F (d p - d(1-p))
+$$
 
-where $x$ is a microstate of the rubber band (i.e. the precise position of each link), and $L(x)$ is the corresponding length (macrostate).  
+This is maximized by the Boltzmann distribution $p = \frac{e^{\beta F 2d}}{1+e^{\beta F 2d}}$, with first two moments 
 
-Since for each $L$ there are $\binom{N}{\frac{N + L/d}{2}}$ possible microstates, we have 
+$$
+\braket{L} = \frac{e^{\beta F 2d} - 1}{e^{\beta F 2d} + 1} d \approx \beta Fd^2,
+\quad \mathbb{V}[L] = p(1-p)d^2 \approx d^2/4
+$$
 
-$$\rho(L) \propto  \binom{N}{\frac{N + L/d}{2}} e^{\beta F L}$$
+The total extension of the rubber band has the first two moments
 
-When $Nd \gg L$, the binomial coefficient is approximately $\exp{[N H_2(\frac 12 + \frac{L}{2dN})]}$, where $H_2$ is the binary entropy function, therefore
+$$
+N\braket{L} \approx \beta F Nd^2,
+\quad N\mathbb{V}[L] \approx Nd^2/4 = \frac{1}{4F\beta} N\braket{L}
+$$
 
-$$\ln \rho(L) \approx \beta F L + NH_2\left(\frac 12 + \frac{L}{2dN}\right) + Const \approx \beta FL - \frac{L^2}{2Nd^2} + Const$$
-
-In particular, we see that $\ln \rho(L)$ is maximized at $\braket{L} = \beta F Nd^2$, exactly what we have found previously. But this time we have also the variance:
-
-$$\sigma_L^2 = \frac{(Nd)^2}{N}$$
-
-which again is an example of the general result that $\sigma \propto N^{-1/2}$.  
-
-:::
+The first equation is the same as the previous one. The second equation tells us the fluctuation in rubber band length when held under constant force and temperature. For typical conditions like $F \sim 1 \ut{N}, T \sim 300 \ut{K}, N\braket{L} \sim 1 \ut{m}$, the fluctuation is on the order of $(0.1\ut{nm})^2$, about one atom's diameter. So we see that the difference between the canonical and the microcanonical ensemble are indeed too tiny to speak of.
 
 ## Combinatorial examples
 
-### Multinomials
+### Multinomials and the chi-squared test
 
-Let $p_1, \dots, p_k$ be a discrete probability distribution, and let $n_1, \dots, n_k$ be integers that depend on $N$, such that
+Let $p_1, \dots, p_k$ be a discrete probability distribution, and let $N_1, \dots, N_n$ be integers that depend on $N$, such that
 
-$$\lim_{N \to \infty}n_i/N = p_i$$
+$$\lim_{N \to \infty}N_i/N = p_i$$
 
 then we have
 
-$$\lim_{N \to \infty}\frac 1N \ln \binom{N}{n_1, \dots, n_k} = -\sum_i p_i \ln p_i$$
+$$\lim_{N \to \infty}\frac 1N \ln \binom{N}{N_1, \dots, N_n} = -\sum_i p_i \ln p_i = S[\rho]$$
 
-::: {.callout-note title="idea"}
-
-Imagine we have a system made of a single ball that can go into one out of $k$ labelled boxes. Now, let us copy paste the system $N$ times, so we have $N$ balls and $kN$ boxes. Then we can interpret
-$$\frac 1N \ln \binom{N}{n_1, \dots, n_k}$$
-
-as the maximal average entropy per ball under the following constraints: There are exactly $n_1$ balls in boxes labelled $1$, etc.  
-
-Thinking thermodynamically, we can pick one ball as the system, and put it in contact with a bath made of $N$ balls. Once we calculate the marginal entropies of the bath, we can infer the Boltzmann distribution for the system, and thus the marginal entropy of the system.
-
-Now, here is the non-rigorous part: We *hope* that as $N \to \infty$, all correlations (pairwise, triple-wise, etc) between balls decay fast enough, such that the interaction-entropy between the balls drop to zero, leaving
-$$\text{average entropy per ball} = \text{marginal entropy of a ball}$$
-
-Justifying this rigorously is generally very difficult, and in fact, the assumption is false at phase transitions, where correlations *do not* decay fast enough.
-
-If this is so, then we need to only show that the marginal distribution of a single ball converges to $(p_1, \dots, p_k)$.
-
-:::
-
-This is an example of how the microcanonical ensemble and the canonical ensemble become indistinguishable at the large particle limit. Indeed, Boltzmann often used this equation to derive the canonical ensemble from microcanonical ensembles.
-
-::: {.callout-note title="derivation" collapse="true"}
-
-Suppose we move the ball from box $i$ to box $j$, then it would force the bath to change all its balls, changing its entropy by
-$$
-\ln\binom{N}{n_1', \dots, n_k'} -\ln \binom{N}{n_1, \dots, n_k}
-$$
-
-where $n_i' = n_i + 1, n_j' = n_j - 1$, and otherwise unchanged.  
-
-By definition of multinomials, this is equal to
-
-$$\ln n_j - \ln(n_i+1)$$
-
-which converges to $(\ln p_j - \ln p_i)$ at large enough $N$.  
-
-Let $X$ stand for the total state, including the bath and the singled-out system, and let $Y$ stand for the state of the singled-out system. By @thm-cond-ent, when the entire system is at the maximal entropy distribution, the distribution of the singled-out system is
-
-$$\rho^*_Y(y) \propto e^{S_{X|y}^*}$$
-
-From the previous calculation, we have
-$$S_{X|j}^* - S_{X|j}^* = \ln p_j - \ln p_i$$
-
-yielding $S_{X|i}^* = S_0 + \ln p_i$ for some constant $S_0$, and so $\rho^*_Y(y) \propto p_i$, finishing the proof.  
-
-:::
-
-### Sanov theorem
+where $\rho$ is the discrete probability distribution. This can be interpreted as the thermodynamic limit of a lot of balls.
 
 Consider a population of particles, all in energy-contact with an energy bath of $\beta = 1$. Each particle has $n$ states, with state $i$ having energy $-\ln p_i$. Thus, at the Boltzmann distribution, each particle is precisely sampled from the categorical distribution $(p_1, \dots, p_n)$.
 
-Let $X$ stand for the state of the entire population of particles. That is, $X$ describes the precise state of each particle. Let $Y$ stand for the vector of $N_1, \dots, N_n$. That is, it counts the number of particles in each state.
+Let $X$ stand for the state of the entire population of particles. That is, $X$ describes the precise state of each particle. Let $Y$ stand for the vector of $N_1, \dots, N_n$. That is, it counts the number of particles in each state. As typical, at the limit of $N \to \infty$, we should expect $\frac{N_i}{N} \to p_i$ with certainty (the thermodynamic limit), and the variance should scale as $1/N$ (statistical fluctuation). So, if we observe the particle population many times, and plot all the $\frac{N_i}{N}$ on the $n$-simplex, we should see an ellipsoidal cloud centered around $(p_1, \dots, p_n)$ with radius $\sim N^{-1/2}$.
 
-The free entropy of a single particle is
-$$\bar f_X^* = S - \beta \braket{E} = \sum_i (-p_i \ln p_i) - \sum_i p_i E_i = 0$$
+<video controls width=100%>
+  <source src="figure/Sanov_convergence.webm" type="video/webm" />
+</video>
 
-Because the particles have no interaction energy, the total free entropy of $X$ is $f_X^* = N \bar f_X^* = 0$.
+This is an example of how the microcanonical ensemble and the canonical ensemble become indistinguishable at the large particle limit. Indeed, Boltzmann often used this equation to derive the canonical ensemble from microcanonical ensembles.
+
+::: {.callout-tip title="non-rigorous part"}
+
+In the above derivation, there was a non-rigorous step. We *hope* that as $N \to \infty$, all correlations (pairwise, triple-wise, etc) between balls decay fast enough, such that the interaction-entropy between the balls drop to zero, leaving
+
+$$\text{average entropy per ball} = \text{marginal entropy of a ball}$$
+
+Justifying this rigorously is generally very difficult, and in fact, the assumption is false at phase transitions, where correlations *do not* decay fast enough, and so the thermodynamic limit is false. However, it is typically good enough to check that the fluctuations decay as $N^{-1/2}$, and if so, the thermodynamic limit is true.
+
+:::
+
+We have argued that the cloud should be ellipsoidal and centered around $(p_1, \dots, p_n)$ with radius $\sim N^{-1/2}$. What exactly is its shape? Well, since each particle's distribution of states is categorical, and the particles are uncorrelated (thanks to the energy market), the mean and covariance of $\vec N= (N_1, \dots, N_n)$ are $\vec p N$ and $[\diag(\vec p) - \vec p \vec p^T] N$. The covariance matrix is not linearly independent, because of the constraint $\sum_i N_i/N = 1$.
+
+A good trick is worth doing again and again. Like how the microcanonical ensemble is freed up by a free market into a canonical ensemble, here we free up $\vec N$ by *adding noise*, then conditioning on zero noise:
+
+$$
+\vec N / N + z\vec p/\sqrt N \sim \mathcal N(\vec p, \diag(\vec p) / N) \quad z \sim \mathcal N(0, 1)
+$$
+
+Therefore, the probability density of $\vec N$ satisfies
+
+$$\rho(\vec N / N) \propto \exp\lrb{-\frac 12 \sum_i \frac{(N_i - Np_i)^2}{Np_i}}$$
+
+after conditioning on $z = 0$. Therefore, the distribution of $\sum_i \frac{(N_i - Np_i)^2}{Np_i}$ converges to $\chi^2(n-1)$. This is the [chi-squared test](https://en.wikipedia.org/wiki/Chi-squared_test).
+
+### Sanov's theorem
+
+Typically in statistical mechanics, we study the fluctuation of a macroscopic variable on the order of $N^{-1/2}$. Large deviation theory studies the fluctuation on the order of $1$. The prototypical example is Sanov's theorem.
+
+The problem is as follows: Suppose that we require $\vec N / N \to \vec q$, where $\vec q$ is some other probability vector, what is the behavior of $Pr(\vec N / N \approx \vec q)$? Sanov's theorem states that
+
+$$
+Pr(\vec N / N \approx \vec q) \sim e^{-ND_{KL}(\vec q \| \vec p)}
+$$
+
+::: {.callout-note title="derivation" collapse="true"}
 
 By @thm-cond-free-ent, 
-$$\rho^*_Y(N_1, \dots, N_n) = e^{f_{X|N_1, \dots, N_n}^*}$$
 
-where $f_{X|N_1, \dots, N_n}^*$ is the maximal free entropy of the entire system conditional on $Y = (N_1, \dots, N_n)$.  
-
-Now, by definition of $f_{X|N_1, \dots, N_n}^*$, it is the maximal free entropy under constraint:
 $$
-\begin{cases}
-\max_\rho \sum_{(s_1, \dots, s_N) \in n^N} \rho(s) (-\ln \rho(s) - \beta E(s))  \\
-Y = (N_1, \dots, N_n)
-\end{cases}
+\frac 1N \ln Pr(\vec N / N \approx \vec q) = \bar f^*_{|\vec N / N \approx \vec q} - \bar f^*
 $$
 
-where $s_i$ is the state of particle $i$.  
+where $\bar f^*$ is the Helmholtz free entropy per particle for the system without constraint on $\vec N$, and $\bar f^*_{|\vec N / N \approx \vec q}$ is the Helmholtz free entropy per particle, conditional on $\vec N / N \approx \vec q$.
 
-For any $\rho$ that satisfies the constraint of $Y = (N_1, \dots, N_n)$, the term is a constant
+The constraint of $\vec N / N \approx \vec q$ is a global constraint, but as usual, when $N$ is large, global constraints over all particles becomes local constraints for each particle individually. In this case, the constraint on individual particle is simply that its state is distributed according to $\vec q$, energy be damned. 
 
-$$E(s) = \sum_{i=1}^n N_i E_i$$
+Thus, we find that
 
-Therefore, the problem reduces to maximizing just the entropy under constraint of $Y = (N_1, \dots, N_n)$, which is a "microcanonical distribution", the uniform distribution over all possible $\binom{N}{N_1, \dots, N_n}$ ways to satisfy the $Y = (N_1, \dots, N_n)$ constraint.  
-
-Therefore,
-$$f_{X|N_1, \dots, N_n}^* = \ln \binom{N}{N_1, \dots, N_n} + \sum_i N_i \ln p_i \approx -ND_{KL}(q \| p)$$
-
-where $q = (N_1/N, \dots, N_n/N)$ is the empirical distribution.  
-
-Therefore,
 $$
-\frac 1N \ln \rho^*_Y(N_1, \dots, N_n) \to D_{KL}(q \| p)
+\frac 1N \ln Pr(\vec N / N \approx \vec q) = \lrb{\sum_i -q_i \ln q_i - \sum_i q_i E_i} - \lrb{\sum_i -p_i \ln p_i - \sum_i p_i E_i} = -D_{KL}(\vec q \| \vec p)
 $$
+
+:::
 
 ### Surface area of high-dimensional spheres
 
@@ -1361,7 +1370,7 @@ Now, as in dynamic programming, we reason backwards from $t = N$ to $t=0$, and w
 
 $$\rho(x) \propto e^{-\frac{\sum_{t\in 1:N} \| x_t-x_{t-1}\|^2}{2\sigma^2}}$$
 
-If we constrain the first *and* second moments of each step, and also allow them to be affected by the previous step, as in
+If we constrain the first *and* the second moments of each step, and also allow them to be affected by the previous step, as in
 
 $$
 \begin{cases}
@@ -1370,9 +1379,9 @@ $$
 \end{cases}, \quad \forall t \in 1:N
 $$
 
-then, reasoning backwards as before, we would obtain the [Fokker--Planck equation](https://en.wikipedia.org/wiki/Fokker-Planck_equation). 
+then, reasoning backwards as before, we would obtain the [Langevin equation](https://en.wikipedia.org/wiki/Langevin_equation). 
 
-Other results, such as the Green-Kubo relation, the Onsager reciprocal relations, etc, can be similarly derived by imposing the right constraints in path space. [@hazoglouCommunicationMaximumCaliber2015]
+Other results, such as the [Green--Kubo relations](https://en.wikipedia.org/wiki/Green%E2%80%93Kubo_relations), the [Onsager reciprocal relations](https://en.wikipedia.org/wiki/Onsager_reciprocal_relations), etc, can be similarly derived by imposing the right constraints in path space. [@hazoglouCommunicationMaximumCaliber2015]
 
 ### Fluctuation-dissipation relations
 
@@ -1389,7 +1398,7 @@ $$
 The prototypical FDR is the [Einstein relation](https://en.wikipedia.org/wiki/Einstein_relation_(kinetic_theory)), to be derived below:
 
 $$
-\ub{(\beta D)^{-1}}{fluctuation} = \ub{\gamma}{dissipation}
+\ub{\beta D}{fluctuation} = \ub{(\gamma\beta)^{-1}}{dissipation}
 $$
 
 where the left side can be interpreted as the strength of molecular noise, and the right side as the strength of molecular damping.
@@ -1592,48 +1601,56 @@ And yes, that is the one!
 
 ## Crooks fluctuation theorem {#sec-cft}
 
+The field of genuinely non-equilibrium thermodynamics is yet unsettled, so this section is more provisional than the previous ones. Here, we are still considering classical mechanics, with time-reversible Hamiltonian dynamics.
+
+The key to modern non-equilibrium thermodynamics is the Crooks fluctuation theorem (CFT), which surprisingly was proven only in 1999. As fundamental physics go, this is really new!
+
 ### In a closed system (microcanonical)
 
-SETUP. The system is a classical-mechanical system, with time-reversible dynamics, and follows Liouville's theorem.
+Consider a system held under variable constraints $x$. For example, we have a piston whose head is held at a given length. Alternatively, its head is held at a given force. The point is simply to pick one type of constraint, then stick with it.
 
-We have a thermodynamic system held under variable constraints $x$.
+Let the system start in a microcanonical ensemble, at energy $E_1$, then we change the constraints $x(t)$, quickly or slowly, over a time interval $t\in [0, \tau]$. The system's microstate follows some trajectory $y(t)$, arriving $y(\tau)$, which falls within some new microcanonical ensemble with energy $E_2$. 
 
-The system starts in microcanonical ensemble of energy $E_1$. Then we change the constraints $x(t)$, quickly or slowly, over a time interval $t\in [0, \tau]$. Let the microstate trajectory of the system be $y(t)$, arriving at the energy shell of $E_2$.
+Putting a prime means time-reversal. For example, $x', y'$ are $x, y$, but time-reversed.
+
+Whereas $E_1$ is known, $E_2$ is randomly sampled, as it is determined by $E_1$ (known), $x(t)$ (known), $y(0)$ (randomly sampled from the microcanonical ensemble).
 
 During the forward process, if the system undergoes microstate trajectory $y(t)$, then we have to expend work $W[x(t), y(t)] = E_2 - E_1$.
 
-Let $S_1^*$ be the maximal entropy of the system when held under the constraints of $x(0)$, and when the system has energy $E_1$. Similarly for $S_2^*$.
+
+Let $S_1^*$ be the maximal entropy of the system when held under the constraints of $x(0)$, and when the system has energy $E_1$. Similarly, let $S_2^*$ be the maximal entropy of the system when held under the constraints of $x(\tau)$, and when the system has energy $E_2$.
 
 ::: {.callout-warning}
 
 $S_1 = S_1^*$, since the system starts in thermal equilibrium. However, by Liouville's theorem, entropy is *conserved*! So we actually have $S_2 = S_1 \neq S_2^*$, because the system does not end in thermal equilibrium.
 
+The key is this: if the system starts at a microcanonical ensemble, then it does *not* in general end up at another microcanonical ensemble, because as we exert external forcing upon the system, the energy shell deforms, no longer the shell of *any* microcanonical ensemble.
+
 :::
 
-$x', y'$ are $x, y$ time-reversed.
+For example, if we have a piston of gas made of only a few gas molecules, then the constraint is the volume $V$, and we want to study the probability of expending work $W$ if we give the piston head a push. The push can be slow or fast -- arbitrarily far from equilibrium. CFT applies no matter how we push the piston head.
 
-For example, if we have a piston of gas made of only a few gas molecules, then the constraint is the volume $V$, and we want to study the probability of expending work $W$ if we give the piston head a push. The push can be slow or fast -- arbitrarily far from equilibrium. Crooks theorem applies no matter how we push the piston head.
+![During the forward time-evolution of an energy shell $E_1$, the shell is no longer a microcanonical ensemble. The particular trajectory sampled lands upon an energy shell $E_2$. [@sethnaStatisticalMechanicsEntropy2021, figure 4.10]](figure/Crooks_sethna_2021_4_10.png)
 
-![[@sethnaStatisticalMechanicsEntropy2021, figure 4.10]](figure/Crooks_sethna_2021_4_10.png)
+![The same situation but in the opposite direction. [@sethnaStatisticalMechanicsEntropy2021, figure 4.11]](figure/Crooks_sethna_2021_4_11.png)
 
-![[@sethnaStatisticalMechanicsEntropy2021, figure 4.11]](figure/Crooks_sethna_2021_4_11.png)
-
-SETUP. probability density over path-space.
+Because the CFT involves the density of not states, but *state trajectories*, we need to set up the formalism for path integrals.
 
 Let $\delta E_1, \delta E_2$ be infinitesimals, and let $E_1, E_2$ be real numbers.
 
-Given a small bundle of microtrajectories $y$, we can measure its path-space volume as $D[y]$. Suppose they start on the energy shell $[E_1, E_1 + \delta E_1]$, then they would end up *somewhere*. If we're lucky, they would end up on the energy shell $[E_2 + \delta E_2]$.
+Given an infinitesimal small bundle of microtrajectories $y$, we can measure its path-space volume as $D[y]$. Suppose they start on the energy shell $[E_1, E_1 + \delta E_1]$, then they would end up *somewhere*. If we're lucky, they would end up on the energy shell $[E_2 + \delta E_2]$.
 
 Suppose the system starts in the microcanonical ensemble on the energy shell $[E_1, E_1 + \delta E_1]$, and we perform the constraint-variation $x$, then there is a certain probability $\delta P$ that we would sample a trajectory from the small bundle. That small probability is
+
 $$\rho(y | x) D[y]$$
 
 where $\rho(y | x)$ is a probability density over path-space. In particular, $\rho(y | x) = 0$ identically, unless $y(0)$ is on the energy shell $[E_1, E_1 + \delta E_1]$.  
 
 Running the argument backwards, we can define $\rho'(y' | x')$, another probability density over paths. This one satisfies $\rho'(y'| x') = 0$ unless $y'(0)$ is on the energy shell $[E_2, E_2 + \delta E_2]$.
 
-::: {#thm-todo}
+::: {#thm-cft-micro}
 
-## Crooks fluctuation theorem (microcanonical)
+## microcanonical CFT
 
 For any trajectory $y$ such that it starts on the $[E_1, E_1 + \delta E_1]$ energy shell, and ends on the $[E_2, E_2 + \delta E_2]$ energy shell,
 
@@ -1649,7 +1666,7 @@ If $y$ does not start on the first energy shell, or does not end on the second e
 
 :::
 
-::: {.callout-note title="Proof" collapse="true"}
+::: {.callout-note title="proof" collapse="true"}
 
 In the forward process, the probability of going along that trajectory is 
 $$\rho(x|y) D[x] = \frac{\delta V}{\Omega_1}$$
@@ -1665,7 +1682,7 @@ $\delta V' = \delta V$ by Liouville's theorem, and $D[x] = D[x']$ because $x'$ i
 
 ### In an energy bath (canonical)
 
-Now, suppose we take the same piston of gas, and put it in energy-contact with an energy bath, then at thermal equilibrium, the piston of gas would have the Boltzmann distribution $\propto e^{-\beta E}$. We can then give the piston head a push, which would cause it to undergo
+Now, suppose we take the same piston of gas, and put it in energy-contact with an energy bath, then at thermal equilibrium, the piston of gas would have the Boltzmann distribution $\propto e^{-\beta E}$. We can then give the piston head a push, which would cause it to undergo some kind of time-evolution. 
 
 ::: {#thm-cft}
 
@@ -1677,7 +1694,7 @@ where $S[x, y]$ is the entropy produced during the forward process, after the sy
 
 :::
 
-::: {.callout-warning}
+::: {.callout-warning title="equilibrium Helmholtz"}
 
 In both forward and backward cases, we start with a thermal equilibrium, and end with a thermal *dis*equilibrium.
 
@@ -1685,21 +1702,17 @@ For example, suppose we have a small tank of a few gas molecules in thermal equi
 
 Now, we *quickly* push the piston head in according to the function $x(t)$. The trajectory of the system would go through is $y(t)$, which is *determined* by both $x(t)$ and the initial state of both the system and the energy bath.
 
-Now, we *wait a long time*, until the tank is in thermal equilibrium again. Then we pull the piston head out with time-reversed trajectory. Because the forward trajectory was quick, the backward trajectory was also quick.
-
-::: 
-
-::: {.callout-warning title="equilibrium Helmholtz"}
+Now, we *wait a long time*, until the tank is in thermal equilibrium again. Then we pull the piston head out with time-reversed trajectory. Because the forward trajectory was quick, the backward trajectory was also quick. In both cases, the system starts at equilibrium, then becomes disequilibrated, and then becomes equilibrated again. The definition of $W$ is measured during the equilibrium-disequilibrium *trajectory*, while $F^*$ is measured by comparing the equilibrium-equilibrium, *regardless* of trajectory.
 
 We wrote $F^*$ instead of $F$, to emphasize that we are dealing with *equilibrium* Helmholtz free energy, defined by $F^* = \min_\rho (\braket{E} - TS[\rho])$, and *not* the generic version $\braket{E} - TS[\rho]$.
 
-This is vitally important, because at time $\tau$, when the constraints have just reached their new values, the system is *not* in equilibrium. We would have to hold the constraints constant for a while for the system to return to equilibrium with the energy bath. Despite this, Crooks fluctuation theorem uses $\Delta F^*$, which is computed at equilibrium.
+This is vitally important, because at time $\tau$, when the constraints have just reached their new values, the system is *not* in equilibrium. We would have to hold the constraints constant for a while for the system to return to equilibrium with the energy bath. Despite this, CFT uses $\Delta F^*$, which is computed at equilibrium.
 
 :::
 
 ::: {.callout-note title="Proof" collapse="true"}
 
-Apply the microcanonical version of Crooks theorem to the entire compound system that includes both the bath and the system, then integrate over all possible microstate trajectories of the bath $y_{\text{bath}}$.
+Apply the microcanonical version of CFT to the entire compound system that includes both the bath and the system, then integrate over all possible microstate trajectories of the bath $y_{\text{bath}}$.
 
 $$\begin{aligned}
   S[x, y] &= \Delta S_{\text{bath}} + \Delta S_{\text{system}} \\
@@ -1718,7 +1731,7 @@ This will be used again in the next step when we integrate over $D[y_{\text{bath
 
 $$\begin{aligned}
   \rho(y|x) &= \int_{y, y_{\text{bath}}, x \text{ is valid}}D[y_{\text{bath}}]\; \rho(y, y_{\text{bath}} | x)  \\
-  &=  \underbrace{\int_{y', y'_{\text{bath}}, x' \text{ is valid}}D[y'_{\text{bath}}]}_{\text{reversible dynamics}}\; \underbrace{e^{S[x, y, y_{\text{bath}}]}\rho'(y', y'_{\text{bath}} | x')}_{\text{microcanonical Crooks}}  \\
+  &=  \underbrace{\int_{y', y'_{\text{bath}}, x' \text{ is valid}}D[y'_{\text{bath}}]}_{\text{reversible dynamics}}\; \underbrace{e^{S[x, y, y_{\text{bath}}]}\rho'(y', y'_{\text{bath}} | x')}_{\text{microcanonical CFT}}  \\
   &=  \int D[y'_{\text{bath}}] \; e^{\red{S[x, y]}}\rho'(y', y'_{\text{bath}} | x') \\
   &=  e^{S[x,y]} \int D[y'_{\text{bath}}] \; \rho'(y', y'_{\text{bath}} | x') \\
   &=  e^{S[x,y]} \rho'(y'|x')
@@ -1740,19 +1753,17 @@ Integrate over all forward microtrajectories $y$ satisfying $W[x, y] \in [W, W+\
 
 :::
 
-### Other ensembles
+Looking at the proof for CFT for the canonical ensemble, we immediately obtain many other possible CFTs, one per free entropy.
 
-Looking at the proof for Crooks theorem for the canonical ensemble, we immediately obtain many other possible Crooks theorems, one per free entropy.
-
-Suppose we have a piston of magnetic gas in energy-and-volume contact with a bath. Now suppose the gas is in equilibrium with the bath, and we vary the external magnetic field over a trajectory $x$. Over the microstate trajectory $x$, the external world would expend both some energy $W[x, y]$ and some volume $V[x, y]$. Thus, we obtain the Crooks theorem for Gibbs free energy $G$:
+Suppose we have a piston of magnetic gas in energy-and-volume contact with a bath. Now suppose the gas is in equilibrium with the bath, and we vary the external magnetic field over a trajectory $x$. Over the microstate trajectory $x$, the external world would expend both some energy $W[x, y]$ and some volume $V[x, y]$. Thus, we obtain the CFT for Gibbs free energy $G$:
 
 $$\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] + PV[x, y] - \Delta G^*)}$$
 
-Similarly, suppose we have a chemical reaction chamber of fixed volume, and in energy-and-particle contact with a bath with chemical potentials $\mu_i$, we have Crooks theorem for Landau free energy $\Omega$:
+Similarly, suppose we have a chemical reaction chamber of fixed volume, and in energy-and-particle contact with a bath with chemical potentials $\mu_i$, we have CFT for Landau free energy $\Omega$:
 
 $$\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] -  \sum_i \mu_i N_i[x, y] - \Delta \Omega^*)}$$
 
-### Jarzynski equality
+### Easy consequences
 
 Let $W$ be the total work we expended by changing the constraints during the interval $[0, \tau]$. Since the work expended depends on the details of the heat bath and the starting state of the system at $t=0$, this is a random variable.
 
@@ -1768,7 +1779,7 @@ where the expectation is taken over many repeats of the same experiment (ensembl
 
 ::: {.callout-note title="Proof" collapse="true"}
 
-Integrate Crooks over all forward trajectories $D[x]$.
+Integrate CFT over all forward trajectories $D[x]$.
 
 $$\rho(y | x) e^{-\beta W[x, y] } = \rho'(y' | x') e^{-\beta\Delta F}$$
 
@@ -1790,21 +1801,15 @@ Apply Markov's inequality.
 
 :::
 
-### Fluctuation-dissipation relations
-
-::: {#cor-todo}
-
-## Fluctuation-dissipation relations
-
 Since $e^t$ is convex, we have $\Delta F^* \leq \braket{W}$, meaning that the average work expended is more than the increase in Helmholtz free energy. This has better be true, else we would be violating the second law of thermodynamics on average.
 
 Since $\Delta F^* = -\frac{1}{\beta} \ln\braket{e^{-\beta W}}$, we find that to second order,
-$$\underbrace{\braket{W} - \Delta F^*}_{\text{work dissipation}} = \frac 12 \beta \underbrace{\sigma_W^2}_{\text{work fluctuation}}$$
 
-It is more familiarly written as
-$$\mu = D\beta$$
+::: {#thm-fdr}
 
-where $D = \frac 12 \sigma_W^2$ is the fluctuation coefficient, and $\mu = (\braket{W} - \Delta F^*)$ is the dissipation coefficient.  
+## fluctuation-dissipation relation
+
+$$\underbrace{\braket{W} - \Delta F^*}_{\text{work dissipation}} = \beta \underbrace{\frac 12 \sigma_W^2}_{\text{work fluctuation}}$$
 
 :::
 
@@ -1824,9 +1829,15 @@ where $\rho(Q)$ is the probability density that a forward cycle, randomly sample
 
 :::
 
+It is often used for time-symmetric driving, such as sine waves. In that case, it is typically written as
+
+$$\frac{\rho(\dot s)}{\rho(-\dot s)} = e^{\beta T \dot s}$$
+
+where $T$ is the driving period, and $\dot s$ is the entropy production rate.
+
 ::: {.callout-note title="Proof" collapse="true"}
 
-Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for $NT$ time where $N$ is a large integer, then remove the driving. At the $N\to\infty$ limit, the CFT reduces to the result.
+Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for $NT$ time where $N$ is a large integer, then remove the driving. At the $N\to\infty$ limit, the CFT reduces to this equation.
 
 :::
 
@@ -1836,17 +1847,21 @@ Construct a process that starts at equilibrium, then mount up the periodic drivi
 
 [@liphardtReversibleUnfoldingSingle2001; @collinVerificationCrooksFluctuation2005]
 
-![[@collinVerificationCrooksFluctuation2005, figure 1]](figure/RNA_unfolding_collin_2005.png)
+![[@collinVerificationCrooksFluctuation2005, figure 1]](figure/RNA_unfolding_collin_2005.jpg)
 
-![[@collinVerificationCrooksFluctuation2005, figure 3]](figure/CFT_mutant_collin_2005.png)
+![[@collinVerificationCrooksFluctuation2005, figure 3]](figure/CFT_mutant_collin_2005.jpg)
 
 Classically, if we have a single system in thermal equilibrium with a single energy-bath, and we perform a cyclic operation on it, then we can't extract work, lest we violate the second law.
 
-Statistically, $\braket{e^{-\beta W}} = 1$, and so it is entirely possible for us to extract work with high probability, as long as there is a small probability to lose a large enough amount of work.
+Because the requirement only says that $\braket{e^{-\beta W}} = 1$, it is entirely possible for us to extract arbitrarily large amounts of work with arbitrarily high probability, as long as there is a corresponding small probability of losing a lot of work:
+
+$$
+e^{-\beta W}(1-\delta) + e^{-\beta W}\delta = 1, \quad W = \beta^{-1} \ln \frac{1}{\delta}
+$$
 
 [@mailletOptimalProbabilisticWork2019] constructed a quantum mechanical device with a single-electron transistor. The electron can expend work. They managed to extract work from the device with over 75% probability.
 
-![Figure from [@mailletOptimalProbabilisticWork2019, figure 3.c]](figure/maillet_2019_3_c.png)
+![Histogram of work extraction. Over 75% of the histogram is in the $W > 0$ part. Despite this, $\braket{e^{-\beta W}} = 0.989 \pm 0.03$, verifying the Jarzynski equation. [@mailletOptimalProbabilisticWork2019, figure 3.c]](figure/maillet_2019_3_c.png)
 
 ### Worked example: bouncing ball
 
@@ -1870,9 +1885,7 @@ $$W = 2v(mv+p)$$
 
 If at $t=0$, the ball is in the phase space region labelled "in region", then it will be hit in the in-stroke. If at $t=\Delta L/v$, the ball is in the phase space region labelled "out region", then it will be hit in the out-stroke. Otherwise, it will not be hit.
 
-![Jarzynski_bouncing_ball_1.jpg](figure/Jarzynski_bouncing_ball_1.jpg){width=50%}
-
-![Jarzynski_bouncing_ball_2.jpg](figure/Jarzynski_bouncing_ball_2.jpg){width=50%}
+![Phase space of the bouncing balls.](figure/Jarzynski_bouncing_ball.jpg)
 
 Therefore,
 
@@ -1905,9 +1918,7 @@ $$
 = \frac{1}{L\sqrt{2\pi m/\beta}} \left(\int_{in, out'} e^{-\frac{\beta}{2m}p^2} dpdx + \int_{other} e^{-\frac{\beta}{2m}p^2} dpdx\right) = 1
 $$
 
-### Arrow of time
-
-[@jarzynskiEqualitiesInequalitiesIrreversibility2011]
+### Other examples
 
 Suppose a scientist has recorded a microscopic movie of pulling on an RNA, flipped a coin to decide whether to reverse the movie, then given you the movie. Your task is to guess whether the movie is reversed.
 
@@ -1916,8 +1927,10 @@ $$Pr(\text{forward}|x, y) = \frac{1}{1 + e^{-S[x, y]}}$$
 
 where $S[x, y] = \beta(W[x, y] - \Delta F^*)$.  
 
-In words, the higher the entropy production, the more likely it is that the movie is playing forward. This is one way to say that entropy production provides an arrow of time.
+In words, the higher the entropy production, the more likely it is that the movie is playing forward. This is one way to say that entropy production provides an arrow of time. Possibly this is why molecular machines in biology tend to operate with dissipation of around $5 k_B T$, even when less dissipation is possible, to provide a good enough forward bias. Too little dissipation would mean that there is no way to distinguish the direction of time, yet time is inherent in life.
 
-[@parrondoThermodynamicsInformation2015]
+In [@parrondoThermodynamicsInformation2015], 
 
 $$\braket{e^{-\beta W - I}} = e^{-\beta \Delta F^*}$$
+
+

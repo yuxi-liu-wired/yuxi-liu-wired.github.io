@@ -190,7 +190,6 @@ window.Quarto = {
                                 <div class="quarto-categories">
                 <div class="quarto-category">math</div>
                 <div class="quarto-category">physics</div>
-                <div class="quarto-category">philosophy</div>
                 <div class="quarto-category">probability</div>
               </div>
                   </div>
@@ -239,6 +238,7 @@ window.Quarto = {
   <li><a href="#philosophical-comments" id="toc-philosophical-comments" class="nav-link" data-scroll-target="#philosophical-comments">Philosophical comments</a></li>
   <li><a href="#principles-of-statistical-mechanics" id="toc-principles-of-statistical-mechanics" class="nav-link" data-scroll-target="#principles-of-statistical-mechanics">Principles of statistical mechanics</a></li>
   <li><a href="#sec-differential-entropy-ill-defined" id="toc-sec-differential-entropy-ill-defined" class="nav-link" data-scroll-target="#sec-differential-entropy-ill-defined">Differential entropy depends on coordinates choice</a></li>
+  <li><a href="#jaynes-epistemological-interpretation" id="toc-jaynes-epistemological-interpretation" class="nav-link" data-scroll-target="#jaynes-epistemological-interpretation">Jaynes’ epistemological interpretation</a></li>
   </ul></li>
   <li><a href="#mathematical-developments" id="toc-mathematical-developments" class="nav-link" data-scroll-target="#mathematical-developments">Mathematical developments</a>
   <ul class="collapse">
@@ -265,8 +265,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#combinatorial-examples" id="toc-combinatorial-examples" class="nav-link" data-scroll-target="#combinatorial-examples">Combinatorial examples</a>
   <ul class="collapse">
-  <li><a href="#multinomials" id="toc-multinomials" class="nav-link" data-scroll-target="#multinomials">Multinomials</a></li>
-  <li><a href="#sanov-theorem" id="toc-sanov-theorem" class="nav-link" data-scroll-target="#sanov-theorem">Sanov theorem</a></li>
+  <li><a href="#multinomials-and-the-chi-squared-test" id="toc-multinomials-and-the-chi-squared-test" class="nav-link" data-scroll-target="#multinomials-and-the-chi-squared-test">Multinomials and the chi-squared test</a></li>
+  <li><a href="#sanovs-theorem" id="toc-sanovs-theorem" class="nav-link" data-scroll-target="#sanovs-theorem">Sanov’s theorem</a></li>
   <li><a href="#surface-area-of-high-dimensional-spheres" id="toc-surface-area-of-high-dimensional-spheres" class="nav-link" data-scroll-target="#surface-area-of-high-dimensional-spheres">Surface area of high-dimensional spheres</a></li>
   </ul></li>
   <li><a href="#biological-examples" id="toc-biological-examples" class="nav-link" data-scroll-target="#biological-examples">Biological examples</a>
@@ -293,14 +293,13 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#in-a-closed-system-microcanonical" id="toc-in-a-closed-system-microcanonical" class="nav-link" data-scroll-target="#in-a-closed-system-microcanonical">In a closed system (microcanonical)</a></li>
   <li><a href="#in-an-energy-bath-canonical" id="toc-in-an-energy-bath-canonical" class="nav-link" data-scroll-target="#in-an-energy-bath-canonical">In an energy bath (canonical)</a></li>
-  <li><a href="#other-ensembles" id="toc-other-ensembles" class="nav-link" data-scroll-target="#other-ensembles">Other ensembles</a></li>
-  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application">Application</a></li>
+  <li><a href="#easy-consequences" id="toc-easy-consequences" class="nav-link" data-scroll-target="#easy-consequences">Easy consequences</a></li>
   </ul></li>
-  <li><a href="#jarzynski-equality" id="toc-jarzynski-equality" class="nav-link" data-scroll-target="#jarzynski-equality">Jarzynski equality</a>
+  <li><a href="#applications-of-cft" id="toc-applications-of-cft" class="nav-link" data-scroll-target="#applications-of-cft">Applications of CFT</a>
   <ul class="collapse">
+  <li><a href="#molecular-machines" id="toc-molecular-machines" class="nav-link" data-scroll-target="#molecular-machines">Molecular machines</a></li>
   <li><a href="#worked-example-bouncing-ball" id="toc-worked-example-bouncing-ball" class="nav-link" data-scroll-target="#worked-example-bouncing-ball">Worked example: bouncing ball</a></li>
-  <li><a href="#fluctuation-dissipation-relations-1" id="toc-fluctuation-dissipation-relations-1" class="nav-link" data-scroll-target="#fluctuation-dissipation-relations-1">Fluctuation-dissipation relations</a></li>
-  <li><a href="#arrow-of-time" id="toc-arrow-of-time" class="nav-link" data-scroll-target="#arrow-of-time">Arrow of time</a></li>
+  <li><a href="#other-examples" id="toc-other-examples" class="nav-link" data-scroll-target="#other-examples">Other examples</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -379,6 +378,25 @@ Pr(\theta \in [\theta_0, \theta_0 + \delta\theta]) = \lim_{T \to \infty} \frac{1
 <p>In typical situations, we don’t need to worry ourselves with KL-divergence, as we just pick the uniform distribution <span class="math inline">\(\mu\)</span>. When the state space is infinite in volume, the uniform distribution is not a probability measure, but it will work. Bayesians say that it is an <em>improper prior</em>.</p>
 <p>In this interpretation, the principle of “maximum entropy distribution under constraint” becomes the principle of “minimal KL-divergence under constraint”, which <em>is</em> Bayesian inference, with exactly the same formulas.</p>
 <p>In almost all cases, we use the uniform prior over phase space. This is how Gibbs did it, and he didn’t really justify it other than saying that <em>it just works</em>, and suggesting it has something to do with Liouville’s theorem. Now with a century of hindsight, we know that it works because of quantum mechanics: We <em>should use</em> the uniform prior over phase space, because phase space volume has a natural unit of measurement: <span class="math inline">\(h^N\)</span>, where <span class="math inline">\(h\)</span> is Planck’s constant, and <span class="math inline">\(2N\)</span> is the dimension of phase space. As Planck’s constant is a universal constant, independent of where we are in phase space, we should weight all of the phase space equally, resulting in a uniform prior.</p>
+</section>
+<section id="jaynes-epistemological-interpretation" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="jaynes-epistemological-interpretation">Jaynes’ epistemological interpretation</h3>
+<p>If one constraint <span class="math inline">\(C_1\)</span> is looser than the other constraint <span class="math inline">\(C_2\)</span>, in the sense that satisfying <span class="math inline">\(C_2\)</span> implies satisfying <span class="math inline">\(C_1\)</span>, then trivially, we have <span class="math display">\[\max_{\rho \text{ satisfies constraints }C_1}S[\rho] \leq \max_{\rho \text{ satisfies constraints }C_2} S[\rho]\]</span></p>
+<p>E. T. Jaynes interpreted statistical mechanics as a Bayesian theory of knowledge. That is, probability is not out there in the world, but in here in our minds. Macroscopic properties are evidences, and the ensemble <span class="math inline">\(\rho\)</span> is the posterior after we incorporate the evidences.</p>
+<p>TODO: quote that example about <span class="citation" data-cites="jaynesGibbsParadox1992">(<a href="#ref-jaynesGibbsParadox1992" role="doc-biblioref">Jaynes 1992</a>)</span></p>
+<p>An alternative viewpoint argues that it is not the entropy that is fundamental, but the argmax of <em>something</em> that is fundamental. In this view, if we replaced the entropy function <span class="math inline">\(S[\cdot]\)</span> with a… kentropy function <span class="math inline">\(K[\cdot]\)</span>, such that any scientist who uses reasons about experiments on a system using <span class="math display">\[\rho^* = \mathop{\mathrm{argmax}}_{\rho: \rho\text{ satisfies constraints }C}K[\rho]\]</span></p>
+<p>would be “rational”, according to certain axioms of rationality.</p>
+<p>In this vein, there is a certain Shore-Johnson theorem which shows that if the scientist is “rational”, according to certain axioms of rationality, then <span class="math display">\[\mathop{\mathrm{argmax}}_{\rho: \rho\text{ satisfies constraints }C}S[\rho] = \mathop{\mathrm{argmax}}_{\rho: \rho\text{ satisfies constraints }C}K[\rho]\]</span></p>
+<p>This is in the style of those Bayes-theological theorems proving that any rational being must use the Bayes update. <span class="citation" data-cites="pressePrinciplesMaximumEntropy2013">(<a href="#ref-pressePrinciplesMaximumEntropy2013" role="doc-biblioref">Pressé et al. 2013</a>)</span></p>
+<p>Shoot some hard balls through a bumpy region. The balls would be scattered. It would increase the entropy of the system… unless we reflect them via a corner mirror, then the balls would be reflected right back through the bumpy region, and return to the previous zero-entropy state!</p>
+<p>Did we violate the second law? Not so, if we think of entropy as a measure of our actionable ignorance. Without a corner mirror, we cannot use the detailed information of the scattered ball beam, and have to treat it as essentially random. However, all the detailed information is still there, in the bumpy region and in the scattered beam, and it takes a corner mirror to “unlock” the information for us.</p>
+<p>Thus, with a corner mirror, the scattered beam still has zero entropy, but without it, the scattered beam has positive entropy.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/Jaynes_irreversible_scattering.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption"><span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021, fig. 5.27</a>)</span></figcaption>
+</figure>
+</div>
 </section>
 </section>
 <section id="mathematical-developments" class="level2 page-columns page-full">
@@ -688,7 +706,7 @@ Tip
 <div class="callout-body-container callout-body">
 <p>The proof showed something extra: If the small system is in distribution <span class="math inline">\(\rho\)</span> that does not equal to the equilibrium distribution <span class="math inline">\(\rho_B\)</span>, then the total system’s entropy is</p>
 <p><span class="math display">\[S = S_{max} - D_{KL}(\rho \| \rho_B)\]</span></p>
-<p>which is related to of Sanov theorem and large deviation theory, though I don’t know how to make this precise.</p>
+<p>which is related to of Sanov’s theorem and large deviation theory, though I don’t know how to make this precise.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Enthalpic ensemble">
@@ -1150,14 +1168,14 @@ Tip
 <p>Now, we need to allow <em>two</em> states at each valid wavevector, to account for polarization.</p>
 <p>At this point, we have decomposed the state space into a composition of oscillators. Because there is no interaction between these oscillators,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> it remains to calculate the partition function of each oscillator.</p>
 <div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;That is, two photons do not interact, except when the energy levels are so high that you would need a quantum field theorist to know what is going on.</p>
-<p>Light resembles ghosts and spirits in that they are massless, untouchable, moving very fast, bright, and vaguely associated with good feelings. During the 19th century, the best scientific theory for light, that of ether theory, became the foundation of many spiritualist world systems. <span class="citation" data-cites="aspremPonderingImponderablesOccultism2011">(<a href="#ref-aspremPonderingImponderablesOccultism2011" role="doc-biblioref">Asprem 2011</a>)</span> The connection of electromagnetism with <a href="https://en.wikipedia.org/wiki/Animal_magnetism">animal magnetism</a> did not help. Whereas modern spiritualists talk of electromagnetic fields and quantum vibrations, a century ago they talked of subatomic structures and ether vibrations.</p></div></div><p>Planck considered an ensemble of <span class="math inline">\(N\)</span> oscillators, all at the same wavevector and polarization. If they have average energy <span class="math inline">\(\braket{E}\)</span>, the question is to find the total entropy for the whole system, which, when divided by <span class="math inline">\(N\)</span>, should yield the entropy of a single oscillator. Here he used the celebrated <em>quantum hypothesis</em>: The energy levels are divided into integer levels of <span class="math inline">\(nh\nu\)</span>, where <span class="math inline">\(n = 0, 1, 2, \dots\)</span>. By the stars and bars argument, there are <span class="math inline">\(\binom{N + M-1}{M}\)</span> ways do distribute these energy-quanta between these oscillators, where <span class="math inline">\(M = \frac{N\braket{E}}{h\nu}\)</span>.</p>
+<p>Light resembles ghosts and spirits in that they are massless, untouchable, moving very fast, bright, and vaguely associated with good feelings. During the 19th century, the best scientific theory for light, that of ether theory, became the foundation of many spiritualist world systems. <span class="citation" data-cites="aspremPonderingImponderablesOccultism2011">(<a href="#ref-aspremPonderingImponderablesOccultism2011" role="doc-biblioref">Asprem 2011</a>)</span> The connection of electromagnetism with <a href="https://en.wikipedia.org/wiki/Animal_magnetism">animal magnetism</a> did not help. Whereas modern spiritualists talk of electromagnetic fields and quantum vibrations, a century ago they talked of subatomic structures and ether vibrations.</p></div></div><p>Planck considered an ensemble of <span class="math inline">\(N\)</span> oscillators, all at the same wavevector and polarization. If they have average energy <span class="math inline">\(\braket{E}\)</span>, the question is to find the total entropy for the whole system, which, when divided by <span class="math inline">\(N\)</span>, should yield the entropy of a single oscillator. Here he used the celebrated <em>quantum hypothesis</em>: The energy levels are divided into integer levels of <span class="math inline">\(nh\nu\)</span>, where <span class="math inline">\(n = 0, 1, 2, \dots\)</span>. By the <a href="https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)">stars and bars</a> argument, there are <span class="math inline">\(\binom{N + M-1}{M}\)</span> ways do distribute these energy-quanta between these oscillators, where <span class="math inline">\(M = \frac{N\braket{E}}{h\nu}\)</span>.</p>
 <p><span class="math display">\[S = \frac 1N \ln \binom{N+M-1}{M} \underbrace{\approx}_{\text{Stirling}} (1 + a) \ln (1+a) - a \ln a, \quad a = \frac{\braket{E}}{h\nu}\]</span></p>
 <p>Given the entropy function, he then matched <span class="math inline">\(\braket{E}\)</span> to temperature <span class="math inline">\(\beta\)</span> by the equality <span class="math inline">\(\beta = \partial_{\braket{E}} S\)</span>, giving</p>
 <p><span class="math display">\[
 \braket{E} = \left(\frac{h\nu}{e^{\beta h\nu}-1}\right)
 \]</span></p>
-<p>The rest of the derivation is fairly obvious. I will just point out one more interesting fact.</p>
-<p>According to Kirchhoff’s law of thermal radiation, a chunk of matter is exactly as absorptive as it is emissive. A black body absorbs all light, and conversely it emits light at the maximal level. A white body absorbs no light, and conversely it does not emit light. This can be understood as a consequence of the second law: If a body emits more light than it absorbs, then it would spontaneously get colder when placed inside a black body radiation chamber.</p>
+<p>The rest of the derivation is fairly obvious and may be found in any textbook. I will just point out one more interesting fact.</p>
+<p>According to <a href="https://en.wikipedia.org/wiki/Kirchhoff's_law_of_thermal_radiation">Kirchhoff’s law of thermal radiation</a>, a chunk of matter is exactly as absorptive as it is emissive. A black body absorbs all light, and conversely it emits light at the maximal level. A white body absorbs no light, and conversely it does not emit light. This can be understood as a consequence of the second law: If a body emits more light than it absorbs, then it would spontaneously get colder when placed inside a black body radiation chamber.</p>
 <p>However, much more can be said than this. Not only is it exactly as absorptive as it is emissive, it is as absorptive as it is emissive at <em>any angle</em>, at any wavelength, and any polarization. So for example, if a piece of leaf is not absorptive when viewed from an angle, at the green light wavelength, of clockwise polarization, then it is not emissive under the same angle, wavelength, polarization.</p>
 <p>Why is that? The standard argument <span class="citation" data-cites="reifFundamentalsStatisticalThermal1998">(<a href="#ref-reifFundamentalsStatisticalThermal1998" role="doc-biblioref">Reif 1998, chap. 9.15</a>)</span> uses a time-reversal argument, but I like to think of it as yet more instances of protecting the second law. If you look inside a black body radiation chamber, you would see a maximal entropy state. Light rushes in all directions equally, at all polarizations equally, and the energy is distributed optimally across the spectrum to maximize entropy (because <span class="math inline">\(\beta\)</span> is constant across the whole spectrum). If we have a material that takes in blue light and outputs green light, then it would spontaneously decrease entropy. Similarly, if it can absorb vertically polarized light to emit diagonally polarized light, it would also spontaneously decrease entropy, etc.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Relativistic gas?">
@@ -1170,20 +1188,23 @@ Relativistic gas?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A chamber full of black body radiation is also called a photon gas. The photon gas is sometimes treated as the limit of “ultrarelativistic gas”. Start with the relativistic energy function <span class="math inline">\(E = \sqrt{m^2 c^4 + \|p\|^2 c^2}\)</span>, derive its Boltzmann distribution <span class="math inline">\(\rho(q, p) \propto e^{-\beta \sqrt{m^2 c^4 + \|p\|^2 c^2}}\)</span>, then take the <span class="math inline">\(m \to 0\)</span> limit. This gives some correct results, such as the <span class="math inline">\(U = 3PV\)</span>.</p>
+<p>A box full of black body radiation is also called a photon gas. The photon gas is sometimes treated as the limit of “ultrarelativistic gas”. Start with the relativistic energy function <span class="math inline">\(E = \sqrt{m^2 c^4 + \|p\|^2 c^2}\)</span>, derive its <a href="https://en.wikipedia.org/wiki/Maxwell-J%C3%BCttner_distribution">Boltzmann distribution</a> <span class="math inline">\(\rho(q, p) \propto e^{-\beta \sqrt{m^2 c^4 + \|p\|^2 c^2}}\)</span>, then take the <span class="math inline">\(m \to 0\)</span> limit. This gives some correct results, such as the <span class="math inline">\(U = 3PV\)</span>.</p>
 <p>However, accounting for the entropy of photon gas, as well as deriving the black body radiation, hinges critically on the photon quantization <span class="math inline">\(E = h\nu, 2h\nu, \dots\)</span>. I guess it can be done correctly by relativistic quantum mechanics, but it is of course beyond the world of classical mechanics.</p>
 </div>
 </div>
 </section>
 <section id="sec-rubber-band" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="sec-rubber-band">Rubber bands</h3>
-<p>We have a long chain molecule with <span class="math inline">\(N\)</span> joints. Each joint can go forward or backward, with equal energy. Each link between two joints has length <span class="math inline">\(d\)</span>. The total length of the system is <span class="math inline">\(L\)</span>.</p>
+<p>It turns out that rubber bands, and generally things made of long polymers, <em>contract</em> when heated up, instead of expanding. This is the <a href="https://en.wikipedia.org/wiki/Gough%E2%80%93Joule_effect">Gough–Joule effect</a>. Roughly speaking, this is because elasticity in long polymer material (like rubber) is very different from elasticity in short molecule solids (like copper and ice). In rubber, elasticity is an entropic force, while in copper, it is an electrostatic force caused by attraction between molecules.</p>
+<p>To model a rubber band, consider a long chain molecule with <span class="math inline">\(N\)</span> joints. Each joint can go forward or backward, with equal energy. Each link between two joints has length <span class="math inline">\(d\)</span>. The total length of the system is <span class="math inline">\(L\)</span>.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/rubber_band.png" class="img-fluid figure-img"></p>
 <figcaption class="margin-caption">A sample shape from the ensemble of all rubber band shapes.</figcaption>
 </figure>
 </div>
+<section id="direct-argument-microcanonical" class="level4">
+<h4 class="anchored" data-anchor-id="direct-argument-microcanonical">Direct argument (microcanonical)</h4>
 <p>The entropy of the system, conditional on <span class="math inline">\(L\)</span>, is</p>
 <p><span class="math display">\[S = \ln \binom{N}{\frac{N + L/d}{2}}\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="elastic constant">
@@ -1207,59 +1228,105 @@ elastic constant
 </div>
 </div>
 <p>Why does the rubber band stiffen when temperature rise? We can interpret it as follows. When we place the rubber band in a chamber of hot air, the air particles would often collide with the links in the rubber band, flipping it. When there are more links going to the right than the left, then the air particles would tend to flip the links to the left, decreasing <span class="math inline">\(L\)</span>, and conversely. The net force is zero only when there are an equal number of links going either way, which is when <span class="math inline">\(L = 0\)</span>.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="ensemble of lengths">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-ensemble of lengths
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Because the rubber band has <span class="math inline">\(dE = TdS + FdL\)</span>, the corresponding free entropy is</p>
-<p><span class="math display">\[S + \beta F\braket{L}\]</span></p>
-<p>and under the canonical distribution, that free entropy is maximized, meaning that under canonical distribution,</p>
-<p><span class="math display">\[\rho(x) = \frac{1}{Z}e^{\beta FL(x)}\]</span></p>
-<p>where <span class="math inline">\(x\)</span> is a microstate of the rubber band (i.e.&nbsp;the precise position of each link), and <span class="math inline">\(L(x)\)</span> is the corresponding length (macrostate).</p>
-<p>Since for each <span class="math inline">\(L\)</span> there are <span class="math inline">\(\binom{N}{\frac{N + L/d}{2}}\)</span> possible microstates, we have</p>
-<p><span class="math display">\[\rho(L) \propto  \binom{N}{\frac{N + L/d}{2}} e^{\beta F L}\]</span></p>
-<p>When <span class="math inline">\(Nd \gg L\)</span>, the binomial coefficient is approximately <span class="math inline">\(\exp{[N H_2(\frac 12 + \frac{L}{2dN})]}\)</span>, where <span class="math inline">\(H_2\)</span> is the binary entropy function, therefore</p>
-<p><span class="math display">\[\ln \rho(L) \approx \beta F L + NH_2\left(\frac 12 + \frac{L}{2dN}\right) + Const \approx \beta FL - \frac{L^2}{2Nd^2} + Const\]</span></p>
-<p>In particular, we see that <span class="math inline">\(\ln \rho(L)\)</span> is maximized at <span class="math inline">\(\braket{L} = \beta F Nd^2\)</span>, exactly what we have found previously. But this time we have also the variance:</p>
-<p><span class="math display">\[\sigma_L^2 = \frac{(Nd)^2}{N}\]</span></p>
-<p>which again is an example of the general result that <span class="math inline">\(\sigma \propto N^{-1/2}\)</span>.</p>
-</div>
-</div>
+</section>
+<section id="via-free-entropy-canonical" class="level4">
+<h4 class="anchored" data-anchor-id="via-free-entropy-canonical">Via free entropy (canonical)</h4>
+<p>Because the rubber band has <span class="math inline">\(dE = TdS + FdL\)</span>, the corresponding free entropy is <span class="math inline">\(S - \beta \braket{E} + \beta F \braket{L}\)</span>. Under the canonical distribution, that free entropy is maximized, meaning that <span class="math inline">\(\rho(x) \propto e^{\beta FL(x)}\)</span> where <span class="math inline">\(x\)</span> is a microstate of the rubber band (i.e.&nbsp;the precise position of each link), and <span class="math inline">\(L(x)\)</span> is the corresponding length (macrostate).</p>
+<p>The trick of using the free entropy is that it decomposes the entire rubber band into atomic individuals. Like how opening an energy market converts consumers trying to coordinate their energy use into consumers each individually buying and selling energy, and thus simplifying the calculation problem. Like how <a href="https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/index.html#lagranges-devil-at-disneyland">Laplace’s devil</a> allows you to calculate the optimal way to schedule your day. Microcanonical ensembles are true, but canonical ensembles are almost just as true, and much easier to use. The idea is that the canonical ensemble and the microcanonical ensemble are essentially the same because the fluctuation is so tiny.</p>
+<p>Back to the rubber band. Each individual link in the rubber band now is freed from the collective responsibility of reaching exactly length <span class="math inline">\(L\)</span>. It is now an atomized individual, maximizing its own free entropy <span class="math inline">\(S - \beta \braket{E} + \beta F \braket{L}\)</span>. Let <span class="math inline">\(p\)</span> be its probability of going up, then its free entropy is</p>
+<p><span class="math display">\[
+\underbrace{-p\ln p - (1-p) \ln(1-p) }_{\text{$S$}} - 0 + \beta F (d p - d(1-p))
+\]</span></p>
+<p>This is maximized by the Boltzmann distribution <span class="math inline">\(p = \frac{e^{\beta F 2d}}{1+e^{\beta F 2d}}\)</span>, with first two moments</p>
+<p><span class="math display">\[
+\braket{L} = \frac{e^{\beta F 2d} - 1}{e^{\beta F 2d} + 1} d \approx \beta Fd^2,
+\quad \mathbb{V}[L] = p(1-p)d^2 \approx d^2/4
+\]</span></p>
+<p>The total extension of the rubber band has the first two moments</p>
+<p><span class="math display">\[
+N\braket{L} \approx \beta F Nd^2,
+\quad N\mathbb{V}[L] \approx Nd^2/4 = \frac{1}{4F\beta} N\braket{L}
+\]</span></p>
+<p>The first equation is the same as the previous one. The second equation tells us the fluctuation in rubber band length when held under constant force and temperature. For typical conditions like <span class="math inline">\(F \sim 1 \;\mathrm{N}, T \sim 300 \;\mathrm{K}, N\braket{L} \sim 1 \;\mathrm{m}\)</span>, the fluctuation is on the order of <span class="math inline">\((0.1\;\mathrm{nm})^2\)</span>, about one atom’s diameter. So we see that the difference between the canonical and the microcanonical ensemble are indeed too tiny to speak of.</p>
+</section>
 </section>
 </section>
 <section id="combinatorial-examples" class="level2">
 <h2 class="anchored" data-anchor-id="combinatorial-examples">Combinatorial examples</h2>
-<section id="multinomials" class="level3">
-<h3 class="anchored" data-anchor-id="multinomials">Multinomials</h3>
-<p>Let <span class="math inline">\(p_1, \dots, p_k\)</span> be a discrete probability distribution, and let <span class="math inline">\(n_1, \dots, n_k\)</span> be integers that depend on <span class="math inline">\(N\)</span>, such that</p>
-<p><span class="math display">\[\lim_{N \to \infty}n_i/N = p_i\]</span></p>
+<section id="multinomials-and-the-chi-squared-test" class="level3">
+<h3 class="anchored" data-anchor-id="multinomials-and-the-chi-squared-test">Multinomials and the chi-squared test</h3>
+<p>Let <span class="math inline">\(p_1, \dots, p_k\)</span> be a discrete probability distribution, and let <span class="math inline">\(N_1, \dots, N_n\)</span> be integers that depend on <span class="math inline">\(N\)</span>, such that</p>
+<p><span class="math display">\[\lim_{N \to \infty}N_i/N = p_i\]</span></p>
 <p>then we have</p>
-<p><span class="math display">\[\lim_{N \to \infty}\frac 1N \ln \binom{N}{n_1, \dots, n_k} = -\sum_i p_i \ln p_i\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="idea">
+<p><span class="math display">\[\lim_{N \to \infty}\frac 1N \ln \binom{N}{N_1, \dots, N_n} = -\sum_i p_i \ln p_i = S[\rho]\]</span></p>
+<p>where <span class="math inline">\(\rho\)</span> is the discrete probability distribution. This can be interpreted as the thermodynamic limit of a lot of balls.</p>
+<p>Consider a population of particles, all in energy-contact with an energy bath of <span class="math inline">\(\beta = 1\)</span>. Each particle has <span class="math inline">\(n\)</span> states, with state <span class="math inline">\(i\)</span> having energy <span class="math inline">\(-\ln p_i\)</span>. Thus, at the Boltzmann distribution, each particle is precisely sampled from the categorical distribution <span class="math inline">\((p_1, \dots, p_n)\)</span>.</p>
+<p>Let <span class="math inline">\(X\)</span> stand for the state of the entire population of particles. That is, <span class="math inline">\(X\)</span> describes the precise state of each particle. Let <span class="math inline">\(Y\)</span> stand for the vector of <span class="math inline">\(N_1, \dots, N_n\)</span>. That is, it counts the number of particles in each state. As typical, at the limit of <span class="math inline">\(N \to \infty\)</span>, we should expect <span class="math inline">\(\frac{N_i}{N} \to p_i\)</span> with certainty (the thermodynamic limit), and the variance should scale as <span class="math inline">\(1/N\)</span> (statistical fluctuation). So, if we observe the particle population many times, and plot all the <span class="math inline">\(\frac{N_i}{N}\)</span> on the <span class="math inline">\(n\)</span>-simplex, we should see an ellipsoidal cloud centered around <span class="math inline">\((p_1, \dots, p_n)\)</span> with radius <span class="math inline">\(\sim N^{-1/2}\)</span>.</p>
+<video controls="" width="100%">
+<source src="figure/Sanov_convergence.webm" type="video/webm">
+</video>
+<p>This is an example of how the microcanonical ensemble and the canonical ensemble become indistinguishable at the large particle limit. Indeed, Boltzmann often used this equation to derive the canonical ensemble from microcanonical ensembles.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="non-rigorous part">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-idea
+non-rigorous part
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Imagine we have a system made of a single ball that can go into one out of <span class="math inline">\(k\)</span> labelled boxes. Now, let us copy paste the system <span class="math inline">\(N\)</span> times, so we have <span class="math inline">\(N\)</span> balls and <span class="math inline">\(kN\)</span> boxes. Then we can interpret <span class="math display">\[\frac 1N \ln \binom{N}{n_1, \dots, n_k}\]</span></p>
-<p>as the maximal average entropy per ball under the following constraints: There are exactly <span class="math inline">\(n_1\)</span> balls in boxes labelled <span class="math inline">\(1\)</span>, etc.</p>
-<p>Thinking thermodynamically, we can pick one ball as the system, and put it in contact with a bath made of <span class="math inline">\(N\)</span> balls. Once we calculate the marginal entropies of the bath, we can infer the Boltzmann distribution for the system, and thus the marginal entropy of the system.</p>
-<p>Now, here is the non-rigorous part: We <em>hope</em> that as <span class="math inline">\(N \to \infty\)</span>, all correlations (pairwise, triple-wise, etc) between balls decay fast enough, such that the interaction-entropy between the balls drop to zero, leaving <span class="math display">\[\text{average entropy per ball} = \text{marginal entropy of a ball}\]</span></p>
-<p>Justifying this rigorously is generally very difficult, and in fact, the assumption is false at phase transitions, where correlations <em>do not</em> decay fast enough.</p>
-<p>If this is so, then we need to only show that the marginal distribution of a single ball converges to <span class="math inline">\((p_1, \dots, p_k)\)</span>.</p>
+<p>In the above derivation, there was a non-rigorous step. We <em>hope</em> that as <span class="math inline">\(N \to \infty\)</span>, all correlations (pairwise, triple-wise, etc) between balls decay fast enough, such that the interaction-entropy between the balls drop to zero, leaving</p>
+<p><span class="math display">\[\text{average entropy per ball} = \text{marginal entropy of a ball}\]</span></p>
+<p>Justifying this rigorously is generally very difficult, and in fact, the assumption is false at phase transitions, where correlations <em>do not</em> decay fast enough, and so the thermodynamic limit is false. However, it is typically good enough to check that the fluctuations decay as <span class="math inline">\(N^{-1/2}\)</span>, and if so, the thermodynamic limit is true.</p>
 </div>
 </div>
-<p>This is an example of how the microcanonical ensemble and the canonical ensemble become indistinguishable at the large particle limit. Indeed, Boltzmann often used this equation to derive the canonical ensemble from microcanonical ensembles.</p>
+<p>We have argued that the cloud should be ellipsoidal and centered around <span class="math inline">\((p_1, \dots, p_n)\)</span> with radius <span class="math inline">\(\sim N^{-1/2}\)</span>. What exactly is its shape? Well, since each particle’s distribution of states is categorical, and the particles are uncorrelated (thanks to the energy market), the mean and covariance of <span class="math inline">\(\vec N= (N_1, \dots, N_n)\)</span> are <span class="math inline">\(\vec p N\)</span> and <span class="math inline">\([\mathop{\mathrm{diag}}(\vec p) - \vec p \vec p^T] N\)</span>. The covariance matrix is not linearly independent, because of the constraint <span class="math inline">\(\sum_i N_i/N = 1\)</span>.</p>
+<p>A good trick is worth doing again and again. Like how the microcanonical ensemble is freed up by a free market into a canonical ensemble, here we free up <span class="math inline">\(\vec N\)</span> by <em>adding noise</em>, then conditioning on zero noise:</p>
+<p><span class="math display">\[
+\vec N / N + z\vec p/\sqrt N \sim \mathcal N(\vec p, \mathop{\mathrm{diag}}(\vec p) / N) \quad z \sim \mathcal N(0, 1)
+\]</span></p>
+<p>Therefore, the probability density of <span class="math inline">\(\vec N\)</span> satisfies</p>
+<p><span class="math display">\[\rho(\vec N / N) \propto \exp\left(-\frac 12 \sum_i \frac{(N_i - Np_i)^2}{Np_i}\right)\]</span></p>
+<p>after conditioning on <span class="math inline">\(z = 0\)</span>. Therefore, the distribution of <span class="math inline">\(\sum_i \frac{(N_i - Np_i)^2}{Np_i}\)</span> converges to <span class="math inline">\(\chi^2(n-1)\)</span>. This is the <a href="https://en.wikipedia.org/wiki/Chi-squared_test">chi-squared test</a>.</p>
+</section>
+<section id="sanovs-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="sanovs-theorem">Sanov’s theorem</h3>
+<p>Typically in statistical mechanics, we study the fluctuation of a macroscopic variable on the order of <span class="math inline">\(N^{-1/2}\)</span>. Large deviation theory studies the fluctuation on the order of <span class="math inline">\(1\)</span>. The prototypical example is Sanov’s theorem.</p>
+<p>The problem is as follows: Suppose that we require <span class="math inline">\(\vec N / N \to \vec q\)</span>, where <span class="math inline">\(\vec q\)</span> is some other probability vector, what is the behavior of <span class="math inline">\(Pr(\vec N / N \approx \vec q)\)</span>? Sanov’s theorem states that</p>
+<p><span class="math display">\[
+Pr(\vec N / N \approx \vec q) \sim e^{-ND_{KL}(\vec q \| \vec p)}
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="derivation">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+derivation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>By <a href="#thm-cond-free-ent" class="quarto-xref">Theorem&nbsp;9</a>,</p>
+<p><span class="math display">\[
+\frac 1N \ln Pr(\vec N / N \approx \vec q) = \bar f^*_{|\vec N / N \approx \vec q} - \bar f^*
+\]</span></p>
+<p>where <span class="math inline">\(\bar f^*\)</span> is the Helmholtz free entropy per particle for the system without constraint on <span class="math inline">\(\vec N\)</span>, and <span class="math inline">\(\bar f^*_{|\vec N / N \approx \vec q}\)</span> is the Helmholtz free entropy per particle, conditional on <span class="math inline">\(\vec N / N \approx \vec q\)</span>.</p>
+<p>The constraint of <span class="math inline">\(\vec N / N \approx \vec q\)</span> is a global constraint, but as usual, when <span class="math inline">\(N\)</span> is large, global constraints over all particles becomes local constraints for each particle individually. In this case, the constraint on individual particle is simply that its state is distributed according to <span class="math inline">\(\vec q\)</span>, energy be damned.</p>
+<p>Thus, we find that</p>
+<p><span class="math display">\[
+\frac 1N \ln Pr(\vec N / N \approx \vec q) = \left(\sum_i -q_i \ln q_i - \sum_i q_i E_i\right) - \left(\sum_i -p_i \ln p_i - \sum_i p_i E_i\right) = -D_{KL}(\vec q \| \vec p)
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="surface-area-of-high-dimensional-spheres" class="level3">
+<h3 class="anchored" data-anchor-id="surface-area-of-high-dimensional-spheres">Surface area of high-dimensional spheres</h3>
+<p>Let <span class="math inline">\(\Omega_N\)</span> be the surface area of a sphere of radius <span class="math inline">\(\sqrt N\)</span> in <span class="math inline">\(\mathbb{R}^N\)</span>, then</p>
+<p><span class="math display">\[\ln\Omega_N = \frac N2 \ln (2\pi e)-\frac 12 \ln (\pi e) + O(N^{-1})\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="derivation">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1271,61 +1338,6 @@ derivation
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-23" class="callout-23-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Suppose we move the ball from box <span class="math inline">\(i\)</span> to box <span class="math inline">\(j\)</span>, then it would force the bath to change all its balls, changing its entropy by <span class="math display">\[
-\ln\binom{N}{n_1', \dots, n_k'} -\ln \binom{N}{n_1, \dots, n_k}
-\]</span></p>
-<p>where <span class="math inline">\(n_i' = n_i + 1, n_j' = n_j - 1\)</span>, and otherwise unchanged.</p>
-<p>By definition of multinomials, this is equal to</p>
-<p><span class="math display">\[\ln n_j - \ln(n_i+1)\]</span></p>
-<p>which converges to <span class="math inline">\((\ln p_j - \ln p_i)\)</span> at large enough <span class="math inline">\(N\)</span>.</p>
-<p>Let <span class="math inline">\(X\)</span> stand for the total state, including the bath and the singled-out system, and let <span class="math inline">\(Y\)</span> stand for the state of the singled-out system. By <a href="#thm-cond-ent" class="quarto-xref">Theorem&nbsp;8</a>, when the entire system is at the maximal entropy distribution, the distribution of the singled-out system is</p>
-<p><span class="math display">\[\rho^*_Y(y) \propto e^{S_{X|y}^*}\]</span></p>
-<p>From the previous calculation, we have <span class="math display">\[S_{X|j}^* - S_{X|j}^* = \ln p_j - \ln p_i\]</span></p>
-<p>yielding <span class="math inline">\(S_{X|i}^* = S_0 + \ln p_i\)</span> for some constant <span class="math inline">\(S_0\)</span>, and so <span class="math inline">\(\rho^*_Y(y) \propto p_i\)</span>, finishing the proof.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="sanov-theorem" class="level3">
-<h3 class="anchored" data-anchor-id="sanov-theorem">Sanov theorem</h3>
-<p>Consider a population of particles, all in energy-contact with an energy bath of <span class="math inline">\(\beta = 1\)</span>. Each particle has <span class="math inline">\(n\)</span> states, with state <span class="math inline">\(i\)</span> having energy <span class="math inline">\(-\ln p_i\)</span>. Thus, at the Boltzmann distribution, each particle is precisely sampled from the categorical distribution <span class="math inline">\((p_1, \dots, p_n)\)</span>.</p>
-<p>Let <span class="math inline">\(X\)</span> stand for the state of the entire population of particles. That is, <span class="math inline">\(X\)</span> describes the precise state of each particle. Let <span class="math inline">\(Y\)</span> stand for the vector of <span class="math inline">\(N_1, \dots, N_n\)</span>. That is, it counts the number of particles in each state.</p>
-<p>The free entropy of a single particle is <span class="math display">\[\bar f_X^* = S - \beta \braket{E} = \sum_i (-p_i \ln p_i) - \sum_i p_i E_i = 0\]</span></p>
-<p>Because the particles have no interaction energy, the total free entropy of <span class="math inline">\(X\)</span> is <span class="math inline">\(f_X^* = N \bar f_X^* = 0\)</span>.</p>
-<p>By <a href="#thm-cond-free-ent" class="quarto-xref">Theorem&nbsp;9</a>, <span class="math display">\[\rho^*_Y(N_1, \dots, N_n) = e^{f_{X|N_1, \dots, N_n}^*}\]</span></p>
-<p>where <span class="math inline">\(f_{X|N_1, \dots, N_n}^*\)</span> is the maximal free entropy of the entire system conditional on <span class="math inline">\(Y = (N_1, \dots, N_n)\)</span>.</p>
-<p>Now, by definition of <span class="math inline">\(f_{X|N_1, \dots, N_n}^*\)</span>, it is the maximal free entropy under constraint: <span class="math display">\[
-\begin{cases}
-\max_\rho \sum_{(s_1, \dots, s_N) \in n^N} \rho(s) (-\ln \rho(s) - \beta E(s))  \\
-Y = (N_1, \dots, N_n)
-\end{cases}
-\]</span></p>
-<p>where <span class="math inline">\(s_i\)</span> is the state of particle <span class="math inline">\(i\)</span>.</p>
-<p>For any <span class="math inline">\(\rho\)</span> that satisfies the constraint of <span class="math inline">\(Y = (N_1, \dots, N_n)\)</span>, the term is a constant</p>
-<p><span class="math display">\[E(s) = \sum_{i=1}^n N_i E_i\]</span></p>
-<p>Therefore, the problem reduces to maximizing just the entropy under constraint of <span class="math inline">\(Y = (N_1, \dots, N_n)\)</span>, which is a “microcanonical distribution”, the uniform distribution over all possible <span class="math inline">\(\binom{N}{N_1, \dots, N_n}\)</span> ways to satisfy the <span class="math inline">\(Y = (N_1, \dots, N_n)\)</span> constraint.</p>
-<p>Therefore, <span class="math display">\[f_{X|N_1, \dots, N_n}^* = \ln \binom{N}{N_1, \dots, N_n} + \sum_i N_i \ln p_i \approx -ND_{KL}(q \| p)\]</span></p>
-<p>where <span class="math inline">\(q = (N_1/N, \dots, N_n/N)\)</span> is the empirical distribution.</p>
-<p>Therefore, <span class="math display">\[
-\frac 1N \ln \rho^*_Y(N_1, \dots, N_n) \to D_{KL}(q \| p)
-\]</span></p>
-</section>
-<section id="surface-area-of-high-dimensional-spheres" class="level3">
-<h3 class="anchored" data-anchor-id="surface-area-of-high-dimensional-spheres">Surface area of high-dimensional spheres</h3>
-<p>Let <span class="math inline">\(\Omega_N\)</span> be the surface area of a sphere of radius <span class="math inline">\(\sqrt N\)</span> in <span class="math inline">\(\mathbb{R}^N\)</span>, then</p>
-<p><span class="math display">\[\ln\Omega_N = \frac N2 \ln (2\pi e)-\frac 12 \ln (\pi e) + O(N^{-1})\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="derivation">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-derivation
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-24" class="callout-24-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Let <span class="math inline">\(x_1, \dots, x_N\)</span> be sampled IID from <span class="math inline">\(\mathcal N(0, 1)\)</span>, and let <span class="math inline">\(r_N^2 = \sum_i x_i^2\)</span>. By routine calculation, <span class="math inline">\(\mathbb{E}[r_N^2] = N\)</span>, and <span class="math inline">\(\mathbb{E}[r_N^4] = 2N + N^2\)</span>. Therefore, <span class="math inline">\(r_N^2\)</span> is approximately distributed as <span class="math inline">\(\mathcal N(N, 2N)\)</span>, and so <span class="math inline">\(r_N\)</span> is approximately distributed as <span class="math inline">\(\mathcal N(\sqrt N, 1/2)\)</span>.</p>
 <p>Now consider two distributions on <span class="math inline">\(\mathbb{R}^N\)</span>. The first is a microcanonical ensemble: <span class="math inline">\(x_{1:N}\)</span> is distributed uniformly on the thin energy shell of <span class="math inline">\(r_N^2 \in [N, N + \delta N]\)</span>. The second is a canonical ensemble: each <span class="math inline">\(x_i\)</span> is distributed independently according to <span class="math inline">\(\mathcal N(0, 1)\)</span>.</p>
@@ -1461,7 +1473,7 @@ p_{\text{unfolded}} = \frac{e^{\beta( FL - \Delta G )}}{1 + e^{\beta( FL - \Delt
 <p>Consider trajectories of type <span class="math inline">\(\{0, 1, 2, \dots, N\} \to \{1, 2, \dots, m\}\)</span>, and let <span class="math inline">\(s_t\)</span> is the state of timestep <span class="math inline">\(t\)</span>.</p>
 <p>If we fix the singleton probability <span class="math inline">\(p_i\)</span> of each state, then the maximum entropy distribution is the Markov chain with uniform initial probability and <span class="math inline">\(p_{i\to j} = p_i p_j\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="derivation">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1470,7 +1482,7 @@ derivation
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If we fix the singleton probability of each state, then the problem is a constrained maximization problem</p>
 <p><span class="math display">\[
@@ -1492,7 +1504,7 @@ derivation
 <p>Similarly, if we fix the transition probability <span class="math inline">\(p_{i \to j}\)</span> of each state-pair, then the maximum entropy distribution is the Markov chain with uniform initial probability. If we fix the initial probability, then it’s still the Markov chain with the same transition probabilities.</p>
 <p>And more generally, if we fix <span class="math inline">\(n\)</span>-th order transition probability <span class="math inline">\(p_{i_1, \dots, i_n \to j}\)</span>, then we obtain an <span class="math inline">\(n\)</span>-th order Markov chain model.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="derivation">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1501,7 +1513,7 @@ derivation
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Similarly as above, the path-space distribution is</p>
 <p><span class="math display">\[\rho(s_1, \dots, s_N) \propto \prod_{t=1}^{N-1} e^{-\sum_{k, k' \in 1:m} \frac{\lambda_{k, k'}}{N} 1[s_t = k, s_{t+1} = k']} \propto \prod_{t=1}^{N-1} p_{s_t \to s_{t+1}}\]</span></p>
@@ -1539,15 +1551,15 @@ S = S[x_0] + E[S[x_1 | x_0]] + E[S[x_2 | x_{0:1}]] + \dots + E[S[x_N | x_{0:N-1}
 <p><span class="math display">\[(E[x_t - x_{t-1}|x_{0:t-1}], E[\|x_t - x_{t-1}\|^2|x_{0:t-1}]) = (0, \sigma^2), \quad \forall t \in 1:N\]</span></p>
 <p>Now, as in dynamic programming, we reason backwards from <span class="math inline">\(t = N\)</span> to <span class="math inline">\(t=0\)</span>, and we find that the maximal entropy distribution is the Brownian motion</p>
 <p><span class="math display">\[\rho(x) \propto e^{-\frac{\sum_{t\in 1:N} \| x_t-x_{t-1}\|^2}{2\sigma^2}}\]</span></p>
-<p>If we constrain the first <em>and</em> second moments of each step, and also allow them to be affected by the previous step, as in</p>
+<p>If we constrain the first <em>and</em> the second moments of each step, and also allow them to be affected by the previous step, as in</p>
 <p><span class="math display">\[
 \begin{cases}
     E[x_t - x_{t-1}|x_{0:t-1}] &amp;= \mu(t, x_{t-1}) \\
     E[(x_t - x_{t-1}) (x_t - x_{t-1})^T|x_{0:t-1}] &amp;= \Sigma(t, x_{t-1})
 \end{cases}, \quad \forall t \in 1:N
 \]</span></p>
-<p>then, reasoning backwards as before, we would obtain the <a href="https://en.wikipedia.org/wiki/Fokker-Planck_equation">Fokker–Planck equation</a>.</p>
-<p>Other results, such as the Green-Kubo relation, the Onsager reciprocal relations, etc, can be similarly derived by imposing the right constraints in path space. <span class="citation" data-cites="hazoglouCommunicationMaximumCaliber2015">(<a href="#ref-hazoglouCommunicationMaximumCaliber2015" role="doc-biblioref">Hazoglou et al. 2015</a>)</span></p>
+<p>then, reasoning backwards as before, we would obtain the <a href="https://en.wikipedia.org/wiki/Langevin_equation">Langevin equation</a>.</p>
+<p>Other results, such as the <a href="https://en.wikipedia.org/wiki/Green%E2%80%93Kubo_relations">Green–Kubo relations</a>, the <a href="https://en.wikipedia.org/wiki/Onsager_reciprocal_relations">Onsager reciprocal relations</a>, etc, can be similarly derived by imposing the right constraints in path space. <span class="citation" data-cites="hazoglouCommunicationMaximumCaliber2015">(<a href="#ref-hazoglouCommunicationMaximumCaliber2015" role="doc-biblioref">Hazoglou et al. 2015</a>)</span></p>
 </section>
 </section>
 <section id="fluctuation-dissipation-relations" class="level3">
@@ -1560,7 +1572,7 @@ S = S[x_0] + E[S[x_1 | x_0]] + E[S[x_2 | x_{0:1}]] + \dots + E[S[x_N | x_{0:N-1}
 \]</span></p>
 <p>The prototypical FDR is the <a href="https://en.wikipedia.org/wiki/Einstein_relation_(kinetic_theory)">Einstein relation</a>, to be derived below:</p>
 <p><span class="math display">\[
-\underbrace{(\beta D)^{-1}}_{\text{fluctuation}} = \underbrace{\gamma}_{\text{dissipation}}
+\underbrace{\beta D}_{\text{fluctuation}} = \underbrace{(\gamma\beta)^{-1}}_{\text{dissipation}}
 \]</span></p>
 <p>where the left side can be interpreted as the strength of molecular noise, and the right side as the strength of molecular damping.</p>
 </section>
@@ -1659,7 +1671,7 @@ relaxation time
 <p>That is beyond the scope. Suffice to say that we should wait a while, not too short, after which the system is close enough to equilibrium. But we cannot wait for too long either, because in the long run, the particle would have escaped the potential well. So there is a time-scale, neither too long nor too short, which we call the relaxation time <span class="math inline">\(\tau\)</span>.</p>
 <p>Formalizing all these things requires stochastic calculus, which I might write about later.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Goldilocks and the three chefs">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1668,7 +1680,7 @@ Goldilocks and the three chefs
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div id="callout-28" class="callout-28-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Goldilocks, with a rumbling stomach, stumbles upon the house of the three chefs. Each chef is holding a pan in one hand and a bottle of Brownian batter in the other. “Excuse me, might I have some pancakes?”</p>
 <p>“Of course!” exclaims the first chef, whose pan holds a small, quivering mound. “It’s just been poured, still brimming with energy!”</p>
@@ -1688,7 +1700,7 @@ Goldilocks and the three chefs
 <p><span class="theorem-title"><strong>Theorem 10 (Arrhenius equation)</strong></span> The escape time for a simple harmonic oscillator in contact with an energy bath scales as <span class="math inline">\(e^{\beta \Delta E}\)</span>, where <span class="math inline">\(\Delta E\)</span> is the energy barrier, and <span class="math inline">\(\beta\)</span> is the temperature of the bath.</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="derivation">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1697,7 +1709,7 @@ derivation
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-31" class="callout-31-contents callout-collapse collapse">
+<div id="callout-30" class="callout-30-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Let the oscillator have <span class="math inline">\(n\)</span> dimensions, then its energy function is <span class="math inline">\(H = \sum_{i=1}^n \frac{p_i^2}{2m_i} + \frac{k_i q_i^2}{2}\)</span>, where <span class="math inline">\(q_i, p_i\)</span> are the generalized position and momentum, and <span class="math inline">\(m_i, k_i\)</span> are the effective masses and elastic constants. The Boltzmann distribution is <span class="math inline">\(\rho(q, p) = Z^{-1} e^{-\beta H}\)</span>, and the probability that it has enough energy to overcome the barrier is</p>
 <p><span class="math display">\[
@@ -1762,13 +1774,16 @@ G(r) = (4\pi \sigma_{\text{ice-water}})\cdot r^2  - \left(\frac 43 \pi \rho_{\te
 </section>
 <section id="sec-cft" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sec-cft">Crooks fluctuation theorem</h2>
+<p>The field of genuinely non-equilibrium thermodynamics is yet unsettled, so this section is more provisional than the previous ones. Here, we are still considering classical mechanics, with time-reversible Hamiltonian dynamics.</p>
+<p>The key to modern non-equilibrium thermodynamics is the Crooks fluctuation theorem (CFT), which surprisingly was proven only in 1999. As fundamental physics go, this is really new!</p>
 <section id="in-a-closed-system-microcanonical" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="in-a-closed-system-microcanonical">In a closed system (microcanonical)</h3>
-<p>SETUP. The system is a classical-mechanical system, with time-reversible dynamics, and follows Liouville’s theorem.</p>
-<p>We have a thermodynamic system held under variable constraints <span class="math inline">\(x\)</span>.</p>
-<p>The system starts in microcanonical ensemble of energy <span class="math inline">\(E_1\)</span>. Then we change the constraints <span class="math inline">\(x(t)\)</span>, quickly or slowly, over a time interval <span class="math inline">\(t\in [0, \tau]\)</span>. Let the microstate trajectory of the system be <span class="math inline">\(y(t)\)</span>, arriving at the energy shell of <span class="math inline">\(E_2\)</span>.</p>
+<p>Consider a system held under variable constraints <span class="math inline">\(x\)</span>. For example, we have a piston whose head is held at a given length. Alternatively, its head is held at a given force. The point is simply to pick one type of constraint, then stick with it.</p>
+<p>Let the system start in a microcanonical ensemble, at energy <span class="math inline">\(E_1\)</span>, then we change the constraints <span class="math inline">\(x(t)\)</span>, quickly or slowly, over a time interval <span class="math inline">\(t\in [0, \tau]\)</span>. The system’s microstate follows some trajectory <span class="math inline">\(y(t)\)</span>, arriving <span class="math inline">\(y(\tau)\)</span>, which falls within some new microcanonical ensemble with energy <span class="math inline">\(E_2\)</span>.</p>
+<p>Putting a prime means time-reversal. For example, <span class="math inline">\(x', y'\)</span> are <span class="math inline">\(x, y\)</span>, but time-reversed.</p>
+<p>Whereas <span class="math inline">\(E_1\)</span> is known, <span class="math inline">\(E_2\)</span> is randomly sampled, as it is determined by <span class="math inline">\(E_1\)</span> (known), <span class="math inline">\(x(t)\)</span> (known), <span class="math inline">\(y(0)\)</span> (randomly sampled from the microcanonical ensemble).</p>
 <p>During the forward process, if the system undergoes microstate trajectory <span class="math inline">\(y(t)\)</span>, then we have to expend work <span class="math inline">\(W[x(t), y(t)] = E_2 - E_1\)</span>.</p>
-<p>Let <span class="math inline">\(S_1^*\)</span> be the maximal entropy of the system when held under the constraints of <span class="math inline">\(x(0)\)</span>, and when the system has energy <span class="math inline">\(E_1\)</span>. Similarly for <span class="math inline">\(S_2^*\)</span>.</p>
+<p>Let <span class="math inline">\(S_1^*\)</span> be the maximal entropy of the system when held under the constraints of <span class="math inline">\(x(0)\)</span>, and when the system has energy <span class="math inline">\(E_1\)</span>. Similarly, let <span class="math inline">\(S_2^*\)</span> be the maximal entropy of the system when held under the constraints of <span class="math inline">\(x(\tau)\)</span>, and when the system has energy <span class="math inline">\(E_2\)</span>.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1780,30 +1795,31 @@ Warning
 </div>
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(S_1 = S_1^*\)</span>, since the system starts in thermal equilibrium. However, by Liouville’s theorem, entropy is <em>conserved</em>! So we actually have <span class="math inline">\(S_2 = S_1 \neq S_2^*\)</span>, because the system does not end in thermal equilibrium.</p>
+<p>The key is this: if the system starts at a microcanonical ensemble, then it does <em>not</em> in general end up at another microcanonical ensemble, because as we exert external forcing upon the system, the energy shell deforms, no longer the shell of <em>any</em> microcanonical ensemble.</p>
 </div>
 </div>
-<p><span class="math inline">\(x', y'\)</span> are <span class="math inline">\(x, y\)</span> time-reversed.</p>
-<p>For example, if we have a piston of gas made of only a few gas molecules, then the constraint is the volume <span class="math inline">\(V\)</span>, and we want to study the probability of expending work <span class="math inline">\(W\)</span> if we give the piston head a push. The push can be slow or fast – arbitrarily far from equilibrium. Crooks theorem applies no matter how we push the piston head.</p>
+<p>For example, if we have a piston of gas made of only a few gas molecules, then the constraint is the volume <span class="math inline">\(V\)</span>, and we want to study the probability of expending work <span class="math inline">\(W\)</span> if we give the piston head a push. The push can be slow or fast – arbitrarily far from equilibrium. CFT applies no matter how we push the piston head.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/Crooks_sethna_2021_4_10.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption"><span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021, fig. 4.10</a>)</span></figcaption>
+<figcaption class="margin-caption">During the forward time-evolution of an energy shell <span class="math inline">\(E_1\)</span>, the shell is no longer a microcanonical ensemble. The particular trajectory sampled lands upon an energy shell <span class="math inline">\(E_2\)</span>. <span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021, fig. 4.10</a>)</span></figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/Crooks_sethna_2021_4_11.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption"><span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021, fig. 4.11</a>)</span></figcaption>
+<figcaption class="margin-caption">The same situation but in the opposite direction. <span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021, fig. 4.11</a>)</span></figcaption>
 </figure>
 </div>
-<p>SETUP. probability density over path-space.</p>
+<p>Because the CFT involves the density of not states, but <em>state trajectories</em>, we need to set up the formalism for path integrals.</p>
 <p>Let <span class="math inline">\(\delta E_1, \delta E_2\)</span> be infinitesimals, and let <span class="math inline">\(E_1, E_2\)</span> be real numbers.</p>
-<p>Given a small bundle of microtrajectories <span class="math inline">\(y\)</span>, we can measure its path-space volume as <span class="math inline">\(D[y]\)</span>. Suppose they start on the energy shell <span class="math inline">\([E_1, E_1 + \delta E_1]\)</span>, then they would end up <em>somewhere</em>. If we’re lucky, they would end up on the energy shell <span class="math inline">\([E_2 + \delta E_2]\)</span>.</p>
-<p>Suppose the system starts in the microcanonical ensemble on the energy shell <span class="math inline">\([E_1, E_1 + \delta E_1]\)</span>, and we perform the constraint-variation <span class="math inline">\(x\)</span>, then there is a certain probability <span class="math inline">\(\delta P\)</span> that we would sample a trajectory from the small bundle. That small probability is <span class="math display">\[\rho(y | x) D[y]\]</span></p>
+<p>Given an infinitesimal small bundle of microtrajectories <span class="math inline">\(y\)</span>, we can measure its path-space volume as <span class="math inline">\(D[y]\)</span>. Suppose they start on the energy shell <span class="math inline">\([E_1, E_1 + \delta E_1]\)</span>, then they would end up <em>somewhere</em>. If we’re lucky, they would end up on the energy shell <span class="math inline">\([E_2 + \delta E_2]\)</span>.</p>
+<p>Suppose the system starts in the microcanonical ensemble on the energy shell <span class="math inline">\([E_1, E_1 + \delta E_1]\)</span>, and we perform the constraint-variation <span class="math inline">\(x\)</span>, then there is a certain probability <span class="math inline">\(\delta P\)</span> that we would sample a trajectory from the small bundle. That small probability is</p>
+<p><span class="math display">\[\rho(y | x) D[y]\]</span></p>
 <p>where <span class="math inline">\(\rho(y | x)\)</span> is a probability density over path-space. In particular, <span class="math inline">\(\rho(y | x) = 0\)</span> identically, unless <span class="math inline">\(y(0)\)</span> is on the energy shell <span class="math inline">\([E_1, E_1 + \delta E_1]\)</span>.</p>
 <p>Running the argument backwards, we can define <span class="math inline">\(\rho'(y' | x')\)</span>, another probability density over paths. This one satisfies <span class="math inline">\(\rho'(y'| x') = 0\)</span> unless <span class="math inline">\(y'(0)\)</span> is on the energy shell <span class="math inline">\([E_2, E_2 + \delta E_2]\)</span>.</p>
-<div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 11 (Crooks fluctuation theorem (microcanonical))</strong></span> For any trajectory <span class="math inline">\(y\)</span> such that it starts on the <span class="math inline">\([E_1, E_1 + \delta E_1]\)</span> energy shell, and ends on the <span class="math inline">\([E_2, E_2 + \delta E_2]\)</span> energy shell,</p>
+<div id="thm-cft-micro" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 11 (microcanonical CFT)</strong></span> For any trajectory <span class="math inline">\(y\)</span> such that it starts on the <span class="math inline">\([E_1, E_1 + \delta E_1]\)</span> energy shell, and ends on the <span class="math inline">\([E_2, E_2 + \delta E_2]\)</span> energy shell,</p>
 <p><span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} = e^{\Delta S}\]</span></p>
 <p>where <span class="math inline">\(\Delta S= \ln\Omega_2 - \ln\Omega_1\)</span>, <span class="math inline">\(\Omega_1\)</span> is the phase space volume of the first energy shell, and <span class="math inline">\(\Omega_2\)</span> the second.</p>
 </div>
@@ -1820,17 +1836,17 @@ Note
 <p>If <span class="math inline">\(y\)</span> does not start on the first energy shell, or does not end on the second energy shell, then either the nominator or the denominator is zero, and so the equation fails to hold.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-note callout-titled" title="proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-34" class="callout-34-contents callout-collapse collapse">
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In the forward process, the probability of going along that trajectory is <span class="math display">\[\rho(x|y) D[x] = \frac{\delta V}{\Omega_1}\]</span></p>
 <p>where <span class="math inline">\(\delta V\)</span> is the phase-space volume of the shaded set.</p>
@@ -1842,26 +1858,10 @@ Proof
 </section>
 <section id="in-an-energy-bath-canonical" class="level3">
 <h3 class="anchored" data-anchor-id="in-an-energy-bath-canonical">In an energy bath (canonical)</h3>
-<p>Now, suppose we take the same piston of gas, and put it in energy-contact with an energy bath, then at thermal equilibrium, the piston of gas would have the Boltzmann distribution <span class="math inline">\(\propto e^{-\beta E}\)</span>. We can then give the piston head a push, which would cause it to undergo</p>
+<p>Now, suppose we take the same piston of gas, and put it in energy-contact with an energy bath, then at thermal equilibrium, the piston of gas would have the Boltzmann distribution <span class="math inline">\(\propto e^{-\beta E}\)</span>. We can then give the piston head a push, which would cause it to undergo some kind of time-evolution.</p>
 <div id="thm-cft" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 12 (Crooks fluctuation theorem)</strong></span> <span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] - \Delta F^*)}\]</span></p>
 <p>where <span class="math inline">\(S[x, y]\)</span> is the entropy produced during the forward process, after the system has equilibrated, and <span class="math inline">\(\Delta F^* = F^*_2 - F^*_2\)</span> is the increase in <em>equilibrium</em> Helmholtz free energy of the system.</p>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In both forward and backward cases, we start with a thermal equilibrium, and end with a thermal <em>dis</em>equilibrium.</p>
-<p>For example, suppose we have a small tank of a few gas molecules in thermal equilibrium with a large energy bath.</p>
-<p>Now, we <em>quickly</em> push the piston head in according to the function <span class="math inline">\(x(t)\)</span>. The trajectory of the system would go through is <span class="math inline">\(y(t)\)</span>, which is <em>determined</em> by both <span class="math inline">\(x(t)\)</span> and the initial state of both the system and the energy bath.</p>
-<p>Now, we <em>wait a long time</em>, until the tank is in thermal equilibrium again. Then we pull the piston head out with time-reversed trajectory. Because the forward trajectory was quick, the backward trajectory was also quick.</p>
-</div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="equilibrium Helmholtz">
 <div class="callout-header d-flex align-content-center">
@@ -1873,9 +1873,79 @@ equilibrium Helmholtz
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>In both forward and backward cases, we start with a thermal equilibrium, and end with a thermal <em>dis</em>equilibrium.</p>
+<p>For example, suppose we have a small tank of a few gas molecules in thermal equilibrium with a large energy bath.</p>
+<p>Now, we <em>quickly</em> push the piston head in according to the function <span class="math inline">\(x(t)\)</span>. The trajectory of the system would go through is <span class="math inline">\(y(t)\)</span>, which is <em>determined</em> by both <span class="math inline">\(x(t)\)</span> and the initial state of both the system and the energy bath.</p>
+<p>Now, we <em>wait a long time</em>, until the tank is in thermal equilibrium again. Then we pull the piston head out with time-reversed trajectory. Because the forward trajectory was quick, the backward trajectory was also quick. In both cases, the system starts at equilibrium, then becomes disequilibrated, and then becomes equilibrated again. The definition of <span class="math inline">\(W\)</span> is measured during the equilibrium-disequilibrium <em>trajectory</em>, while <span class="math inline">\(F^*\)</span> is measured by comparing the equilibrium-equilibrium, <em>regardless</em> of trajectory.</p>
 <p>We wrote <span class="math inline">\(F^*\)</span> instead of <span class="math inline">\(F\)</span>, to emphasize that we are dealing with <em>equilibrium</em> Helmholtz free energy, defined by <span class="math inline">\(F^* = \min_\rho (\braket{E} - TS[\rho])\)</span>, and <em>not</em> the generic version <span class="math inline">\(\braket{E} - TS[\rho]\)</span>.</p>
-<p>This is vitally important, because at time <span class="math inline">\(\tau\)</span>, when the constraints have just reached their new values, the system is <em>not</em> in equilibrium. We would have to hold the constraints constant for a while for the system to return to equilibrium with the energy bath. Despite this, Crooks fluctuation theorem uses <span class="math inline">\(\Delta F^*\)</span>, which is computed at equilibrium.</p>
+<p>This is vitally important, because at time <span class="math inline">\(\tau\)</span>, when the constraints have just reached their new values, the system is <em>not</em> in equilibrium. We would have to hold the constraints constant for a while for the system to return to equilibrium with the energy bath. Despite this, CFT uses <span class="math inline">\(\Delta F^*\)</span>, which is computed at equilibrium.</p>
 </div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-35" class="callout-35-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Apply the microcanonical version of CFT to the entire compound system that includes both the bath and the system, then integrate over all possible microstate trajectories of the bath <span class="math inline">\(y_{\text{bath}}\)</span>.</p>
+<p><span class="math display">\[\begin{aligned}
+  S[x, y] &amp;= \Delta S_{\text{bath}} + \Delta S_{\text{system}} \\
+  &amp;= \beta \Delta E_{\text{bath}} + \Delta S_{\text{system}} \\
+  &amp;= \beta(W[x, y] - \braket{\Delta E_{\text{system}}}_2) + \Delta S_{\text{system}} \\
+  &amp;= \beta (W[x, y] - \Delta F^*)
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(\braket{\cdot}_2\)</span> means the canonical ensemble average under constraint <span class="math inline">\(x(\tau)\)</span>.</p>
+<p>Notice that the work expended/entropy produced depends only on the system’s microtrajectory <span class="math inline">\(y(t)\)</span>, and <em>not</em> on the bath’s microtrajectory <span class="math inline">\(y_{\text{bath}}(t)\)</span>. That is,</p>
+<p><span class="math display">\[S[x, y, y_{\text{bath}}] = S[x, y]\]</span></p>
+<p>This will be used again in the next step when we integrate over <span class="math inline">\(D[y_{\text{bath}}]\)</span>.</p>
+<p><span class="math display">\[\begin{aligned}
+  \rho(y|x) &amp;= \int_{y, y_{\text{bath}}, x \text{ is valid}}D[y_{\text{bath}}]\; \rho(y, y_{\text{bath}} | x)  \\
+  &amp;=  \underbrace{\int_{y', y'_{\text{bath}}, x' \text{ is valid}}D[y'_{\text{bath}}]}_{\text{reversible dynamics}}\; \underbrace{e^{S[x, y, y_{\text{bath}}]}\rho'(y', y'_{\text{bath}} | x')}_{\text{microcanonical CFT}}  \\
+  &amp;=  \int D[y'_{\text{bath}}] \; e^{{\color{red} S[x, y]}}\rho'(y', y'_{\text{bath}} | x') \\
+  &amp;=  e^{S[x,y]} \int D[y'_{\text{bath}}] \; \rho'(y', y'_{\text{bath}} | x') \\
+  &amp;=  e^{S[x,y]} \rho'(y'|x')
+\end{aligned}\]</span></p>
+</div>
+</div>
+</div>
+<div id="cor-todo" class="theorem corollary">
+<p><span class="theorem-title"><strong>Corollary 3</strong></span> <span class="math display">\[\frac{\rho(W | x)}{\rho'(-W | x')} =  e^{\beta (W - \Delta F^*)}\]</span></p>
+<p>where <span class="math inline">\(\rho(W|x)\)</span> is the probability density of expending work <span class="math inline">\(W\)</span> in the forward process.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Proof">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-36" class="callout-36-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Integrate over all forward microtrajectories <span class="math inline">\(y\)</span> satisfying <span class="math inline">\(W[x, y] \in [W, W+\delta W]\)</span>. By reversibility, <span class="math inline">\(W[x', y'] = [-W - \delta W, -W]\)</span> for such microtrajectories.</p>
+</div>
+</div>
+</div>
+<p>Looking at the proof for CFT for the canonical ensemble, we immediately obtain many other possible CFTs, one per free entropy.</p>
+<p>Suppose we have a piston of magnetic gas in energy-and-volume contact with a bath. Now suppose the gas is in equilibrium with the bath, and we vary the external magnetic field over a trajectory <span class="math inline">\(x\)</span>. Over the microstate trajectory <span class="math inline">\(x\)</span>, the external world would expend both some energy <span class="math inline">\(W[x, y]\)</span> and some volume <span class="math inline">\(V[x, y]\)</span>. Thus, we obtain the CFT for Gibbs free energy <span class="math inline">\(G\)</span>:</p>
+<p><span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] + PV[x, y] - \Delta G^*)}\]</span></p>
+<p>Similarly, suppose we have a chemical reaction chamber of fixed volume, and in energy-and-particle contact with a bath with chemical potentials <span class="math inline">\(\mu_i\)</span>, we have CFT for Landau free energy <span class="math inline">\(\Omega\)</span>:</p>
+<p><span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] -  \sum_i \mu_i N_i[x, y] - \Delta \Omega^*)}\]</span></p>
+</section>
+<section id="easy-consequences" class="level3">
+<h3 class="anchored" data-anchor-id="easy-consequences">Easy consequences</h3>
+<p>Let <span class="math inline">\(W\)</span> be the total work we expended by changing the constraints during the interval <span class="math inline">\([0, \tau]\)</span>. Since the work expended depends on the details of the heat bath and the starting state of the system at <span class="math inline">\(t=0\)</span>, this is a random variable.</p>
+<div id="thm-todo" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 13 (Jarzynski equality)</strong></span> <span class="math display">\[\braket{e^{-\beta W}} = e^{-\beta \Delta F^*}\]</span></p>
+<p>where the expectation is taken over many repeats of the same experiment (ensemble average).</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-37-contents" aria-controls="callout-37" aria-expanded="false" aria-label="Toggle callout">
@@ -1889,30 +1959,14 @@ Proof
 </div>
 <div id="callout-37" class="callout-37-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Apply the microcanonical version of Crooks theorem to the entire compound system that includes both the bath and the system, then integrate over all possible microstate trajectories of the bath <span class="math inline">\(y_{\text{bath}}\)</span>.</p>
-<p><span class="math display">\[\begin{aligned}
-  S[x, y] &amp;= \Delta S_{\text{bath}} + \Delta S_{\text{system}} \\
-  &amp;= \beta \Delta E_{\text{bath}} + \Delta S_{\text{system}} \\
-  &amp;= \beta(W[x, y] - \braket{\Delta E_{\text{system}}}_2) + \Delta S_{\text{system}} \\
-  &amp;= \beta (W[x, y] - \Delta F^*)
-\end{aligned}\]</span></p>
-<p>where <span class="math inline">\(\braket{\cdot}_2\)</span> means the canonical ensemble average under constraint <span class="math inline">\(x(\tau)\)</span>.</p>
-<p>Notice that the work expended/entropy produced depends only on the system’s microtrajectory <span class="math inline">\(y(t)\)</span>, and <em>not</em> on the bath’s microtrajectory <span class="math inline">\(y_{\text{bath}}(t)\)</span>. That is,</p>
-<p><span class="math display">\[S[x, y, y_{\text{bath}}] = S[x, y]\]</span></p>
-<p>This will be used again in the next step when we integrate over <span class="math inline">\(D[y_{\text{bath}}]\)</span>.</p>
-<p><span class="math display">\[\begin{aligned}
-  \rho(y|x) &amp;= \int_{y, y_{\text{bath}}, x \text{ is valid}}D[y_{\text{bath}}]\; \rho(y, y_{\text{bath}} | x)  \\
-  &amp;=  \underbrace{\int_{y', y'_{\text{bath}}, x' \text{ is valid}}D[y'_{\text{bath}}]}_{\text{reversible dynamics}}\; \underbrace{e^{S[x, y, y_{\text{bath}}]}\rho'(y', y'_{\text{bath}} | x')}_{\text{microcanonical Crooks}}  \\
-  &amp;=  \int D[y'_{\text{bath}}] \; e^{\red{S[x, y]}}\rho'(y', y'_{\text{bath}} | x') \\
-  &amp;=  e^{S[x,y]} \int D[y'_{\text{bath}}] \; \rho'(y', y'_{\text{bath}} | x') \\
-  &amp;=  e^{S[x,y]} \rho'(y'|x')
-\end{aligned}\]</span></p>
+<p>Integrate CFT over all forward trajectories <span class="math inline">\(D[x]\)</span>.</p>
+<p><span class="math display">\[\rho(y | x) e^{-\beta W[x, y] } = \rho'(y' | x') e^{-\beta\Delta F}\]</span></p>
+<p>now integrate over <span class="math inline">\(\int D[y]\)</span>, using the fact that <span class="math inline">\(D[y] = D[y']\)</span>.</p>
 </div>
 </div>
 </div>
 <div id="cor-todo" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corollary 3</strong></span> <span class="math display">\[\frac{\rho(W | x)}{\rho'(-W | x')} =  e^{\beta (W - \Delta F^*)}\]</span></p>
-<p>where <span class="math inline">\(\rho(W|x)\)</span> is the probability density of expending work <span class="math inline">\(W\)</span> in the forward process.</p>
+<p><span class="theorem-title"><strong>Corollary 4 (violation of second law is exponentially unlikely)</strong></span> <span class="math display">\[Pr((W - \Delta F^*) \leq - \delta W) \leq e^{-\beta \delta W}\]</span></p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
@@ -1926,33 +1980,25 @@ Proof
 </div>
 <div id="callout-38" class="callout-38-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Integrate over all forward microtrajectories <span class="math inline">\(y\)</span> satisfying <span class="math inline">\(W[x, y] \in [W, W+\delta W]\)</span>. By reversibility, <span class="math inline">\(W[x', y'] = [-W - \delta W, -W]\)</span> for such microtrajectories.</p>
+<p>Apply Markov’s inequality.</p>
 </div>
 </div>
 </div>
-</section>
-<section id="other-ensembles" class="level3">
-<h3 class="anchored" data-anchor-id="other-ensembles">Other ensembles</h3>
-<p>Looking at the proof for Crooks theorem for the canonical ensemble, we immediately obtain many other possible Crooks theorems, one per free entropy.</p>
-<p>EXP. Crooks theorem for Gibbs free energy <span class="math inline">\(G\)</span></p>
-<p>Suppose we have a piston of magnetic gas in energy-and-volume contact with a bath. Now suppose the gas is in equilibrium with the bath, and we vary the external magnetic field over a trajectory <span class="math inline">\(x\)</span>. Over the microstate trajectory <span class="math inline">\(x\)</span>, the external world would expend both some energy <span class="math inline">\(W[x, y]\)</span> and some volume <span class="math inline">\(V[x, y]\)</span>.</p>
-<p><span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] + PV[x, y] - \Delta G^*)}\]</span></p>
-<p>EXP. Crooks theorem for Landau free energy <span class="math inline">\(\Omega\)</span></p>
-<p>Suppose we have a chemical reaction chamber of fixed volume, and in energy-and-particle contact with a bath with chemical potentials <span class="math inline">\(\mu_i\)</span>.</p>
-<p><span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] -  \sum_i \mu_i N_i[x, y] - \Delta \Omega^*)}\]</span></p>
-</section>
-<section id="application" class="level3">
-<h3 class="anchored" data-anchor-id="application">Application</h3>
-<p><span class="citation" data-cites="liphardtReversibleUnfoldingSingle2001 collinVerificationCrooksFluctuation2005">(<a href="#ref-liphardtReversibleUnfoldingSingle2001" role="doc-biblioref">Liphardt et al. 2001</a>; <a href="#ref-collinVerificationCrooksFluctuation2005" role="doc-biblioref">Collin et al. 2005</a>)</span></p>
-</section>
-</section>
-<section id="jarzynski-equality" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="jarzynski-equality">Jarzynski equality</h2>
-<p>Let <span class="math inline">\(W\)</span> be the total work we expended by changing the constraints during the interval <span class="math inline">\([0, \tau]\)</span>. Since the work expended depends on the details of the heat bath and the starting state of the system at <span class="math inline">\(t=0\)</span>, this is a random variable.</p>
-<div id="thm-todo" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 13 (Jarzynski equality)</strong></span> <span class="math display">\[\braket{e^{-\beta W}} = e^{-\beta \Delta F^*}\]</span></p>
-<p>where the expectation is taken over many repeats of the same experiment (ensemble average).</p>
+<p>Since <span class="math inline">\(e^t\)</span> is convex, we have <span class="math inline">\(\Delta F^* \leq \braket{W}\)</span>, meaning that the average work expended is more than the increase in Helmholtz free energy. This has better be true, else we would be violating the second law of thermodynamics on average.</p>
+<p>Since <span class="math inline">\(\Delta F^* = -\frac{1}{\beta} \ln\braket{e^{-\beta W}}\)</span>, we find that to second order,</p>
+<div id="thm-fdr" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 14 (fluctuation-dissipation relation)</strong></span> <span class="math display">\[\underbrace{\braket{W} - \Delta F^*}_{\text{work dissipation}} = \beta \underbrace{\frac 12 \sigma_W^2}_{\text{work fluctuation}}\]</span></p>
 </div>
+<p>For periodic forcing, the CFT has a simpler form.</p>
+<p>Consider a time-reversible dynamical system immersed in an energy bath with inverse temperature <span class="math inline">\(\beta\)</span> , driven by periodically varying constraints. For example, a pendulum in a sticky fluid subjected to a periodic driving torque, or a water-cooled electric circuit driven by a periodic voltage.</p>
+<p>Such a system will settle into a “dynamical equilibrium” ensemble, much like a canonical ensemble. If it is driven by the same process time-reversed, then, it will settle into another dynamical equilibrium ensemble.</p>
+<div id="thm-gallavotti-cohen" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 15 (Gallavotti–Cohen fluctuation theorem)</strong></span> <span class="math display">\[\frac{\rho(Q)}{\rho'(-Q)} = e^{\beta Q}\]</span></p>
+<p>where <span class="math inline">\(\rho(Q)\)</span> is the probability density that a forward cycle, randomly sampled from the dynamical equilibrium ensemble, emits energy <span class="math inline">\(Q\)</span> into the energy bath. Similarly, <span class="math inline">\(\rho'\)</span> is for the backward cycle.</p>
+</div>
+<p>It is often used for time-symmetric driving, such as sine waves. In that case, it is typically written as</p>
+<p><span class="math display">\[\frac{\rho(\dot s)}{\rho(-\dot s)} = e^{\beta T \dot s}\]</span></p>
+<p>where <span class="math inline">\(T\)</span> is the driving period, and <span class="math inline">\(\dot s\)</span> is the entropy production rate.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Proof">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-39-contents" aria-controls="callout-39" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1965,41 +2011,42 @@ Proof
 </div>
 <div id="callout-39" class="callout-39-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Integrate Crooks over all forward trajectories <span class="math inline">\(D[x]\)</span>.</p>
-<p><span class="math display">\[\rho(y | x) e^{-\beta W[x, y] } = \rho'(y' | x') e^{-\beta\Delta F}\]</span></p>
-<p>now integrate over <span class="math inline">\(\int D[y]\)</span>, using the fact that <span class="math inline">\(D[y] = D[y']\)</span>.</p>
+<p>Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for <span class="math inline">\(NT\)</span> time where <span class="math inline">\(N\)</span> is a large integer, then remove the driving. At the <span class="math inline">\(N\to\infty\)</span> limit, the CFT reduces to this equation.</p>
 </div>
 </div>
 </div>
-<div id="cor-todo" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corollary 4 (violation of second law is exponentially unlikely)</strong></span> <span class="math display">\[Pr((W - \Delta F^*) \leq - \delta W) \leq e^{-\beta \delta W}\]</span></p>
+</section>
+</section>
+<section id="applications-of-cft" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="applications-of-cft">Applications of CFT</h2>
+<section id="molecular-machines" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="molecular-machines">Molecular machines</h3>
+<p><span class="citation" data-cites="liphardtReversibleUnfoldingSingle2001 collinVerificationCrooksFluctuation2005">(<a href="#ref-liphardtReversibleUnfoldingSingle2001" role="doc-biblioref">Liphardt et al. 2001</a>; <a href="#ref-collinVerificationCrooksFluctuation2005" role="doc-biblioref">Collin et al. 2005</a>)</span></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/RNA_unfolding_collin_2005.jpg" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption"><span class="citation" data-cites="collinVerificationCrooksFluctuation2005">(<a href="#ref-collinVerificationCrooksFluctuation2005" role="doc-biblioref">Collin et al. 2005, fig. 1</a>)</span></figcaption>
+</figure>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/CFT_mutant_collin_2005.jpg" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption"><span class="citation" data-cites="collinVerificationCrooksFluctuation2005">(<a href="#ref-collinVerificationCrooksFluctuation2005" role="doc-biblioref">Collin et al. 2005, fig. 3</a>)</span></figcaption>
+</figure>
 </div>
-<div class="callout-title-container flex-fill">
-Proof
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-40" class="callout-40-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Apply Markov’s inequality.</p>
-</div>
-</div>
-</div>
-<p>EXP. high probability of work extraction</p>
 <p>Classically, if we have a single system in thermal equilibrium with a single energy-bath, and we perform a cyclic operation on it, then we can’t extract work, lest we violate the second law.</p>
-<p>Statistically, <span class="math inline">\(\braket{e^{-\beta W}} = 1\)</span>, and so it is entirely possible for us to extract work with high probability, as long as there is a small probability to lose a large enough amount of work.</p>
+<p>Because the requirement only says that <span class="math inline">\(\braket{e^{-\beta W}} = 1\)</span>, it is entirely possible for us to extract arbitrarily large amounts of work with arbitrarily high probability, as long as there is a corresponding small probability of losing a lot of work:</p>
+<p><span class="math display">\[
+e^{-\beta W}(1-\delta) + e^{-\beta W}\delta = 1, \quad W = \beta^{-1} \ln \frac{1}{\delta}
+\]</span></p>
 <p><span class="citation" data-cites="mailletOptimalProbabilisticWork2019">(<a href="#ref-mailletOptimalProbabilisticWork2019" role="doc-biblioref">Maillet et al. 2019</a>)</span> constructed a quantum mechanical device with a single-electron transistor. The electron can expend work. They managed to extract work from the device with over 75% probability.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/maillet_2019_3_c.png" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption">Figure from <span class="citation" data-cites="mailletOptimalProbabilisticWork2019">(<a href="#ref-mailletOptimalProbabilisticWork2019" role="doc-biblioref">Maillet et al. 2019, fig. 3.c</a>)</span></figcaption>
+<figcaption class="margin-caption">Histogram of work extraction. Over 75% of the histogram is in the <span class="math inline">\(W &gt; 0\)</span> part. Despite this, <span class="math inline">\(\braket{e^{-\beta W}} = 0.989 \pm 0.03\)</span>, verifying the Jarzynski equation. <span class="citation" data-cites="mailletOptimalProbabilisticWork2019">(<a href="#ref-mailletOptimalProbabilisticWork2019" role="doc-biblioref">Maillet et al. 2019, fig. 3.c</a>)</span></figcaption>
 </figure>
 </div>
+</section>
 <section id="worked-example-bouncing-ball" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="worked-example-bouncing-ball">Worked example: bouncing ball</h3>
 <p>This example is from <span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021</a>, exercise 4.8)</span>, which itself derives from <span class="citation" data-cites="luaPracticalApplicabilityJarzynski2005">(<a href="#ref-luaPracticalApplicabilityJarzynski2005" role="doc-biblioref">Lua and Grosberg 2005</a>)</span>. See also <span class="citation" data-cites="hijarJarzynskiEqualityIllustrated2010">(<a href="#ref-hijarJarzynskiEqualityIllustrated2010" role="doc-biblioref">Híjar and de Zárate 2010</a>)</span> for another solved example, of a chest expander with mass points stuck in the middle of the springs. You might need to read my tutorial on <a href="https://yuxi-liu-wired.github.io/sketches/posts/field-theory-how-to/">field-theoretic calculations</a> before attempting that example.</p>
@@ -2022,14 +2069,8 @@ Proof
 <p>If at <span class="math inline">\(t=0\)</span>, the ball is in the phase space region labelled “in region”, then it will be hit in the in-stroke. If at <span class="math inline">\(t=\Delta L/v\)</span>, the ball is in the phase space region labelled “out region”, then it will be hit in the out-stroke. Otherwise, it will not be hit.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="figure/Jarzynski_bouncing_ball_1.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="margin-caption">Jarzynski_bouncing_ball_1.jpg</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="figure/Jarzynski_bouncing_ball_2.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="margin-caption">Jarzynski_bouncing_ball_2.jpg</figcaption>
+<p><img src="figure/Jarzynski_bouncing_ball.jpg" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">Phase space of the bouncing balls.</figcaption>
 </figure>
 </div>
 <p>Therefore,</p>
@@ -2064,46 +2105,13 @@ Note
 = \frac{1}{L\sqrt{2\pi m/\beta}} \left(\int_{in, out'} e^{-\frac{\beta}{2m}p^2} dpdx + \int_{other} e^{-\frac{\beta}{2m}p^2} dpdx\right) = 1
 \]</span></p>
 </section>
-<section id="fluctuation-dissipation-relations-1" class="level3">
-<h3 class="anchored" data-anchor-id="fluctuation-dissipation-relations-1">Fluctuation-dissipation relations</h3>
-<div id="cor-todo" class="theorem corollary">
-<p><span class="theorem-title"><strong>Corollary 5 (Fluctuation-dissipation relations)</strong></span> Since <span class="math inline">\(e^t\)</span> is convex, we have <span class="math inline">\(\Delta F^* \leq \braket{W}\)</span>, meaning that the average work expended is more than the increase in Helmholtz free energy. This has better be true, else we would be violating the second law of thermodynamics on average.</p>
-<p>Since <span class="math inline">\(\Delta F^* = -\frac{1}{\beta} \ln\braket{e^{-\beta W}}\)</span>, we find that to second order, <span class="math display">\[\underbrace{\braket{W} - \Delta F^*}_{\text{work dissipation}} = \frac 12 \beta \underbrace{\sigma_W^2}_{\text{work fluctuation}}\]</span></p>
-<p>It is more familiarly written as <span class="math display">\[\mu = D\beta\]</span></p>
-<p>where <span class="math inline">\(D = \frac 12 \sigma_W^2\)</span> is the fluctuation coefficient, and <span class="math inline">\(\mu = (\braket{W} - \Delta F^*)\)</span> is the dissipation coefficient.</p>
-</div>
-<p>For periodic forcing, the CFT has a simpler form.</p>
-<p>Consider a time-reversible dynamical system immersed in an energy bath with inverse temperature <span class="math inline">\(\beta\)</span> , driven by periodically varying constraints. For example, a pendulum in a sticky fluid subjected to a periodic driving torque, or a water-cooled electric circuit driven by a periodic voltage.</p>
-<p>Such a system will settle into a “dynamical equilibrium” ensemble, much like a canonical ensemble. If it is driven by the same process time-reversed, then, it will settle into another dynamical equilibrium ensemble.</p>
-<div id="thm-gallavotti-cohen" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 14 (Gallavotti–Cohen fluctuation theorem)</strong></span> <span class="math display">\[\frac{\rho(Q)}{\rho'(-Q)} = e^{\beta Q}\]</span></p>
-<p>where <span class="math inline">\(\rho(Q)\)</span> is the probability density that a forward cycle, randomly sampled from the dynamical equilibrium ensemble, emits energy <span class="math inline">\(Q\)</span> into the energy bath. Similarly, <span class="math inline">\(\rho'\)</span> is for the backward cycle.</p>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Proof">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-42-contents" aria-controls="callout-42" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proof
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-42" class="callout-42-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Construct a process that starts at equilibrium, then mount up the periodic driving, runs it for <span class="math inline">\(NT\)</span> time where <span class="math inline">\(N\)</span> is a large integer, then remove the driving. At the <span class="math inline">\(N\to\infty\)</span> limit, the CFT reduces to the result.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="arrow-of-time" class="level3">
-<h3 class="anchored" data-anchor-id="arrow-of-time">Arrow of time</h3>
-<p><span class="citation" data-cites="jarzynskiEqualitiesInequalitiesIrreversibility2011">(<a href="#ref-jarzynskiEqualitiesInequalitiesIrreversibility2011" role="doc-biblioref">Jarzynski 2011</a>)</span></p>
+<section id="other-examples" class="level3">
+<h3 class="anchored" data-anchor-id="other-examples">Other examples</h3>
 <p>Suppose a scientist has recorded a microscopic movie of pulling on an RNA, flipped a coin to decide whether to reverse the movie, then given you the movie. Your task is to guess whether the movie is reversed.</p>
 <p>By Bayes theorem, <span class="math display">\[Pr(\text{forward}|x, y) = \frac{1}{1 + e^{-S[x, y]}}\]</span></p>
 <p>where <span class="math inline">\(S[x, y] = \beta(W[x, y] - \Delta F^*)\)</span>.</p>
-<p>In words, the higher the entropy production, the more likely it is that the movie is playing forward. This is one way to say that entropy production provides an arrow of time.</p>
-<p><span class="citation" data-cites="parrondoThermodynamicsInformation2015">(<a href="#ref-parrondoThermodynamicsInformation2015" role="doc-biblioref">Parrondo, Horowitz, and Sagawa 2015</a>)</span></p>
+<p>In words, the higher the entropy production, the more likely it is that the movie is playing forward. This is one way to say that entropy production provides an arrow of time. Possibly this is why molecular machines in biology tend to operate with dissipation of around <span class="math inline">\(5 k_B T\)</span>, even when less dissipation is possible, to provide a good enough forward bias. Too little dissipation would mean that there is no way to distinguish the direction of time, yet time is inherent in life.</p>
+<p>In <span class="citation" data-cites="parrondoThermodynamicsInformation2015">(<a href="#ref-parrondoThermodynamicsInformation2015" role="doc-biblioref">Parrondo, Horowitz, and Sagawa 2015</a>)</span>,</p>
 <p><span class="math display">\[\braket{e^{-\beta W - I}} = e^{-\beta \Delta F^*}\]</span></p>
 
 
@@ -2170,8 +2178,8 @@ Hoagland, Hudson. 1933. <span>“The <span>Physiological Control</span> of <span
 <div id="ref-hoaglandPacemakersHumanBrain1936" class="csl-entry" role="listitem">
 ———. 1936. <span>“Pacemakers of Human Brain Waves in Normals and in General Paretics.”</span> <em>American Journal of Physiology-Legacy Content</em> 116 (3): 604–15. <a href="https://doi.org/10.1152/ajplegacy.1936.116.3.604">https://doi.org/10.1152/ajplegacy.1936.116.3.604</a>.
 </div>
-<div id="ref-jarzynskiEqualitiesInequalitiesIrreversibility2011" class="csl-entry" role="listitem">
-Jarzynski, Christopher. 2011. <span>“Equalities and <span>Inequalities</span>: <span>Irreversibility</span> and the <span>Second Law</span> of <span>Thermodynamics</span> at the <span>Nanoscale</span>.”</span> <em>Annual Review of Condensed Matter Physics</em> 2 (Volume 2, 2011): 329–51. <a href="https://doi.org/10.1146/annurev-conmatphys-062910-140506">https://doi.org/10.1146/annurev-conmatphys-062910-140506</a>.
+<div id="ref-jaynesGibbsParadox1992" class="csl-entry" role="listitem">
+Jaynes, E. T. 1992. <span>“The <span>Gibbs Paradox</span>.”</span> In <em>Maximum <span>Entropy</span> and <span>Bayesian Methods</span>: <span>Seattle</span>, 1991</em>, edited by C. Ray Smith, Gary J. Erickson, and Paul O. Neudorfer, 1–21. Dordrecht: Springer Netherlands. <a href="https://doi.org/10.1007/978-94-017-2219-3_1">https://doi.org/10.1007/978-94-017-2219-3_1</a>.
 </div>
 <div id="ref-laidlerUnconventionalApplicationsArrhenius1972" class="csl-entry" role="listitem">
 Laidler, Keith J. 1972. <span>“Unconventional Applications of the <span>Arrhenius</span> Law.”</span> <em>Journal of Chemical Education</em> 49 (5): 343. <a href="https://doi.org/10.1021/ed049p343">https://doi.org/10.1021/ed049p343</a>.
@@ -2187,6 +2195,9 @@ Maillet, Olivier, Paolo A. Erdman, Vasco Cavina, Bibek Bhandari, Elsa T. Mannila
 </div>
 <div id="ref-parrondoThermodynamicsInformation2015" class="csl-entry" role="listitem">
 Parrondo, Juan M. R., Jordan M. Horowitz, and Takahiro Sagawa. 2015. <span>“Thermodynamics of Information.”</span> <em>Nature Physics</em> 11 (2): 131–39. <a href="https://doi.org/10.1038/nphys3230">https://doi.org/10.1038/nphys3230</a>.
+</div>
+<div id="ref-pressePrinciplesMaximumEntropy2013" class="csl-entry" role="listitem">
+Pressé, Steve, Kingshuk Ghosh, Julian Lee, and Ken A. Dill. 2013. <span>“Principles of Maximum Entropy and Maximum Caliber in Statistical Physics.”</span> <em>Reviews of Modern Physics</em> 85 (3): 1115–41. <a href="https://doi.org/10.1103/RevModPhys.85.1115">https://doi.org/10.1103/RevModPhys.85.1115</a>.
 </div>
 <div id="ref-reifFundamentalsStatisticalThermal1998" class="csl-entry" role="listitem">
 Reif, Frederick. 1998. <em>Fundamentals of Statistical and Thermal Physics</em>. 43. [pr.]. <span>McGraw-Hill</span> Series in Fundamentals of Physics. New York: McGraw-Hill.
