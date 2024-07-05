@@ -7,7 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Yuxi Liu">
-<meta name="dcterms.date" content="2024-07-01">
+<meta name="dcterms.date" content="2024-07-04">
+<meta name="description" content="How to think like a classical statistical-mechanic, with many examples from gas theory, biology, probability, and information theory. Prerequisites: thermodynamics, calculus, probability, and mathematical maturity.">
 
 <title>Yuxi on the Wired - Statistical Mechanics</title>
 <style>
@@ -121,11 +122,11 @@ window.Quarto = {
 </script>
 
 <meta property="og:title" content="Yuxi on the Wired - Statistical Mechanics">
-<meta property="og:description" content="Personal website of Yuxi Liu">
+<meta property="og:description" content="How to think like a classical statistical-mechanic, with many examples from gas theory, biology, probability, and information theory. Prerequisites: thermodynamics, calculus, probability, and mathematical maturity.">
 <meta property="og:image" content="https://yuxi-liu-wired.github.io/blog/posts/statistical-mechanics/img/blog icon.jpg">
 <meta property="og:site_name" content="Yuxi on the Wired">
 <meta name="twitter:title" content="Yuxi on the Wired - Statistical Mechanics">
-<meta name="twitter:description" content="Personal website of Yuxi Liu">
+<meta name="twitter:description" content="How to think like a classical statistical-mechanic, with many examples from gas theory, biology, probability, and information theory. Prerequisites: thermodynamics, calculus, probability, and mathematical maturity.">
 <meta name="twitter:image" content="https://yuxi-liu-wired.github.io/blog/posts/statistical-mechanics/img/blog icon.jpg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -187,7 +188,12 @@ window.Quarto = {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Statistical Mechanics</h1>
-                                <div class="quarto-categories">
+                  <div>
+        <div class="description">
+          How to think like a classical statistical-mechanic, with many examples from gas theory, biology, probability, and information theory. Prerequisites: thermodynamics, calculus, probability, and mathematical maturity.
+        </div>
+      </div>
+                          <div class="quarto-categories">
                 <div class="quarto-category">math</div>
                 <div class="quarto-category">physics</div>
                 <div class="quarto-category">probability</div>
@@ -208,14 +214,14 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 1, 2024</p>
+        <p class="date">July 4, 2024</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">July 1, 2024</p>
+        <p class="date-modified">July 4, 2024</p>
       </div>
     </div>
       
@@ -231,7 +237,9 @@ window.Quarto = {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
+  <li><a href="#what-this-essay-contains" id="toc-what-this-essay-contains" class="nav-link" data-scroll-target="#what-this-essay-contains">What this essay contains</a></li>
   <li><a href="#quick-reference" id="toc-quick-reference" class="nav-link" data-scroll-target="#quick-reference">Quick reference</a></li>
+  <li><a href="#further-readings" id="toc-further-readings" class="nav-link" data-scroll-target="#further-readings">Further readings</a></li>
   </ul></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
   <ul class="collapse">
@@ -316,14 +324,58 @@ window.Quarto = {
 
 
 
-<section id="introduction" class="level2">
+<section id="introduction" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="what-this-essay-contains" class="level3">
+<h3 class="anchored" data-anchor-id="what-this-essay-contains">What this essay contains</h3>
+<p>Classical mechanics, electrodynamics, and thermodynamics are all conceptually simple, but settled. Things are less clear with statistical mechanics. To say it kindly, it is a lively field of research. To say it unkindly, it is a field whose very conceptual foundation is in doubt. The main issue is not with quantum mechanics, but with non-equilibrium. Fortunately, as long as we stick to the classical and equilibrium parts, then it is mostly settled, and so this is how this essay is going to be written about. We will avoid quantum, and avoid non-equilibrium, and in exchange obtain a beautiful mathematical theory with surprisingly wide applications.</p>
+<p>Statistical mechanics is technically independent of thermodynamics, but it is strongly related. You can acquire the basic skills in thermodynamics by working through the first half of my previous essay <a href="https://yuxi-liu-wired.github.io/essays/posts/equilibrium-thermoeconomics/"><em>Classical Thermodynamics and Economics</em></a>.</p>
+<p>About half of the essay is taken up with calculations. I have tried to make them skimmable. The theoretical core of statistical mechanics is small, and most of the skills are in applying it to actual systems. Therefore, a lot of worked-through examples are necessary.</p>
+<p>The essay contains: entropy, free entropies, partition function, about 12 useful theorems, fluctuation-dissipation relations, maximal caliber, Crooks fluctuation theorem, Jarzynski equality, rubber bands, kinetic gas theory, van der Waals law, blackbody radiation, combinatorics, chi-squared test, large deviation theory, bacteria hunting, unzipping RNA hairpins, Arrhenius equation, martingales, Maxwell’s demon, Laplace’s demon.</p>
+<p>It does not contain: quantum statistical mechanics, nonequilibrium statistical mechanics, linear response theory, Onsager reciprocal relations, statistical field theory, phase transitions, stochastic processes, Langevin equation, diffusion theory, Fokker–Planck equation, Feynman–Kac formula, Brownian ratchets.</p>
+<p>The prerequisites are thermodynamics, multivariate calculus, probability, combinatorics, and mathematical maturity. It’s good to be familiar with biology and the basics of random walk as well.</p>
+</section>
 <section id="quick-reference" class="level3">
 <h3 class="anchored" data-anchor-id="quick-reference">Quick reference</h3>
 <ul>
-<li>Liouville’s theorem: Hamiltonian dynamics preserves density in phase space.</li>
+<li><span class="math inline">\(D_{KL}\)</span>: <a href="https://en.wikipedia.org/wiki/Kullback-Leibler_divergence">Kullback–Leibler divergence</a>.</li>
+<li><span class="math inline">\(S[\rho]\)</span>: entropy of probability distribution <span class="math inline">\(\rho\)</span>.</li>
+<li><span class="math inline">\(S^*\)</span>: maximal entropy under constraints.</li>
+<li><span class="math inline">\(f[\rho]\)</span>: Helmholtz free entropy of probability distribution <span class="math inline">\(\rho\)</span>.</li>
+<li><span class="math inline">\(f^*_{X|y}\)</span>: maximal Helmholtz free entropy under the constraint that <span class="math inline">\(Y = y\)</span>.</li>
+<li><span class="math inline">\(Z\)</span>: the partition function.</li>
+<li><span class="math inline">\(\beta\)</span>: inverse temperature.</li>
+<li><span class="math inline">\(N\)</span>: number of particles, or some other quantity that can get very large.</li>
+<li><span class="math inline">\(n\)</span>: number of dimensions, or some other quantity that is fixed.</li>
+<li><span class="math inline">\(F\)</span>: Helmholtz free energy.</li>
+<li><span class="math inline">\(\binom{m}{n}\)</span>: <a href="https://en.wikipedia.org/wiki/Binomial_coefficient">binomial coefficient</a>.</li>
+<li><span class="math inline">\(\braket{f(x, y) | z}_y\)</span>: The expectation of <span class="math inline">\(f\)</span> where we fix <span class="math inline">\(x\)</span>, let <span class="math inline">\(y\)</span> vary, and conditional on <span class="math inline">\(z\)</span>.</li>
+<li><span class="math inline">\(\mathrm{Var}\)</span>: variance.</li>
+<li><span class="math inline">\(\int (\cdots) D[x]\)</span>: path integral where <span class="math inline">\(x\)</span> varies over the space of all possible paths.</li>
 </ul>
+<p>As usual, we set <span class="math inline">\(k_B = 1\)</span>, so that <span class="math inline">\(\beta = 1/T\)</span>, except when we need a numerical answer in SI units.</p>
 </section>
+<section id="further-readings" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="further-readings">Further readings</h3>
+<p>Unfortunately, I never learned statistical mechanics from any textbook. I just understood things gradually on my own after trying to make sense of things. This means I cannot recommend any introductory textbook based on my personal experience.</p>
+<ul>
+<li>Books I did learn from:
+<ul>
+<li><span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021</a>)</span> shows how a modern statistical mechanist thinks. It is a rather eclectic book, because modern statistical mechanics is full of weird applications, from music theory to economics.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li><span class="citation" data-cites="nelsonBiologicalPhysicsEnergy2003">(<a href="#ref-nelsonBiologicalPhysicsEnergy2003" role="doc-biblioref">Nelson 2003</a>)</span> teaches basic statistical thermodynamics in the context of biology, and <span class="citation" data-cites="bergRandomWalksBiology1993">(<a href="#ref-bergRandomWalksBiology1993" role="doc-biblioref">Howard C. Berg 1993</a>)</span> teaches random walks.</li>
+<li><span class="citation" data-cites="ben-naimFarewellEntropyStatistical2008 feynmanFeynmanLecturesComputation1996">(<a href="#ref-ben-naimFarewellEntropyStatistical2008" role="doc-biblioref">Ben-Naim 2008</a>; <a href="#ref-feynmanFeynmanLecturesComputation1996" role="doc-biblioref">Richard P. Feynman 1996</a>)</span> show how to combine (unify?) statistical mechanics with information theory.</li>
+<li><span class="citation" data-cites="jaynesProbabilityTheoryLogic2003">(<a href="#ref-jaynesProbabilityTheoryLogic2003" role="doc-biblioref">Jaynes 2003</a>)</span> gives Jaynes’ entire philosophy of information, one application of which is his theory of why entropy is maximized in statistical mechanics.</li>
+<li><span class="citation" data-cites="lemonsTrailBlackbodyRadiation2022">(<a href="#ref-lemonsTrailBlackbodyRadiation2022" role="doc-biblioref">Lemons, Shanahan, and Buchholtz 2022</a>)</span> closely follows the story of how Planck actually derived the blackbody radiation law. Reading it, you almost have the illusion that you too could have discovered what he discovered</li>
+<li><span class="citation" data-cites="penroseFoundationsStatisticalMechanics2005">(<a href="#ref-penroseFoundationsStatisticalMechanics2005" role="doc-biblioref">Penrose 2005</a>)</span> gives an elegant mathematical deduction that brings philosophers and mathematical logicians joy. However, it is not useful for applications.</li>
+</ul></li>
+<li>Books I did not learn from, but feel obliged to recommend:
+<ul>
+<li><span class="citation" data-cites="maStatisticalMechanics1985 tolmanPrinciplesStatisticalMechanics1980 feynmanStatisticalMechanicsSet2018 schrodingerStatisticalThermodynamics1989">(<a href="#ref-maStatisticalMechanics1985" role="doc-biblioref">Ma 1985</a>; <a href="#ref-tolmanPrinciplesStatisticalMechanics1980" role="doc-biblioref">Tolman 1980</a>; <a href="#ref-feynmanStatisticalMechanicsSet2018" role="doc-biblioref">Richard P. Feynman 2018</a>; <a href="#ref-schrodingerStatisticalThermodynamics1989" role="doc-biblioref">Schrodinger 1989</a>)</span> are books that apparently every real physicist must read before they die. Like those other “1001 books you must read before you die”, I did not read them.</li>
+<li><span class="citation" data-cites="nashElementsStatisticalThermodynamics2006">(<a href="#ref-nashElementsStatisticalThermodynamics2006" role="doc-biblioref">Nash 2006</a>)</span> is a concise introduction for chemistry students.</li>
+<li><span class="citation" data-cites="sommerfeldLecturesTheoreticalPhysics1950">(<a href="#ref-sommerfeldLecturesTheoreticalPhysics1950" role="doc-biblioref">Sommerfeld 1950, vol. 5</a>)</span> is by the master, Sommerfeld. If you want to do 19th century style thermodynamics, then it is very good, but otherwise, I don’t know what this book is for.</li>
+</ul></li>
+</ul>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;The book has quite many buzzwords like “fractals”, “complexity”, “avalanche”, and “edge of chaos”, buzzy in the 1990s. A joke is that during the 1980s, as the Cold War was winding down, physicists were overproduced and underemployed, and had to find someway to get employed. Thus, they went into economics, social sciences, etc, resulting in the discipline of “econophysics”, the nebulous non-discipline of “complexity studies”, etc.</p></div></div></section>
 </section>
 <section id="overview" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
@@ -358,8 +410,8 @@ Pr(\theta \in [\theta_0, \theta_0 + \delta\theta]) = \lim_{T \to \infty} \frac{1
 <li>Under any constraint, there exists a unique ensemble, named the <strong>equilibrium ensemble</strong>, which maximizes entropy under constraint.</li>
 </ul>
 <p>Most of the times, the state space is a phase space, and the equation of motion is described by a Hamiltonian function. However, the machinery of statistical mechanics, as given above, is purely mathematical. It can be used to study any problem in probability whatsoever, even those with no physical meaning.</p>
-<p>Believe it or not, the above constitutes the entirety of equilibrium statistical mechanics. So far, it is a purely mathematical theory, with no falsifiability (Popperians shouting in the background). To make it falsifiable, we need to add one more assumption, necessarily fuzzy:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><blockquote class="blockquote"><sup>1</sup>&nbsp;
+<p>Believe it or not, the above constitutes the entirety of equilibrium statistical mechanics. So far, it is a purely mathematical theory, with no falsifiability (Popperians shouting in the background). To make it falsifiable, we need to add one more assumption, necessarily fuzzy:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><blockquote class="blockquote"><sup>2</sup>&nbsp;
 <p>As far as the laws of mathematics refer to reality, they are not certain; and as far as they are certain, they do not refer to reality.</p>
 <p>— Albert Einstein, <em>Address to Prussian Academy of Sciences</em> (1921)</p>
 </blockquote>
@@ -372,8 +424,8 @@ Pr(\theta \in [\theta_0, \theta_0 + \delta\theta]) = \lim_{T \to \infty} \frac{1
 <section id="sec-differential-entropy-ill-defined" class="level3">
 <h3 class="anchored" data-anchor-id="sec-differential-entropy-ill-defined">Differential entropy depends on coordinates choice</h3>
 <p>There is a well-known secret among information theorists: differential entropy is ill-defined.</p>
-<p>Consider the uniform distribution on <span class="math inline">\([0, 1]\)</span>. It is the maxent distribution on <span class="math inline">\([0, 1]\)</span> – relative to the Lebesgue measure. However, why should we pick the Lebesgue measure, and what happens if we don’t?</p>
-<p>Suppose we now stretch the <span class="math inline">\([0, 1]\)</span> interval nonlinearly, by <span class="math inline">\(f(x) = x^2\)</span>, then the maxent distribution relative to <em>that</em> would no longer be the uniform distribution on <span class="math inline">\([0, 1]\)</span>. Instead, it would be the uniform distribution after stretching.</p>
+<p>Consider the uniform distribution on <span class="math inline">\([0, 1]\)</span>. It is the maximal-entropy distribution on <span class="math inline">\([0, 1]\)</span> – relative to the Lebesgue measure. However, why should we pick the Lebesgue measure, and what happens if we don’t?</p>
+<p>Suppose we now stretch the <span class="math inline">\([0, 1]\)</span> interval nonlinearly, by <span class="math inline">\(f(x) = x^2\)</span>, then the maximal-entropy distribution relative to <em>that</em> would no longer be the uniform distribution on <span class="math inline">\([0, 1]\)</span>. Instead, it would be the uniform distribution after stretching.</p>
 <p>The problem is this: Differential entropy is not coordinate-free. If we change the coordinates, we change the base measure, and the differential entropy changes as well.</p>
 <p>To fix this, we need to use the KL-divergence, which is invariant under a change of base measure, as in <span class="math display">\[-D_{KL}(\rho \| \mu) := - \int dx\; \rho(x) \ln\frac{\rho(x)}{\mu(x)}\]</span></p>
 <p>In typical situations, we don’t need to worry ourselves with KL-divergence, as we just pick the uniform distribution <span class="math inline">\(\mu\)</span>. When the state space is infinite in volume, the uniform distribution is not a probability measure, but it will work. Bayesians say that it is an <em>improper prior</em>.</p>
@@ -399,8 +451,8 @@ Pr(\theta \in [\theta_0, \theta_0 + \delta\theta]) = \lim_{T \to \infty} \frac{1
 </figure>
 </div>
 <p>Still, there is a nagging feeling that, even if we have no corner reflector, and so the beam of light truly has increased in entropy <em>relative to us</em>, as long as the corner reflector is theoretically possible, then the entropy of the beam of light is still unchanged <em>in itself</em>. Isn’t information a subjective phenomenon that only intelligent life has? Surely even if nobody is around to see it, if a tank of gas explodes in a forest, entropy still makes a sound.</p>
-<p>Responding to this would entangle us into a whole mess of philosophical arguments about objective vs subjective probability, and observer vs observed phenomena. My quick answer is simply that knowledge isn’t magical, and even nature does not laugh at the difficulty of inference.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> If the entropy of a tank of gas appears high to us, then chances are, it would appear even higher to a car engine, for the car engine has only a few ways to interact with this tank of gas, unlike us, who have all of modern technology.</p>
-<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;Supposedly, Laplace said “Nature laughs at the difficulties of integration.”, but when I tried to hunt it down, all citations led directly to a 1953 essay, which cites an anonymous “mathematician”. I have tried searching for it in French, with no results. I think this is actually a pseudo-Laplace quote, a <a href="https://gwern.net/leprechaun">paper ghost</a>, much like how people kept attributing things to <a href="https://en.wikipedia.org/wiki/Pseudo-Aristotle">pseudo-Aristotle</a>.</p>
+<p>Responding to this would entangle us into a whole mess of philosophical arguments about objective vs subjective probability, and observer vs observed phenomena. My quick answer is simply that knowledge isn’t magical, and even nature does not laugh at the difficulty of inference.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> If the entropy of a tank of gas appears high to us, then chances are, it would appear even higher to a car engine, for the car engine has only a few ways to interact with this tank of gas, unlike us, who have all of modern technology.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Supposedly, Laplace said “Nature laughs at the difficulties of integration.”, but when I tried to hunt it down, all citations led directly to a 1953 essay, which cites an anonymous “mathematician”. I have tried searching for it in French, with no results. I think this is actually a pseudo-Laplace quote, a <a href="https://gwern.net/leprechaun">paper ghost</a>, much like how people kept attributing things to <a href="https://en.wikipedia.org/wiki/Pseudo-Aristotle">pseudo-Aristotle</a>.</p>
 <blockquote class="blockquote">
 <p>It would take a physicist a long time to work out the problem and he could achieve only an approximation at that. Yet presumably the coin will stop exactly where it should. Some very rapid calculations have to be made before it can do so, and they are, presumably, always accurate. And then, just as I was blushing at what I supposed he must regard as my folly, the mathematician came to my rescue by informing me that Laplace had been puzzled by exactly the same fact. “Nature laughs at the difficulties of integration.” <span class="citation" data-cites="krutchBestTwoWorlds1953">(<a href="#ref-krutchBestTwoWorlds1953" role="doc-biblioref">Krutch 1953, 148</a>)</span></p>
 </blockquote>
@@ -544,7 +596,7 @@ Proof
 <p>Consider a compound system in ensemble <span class="math inline">\(\rho(x, y)\)</span>. Its entropy is</p>
 <p><span class="math display">\[S[\rho] = -\int dxdy \; \rho(x, y) \ln \rho(x, y)\]</span></p>
 <p>We can take the calculation in two steps:</p>
-<p><span class="math display">\[S[\rho] = -\int dxdy \; \rho(x|y)\rho(y) (\ln \rho(x|y) + \ln  \rho(y)) = S[\rho_Y] + \mathbb{E}_y[S[\rho_{X|y}]]\]</span></p>
+<p><span class="math display">\[S[\rho] = -\int dxdy \; \rho(x|y)\rho(y) (\ln \rho(x|y) + \ln  \rho(y)) = S[\rho_Y] + \braket{S[\rho_{X|y}]}_y\]</span></p>
 </div>
 </div>
 </div>
@@ -745,7 +797,7 @@ Enthalpic ensemble
 </div>
 <div class="callout-body-container callout-body">
 <p>What if we have a system in volume-contact, but not thermal-contact? This might happen when the system is a flexible bag of gas held in an atmosphere, but the bag is thermally insulating. Notice that in this case, the small system still exchanges energy with the large system via <span class="math inline">\(d\braket{E} = -Pd\braket{V}\)</span>. We don’t have <span class="math inline">\(E = -PdV\)</span>, because the small system might get unlucky. During a moment of weakness, all its particles has abandoned their frontier posts, and the bath has taken advantage of this by encroaching on its land. The system loses volume by <span class="math inline">\(\delta V\)</span>, without earning a compensating <span class="math inline">\(\delta E = P \delta V\)</span>. In short, the thermodynamic equality <span class="math inline">\(E = -PdV\)</span> is inexact in statistical mechanics, and only holds true on the ensemble average.</p>
-<p>In this case, because pressure is a constant, we have <span class="math inline">\(d(E + PV) = 0\)</span>, and so we have the enthalpic ensemble <span class="math inline">\(\rho \propto e^{-\beta H}\)</span>, where <span class="math inline">\(H := E + PV\)</span> is the <a href="https://en.wikipedia.org/wiki/Enthalpy">enthalpy</a>,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>In this case, because pressure is a constant, we have <span class="math inline">\(d(E + PV) = 0\)</span>, and so we have the enthalpic ensemble <span class="math inline">\(\rho \propto e^{-\beta H}\)</span>, where <span class="math inline">\(H := E + PV\)</span> is the <a href="https://en.wikipedia.org/wiki/Enthalpy">enthalpy</a>,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
 <p>Specifically, if you work through the same argument, you would end up with the following constrained maximization problem:</p>
 <p><span class="math display">\[
 \begin{cases}
@@ -756,7 +808,7 @@ Enthalpic ensemble
 <p>yielding the enthalpic ensemble (or the <a href="https://en.wikipedia.org/wiki/Isoenthalpic%E2%80%93isobaric_ensemble">isoenthalpic-isobaric ensemble</a>).</p>
 </div>
 </div>
-<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Sorry, I know this is not Hamiltonian, but we are running out of letters.</p></div></div></section>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;Sorry, I know this is not Hamiltonian, but we are running out of letters.</p></div></div></section>
 <section id="free-entropies" class="level3">
 <h3 class="anchored" data-anchor-id="free-entropies">Free entropies</h3>
 <p>Just like in thermodynamics, it is useful to consider free entropies, which are the convex duals of the entropy:</p>
@@ -888,7 +940,7 @@ Proof
     \text{$x$ must be chosen such that the observable $Y = y$}
 \end{cases}
 \]</span></p>
-<p>Then, each such problem gives us a maximal conditional<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> entropy <span class="math inline">\(S_{X|y}^*\)</span>, and we can follow it up by solving for <span class="math inline">\(Y\)</span> with</p>
+<p>Then, each such problem gives us a maximal conditional<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> entropy <span class="math inline">\(S_{X|y}^*\)</span>, and we can follow it up by solving for <span class="math inline">\(Y\)</span> with</p>
 <p><span class="math display">\[\max\left(S_Y + \braket{S_{X|y}^*}_{y \sim Y}\right)\]</span></p>
 <p>Again, the solution is immediate once we see it is just the KL-divergence:</p>
 <p><span class="math display">\[S_Y + \braket{S_{X|y}^*}_{y \sim Y} = - \int dy \; \rho_Y(y) \ln\frac{\rho_Y(y)}{e^{S_{X|y}^*}} = \ln Z - D_{KL}(\rho_Y \| \rho_Y^*)\]</span></p>
@@ -898,7 +950,7 @@ Proof
 </div>
 </div>
 </div>
-<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;If you’re a pure mathematician, you can formalize this using <a href="https://en.wikipedia.org/wiki/Disintegration_theorem">measure disintegration</a>.</p></div></div><div class="callout callout-style-default callout-note callout-titled" title="deriving the canonical ensemble yet again">
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;If you’re a pure mathematician, you can formalize this using <a href="https://en.wikipedia.org/wiki/Disintegration_theorem">measure disintegration</a>.</p></div></div><div class="callout callout-style-default callout-note callout-titled" title="deriving the canonical ensemble yet again">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -952,7 +1004,7 @@ Proof
 <p><span class="math display">\[
 U = 3N \times \int_{\mathbb{R}}dp\; \frac{p^2}{2m} \frac{e^{-\frac{p^2}{2m/\beta}}}{\sqrt{2\pi m/\beta}} = \frac{3N}{2\beta}
 \]</span></p>
-<p>This is the same as Boltzmann’s derivation so far. However, although entropy is exactly defined when there are only finitely or countably many possible states, as <span class="math inline">\(\sum_{j \in \mathbb{N}} -p_j \ln p_j\)</span>, this is not so when state space is uncountably large, like <span class="math inline">\(\mathbb{R}^{6N}\)</span>. When Boltzmann encountered the issue, he solved it by discretizing the phase space into <em>arbitrary but small</em> cubes. The effect is that he could rederive the ideal gas laws, but the entropy has an additive constant that depends on the exact choice of the cube size. This was not a problem for Boltzmann, who was trying to found classical thermodynamics upon statistical mechanics, and in classical thermodynamics, entropy <em>does</em> have an indeterminant additive constant.</p>
+<p>This is the same as Boltzmann’s derivation so far. However, although entropy is exactly defined when there are only finitely or countably many possible states, as <span class="math inline">\(\sum_{j \in \mathbb{N}} -p_j \ln p_j\)</span>, this is not so when state space is uncountably large, like <span class="math inline">\(\mathbb{R}^{6N}\)</span>. When Boltzmann encountered the issue, he solved it by discretizing the phase space into <em>arbitrary but small</em> cubes. The effect is that he could rederive the ideal gas laws, but the entropy has an additive constant that depends on the exact choice of the cube size. This was not a problem for Boltzmann, who was trying to found classical thermodynamics upon statistical mechanics, and in classical thermodynamics, entropy <em>does</em> have an indeterminate additive constant.</p>
 <p>Later, Planck in his derivation of the blackbody radiation law, used the same trick. Ironically, Planck did not believe in atoms nor quantized light, but he did make the correct assumption that there is a natural unit of measurement for phase space area, which he called <span class="math inline">\(h\)</span>, and which we know as Planck’s constant. <span class="citation" data-cites="duncanConstructingQuantumMechanics2019">(<a href="#ref-duncanConstructingQuantumMechanics2019" role="doc-biblioref">Duncan and Janssen 2019, chap. 2</a>)</span>.</p>
 <p>Following Planck, we discretize the phase space into little cubes of size <span class="math inline">\(h^{3N}\)</span>, and continue:</p>
 <p><span class="math display">\[
@@ -1195,18 +1247,18 @@ Tip
 </div>
 </div>
 <p>Now, we need to allow <em>two</em> states at each valid wavevector, to account for polarization.</p>
-<p>At this point, we have decomposed the state space into a composition of oscillators. Because there is no interaction between these oscillators,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> it remains to calculate the partition function of each oscillator.</p>
-<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;That is, two photons do not interact, except when the energy levels are so high that you would need a quantum field theorist to know what is going on.</p>
-<p>Light resembles ghosts and spirits in that they are massless, untouchable, moving very fast, bright, and vaguely associated with good feelings. During the 19th century, the best scientific theory for light, that of ether theory, became the foundation of many spiritualist world systems. <span class="citation" data-cites="aspremPonderingImponderablesOccultism2011">(<a href="#ref-aspremPonderingImponderablesOccultism2011" role="doc-biblioref">Asprem 2011</a>)</span> The connection of electromagnetism with <a href="https://en.wikipedia.org/wiki/Animal_magnetism">animal magnetism</a> did not help. Whereas modern spiritualists talk of electromagnetic fields and quantum vibrations, a century ago they talked of subatomic structures and ether vibrations.</p></div></div><p>Planck considered an ensemble of <span class="math inline">\(N\)</span> oscillators, all at the same wavevector and polarization. If they have average energy <span class="math inline">\(\braket{E}\)</span>, the question is to find the total entropy for the whole system, which, when divided by <span class="math inline">\(N\)</span>, should yield the entropy of a single oscillator. Here he used the celebrated <em>quantum hypothesis</em>: The energy levels are divided into integer levels of <span class="math inline">\(nh\nu\)</span>, where <span class="math inline">\(n = 0, 1, 2, \dots\)</span>. By the <a href="https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)">stars and bars</a> argument, there are <span class="math inline">\(\binom{N + M-1}{M}\)</span> ways do distribute these energy-quanta between these oscillators, where <span class="math inline">\(M = \frac{N\braket{E}}{h\nu}\)</span>.</p>
+<p>At this point, we have decomposed the state space into a composition of oscillators. Because there is no interaction between these oscillators,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> it remains to calculate the partition function of each oscillator.</p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;That is, two photons do not interact, except when the energy levels are so high that you would need a quantum field theorist to know what is going on.</p>
+<p>Whereas modern spiritualists talk of electromagnetic fields and quantum vibrations, a century ago they talked of subatomic structures and ether vibrations. Light resembles ghosts and spirits in that they are massless, untouchable, moving very fast, bright, and vaguely associated with good feelings. During the 19th century, the best scientific theory for light, that of ether theory, became the foundation of many spiritualist world systems. <span class="citation" data-cites="aspremPonderingImponderablesOccultism2011">(<a href="#ref-aspremPonderingImponderablesOccultism2011" role="doc-biblioref">Asprem 2011</a>)</span> The connection of electromagnetism with <a href="https://en.wikipedia.org/wiki/Animal_magnetism">animal magnetism</a> did not help.</p></div></div><p>Planck considered an ensemble of <span class="math inline">\(N\)</span> oscillators, all at the same wavevector and polarization. If they have average energy <span class="math inline">\(\braket{E}\)</span>, the question is to find the total entropy for the whole system, which, when divided by <span class="math inline">\(N\)</span>, should yield the entropy of a single oscillator. Here he used the celebrated <em>quantum hypothesis</em>: The energy levels are divided into integer levels of <span class="math inline">\(nh\nu\)</span>, where <span class="math inline">\(n = 0, 1, 2, \dots\)</span>. By the <a href="https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)">stars and bars</a> argument, there are <span class="math inline">\(\binom{N + M-1}{M}\)</span> ways do distribute these energy-quanta between these oscillators, where <span class="math inline">\(M = \frac{N\braket{E}}{h\nu}\)</span>.</p>
 <p><span class="math display">\[S = \frac 1N \ln \binom{N+M-1}{M} \underbrace{\approx}_{\text{Stirling}} (1 + a) \ln (1+a) - a \ln a, \quad a = \frac{\braket{E}}{h\nu}\]</span></p>
 <p>Given the entropy function, he then matched <span class="math inline">\(\braket{E}\)</span> to temperature <span class="math inline">\(\beta\)</span> by the equality <span class="math inline">\(\beta = \partial_{\braket{E}} S\)</span>, giving</p>
 <p><span class="math display">\[
 \braket{E} = \left(\frac{h\nu}{e^{\beta h\nu}-1}\right)
 \]</span></p>
 <p>The rest of the derivation is fairly obvious and may be found in any textbook. I will just point out one more interesting fact.</p>
-<p>According to <a href="https://en.wikipedia.org/wiki/Kirchhoff's_law_of_thermal_radiation">Kirchhoff’s law of thermal radiation</a>, a chunk of matter is exactly as absorptive as it is emissive. A black body absorbs all light, and conversely it emits light at the maximal level. A white body absorbs no light, and conversely it does not emit light. This can be understood as a consequence of the second law: If a body emits more light than it absorbs, then it would spontaneously get colder when placed inside a black body radiation chamber.</p>
+<p>According to <a href="https://en.wikipedia.org/wiki/Kirchhoff's_law_of_thermal_radiation">Kirchhoff’s law of thermal radiation</a>, a chunk of matter is exactly as absorptive as it is emissive. A blackbody absorbs all light, and conversely it emits light at the maximal level. A white body absorbs no light, and conversely it does not emit light. This can be understood as a consequence of the second law: If a body emits more light than it absorbs, then it would spontaneously get colder when placed inside a blackbody radiation chamber.</p>
 <p>However, much more can be said than this. Not only is it exactly as absorptive as it is emissive, it is as absorptive as it is emissive at <em>any angle</em>, at any wavelength, and any polarization. So for example, if a piece of leaf is not absorptive when viewed from an angle, at the green light wavelength, of clockwise polarization, then it is not emissive under the same angle, wavelength, polarization.</p>
-<p>Why is that? The standard argument <span class="citation" data-cites="reifFundamentalsStatisticalThermal1998">(<a href="#ref-reifFundamentalsStatisticalThermal1998" role="doc-biblioref">Reif 1998, chap. 9.15</a>)</span> uses a time-reversal argument, but I like to think of it as yet more instances of protecting the second law. If you look inside a black body radiation chamber, you would see a maximal entropy state. Light rushes in all directions equally, at all polarizations equally, and the energy is distributed optimally across the spectrum to maximize entropy (because <span class="math inline">\(\beta\)</span> is constant across the whole spectrum). If we have a material that takes in blue light and outputs green light, then it would spontaneously decrease entropy. Similarly, if it can absorb vertically polarized light to emit diagonally polarized light, it would also spontaneously decrease entropy, etc.</p>
+<p>Why is that? The standard argument <span class="citation" data-cites="reifFundamentalsStatisticalThermal1998">(<a href="#ref-reifFundamentalsStatisticalThermal1998" role="doc-biblioref">Reif 1998, chap. 9.15</a>)</span> uses a time-reversal argument, but I like to think of it as yet more instances of protecting the second law. If you look inside a blackbody radiation chamber, you would see a maximal entropy state. Light rushes in all directions equally, at all polarizations equally, and the energy is distributed optimally across the spectrum to maximize entropy (because <span class="math inline">\(\beta\)</span> is constant across the whole spectrum). If we have a material that takes in blue light and outputs green light, then it would spontaneously decrease entropy. Similarly, if it can absorb vertically polarized light to emit diagonally polarized light, it would also spontaneously decrease entropy, etc.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Relativistic gas?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1217,8 +1269,8 @@ Relativistic gas?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A box full of black body radiation is also called a photon gas. The photon gas is sometimes treated as the limit of “ultrarelativistic gas”. Start with the relativistic energy function <span class="math inline">\(E = \sqrt{m^2 c^4 + \|p\|^2 c^2}\)</span>, derive its <a href="https://en.wikipedia.org/wiki/Maxwell-J%C3%BCttner_distribution">Boltzmann distribution</a> <span class="math inline">\(\rho(q, p) \propto e^{-\beta \sqrt{m^2 c^4 + \|p\|^2 c^2}}\)</span>, then take the <span class="math inline">\(m \to 0\)</span> limit. This gives some correct results, such as the <span class="math inline">\(U = 3PV\)</span>.</p>
-<p>However, accounting for the entropy of photon gas, as well as deriving the black body radiation, hinges critically on the photon quantization <span class="math inline">\(E = h\nu, 2h\nu, \dots\)</span>. I guess it can be done correctly by relativistic quantum mechanics, but it is of course beyond the world of classical mechanics.</p>
+<p>A box full of blackbody radiation is also called a photon gas. The photon gas is sometimes treated as the limit of “ultrarelativistic gas”. Start with the relativistic energy function <span class="math inline">\(E = \sqrt{m^2 c^4 + \|p\|^2 c^2}\)</span>, derive its <a href="https://en.wikipedia.org/wiki/Maxwell-J%C3%BCttner_distribution">Boltzmann distribution</a> <span class="math inline">\(\rho(q, p) \propto e^{-\beta \sqrt{m^2 c^4 + \|p\|^2 c^2}}\)</span>, then take the <span class="math inline">\(m \to 0\)</span> limit. This gives some correct results, such as the <span class="math inline">\(U = 3PV\)</span>.</p>
+<p>However, accounting for the entropy of photon gas, as well as deriving the blackbody radiation, hinges critically on the photon quantization <span class="math inline">\(E = h\nu, 2h\nu, \dots\)</span>. I guess it can be done correctly by relativistic quantum mechanics, but it is of course beyond the world of classical mechanics.</p>
 </div>
 </div>
 </section>
@@ -1290,20 +1342,20 @@ N\braket{L} \approx \beta F Nd^2,
 </blockquote>
 <p>Like the artist <a href="https://en.wikipedia.org/wiki/M._C._Escher">M. C. Escher</a>, the writer <a href="https://en.wikipedia.org/wiki/Jorge_Luis_Borges">J. L. Borges</a> is a favorite of scientists, for his stories that construct precise worlds like elegant thought experiments. The Library of Babel is a thought experiment on combinatorics and entropy. In the universe, there are only books. Each book contains</p>
 <p><span class="math display">\[410 \;\mathrm{page} \times 40\;\mathrm{line/page} \times 80 \;\mathrm{symbol/line} = 1.3\times 10^6\;\mathrm{symbol}\]</span></p>
-<p>Suppose the books are uniformly random sequences made of 25 symbols, then each symbol contains <span class="math inline">\(\ln 25\)</span> amount of entropy, and each book contains <span class="math inline">\(1.3\times 10^6\ln 25 = 4.2 \times 10^6\)</span>. Now, consider another library of Babel, but this one consists in books filled with white space, so each book has zero entropy. Then, we can take one empty book and “burn” it into a uniformly random book, recovering <span class="math inline">\(4.2 \times 10^6 k_B T\)</span> free energy per book burned. At ambient temperature <span class="math inline">\(300\;\mathrm{K}\)</span>, that is just <span class="math inline">\(1.4 \times 10^{-14}\;\mathrm{J}\)</span> per book. Book-burning isn’t going to keep the librarians warm.</p>
+<p>Suppose the books are uniformly random sequences made of 25 symbols, then each symbol contains <span class="math inline">\(\ln 25\)</span> amount of entropy, and each book contains <span class="math inline">\(1.3\times 10^6\ln 25 = 4.2 \times 10^6\)</span>. Now, consider another library of Babel, but this one consists of books filled with white space, so each book has zero entropy. Then, we can take one empty book and “burn” it into a uniformly random book, recovering <span class="math inline">\(4.2 \times 10^6 k_B T\)</span> free energy per book burned. At ambient temperature <span class="math inline">\(300\;\mathrm{K}\)</span>, that is just <span class="math inline">\(1.4 \times 10^{-14}\;\mathrm{J}\)</span> per book. Book-burning isn’t going to keep the librarians warm.</p>
 <blockquote class="blockquote">
 <p>After having razed the garden and profaned the chalices and altars, the Huns entered the monastery library on horseback and trampled the incomprehensible books and vituperated and burned them, perhaps fearful that the letters concealed blasphemies against their god, which was an iron scimitar. Palimpsests and codices were consumed, but in the heart of the fire, amid the ashes, there remained almost intact the twelfth book of the <em>Civitas Dei</em>, which relates how in Athens Plato taught that, at the centuries’ end, all things will recover their previous state and he in Athens, before the same audience, will teach this same doctrine anew.</p>
 <p><em>The Theologians</em>, Jorge Luis Borges</p>
 </blockquote>
 <p>While it is fanciful to “burn” a book by randomizing its letters, if we take the “information is physical, physics is informational” equivalence seriously, then there must be a way to actually “burn information”. Indeed, there is a way.</p>
-<p>We can consider a chamber containing a single ball inside. The chamber has a removable wall, separating it into two parts labelled <code>0</code> and <code>1</code>. If we know which side the ball is in, then we can put a piston into the other side, remove the wall, then extract work by isothermal expansion. Of course, the actual work extractable is random, but if we do this for a large number of chambers, then it is the same as isothermal expansion of an ideal gas to double its volume. By the ideal gas equation, we would extract <span class="math inline">\(k_B T \ln 2\)</span> of mechanical energy per chamber on average.</p>
+<p>We can consider a chamber containing a single ball inside. The chamber has a removable wall, separating it into two parts labelled <code>0</code> and <code>1</code>. If we know which side the ball is in, then we can put a piston into the other side, remove the wall, then extract work by isothermal expansion. Of course, the actual work extractable is random, but if we do this for a large number of chambers, then it is the same as isothermal expansion of an ideal gas to double its volume. By the ideal gas equation, we would extract <span class="math inline">\(k_B T \ln 2\)</span> of mechanical energy per chamber on average, exactly as predicted by the information-burning argument.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/information-burning_engine.png" class="img-fluid figure-img"></p>
 <figcaption class="margin-caption">A car driven by burning a tape of zero information, emitting “waste information” in its wake. <span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021, fig. 5.10</a>)</span></figcaption>
 </figure>
 </div>
-<p>In the best tradition of steampunk, <span class="citation" data-cites="luEngineeringMaxwellDemon2014">(<a href="#ref-luEngineeringMaxwellDemon2014" role="doc-biblioref">Lu, Mandal, and Jarzynski 2014</a>)</span> constructed a purely mechanical model of information-burning, 19th century style. As shown below, we have a belt of paddles that can rotate freely, except when they hit one of the two red rods. The two red rods divide space into two sides: the <code>0</code> side and the <code>1</code> side. One of the red rods has an opening on it, allowing the paddle to go through. All the paddles start on the top in the <code>0</code> side, and slowly move down. As soon as a paddle has moved into the middle, it would be able to be able to freely move between <code>0</code> and <code>1</code> sides.</p>
+<p>In the tradition of <a href="https://en.wikipedia.org/wiki/Steampunk">steampunk</a>, <span class="citation" data-cites="luEngineeringMaxwellDemon2014">(<a href="#ref-luEngineeringMaxwellDemon2014" role="doc-biblioref">Lu, Mandal, and Jarzynski 2014</a>)</span> constructed a purely mechanical model of information-burning. As shown below, we have a belt of paddles that can rotate freely, except when they hit one of the two red rods. The two red rods divide space into two sides: the <code>0</code> side and the <code>1</code> side. One of the red rods has an opening on it, allowing the paddle to go through. All the paddles start on the top in the <code>0</code> side, and slowly move down. As soon as a paddle has moved into the middle, it would be able to be able to freely move between <code>0</code> and <code>1</code> sides.</p>
 <p>So, if we blur our vision and look at the average motion of the paddles, we would see an averaged “entropic force” that drives paddles from <code>0</code> side to <code>1</code> side. We can harvest this entropic force by adding a ring with a paddle inside, which can be hit by the paddles, driving it into rotation. The ring would be able to wind up a spring, thus converting information into mechanical work.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -1406,7 +1458,7 @@ derivation
 </div>
 <div id="callout-24" class="callout-24-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Let <span class="math inline">\(x_1, \dots, x_N\)</span> be sampled IID from <span class="math inline">\(\mathcal N(0, 1)\)</span>, and let <span class="math inline">\(r_N^2 = \sum_i x_i^2\)</span>. By routine calculation, <span class="math inline">\(\mathbb{E}[r_N^2] = N\)</span>, and <span class="math inline">\(\mathbb{E}[r_N^4] = 2N + N^2\)</span>. Therefore, <span class="math inline">\(r_N^2\)</span> is approximately distributed as <span class="math inline">\(\mathcal N(N, 2N)\)</span>, and so <span class="math inline">\(r_N\)</span> is approximately distributed as <span class="math inline">\(\mathcal N(\sqrt N, 1/2)\)</span>.</p>
+<p>Let <span class="math inline">\(x_1, \dots, x_N\)</span> be sampled IID from <span class="math inline">\(\mathcal N(0, 1)\)</span>, and let <span class="math inline">\(r_N^2 = \sum_i x_i^2\)</span>. By routine calculation, <span class="math inline">\(\braket{r_N^2} = N\)</span>, and <span class="math inline">\(\braket{r_N^4} = 2N + N^2\)</span>. Therefore, <span class="math inline">\(r_N^2\)</span> is approximately distributed as <span class="math inline">\(\mathcal N(N, 2N)\)</span>, and so <span class="math inline">\(r_N\)</span> is approximately distributed as <span class="math inline">\(\mathcal N(\sqrt N, 1/2)\)</span>.</p>
 <p>Now consider two distributions on <span class="math inline">\(\mathbb{R}^N\)</span>. The first is a microcanonical ensemble: <span class="math inline">\(x_{1:N}\)</span> is distributed uniformly on the thin energy shell of <span class="math inline">\(r_N^2 \in [N, N + \delta N]\)</span>. The second is a canonical ensemble: each <span class="math inline">\(x_i\)</span> is distributed independently according to <span class="math inline">\(\mathcal N(0, 1)\)</span>.</p>
 <p>We can think of them as particles in a potential well of form <span class="math inline">\(V(x) = \frac 12 x^2\)</span>. The first ensemble is the microcanonical ensemble where the total energy is fixed, and the second is the canonical ensemble at temperature <span class="math inline">\(\beta = 1\)</span>.</p>
 <p>We can calculate the entropy of the canonical ensemble in two ways. We can calculate it by adding up the entropy of each particle, which are the same since there is no interaction energy between particles. We can also calculate it indirectly, by first sampling a random radius, then a random point from the microcanonical ensemble, then multiplying them together.</p>
@@ -1426,8 +1478,8 @@ derivation
 <section id="how-elastic-is-the-skin-of-red-blood-cell" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="how-elastic-is-the-skin-of-red-blood-cell">How elastic is the skin of red blood cell?</h3>
 <p><span class="citation" data-cites="discherNewInsightsErythrocyte2000">(<a href="#ref-discherNewInsightsErythrocyte2000" role="doc-biblioref">Discher 2000</a>)</span> measured the elasticity of the red blood cell’s skin. To a good approximation, it is just a 2D spring, following Hooke’s law. He attached a tiny particle to the surface of a red blood cell, and measured its thermal motion.</p>
-<p>As usual, in the microscopic world, inertia might as well not exist,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> so the oscillator’s energy is entirely elastic. Let it be of form <span class="math inline">\(\frac 12 k(x^2 + y^2)\)</span>. By equipartition of energy, we would have</p>
-<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;But just to be sure, I checked the original numbers: It is a particle of diameter <span class="math inline">\(40 \;\mathrm{nm}\)</span>, and moving at about <span class="math inline">\(100 \;\mathrm{nm/s}\)</span>, so its kinetic energy is <span class="math inline">\(\sim 10^{-33}\;\mathrm{J} \sim 10^{-13} k_BT\)</span>.</p></div></div><p><span class="math display">\[\frac 12 k\braket{x^2} = \frac 12 \beta^{-1}\]</span></p>
+<p>As usual, in the microscopic world, inertia might as well not exist,<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> so the oscillator’s energy is entirely elastic. Let it be of form <span class="math inline">\(\frac 12 k(x^2 + y^2)\)</span>. By equipartition of energy, we would have</p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;But just to be sure, I checked the original numbers: It is a particle of diameter <span class="math inline">\(40 \;\mathrm{nm}\)</span>, and moving at about <span class="math inline">\(100 \;\mathrm{nm/s}\)</span>, so its kinetic energy is <span class="math inline">\(\sim 10^{-33}\;\mathrm{J} \sim 10^{-13} k_BT\)</span>.</p></div></div><p><span class="math display">\[\frac 12 k\braket{x^2} = \frac 12 \beta^{-1}\]</span></p>
 <p>The data shows that <span class="math inline">\(\braket{x^2} = (35 \;\mathrm{nm})^2\)</span> at temperature <span class="math inline">\(T = 310 \;\mathrm{K}\)</span>, giving us an effective elastic constant of <span class="math inline">\(k \sim 0.004 \;\mathrm{pN/nm}\)</span>.</p>
 <p>A red blood cell has diameter <span class="math inline">\(10^4 \;\mathrm{nm}\)</span>, so dragging a patch of its skin all across the surface would take only about <span class="math inline">\(40 \;\mathrm{pN}\)</span>. This is about the force output of 10 kinesins working in concert. Thus we can say that the skin of red blood cell is very slack.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
@@ -1462,18 +1514,18 @@ derivation
 <figcaption class="margin-caption">RNA hairpin. Figure from <a href="https://commons.wikimedia.org/wiki/File:Stem-loop.svg">Wikimedia Commons</a></figcaption>
 </figure>
 </div>
-<p>Since each basepair has about 100 atoms, an RNA hairpin is a large molecule with <span class="math inline">\(\sim 1000\)</span> atoms. This is large enough for statistical mechanics, but not large enough to smooth out thermal fluctuations, which ought to make it interesting. Now, what happens if we pull on the hairpin? This is the experiment done by <span class="citation" data-cites="liphardtReversibleUnfoldingSingle2001">(<a href="#ref-liphardtReversibleUnfoldingSingle2001" role="doc-biblioref">Liphardt et al. 2001</a>)</span>. They attached a single RNA hairpin to two beads, and pulled the beads apart very slowly, using force-feedback to keep the force stable within <span class="math inline">\(0.1 \;\mathrm{pN}\)</span>. The RNA they used is <code>P5ab</code>, which has about 20 basepairs, each base of length about 5 Angstrom.</p>
+<p>Since each base pair has about 100 atoms, an RNA hairpin is a large molecule with <span class="math inline">\(\sim 1000\)</span> atoms. This is large enough for statistical mechanics, but not large enough to smooth out thermal fluctuations, which ought to make it interesting. Now, what happens if we pull on the hairpin? This is the experiment done by <span class="citation" data-cites="liphardtReversibleUnfoldingSingle2001">(<a href="#ref-liphardtReversibleUnfoldingSingle2001" role="doc-biblioref">Liphardt et al. 2001</a>)</span>. They attached a single RNA hairpin to two beads, and pulled the beads apart very slowly, using force-feedback to keep the force stable within <span class="math inline">\(0.1 \;\mathrm{pN}\)</span>. The RNA they used is <code>P5ab</code>, which has about 20 base pairs, each base of length about 5 Angstrom.</p>
 <p>If we ignore fluctuation, and treat it by classical thermodynamics, we get <span class="math inline">\(dS = \beta dE - \beta F dx\)</span>, where <span class="math inline">\(F\)</span> is the pulling force, and <span class="math inline">\(x\)</span> is the distance between the two tweezers. Looking at this equation, we immediately see that the problem is best analyzed using the following free entropy</p>
 <p><span class="math display">\[
 h := \underbrace{S - \beta \braket{E}}_{\text{Helmholtz free entropy}} + \beta F \braket{x}
 \]</span></p>
 <p>which can be interpreted as “one-dimensional Gibbs free entropy”.</p>
-<p>Let <span class="math inline">\(x_0\)</span> be the length of a single RNA unit, <span class="math inline">\(n\)</span> be the number of unzipped RNA basepairs, <span class="math inline">\(2N\)</span> be the total number of RNA bases, and <span class="math inline">\(-E_0\)</span> be the bonding energy of a basepair (assume that the two kinds of basepairs have the same bonding energy).</p>
+<p>Let <span class="math inline">\(x_0\)</span> be the length of a single RNA unit, <span class="math inline">\(n\)</span> be the number of unzipped RNA base pairs, <span class="math inline">\(2N\)</span> be the total number of RNA bases, and <span class="math inline">\(-E_0\)</span> be the bonding energy of a base pair (assume that the two kinds of base pairs have the same bonding energy).</p>
 <p>Because the state of the system is fully determined once we know what <span class="math inline">\(n\)</span> is, the entropy <span class="math inline">\(S\)</span> conditional on <span class="math inline">\(n\)</span> is zero, and so, plugging in the <a href="#thm-cond-free-ent" class="quarto-xref">Theorem&nbsp;9</a>, the probability of the hairpin in state <span class="math inline">\(n\)</span> is: <span class="math display">\[
 \rho(n) \propto e^{\beta(2Fx_0 - E_0)n}, \quad 0 \leq 2n \leq 2N
 \]</span></p>
 <p>a truncated exponential distribution. When <span class="math inline">\(F = E_0/2x_0\)</span>, the bonding force and the pulling force are exactly balanced, and the hairpin is equally likely to be in any state. When the pulling force is larger, then <span class="math inline">\(n\)</span> concentrates on the <span class="math inline">\(n = N\)</span> end.</p>
-<p>For reasons they did not explain, and I do not understand, in the <span class="citation" data-cites="liphardtReversibleUnfoldingSingle2001">(<a href="#ref-liphardtReversibleUnfoldingSingle2001" role="doc-biblioref">Liphardt et al. 2001</a>)</span> experiment, the RNA hairpin had <em>no</em> intermediate state. It either fully unfolded, or fully folded. In that case, the hairpin became a two-level system, satisfying</p>
+<p>For reasons they did not explain, and I do not understand (sorry), in the <span class="citation" data-cites="liphardtReversibleUnfoldingSingle2001">(<a href="#ref-liphardtReversibleUnfoldingSingle2001" role="doc-biblioref">Liphardt et al. 2001</a>)</span> experiment, the RNA hairpin had <em>no</em> intermediate state. It either fully unfolded, or fully folded. In that case, the hairpin became a two-level system, satisfying</p>
 <p><span class="math display">\[
 p_{\text{unfolded}} = \frac{e^{\beta( FL - \Delta G )}}{1 + e^{\beta( FL - \Delta G )}}
 \]</span></p>
@@ -1515,7 +1567,7 @@ p_{\text{unfolded}} = \frac{e^{\beta( FL - \Delta G )}}{1 + e^{\beta( FL - \Delt
 <p>There is no point for it to swim more than 10 seconds, because it would have totally lost its heading due to diffusion. There is no point in swimming less than 1 second, because it needs to average the chemical concentration over at least a second to overcome the statistical noise. And so, by simple physics, we have explained an <em>E. coli</em>’s hunting strategy.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="figure/bacterial_swimming_berg_1993.png" class="img-fluid figure-img"></p>
+<p><img src="figure/bacterial_swimming_berg_1993.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption class="margin-caption">A spherical bacterium is propelled by spinning flagella. The spherical bacterium swims along the <span class="math inline">\(x\)</span> -axis. Its rotational state diffuses along three possible degrees of freedom. Of those, the one around <span class="math inline">\(x\)</span>-axis is irrelevant, and the ones around <span class="math inline">\(y\)</span>- and <span class="math inline">\(z\)</span>-axes are relevant. <span class="citation" data-cites="bergRandomWalksBiology1993">(<a href="#ref-bergRandomWalksBiology1993" role="doc-biblioref">Howard C. Berg 1993, fig. 6.6</a>)</span></figcaption>
 </figure>
 </div>
@@ -1605,24 +1657,24 @@ S = - \int \rho(x) \ln \rho(x) D[x]
 \]</span></p>
 <p>the path-space entropy decomposes sequentially:</p>
 <p><span class="math display">\[
-S = S[x_0] + E[S[x_1 | x_0]] + E[S[x_2 | x_{0:1}]] + \dots + E[S[x_N | x_{0:N-1}]]
+S = S[x_0] + \braket{S[x_1 | x_0]} + \braket{S[x_2 | x_{0:1}]} + \dots + \braket{S[x_N | x_{0:N-1}]}
 \]</span></p>
 <p>To prevent the entropy from diverging, we need to impose some constraints. If we constrain the second moment of each step, as</p>
-<p><span class="math display">\[(E[x_t|x_{0:t-1}], E[x_t^2|x_{0:t-1}]) = (0, \sigma^2), \quad \forall t \in 0:N\]</span></p>
+<p><span class="math display">\[(\braket{x_t|x_{0:t-1}}, \braket{x_t^2|x_{0:t-1}}) = (0, \sigma^2), \quad \forall t \in 0:N\]</span></p>
 <p>by reasoning backwards from <span class="math inline">\(t = N\)</span> to <span class="math inline">\(t=0\)</span>, we find that the maximal entropy distribution is a white noise:</p>
 <p><span class="math display">\[
 \rho(x) = \prod_{t\in 0:N} \rho(x_t), \quad \rho(x_t) \propto e^{-\frac{\|x_t\|^2}{2\sigma^2}}
 \]</span></p>
 <p>If you have studied <a href="https://en.wikipedia.org/wiki/Dynamic_programming">dynamic programming</a> and cybernetics, this should look very similar to the argument by which you derived the <a href="https://en.wikipedia.org/wiki/Linear-quadratic_regulator">LQR</a>.</p>
 <p>To keep the path from exploding into white noise, we instead impose the constraints on the sizes of the steps</p>
-<p><span class="math display">\[(E[x_t - x_{t-1}|x_{0:t-1}], E[\|x_t - x_{t-1}\|^2|x_{0:t-1}]) = (0, \sigma^2), \quad \forall t \in 1:N\]</span></p>
+<p><span class="math display">\[(\braket{x_t - x_{t-1}|x_{0:t-1}}, \braket{\|x_t - x_{t-1}\|^2|x_{0:t-1}}) = (0, \sigma^2), \quad \forall t \in 1:N\]</span></p>
 <p>Now, as in dynamic programming, we reason backwards from <span class="math inline">\(t = N\)</span> to <span class="math inline">\(t=0\)</span>, and we find that the maximal entropy distribution is the Brownian motion</p>
 <p><span class="math display">\[\rho(x) \propto e^{-\frac{\sum_{t\in 1:N} \| x_t-x_{t-1}\|^2}{2\sigma^2}}\]</span></p>
 <p>If we constrain the first <em>and</em> the second moments of each step, and also allow them to be affected by the previous step, as in</p>
 <p><span class="math display">\[
 \begin{cases}
-    E[x_t - x_{t-1}|x_{0:t-1}] &amp;= \mu(t, x_{t-1}) \\
-    E[(x_t - x_{t-1}) (x_t - x_{t-1})^T|x_{0:t-1}] &amp;= \Sigma(t, x_{t-1})
+    \braket{x_t - x_{t-1}|x_{0:t-1}} &amp;= \mu(t, x_{t-1}) \\
+    \braket{(x_t - x_{t-1}) (x_t - x_{t-1})^T|x_{0:t-1}} &amp;= \Sigma(t, x_{t-1})
 \end{cases}, \quad \forall t \in 1:N
 \]</span></p>
 <p>then, reasoning backwards as before, we would obtain the <a href="https://en.wikipedia.org/wiki/Langevin_equation">Langevin equation</a>.</p>
@@ -1743,14 +1795,14 @@ f^*_{X|\rho} = f^*_{X|\rho_0} - \frac{1}{2\rho_0} \int (\delta \rho)^2dx
 \]</span></p>
 <p>which tells us that <span class="math inline">\(Pr(\rho_0 + \delta \rho) \propto e^{- \frac{1}{2\rho_0} \int (\delta \rho)^2dx}\)</span>, which is precisely the Boltzmann distribution of a physical system whose energy is</p>
 <p><span class="math display">\[
-\delta E := \frac{1}{2\rho_0 \beta} \int \delta \rho(x)^2dx \underbrace{=}_{\text{$P = \rho_0/\beta$}} \frac 12 P\int \left(\frac{\delta \rho(x)}{\rho_0}\right)^2 dx
+\delta E := \frac{1}{2\rho_0 \beta} \int \delta \rho(x)^2dx \underbrace{=}_{\text{$P = \rho_0/\beta$ by ideal gas law}} \frac 12 P\int \left(\frac{\delta \rho(x)}{\rho_0}\right)^2 dx
 \]</span></p>
 <p>Now, if you have studied continuum mechanics, this should look very familiar: it is the elastic energy of air. At this point, we are quite close to a statistical field theory of sound waves, but to actually derive sound waves from this, we need to not only know the free entropy <span class="math inline">\(f^*_{X|\rho_0 + \delta \rho}\)</span>, but also know how quickly a perturbation <span class="math inline">\(\delta \rho\)</span> is pulled back to <span class="math inline">\(\delta \rho = 0\)</span>.</p>
 <p>Since <span class="math inline">\(\delta E = \frac 12 P\int \left(\frac{\delta \rho(x)}{\rho_0}\right)^2 dx\)</span> looks like the potential energy of a spring <span class="math inline">\(\frac 12 kx^2\)</span>, it is reasonable to guess that we need to add a “kinetic energy” term, giving</p>
 <p><span class="math display">\[
 \delta E = \frac 12 P\int \left(\frac{\delta \rho(x)}{\rho_0}\right)^2 dx + \frac 12 \int \mu \delta \dot\rho(x)^2 dx
 \]</span></p>
-<p>At this point, it looks just like a Hamiltonian, and it is more productive to switch to Hamiltonian mechanics. This is a taste of statistical field theory of idea gas and how it reduces to classical field theory of sound waves. I might write a proper essay about statistical field theory someday.</p>
+<p>At this point, it looks just like a Hamiltonian, and it is more productive to switch to Hamiltonian mechanics. This is a taste of statistical field theory of idea gas and how it reduces to classical field theory of density waves (sound waves). I might write a proper essay about statistical field theory someday.</p>
 </section>
 </section>
 <section id="metastability" class="level2 page-columns page-full">
@@ -1845,6 +1897,12 @@ T = \braket{N}\tau = \frac{1}{P}\tau = \tau e^{\beta \Delta E}
 G(r) = (4\pi \sigma_{\text{ice-water}})\cdot r^2  - \left(\frac 43 \pi \rho_{\text{ice}} \frac{L\Delta T}{T_{\text{freezing}}}\right) \cdot r^3
 \]</span></p>
 <p>where <span class="math inline">\(L\)</span> is the latent heat of ice, and <span class="math inline">\(\sigma_{\text{ice-water}}\)</span> is the surface tension. This creates an energy barrier of height <span class="math inline">\(\sim \Delta T^{-2}\)</span>, so the metastable phase of the system can survive for <span class="math inline">\(\sim e^{C\frac{1}{T(\Delta T)^2}}\)</span>. <span class="citation" data-cites="sethnaStatisticalMechanicsEntropy2021">(<a href="#ref-sethnaStatisticalMechanicsEntropy2021" role="doc-biblioref">Sethna 2021, chap. 11.3</a>)</span> One must wait for a long while before random chance creates a large enough “seed”, which then grows without bound. This picture we just described is called “bubble nucleation”, as described in <a href="https://en.wikipedia.org/wiki/Classical_nucleation_theory">classical nucleation theory</a>.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/nucleation_theory.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="margin-caption">The free energy barrier to nucleation.</figcaption>
+</figure>
+</div>
 <p>Similarly, slightly <a href="https://en.wikipedia.org/wiki/Supersaturation">supersaturated</a> water vapor can stay metastable for a long time before it rains spontaneously. In real-life clouds, however, there are always enough dust for droplets to form around them, thus taking a shortcut through the energetic barrier.</p>
 <p>A similar argument applies for <a href="https://en.wikipedia.org/wiki/Disappearing_polymorphs">disappearing polymorphs</a>. Some chemicals, such as Ritonavir, have two forms (“morphs”) of crystals. Call them A and B. Morph A has higher Gibbs free energy density than morph B, but lower energy barrier of formation. Thus, when a chemist attempts to crystallize it from a solution, by Arrhenius law, morph A would appear much faster than morph B. As soon as one droplet of morph A forms, that would serve as centers around which more of morph A forms. Eventually, however, a small crystal of morph A would spontaneously overcome the energetic barrier, shift all its atomic lattices, and become morph B. That would “infect” all subsequent attempts to crystallize morph A. <span class="citation" data-cites="wardPerilsPolymorphismSize2017">(<a href="#ref-wardPerilsPolymorphismSize2017" role="doc-biblioref">Ward 2017</a>)</span></p>
 <p>The matter of the disappearing polymorph has serious legal effects. For example, Ritonavir is a medicine for AIDS. It was marketed in 1996 as Form I crystal, which was thought to be the only crystal form for Ritonavir. In 1998, Form II crystals spontaneously appeared. Any lab in contact with Form II could only produce more of Form II. Eventually the company rediscovered how to create Form I despite infection by Form II, but the delay cost the company 250 million USD. <span class="citation" data-cites="bucarDisappearingPolymorphsRevisited2015">(<a href="#ref-bucarDisappearingPolymorphsRevisited2015" role="doc-biblioref">Bučar, Lancaster, and Bernstein 2015</a>)</span></p>
@@ -1870,7 +1928,7 @@ G(r) = (4\pi \sigma_{\text{ice-water}})\cdot r^2  - \left(\frac 43 \pi \rho_{\te
 <p>While writing this, I suddenly recognized <span class="citation" data-cites="hoaglandPhysiologicalControlJudgments1933">(<a href="#ref-hoaglandPhysiologicalControlJudgments1933" role="doc-biblioref">Hoagland 1933</a>)</span> from when I read Feynman’s book all those years ago!</p>
 <blockquote class="blockquote">
 <p>When I was in graduate school at Princeton [1939–1942] a kind of dumb psychology paper came out that stirred up a lot of discussion. The author had decided that the thing controlling the “time sense” in the brain is a chemical reaction involving iron… his wife had a chronic fever which went up and down a lot. Somehow he got the idea to test her sense of time. He had her count seconds to herself (without looking at a clock), and checked how long it took her to count up to 60. He had her counting – the poor woman – all during the day: when her fever went up, he found she counted quicker; when her fever went down, she counted slower… he tried to find a chemical reaction whose rates varied with temperature in the same amounts as his wife’s counting did. He found that iron reactions fit the pattern best… it all seemed like a lot of baloney to me – there were so many things that could go wrong in his long chain of reasoning.</p>
-<p><span class="citation" data-cites="feynmanWhatYouCare1989">(<a href="#ref-feynmanWhatYouCare1989" role="doc-biblioref">Feynman 1989, 55</a>)</span></p>
+<p><span class="citation" data-cites="feynmanWhatYouCare1989">(<a href="#ref-feynmanWhatYouCare1989" role="doc-biblioref">Richard P. Feynman 1989, 55</a>)</span></p>
 </blockquote>
 <p>And yes, that is the one!</p>
 <blockquote class="blockquote">
@@ -2043,9 +2101,9 @@ Proof
 </div>
 </div>
 <p>Looking at the proof for CFT for the canonical ensemble, we immediately obtain many other possible CFTs, one per free entropy.</p>
-<p>Suppose we have a piston of magnetic gas in energy-and-volume contact with a bath. Now suppose the gas is in equilibrium with the bath, and we vary the external magnetic field over a trajectory <span class="math inline">\(x\)</span>. Over the microstate trajectory <span class="math inline">\(x\)</span>, the external world would expend both some energy <span class="math inline">\(W[x, y]\)</span> and some volume <span class="math inline">\(V[x, y]\)</span>. Thus, we obtain the CFT for Gibbs free energy <span class="math inline">\(G\)</span>:</p>
+<p>Suppose we have a piston of magnetic gas in energy-and-volume contact with a bath of constant temperature <span class="math inline">\(\beta\)</span> and pressure <span class="math inline">\(P\)</span>. Now suppose the gas is in equilibrium with the bath, and we vary the external magnetic field over a trajectory <span class="math inline">\(x\)</span>. Over the microstate trajectory <span class="math inline">\(x\)</span>, the external world would expend both some energy <span class="math inline">\(W[x, y]\)</span> and some volume <span class="math inline">\(V[x, y]\)</span>. Thus, we obtain the CFT for Gibbs free energy <span class="math inline">\(G\)</span>:</p>
 <p><span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] + PV[x, y] - \Delta G^*)}\]</span></p>
-<p>Similarly, suppose we have a chemical reaction chamber of fixed volume, and in energy-and-particle contact with a bath with chemical potentials <span class="math inline">\(\mu_i\)</span>, we have CFT for Landau free energy <span class="math inline">\(\Omega\)</span>:</p>
+<p>Similarly, suppose we have a chemical reaction chamber of fixed volume, and in energy-and-particle contact with a bath with constant temperature <span class="math inline">\(\beta\)</span> and chemical potentials <span class="math inline">\(\mu_i\)</span>, we have the CFT for Landau free energy <span class="math inline">\(\Omega\)</span>:</p>
 <p><span class="math display">\[\frac{\rho(y | x)}{\rho'(y' | x')} =  e^{S[x, y]} = e^{\beta (W[x, y] -  \sum_i \mu_i N_i[x, y] - \Delta \Omega^*)}\]</span></p>
 </section>
 <section id="easy-consequences" class="level3">
@@ -2073,7 +2131,7 @@ Proof
 </div>
 </div>
 </div>
-<p>THe Jarzynski equality can be understood as a special case of the following statement: <span class="math inline">\(e^{-\beta S_{[0, t]}}\)</span> is a martingale, where <span class="math inline">\(_{[0, t]}\)</span> is the entropy produced during time-period <span class="math inline">\([0, t]\)</span>. See <span class="citation" data-cites="roldanMartingalesPhysicistsTreatise2024">(<a href="#ref-roldanMartingalesPhysicistsTreatise2024" role="doc-biblioref">Roldán et al. 2024</a>)</span> for a derivation, as well as the martingale-theory perspective on thermodynamics.</p>
+<p>THe Jarzynski equality can be understood as a special case of the following statement: <span class="math inline">\(e^{-\beta S_{[0, t]}}\)</span> is a <a href="https://en.wikipedia.org/wiki/Martingale_(probability_theory)">martingale</a>, where <span class="math inline">\(_{[0, t]}\)</span> is the entropy produced during time-period <span class="math inline">\([0, t]\)</span>. See <span class="citation" data-cites="roldanMartingalesPhysicistsTreatise2024">(<a href="#ref-roldanMartingalesPhysicistsTreatise2024" role="doc-biblioref">Roldán et al. 2024</a>)</span> for a derivation, as well as the martingale-theoretic perspective on thermodynamics.</p>
 <div id="cor-todo" class="theorem corollary">
 <p><span class="theorem-title"><strong>Corollary 4 (violation of second law is exponentially unlikely)</strong></span> <span class="math display">\[Pr((W - \Delta F^*) \leq - \delta W) \leq e^{-\beta \delta W}\]</span></p>
 </div>
@@ -2134,7 +2192,7 @@ Proof
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/RNA_unfolding_collin_2005.jpg" class="img-fluid figure-img"></p>
-<figcaption class="margin-caption">Several hundred trajectories of pulling and unpulling an RNA hairpin, at loading rate <span class="math inline">\(7.5 \;\mathrm{pN/s}\)</span>. <span class="citation" data-cites="collinVerificationCrooksFluctuation2005">(<a href="#ref-collinVerificationCrooksFluctuation2005" role="doc-biblioref">Collin et al. 2005, fig. 1</a>)</span></figcaption>
+<figcaption class="margin-caption">Several hundred trajectories of pulling and un-pulling an RNA hairpin, at loading rate <span class="math inline">\(7.5 \;\mathrm{pN/s}\)</span>. <span class="citation" data-cites="collinVerificationCrooksFluctuation2005">(<a href="#ref-collinVerificationCrooksFluctuation2005" role="doc-biblioref">Collin et al. 2005, fig. 1</a>)</span></figcaption>
 </figure>
 </div>
 <p>In <span class="citation" data-cites="collinVerificationCrooksFluctuation2005">(<a href="#ref-collinVerificationCrooksFluctuation2005" role="doc-biblioref">Collin et al. 2005</a>)</span>, they repeatedly pulled on different types of RNA hairpins, at different speeds, obtaining the following distributions. Not only did they verify the CFT, but also used it to measure <span class="math inline">\(\Delta F^*\)</span> as the <span class="math inline">\(W\)</span> where <span class="math inline">\(\rho(W) = \rho'(-W)\)</span>, that is, the crossing point between the two histograms of <span class="math inline">\(\rho(W)\)</span> and <span class="math inline">\(\rho'(-W)\)</span>. This was a breakthrough, extending statistical mechanics to the single-molecule regime, a fast-developing field of study that is still far from equilibrium.</p>
@@ -2155,6 +2213,22 @@ e^{-\beta W}(1-\delta) + e^{-\beta W}\delta = 1, \quad W = \beta^{-1} \ln \frac{
 <p><img src="figure/maillet_2019_3_c.png" class="img-fluid figure-img"></p>
 <figcaption class="margin-caption">Histogram of work extraction. Over 75% of the histogram is in the <span class="math inline">\(W &gt; 0\)</span> part. Despite this, <span class="math inline">\(\braket{e^{-\beta W}} = 0.989 \pm 0.03\)</span>, verifying the Jarzynski equation. <span class="citation" data-cites="mailletOptimalProbabilisticWork2019">(<a href="#ref-mailletOptimalProbabilisticWork2019" role="doc-biblioref">Maillet et al. 2019, fig. 3.c</a>)</span></figcaption>
 </figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Martingales or bust!">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Martingales or bust!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As described, the Jarzynski equality is really a consequence of the fact that <span class="math inline">\(e^S\)</span> is a martingale. Martingales, roughly speaking, are payoffs in fair gambles. Imagine playing at a fair casino. You start with cash <span class="math inline">\(X_0\)</span>, and after each game, your cash grows or shrinks, resulting in a sequence <span class="math inline">\(X_1, X_2, \dots\)</span>. The game ends when you decide you’ve had enough, goes bankrupt, or the casino goes bankrupt. A fair casino is one where <span class="math inline">\(\braket{X_{t+1} - X_t | X_t} = 0\)</span>, meaning that no matter what your strategy is, at time <span class="math inline">\(t\)</span>, your expected payoff is still zero.</p>
+<p>Consider the double-or-nothing gamble. The casino flips a coin, and if heads, you get double the bet, else you get nothing. The classic martingale strategy is to start at betting 1 dollar, and doubling the bet at each loss. It is clear that this strategy has “guaranteed” return – eventually the coin will land heads and you will recoup all losses plus one dollar.</p>
+<p>This “guaranteed” return is an illusion, because you (or the casino) can go bankrupt. Suppose you start with 127 dollars, then by tracing out all possibilities during one martingale run, you will find that the martingale ends with winning 1 dollar with probability <span class="math inline">\(\frac{127}{128}\)</span>, and losing 127 dollars with probability <span class="math inline">\(\frac{1}{128}\)</span>.</p>
+<p>In this sense, martingale strategies cannot create free money out of a fair gamble, much like how machines cannot create free energy out of thermal noise. However, martingale strategies can shape the probability distribution of the payoff. For example, in the double-or-nothing game, the martingale strategy shifts almost all probability mass to winning one dollar, at the cost of a small but nonzero probability of losing everything. Similarly, a machine can create a large probability of extracting a little work from a thermal bath, at the price of a small probability of losing a lot of work to the thermal bath.</p>
+</div>
 </div>
 </section>
 <section id="worked-example-bouncing-ball" class="level3 page-columns page-full">
@@ -2222,8 +2296,8 @@ Note
 <p><span class="math display">\[Pr(\text{forward}|x, y) = \frac{1}{1 + e^{-S[x, y]}}\]</span></p>
 <p>where <span class="math inline">\(S[x, y] = \beta(W[x, y] - \Delta F^*)\)</span>.</p>
 <p>In words, the higher the entropy production, the more likely it is that the movie is playing forward. This is one way to say that entropy production provides an arrow of time. Possibly this is why molecular machines in biology tend to operate with dissipation of around <span class="math inline">\(5 k_B T\)</span>, even when less dissipation is possible, to provide a good enough forward bias. Too little dissipation would mean that there is no way to distinguish the direction of time, yet time is inherent in life.</p>
-<p>Maxwell’s demon<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> has made it clear that information is physical, and vice versa. It is reasonable to guess that Maxwell’s demon is a converter between information and usable work. Or stated in another way, the information that Maxwell’s demon has is a form of usable work. In <span class="citation" data-cites="parrondoThermodynamicsInformation2015">(<a href="#ref-parrondoThermodynamicsInformation2015" role="doc-biblioref">Parrondo, Horowitz, and Sagawa 2015</a>)</span>, this analogy is made precise.</p>
-<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;I tried to write an essay purely on equilibrium statistical mechanics, but alas, there is no escape from that demon.</p></div></div><p>Consider a “demon” machine made of cameras, motors, and other contraptions, all controlled by its <a href="https://en.wikipedia.org/wiki/Finite-state_machine">finite-state machine</a> “brain”. There are two boxes of gas of oxygen and nitrogen, that started out in equilibrium at temperature <span class="math inline">\(T\)</span>. The demon uses its camera to measure some particle locations, which then causes some changes in its internal state, driving some motors to open a few gates while closing some other gates. The demon finishes its work after a fixed amount of time <span class="math inline">\(t\)</span>, ending up with two tanks of gas at temperature <span class="math inline">\(T\)</span>, one enriched in oxygen, the other in nitrogen.</p>
+<p>Maxwell’s demon<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> has made it clear that information is physical, and vice versa. It is reasonable to guess that Maxwell’s demon is a converter between information and usable work. Or stated in another way, the information that Maxwell’s demon has is a form of usable work. In <span class="citation" data-cites="parrondoThermodynamicsInformation2015">(<a href="#ref-parrondoThermodynamicsInformation2015" role="doc-biblioref">Parrondo, Horowitz, and Sagawa 2015</a>)</span>, this analogy is made precise.</p>
+<div class="no-row-height column-margin column-container"><div id="fn8"><p><sup>8</sup>&nbsp;I tried to write an essay purely on equilibrium statistical mechanics, but alas, there is no escape from that demon.</p></div></div><p>Consider a “demon” machine made of cameras, motors, and other contraptions, all controlled by its <a href="https://en.wikipedia.org/wiki/Finite-state_machine">finite-state machine</a> “brain”. There are two boxes of gas of oxygen and nitrogen, that started out in equilibrium at temperature <span class="math inline">\(T\)</span>. The demon uses its camera to measure some particle locations, which then causes some changes in its internal state, driving some motors to open a few gates while closing some other gates. The demon finishes its work after a fixed amount of time <span class="math inline">\(t\)</span>, ending up with two tanks of gas at temperature <span class="math inline">\(T\)</span>, one enriched in oxygen, the other in nitrogen.</p>
 <p>The system has changed by Helmholtz free energy <span class="math inline">\(\Delta F^*\)</span>. By the Jarzynski inequality, <span class="math inline">\(\braket{e^{-\Delta S}} = 1\)</span> where <span class="math inline">\(\Delta S\)</span> is the entropy production. Here, because the demon might end up with a state that is different from where it started, we need to account for that demon’s inner state. As Landauer and Bennett argued, the problem with Maxwell’s demon is that it cannot forget without paying an energetic cost. And what is forgotten when a demon forgets? It forgets its statistical correlation with the tank of gas. Thus, we should account for that information entropy term by <span class="math inline">\(I\)</span>, where <span class="math inline">\(I\)</span> is the <a href="https://en.wikipedia.org/wiki/Mutual_information">mutual information</a> between the demon’s end-state, and the trajectory of the system. This allows us to rescue the second law of thermodynamics:</p>
 <p><span class="math display">\[
 \text{entropy production} = \beta(W - \Delta F^*) + I
@@ -2242,6 +2316,9 @@ Andersen, Hans C. 1977. <span>“Cluster <span>Methods</span> in <span>Equilibri
 </div>
 <div id="ref-aspremPonderingImponderablesOccultism2011" class="csl-entry" role="listitem">
 Asprem, Egil. 2011. <span>“Pondering <span>Imponderables</span>: <span>Occultism</span> in the Mirror of Late Classical Physics.”</span> <em>Aries-Journal for the Study of Western Esotericism</em> 11 (2): 129.
+</div>
+<div id="ref-ben-naimFarewellEntropyStatistical2008" class="csl-entry" role="listitem">
+Ben-Naim, Arieh. 2008. <em>Farewell <span>To Entropy</span>, <span>A</span>: <span>Statistical Thermodynamics Based On Information</span></em>. Illustrated edition. Hackensack, N.J: Wspc.
 </div>
 <div id="ref-bergPhysicsChemoreception1977" class="csl-entry" role="listitem">
 Berg, H C, and E M Purcell. 1977. <span>“<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1473391">Physics of Chemoreception.</a>”</span> <em>Biophysical Journal</em> 20 (2): 193–219.
@@ -2273,8 +2350,14 @@ Discher, Dennis E. 2000. <span>“New Insights into Erythrocyte Membrane Organiz
 <div id="ref-duncanConstructingQuantumMechanics2019" class="csl-entry" role="listitem">
 Duncan, Anthony, and Michel Janssen. 2019. <em>Constructing Quantum Mechanics. <span>Volume</span> 1: <span>The</span> Scaffold 1900-1923</em>. First edition. Oxford, United Kingdom ; New York, NY: Oxford University Press.
 </div>
+<div id="ref-feynmanStatisticalMechanicsSet2018" class="csl-entry" role="listitem">
+Feynman, Richard P. 2018. <em>Statistical <span>Mechanics</span>: A <span>Set Of Lectures</span></em>.
+</div>
 <div id="ref-feynmanWhatYouCare1989" class="csl-entry" role="listitem">
 Feynman, Richard P. 1989. <em>"<span>What</span> Do You Care What Other People Think?": Further Adventures of a Curious Character</em>. Edited by Ralph Leighton. New York: Bantam Books.
+</div>
+<div id="ref-feynmanFeynmanLecturesComputation1996" class="csl-entry" role="listitem">
+———. 1996. <em>Feynman Lectures on Computation</em>. Edited by Anthony J. G. Hey and Robin W. Allen. Reading, Mass: Addison-Wesley.
 </div>
 <div id="ref-garciaQuantitativeDissectionSimple2011" class="csl-entry" role="listitem">
 Garcia, Hernan G., and Rob Phillips. 2011. <span>“Quantitative Dissection of the Simple Repression Input–Output Function.”</span> <em>Proceedings of the National Academy of Sciences</em> 108 (29): 12173–78. <a href="https://doi.org/10.1073/pnas.1015616108">https://doi.org/10.1073/pnas.1015616108</a>.
@@ -2297,11 +2380,17 @@ Hoagland, Hudson. 1933. <span>“The <span>Physiological Control</span> of <span
 <div id="ref-jaynesGibbsParadox1992" class="csl-entry" role="listitem">
 Jaynes, E. T. 1992. <span>“The <span>Gibbs Paradox</span>.”</span> In <em>Maximum <span>Entropy</span> and <span>Bayesian Methods</span>: <span>Seattle</span>, 1991</em>, edited by C. Ray Smith, Gary J. Erickson, and Paul O. Neudorfer, 1–21. Dordrecht: Springer Netherlands. <a href="https://doi.org/10.1007/978-94-017-2219-3_1">https://doi.org/10.1007/978-94-017-2219-3_1</a>.
 </div>
+<div id="ref-jaynesProbabilityTheoryLogic2003" class="csl-entry" role="listitem">
+———. 2003. <em>Probability <span>Theory</span>: <span>The Logic</span> of <span>Science</span></em>. Edited by G. Larry Bretthorst. Annotated edition. Cambridge: Cambridge University Press.
+</div>
 <div id="ref-krutchBestTwoWorlds1953" class="csl-entry" role="listitem">
 Krutch, Joseph Wood. 1953. <em>The <span>Best</span> of <span>Two Worlds</span></em>. William Sloane Associates.
 </div>
 <div id="ref-laidlerUnconventionalApplicationsArrhenius1972" class="csl-entry" role="listitem">
 Laidler, Keith J. 1972. <span>“Unconventional Applications of the <span>Arrhenius</span> Law.”</span> <em>Journal of Chemical Education</em> 49 (5): 343. <a href="https://doi.org/10.1021/ed049p343">https://doi.org/10.1021/ed049p343</a>.
+</div>
+<div id="ref-lemonsTrailBlackbodyRadiation2022" class="csl-entry" role="listitem">
+Lemons, Don S., William R. Shanahan, and Louis Buchholtz. 2022. <em>On the Trail of Blackbody Radiation: <span>Max Planck</span> and the Physics of His Era</em>. Cambridge, Massachusetts: The MIT Press.
 </div>
 <div id="ref-liphardtReversibleUnfoldingSingle2001" class="csl-entry" role="listitem">
 Liphardt, Jan, Bibiana Onoa, Steven B. Smith, Ignacio Tinoco, and Carlos Bustamante. 2001. <span>“Reversible <span>Unfolding</span> of <span>Single RNA Molecules</span> by <span>Mechanical Force</span>.”</span> <em>Science</em> 292 (5517): 733–37. <a href="https://doi.org/10.1126/science.1058498">https://doi.org/10.1126/science.1058498</a>.
@@ -2312,11 +2401,23 @@ Lu, Zhiyue, Dibyendu Mandal, and Christopher Jarzynski. 2014. <span>“Engineeri
 <div id="ref-luaPracticalApplicabilityJarzynski2005" class="csl-entry" role="listitem">
 Lua, Rhonald C., and Alexander Y. Grosberg. 2005. <span>“Practical <span>Applicability</span> of the <span>Jarzynski Relation</span> in <span>Statistical Mechanics</span>:  <span>A Pedagogical Example</span>.”</span> <em>The Journal of Physical Chemistry B</em> 109 (14): 6805–11. <a href="https://doi.org/10.1021/jp0455428">https://doi.org/10.1021/jp0455428</a>.
 </div>
+<div id="ref-maStatisticalMechanics1985" class="csl-entry" role="listitem">
+Ma, Shang-keng. 1985. <em>Statistical Mechanics</em>. Philadelphia: World Scientific.
+</div>
 <div id="ref-mailletOptimalProbabilisticWork2019" class="csl-entry" role="listitem">
 Maillet, Olivier, Paolo A. Erdman, Vasco Cavina, Bibek Bhandari, Elsa T. Mannila, Joonas T. Peltonen, Andrea Mari, et al. 2019. <span>“Optimal <span>Probabilistic Work Extraction</span> Beyond the <span>Free Energy Difference</span> with a <span>Single-Electron Device</span>.”</span> <em>Physical Review Letters</em> 122 (15): 150604. <a href="https://doi.org/10.1103/PhysRevLett.122.150604">https://doi.org/10.1103/PhysRevLett.122.150604</a>.
 </div>
+<div id="ref-nashElementsStatisticalThermodynamics2006" class="csl-entry" role="listitem">
+Nash, Leonard K. 2006. <em>Elements of <span>Statistical Thermodynamics</span>: <span>Second Edition</span></em>. Second edition. Mineola, N.Y: Dover Publications.
+</div>
+<div id="ref-nelsonBiologicalPhysicsEnergy2003" class="csl-entry" role="listitem">
+Nelson, Philip. 2003. <em>Biological <span>Physics</span>: <span>Energy</span>, <span>Information</span>, <span>Life</span></em>. First Edition. New York: W. H. Freeman.
+</div>
 <div id="ref-parrondoThermodynamicsInformation2015" class="csl-entry" role="listitem">
 Parrondo, Juan M. R., Jordan M. Horowitz, and Takahiro Sagawa. 2015. <span>“Thermodynamics of Information.”</span> <em>Nature Physics</em> 11 (2): 131–39. <a href="https://doi.org/10.1038/nphys3230">https://doi.org/10.1038/nphys3230</a>.
+</div>
+<div id="ref-penroseFoundationsStatisticalMechanics2005" class="csl-entry" role="listitem">
+Penrose, Oliver. 2005. <em>Foundations of Statistical Mechanics: A Deductive Treatment</em>. Mineola: Dover Publ.
 </div>
 <div id="ref-pressePrinciplesMaximumEntropy2013" class="csl-entry" role="listitem">
 Pressé, Steve, Kingshuk Ghosh, Julian Lee, and Ken A. Dill. 2013. <span>“Principles of Maximum Entropy and Maximum Caliber in Statistical Physics.”</span> <em>Reviews of Modern Physics</em> 85 (3): 1115–41. <a href="https://doi.org/10.1103/RevModPhys.85.1115">https://doi.org/10.1103/RevModPhys.85.1115</a>.
@@ -2327,8 +2428,17 @@ Reif, Frederick. 1998. <em>Fundamentals of Statistical and Thermal Physics</em>.
 <div id="ref-roldanMartingalesPhysicistsTreatise2024" class="csl-entry" role="listitem">
 Roldán, Édgar, Izaak Neri, Raphael Chetrite, Shamik Gupta, Simone Pigolotti, Frank Jülicher, and Ken Sekimoto. 2024. <span>“Martingales for Physicists: A Treatise on Stochastic Thermodynamics and Beyond.”</span> <em>Advances in Physics</em>, May, 1–258. <a href="https://doi.org/10.1080/00018732.2024.2317494">https://doi.org/10.1080/00018732.2024.2317494</a>.
 </div>
+<div id="ref-schrodingerStatisticalThermodynamics1989" class="csl-entry" role="listitem">
+Schrodinger, Erwin. 1989. <em>Statistical <span>Thermodynamics</span></em>. Revised ed. edition. New York: Dover Publications.
+</div>
 <div id="ref-sethnaStatisticalMechanicsEntropy2021" class="csl-entry" role="listitem">
 Sethna, James P. 2021. <em>Statistical Mechanics: Entropy, Order Parameters, and Complexity</em>. Second Edition. Oxford Master Series in Statistical, Computational, and Theoretical Physics. Oxford, United Kingdom ; New York, NY: Oxford University Press.
+</div>
+<div id="ref-sommerfeldLecturesTheoreticalPhysics1950" class="csl-entry" role="listitem">
+Sommerfeld, Arnold. 1950. <em>Lectures on Theoretical Physics</em>. New York, Academic Press.
+</div>
+<div id="ref-tolmanPrinciplesStatisticalMechanics1980" class="csl-entry" role="listitem">
+Tolman, Richard C. 1980. <em>The Principles of Statistical Mechanics</em>. Unabridged and unaltered republ. of the original (1938) ed. Dover Books on Physics. New York, NY: Dover.
 </div>
 <div id="ref-wardPerilsPolymorphismSize2017" class="csl-entry" role="listitem">
 Ward, Michael D. 2017. <span>“Perils of <span>Polymorphism</span>: <span>Size Matters</span>.”</span> <em>Israel Journal of Chemistry</em> 57 (1-2): 82–92. <a href="https://doi.org/10.1002/ijch.201600071">https://doi.org/10.1002/ijch.201600071</a>.
