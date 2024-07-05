@@ -538,6 +538,101 @@ I also want to quote this from the same pages, because it describes accurately w
 > 
 > [@yangSelectedPapers194519802005, page 12]
 
+### Bonus: Edgeworth series
+
+In a typical intermediate probability course taught to graduate students, the central limit theorem is taught in two lines: For any probability distribution with finite variance, check how its characteristic function varies under sum-then-average operations, and check that it converges to the characteristic function of the gaussian distribution.
+
+This simple argument is the seeds to functional renormalization theory. This section is based on [@sethnaStatisticalMechanicsEntropy2021, exercise 12.11]. 
+
+If we have a sequence of random variables $X_1, X_2, \dots$, then we can do the double-then-average trick repeatedly:
+
+$$
+X_1, \frac{X_1 + X_2}{\sqrt 2}, \frac{\frac{X_1 + X_2}{\sqrt 2} + \frac{X_3 + X_4}{\sqrt 2}}{\sqrt 2}, \dots
+$$
+
+Now, consider Fourier transforms to the probability density function
+
+$$
+\tilde\rho(k) := \int_\R e^{-ikx} \rho(x) dx
+$$
+
+If $X, X'$ are sampled from the pdf $\rho$, then $\frac{X+X'}{\sqrt 2}$ has the pdf $\rho'$ such that  
+
+$$\tilde{\rho'}(k) = \tilde\rho(k/\sqrt 2)^2$$
+
+Thus, we define an operator by $R[\tilde f](k) = \tilde f(k/\sqrt 2)^2$, and the problem of central limit theorem is finding the fixed points of $R$ and their local stability.
+
+The pdf of $\mathcal N(\mu, \sigma^2)$ transforms to $e^{-ik\mu - \frac 12 \sigma^2 k^2}$, so $\mathcal N(0, \sigma^2)$ is a fixed point of $R$.
+
+Let $\rho^*$ be the pdf for $\mathcal N(0, 1)$, then the question is to find the local linear expansion of $R$ near $\tilde \rho^*$. That is, we want to find the eigenvectors of $R$:
+
+$$
+R[\tilde \rho^* + \epsilon f] = \tilde \rho^* + \lambda\epsilon f
+$$
+
+Now, $\tilde f_n := (ik)^n \tilde \rho^*(k)$ has eigenvalue $1/2^{\frac{n-2}{2}}$. Since these $\tilde f_0, \tilde f_1, \dots$ allow for Taylor expansion, these exhaust all possible eigenvectors of $R$ near $\tilde \rho^*$.  
+
+Consider a generic function $(1+a_0) \tilde f_0 + a_1 \tilde f_1 + \cdots$. It corresponds to a pdf 
+
+$$
+\rho = (1+a_0) f_0 + a_1 f_1 + \cdots
+$$
+
+$$
+f_n(x) = \frac{1}{2\pi} \int_\R e^{ikx}\tilde f_n(k) dk = \partial_x^n \rho^*(x) = \rho^*(x) He_n(-x/\sigma)/\sigma^n
+$$
+
+$$
+He_0 = 1, He_1 = x, He_2 = x^2 - 1, He_3 = x^3 - 3x, \dots
+$$
+
+Those are the [probabilist's Hermite polynomial](https://en.wikipedia.org/wiki/Hermite_polynomials).
+
+The only dangers to convergence are $f_n$ where $n = 0, 1, 2$, since the other terms have eigenvalue less than 1. The effect of adding a small amount of $f_0, f_1, f_2$ to $\rho^*$ is to change it from $\frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{x^2}{2\sigma^2}}$ to
+
+$$
+\frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{x^2}{2\sigma^2} + \ln a_0 - a_1 \frac{x}{\sigma^2} + a_2 \frac{x^2 - \sigma^2 }{\sigma^4}}
+$$
+
+So we see that the effect of $a_0$ is to normalize the probability mass to 1, the effect of $a_1$ is to shift the mean, and $a_2$ is to change the variance.
+
+Therefore, if we always subtract the mean and dividing by the variance, then the first three perturbation terms $f_0, f_1, f_2$ are zeroed out, leaving the other terms decaying to zero.
+
+Normalize $X$ to have mean 0 and variance 1, then we find that the pdf of $2^{-n}\sum_{i=1}^{2^n}X_i$ is
+
+$$
+\rho_{2^n} = \rho^*(1 + 2^{-n/2}a_3 He_3(-x) + 2^{-n}a_4 He_4(-x) + \cdots) 
+$$
+
+where
+
+$$e^{\frac 12 k^2}\tilde \rho(k) = 1 + a_3 (ik)^3+ a_4 (ik)^4 + \cdots$$
+
+::: {.callout-note title="example: Bernoulli variable" collapse="true"}
+
+The Bernoulli variable $\frac 12(\delta_{-1} + \delta_{+1})$ has
+
+$$e^{\frac 12 k^2}\tilde \rho(k) = e^{\frac 12 k^2}\cos k = 1 - \frac{k^4}{12} - \frac{k^6}{45} + \cdots$$
+
+giving
+
+$$
+a_4 = -\frac{1}{12}, a_6 = \frac{1}{45}, \dots
+$$
+
+$$
+\rho_{2^n}(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac 12 x^2} \left[1 -\frac{1}{12} 2^{-n} He_4(-x) + \frac{1}{45} 2^{-2n} He_6(-x) + \cdots\right]
+$$
+
+The exact result is
+
+$$
+\rho_{2^n} = \sum_{i=0}^{2^n} \frac{1}{2^{2^n}} \binom{2^n}{i}  \delta_{\frac{-2^n + 2i}{2^{n/2}}}
+$$
+
+which reduces to the previous result by Stirling approximation.
+
+:::
 
 ### Bonus: Generalized central limit theorem
 
