@@ -183,13 +183,13 @@ In the above formulation, maximal entropy inference is interpreted as how ration
 
 $$\rho^* = \argmax_{\rho: \rho\text{ satisfies constraints }C}K[\rho]$$
 
-would be "rational", according to certain axioms of rationality.  
+would still satisfy certain axioms of rationality, then $K$ should be as good as $S$.
 
-In this vein, there is a certain Shore--Johnson theorem which shows that if the scientist is "rational", according to certain axioms of rationality, then
+In this vein, there is a certain Shore--Johnson theorem which shows that for any such kentropy function $K$, we have
 
 $$\argmax_{\rho: \rho\text{ satisfies constraints }C}S[\rho] = \argmax_{\rho: \rho\text{ satisfies constraints }C}K[\rho]$$
 
-in the style of those Bayes-theological theorems proving that any rational being must use Bayes theorem for updates. [@pressePrinciplesMaximumEntropy2013]
+Thus, this shows that the entropy function $S$ is good enough -- any constraint-maximizing rational thinker thinks *as if* it is doing constraint-maximizing entropy inference. This is in the typical style of those Bayes-theological theorems proving that any rational being must use Bayes theorem for updates. [@pressePrinciplesMaximumEntropy2013]
 
 :::
 
@@ -1149,35 +1149,61 @@ So, if we blur our vision and look at the average motion of the paddles, we woul
 
 ### Multinomials and the chi-squared test
 
-Let $p_1, \dots, p_k$ be a discrete probability distribution, and let $N_1, \dots, N_n$ be integers that depend on $N$, such that
+Let $\vec p := (p_1, \dots, p_k)$ be a discrete probability distribution, and let $N_1, \dots, N_n$ be integers that depend on $N$, such that
 
-$$\lim_{N \to \infty}N_i/N = p_i$$
+$$\lim_{N \to \infty}\vec N / N = \vec p$$
 
-then we have
+where $\vec N := (N_1, \dots, N_n)$, then we have
 
 $$\lim_{N \to \infty}\frac 1N \ln \binom{N}{N_1, \dots, N_n} = -\sum_i p_i \ln p_i = S[\rho]$$
 
-where $\rho$ is the discrete probability distribution. This can be interpreted as the thermodynamic limit of a lot of balls.
+where $\rho$ is the discrete probability distribution, and $\binom{N}{N_1, \dots, N_n} = \frac{N!}{N_1! \cdots N_n!}$ is the [multinomial coefficient](https://en.wikipedia.org/wiki/Multinomial_theorem), which counts the number of ways for $N$ labelled balls to go into $n$ labelled boxes, such that the $i$-th box contains $N_i$ balls.
 
-Consider a population of particles, all in energy-contact with an energy bath of $\beta = 1$. Each particle has $n$ states, with state $i$ having energy $-\ln p_i$. Thus, at the Boltzmann distribution, each particle is precisely sampled from the categorical distribution $(p_1, \dots, p_n)$.
+This can be interpreted as the thermodynamic limit of a lot of balls.
 
-Let $X$ stand for the state of the entire population of particles. That is, $X$ describes the precise state of each particle. Let $Y$ stand for the vector of $N_1, \dots, N_n$. That is, it counts the number of particles in each state. As typical, at the limit of $N \to \infty$, we should expect $\frac{N_i}{N} \to p_i$ with certainty (the thermodynamic limit), and the variance should scale as $1/N$ (statistical fluctuation). So, if we observe the particle population many times, and plot all the $\frac{N_i}{N}$ on the $n$-simplex, we should see an ellipsoidal cloud centered around $(p_1, \dots, p_n)$ with radius $\sim N^{-1/2}$.
+Consider a population of particles, all in energy-contact with an energy bath of $\beta = 1$. Each particle has $n$ states, with state $i$ having energy $-\ln p_i$. Thus, at the Boltzmann distribution, each particle is precisely sampled from the categorical distribution $\vec p$. Clearly, this system has entropy $N\sum_i -p_i \ln p_i$. This is a "canonical ensemble".
 
-<video controls width=100%>
-  <source src="figure/Sanov_convergence.webm" type="video/webm" />
-</video>
+In contrast, consider the "microcanonical ensemble" (in quotation marks, because the constraint is not on the total energy) of $N$ particles, such that there are exactly $N_i$ particles in state $i$.
 
-This is an example of how the microcanonical ensemble and the canonical ensemble become indistinguishable at the large particle limit. Indeed, Boltzmann often used this equation to derive the canonical ensemble from microcanonical ensembles.
+Thinking thermodynamically, we can single out one ball as the system, and regard the other $N$ balls as a bath. Once we calculate the marginal entropies of the bath, we can infer the Boltzmann distribution for the system, and show that it is the same as the Boltzmann distribution in the canonical ensemble.
 
 ::: {.callout-tip title="non-rigorous part"}
 
-In the above derivation, there was a non-rigorous step. We *hope* that as $N \to \infty$, all correlations (pairwise, triple-wise, etc) between balls decay fast enough, such that the interaction-entropy between the balls drop to zero, leaving
+We *hope* that as $N \to \infty$, all correlations (pairwise, triple-wise, etc) between balls decay fast enough, such that the interaction-entropy between the balls drop to zero, leaving
 
 $$\text{average entropy per ball} = \text{marginal entropy of a ball}$$
 
 Justifying this rigorously is generally very difficult, and in fact, the assumption is false at phase transitions, where correlations *do not* decay fast enough, and so the thermodynamic limit is false. However, it is typically good enough to check that the fluctuations decay as $N^{-1/2}$, and if so, the thermodynamic limit is true.
 
 :::
+
+Suppose we move the ball from box $i$ to box $j$, then it would force the bath to change all its balls, changing its entropy by
+
+$$
+\ln\binom{N}{n_1', \dots, n_k'} -\ln \binom{N}{n_1, \dots, n_k}
+$$
+
+where $n_i' = n_i + 1, n_j' = n_j - 1$, and otherwise unchanged. By definition of multinomials, this is $\ln n_j - \ln(n_i+1) \to (\ln p_j - \ln p_i)$ at large enough $N$.  
+
+Let $X$ stand for the total state, including the bath and the singled-out system, and let $Y$ stand for the state of the singled-out system. By the conditional entropy theorem, when the entire system is at the maximal entropy distribution, the distribution of the singled-out system is
+
+$$\rho^*_Y(y) \propto e^{S_{X|y}^*}$$
+
+From the previous calculation, we have
+
+$$S_{X|j}^* - S_{X|j}^* = \ln p_j - \ln p_i$$
+
+yielding $S_{X|i}^* = S_0 + \ln p_i$ for some constant $S_0$, and so $\rho^*_Y(y) \propto p_i$.
+
+::: {.callout-note title="chi-squared test"}
+
+Let $X$ stand for the state of the entire population of particles. That is, $X$ describes the precise state of each particle. Let $Y$ stand for the vector of $\vec N$. That is, it counts the number of particles in each state. As typical, at the limit of $N \to \infty$, we should expect $\frac{N_i}{N} \to p_i$ with certainty (the thermodynamic limit), and the variance should scale as $1/N$ (statistical fluctuation). So, if we observe the particle population many times, and plot all the $\frac{N_i}{N}$ on the $n$-simplex, we should see an ellipsoidal cloud centered around $\vec p$ with radius $\sim N^{-1/2}$.
+
+<video controls width=100%>
+  <source src="figure/Sanov_convergence.webm" type="video/webm" />
+</video>
+
+This is an example of how the microcanonical ensemble and the canonical ensemble become indistinguishable at the large particle limit. Indeed, Boltzmann often used this equation to derive the canonical ensemble from microcanonical ensembles.
 
 We have argued that the cloud should be ellipsoidal and centered around $(p_1, \dots, p_n)$ with radius $\sim N^{-1/2}$. What exactly is its shape? Well, since each particle's distribution of states is categorical, and the particles are uncorrelated (thanks to the energy market), the mean and covariance of $\vec N= (N_1, \dots, N_n)$ are $\vec p N$ and $[\diag(\vec p) - \vec p \vec p^T] N$. The covariance matrix is not linearly independent, because of the constraint $\sum_i N_i/N = 1$.
 
@@ -1192,6 +1218,8 @@ Therefore, the probability density of $\vec N$ satisfies
 $$\rho(\vec N / N) \propto \exp\lrb{-\frac 12 \sum_i \frac{(N_i - Np_i)^2}{Np_i}}$$
 
 after conditioning on $z = 0$. Therefore, the distribution of $\sum_i \frac{(N_i - Np_i)^2}{Np_i}$ converges to $\chi^2(n-1)$. This is the [chi-squared test](https://en.wikipedia.org/wiki/Chi-squared_test).
+
+:::
 
 ### Sanov's theorem
 
