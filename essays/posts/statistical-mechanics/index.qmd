@@ -25,11 +25,11 @@ importance: 7
 
 ### What this essay contains
 
-Classical mechanics, electrodynamics, and thermodynamics are all conceptually simple, but settled. Things are less clear with statistical mechanics. To say it kindly, it is a lively field of research. To say it unkindly, it is a field whose very conceptual foundation is in doubt. The main issue is not with quantum mechanics, but with non-equilibrium. Fortunately, as long as we stick to the classical and equilibrium parts, then it is mostly settled, and so this is how this essay is going to be written about. We will avoid quantum, and avoid non-equilibrium, and in exchange obtain a beautiful mathematical theory with surprisingly wide applications.
+Classical mechanics, electrodynamics, and thermodynamics are all conceptually simple, but settled. Things are less clear with statistical mechanics. To say it kindly, it is a lively field of research. To say it unkindly, it is a field whose very conceptual foundation is in doubt. The main problem is not with quantum mechanics, as quantum statistical mechanics works very well, but with how to handle systems far-from-equilibrium. Fortunately, as long as we stick to the (near-)equilibrium parts, then it is mostly settled, and so this is how this essay is going to be written about. We will avoid quantum because that deserves its own entire essay, and avoid far-from-equilibrium because it is unsettled. What we can present is still a beautifully precise mathematical toolbox with surprisingly wide applications.
 
 Statistical mechanics is technically independent of thermodynamics, but it is strongly related. You can acquire the basic skills in thermodynamics by working through the first half of my previous essay [*Classical Thermodynamics and Economics*](https://yuxi-liu-wired.github.io/essays/posts/equilibrium-thermoeconomics/).
 
-About half of the essay is taken up with calculations. I have tried to make them skimmable. The theoretical core of statistical mechanics is small, and most of the skills are in applying it to actual systems. Therefore, a lot of worked-through examples are necessary.
+About half of the essay is taken up with calculations. The theoretical core of statistical mechanics is small, and most of the skills are in applying it to actual systems. Therefore, a lot of worked-through examples are necessary. I have tried to make them flow well and skimmable.
 
 The essay contains: entropy, free entropies, partition function, about 12 useful theorems, fluctuation-dissipation relations, maximal caliber, Crooks fluctuation theorem, Jarzynski equality, rubber bands, kinetic gas theory, van der Waals law, blackbody radiation, combinatorics, chi-squared test, large deviation theory, bacteria hunting, unzipping RNA hairpins, Arrhenius equation, martingales, Maxwell's demon, Laplace's demon.
 
@@ -1028,7 +1028,13 @@ Now, in any direction $\hat k$, for any wavelength interval $[\lambda, \lambda +
 
 ![In any direction, wavelength, and span of solid angle, we find the corresponding volume in the space of wavevectors, sum up all the states within that volume, to obtain the blackbody radiation law.](figure/blackbody_radiation_wavevector_space.jpg)
 
-The details are found in any textbook. I will just point out one more interesting fact.
+The details are found in any textbook. I will just point out some interesting facts typically passed over in textbooks.
+
+In the above derivation of the blackbody radiation law, the allowed wavevectors $\vec k$ are like a dust cloud in the space of possible wavevectors. The cloud is assumed to be dense and even, so that the number of states inside a chunk of volume $\Delta V$ is roughly $\Delta V \rho$, where $\rho$ is the *average* density of states. This only works if $\Delta V \rho \gg 1$, or in other words, $\frac{\Delta \lambda}{\lambda} \gg \frac{\lambda^3}{L^3}$. Thus, when the chamber is small, or when temperature is low enough that the spectral peak is close to the zero, then the murky cloud of wavevectors resolves into individual little specks, and we have deviation from blackbody radiation law. 
+
+In this limit, the precise shape of the chamber becomes important, since the precise chamber shape has a strong effect on long-wavelength (low-temperature) resonant modes. A tiny cube and a tiny cylinder have different blackbody spectra. See [@reiserGeometricEffectsBlackbody2013] for a literature review.
+
+![Red solid line is Planck's blackbody radiation law. Black dashed line is the analytical prediction for a spherical blackbody.[@garcia-garciaFinitesizeCorrectionsBlackbody2008]](figure/microscopic_blackbody_spectrum.png)
 
 According to [Kirchhoff's law of thermal radiation](https://en.wikipedia.org/wiki/Kirchhoff's_law_of_thermal_radiation), a chunk of matter is exactly as absorptive as it is emissive. A blackbody absorbs all light, and conversely it emits light at the maximal level. A white body absorbs no light, and conversely it does not emit light. This can be understood as a consequence of the second law: If a body emits more light than it absorbs, then it would spontaneously get colder when placed inside a blackbody radiation chamber. 
 
@@ -1043,6 +1049,8 @@ A box full of blackbody radiation is also called a photon gas. The photon gas is
 However, accounting for the entropy of photon gas, as well as deriving the blackbody radiation, hinges critically on the photon quantization $E = h\nu, 2h\nu, \dots$. I guess it can be done correctly by relativistic quantum mechanics, but it is of course beyond the world of classical mechanics.
 
 :::
+
+The point is that the blackbody radiation law is not *about* a blackbody. Instead, it is about photons in vacuum. We could have taken a perfectly reflecting mirror box (or if you are fancy, a [three-dimensional torus](https://en.wikipedia.org/wiki/3-torus)) and injected it with a gas of $400 \ut{nm}$ photons with zero total momentum and angular momentum. Since no conservation laws are constraining, the system will equilibrate to its maximal entropy state, which is the blackbody radiation spectrum. We simply need to wait a few eternities for [photon-photon interactions](https://en.wikipedia.org/wiki/Two-photon_physics) to do the job. Thus, the precise material of the chamber does not matter, and charcoal is merely a better catalyst than titanium oxide.
 
 ### Rubber bands {#sec-rubber-band}
 

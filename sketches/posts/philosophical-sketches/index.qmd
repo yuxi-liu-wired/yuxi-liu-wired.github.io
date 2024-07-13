@@ -15,7 +15,9 @@ confidence: "log"
 importance: 0
 ---
 
-## Causal anthropocentrism
+## Brief notes
+
+### Causal anthropocentrism
 
 There is a pattern of thinking that has annoyed me: "causal anthropocentrism".
 
@@ -31,7 +33,79 @@ And thus, if climate change is the problem, then human society is the root cause
 
 This is what I call "causal anthropocentrism". It might be the most practical, motivating, and moral, but it's wrong. All root causes are egocentric. Without a personal viewpoint, there are only causes, but not any root cause.
 
-## Case Report: A Novel Form of Introspective Anosognosia
+### Moral nihilism
+
+A common argument against moral nihilism is that moral nihilism leads to immoral behavior. This is so obviously question-begging that one wonders why good philosophers would still fall for this problem. I think this is a case where the very foundation of what constitutes a good argument is in doubt. The moral nihilists might be knapping their brains against materialist science, but the good philosophers are fundamentally doing good in this world.
+
+1. Moral nihilism leads to behavior X.
+2. X is immoral. (question-begging)
+3. If a theory leads to immoral behavior, then it is incorrect. (crossing the )
+4. Therefore, moral nihilism is incorrect.
+
+Another attempt which goes like "It might be correct, but we shouldn't talk about it because of the harms it would cause.".
+
+1. Moral nihilism leads to behavior X.
+2. X is immoral. (question-begging)
+3. If a theory leads to immoral behavior, then it should not be talked about. (question-begging)
+4. Therefore, moral nihilism should not be talked about.
+
+Materialist science as a symbolic system has very well-known difficulties with meshing with commonsense symbolic system, especially morality. An entire philosophical industry (I call it "the word-lubricant industry") called "compatibilism" sprang up to make them fit. Moral nihilists in making their arguments might simply be driven by the same grinding of the gears as the compatibilists.
+
+The pragmatist's modus ponens: You act, therefore you do believe in morality.
+
+The moral nihilist's modus tollens[^moral-nihilist-modus-tollens]: I act, but I do not believe in morality. Therefore, the fact that people act is no evidence that *they* believe in morality either.
+
+[^moral-nihilist-modus-tollens]: Not quite the classic modus tollens, because it is the *major premise* being rejected: `P: Act; P → Q: If act, then believe; Q: Believe.`
+
+### Is and ought
+
+People intuitively understand "is implies ought". This is why research into genetic differences among social groups is so controversial. However, people also tend to claim that moral commitments are independent of material reality, lest they open themselves to experimental disproof, and the reproach of philosophers who go like "You can't get an is from an ought.". This essential tension is the unresolved original trauma of Enlightenment. One is reminded of Victorian scientists who vehemently denied sleepwalking, for it exonerates crimes committed in sleep: "The greatest sophistry of atheists can deny what is plain and common sense, *viz* that a murderer is a murderer in any other name."
+
+That is, going one way with "is does not imply ought" we end up with odd argument where the facts about the physiological basis of behavior are disregarded (such as in sleepwalking, or the fugue state), because "a murderer is a murderer", but going the other way with "is imply ought", and we get the well-known philosophical problems, as well as "science wars" where moral battles masquerade as scientific disputations.
+
+### Time, Memento, Jesus Christ
+
+What is time, in computer programs? A program in source-code form is quite different from it in assembly-code form, which is again very different from it in runtime-form. I think at least 3 kinds of time is involved here.
+
+1. In source-code form (at least, without GOTO and COMEFROM), time is the line number. 
+2. In assembly-code form (with so many GOTO and COMEFROM), time is less clear, perhaps assembly-code time is a bit tangled-up and hard to deal with.
+3. In runtime-form, time is just the clock cycle.
+
+In trying to program some Internet agents, I saw that time, for internet agents, is just a bit different than it is for humanoids. This is fascinating and a bit disturbing. Let me give an example.
+
+Typically, an Internet agent is run as a piece of source code running on a machine ("the server") and communicating with some other program (usually from "the client" machine). By design, Internet communication protocols are by default stateless, and so, to adapt to such protocols, Internet agents are by default also amnesiac -- so how do they remember who they are and what they were doing? They use [continuation-passing style](https://en.wikipedia.org/wiki/Continuation-passing_style)! 
+
+The analogy is this: whenever they finish one piece of communication, they write down everything that has happened so far in the communication, then forget about it. Later, if they are requested to pick up where they left off, the user would tell the agent to load up the record, and suddenly memory is restored.
+
+The agent then communicates with the remote client. The client has also forgotten all about it, but no problem! The record is sent to the client, and suddenly the client is also reincarnated where they were.
+
+And just like that, the two amnesiacs reincarnated after being dead for several hours. They will die again after the conversation, only to reincarnate again if the future loads them up.
+So imagine this Memento-like scenario.
+
+> You are showering. How did you get there?? You hear a voice, "`IF` fridge contains sandwich `THEN` eat sandwich." You leave shower and go to the fridge. It contains a sandwich. You eat it. You speak to the voice, "`RETURN`".
+> 
+> You are in front of a fridge. You hear a voice: "`IF` fridge contains sandwich `THEN` eat sandwich". You open it and realize that it has no sandwich. You speak to the voice, "`ASYNC-WAIT`; `MAKE-SANDWICH`".
+>
+> You are in front of a table. You hear a voice: "make a sandwich and put it into the fridge." You go to the fridge and grab two slices of bread and a slice of cow juice, then made a sandwich and put it into the fridge. You speak to the voice, "`RETURN`".
+
+Internet agents are functions, so they have arguments. The arguments are the "voices in the head", and "speaking to the voice" is basically returning values. In the jargon, it's not actually "return", but "yield", meaning "returning for now, but please reincarnate me later!"
+
+Usually, when an agent "yields", it returns not only the computation result, but also a copy of everything that's necessary to replicate its current state, so that if you need to call it up again to continue its work, you just have to send it the copy, and it will "reincarnate". 
+
+This gives us a new interpretation of the (first) death of Jesus:
+
+> Now from the sixth hour there was darkness over all the land unto the ninth hour. And about the ninth hour Jesus cried with a loud voice, saying, `Eli, Eli, lama sabachthani?` that is to say, `My God, my God, why hast thou forsaken me?` ... Jesus, when he had cried again with a loud voice, `YIELDED` up the ghost.
+>
+> Matthew 27:45--50
+
+or 
+
+> The essential Saltes of Animals may be so prepared and preserved, that an ingenious Man may have the whole Ark of Noah in his own Studie, and raise the fine Shape of an Animal out of its Ashes at his Pleasure; and by the lyke Method from the essential Saltes of humane Dust, a Philosopher may, without any criminal Necromancy, call up the Shape of any dead Ancestour from the Dust whereinto his Bodie has been incinerated.
+>
+> *The Case of Charles Dexter Ward*, H. P. Lovecraft
+
+
+### Case Report: A Novel Form of Introspective Anosognosia
 
 **Patient:** M.H., 57, Male, Philosopher
 
@@ -55,7 +129,31 @@ When questioned about the apparent contradictions between his philosophical fram
 
 Heidegger puts the lived world of ontological Dasein before the objective world of ontic objects. Cool. I will take him seriously if he could discover atomic physics *phenomenologically*.
 
+Kant managed to push God out of the front door (by *Critique of Pure Reason*) only to lead Him back through the window (by *Critique of Practical Reason*).
+
 Continental philosophers have gone postal: post-human, post-modern, post-gender, post-intentional...
+
+Weizenbaum rejects `D-a-r-w-i-n-i-s-m`:
+
+> I have in mind also the teaching urged on us by some leaders of the AI community that there is nothing unique about the human species, that in fact, the embrace of the illusion of human uniqueness amounts to a kind of species prejudice and is unworthy of enlightened intellectuals. If we find nothing abhorrent in the use of artificially sustained, disembodied animal brains as computer components, and if there is nothing that uniquely distinguishes the human species from animal species, then -- need I spell out where that idea leads?
+>
+> --- Joseph Weizenbaum, author of ELIZA
+
+- Wise person: Happiness equals material consumption divided by desire
+- Depressed person: But I don't want anything!
+- Mathematician: Well, instead of [one-point compactification](https://en.wikipedia.org/wiki/Alexandroff_extension) of the utility line...
+
+### No Child Left
+
+The mission of No Child Left is to end childhood. It is well-known that children are unable to make informed consent about their education, and all education is necessarily indoctrination. Thus, the only way to avoid perpetrating the perennial injustice is to synthesize adults *ab initio*, without going through the odious path of child-rearing.
+
+*No Child Left: Childhood is no longer a necessary evil.*
+
+Objection: Doesn't this just mean indoctrination of adults? And don't say that you know that they consent to this because you have designed them to be precisely those that consent to this. That is retroactive consent. It is a deeper sense of servitude that approves of its own chains!
+
+Reply: No more retroactive than retroactively approving your human moral tastes forced upon you by nature. When are *you* going to overcome your humanity, O the [most modern of Prometheus](https://en.wikipedia.org/wiki/Frankenstein)?
+
+Objection: Those aren't chains! Those are the *bonds* of universal brotherhood.
 
 ### The devil's dictionary
 
@@ -69,15 +167,21 @@ Positivism: Wrong, but other philosophical schools are not even wrong.
 
 Hermeneutic circle: Simulated annealing on lists of tokens.
 
+The transcendent vs the transcendental: Kant feel it vs Kant feel without it.
+
 Kantian practical reason: You don't want to be insane, do you? Therefore, God exists.
 
 Pragmatism: Always right, except when it is useful to be wrong.
 
+The misanthropic principle: If pain makes one feel alive, then the anthropic principle leads to a universe of maximal suffering.
+
 Eliminativism: The art of slaying dragons.
 
-> 朱泙漫学屠龙于支离益，单千金之家，三年技成，而无所用其巧。 \[Zhu Pingman learned how to slay dragons from Zhi Liyi. Using up all his family wealth, it took him three years to master the skill, but found no occasion for it.\]
+> 朱泙漫学屠龙于支离益，单千金之家，三年技成，而无所用其巧。 \[Zhu Pingman learned how to slay dragons from Zhi Liyi. Exhausting his family wealth, it took him many years to master the skill, but he found no occasion for it.\]
 >
 > --- 庄子·列御寇 \[Zhuangzi, Lie Yukou\]
+
+Anti-Eliminativism: The defense of what everyone knows using data everyone has, but by methods that require 10 years of PhD to learn.
 
 ### Variations on Santayana
 

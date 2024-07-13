@@ -307,19 +307,15 @@ In the famous paper [@mccullochLogicalCalculusIdeas1943], McCulloch and Pitts pr
 
 The McCulloch and Pitts paper is difficult to read, and is rooted in early 20th century mathematical logic. In fact, it uses the same abstruse notations of the [*Principia Mathematica*](https://en.wikipedia.org/wiki/Principia_Mathematica), which is cited in the paper.
 
-::: { layout-ncol=2}
 ![The infamous proof of 1+1=2 in Principia Mathematica](figure/principia_mathematica.png)
 
 ![The same notation is used by McCulloch and Pitts](figure/principia_mathematica_McCulloch_and_Pitts.png)
-:::
 
 The McCulloch and Pitts paper, like the *Perceptrons* book, is something often cited but rarely read. The best introduction to the McCulloch and Pitts neural network is still [@minskyComputationFiniteInfinite1967, Chapter 3], which explicitly designs, neuron by neuron, threshold by threshold, how to construct neural networks that perform various tasks, such as simulating arbitrary Turing machines, process signals, perform additions, etc.
 
-::: { layout-ncol=2}
 ![](figure/minsky_1976_finite_state_machine.png)
 
 ![](figure/minsky_1976_serial_binary_addition_network.png)
-:::
 
 ## Frank Rosenblatt
 
@@ -383,13 +379,10 @@ $$
 
 The first ADALINE machine was a box that learned to classify binary patterns on a $4 \times 4$ grid. It was pretty amusing, as everything was done manually. The patterns were inputted by flipping 16 switches by hand. The error $w^T x + b - y$ was read from a voltmeter, and the parameters $w, b$ were individually adjusted by turning knobs controlling rheostats inside the box. They then automated the knob-turning process using electrochemical devices called memistors, though the pattern input $x$ and the desired output $y$ were still entered by manual switches.
 
-::: {layout-nrow=1 layout-ncol=2 width=80%}
+![A memistor ADALINE with glass-sealed memistors. [@widrowAncientHistory2023, Figure 26.12]](figure/widrow_2022_memistor_adaline.jpg){width=80%}
 
-![A memistor ADALINE with glass-sealed memistors. [@widrowAncientHistory2023, Figure 26.12]](figure/widrow_2022_memistor_adaline.jpg){width=40%}
+![Test patterns, and a learning curve, for the ADALINE machine. [@widrowAncientHistory2023, Figure 26.4]](figure/widrow_2022_learning_curve.png){width=80%}
 
-![Test patterns, and a learning curve, for the ADALINE machine. [@widrowAncientHistory2023, Figure 26.4]](figure/widrow_2022_learning_curve.png){width=40%}
-
-:::
 
 Widrow recounts an amusing encounter with Rosenblatt:
 
@@ -436,13 +429,13 @@ I checked all his English papers during the 1970s, and it seems only [@linnainma
 
 Rumelhart rediscovered backpropagation around 1982 and immediately set about publishing and telling others about it. Some still resisted, such as Geoffrey Hinton, but others immediately grasped it and set about using it, such as Terrence Sejnowski. In the interview, he was rather unbothered by the priority dispute [@rosenfeldTalkingNetsOral2000, Chapter 12]:
 
-> I had no idea that Paul Werbos had done work on it. ... There are other examples of work in the control literature in the '60s \[the [adjoint method](https://en.wikipedia.org/wiki/Adjoint_state_method)\]. ... it's just no one had really done anything with them. My view is that we not only discovered them, but we realized what we could do with them and did a lot of different things. I consider them independent discoveries, at least three and maybe more. \[Shun'ichi\] Amari, I think, suggests that he had another discovery, and you know, I believe that. You can look at his paper. He had, but he didn't do anything with it. I think that was in the late '60s. I don't feel any problem. You know, maybe we should have done better scholarship and searched out all of the precursors to it, but we didn't know there were any.
+> I had no idea that Paul Werbos had done work on it. ... There are other examples of work in the control literature in the '60s \[the [adjoint method](https://en.wikipedia.org/wiki/Adjoint_state_method)\]. ... it's just no one had really done anything with them. My view is that we not only discovered them, but we realized what we could do with them and did a lot of different things. I consider them independent discoveries, at least three and maybe more. [\[Shun'ichi\] Amari](https://en.wikipedia.org/wiki/Shun'ichi_Amari), I think, suggests that he had another discovery, and you know, I believe that. You can look at his paper. He had, but he didn't do anything with it. I think that was in the late '60s. I don't feel any problem. You know, maybe we should have done better scholarship and searched out all of the precursors to it, but we didn't know there were any.
 
 In 1983, Rumelhart showed backpropagation to Sejnowski, who immediately tried it and found that it was much faster than the Boltzmann machine learning rule. What a refreshing change from all those others who stubbornly refused to try it.
 
 > ... I was still working on the Boltzmann machine and was beginning to do simulations using backprop. I discovered very rapidly that backprop was about an order of magnitude faster than anything you could do with the Boltzmann machine. And if you let it run longer, it was more accurate, so you could get better solutions. [@rosenfeldTalkingNetsOral2000, Chapter 14]
 
-This was vitally important later, when Sejnowski used backpropagation to train [NETtalk](https://en.wikipedia.org/wiki/NETtalk_(artificial_neural_network)), a *huge* network with 18,629 parameters.[^nettalk-scaling] The model was a popular hit and appeared on prime-time television.[@sejnowskiDeepLearningRevolution2018, pages 112--115]
+This was vitally important later, when Sejnowski used backpropagation to train [NETtalk](https://en.wikipedia.org/wiki/NETtalk_(artificial_neural_network)), a *huge* network with 18,629 parameters.[^nettalk-scaling] The model was a popular hit and appeared on prime-time television. [@sejnowskiDeepLearningRevolution2018, pages 112--115]
 
 [^nettalk-scaling]:
     People told him that it had too many parameters and would hopelessly overfit, but the network just needed enough data and it generalized uncannily well. It really does seem like scaling skepticism is a researcher universal, if not a human universal.
@@ -529,7 +522,7 @@ For his masters (1969), he majored in mathematical physics, and minored in decis
 >
 > "Yeah, yeah, but you know, **we're not convinced it's so straightforward**. You've got to prove some theorems first."
 >
-> So they wouldn't let me do it. One of the reasons that is amusing to me is that there are now some people who are saying backprop was invented by Bryson and Ho. They don't realize it was the same Larry Ho, who was on my committee and who said this wasn't going to work.
+> So they wouldn't let me do it. One of the reasons that is amusing to me is that there are now some people who are saying backprop was invented by [Bryson](https://en.wikipedia.org/wiki/Arthur_E._Bryson) and Ho. They don't realize it was the same [Larry Ho](https://en.wikipedia.org/wiki/Yu-Chi_Ho), who was on my committee and who said this wasn't going to work.
 
 I am not sure if this is sarcastic or not. It reminds me of the "summer vision project" [@papertSummerVisionProject1966] that expected some undergraduate students to construct "a significant part of a visual system" in a single summer.
 
@@ -583,7 +576,7 @@ Further, in a 1991 interview, Minsky made the same kind of statement:
 
 Out of curiosity, I looked up the "Rosenblith" book [@rosenblithSensoryCommunicationContributions2012] that Werbos mentioned, and indeed there were a few tracings that show continuously varying neural activation.
 
-::: {#fig-rosenblith layout-ncol=2}
+::: {#fig-rosenblith layout-ncol=1}
 
 ![Page 146 of the book. *Mechanisms of gustatory and olfactory receptor stimulation*, Figure 2.](figure/no_bg_beidler_2.png){#fig-however}
 
