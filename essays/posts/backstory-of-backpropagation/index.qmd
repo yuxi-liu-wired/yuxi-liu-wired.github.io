@@ -2,7 +2,7 @@
 title: "The Backstory of Backpropagation"
 author: "Yuxi Liu"
 date: "2023-12-26"
-date-modified: "2023-12-27"
+date-modified: "2024-08-16"
 categories: [AI, math, physics, history]
 format:
     html:
@@ -290,7 +290,7 @@ He then gave the following examples[^live-with-his-mistakes]:
 
 $$
 \begin{aligned}
- & \overline{d \sqrt[2]{a+b z+c}} z^2 \text {. Let } a+b z+c z^2=x \text {; } \\
+ & \overline{d \sqrt[2]{a+b z+c z^2}} \text {. Let } a+b z+c z^2=x \text {; } \\
 \text{Then} \quad  & \overline{d \sqrt[2]{x}}=-\frac{1}{2 \sqrt{x}} \text {, and } \frac{d x}{d z}=b+2 c z \text {; } \\
 \text{Therefore} \quad  & \overline{d \sqrt{a+b z+c z^2}}=-\frac{b+2 c z}{2 \overline{d z} \sqrt{a+b z+c z^2}} \\
 &
@@ -303,7 +303,7 @@ $$
 
 In the famous paper [@mccullochLogicalCalculusIdeas1943], McCulloch and Pitts proposed that
 
-> Because of the “all-or-none” character of nervous activity, neural events and the relations among them can be treated by means of propositional logic. It is found that the behavior of every net can be described in these terms, with the addition of more complicated logical means for nets containing circles; and that for any logical expression satisfying certain conditions, one can find a net behaving in the fashion it describes.
+> Because of the "all-or-none" character of nervous activity, neural events and the relations among them can be treated by means of propositional logic. It is found that the behavior of every net can be described in these terms, with the addition of more complicated logical means for nets containing circles; and that for any logical expression satisfying certain conditions, one can find a net behaving in the fashion it describes.
 
 The McCulloch and Pitts paper is difficult to read, and is rooted in early 20th century mathematical logic. In fact, it uses the same abstruse notations of the [*Principia Mathematica*](https://en.wikipedia.org/wiki/Principia_Mathematica), which is cited in the paper.
 
@@ -381,8 +381,9 @@ The first ADALINE machine was a box that learned to classify binary patterns on 
 
 ![A memistor ADALINE with glass-sealed memistors. [@widrowAncientHistory2023, Figure 26.12]](figure/widrow_2022_memistor_adaline.jpg){width=80%}
 
-![Test patterns, and a learning curve, for the ADALINE machine. [@widrowAncientHistory2023, Figure 26.4]](figure/widrow_2022_learning_curve.png){width=80%}
+![Test patterns for the ADALINE machine. It also shows one of the first learning curves in machine learning. [@widrowAncientHistory2023, Figure 26.4]](figure/widrow_2022_learning_curve.png){width=80%}
 
+![A MADALINE from 1962. The "JOB ASSIGNER" learning rule is too hacky to explain. [@widrowGeneralizationInformationStorage1962, figure 11]](figure/MADALINE.png)
 
 Widrow recounts an amusing encounter with Rosenblatt:
 
@@ -401,11 +402,11 @@ Frustrated by the difficulty, they left neural network research. Hoff went to In
 [^marvin-minsky-approves]:
     Marvin Minsky would approve.
 
-    > \[The perceptron\] is such a simple machine that it would be astonishing if nature did not make use of it somewhere. It may be that one of the best things a neuron can have is a tiny Perceptron, since you get so much from it for so little. You can’t get one big Perceptron to do very much, but for some things it remains one of the most elegant and simple learning devices I know of.” [@bernsteinMarvinMinskyVision1981]
+    > "\[The perceptron\] is such a simple machine that it would be astonishing if nature did not make use of it somewhere. It may be that one of the best things a neuron can have is a tiny Perceptron, since you get so much from it for so little. You can't get one big Perceptron to do very much, but for some things it remains one of the most elegant and simple learning devices I know of."[@bernsteinMarvinMinskyVision1981]
 
 Perhaps Widrow and Hoff were limited to considering only learning rules they could implement electrochemically? But it does not seem so, in the words of Widrow himself, it was a blind spot for all researchers:
 
-> The Madaline had an adaptive first layer and a fixed-logic second layer. What Rosenblatt had was a fixed-logic mst layer and an adaptive-logic second layer or output layer. Now, it is easy to adapt on output layer. But it's very difficult to adapt a hidden layer. ... We could adapt an adaptive first layer with a fixed second layer as long as we knew what the second layer was. But we never succeeded in developing an algorithm for adapting both layers, so that the second layer is not fixed and both layers are adaptive. It wasn't that we didn't try. I mean we would have given our eye teeth to come up with something like backprop.
+> The Madaline had an adaptive first layer and a fixed-logic second layer. What Rosenblatt had was a fixed-logic first layer and an adaptive-logic second layer or output layer. Now, it is easy to adapt on output layer. But it's very difficult to adapt a hidden layer. ... We could adapt an adaptive first layer with a fixed second layer as long as we knew what the second layer was. But we never succeeded in developing an algorithm for adapting both layers, so that the second layer is not fixed and both layers are adaptive. It wasn't that we didn't try. I mean we would have given our eye teeth to come up with something like backprop.
 >
 > Backprop would not work with the kind of neurons that we were using because the neurons we were using all had quantizers that were sharp. In order to make backprop work, you have to have sigmoids; **you have to have a smooth nonlinearity ... no one knew anything about it at that time.** This was long before Paul Werbos. **Backprop to me is almost miraculous**. [@rosenfeldTalkingNetsOral2000]
 
@@ -437,6 +438,12 @@ In 1983, Rumelhart showed backpropagation to Sejnowski, who immediately tried it
 
 This was vitally important later, when Sejnowski used backpropagation to train [NETtalk](https://en.wikipedia.org/wiki/NETtalk_(artificial_neural_network)), a *huge* network with 18,629 parameters.[^nettalk-scaling] The model was a popular hit and appeared on prime-time television. [@sejnowskiDeepLearningRevolution2018, pages 112--115]
 
+Sejnowski later commented that backpropagation is inelegant:
+
+> This is a highly efficient way to compute error gradients. Although it has neither the elegance nor the deep roots in physics that the Boltzmann machine learning algorithm has, backprop is more efficient, and it has made possible much more rapid progress.
+>
+> [@sejnowskiDeepLearningRevolution2018, page 112]
+
 [^nettalk-scaling]:
     People told him that it had too many parameters and would hopelessly overfit, but the network just needed enough data and it generalized uncannily well. It really does seem like scaling skepticism is a researcher universal, if not a human universal.
 
@@ -444,7 +451,7 @@ This was vitally important later, when Sejnowski used backpropagation to train [
 
 ## Geoffrey Hinton
 
-The interview with Geoffrey Hinton is hilarious, mostly about how he *spent an entire year refusing to use backpropagation*. This section is mostly made of quotations from [@rosenfeldTalkingNetsOral2000, Chapter 16].
+The interview with Geoffrey Hinton is hilarious, mostly about how he *spent several years refusing to use backpropagation*. This section is mostly made of quotations from [@rosenfeldTalkingNetsOral2000, Chapter 16].
 
 After learning about Hopfield networks and simulated annealing both in 1982, he tried combining them, and discovered the Boltzmann learning algorithm in 1983, which he published in 1985 [@ackleyLearningAlgorithmBoltzmann1985].
 
@@ -484,7 +491,11 @@ Hinton almost had one last chance at giving up on backpropagation.
 >
 > In a Boltzmann machine, since the units are binary, the states of the three hidden units have to be the eight different binary codes, so you know what the hidden units will look like when they've solved the problem. So I ran backpropagation on this problem and looked at the weights of the hidden units. They didn't have the right structure of weights. ... I thought, "Oh well, it turns out backpropagation's not that good after all." Then I looked at the error, and the error was zero. I was amazed.
 
+![The 8-3-8 autoencoder. The input is a one-hot encoding of one integer from $(0:7)$, and the output should be a copy of the input. The middle layer has 3 units, which is sufficient for binary encoding. Hinton found the Boltzmann machine learned exactly this, and expected backpropagation to learn the same thing, but was surprised when it did not. In the picture, the input is a one-hot vector of the integer `3`, and the hidden layer encodes it as a binary `011`, which is then decoded to a one-hot vector of `3` again.](figure/Hinton 8-3-8 task.svg)
+
 And so one year of excuses later, Hinton finally surrendered to backpropagation. They published the algorithm along with several examples, which became widely cited.
+
+Despite this, Hinton remained unhappy with backprop and kept working on Boltzmann machines, as well as its relatives like the Helmholtz machine and the Deep Belief Networks. This is him talking in 1995, already 10 years after he was forced to accept the superiority of backprop:
 
 > That was at the stage when we were just completing the PDP books, so we'd already agreed on what was going to be in the books. The final chapters were being edited. We decided we'd just slip in an extra chapter on backpropagation, so it was a late addition to the book. But I was always a bit disappointed. I mean, intellectually, backpropagation wasn't nearly as satisfying as Boltzmann machines. ... it didn't have the nice probabilistic interpretation.
 
@@ -564,7 +575,7 @@ Although I believe Minsky would have disapproved of the idea of backpropagation 
 
 Further, in a 1991 interview, Minsky made the same kind of statement:
 
-> I don't know what they would have done with the money. The story of DARPA and all that is just a myth. The problem is that there were no good ideas. The modern idea of backpropagation could be an old idea. There was someone . . . [trying to remember].
+> I don't know what they would have done with the money. The story of DARPA and all that is just a myth. The problem is that there were no good ideas. The modern idea of backpropagation could be an old idea. There was someone . . . \[trying to remember\].
 >
 > Question: Paul Werbos?
 >
@@ -619,7 +630,13 @@ Karl Deutsch, who believed in Werbos, sponsored his PhD thesis on a "respectable
 >
 > ... Once I started doing software for them, they discovered I was pretty good at it. Once I had put backpropagation into a TSP command, they offered me a full-time job at the Harvard Cambridge Project, so I did the Ph.D. thesis while having a full-time job. While I was doing these things at MIT, I remember going to one party. ... one of the people there said, 'We have heard through the grapevine that somebody has developed this thing called continuous feedback that allows you to calculate all the derivatives in a single pass."
 
-But the saga is not over. After the PhD, Werbos was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.
+But the saga is not over. After the PhD, he tried promoting his work. For example, he tried interesting Laveen Kanal in it, who promptly ignored it:
+
+> a young man came by in the spring of 1975 to introduce himself as a new assistant professor in the Government and Politics department at the University. He wanted to talk about his Ph.D. dissertation which he had recently finished at Harvard. He said quite enthusiastically that it related to pattern recognition, learning machines, and intelligent systems. With the best of intentions I told him to lend me a copy and he lent me a report titled "Beyond Regression: New Tools for Prediction and Analysis in the Behavioral Sciences". Soon the report got buried in the usual flood of paper that unfortunately still remains very much part of my life. I have often wondered in recent years if the title had been different, e.g., if it had mentioned something about a procedure for training multilayer neural networks, or if my desk had been less cluttered, would I have paid more attention to this report or was I so tuned away from artificial neural networks that it would have made no difference? ... I was not alone in neglecting his work.
+>
+> [@kanalPatternCategoriesAlternate1993]
+
+Then he was hired by the DoD, and promptly got sucked into several more years of misadventure, which meant that he could not even talk about backpropagation in a public journal until 1978 -- and the algorithm got removed anyway due to page limits. This annoyed the DoD and he had to move to the Department of Energy.
 
 > I found out that DARPA had spent a lot of effort building a worldwide conflict forecasting model for the Joint Chiefs of Staff that was used in the long-range strategy division of the Joint Chiefs. ... I wound up sending a couple of graduate students to create a really good database of Latin America. I said, "You want variance, high variance. Something hard to predict." I thought conflict in Latin America would be the most beautiful case. I figured there were enough cultural homogeneities that it would be a single stochastic process, but with lots and lots of variance in that process. So we got truly annual data going back, I don't know, twenty or thirty years for all the countries in Latin America and then reestimated the Joint Chief's model on it. It had an r2 of about .0016 at forecasting conflict. By jiggling and jiggling we could raise it to about .05. It could predict GNP and economic things decently. Conflict prediction we couldn't improve, though; it was hopeless.
 >
@@ -636,3 +653,16 @@ So he went to the Department of Energy, used backpropagation to create another m
 As a side note, one might feel that Werbos' "turning Freud into mathematics" seems rather strange. This feeling is completely justified. I found a recent paper by him [@werbosIntelligenceBrainTheory2009] with this crackpot illustration:
 
 ![The text at the end of the arrow says "quantum and collective intelligence (Jung, Dao, Atman...)?".](figure/werbos_2009.jpg)
+
+I did find this paper where he gave some details about which part of Freud he meant exactly:
+
+> The model in Figure 1 is actually just a mathematical version of Freud's model of psychodynamics, where the derivative of $R_i$ represents what Freud called the "cathexis" (or affect) or emotional charge or emotional energy attached to the object which $R_i$ represents. In other words, I came up with backpropagation by not just laughing at Freud's "nonscientific" model, but by translating it into mathematics and showing that it works.
+> 
+>  More concretely, Freud said that "if A causes B, a forward association or axon develops from A to B; and then, if there is an emotional charge on B, that energy flows backwards, to put a charge in A, proportional to the charge on B and to the strength of the forwards association from A to B." That's exactly what backpropagation does. Chronologically, I translated Freud into a way to calculate derivatives across a network of simple neurons (which Harvard simply did not believe), and then proved the more general chain rule for ordered derivatives to prove it and make it more powerful (and to graduate). 
+> 
+> Freud's term "psychic energy" for this flow really captures the subjective feeling of this subjective reality, which Freud documents many, many times over in his works. (Though of course, it is not conserved like the energy operators of physics. It is a computational flow, however implemented.) But in my view, any really strong collective intelligence would have to be held together by the same kind of thing, propagated over a more complicated network topology, but still the same basic thing. And indeed, almost every major deep culture on earth has a term for the same kind of "psychic energy" at another level – like "qi" or "prana" or "charisma." What's more, several different types of derivatives (like derivatives of $J$ versus derivatives of error) need to be propagated, giving rise to different kinds of mental energy. Sensitivity to these flows, to the fact that they are not conserved, and to the mathematics of the factors which govern their flow, is of great importance, in my view and my experience.
+>
+> [@werbosNeuralNetworksPath2011]
+
+![The backpropagation diagram in Werbos' 1972 thesis proposal, which was a mathematical translation of Freud's concept of "psychic energy". [@werbosNeuralNetworksPath2011]](figure/Werbos_1972_thesis_proposal.png)
+

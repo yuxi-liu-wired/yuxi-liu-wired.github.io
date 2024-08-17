@@ -251,6 +251,8 @@ They found that $H \leq 1.3 \;\rm{bit/character}$.
 
 The guesser does not have to be a human. It can very well be a language model. [@brownEstimateUpperBound1992] made a simple trigram model over the Brown corpus (600 million words), and found that it gives $H \leq 1.75 \;\rm{bit/character}$. [@behrjrEstimatingComparingEntropy2002] used a model that combines multiple n-gram models, giving $H \leq 1.46 \;\rm{bit/character}$.
 
+A [more recent attempt in 2022](https://www.lesswrong.com/posts/htrZrxduciZ5QaCjw/language-models-seem-to-be-much-better-than-humans-at-next) is crucial, as it seems to show humans are already surpassed by the best language models like GPT-3 in terms of reaching low perplexity, but I haven't yet studied it in detail.
+
 ### Lossless compression
 
 Another way to estimate is by lossless compression of a large corpus, since the entropy rate is the lower bound on compression rate. In more detail, if you have a source of information emitting symbols, and its symbol stream has an entropy rate of $x \;\mathrm{bit/symbol}$, then it takes at least $\sim xl$ bits to encode a long segment with $l$ symbols. Furthermore, this lower bound is approachable using the [entropy encoding](https://en.wikipedia.org/wiki/Entropy_coding).

@@ -14,9 +14,26 @@ description: "Ideas for research. Free for a good home."
 
 # image: "figure/banner.png"
 status: "draft"
-confidence: "certain"
+confidence: "log"
 importance: 3
 ---
 
 {{< include ../../../utils/blog_utils/_macros.tex >}}
+
+## Statistics
+
+### Correlation gradient ascends to causation
+
+The idea is that by gradient-ascending correlation, we would eventually arrive at a high-correlation pair of variables, which should be quite causally related. Naively, this is false. If the basic structure is a complex causal diagram, then a local maximum for $\argmax_Y R_{XY}$ might be where $Y$ is far downstream of $X$, and connected by many weak paths.
+
+However, there was a case-report that it works in biochemistry, where the following sequence was used to discover how to chemically induce meiosis ([*Meiosis is all you need*, Metacelsus 2022](https://denovo.substack.com/p/meiosis-is-all-you-need)):
+
+1. Take a diploid cell line (probably ESC or iPSC or PGCLC)
+2. Induce meiosis and form many haploid cell lines.
+3. Genotype the haploid lines and select the best ones.
+4. Fuse two haploid cells to re-generate a diploid cell line.
+5. Repeat as desired. At the end, either differentiate the cells into oocytes or perform nuclear transfer into a donor oocyte.
+
+What I think *might* work out is if we find $X, Y$ such that $\nabla_X r_{X,Y} = 0$ and $\nabla_Y r_{X,Y} = 0$, where the gradient $\nabla$ does not literally mean $d/dx$, but rather, what happens if we move from $X$ to an adjacent variable. However, what is "adjacent"? We can't say that "adjacent" means "directly connected on the causal graph" because if we know the causal graph, then our problem is solved!
+
 

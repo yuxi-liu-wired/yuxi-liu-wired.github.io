@@ -250,11 +250,19 @@ In the literature about the largest AI models, the training cost is often report
     USD/hr, it would cost 160 USD.
 </details>
 
-The largest model of GPT-3 cost 3640 petaFLOP-days to train (according to [Table D.1 of the report](https://arxiv.org/pdf/2005.14165v4.pdf#page=46)). How much would it cost if it were trained with A100? How much money does it cost to train our hypothetical GPT-5?
+The largest model of GPT-3 cost 3640 petaFLOP-days to train (according to [Table D.1 of the report](https://arxiv.org/pdf/2005.14165v4.pdf#page=46)). How much would it cost if it were trained with A100? How much money did it cost to train GPT-4, which is rumored to cost 2E25 FLOPs?
+
+In reality, the GPU cannot be worked to their full speed, and we only use about 30% of its theoretical peak FLOP/s (so for example, for A100, we only get 0.1 petaFLOP/s, instead of 0.3 petaFLOP/s).[^utilization-rate-30] For this question, we assume that the utilization rate is 100%.
+
+[^utilization-rate-30]: The utilization rate of 30% is [according to EpochAI](https://epochai.org/blog/estimating-training-compute).
+
+Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2× to 3×.
 
 <details>
   <summary>Solution</summary>
-    2E25 FLOP = 0.2 amount of GPT-5 = 17 million A100-hours = 33 million USD.
+The cost of GPT-3 is $3640 \times 160 = 0.6$ million USD.
+
+For GPT-4, it cost 2E25 FLOPs = 2.3E5 petaFLOP-days = 37 million USD.
 
 And accounting for the utilization rate of 30%, that would give us 110 million USD.
 
@@ -263,12 +271,6 @@ Oh, and if you want some kind of official confirmation? [OpenAI's CEO Says the A
 > At the MIT event, Altman was asked if training GPT-4 cost $100 million; he replied, "It's more than that."
 
 </details>
-
-In reality, the GPU cannot be worked to their full speed, and we only use about 30% of its theoretical peak FLOP/s (so for example, for A100, we only get 0.1 petaFLOP/s, instead of 0.3 petaFLOP/s).[^utilization-rate-30] For this question, we assume that the utilization rate is 100%.
-
-[^utilization-rate-30]: The utilization rate of 30% is [according to EpochAI](https://epochai.org/blog/estimating-training-compute).
-
-Also, we are assuming the training happens in one go, without hardware failures, divergences, and other issues requiring restart at a checkpoint. There is not much published data from large-scale training, but the OPT-175B training run (described later) took 3 months to complete, but would have taken only 33 days if there were no need for the many restarts. This suggests that the restarts would increase the computing cost by 2× to 3×.
 
 For context, here are the costs of *development* of various items[^no-inflation]:
 

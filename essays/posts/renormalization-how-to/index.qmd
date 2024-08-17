@@ -2,7 +2,7 @@
 title: "How to do Renormalization"
 author: "Yuxi Liu"
 date: "2024-04-11"
-date-modified: "2024-04-11"
+date-modified: "2024-07-19"
 categories: [math, physics, scaling]
 format:
   html:
@@ -15,7 +15,7 @@ description: "Survival guide for renormalization (RN) theory. How to do it in re
 image: "figure/banner/banner_2.png"
 image-alt: "A metaphor for real-space renormalization, where the building on the left is coarse-grained to the building on right. The facade of a wide brutalist architecture. On the left, the windows are small and the floors are close together. On the right, the windows are large and the floors are wide apart. High contrast, monochromatic, minimalistic, in the flat style of vector svg art., illustration, conceptual art."
 
-status: "draft"
+status: "finished"
 confidence: "certain"
 importance: 3
 ---
@@ -382,7 +382,7 @@ where we have hopefully written the $J'$. It is our ardent hope that there exist
 
     > The author of an atrocious undertaking ought to imagine that he has already accomplished it, ought to impose upon himself a future as irrevocable as the past.
     > 
-    > -- [Yu Tsun](https://en.wikipedia.org/wiki/The_Garden_of_Forking_Paths), professor of English at Deutsch-Chinesische Hochschule.
+    > --- [Yu Tsun](https://en.wikipedia.org/wiki/The_Garden_of_Forking_Paths), professor of English at Deutsch-Chinesische Hochschule.
 
 Because each even spin can only reach its nearest-neighboring even spins *via* the odd spin between them, the partition function splits cleanly:
 
@@ -568,6 +568,8 @@ $$\tilde{\rho'}(k) = \tilde\rho(k/\sqrt 2)^2$$
 
 Thus, we define an operator by $R[\tilde f](k) = \tilde f(k/\sqrt 2)^2$, and the problem of central limit theorem is finding the fixed points of $R$ and their local stability.
 
+::: {.callout-note title="derivation" collapse="true"}
+
 The pdf of $\mathcal N(\mu, \sigma^2)$ transforms to $e^{-ik\mu - \frac 12 \sigma^2 k^2}$, so $\mathcal N(0, \sigma^2)$ is a fixed point of $R$.
 
 Let $\rho^*$ be the pdf for $\mathcal N(0, 1)$, then the question is to find the local linear expansion of $R$ near $\tilde \rho^*$. That is, we want to find the eigenvectors of $R$:
@@ -601,6 +603,8 @@ $$
 $$
 
 So we see that the effect of $a_0$ is to normalize the probability mass to 1, the effect of $a_1$ is to shift the mean, and $a_2$ is to change the variance.
+
+:::
 
 Therefore, if we always subtract the mean and dividing by the variance, then the first three perturbation terms $f_0, f_1, f_2$ are zeroed out, leaving the other terms decaying to zero.
 
@@ -963,9 +967,7 @@ for two constants $k_I, k_R$, which implies that $R = I^{k_I/k_R}$, a power law.
 
 ### RN as a journey in the space of possible theories
 
-So far, we have seen again and again the common refrain of 
-
-The space of possible theories is defined by the symmetry of the physical system, and the Renormalization Group (RG) flow defines a journey in this space.
+So far, we have seen again and again the common refrain of "the space of theories" and "moving to another theory". It is time to make this clear. The space of possible theories is defined by the symmetry of the physical system, and the Renormalization Group (RG) flow defines a journey in this space.
 
 ![[@fisherRenormalizationGroupTheory1998, figure 4]](figure/fisher_1998_fig_4.png)
 
