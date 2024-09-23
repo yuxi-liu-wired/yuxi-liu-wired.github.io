@@ -2,7 +2,7 @@
 title: "The Perceptron Controversy"
 author: "Yuxi Liu"
 date: "2024-01-01"
-date-modified: "2024-01-01"
+date-modified: "2024-09-22"
 
 categories: [AI, history]
 format:
@@ -150,7 +150,7 @@ In the real world, phenomena are limited by nature, and aspiring little heterodo
 
 > Traditional education codifies what it thinks citizens need to know and sets out to feed children this "fish." Constructionism is built on the assumption that children will do best by finding ("fishing") for themselves the specific knowledge they need ... it is as well to have good fishing lines, which is why we need computers, and to know the location of rich waters, which is why we need to develop a large range of mathetically rich activities or "microworlds."
 >
-> ... School math, like the ideology, though not necessarily the practice, of modern science, is based on the ideal of generality -- the single, universally correct method that will work for all problems and for all people. Bricolage is a metaphor for the ways of che old-fashioned traveling tinker, the jack-of-all-trades who knocks on the door offering to fix whatever is broken. Faced with a job, the tinker rummages in his bag of assorted tools to find one that will fit the problem at hand and, if one tool does nor work for the job, simply tries another without ever being upset in the slightest by the lack of generality. The basic tenets of bricolage as a methodology for intellectual activity are: Use what you've got, improvise, make do. And for the true bricoleur, the tools in the bag will have been selected over a long time by a process determined by more than pragmatic utility. These mental tools will be as well worn and comfortable as the physical tools of the traveling tinker; they will give a sense of the familiar, of being at ease with oneself ...
+> ... School math, like the ideology, though not necessarily the practice, of modern science, is based on the ideal of generality -- the single, universally correct method that will work for all problems and for all people. Bricolage is a metaphor for the ways of the old-fashioned traveling tinker, the jack-of-all-trades who knocks on the door offering to fix whatever is broken. Faced with a job, the tinker rummages in his bag of assorted tools to find one that will fit the problem at hand and, if one tool does nor work for the job, simply tries another without ever being upset in the slightest by the lack of generality. The basic tenets of bricolage as a methodology for intellectual activity are: Use what you've got, improvise, make do. And for the true bricoleur, the tools in the bag will have been selected over a long time by a process determined by more than pragmatic utility. These mental tools will be as well worn and comfortable as the physical tools of the traveling tinker; they will give a sense of the familiar, of being at ease with oneself ...
 >
 > Kitchen math provides a clear demonstration of bricolage in its seamless connection with a surrounding ongoing activity that provides the tinker's bag of tricks and tools. The opposite of bricolage would be to leave the "cooking microworld" for a "math world," to work the fractions problem using a calculator or, more likely in this case, mental arithmetic. But the practitioner of kitchen math, as a good bricoleur, does not stop cooking and turn to math; on the contrary, the mathematical manipulations of ingredients would be indistinguishable to an outside observer from the culinary manipulations.
 >
@@ -464,7 +464,7 @@ If a high school student could bypass the XOR problem in a few minutes, how coul
 
 When I started researching neural networks properly, the standard story about the XOR problem became more nonsensical the more I learned. The 1943 paper by McCulloch and Pitts [@mccullochLogicalCalculusIdeas1943] *already* said that their neural networks were equivalent in power to Turing machines. Marvin Minsky's 1954 PhD thesis [@minskyTheoryNeuralanalogReinforcement1954] develops an entire computer theory out of McCulloch--Pitts neural networks.
 
-On the electrical engineering side, perceptron networks were studied under the name of "linear threshold logic" by electrical engineers since the 1950s, who clearly would not have bothered if they could not even make an XOR gate out of it. In fact, in a standard reference from 1965, there are chapters on "Single-Threshold-Element Synthesis by Iteration" -- learning a single perceptron by the perceptron learning algorithm -- and "Network Synthesis" -- which does not imply machine learning, but rather hand-designing perceptron networks.[@dertouzosThresholdLogicSynthesis1965]
+On the electrical engineering side, perceptron networks were studied under the name of "linear threshold logic" by electrical engineers since the 1950s, who clearly would not have bothered if they could not even make an XOR gate out of it. In fact, in a standard reference from 1965, there are chapters on "Single-Threshold-Element Synthesis by Iteration" -- learning a single perceptron by the perceptron learning algorithm -- and "Network Synthesis" -- which does not imply machine learning, but rather hand-designing perceptron networks. [@dertouzosThresholdLogicSynthesis1965]
 
 What is going on?
 
@@ -489,7 +489,7 @@ Meanwhile, during the early 1960s, Widrow and Hoff trained a single perceptron w
 
 In short, due to a variety of unfortunate developments, people spent about twenty years (1950--1970) failing to find an effective algorithm for training the pre-final layers of neural networks. They could train the final layer either by the perceptron learning rule of Rosenblatt or by the Widrow--Hoff rule of gradient descent on the squared error, but that was the extent of the learning they could get the neural networks to do.
 
-Consider a two-layered neural network. The second layer is easy to learn. What should happen to the first layer? Rosenblatt's solution was mainly just randomization because he mistakenly believed that the retina was randomly wired to the visual cortex, and he believed in emulating nature. Rosenblatt was working with the standard knowledge of neuroscience in his time. He could not have known that neural connections were anything but random -- the first of the Hubel and Wiesel papers was published only in 1959. However, it seems that Rosenblatt simply had a strong attachment to randomization, as [@rosenblattPrinciplesNeurodynamicsPerceptrons1962] cites [@hubelReceptiveFieldsSingle1959] several times, yet he still randomized the first layer for most experiments in the book. Rosenblatt had also experimented with Hebbian learning [@rosenblattPrinciplesNeurodynamicsPerceptrons1962, Section 16.1], but since he did not use this method extensively, I infer that it did not work well.
+Consider a two-layered neural network. The second layer is easy to learn. What should happen to the first layer? Rosenblatt's solution was mainly just randomization because he mistakenly believed that the retina was randomly wired to the visual cortex, and he believed in emulating nature. Maybe Rosenblatt was working with the standard knowledge of neuroscience in his time, so he could not have known that neural connections were anything but random -- the first of the Hubel and Wiesel papers was published only in 1959. However, it seems that Rosenblatt simply had a strong attachment to randomization, as [@rosenblattPrinciplesNeurodynamicsPerceptrons1962] cites [@hubelReceptiveFieldsSingle1959] several times, yet he still randomized the first layer for most experiments in the book. Rosenblatt had also experimented with Hebbian learning [@rosenblattPrinciplesNeurodynamicsPerceptrons1962, Section 16.1], but since he did not use this method extensively, I infer that it did not work well.
 
 Widrow's solution was the MADALINE I rule -- a complicated hack and a dead end. Without an effective method to train the first layer, those who worked on two-layered neural networks had only two choices: either randomize the first layer or design it by hand. Both choices played right into the hands of Minsky and Papert.
 
@@ -722,9 +722,17 @@ display(SVG(tree_svg.get_svg()))
 
 ![The syntax tree for "Can eagles that fly swim?", drawn by GPT-4.](figure/can_eagles_that_fly_swim_tree.svg)
 
-As expected, Chomsky rejected statistical language learning to the very end.
+Chomsky has consistently rejected statistical language learning from the beginning to the end.
+
+> But it must be recognized that the notion of "probability of a sentence" is an entirely useless one, under any known interpretation of this term.  
+>
+> [@chomskyEmpiricalAssumptionsModern1969]  
 
 > It's true there's been a lot of work on trying to apply statistical models to various linguistic problems. I think there have been some successes, but a lot of failures. There is a notion of success ... which I think is novel in the history of science. It interprets success as approximating unanalyzed data. [@norvigChomskyTwoCultures2017]
+
+> Well, first we should ask the question whether large language models have achieved anything, anything, in this domain? Answer: No! They've achieved zero... GPT-4 is coming along, which is supposed to going to have a trillion parameters. It will be exactly the same. It'll use even more energy and achieve exactly nothing, for the same reasons. So there's nothing to discuss.
+>
+> [Machine Learning Street Talk: The Ghost in the Machine and the Limits of Human Understanding (2022)](https://whimsical.com/question-1-large-language-models-such-as-gpt-3-DJmQ8R5kD8tqvsXxgCN9vK)  
 
 [Peter Norvig](https://en.wikipedia.org/wiki/Peter_Norvig) gave a detailed analysis and a rebuttal in [@norvigChomskyTwoCultures2017].
 
@@ -756,4 +764,7 @@ And here is him writing in 2018, just in time to miss the Transformer revolution
 
 Not one to give up, he continued with the same criticisms into the age of Transformer language models. Given the track record, he is conveniently predictable[^llm-simulation], and we can expect nothing less than see his recent criticisms of deep learning [@marcusDeepLearningCritical2018] and [large language models](https://www.technologyreview.com/2020/08/22/1007539/gpt3-openai-language-generator-artificial-intelligence-ai-opinion/), [repeatedly](https://www.theatlantic.com/technology/archive/2023/03/ai-chatbots-large-language-model-misinformation/673376/).
 
-[^llm-simulation]: It would be funny if someone could train a language model to pass the "Gary Marcus test": impersonate Gary Marcus in a Turing test setup. If such a model were to pass, Marcus would either have to admit that the language model makes sense or accept that what he says is indistinguishable from nonsense.
+[^llm-simulation]:
+    It would be funny if someone could train a language model to pass the "Gary Marcus test": impersonate Gary Marcus in a Turing test setup. If such a model were to pass, Marcus would either have to admit that the language model makes sense or accept that what he says is indistinguishable from nonsense.
+    
+    The same could work for Noam Chomsky -- a statistical language model who can editorialize against every one of GPT-5, Gemini 2, GPT-6, etc, as soon as they come out. A [performative contradiction](https://en.wikipedia.org/wiki/Performative_contradiction).

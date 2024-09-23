@@ -63,7 +63,7 @@ In canonical quantization, each quantized classical observable is a map of type 
 
 $$
 \begin{aligned}{}
-    [\hat q_j, \hat p_k] &= i\hbar, \\
+    [\hat q_j, \hat p_k] &= i\hbar \delta_{jk}, \\
     [\hat q_j, \hat q_k] &= 0, \\ 
     [\hat p_j, \hat p_k] &= 0.
 \end{aligned}
@@ -98,13 +98,13 @@ P=\begin{bmatrix}
 \end{bmatrix}
 $$
 
-They satisfy $[P, Q] = -I, [P^\dagger, Q] = 0$. Thus, by standard manipulations with the commutator bracket, we find that
+They satisfy $[Q, P] = -I, [Q, P^\dagger] = 0$. Thus, by standard manipulations with the commutator bracket, we find that
 
 $$
 [zQ + z^* Q^\dagger, wP + w^* P^\dagger] = (-zw + z^*w^*) I
 $$
 
-Thus, if we set $z = w = \sqrt{-i\hbar/2}$, we would have $[zQ + z^* Q^\dagger, wP + w^* P^\dagger] = i\hbar I$, which is the simplest example of Heisenberg matrix quantization.
+Thus, if we set $z = w = \sqrt{-i\hbar/2}$, we would have two Hermitian matrices $zQ + z^* Q^\dagger, wP + w^* P^\dagger$ satisfying the canonical commutator relations. This is the simplest example of Heisenberg matrix quantization.
 
 #### Schrödinger wavefunction quantization
 
@@ -118,7 +118,7 @@ where $\hbar$ is a positive constant.
 
 #### Uniqueness
 
-Heisenberg in 1925 proposed the matrix quantization, and Schrödinger in 1926 proposed the wavefunction quantization. These were the earliest two quantizations. There was a brief confusion as to which one is the "correct" one, but it was quickly shown to be equivalent. So both are currently called "canonical quantization".
+Heisenberg in 1925 proposed the matrix quantization, and Schrödinger in 1926 proposed the wavefunction quantization, and there was a brief confusion as to which is the "correct" one, but it was quickly shown to be equivalent. So both are currently called "canonical quantization".
 
 Indeed, it turns out under some reasonable assumptions, there exists only one canonical quantization. Such theorems are typically called [Stone--von Neumann theorems](https://en.wikipedia.org/wiki/Stone%E2%80%93von_Neumann_theorem). The following is the most famous:
 
@@ -900,7 +900,7 @@ $$
 \end{aligned}
 $$
 
-Plug it into the first equation, and integrate out $d^{n} \tilde q, d^n \tilde p, d^{n} q, d^n q$ in order, using the Dirac delta trick of $\int e^{i \tilde x x} d^n x = (2\pi)^n \delta^n(\tilde x)$.
+Plug it into the first equation, and integrate out $d^{n} \tilde q, d^n \tilde p, d^{n} q, d^n q$ one-by-one, using the Dirac delta trick of $\int e^{i \tilde x x} d^n x = (2\pi)^n \delta^n(\tilde x)$.
 
 :::
 
@@ -1152,7 +1152,7 @@ Let $\psi(q)$ be a wavefunction of a in position space $\R^n$. We have:
 
 * If we translate $\psi$ by $+\Delta q$, or equivalently, multiplying it by the operator $e^{\Delta q \cdot \nabla_q}$, then we also translate its Wigner function by $+\Delta q$.
 * If we multiply $\psi$ by the operator $e^{+i \Delta p \cdot q/\hbar}$, then we also translate its Wigner function by $+\Delta p$.
-* If we multiply it by the Hamiltonian of the quantum harmonic oscillator $e^{-i \hat H t/\hbar}$, where $\hat H := \frac{{\hat p}^2}{2m} + \frac{1}{2} m \omega^2 {\hat q}^2$, then we rotate its Wigner function by $\omega t$ around the ellipse with semiaxes $\sqrt{1/m\omega^2}, \sqrt{m}$. That is, the new Wigner function satisfies $W'(q, p) = W(q \cos(\omega t) - \frac{p}{m\omega} \sin(\omega t),  q m \omega \sin(\omega t), p \cos(\omega t))$.
+* If we multiply it by the Hamiltonian of the quantum harmonic oscillator $e^{-i \hat H t/\hbar}$, where $\hat H := \frac{{\hat p}^2}{2m} + \frac{1}{2} m \omega^2 {\hat q}^2$, then we rotate its Wigner function by $\omega t$ around the ellipse with semiaxes $\sqrt{1/m\omega^2}, \sqrt{m}$. That is, the new Wigner function satisfies $W'(q, p) = W(q \cos(\omega t) - \frac{p}{m\omega} \sin(\omega t),  q m \omega \sin(\omega t) + p \cos(\omega t))$.
 
 :::
 
@@ -1301,9 +1301,7 @@ $$
 meaning that the quantum energy function in quantum phase space is exactly the same as the classical energy function in classical phase space. How nice.
 
 
-## Examples
-
-### Quadratic Hamiltonian
+## Quadratic Hamiltonian
 
 If the Hamiltonian $H$ is a sum of kinetic and potential energies, as $H = T(p) + V(q)$, then
 
@@ -1363,7 +1361,7 @@ More generally, a gaussian wavepacket with initial peak position $q_0$ and momen
   <source src="figure/shear_wigner.webm" type="video/webm" />
 </video>
 
-![Static frames from the animation. As time increases, a gaussian wavepacket shrinks, then spreads, on the $q$-axis marginal. Its $p$-axis marginal remains unchanged.](figure/shear_wigner_all.png)
+![Static frames from the animation. As time increases, a gaussian wavepacket shrinks, then spreads, on the $q$-axis marginal. Its $p$-axis marginal remains unchanged.](figure/shear_wigner.png)
 
 #### Negative probability flow
 
@@ -1403,7 +1401,9 @@ $$
 
 and so, the projection to the $q$-axis has end points 
 
-$$\pm \sigma_q\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^2} = \pm \sqrt{\sigma_q^2 + \left( \frac{\hbar t}{2m\sigma_q}\right)^2}$$
+$$
+\pm \sigma_q\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^2} = \pm \sqrt{\sigma_q^2 + \left( \frac{\hbar t}{2m\sigma_q}\right)^2}
+$$
 
 as expected.
 
@@ -1411,7 +1411,7 @@ as expected.
   <source src="figure/gaussian_wavepacket_spreading.webm" type="video/webm" />
 </video>
 
-![Illustration for gaussian wavepacket spreading. As time increases, the one-sigma circle projects to an interval on $q$-axis, which shrinks as $t \uparrow 0$, then grows as $t \uparrow \infty$.](figure/gaussian_wavepacket_spreading_all.png)
+![Illustration for gaussian wavepacket spreading. As time increases, the one-sigma circle projects to an interval on $q$-axis, which shrinks as $t \uparrow 0$, then grows as $t \uparrow \infty$.](figure/gaussian_wavepacket_spreading.png)
 
 In particular, for very large $t$, the wavepacket spreads linearly. This is in fact a generic result for arbitrary waves. Specifically, the $q$-marginal of the Wigner function at $q = q_1$ and time $t$ can be found by shearing a thin slice $q \in [q_1, q_1 + \delta q]$ back by $\frac{pt}{m}$. If $t$ is large, then this thin slice, perpendicular to the $q$-axis, is sheared to become almost perpendicular to the $p$-axis instead, which is approximately $p \in [mq_1 / t, m(q_1 + \delta q)/ t]$. Thus, we have
 
@@ -1440,11 +1440,35 @@ The Hermite--Gauss waves are the only wavefunctions whose probability density fu
 
 :::
 
-This result was previously proved in [@andrewsEvolutionFreeWave2008] analytically.
+Furthermore, the exact same argument as the previous section allows us to compute how fast the wave spreads. Though the $q$-marginal is no longer gaussian, we can still characterize its width by a single number.
+
+Concretely, let $t=0$ be the point in time where the wave has minimal spread -- that is, the point at which its Wigner function has contour ellipses that are not tilted, but has major axes parallel to the $q$-axis and the $p$-axis. Let $\sigma_q$ be the quartile distance. That is, between $q_{50\%}$ and $q_{75\%}$, where $q_{75\%}$ is the point such that $Pr(q \leq q_{75\%}) = 75\%$.
+
+Since in the simple harmonic oscillator, the Wigner function just rotates around classically, we can calculate as if it is classical. This means that the energy conservation holds:
+
+$$
+\frac{\sigma_p(0)^2}{2m} = \frac 12 m\omega^2 \sigma_q(0)^2 \implies \sigma_p(0)/\sigma_q(0) = m\omega
+$$
+
+Now, the same geometric argument shows that
+
+$$
+\sigma_q(t) = \sigma_q(0)\sqrt{1 + \left( \frac{\sigma_p(0) t}{\sigma_q(0) m}\right)^2} = \sigma_q(0)\sqrt{1 + \left(\omega t\right)^2}
+$$
+
+which is a surprisingly simple and elegant formula. The case of the gaussian is recovered by noting that it is the only Hermite--Gauss wave that exactly reaches the minimum allowed by the uncertainty principle: $\sigma_q(0) \sigma_p(0) = \hbar/2$, which, when combined with $\sigma_p(0)/\sigma_q(0) = m\omega$ that is satisfied by all Hermite--Gauss waves, gives us $\omega = \frac{\hbar}{2 m \sigma_q^2}$, and so we recover the previous result of $\sigma_q(t) = \sigma_q(0)\sqrt{1 + \left(\frac{\hbar t}{2 m \sigma_q^2}\right)^2}$
+
+<video controls width=100%>
+  <source src="figure/gaussian_wavepacket_spreading_2.webm" type="video/webm" />
+</video>
+
+![Illustration for gaussian wavepacket spreading in a wavefunction corresponding to the $n=2$ eigenstate of the simple harmonic oscillator. As time increases, the one-sigma circle projects to an interval on $q$-axis, which shrinks as $t \uparrow 0$, then grows as $t \uparrow \infty$.](figure/gaussian_wavepacket_spreading_2.png)
+
+These results were previously proved in [@andrewsEvolutionFreeWave2008] analytically. However as far as the author knows, this is the first time these were derived geometrically, with minimal calculus.
 
 #### Square wave
 
-Consider the square wave function
+As a concrete example of a wave that is not Hermite--Gauss, consider the square wave function
 
 $$
 \psi(q) = \begin{cases}a^{-1/2} & \text{ if }q \in [-a/2, +a/2]\\ 0  & \text{ else}\end{cases}
@@ -1474,7 +1498,7 @@ $$
 
 Let $f(t) := \frac{1 - \cos t}{\pi t^2} = \left(\frac{\operatorname{sinc}(t/2)}{\sqrt{2\pi}} \right)^2$, then $\rho_p(p) = \frac{a}{\hbar} f(\frac{a}{\hbar}p)$. Thus, the $p$-marginal distribution always has the same shape no matter what $a$ is.
 
-![Wigner function of the square wave, and its $p$-marginal distribution. $a = 1.3, \hbar = 1$](figure/square_wave_Wigner.png)
+![Wigner function of the square wave, and its $p$-marginal distribution. $a = 1.3, \hbar = 1$](figure/square_wave_wigner.png)
 
 Because at $t=0$, the Wigner function is zero outside of $q \in [-a/2, +a/2]$, at large $t$, the probability that the particle is found at $[q, q + \delta q]$ is the integral of $W_0$ over a the thin line passing $[q, q + \delta q]$ at slope $-m/t$. Thus, we have
 
@@ -1541,6 +1565,6 @@ $$
 \partial_t W = \sum_k \left( -\frac{p_k}{m_k} \partial_{q_k} W + \partial_{q_k} V \partial_{p_k} W\right)
 $$
 
-### Quantum computing
+## Quantum computing
 
 [@woottersPicturingQubitsPhase2004; @miquelQuantumComputersPhase2002]
