@@ -297,13 +297,12 @@ window.Quarto = {
   <li><a href="#gaussians" id="toc-gaussians" class="nav-link" data-scroll-target="#gaussians">Gaussians</a></li>
   <li><a href="#time-evolution" id="toc-time-evolution" class="nav-link" data-scroll-target="#time-evolution">Time-evolution</a></li>
   </ul></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a>
+  <li><a href="#quadratic-hamiltonian" id="toc-quadratic-hamiltonian" class="nav-link" data-scroll-target="#quadratic-hamiltonian">Quadratic Hamiltonian</a>
   <ul class="collapse">
-  <li><a href="#quadratic-hamiltonian" id="toc-quadratic-hamiltonian" class="nav-link" data-scroll-target="#quadratic-hamiltonian">Quadratic Hamiltonian</a></li>
   <li><a href="#free-particle" id="toc-free-particle" class="nav-link" data-scroll-target="#free-particle">Free particle</a></li>
   <li><a href="#simple-harmonic-oscillator" id="toc-simple-harmonic-oscillator" class="nav-link" data-scroll-target="#simple-harmonic-oscillator">Simple harmonic oscillator</a></li>
-  <li><a href="#quantum-computing" id="toc-quantum-computing" class="nav-link" data-scroll-target="#quantum-computing">Quantum computing</a></li>
   </ul></li>
+  <li><a href="#quantum-computing" id="toc-quantum-computing" class="nav-link" data-scroll-target="#quantum-computing">Quantum computing</a></li>
   </ul>
 </nav>
 </nav>
@@ -397,7 +396,7 @@ window.Quarto = {
 <p>In canonical quantization, each quantized classical observable is a map of type <span class="math inline">\(f \mapsto \hat f\)</span>, where <span class="math inline">\(f\)</span> is a function of type <span class="math inline">\(f: \mathbb{R}^{2n} \to \mathbb{R}\)</span>, and <span class="math inline">\(\hat f\)</span> is a linear operator of some kind. The defining feature of canonical quantization is that, whatever <span class="math inline">\(\hat f\)</span> should be, the <strong>canonical commutation relations</strong> are satisfied:</p>
 <p><span class="math display">\[
 \begin{aligned}{}
-    [\hat q_j, \hat p_k] &amp;= i\hbar, \\
+    [\hat q_j, \hat p_k] &amp;= i\hbar \delta_{jk}, \\
     [\hat q_j, \hat q_k] &amp;= 0, \\
     [\hat p_j, \hat p_k] &amp;= 0.
 \end{aligned}
@@ -428,11 +427,11 @@ P=\begin{bmatrix}
 \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots
 \end{bmatrix}
 \]</span></p>
-<p>They satisfy <span class="math inline">\([P, Q] = -I, [P^\dagger, Q] = 0\)</span>. Thus, by standard manipulations with the commutator bracket, we find that</p>
+<p>They satisfy <span class="math inline">\([Q, P] = -I, [Q, P^\dagger] = 0\)</span>. Thus, by standard manipulations with the commutator bracket, we find that</p>
 <p><span class="math display">\[
 [zQ + z^* Q^\dagger, wP + w^* P^\dagger] = (-zw + z^*w^*) I
 \]</span></p>
-<p>Thus, if we set <span class="math inline">\(z = w = \sqrt{-i\hbar/2}\)</span>, we would have <span class="math inline">\([zQ + z^* Q^\dagger, wP + w^* P^\dagger] = i\hbar I\)</span>, which is the simplest example of Heisenberg matrix quantization.</p>
+<p>Thus, if we set <span class="math inline">\(z = w = \sqrt{-i\hbar/2}\)</span>, we would have two Hermitian matrices <span class="math inline">\(zQ + z^* Q^\dagger, wP + w^* P^\dagger\)</span> satisfying the canonical commutator relations. This is the simplest example of Heisenberg matrix quantization.</p>
 </section>
 <section id="schrödinger-wavefunction-quantization" class="level4">
 <h4 class="anchored" data-anchor-id="schrödinger-wavefunction-quantization">Schrödinger wavefunction quantization</h4>
@@ -444,7 +443,7 @@ P=\begin{bmatrix}
 </section>
 <section id="uniqueness" class="level4">
 <h4 class="anchored" data-anchor-id="uniqueness">Uniqueness</h4>
-<p>Heisenberg in 1925 proposed the matrix quantization, and Schrödinger in 1926 proposed the wavefunction quantization. These were the earliest two quantizations. There was a brief confusion as to which one is the “correct” one, but it was quickly shown to be equivalent. So both are currently called “canonical quantization”.</p>
+<p>Heisenberg in 1925 proposed the matrix quantization, and Schrödinger in 1926 proposed the wavefunction quantization, and there was a brief confusion as to which is the “correct” one, but it was quickly shown to be equivalent. So both are currently called “canonical quantization”.</p>
 <p>Indeed, it turns out under some reasonable assumptions, there exists only one canonical quantization. Such theorems are typically called <a href="https://en.wikipedia.org/wiki/Stone%E2%80%93von_Neumann_theorem">Stone–von Neumann theorems</a>. The following is the most famous:</p>
 <div id="thm-todo" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 1 (<span class="citation" data-cites="neumannEindeutigkeitSchroedingerschenOperatoren1931">(<a href="#ref-neumannEindeutigkeitSchroedingerschenOperatoren1931" role="doc-biblioref">Neumann 1931</a>)</span>)</strong></span> Assuming that</p>
@@ -1076,7 +1075,7 @@ Proof
 &amp;= e^{\frac 12 i\hbar (\tilde q \cdot \tilde p) - i \tilde \xi \xi}\int d^n q' d^n p' \ket{q'} \bra{p'} e^{i (\tilde q \cdot q' + \tilde p \cdot p' + q' \cdot p' / \hbar)}
 \end{aligned}
 \]</span></p>
-<p>Plug it into the first equation, and integrate out <span class="math inline">\(d^{n} \tilde q, d^n \tilde p, d^{n} q, d^n q\)</span> in order, using the Dirac delta trick of <span class="math inline">\(\int e^{i \tilde x x} d^n x = (2\pi)^n \delta^n(\tilde x)\)</span>.</p>
+<p>Plug it into the first equation, and integrate out <span class="math inline">\(d^{n} \tilde q, d^n \tilde p, d^{n} q, d^n q\)</span> one-by-one, using the Dirac delta trick of <span class="math inline">\(\int e^{i \tilde x x} d^n x = (2\pi)^n \delta^n(\tilde x)\)</span>.</p>
 </div>
 </div>
 </div>
@@ -1317,7 +1316,7 @@ some pure states are impossible
 <ul>
 <li>If we translate <span class="math inline">\(\psi\)</span> by <span class="math inline">\(+\Delta q\)</span>, or equivalently, multiplying it by the operator <span class="math inline">\(e^{\Delta q \cdot \nabla_q}\)</span>, then we also translate its Wigner function by <span class="math inline">\(+\Delta q\)</span>.</li>
 <li>If we multiply <span class="math inline">\(\psi\)</span> by the operator <span class="math inline">\(e^{+i \Delta p \cdot q/\hbar}\)</span>, then we also translate its Wigner function by <span class="math inline">\(+\Delta p\)</span>.</li>
-<li>If we multiply it by the Hamiltonian of the quantum harmonic oscillator <span class="math inline">\(e^{-i \hat H t/\hbar}\)</span>, where <span class="math inline">\(\hat H := \frac{{\hat p}^2}{2m} + \frac{1}{2} m \omega^2 {\hat q}^2\)</span>, then we rotate its Wigner function by <span class="math inline">\(\omega t\)</span> around the ellipse with semiaxes <span class="math inline">\(\sqrt{1/m\omega^2}, \sqrt{m}\)</span>. That is, the new Wigner function satisfies <span class="math inline">\(W'(q, p) = W(q \cos(\omega t) - \frac{p}{m\omega} \sin(\omega t),  q m \omega \sin(\omega t), p \cos(\omega t))\)</span>.</li>
+<li>If we multiply it by the Hamiltonian of the quantum harmonic oscillator <span class="math inline">\(e^{-i \hat H t/\hbar}\)</span>, where <span class="math inline">\(\hat H := \frac{{\hat p}^2}{2m} + \frac{1}{2} m \omega^2 {\hat q}^2\)</span>, then we rotate its Wigner function by <span class="math inline">\(\omega t\)</span> around the ellipse with semiaxes <span class="math inline">\(\sqrt{1/m\omega^2}, \sqrt{m}\)</span>. That is, the new Wigner function satisfies <span class="math inline">\(W'(q, p) = W(q \cos(\omega t) - \frac{p}{m\omega} \sin(\omega t),  q m \omega \sin(\omega t) + p \cos(\omega t))\)</span>.</li>
 </ul>
 </div>
 <p>We say that a Wigner function is <strong>pure</strong> iff it is the Wigner function of a pure state <span class="math inline">\(\hat \rho = \ket{\psi}\bra{\psi}\)</span>. We then have</p>
@@ -1448,10 +1447,8 @@ H = W^{-1}[\hat H] = T(p) + V(q)
 <p>meaning that the quantum energy function in quantum phase space is exactly the same as the classical energy function in classical phase space. How nice.</p>
 </section>
 </section>
-<section id="examples" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="examples">Examples</h2>
-<section id="quadratic-hamiltonian" class="level3">
-<h3 class="anchored" data-anchor-id="quadratic-hamiltonian">Quadratic Hamiltonian</h3>
+<section id="quadratic-hamiltonian" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="quadratic-hamiltonian">Quadratic Hamiltonian</h2>
 <p>If the Hamiltonian <span class="math inline">\(H\)</span> is a sum of kinetic and potential energies, as <span class="math inline">\(H = T(p) + V(q)\)</span>, then</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1474,7 +1471,6 @@ H \star W = T(p - (i\hbar/2)\nabla_q) W + V(q +  (i\hbar/2) \nabla_p) W
 \]</span></p>
 <p>which is exactly the same as the classical Hamiltonian equations of motion.</p>
 <p>In other words, we can picture the phase-space evolution of a quantum harmonic oscillator’s Wigner function as exactly the same as if it is the phase space evolution in classical statistical mechanics. The only difference is that there are both regions of positive and negative probabilities. But at least it is all real-valued!</p>
-</section>
 <section id="free-particle" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="free-particle">Free particle</h3>
 <p>For a particle in free space, the Hamiltonian is <span class="math inline">\(H = \frac{\|p\|^2}{2m}\)</span>. Thus, the Wigner function <span class="math inline">\(W\)</span> evolves by a simple shearing flow in phase space:</p>
@@ -1495,7 +1491,7 @@ W(t, q, p) = W(0, q - pt/m, p)
 </video>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="figure/shear_wigner_all.png" class="img-fluid figure-img"></p>
+<p><img src="figure/shear_wigner.png" class="img-fluid figure-img"></p>
 <figcaption class="margin-caption">Static frames from the animation. As time increases, a gaussian wavepacket shrinks, then spreads, on the <span class="math inline">\(q\)</span>-axis marginal. Its <span class="math inline">\(p\)</span>-axis marginal remains unchanged.</figcaption>
 </figure>
 </div>
@@ -1529,14 +1525,16 @@ W(t, q, p) = W(0, q - pt/m, p)
 (q, p) = \left( \frac{\sigma_q}{\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^2}}, \frac{\sigma_p}{\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^{-2}}}\right)
 \]</span></p>
 <p>and so, the projection to the <span class="math inline">\(q\)</span>-axis has end points</p>
-<p><span class="math display">\[\pm \sigma_q\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^2} = \pm \sqrt{\sigma_q^2 + \left( \frac{\hbar t}{2m\sigma_q}\right)^2}\]</span></p>
+<p><span class="math display">\[
+\pm \sigma_q\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^2} = \pm \sqrt{\sigma_q^2 + \left( \frac{\hbar t}{2m\sigma_q}\right)^2}
+\]</span></p>
 <p>as expected.</p>
 <video controls="" width="100%">
 <source src="figure/gaussian_wavepacket_spreading.webm" type="video/webm">
 </video>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="figure/gaussian_wavepacket_spreading_all.png" class="img-fluid figure-img"></p>
+<p><img src="figure/gaussian_wavepacket_spreading.png" class="img-fluid figure-img"></p>
 <figcaption class="margin-caption">Illustration for gaussian wavepacket spreading. As time increases, the one-sigma circle projects to an interval on <span class="math inline">\(q\)</span>-axis, which shrinks as <span class="math inline">\(t \uparrow 0\)</span>, then grows as <span class="math inline">\(t \uparrow \infty\)</span>.</figcaption>
 </figure>
 </div>
@@ -1546,7 +1544,7 @@ W(t, q, p) = W(0, q - pt/m, p)
 \]</span></p>
 <p>as <span class="math inline">\(t \to +\infty\)</span>.</p>
 </section>
-<section id="hermitegauss-waves" class="level4">
+<section id="hermitegauss-waves" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="hermitegauss-waves">Hermite–Gauss waves</h4>
 <p>For a simple harmonic oscillator with Hamiltonian <span class="math inline">\(\frac{p^2}{2m} + \frac 12 m\omega^2 q^2\)</span>, the evolution of the Wigner function is still the same as the classical one. Thus, the Wigner function simply rotates in phase space. A standing wave for a simple harmonic oscillator, then, is some wavefunction <span class="math inline">\(\psi(q)\)</span> such that its Wigner function is rotationally symmetric.</p>
 <p>It is proved in every introductory quantum mechanics course that such standing waves are precisely the Hermite–Gauss waves:</p>
@@ -1558,11 +1556,31 @@ W(t, q, p) = W(0, q - pt/m, p)
 <div id="prp-todo" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposition 19</strong></span> The Hermite–Gauss waves are the only wavefunctions whose probability density functions retain their shapes during propagation in free space.</p>
 </div>
-<p>This result was previously proved in <span class="citation" data-cites="andrewsEvolutionFreeWave2008">(<a href="#ref-andrewsEvolutionFreeWave2008" role="doc-biblioref">Andrews 2008</a>)</span> analytically.</p>
+<p>Furthermore, the exact same argument as the previous section allows us to compute how fast the wave spreads. Though the <span class="math inline">\(q\)</span>-marginal is no longer gaussian, we can still characterize its width by a single number.</p>
+<p>Concretely, let <span class="math inline">\(t=0\)</span> be the point in time where the wave has minimal spread – that is, the point at which its Wigner function has contour ellipses that are not tilted, but has major axes parallel to the <span class="math inline">\(q\)</span>-axis and the <span class="math inline">\(p\)</span>-axis. Let <span class="math inline">\(\sigma_q\)</span> be the quartile distance. That is, between <span class="math inline">\(q_{50\%}\)</span> and <span class="math inline">\(q_{75\%}\)</span>, where <span class="math inline">\(q_{75\%}\)</span> is the point such that <span class="math inline">\(Pr(q \leq q_{75\%}) = 75\%\)</span>.</p>
+<p>Since in the simple harmonic oscillator, the Wigner function just rotates around classically, we can calculate as if it is classical. This means that the energy conservation holds:</p>
+<p><span class="math display">\[
+\frac{\sigma_p(0)^2}{2m} = \frac 12 m\omega^2 \sigma_q(0)^2 \implies \sigma_p(0)/\sigma_q(0) = m\omega
+\]</span></p>
+<p>Now, the same geometric argument shows that</p>
+<p><span class="math display">\[
+\sigma_q(t) = \sigma_q(0)\sqrt{1 + \left( \frac{\sigma_p(0) t}{\sigma_q(0) m}\right)^2} = \sigma_q(0)\sqrt{1 + \left(\omega t\right)^2}
+\]</span></p>
+<p>which is a surprisingly simple and elegant formula. The case of the gaussian is recovered by noting that it is the only Hermite–Gauss wave that exactly reaches the minimum allowed by the uncertainty principle: <span class="math inline">\(\sigma_q(0) \sigma_p(0) = \hbar/2\)</span>, which, when combined with <span class="math inline">\(\sigma_p(0)/\sigma_q(0) = m\omega\)</span> that is satisfied by all Hermite–Gauss waves, gives us <span class="math inline">\(\omega = \frac{\hbar}{2 m \sigma_q^2}\)</span>, and so we recover the previous result of <span class="math inline">\(\sigma_q(t) = \sigma_q(0)\sqrt{1 + \left(\frac{\hbar t}{2 m \sigma_q^2}\right)^2}\)</span></p>
+<video controls="" width="100%">
+<source src="figure/gaussian_wavepacket_spreading_2.webm" type="video/webm">
+</video>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="figure/gaussian_wavepacket_spreading_2.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">Illustration for gaussian wavepacket spreading in a wavefunction corresponding to the <span class="math inline">\(n=2\)</span> eigenstate of the simple harmonic oscillator. As time increases, the one-sigma circle projects to an interval on <span class="math inline">\(q\)</span>-axis, which shrinks as <span class="math inline">\(t \uparrow 0\)</span>, then grows as <span class="math inline">\(t \uparrow \infty\)</span>.</figcaption>
+</figure>
+</div>
+<p>These results were previously proved in <span class="citation" data-cites="andrewsEvolutionFreeWave2008">(<a href="#ref-andrewsEvolutionFreeWave2008" role="doc-biblioref">Andrews 2008</a>)</span> analytically. However as far as the author knows, this is the first time these were derived geometrically, with minimal calculus.</p>
 </section>
 <section id="square-wave" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="square-wave">Square wave</h4>
-<p>Consider the square wave function</p>
+<p>As a concrete example of a wave that is not Hermite–Gauss, consider the square wave function</p>
 <p><span class="math display">\[
 \psi(q) = \begin{cases}a^{-1/2} &amp; \text{ if }q \in [-a/2, +a/2]\\ 0  &amp; \text{ else}\end{cases}
 \]</span></p>
@@ -1586,7 +1604,7 @@ W(t, q, p) = W(0, q - pt/m, p)
 <p>Let <span class="math inline">\(f(t) := \frac{1 - \cos t}{\pi t^2} = \left(\frac{\operatorname{sinc}(t/2)}{\sqrt{2\pi}} \right)^2\)</span>, then <span class="math inline">\(\rho_p(p) = \frac{a}{\hbar} f(\frac{a}{\hbar}p)\)</span>. Thus, the <span class="math inline">\(p\)</span>-marginal distribution always has the same shape no matter what <span class="math inline">\(a\)</span> is.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="figure/square_wave_Wigner.png" class="img-fluid figure-img"></p>
+<p><img src="figure/square_wave_wigner.png" class="img-fluid figure-img"></p>
 <figcaption class="margin-caption">Wigner function of the square wave, and its <span class="math inline">\(p\)</span>-marginal distribution. <span class="math inline">\(a = 1.3, \hbar = 1\)</span></figcaption>
 </figure>
 </div>
@@ -1650,15 +1668,15 @@ Proof
 \partial_t W = \sum_k \left( -\frac{p_k}{m_k} \partial_{q_k} W + \partial_{q_k} V \partial_{p_k} W\right)
 \]</span></p>
 </section>
-<section id="quantum-computing" class="level3">
-<h3 class="anchored" data-anchor-id="quantum-computing">Quantum computing</h3>
+</section>
+<section id="quantum-computing" class="level2">
+<h2 class="anchored" data-anchor-id="quantum-computing">Quantum computing</h2>
 <p><span class="citation" data-cites="woottersPicturingQubitsPhase2004 miquelQuantumComputersPhase2002">(<a href="#ref-woottersPicturingQubitsPhase2004" role="doc-biblioref">Wootters 2004</a>; <a href="#ref-miquelQuantumComputersPhase2002" role="doc-biblioref">Miquel, Paz, and Saraceno 2002</a>)</span></p>
 
 
 <!-- -->
 
 
-</section>
 </section>
 
 
@@ -2384,7 +2402,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>\begin{aligned}{}</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">\hat q_j, \hat p_k</span><span class="co">]</span> &amp;= i\hbar, <span class="sc">\\</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">\hat q_j, \hat p_k</span><span class="co">]</span> &amp;= i\hbar \delta_{jk}, <span class="sc">\\</span></span>
 <span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">\hat q_j, \hat q_k</span><span class="co">]</span> &amp;= 0, <span class="sc">\\</span> </span>
 <span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">\hat p_j, \hat p_k</span><span class="co">]</span> &amp;= 0.</span>
 <span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
@@ -2419,13 +2437,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>\end{bmatrix}</span>
 <span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>They satisfy $<span class="co">[</span><span class="ot">P, Q</span><span class="co">]</span> = -I, <span class="co">[</span><span class="ot">P^\dagger, Q</span><span class="co">]</span> = 0$. Thus, by standard manipulations with the commutator bracket, we find that</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>They satisfy $<span class="co">[</span><span class="ot">Q, P</span><span class="co">]</span> = -I, <span class="co">[</span><span class="ot">Q, P^\dagger</span><span class="co">]</span> = 0$. Thus, by standard manipulations with the commutator bracket, we find that</span>
 <span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">zQ + z^* Q^\dagger, wP + w^* P^\dagger</span><span class="co">]</span> = (-zw + z^*w^*) I</span>
 <span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>Thus, if we set $z = w = \sqrt{-i\hbar/2}$, we would have $<span class="co">[</span><span class="ot">zQ + z^* Q^\dagger, wP + w^* P^\dagger</span><span class="co">]</span> = i\hbar I$, which is the simplest example of Heisenberg matrix quantization.</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>Thus, if we set $z = w = \sqrt{-i\hbar/2}$, we would have two Hermitian matrices $zQ + z^* Q^\dagger, wP + w^* P^\dagger$ satisfying the canonical commutator relations. This is the simplest example of Heisenberg matrix quantization.</span>
 <span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Schrödinger wavefunction quantization</span></span>
 <span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a></span>
@@ -2439,7 +2457,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Uniqueness</span></span>
 <span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>Heisenberg in 1925 proposed the matrix quantization, and Schrödinger in 1926 proposed the wavefunction quantization. These were the earliest two quantizations. There was a brief confusion as to which one is the "correct" one, but it was quickly shown to be equivalent. So both are currently called "canonical quantization".</span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>Heisenberg in 1925 proposed the matrix quantization, and Schrödinger in 1926 proposed the wavefunction quantization, and there was a brief confusion as to which is the "correct" one, but it was quickly shown to be equivalent. So both are currently called "canonical quantization".</span>
 <span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>Indeed, it turns out under some reasonable assumptions, there exists only one canonical quantization. Such theorems are typically called <span class="co">[</span><span class="ot">Stone--von Neumann theorems</span><span class="co">](https://en.wikipedia.org/wiki/Stone%E2%80%93von_Neumann_theorem)</span>. The following is the most famous:</span>
 <span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
@@ -3221,7 +3239,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-900"><a href="#cb3-900" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
 <span id="cb3-901"><a href="#cb3-901" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb3-902"><a href="#cb3-902" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-903"><a href="#cb3-903" aria-hidden="true" tabindex="-1"></a>Plug it into the first equation, and integrate out $d^{n} \tilde q, d^n \tilde p, d^{n} q, d^n q$ in order, using the Dirac delta trick of $\int e^{i \tilde x x} d^n x = (2\pi)^n \delta^n(\tilde x)$.</span>
+<span id="cb3-903"><a href="#cb3-903" aria-hidden="true" tabindex="-1"></a>Plug it into the first equation, and integrate out $d^{n} \tilde q, d^n \tilde p, d^{n} q, d^n q$ one-by-one, using the Dirac delta trick of $\int e^{i \tilde x x} d^n x = (2\pi)^n \delta^n(\tilde x)$.</span>
 <span id="cb3-904"><a href="#cb3-904" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-905"><a href="#cb3-905" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-906"><a href="#cb3-906" aria-hidden="true" tabindex="-1"></a></span>
@@ -3473,7 +3491,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-1152"><a href="#cb3-1152" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1153"><a href="#cb3-1153" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>If we translate $\psi$ by $+\Delta q$, or equivalently, multiplying it by the operator $e^{\Delta q \cdot \nabla_q}$, then we also translate its Wigner function by $+\Delta q$.</span>
 <span id="cb3-1154"><a href="#cb3-1154" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>If we multiply $\psi$ by the operator $e^{+i \Delta p \cdot q/\hbar}$, then we also translate its Wigner function by $+\Delta p$.</span>
-<span id="cb3-1155"><a href="#cb3-1155" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>If we multiply it by the Hamiltonian of the quantum harmonic oscillator $e^{-i \hat H t/\hbar}$, where $\hat H := \frac{{\hat p}^2}{2m} + \frac{1}{2} m \omega^2 {\hat q}^2$, then we rotate its Wigner function by $\omega t$ around the ellipse with semiaxes $\sqrt{1/m\omega^2}, \sqrt{m}$. That is, the new Wigner function satisfies $W'(q, p) = W(q \cos(\omega t) - \frac{p}{m\omega} \sin(\omega t),  q m \omega \sin(\omega t), p \cos(\omega t))$.</span>
+<span id="cb3-1155"><a href="#cb3-1155" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>If we multiply it by the Hamiltonian of the quantum harmonic oscillator $e^{-i \hat H t/\hbar}$, where $\hat H := \frac{{\hat p}^2}{2m} + \frac{1}{2} m \omega^2 {\hat q}^2$, then we rotate its Wigner function by $\omega t$ around the ellipse with semiaxes $\sqrt{1/m\omega^2}, \sqrt{m}$. That is, the new Wigner function satisfies $W'(q, p) = W(q \cos(\omega t) - \frac{p}{m\omega} \sin(\omega t),  q m \omega \sin(\omega t) + p \cos(\omega t))$.</span>
 <span id="cb3-1156"><a href="#cb3-1156" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1157"><a href="#cb3-1157" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-1158"><a href="#cb3-1158" aria-hidden="true" tabindex="-1"></a></span>
@@ -3622,109 +3640,109 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-1301"><a href="#cb3-1301" aria-hidden="true" tabindex="-1"></a>meaning that the quantum energy function in quantum phase space is exactly the same as the classical energy function in classical phase space. How nice.</span>
 <span id="cb3-1302"><a href="#cb3-1302" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1303"><a href="#cb3-1303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1304"><a href="#cb3-1304" aria-hidden="true" tabindex="-1"></a><span class="fu">## Examples</span></span>
+<span id="cb3-1304"><a href="#cb3-1304" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quadratic Hamiltonian</span></span>
 <span id="cb3-1305"><a href="#cb3-1305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1306"><a href="#cb3-1306" aria-hidden="true" tabindex="-1"></a><span class="fu">### Quadratic Hamiltonian</span></span>
+<span id="cb3-1306"><a href="#cb3-1306" aria-hidden="true" tabindex="-1"></a>If the Hamiltonian $H$ is a sum of kinetic and potential energies, as $H = T(p) + V(q)$, then</span>
 <span id="cb3-1307"><a href="#cb3-1307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1308"><a href="#cb3-1308" aria-hidden="true" tabindex="-1"></a>If the Hamiltonian $H$ is a sum of kinetic and potential energies, as $H = T(p) + V(q)$, then</span>
-<span id="cb3-1309"><a href="#cb3-1309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1310"><a href="#cb3-1310" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1311"><a href="#cb3-1311" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb3-1312"><a href="#cb3-1312" aria-hidden="true" tabindex="-1"></a>  (f \star_t g)(q,p) &amp;= f\left(q_1 + t\overrightarrow{\partial_{p_1}}, \dots, p_1 - t\overrightarrow{\partial_{q_1}}, \dots\right) g(q,p) <span class="sc">\\</span></span>
-<span id="cb3-1313"><a href="#cb3-1313" aria-hidden="true" tabindex="-1"></a>  &amp;= f(q,p) g\left(q_1 - t\overleftarrow{\partial_{p_1}}, \dots, p_1 + t\overleftarrow{\partial_{q_1}}, \dots\right) <span class="sc">\\</span></span>
-<span id="cb3-1314"><a href="#cb3-1314" aria-hidden="true" tabindex="-1"></a>  &amp;= f\left(q_1 + t\overrightarrow{\partial_{p_1}}, \dots, p\right) g\left(q_1 - t\overleftarrow{\partial_{p_1}}, \dots, p\right)</span>
-<span id="cb3-1315"><a href="#cb3-1315" aria-hidden="true" tabindex="-1"></a>  \end{aligned}</span>
-<span id="cb3-1316"><a href="#cb3-1316" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1308"><a href="#cb3-1308" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1309"><a href="#cb3-1309" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb3-1310"><a href="#cb3-1310" aria-hidden="true" tabindex="-1"></a>  (f \star_t g)(q,p) &amp;= f\left(q_1 + t\overrightarrow{\partial_{p_1}}, \dots, p_1 - t\overrightarrow{\partial_{q_1}}, \dots\right) g(q,p) <span class="sc">\\</span></span>
+<span id="cb3-1311"><a href="#cb3-1311" aria-hidden="true" tabindex="-1"></a>  &amp;= f(q,p) g\left(q_1 - t\overleftarrow{\partial_{p_1}}, \dots, p_1 + t\overleftarrow{\partial_{q_1}}, \dots\right) <span class="sc">\\</span></span>
+<span id="cb3-1312"><a href="#cb3-1312" aria-hidden="true" tabindex="-1"></a>  &amp;= f\left(q_1 + t\overrightarrow{\partial_{p_1}}, \dots, p\right) g\left(q_1 - t\overleftarrow{\partial_{p_1}}, \dots, p\right)</span>
+<span id="cb3-1313"><a href="#cb3-1313" aria-hidden="true" tabindex="-1"></a>  \end{aligned}</span>
+<span id="cb3-1314"><a href="#cb3-1314" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1315"><a href="#cb3-1315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1316"><a href="#cb3-1316" aria-hidden="true" tabindex="-1"></a>Thus,</span>
 <span id="cb3-1317"><a href="#cb3-1317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1318"><a href="#cb3-1318" aria-hidden="true" tabindex="-1"></a>Thus,</span>
-<span id="cb3-1319"><a href="#cb3-1319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1318"><a href="#cb3-1318" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1319"><a href="#cb3-1319" aria-hidden="true" tabindex="-1"></a>H \star W = T(p - (i\hbar/2)\nabla_q) W + V(q +  (i\hbar/2) \nabla_p) W</span>
 <span id="cb3-1320"><a href="#cb3-1320" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1321"><a href="#cb3-1321" aria-hidden="true" tabindex="-1"></a>H \star W = T(p - (i\hbar/2)\nabla_q) W + V(q +  (i\hbar/2) \nabla_p) W</span>
-<span id="cb3-1322"><a href="#cb3-1322" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1321"><a href="#cb3-1321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1322"><a href="#cb3-1322" aria-hidden="true" tabindex="-1"></a>and similarly for the other direction. Together, it means</span>
 <span id="cb3-1323"><a href="#cb3-1323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1324"><a href="#cb3-1324" aria-hidden="true" tabindex="-1"></a>and similarly for the other direction. Together, it means</span>
-<span id="cb3-1325"><a href="#cb3-1325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1324"><a href="#cb3-1324" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1325"><a href="#cb3-1325" aria-hidden="true" tabindex="-1"></a>\partial_t W = \frac{T(p - (i\hbar/2)\nabla_q) - T(p + (i\hbar/2)\nabla_q)}{i\hbar} W + \frac{V(q + (i\hbar/2)\nabla_p) - V(q - (i\hbar/2)\nabla_p)}{i\hbar} W</span>
 <span id="cb3-1326"><a href="#cb3-1326" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1327"><a href="#cb3-1327" aria-hidden="true" tabindex="-1"></a>\partial_t W = \frac{T(p - (i\hbar/2)\nabla_q) - T(p + (i\hbar/2)\nabla_q)}{i\hbar} W + \frac{V(q + (i\hbar/2)\nabla_p) - V(q - (i\hbar/2)\nabla_p)}{i\hbar} W</span>
-<span id="cb3-1328"><a href="#cb3-1328" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1327"><a href="#cb3-1327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1328"><a href="#cb3-1328" aria-hidden="true" tabindex="-1"></a>In particular, if $T, V$ are both quadratic, such as in the case of a harmonic oscillator $H = \frac{p^2}{2m} + \frac 12 m\omega^2 q^2$, then we have</span>
 <span id="cb3-1329"><a href="#cb3-1329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1330"><a href="#cb3-1330" aria-hidden="true" tabindex="-1"></a>In particular, if $T, V$ are both quadratic, such as in the case of a harmonic oscillator $H = \frac{p^2}{2m} + \frac 12 m\omega^2 q^2$, then we have</span>
-<span id="cb3-1331"><a href="#cb3-1331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1330"><a href="#cb3-1330" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1331"><a href="#cb3-1331" aria-hidden="true" tabindex="-1"></a>\partial_t W = -\nabla_p T \cdot \nabla_q W + \nabla_q V \cdot \nabla_p W = <span class="sc">\{</span>H, W<span class="sc">\}</span></span>
 <span id="cb3-1332"><a href="#cb3-1332" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1333"><a href="#cb3-1333" aria-hidden="true" tabindex="-1"></a>\partial_t W = -\nabla_p T \cdot \nabla_q W + \nabla_q V \cdot \nabla_p W = <span class="sc">\{</span>H, W<span class="sc">\}</span></span>
-<span id="cb3-1334"><a href="#cb3-1334" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1333"><a href="#cb3-1333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1334"><a href="#cb3-1334" aria-hidden="true" tabindex="-1"></a>which is exactly the same as the classical Hamiltonian equations of motion.</span>
 <span id="cb3-1335"><a href="#cb3-1335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1336"><a href="#cb3-1336" aria-hidden="true" tabindex="-1"></a>which is exactly the same as the classical Hamiltonian equations of motion.</span>
+<span id="cb3-1336"><a href="#cb3-1336" aria-hidden="true" tabindex="-1"></a>In other words, we can picture the phase-space evolution of a quantum harmonic oscillator's Wigner function as exactly the same as if it is the phase space evolution in classical statistical mechanics. The only difference is that there are both regions of positive and negative probabilities. But at least it is all real-valued!</span>
 <span id="cb3-1337"><a href="#cb3-1337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1338"><a href="#cb3-1338" aria-hidden="true" tabindex="-1"></a>In other words, we can picture the phase-space evolution of a quantum harmonic oscillator's Wigner function as exactly the same as if it is the phase space evolution in classical statistical mechanics. The only difference is that there are both regions of positive and negative probabilities. But at least it is all real-valued!</span>
+<span id="cb3-1338"><a href="#cb3-1338" aria-hidden="true" tabindex="-1"></a><span class="fu">### Free particle</span></span>
 <span id="cb3-1339"><a href="#cb3-1339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1340"><a href="#cb3-1340" aria-hidden="true" tabindex="-1"></a><span class="fu">### Free particle</span></span>
+<span id="cb3-1340"><a href="#cb3-1340" aria-hidden="true" tabindex="-1"></a>For a particle in free space, the Hamiltonian is $H = \frac{\|p\|^2}{2m}$. Thus, the Wigner function $W$ evolves by a simple shearing flow in phase space:</span>
 <span id="cb3-1341"><a href="#cb3-1341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1342"><a href="#cb3-1342" aria-hidden="true" tabindex="-1"></a>For a particle in free space, the Hamiltonian is $H = \frac{\|p\|^2}{2m}$. Thus, the Wigner function $W$ evolves by a simple shearing flow in phase space:</span>
-<span id="cb3-1343"><a href="#cb3-1343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1342"><a href="#cb3-1342" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1343"><a href="#cb3-1343" aria-hidden="true" tabindex="-1"></a>W(t, q, p) = W(0, q - pt/m, p)</span>
 <span id="cb3-1344"><a href="#cb3-1344" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1345"><a href="#cb3-1345" aria-hidden="true" tabindex="-1"></a>W(t, q, p) = W(0, q - pt/m, p)</span>
-<span id="cb3-1346"><a href="#cb3-1346" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1345"><a href="#cb3-1345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1346"><a href="#cb3-1346" aria-hidden="true" tabindex="-1"></a>This picture allows us to obtain some results pictorially.</span>
 <span id="cb3-1347"><a href="#cb3-1347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1348"><a href="#cb3-1348" aria-hidden="true" tabindex="-1"></a>This picture allows us to obtain some results pictorially.</span>
+<span id="cb3-1348"><a href="#cb3-1348" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Gaussian wavepacket</span></span>
 <span id="cb3-1349"><a href="#cb3-1349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1350"><a href="#cb3-1350" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Gaussian wavepacket</span></span>
+<span id="cb3-1350"><a href="#cb3-1350" aria-hidden="true" tabindex="-1"></a>Consider the simplest case of a gaussian wavepacket on $\R$, centered at $q = 0$, with zero total momentum. Over time, it contracts, until its width $\sigma_q$ reaches a minimum, before spreading out again. Let $t = 0$ be the time of minimal width, so its wavefunction satisfies</span>
 <span id="cb3-1351"><a href="#cb3-1351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1352"><a href="#cb3-1352" aria-hidden="true" tabindex="-1"></a>Consider the simplest case of a gaussian wavepacket on $\R$, centered at $q = 0$, with zero total momentum. Over time, it contracts, until its width $\sigma_q$ reaches a minimum, before spreading out again. Let $t = 0$ be the time of minimal width, so its wavefunction satisfies</span>
-<span id="cb3-1353"><a href="#cb3-1353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1352"><a href="#cb3-1352" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1353"><a href="#cb3-1353" aria-hidden="true" tabindex="-1"></a>\psi(0, q) = \sqrt{\rho_{N (0, \sigma_q^2)}(q)}</span>
 <span id="cb3-1354"><a href="#cb3-1354" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1355"><a href="#cb3-1355" aria-hidden="true" tabindex="-1"></a>\psi(0, q) = \sqrt{\rho_{N (0, \sigma_q^2)}(q)}</span>
-<span id="cb3-1356"><a href="#cb3-1356" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1355"><a href="#cb3-1355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1356"><a href="#cb3-1356" aria-hidden="true" tabindex="-1"></a>where $\rho_{N (0, \sigma_q^2)}$ denotes the probability density function of the gaussian with mean $0$ and variance $\sigma_q^2$. By direct calculation, its Wigner function is the probability density function of the gaussian with mean $(0, 0)$ and variance $\diag(\sigma_q^2, \sigma_p^2)$, satisfying the uncertainty principle $\sigma_q^2 \sigma_p^2 = \hbar^2/4$.</span>
 <span id="cb3-1357"><a href="#cb3-1357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1358"><a href="#cb3-1358" aria-hidden="true" tabindex="-1"></a>where $\rho_{N (0, \sigma_q^2)}$ denotes the probability density function of the gaussian with mean $0$ and variance $\sigma_q^2$. By direct calculation, its Wigner function is the probability density function of the gaussian with mean $(0, 0)$ and variance $\diag(\sigma_q^2, \sigma_p^2)$, satisfying the uncertainty principle $\sigma_q^2 \sigma_p^2 = \hbar^2/4$.</span>
+<span id="cb3-1358"><a href="#cb3-1358" aria-hidden="true" tabindex="-1"></a>More generally, a gaussian wavepacket with initial peak position $q_0$ and momentum $p_0$ has a Wigner function with mean $(q_0, p_0)$ and variance $\diag(\sigma_q^2, \sigma_p^2)$. For concreteness, let $q_0 &gt; 0, p_0 &lt; 0$. As time $t$ increases from $-\infty$ to $t = 0$, the Wigner function shears to the left more and more, until it becomes an ellipse with major axes parallel to the $p$-axis and the $q$-axis right at $t = 0$. The center of mass on the $q$-axis is the projection of the center of the Wigner function, which moves at constant velocity $p_0/m$. The $q$-marginal distribution of the Wigner function first shrinks, reaching a minimum at $t = 0$, before growing again. Its $p$-axis marginal remains unchanged. This is shown in the following animation.</span>
 <span id="cb3-1359"><a href="#cb3-1359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1360"><a href="#cb3-1360" aria-hidden="true" tabindex="-1"></a>More generally, a gaussian wavepacket with initial peak position $q_0$ and momentum $p_0$ has a Wigner function with mean $(q_0, p_0)$ and variance $\diag(\sigma_q^2, \sigma_p^2)$. For concreteness, let $q_0 &gt; 0, p_0 &lt; 0$. As time $t$ increases from $-\infty$ to $t = 0$, the Wigner function shears to the left more and more, until it becomes an ellipse with major axes parallel to the $p$-axis and the $q$-axis right at $t = 0$. The center of mass on the $q$-axis is the projection of the center of the Wigner function, which moves at constant velocity $p_0/m$. The $q$-marginal distribution of the Wigner function first shrinks, reaching a minimum at $t = 0$, before growing again. Its $p$-axis marginal remains unchanged. This is shown in the following animation.</span>
-<span id="cb3-1361"><a href="#cb3-1361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1362"><a href="#cb3-1362" aria-hidden="true" tabindex="-1"></a>&lt;video controls width=100%&gt;</span>
-<span id="cb3-1363"><a href="#cb3-1363" aria-hidden="true" tabindex="-1"></a>  &lt;source src="figure/shear_wigner.webm" type="video/webm" /&gt;</span>
-<span id="cb3-1364"><a href="#cb3-1364" aria-hidden="true" tabindex="-1"></a>&lt;/video&gt;</span>
+<span id="cb3-1360"><a href="#cb3-1360" aria-hidden="true" tabindex="-1"></a>&lt;video controls width=100%&gt;</span>
+<span id="cb3-1361"><a href="#cb3-1361" aria-hidden="true" tabindex="-1"></a>  &lt;source src="figure/shear_wigner.webm" type="video/webm" /&gt;</span>
+<span id="cb3-1362"><a href="#cb3-1362" aria-hidden="true" tabindex="-1"></a>&lt;/video&gt;</span>
+<span id="cb3-1363"><a href="#cb3-1363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1364"><a href="#cb3-1364" aria-hidden="true" tabindex="-1"></a><span class="al">![Static frames from the animation. As time increases, a gaussian wavepacket shrinks, then spreads, on the $q$-axis marginal. Its $p$-axis marginal remains unchanged.](figure/shear_wigner.png)</span></span>
 <span id="cb3-1365"><a href="#cb3-1365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1366"><a href="#cb3-1366" aria-hidden="true" tabindex="-1"></a><span class="al">![Static frames from the animation. As time increases, a gaussian wavepacket shrinks, then spreads, on the $q$-axis marginal. Its $p$-axis marginal remains unchanged.](figure/shear_wigner_all.png)</span></span>
+<span id="cb3-1366"><a href="#cb3-1366" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Negative probability flow</span></span>
 <span id="cb3-1367"><a href="#cb3-1367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1368"><a href="#cb3-1368" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Negative probability flow</span></span>
+<span id="cb3-1368"><a href="#cb3-1368" aria-hidden="true" tabindex="-1"></a>In <span class="co">[</span><span class="ot">@villanuevaNegativeFlowProbability2020; @goussevCommentNegativeFlow2020</span><span class="co">]</span>, it was noted that for a gaussian wavepacket with positive group velocity $p_0 / m &gt; 0$, it is often the case that there is a paradoxical "negative probability flow". Specifically, it was found that, if we stand at a point $q_1 &gt; q_0$, and plot $Pr(q &gt; q_1 | t)$, the probability that the particle is found at $q &gt; q_1$ at time $t$, then as time passes, that probability first decreases, before it increases, even though the wavepacket always has positive group velocity. This is immediate in the phase space picture.</span>
 <span id="cb3-1369"><a href="#cb3-1369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1370"><a href="#cb3-1370" aria-hidden="true" tabindex="-1"></a>In <span class="co">[</span><span class="ot">@villanuevaNegativeFlowProbability2020; @goussevCommentNegativeFlow2020</span><span class="co">]</span>, it was noted that for a gaussian wavepacket with positive group velocity $p_0 / m &gt; 0$, it is often the case that there is a paradoxical "negative probability flow". Specifically, it was found that, if we stand at a point $q_1 &gt; q_0$, and plot $Pr(q &gt; q_1 | t)$, the probability that the particle is found at $q &gt; q_1$ at time $t$, then as time passes, that probability first decreases, before it increases, even though the wavepacket always has positive group velocity. This is immediate in the phase space picture.</span>
+<span id="cb3-1370"><a href="#cb3-1370" aria-hidden="true" tabindex="-1"></a>Consider a gaussian wavepacket with $W(0, q, p) = \rho_{N ((q_0, p_0), \diag(\sigma_q^2, \sigma_p^2))}$, with $q_0 &lt; 0, p_0 &gt; 0$. Geometrically, $Pr(q &gt; q_1 | t)$ is the integral of $W(t, q, p)$ on the region to the right of the vertical line $q = q_1$, which is equal to the integral of $W(0, q, p)$ on the region to the right of the sheared line $q = -\frac{t}{m} p$. The sheared line rotates clockwise over time.</span>
 <span id="cb3-1371"><a href="#cb3-1371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1372"><a href="#cb3-1372" aria-hidden="true" tabindex="-1"></a>Consider a gaussian wavepacket with $W(0, q, p) = \rho_{N ((q_0, p_0), \diag(\sigma_q^2, \sigma_p^2))}$, with $q_0 &lt; 0, p_0 &gt; 0$. Geometrically, $Pr(q &gt; q_1 | t)$ is the integral of $W(t, q, p)$ on the region to the right of the vertical line $q = q_1$, which is equal to the integral of $W(0, q, p)$ on the region to the right of the sheared line $q = -\frac{t}{m} p$. The sheared line rotates clockwise over time.</span>
+<span id="cb3-1372"><a href="#cb3-1372" aria-hidden="true" tabindex="-1"></a>From the geometry of gaussian distributions, this integral can be pictorially calculated by finding the ellipse of constant $\rho_{N ((q_0, p_0), \diag(\sigma_q^2, \sigma_p^2))}$ that is tangent to the sheared line. At $t \to -\infty$, the sheared line is just the $q$-axis. As $t$ increases, the sheared line rotates counterclockwise, and the tangent ellipse grows, until it hits the maximal size at some critical time $t = t_{\text{critical}}$, at which point the tangent ellipse is equal to</span>
 <span id="cb3-1373"><a href="#cb3-1373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1374"><a href="#cb3-1374" aria-hidden="true" tabindex="-1"></a>From the geometry of gaussian distributions, this integral can be pictorially calculated by finding the ellipse of constant $\rho_{N ((q_0, p_0), \diag(\sigma_q^2, \sigma_p^2))}$ that is tangent to the sheared line. At $t \to -\infty$, the sheared line is just the $q$-axis. As $t$ increases, the sheared line rotates counterclockwise, and the tangent ellipse grows, until it hits the maximal size at some critical time $t = t_{\text{critical}}$, at which point the tangent ellipse is equal to</span>
-<span id="cb3-1375"><a href="#cb3-1375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1374"><a href="#cb3-1374" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1375"><a href="#cb3-1375" aria-hidden="true" tabindex="-1"></a>\frac{(q-q_0)^2}{\sigma_q^2} + \frac{(p-p_0)^2}{\sigma_p^2} = \frac{(q_1-q_0)^2}{\sigma_q^2} + \frac{(0-p_0)^2}{\sigma_p^2}</span>
 <span id="cb3-1376"><a href="#cb3-1376" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1377"><a href="#cb3-1377" aria-hidden="true" tabindex="-1"></a>\frac{(q-q_0)^2}{\sigma_q^2} + \frac{(p-p_0)^2}{\sigma_p^2} = \frac{(q_1-q_0)^2}{\sigma_q^2} + \frac{(0-p_0)^2}{\sigma_p^2}</span>
-<span id="cb3-1378"><a href="#cb3-1378" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1377"><a href="#cb3-1377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1378"><a href="#cb3-1378" aria-hidden="true" tabindex="-1"></a>It is a simple exercise to show $t_{\text{critical}} = -\frac{mp_0 \sigma_q^2}{(q_1- q_0) \sigma_p^2}$.</span>
 <span id="cb3-1379"><a href="#cb3-1379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1380"><a href="#cb3-1380" aria-hidden="true" tabindex="-1"></a>It is a simple exercise to show $t_{\text{critical}} = -\frac{mp_0 \sigma_q^2}{(q_1- q_0) \sigma_p^2}$.</span>
+<span id="cb3-1380"><a href="#cb3-1380" aria-hidden="true" tabindex="-1"></a>After that, the tangent ellipse shrinks again. This is illustrated in the following figure.</span>
 <span id="cb3-1381"><a href="#cb3-1381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1382"><a href="#cb3-1382" aria-hidden="true" tabindex="-1"></a>After that, the tangent ellipse shrinks again. This is illustrated in the following figure.</span>
+<span id="cb3-1382"><a href="#cb3-1382" aria-hidden="true" tabindex="-1"></a><span class="al">![Illustration for the negative probability flow of a gaussian wavepacket. The dashed circle is the largest possible tangent ellipse. At $t = t_{\text{critical}}$, the sheared line is tangent to the dashed circle.](figure/negative_probability_flow.png)</span></span>
 <span id="cb3-1383"><a href="#cb3-1383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1384"><a href="#cb3-1384" aria-hidden="true" tabindex="-1"></a><span class="al">![Illustration for the negative probability flow of a gaussian wavepacket. The dashed circle is the largest possible tangent ellipse. At $t = t_{\text{critical}}$, the sheared line is tangent to the dashed circle.](figure/negative_probability_flow.png)</span></span>
+<span id="cb3-1384"><a href="#cb3-1384" aria-hidden="true" tabindex="-1"></a>By tracing out the pictures, we visually see that $Pr(q &gt; q_1|t)$ decreases over the region $t \leq t_{\text{critical}}$, and increases over the region $t \geq t_{\text{critical}}$.</span>
 <span id="cb3-1385"><a href="#cb3-1385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1386"><a href="#cb3-1386" aria-hidden="true" tabindex="-1"></a>By tracing out the pictures, we visually see that $Pr(q &gt; q_1|t)$ decreases over the region $t \leq t_{\text{critical}}$, and increases over the region $t \geq t_{\text{critical}}$.</span>
+<span id="cb3-1386"><a href="#cb3-1386" aria-hidden="true" tabindex="-1"></a>By a similar pictorial reasoning, if $q_0 &gt; 0, p_0 &gt; 0$, then $Pr(q &gt; q_1|t)$ increases over the region $t \leq t_{\text{critical}}$, and decreases over the region $t \geq t_{\text{critical}}$. Only when $q_0 = q_1$ is $Pr(q &gt; q_1|t)$ strictly monotonic over all time.</span>
 <span id="cb3-1387"><a href="#cb3-1387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1388"><a href="#cb3-1388" aria-hidden="true" tabindex="-1"></a>By a similar pictorial reasoning, if $q_0 &gt; 0, p_0 &gt; 0$, then $Pr(q &gt; q_1|t)$ increases over the region $t \leq t_{\text{critical}}$, and decreases over the region $t \geq t_{\text{critical}}$. Only when $q_0 = q_1$ is $Pr(q &gt; q_1|t)$ strictly monotonic over all time.</span>
+<span id="cb3-1388"><a href="#cb3-1388" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Wave dispersion</span></span>
 <span id="cb3-1389"><a href="#cb3-1389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1390"><a href="#cb3-1390" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Wave dispersion</span></span>
+<span id="cb3-1390"><a href="#cb3-1390" aria-hidden="true" tabindex="-1"></a>As noted previously, a gaussian wave packet first shrinks, then grows, according to a precise formula proved in every introductory quantum mechanics course. We derive this formula geometrically.</span>
 <span id="cb3-1391"><a href="#cb3-1391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1392"><a href="#cb3-1392" aria-hidden="true" tabindex="-1"></a>As noted previously, a gaussian wave packet first shrinks, then grows, according to a precise formula proved in every introductory quantum mechanics course. We derive this formula geometrically.</span>
+<span id="cb3-1392"><a href="#cb3-1392" aria-hidden="true" tabindex="-1"></a>Without loss of generality, consider a wavepacket with zero group velocity, centered at $q = 0$, reaching minimal width $\sigma_q$ at $t=0$. Its Wigner function is $\rho_{N((0, 0), \diag(\sigma_q^2, \sigma_p^2))}$, where $\sigma_q \sigma_p = \hbar / 2$.</span>
 <span id="cb3-1393"><a href="#cb3-1393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1394"><a href="#cb3-1394" aria-hidden="true" tabindex="-1"></a>Without loss of generality, consider a wavepacket with zero group velocity, centered at $q = 0$, reaching minimal width $\sigma_q$ at $t=0$. Its Wigner function is $\rho_{N((0, 0), \diag(\sigma_q^2, \sigma_p^2))}$, where $\sigma_q \sigma_p = \hbar / 2$.</span>
+<span id="cb3-1394"><a href="#cb3-1394" aria-hidden="true" tabindex="-1"></a>Now, consider its one-sigma ellipse $\frac{q^2}{\sigma_q^2} + \frac{p^2}{\sigma_q^2} = 1$. It projects to an interval $<span class="co">[</span><span class="ot">-\sigma_q, +\sigma_q</span><span class="co">]</span>$ on the $q$-axis, meaning that at time $t=0$, the probability of finding the particle within the interval $<span class="co">[</span><span class="ot">-\sigma_q, +\sigma_q</span><span class="co">]</span>$ is plus-or-minus one-sigma, that is, 68.3%.</span>
 <span id="cb3-1395"><a href="#cb3-1395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1396"><a href="#cb3-1396" aria-hidden="true" tabindex="-1"></a>Now, consider its one-sigma ellipse $\frac{q^2}{\sigma_q^2} + \frac{p^2}{\sigma_q^2} = 1$. It projects to an interval $<span class="co">[</span><span class="ot">-\sigma_q, +\sigma_q</span><span class="co">]</span>$ on the $q$-axis, meaning that at time $t=0$, the probability of finding the particle within the interval $<span class="co">[</span><span class="ot">-\sigma_q, +\sigma_q</span><span class="co">]</span>$ is plus-or-minus one-sigma, that is, 68.3%.</span>
+<span id="cb3-1396"><a href="#cb3-1396" aria-hidden="true" tabindex="-1"></a>Now, at time $t$, the new one-sigma interval can be either found by shearing the Wigner function, or by shearing the $q$-intervals. As pictured, the sheared $q$-intervals are the tangent lines to the one-sigma ellipse satisfying $q + \frac{t}{m} p = C$. The tangent points are </span>
 <span id="cb3-1397"><a href="#cb3-1397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1398"><a href="#cb3-1398" aria-hidden="true" tabindex="-1"></a>Now, at time $t$, the new one-sigma interval can be either found by shearing the Wigner function, or by shearing the $q$-intervals. As pictured, the sheared $q$-intervals are the tangent lines to the one-sigma ellipse satisfying $q + \frac{t}{m} p = C$. The tangent points are </span>
-<span id="cb3-1399"><a href="#cb3-1399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1398"><a href="#cb3-1398" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1399"><a href="#cb3-1399" aria-hidden="true" tabindex="-1"></a>(q, p) = \left( \frac{\sigma_q}{\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^2}}, \frac{\sigma_p}{\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^{-2}}}\right)</span>
 <span id="cb3-1400"><a href="#cb3-1400" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1401"><a href="#cb3-1401" aria-hidden="true" tabindex="-1"></a>(q, p) = \left( \frac{\sigma_q}{\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^2}}, \frac{\sigma_p}{\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^{-2}}}\right)</span>
-<span id="cb3-1402"><a href="#cb3-1402" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1401"><a href="#cb3-1401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1402"><a href="#cb3-1402" aria-hidden="true" tabindex="-1"></a>and so, the projection to the $q$-axis has end points </span>
 <span id="cb3-1403"><a href="#cb3-1403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1404"><a href="#cb3-1404" aria-hidden="true" tabindex="-1"></a>and so, the projection to the $q$-axis has end points </span>
-<span id="cb3-1405"><a href="#cb3-1405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1406"><a href="#cb3-1406" aria-hidden="true" tabindex="-1"></a>$$\pm \sigma_q\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^2} = \pm \sqrt{\sigma_q^2 + \left( \frac{\hbar t}{2m\sigma_q}\right)^2}$$</span>
+<span id="cb3-1404"><a href="#cb3-1404" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1405"><a href="#cb3-1405" aria-hidden="true" tabindex="-1"></a>\pm \sigma_q\sqrt{1 + \left( \frac{\sigma_p t}{\sigma_q m}\right)^2} = \pm \sqrt{\sigma_q^2 + \left( \frac{\hbar t}{2m\sigma_q}\right)^2}</span>
+<span id="cb3-1406"><a href="#cb3-1406" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb3-1407"><a href="#cb3-1407" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1408"><a href="#cb3-1408" aria-hidden="true" tabindex="-1"></a>as expected.</span>
 <span id="cb3-1409"><a href="#cb3-1409" aria-hidden="true" tabindex="-1"></a></span>
@@ -3732,7 +3750,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-1411"><a href="#cb3-1411" aria-hidden="true" tabindex="-1"></a>  &lt;source src="figure/gaussian_wavepacket_spreading.webm" type="video/webm" /&gt;</span>
 <span id="cb3-1412"><a href="#cb3-1412" aria-hidden="true" tabindex="-1"></a>&lt;/video&gt;</span>
 <span id="cb3-1413"><a href="#cb3-1413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1414"><a href="#cb3-1414" aria-hidden="true" tabindex="-1"></a><span class="al">![Illustration for gaussian wavepacket spreading. As time increases, the one-sigma circle projects to an interval on $q$-axis, which shrinks as $t \uparrow 0$, then grows as $t \uparrow \infty$.](figure/gaussian_wavepacket_spreading_all.png)</span></span>
+<span id="cb3-1414"><a href="#cb3-1414" aria-hidden="true" tabindex="-1"></a><span class="al">![Illustration for gaussian wavepacket spreading. As time increases, the one-sigma circle projects to an interval on $q$-axis, which shrinks as $t \uparrow 0$, then grows as $t \uparrow \infty$.](figure/gaussian_wavepacket_spreading.png)</span></span>
 <span id="cb3-1415"><a href="#cb3-1415" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1416"><a href="#cb3-1416" aria-hidden="true" tabindex="-1"></a>In particular, for very large $t$, the wavepacket spreads linearly. This is in fact a generic result for arbitrary waves. Specifically, the $q$-marginal of the Wigner function at $q = q_1$ and time $t$ can be found by shearing a thin slice $q \in <span class="co">[</span><span class="ot">q_1, q_1 + \delta q</span><span class="co">]</span>$ back by $\frac{pt}{m}$. If $t$ is large, then this thin slice, perpendicular to the $q$-axis, is sheared to become almost perpendicular to the $p$-axis instead, which is approximately $p \in <span class="co">[</span><span class="ot">mq_1 / t, m(q_1 + \delta q)/ t</span><span class="co">]</span>$. Thus, we have</span>
 <span id="cb3-1417"><a href="#cb3-1417" aria-hidden="true" tabindex="-1"></a></span>
@@ -3761,110 +3779,134 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-1440"><a href="#cb3-1440" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1441"><a href="#cb3-1441" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-1442"><a href="#cb3-1442" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1443"><a href="#cb3-1443" aria-hidden="true" tabindex="-1"></a>This result was previously proved in <span class="co">[</span><span class="ot">@andrewsEvolutionFreeWave2008</span><span class="co">]</span> analytically.</span>
+<span id="cb3-1443"><a href="#cb3-1443" aria-hidden="true" tabindex="-1"></a>Furthermore, the exact same argument as the previous section allows us to compute how fast the wave spreads. Though the $q$-marginal is no longer gaussian, we can still characterize its width by a single number.</span>
 <span id="cb3-1444"><a href="#cb3-1444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1445"><a href="#cb3-1445" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Square wave</span></span>
+<span id="cb3-1445"><a href="#cb3-1445" aria-hidden="true" tabindex="-1"></a>Concretely, let $t=0$ be the point in time where the wave has minimal spread -- that is, the point at which its Wigner function has contour ellipses that are not tilted, but has major axes parallel to the $q$-axis and the $p$-axis. Let $\sigma_q$ be the quartile distance. That is, between $q_{50\%}$ and $q_{75\%}$, where $q_{75\%}$ is the point such that $Pr(q \leq q_{75\%}) = 75\%$.</span>
 <span id="cb3-1446"><a href="#cb3-1446" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1447"><a href="#cb3-1447" aria-hidden="true" tabindex="-1"></a>Consider the square wave function</span>
+<span id="cb3-1447"><a href="#cb3-1447" aria-hidden="true" tabindex="-1"></a>Since in the simple harmonic oscillator, the Wigner function just rotates around classically, we can calculate as if it is classical. This means that the energy conservation holds:</span>
 <span id="cb3-1448"><a href="#cb3-1448" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1449"><a href="#cb3-1449" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1450"><a href="#cb3-1450" aria-hidden="true" tabindex="-1"></a>\psi(q) = \begin{cases}a^{-1/2} &amp; \text{ if }q \in <span class="co">[</span><span class="ot">-a/2, +a/2</span><span class="co">]</span><span class="sc">\\</span> 0  &amp; \text{ else}\end{cases}</span>
+<span id="cb3-1450"><a href="#cb3-1450" aria-hidden="true" tabindex="-1"></a>\frac{\sigma_p(0)^2}{2m} = \frac 12 m\omega^2 \sigma_q(0)^2 \implies \sigma_p(0)/\sigma_q(0) = m\omega</span>
 <span id="cb3-1451"><a href="#cb3-1451" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb3-1452"><a href="#cb3-1452" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1453"><a href="#cb3-1453" aria-hidden="true" tabindex="-1"></a>Its Wigner function is easily calculated as</span>
+<span id="cb3-1453"><a href="#cb3-1453" aria-hidden="true" tabindex="-1"></a>Now, the same geometric argument shows that</span>
 <span id="cb3-1454"><a href="#cb3-1454" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1455"><a href="#cb3-1455" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1456"><a href="#cb3-1456" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb3-1457"><a href="#cb3-1457" aria-hidden="true" tabindex="-1"></a>      W_0(q, p) &amp;= \frac{1}{2a\pi \hbar} \int_{|q + y/2| \leq a/2, |q - y/2| \leq a/2} dy e^{-ipy /\hbar} <span class="sc">\\</span></span>
-<span id="cb3-1458"><a href="#cb3-1458" aria-hidden="true" tabindex="-1"></a>      &amp;= \frac{1}{2a\pi \hbar} \frac{\hbar}{-ip} e^{-ipy /\hbar}\Big|_{\max(2q - a, -2q- a)}^{\min(2q+a, -2q+a)}<span class="sc">\\</span></span>
-<span id="cb3-1459"><a href="#cb3-1459" aria-hidden="true" tabindex="-1"></a>      &amp;= \frac{1}{a \pi p} \sin\left(\frac{p(a - 2|q|)}{\hbar} \right)</span>
-<span id="cb3-1460"><a href="#cb3-1460" aria-hidden="true" tabindex="-1"></a>      \end{aligned}</span>
-<span id="cb3-1461"><a href="#cb3-1461" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1462"><a href="#cb3-1462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1463"><a href="#cb3-1463" aria-hidden="true" tabindex="-1"></a>when $q \in <span class="co">[</span><span class="ot">-a/2, +a/2</span><span class="co">]</span>$. For larger values, $W = 0$.  </span>
+<span id="cb3-1456"><a href="#cb3-1456" aria-hidden="true" tabindex="-1"></a>\sigma_q(t) = \sigma_q(0)\sqrt{1 + \left( \frac{\sigma_p(0) t}{\sigma_q(0) m}\right)^2} = \sigma_q(0)\sqrt{1 + \left(\omega t\right)^2}</span>
+<span id="cb3-1457"><a href="#cb3-1457" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1458"><a href="#cb3-1458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1459"><a href="#cb3-1459" aria-hidden="true" tabindex="-1"></a>which is a surprisingly simple and elegant formula. The case of the gaussian is recovered by noting that it is the only Hermite--Gauss wave that exactly reaches the minimum allowed by the uncertainty principle: $\sigma_q(0) \sigma_p(0) = \hbar/2$, which, when combined with $\sigma_p(0)/\sigma_q(0) = m\omega$ that is satisfied by all Hermite--Gauss waves, gives us $\omega = \frac{\hbar}{2 m \sigma_q^2}$, and so we recover the previous result of $\sigma_q(t) = \sigma_q(0)\sqrt{1 + \left(\frac{\hbar t}{2 m \sigma_q^2}\right)^2}$</span>
+<span id="cb3-1460"><a href="#cb3-1460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1461"><a href="#cb3-1461" aria-hidden="true" tabindex="-1"></a>&lt;video controls width=100%&gt;</span>
+<span id="cb3-1462"><a href="#cb3-1462" aria-hidden="true" tabindex="-1"></a>  &lt;source src="figure/gaussian_wavepacket_spreading_2.webm" type="video/webm" /&gt;</span>
+<span id="cb3-1463"><a href="#cb3-1463" aria-hidden="true" tabindex="-1"></a>&lt;/video&gt;</span>
 <span id="cb3-1464"><a href="#cb3-1464" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1465"><a href="#cb3-1465" aria-hidden="true" tabindex="-1"></a>The $p$-marginal distribution is</span>
+<span id="cb3-1465"><a href="#cb3-1465" aria-hidden="true" tabindex="-1"></a><span class="al">![Illustration for gaussian wavepacket spreading in a wavefunction corresponding to the $n=2$ eigenstate of the simple harmonic oscillator. As time increases, the one-sigma circle projects to an interval on $q$-axis, which shrinks as $t \uparrow 0$, then grows as $t \uparrow \infty$.](figure/gaussian_wavepacket_spreading_2.png)</span></span>
 <span id="cb3-1466"><a href="#cb3-1466" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1467"><a href="#cb3-1467" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1468"><a href="#cb3-1468" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb3-1469"><a href="#cb3-1469" aria-hidden="true" tabindex="-1"></a>\rho_p(p) &amp;:= \int_\R  W_0(q,p)dq  <span class="sc">\\</span></span>
-<span id="cb3-1470"><a href="#cb3-1470" aria-hidden="true" tabindex="-1"></a>      &amp;= \int_{-a/2}^{+a/2} \frac{1}{a \pi p} \sin\left(\frac{p(a - 2|q|)}{\hbar} \right) dq <span class="sc">\\</span></span>
-<span id="cb3-1471"><a href="#cb3-1471" aria-hidden="true" tabindex="-1"></a>      &amp;= \frac{\hbar }{\pi a p^2} ( 1 - \cos(pa /\hbar))</span>
-<span id="cb3-1472"><a href="#cb3-1472" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb3-1467"><a href="#cb3-1467" aria-hidden="true" tabindex="-1"></a>These results were previously proved in <span class="co">[</span><span class="ot">@andrewsEvolutionFreeWave2008</span><span class="co">]</span> analytically. However as far as the author knows, this is the first time these were derived geometrically, with minimal calculus.</span>
+<span id="cb3-1468"><a href="#cb3-1468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1469"><a href="#cb3-1469" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Square wave</span></span>
+<span id="cb3-1470"><a href="#cb3-1470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1471"><a href="#cb3-1471" aria-hidden="true" tabindex="-1"></a>As a concrete example of a wave that is not Hermite--Gauss, consider the square wave function</span>
+<span id="cb3-1472"><a href="#cb3-1472" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1473"><a href="#cb3-1473" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1474"><a href="#cb3-1474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1475"><a href="#cb3-1475" aria-hidden="true" tabindex="-1"></a>Let $f(t) := \frac{1 - \cos t}{\pi t^2} = \left(\frac{\operatorname{sinc}(t/2)}{\sqrt{2\pi}} \right)^2$, then $\rho_p(p) = \frac{a}{\hbar} f(\frac{a}{\hbar}p)$. Thus, the $p$-marginal distribution always has the same shape no matter what $a$ is.</span>
+<span id="cb3-1474"><a href="#cb3-1474" aria-hidden="true" tabindex="-1"></a>\psi(q) = \begin{cases}a^{-1/2} &amp; \text{ if }q \in <span class="co">[</span><span class="ot">-a/2, +a/2</span><span class="co">]</span><span class="sc">\\</span> 0  &amp; \text{ else}\end{cases}</span>
+<span id="cb3-1475"><a href="#cb3-1475" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb3-1476"><a href="#cb3-1476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1477"><a href="#cb3-1477" aria-hidden="true" tabindex="-1"></a><span class="al">![Wigner function of the square wave, and its $p$-marginal distribution. $a = 1.3, \hbar = 1$](figure/square_wave_Wigner.png)</span></span>
+<span id="cb3-1477"><a href="#cb3-1477" aria-hidden="true" tabindex="-1"></a>Its Wigner function is easily calculated as</span>
 <span id="cb3-1478"><a href="#cb3-1478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1479"><a href="#cb3-1479" aria-hidden="true" tabindex="-1"></a>Because at $t=0$, the Wigner function is zero outside of $q \in <span class="co">[</span><span class="ot">-a/2, +a/2</span><span class="co">]</span>$, at large $t$, the probability that the particle is found at $<span class="co">[</span><span class="ot">q, q + \delta q</span><span class="co">]</span>$ is the integral of $W_0$ over a the thin line passing $<span class="co">[</span><span class="ot">q, q + \delta q</span><span class="co">]</span>$ at slope $-m/t$. Thus, we have</span>
-<span id="cb3-1480"><a href="#cb3-1480" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1481"><a href="#cb3-1481" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1482"><a href="#cb3-1482" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb3-1483"><a href="#cb3-1483" aria-hidden="true" tabindex="-1"></a>\int_\R W_t(q, p)dp </span>
-<span id="cb3-1484"><a href="#cb3-1484" aria-hidden="true" tabindex="-1"></a>    &amp;\approx \frac mt\int_{-a/2}^{+a/2} W_0(q, p)dq <span class="sc">\\</span></span>
-<span id="cb3-1485"><a href="#cb3-1485" aria-hidden="true" tabindex="-1"></a>    &amp;= \frac{m}{t} \rho_p(qm/t) = \frac{\hbar t}{\pi m a q^2} \left(1 - \cos \left( \frac{ma}{\hbar t} q\right)\right) <span class="sc">\\</span></span>
-<span id="cb3-1486"><a href="#cb3-1486" aria-hidden="true" tabindex="-1"></a>    &amp;= \frac{am}{\hbar t} f \left(\frac{am}{\hbar t} q\right)</span>
-<span id="cb3-1487"><a href="#cb3-1487" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb3-1488"><a href="#cb3-1488" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1489"><a href="#cb3-1489" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1490"><a href="#cb3-1490" aria-hidden="true" tabindex="-1"></a>In particular, the higher-order waves are *not* disspated away, and so the square wave never converges to a gaussian wavepacket. In fact, it always converges to the same shape of $f$. This is directly against the claim of <span class="co">[</span><span class="ot">@mitaDispersionNonGaussianFree2007</span><span class="co">]</span>, as previously pointed out by <span class="co">[</span><span class="ot">@andrewsEvolutionFreeWave2008</span><span class="co">]</span>.</span>
-<span id="cb3-1491"><a href="#cb3-1491" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1492"><a href="#cb3-1492" aria-hidden="true" tabindex="-1"></a>By the symmetry of the Wigner function in $q$ and $p$, we have the following result: If the wavefunction satisfies $\psi(q) = \sqrt{\frac{b}{\hbar} }\frac{\operatorname{sinc}(bq/2 \hbar)}{\sqrt{2\pi}}$ at $t=0$, then at large $t$, the wavefunction converges to a square wave on the interval $<span class="co">[</span><span class="ot">-bt/2m, +bt/2m</span><span class="co">]</span>$ with height $\sqrt{\frac{m}{bt}}$.</span>
-<span id="cb3-1493"><a href="#cb3-1493" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1494"><a href="#cb3-1494" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Generic wavepacket</span></span>
-<span id="cb3-1495"><a href="#cb3-1495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1496"><a href="#cb3-1496" aria-hidden="true" tabindex="-1"></a>In general, the shape of the wave of any normalizable wave function $\psi_q(q)$, propagating in free space, would, after a long time, converge to a translation-and-dilation of its $p$-marginal distribution $\psi_q(q)$, multiplied by a phase factor $e^{iS(t, q)}$. Since the $q$-marginal distribution can be arbitrary, the same is true for the $p$-marginal distribution. In particular, we have the following theorem, which is immediate from the geometric intuition.</span>
-<span id="cb3-1497"><a href="#cb3-1497" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1498"><a href="#cb3-1498" aria-hidden="true" tabindex="-1"></a>::: {#prp-todo}</span>
-<span id="cb3-1499"><a href="#cb3-1499" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1500"><a href="#cb3-1500" aria-hidden="true" tabindex="-1"></a>If $\rho$ is a smooth probability density function on $\R$, then there exists a wavefunction $\psi$ propagating in free space, such that for all large enough $t$,</span>
-<span id="cb3-1501"><a href="#cb3-1501" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1502"><a href="#cb3-1502" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1503"><a href="#cb3-1503" aria-hidden="true" tabindex="-1"></a>|\psi(t, q)|^2 \to \frac{m}{t}\rho(mq/t)</span>
-<span id="cb3-1504"><a href="#cb3-1504" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1505"><a href="#cb3-1505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1506"><a href="#cb3-1506" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-1507"><a href="#cb3-1507" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1508"><a href="#cb3-1508" aria-hidden="true" tabindex="-1"></a>Such $\psi(0, q)$ can be found by taking the Wigner function of $\sqrt{\rho(p)} e^{iS(p)}$ for an arbitrary smooth function $S$, rotating by 90 degrees in the phase plane, then taking the inverse Wigner transform.</span>
-<span id="cb3-1509"><a href="#cb3-1509" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1510"><a href="#cb3-1510" aria-hidden="true" tabindex="-1"></a>Previously, we showed that for almost any gaussian wavepacket, $Pr(q &gt; q_1 | t)$ the probability of finding the particle to the right of some point $q_1$ at time $t$, would first increase then decrease, or first decrease then increase. In fact, this is true for almost any Wigner function, period. The Wigner function does not even need to be pure. It can be the Wigner function of a mixed state, and this would still be true.</span>
-<span id="cb3-1511"><a href="#cb3-1511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1512"><a href="#cb3-1512" aria-hidden="true" tabindex="-1"></a>::: {#prp-todo}</span>
+<span id="cb3-1479"><a href="#cb3-1479" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1480"><a href="#cb3-1480" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb3-1481"><a href="#cb3-1481" aria-hidden="true" tabindex="-1"></a>      W_0(q, p) &amp;= \frac{1}{2a\pi \hbar} \int_{|q + y/2| \leq a/2, |q - y/2| \leq a/2} dy e^{-ipy /\hbar} <span class="sc">\\</span></span>
+<span id="cb3-1482"><a href="#cb3-1482" aria-hidden="true" tabindex="-1"></a>      &amp;= \frac{1}{2a\pi \hbar} \frac{\hbar}{-ip} e^{-ipy /\hbar}\Big|_{\max(2q - a, -2q- a)}^{\min(2q+a, -2q+a)}<span class="sc">\\</span></span>
+<span id="cb3-1483"><a href="#cb3-1483" aria-hidden="true" tabindex="-1"></a>      &amp;= \frac{1}{a \pi p} \sin\left(\frac{p(a - 2|q|)}{\hbar} \right)</span>
+<span id="cb3-1484"><a href="#cb3-1484" aria-hidden="true" tabindex="-1"></a>      \end{aligned}</span>
+<span id="cb3-1485"><a href="#cb3-1485" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1486"><a href="#cb3-1486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1487"><a href="#cb3-1487" aria-hidden="true" tabindex="-1"></a>when $q \in <span class="co">[</span><span class="ot">-a/2, +a/2</span><span class="co">]</span>$. For larger values, $W = 0$.  </span>
+<span id="cb3-1488"><a href="#cb3-1488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1489"><a href="#cb3-1489" aria-hidden="true" tabindex="-1"></a>The $p$-marginal distribution is</span>
+<span id="cb3-1490"><a href="#cb3-1490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1491"><a href="#cb3-1491" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1492"><a href="#cb3-1492" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb3-1493"><a href="#cb3-1493" aria-hidden="true" tabindex="-1"></a>\rho_p(p) &amp;:= \int_\R  W_0(q,p)dq  <span class="sc">\\</span></span>
+<span id="cb3-1494"><a href="#cb3-1494" aria-hidden="true" tabindex="-1"></a>      &amp;= \int_{-a/2}^{+a/2} \frac{1}{a \pi p} \sin\left(\frac{p(a - 2|q|)}{\hbar} \right) dq <span class="sc">\\</span></span>
+<span id="cb3-1495"><a href="#cb3-1495" aria-hidden="true" tabindex="-1"></a>      &amp;= \frac{\hbar }{\pi a p^2} ( 1 - \cos(pa /\hbar))</span>
+<span id="cb3-1496"><a href="#cb3-1496" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb3-1497"><a href="#cb3-1497" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1498"><a href="#cb3-1498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1499"><a href="#cb3-1499" aria-hidden="true" tabindex="-1"></a>Let $f(t) := \frac{1 - \cos t}{\pi t^2} = \left(\frac{\operatorname{sinc}(t/2)}{\sqrt{2\pi}} \right)^2$, then $\rho_p(p) = \frac{a}{\hbar} f(\frac{a}{\hbar}p)$. Thus, the $p$-marginal distribution always has the same shape no matter what $a$ is.</span>
+<span id="cb3-1500"><a href="#cb3-1500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1501"><a href="#cb3-1501" aria-hidden="true" tabindex="-1"></a><span class="al">![Wigner function of the square wave, and its $p$-marginal distribution. $a = 1.3, \hbar = 1$](figure/square_wave_wigner.png)</span></span>
+<span id="cb3-1502"><a href="#cb3-1502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1503"><a href="#cb3-1503" aria-hidden="true" tabindex="-1"></a>Because at $t=0$, the Wigner function is zero outside of $q \in <span class="co">[</span><span class="ot">-a/2, +a/2</span><span class="co">]</span>$, at large $t$, the probability that the particle is found at $<span class="co">[</span><span class="ot">q, q + \delta q</span><span class="co">]</span>$ is the integral of $W_0$ over a the thin line passing $<span class="co">[</span><span class="ot">q, q + \delta q</span><span class="co">]</span>$ at slope $-m/t$. Thus, we have</span>
+<span id="cb3-1504"><a href="#cb3-1504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1505"><a href="#cb3-1505" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1506"><a href="#cb3-1506" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb3-1507"><a href="#cb3-1507" aria-hidden="true" tabindex="-1"></a>\int_\R W_t(q, p)dp </span>
+<span id="cb3-1508"><a href="#cb3-1508" aria-hidden="true" tabindex="-1"></a>    &amp;\approx \frac mt\int_{-a/2}^{+a/2} W_0(q, p)dq <span class="sc">\\</span></span>
+<span id="cb3-1509"><a href="#cb3-1509" aria-hidden="true" tabindex="-1"></a>    &amp;= \frac{m}{t} \rho_p(qm/t) = \frac{\hbar t}{\pi m a q^2} \left(1 - \cos \left( \frac{ma}{\hbar t} q\right)\right) <span class="sc">\\</span></span>
+<span id="cb3-1510"><a href="#cb3-1510" aria-hidden="true" tabindex="-1"></a>    &amp;= \frac{am}{\hbar t} f \left(\frac{am}{\hbar t} q\right)</span>
+<span id="cb3-1511"><a href="#cb3-1511" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb3-1512"><a href="#cb3-1512" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb3-1513"><a href="#cb3-1513" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1514"><a href="#cb3-1514" aria-hidden="true" tabindex="-1"></a>For almost any mixed state of a particle propagating in free space, and almost any $q_1$, the function $t \mapsto Pr(q &gt; q_1 | t)$ is not monotonic.</span>
+<span id="cb3-1514"><a href="#cb3-1514" aria-hidden="true" tabindex="-1"></a>In particular, the higher-order waves are *not* disspated away, and so the square wave never converges to a gaussian wavepacket. In fact, it always converges to the same shape of $f$. This is directly against the claim of <span class="co">[</span><span class="ot">@mitaDispersionNonGaussianFree2007</span><span class="co">]</span>, as previously pointed out by <span class="co">[</span><span class="ot">@andrewsEvolutionFreeWave2008</span><span class="co">]</span>.</span>
 <span id="cb3-1515"><a href="#cb3-1515" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1516"><a href="#cb3-1516" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-1516"><a href="#cb3-1516" aria-hidden="true" tabindex="-1"></a>By the symmetry of the Wigner function in $q$ and $p$, we have the following result: If the wavefunction satisfies $\psi(q) = \sqrt{\frac{b}{\hbar} }\frac{\operatorname{sinc}(bq/2 \hbar)}{\sqrt{2\pi}}$ at $t=0$, then at large $t$, the wavefunction converges to a square wave on the interval $<span class="co">[</span><span class="ot">-bt/2m, +bt/2m</span><span class="co">]</span>$ with height $\sqrt{\frac{m}{bt}}$.</span>
 <span id="cb3-1517"><a href="#cb3-1517" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1518"><a href="#cb3-1518" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Proof" collapse="true"}</span>
+<span id="cb3-1518"><a href="#cb3-1518" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Generic wavepacket</span></span>
 <span id="cb3-1519"><a href="#cb3-1519" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1520"><a href="#cb3-1520" aria-hidden="true" tabindex="-1"></a>Fix some Wigner function $W$. Define $f(\theta)$ to be the integral of $W$ to the right of the line passing $(q_1, 0)$, making an angle $\theta$ with the $q$-axis. Then we have $f(0) = 1 - f(\pi)$, and in general, $f(\theta) = 1 - f(\pi + \theta)$. Thus, if $f$ reaches a global minimum at $\theta$, then it reaches a global maximum at $f(\theta + \pi)$. In particular, if $f(0)$ is neither the global minimum nor the global maximum, then $f(\theta)$ must reach either the global minimum or the global maximum at some $\theta \in (0, \pi)$. Therefore, $f$ is not monotonic as $\theta$ rotates.</span>
+<span id="cb3-1520"><a href="#cb3-1520" aria-hidden="true" tabindex="-1"></a>In general, the shape of the wave of any normalizable wave function $\psi_q(q)$, propagating in free space, would, after a long time, converge to a translation-and-dilation of its $p$-marginal distribution $\psi_q(q)$, multiplied by a phase factor $e^{iS(t, q)}$. Since the $q$-marginal distribution can be arbitrary, the same is true for the $p$-marginal distribution. In particular, we have the following theorem, which is immediate from the geometric intuition.</span>
 <span id="cb3-1521"><a href="#cb3-1521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1522"><a href="#cb3-1522" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-1522"><a href="#cb3-1522" aria-hidden="true" tabindex="-1"></a>::: {#prp-todo}</span>
 <span id="cb3-1523"><a href="#cb3-1523" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1524"><a href="#cb3-1524" aria-hidden="true" tabindex="-1"></a>We can think of this as a "maximally non-dissipation" result. Unlike the heat equation, where all high-frequency fluctuations decay away, leaving behind just a single low-frequency gaussian mode, the Schrödinger equation results in a wave propagation that has no dissipation, but preserves the shape of $|\psi_p(0)|^2$ for all large times. This is unsurprising, as it is well-known that quantum mechanics does not dissipate.</span>
+<span id="cb3-1524"><a href="#cb3-1524" aria-hidden="true" tabindex="-1"></a>If $\rho$ is a smooth probability density function on $\R$, then there exists a wavefunction $\psi$ propagating in free space, such that for all large enough $t$,</span>
 <span id="cb3-1525"><a href="#cb3-1525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1526"><a href="#cb3-1526" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Airy wavepacket non-spreading</span></span>
-<span id="cb3-1527"><a href="#cb3-1527" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1528"><a href="#cb3-1528" aria-hidden="true" tabindex="-1"></a>Because the <span class="co">[</span><span class="ot">Airy wavepacket</span><span class="co">](https://en.wikipedia.org/wiki/Wave_packet#The_Airy_wave_train)</span> is invariant under shearing, it does not spread even as it evolves.</span>
+<span id="cb3-1526"><a href="#cb3-1526" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1527"><a href="#cb3-1527" aria-hidden="true" tabindex="-1"></a>|\psi(t, q)|^2 \to \frac{m}{t}\rho(mq/t)</span>
+<span id="cb3-1528"><a href="#cb3-1528" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb3-1529"><a href="#cb3-1529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1530"><a href="#cb3-1530" aria-hidden="true" tabindex="-1"></a><span class="fu">### Simple harmonic oscillator</span></span>
+<span id="cb3-1530"><a href="#cb3-1530" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-1531"><a href="#cb3-1531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1532"><a href="#cb3-1532" aria-hidden="true" tabindex="-1"></a>If in the Schrödinger picture, the Hamiltonian of the system is</span>
+<span id="cb3-1532"><a href="#cb3-1532" aria-hidden="true" tabindex="-1"></a>Such $\psi(0, q)$ can be found by taking the Wigner function of $\sqrt{\rho(p)} e^{iS(p)}$ for an arbitrary smooth function $S$, rotating by 90 degrees in the phase plane, then taking the inverse Wigner transform.</span>
 <span id="cb3-1533"><a href="#cb3-1533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1534"><a href="#cb3-1534" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1535"><a href="#cb3-1535" aria-hidden="true" tabindex="-1"></a>\hat H = \sum_k \frac{\hat p_k^2}{2m_k} + V(\hat q)</span>
-<span id="cb3-1536"><a href="#cb3-1536" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1534"><a href="#cb3-1534" aria-hidden="true" tabindex="-1"></a>Previously, we showed that for almost any gaussian wavepacket, $Pr(q &gt; q_1 | t)$ the probability of finding the particle to the right of some point $q_1$ at time $t$, would first increase then decrease, or first decrease then increase. In fact, this is true for almost any Wigner function, period. The Wigner function does not even need to be pure. It can be the Wigner function of a mixed state, and this would still be true.</span>
+<span id="cb3-1535"><a href="#cb3-1535" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1536"><a href="#cb3-1536" aria-hidden="true" tabindex="-1"></a>::: {#prp-todo}</span>
 <span id="cb3-1537"><a href="#cb3-1537" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1538"><a href="#cb3-1538" aria-hidden="true" tabindex="-1"></a>then in the phase-space picture, the time-evolution of the Wigner quasiprobability distribution is</span>
+<span id="cb3-1538"><a href="#cb3-1538" aria-hidden="true" tabindex="-1"></a>For almost any mixed state of a particle propagating in free space, and almost any $q_1$, the function $t \mapsto Pr(q &gt; q_1 | t)$ is not monotonic.</span>
 <span id="cb3-1539"><a href="#cb3-1539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1540"><a href="#cb3-1540" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-1541"><a href="#cb3-1541" aria-hidden="true" tabindex="-1"></a>\partial_t W = \sum_k \left( -\frac{p_k}{m_k} \partial_{q_k} W + \partial_{q_k} V \partial_{p_k} W\right)</span>
-<span id="cb3-1542"><a href="#cb3-1542" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1540"><a href="#cb3-1540" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-1541"><a href="#cb3-1541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1542"><a href="#cb3-1542" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Proof" collapse="true"}</span>
 <span id="cb3-1543"><a href="#cb3-1543" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1544"><a href="#cb3-1544" aria-hidden="true" tabindex="-1"></a><span class="fu">### Quantum computing</span></span>
+<span id="cb3-1544"><a href="#cb3-1544" aria-hidden="true" tabindex="-1"></a>Fix some Wigner function $W$. Define $f(\theta)$ to be the integral of $W$ to the right of the line passing $(q_1, 0)$, making an angle $\theta$ with the $q$-axis. Then we have $f(0) = 1 - f(\pi)$, and in general, $f(\theta) = 1 - f(\pi + \theta)$. Thus, if $f$ reaches a global minimum at $\theta$, then it reaches a global maximum at $f(\theta + \pi)$. In particular, if $f(0)$ is neither the global minimum nor the global maximum, then $f(\theta)$ must reach either the global minimum or the global maximum at some $\theta \in (0, \pi)$. Therefore, $f$ is not monotonic as $\theta$ rotates.</span>
 <span id="cb3-1545"><a href="#cb3-1545" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1546"><a href="#cb3-1546" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@woottersPicturingQubitsPhase2004; @miquelQuantumComputersPhase2002</span><span class="co">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-1546"><a href="#cb3-1546" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-1547"><a href="#cb3-1547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1548"><a href="#cb3-1548" aria-hidden="true" tabindex="-1"></a>We can think of this as a "maximally non-dissipation" result. Unlike the heat equation, where all high-frequency fluctuations decay away, leaving behind just a single low-frequency gaussian mode, the Schrödinger equation results in a wave propagation that has no dissipation, but preserves the shape of $|\psi_p(0)|^2$ for all large times. This is unsurprising, as it is well-known that quantum mechanics does not dissipate.</span>
+<span id="cb3-1549"><a href="#cb3-1549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1550"><a href="#cb3-1550" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Airy wavepacket non-spreading</span></span>
+<span id="cb3-1551"><a href="#cb3-1551" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1552"><a href="#cb3-1552" aria-hidden="true" tabindex="-1"></a>Because the <span class="co">[</span><span class="ot">Airy wavepacket</span><span class="co">](https://en.wikipedia.org/wiki/Wave_packet#The_Airy_wave_train)</span> is invariant under shearing, it does not spread even as it evolves.</span>
+<span id="cb3-1553"><a href="#cb3-1553" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1554"><a href="#cb3-1554" aria-hidden="true" tabindex="-1"></a><span class="fu">### Simple harmonic oscillator</span></span>
+<span id="cb3-1555"><a href="#cb3-1555" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1556"><a href="#cb3-1556" aria-hidden="true" tabindex="-1"></a>If in the Schrödinger picture, the Hamiltonian of the system is</span>
+<span id="cb3-1557"><a href="#cb3-1557" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1558"><a href="#cb3-1558" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1559"><a href="#cb3-1559" aria-hidden="true" tabindex="-1"></a>\hat H = \sum_k \frac{\hat p_k^2}{2m_k} + V(\hat q)</span>
+<span id="cb3-1560"><a href="#cb3-1560" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1561"><a href="#cb3-1561" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1562"><a href="#cb3-1562" aria-hidden="true" tabindex="-1"></a>then in the phase-space picture, the time-evolution of the Wigner quasiprobability distribution is</span>
+<span id="cb3-1563"><a href="#cb3-1563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1564"><a href="#cb3-1564" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1565"><a href="#cb3-1565" aria-hidden="true" tabindex="-1"></a>\partial_t W = \sum_k \left( -\frac{p_k}{m_k} \partial_{q_k} W + \partial_{q_k} V \partial_{p_k} W\right)</span>
+<span id="cb3-1566"><a href="#cb3-1566" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-1567"><a href="#cb3-1567" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1568"><a href="#cb3-1568" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quantum computing</span></span>
+<span id="cb3-1569"><a href="#cb3-1569" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1570"><a href="#cb3-1570" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@woottersPicturingQubitsPhase2004; @miquelQuantumComputersPhase2002</span><span class="co">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
