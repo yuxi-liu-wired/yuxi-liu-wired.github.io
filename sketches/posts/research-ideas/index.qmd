@@ -36,4 +36,15 @@ However, there was a case-report that it works in biochemistry, where the follow
 
 What I think *might* work out is if we find $X, Y$ such that $\nabla_X r_{X,Y} = 0$ and $\nabla_Y r_{X,Y} = 0$, where the gradient $\nabla$ does not literally mean $d/dx$, but rather, what happens if we move from $X$ to an adjacent variable. However, what is "adjacent"? We can't say that "adjacent" means "directly connected on the causal graph" because if we know the causal graph, then our problem is solved!
 
+## AI
+
+### search-aware training
+
+When one does "tree of thought" with an LLM, such as Llama 3, because the LLM was "unaware" that it would be used in tree searches in test-time, it would not behave as well as possible. This is a case of train-test mismatch. If during training it was also used in tree searches, it should do much better during test-time tree search.
+
+Intuition for the mismatch: If an LLM is trained to just predict the next token on only the training corpus, then it would have difficulty planning over multiple rollouts, because it has only ever played one-rollout games of language-generation.
+
+Sometimes it is very valuable to go through many  rollouts being wrong just to gather learn exactly why they are wrong, so that one can avoid them. But an LLM trained to do one-rollout language-generation would be trained to not do that. They are "YOLO" (you only language once) in that sense. YOLO leads to conservation and exploitation, not exploration.
+
+Note: It may still learn multi-rollout by a "[side-channel attack](https://en.wikipedia.org/wiki/Side-channel_attack)", like how they managed to learn to spell despite using tokenizers ([*Models In a Spelling Bee: Language Models Implicitly Learn the Character Composition of Tokens*](https://arxiv.org/abs/2108.11193)), by using some implicit cryptoanalysis to break the [substitution cipher](https://en.wikipedia.org/wiki/Substitution_cipher) of tokenizers, but that's obviously very inefficient.
 
