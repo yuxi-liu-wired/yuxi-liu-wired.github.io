@@ -263,6 +263,10 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#correlation-gradient-ascends-to-causation" id="toc-correlation-gradient-ascends-to-causation" class="nav-link" data-scroll-target="#correlation-gradient-ascends-to-causation">Correlation gradient ascends to causation</a></li>
   </ul></li>
+  <li><a href="#ai" id="toc-ai" class="nav-link" data-scroll-target="#ai">AI</a>
+  <ul class="collapse">
+  <li><a href="#search-aware-training" id="toc-search-aware-training" class="nav-link" data-scroll-target="#search-aware-training">search-aware training</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -291,6 +295,16 @@ window.Quarto = {
 <li>Repeat as desired. At the end, either differentiate the cells into oocytes or perform nuclear transfer into a donor oocyte.</li>
 </ol>
 <p>What I think <em>might</em> work out is if we find <span class="math inline">\(X, Y\)</span> such that <span class="math inline">\(\nabla_X r_{X,Y} = 0\)</span> and <span class="math inline">\(\nabla_Y r_{X,Y} = 0\)</span>, where the gradient <span class="math inline">\(\nabla\)</span> does not literally mean <span class="math inline">\(d/dx\)</span>, but rather, what happens if we move from <span class="math inline">\(X\)</span> to an adjacent variable. However, what is “adjacent”? We can’t say that “adjacent” means “directly connected on the causal graph” because if we know the causal graph, then our problem is solved!</p>
+</section>
+</section>
+<section id="ai" class="level2">
+<h2 class="anchored" data-anchor-id="ai">AI</h2>
+<section id="search-aware-training" class="level3">
+<h3 class="anchored" data-anchor-id="search-aware-training">search-aware training</h3>
+<p>When one does “tree of thought” with an LLM, such as Llama 3, because the LLM was “unaware” that it would be used in tree searches in test-time, it would not behave as well as possible. This is a case of train-test mismatch. If during training it was also used in tree searches, it should do much better during test-time tree search.</p>
+<p>Intuition for the mismatch: If an LLM is trained to just predict the next token on only the training corpus, then it would have difficulty planning over multiple rollouts, because it has only ever played one-rollout games of language-generation.</p>
+<p>Sometimes it is very valuable to go through many rollouts being wrong just to gather learn exactly why they are wrong, so that one can avoid them. But an LLM trained to do one-rollout language-generation would be trained to not do that. They are “YOLO” (you only language once) in that sense. YOLO leads to conservation and exploitation, not exploration.</p>
+<p>Note: It may still learn multi-rollout by a “<a href="https://en.wikipedia.org/wiki/Side-channel_attack">side-channel attack</a>”, like how they managed to learn to spell despite using tokenizers (<a href="https://arxiv.org/abs/2108.11193"><em>Models In a Spelling Bee: Language Models Implicitly Learn the Character Composition of Tokens</em></a>), by using some implicit cryptoanalysis to break the <a href="https://en.wikipedia.org/wiki/Substitution_cipher">substitution cipher</a> of tokenizers, but that’s obviously very inefficient.</p>
 
 
 <!-- -->
@@ -940,7 +954,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Repeat as desired. At the end, either differentiate the cells into oocytes or perform nuclear transfer into a donor oocyte.</span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>What I think *might* work out is if we find $X, Y$ such that $\nabla_X r_{X,Y} = 0$ and $\nabla_Y r_{X,Y} = 0$, where the gradient $\nabla$ does not literally mean $d/dx$, but rather, what happens if we move from $X$ to an adjacent variable. However, what is "adjacent"? We can't say that "adjacent" means "directly connected on the causal graph" because if we know the causal graph, then our problem is solved!</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## AI</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### search-aware training</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>When one does "tree of thought" with an LLM, such as Llama 3, because the LLM was "unaware" that it would be used in tree searches in test-time, it would not behave as well as possible. This is a case of train-test mismatch. If during training it was also used in tree searches, it should do much better during test-time tree search.</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>Intuition for the mismatch: If an LLM is trained to just predict the next token on only the training corpus, then it would have difficulty planning over multiple rollouts, because it has only ever played one-rollout games of language-generation.</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>Sometimes it is very valuable to go through many  rollouts being wrong just to gather learn exactly why they are wrong, so that one can avoid them. But an LLM trained to do one-rollout language-generation would be trained to not do that. They are "YOLO" (you only language once) in that sense. YOLO leads to conservation and exploitation, not exploration.</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>Note: It may still learn multi-rollout by a "<span class="co">[</span><span class="ot">side-channel attack</span><span class="co">](https://en.wikipedia.org/wiki/Side-channel_attack)</span>", like how they managed to learn to spell despite using tokenizers (<span class="co">[</span><span class="ot">*Models In a Spelling Bee: Language Models Implicitly Learn the Character Composition of Tokens*</span><span class="co">](https://arxiv.org/abs/2108.11193)</span>), by using some implicit cryptoanalysis to break the <span class="co">[</span><span class="ot">substitution cipher</span><span class="co">](https://en.wikipedia.org/wiki/Substitution_cipher)</span> of tokenizers, but that's obviously very inefficient.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
