@@ -2,7 +2,7 @@
 title: "The Backstory of Backpropagation"
 author: "Yuxi Liu"
 date: "2023-12-26"
-date-modified: "2024-08-16"
+date-modified: "2024-11-22"
 categories: [AI, math, physics, history]
 format:
     html:
@@ -26,7 +26,7 @@ Seppo Linnainmaa's claim of priority is his 1970 master thesis -- in Finnish, an
 
 Paul Werbos' claim of priority is that he developed the backpropagation algorithm in 1971, but was frustrated at every turn whenever he tried publishing it, not managing until around 1982. After that, it was taken up by many neural network researchers. He has priority and paternity.
 
-As he freely admits, David Rumelhart reinvented it in 1982, as he did not know the previous work. The 1986 paper he coauthored [@rumelhartLearningRepresentationsBackpropagating1986] became popular enough that nobody would need to reinvent it again. He has no priority, but paternity. As usual in science, it is not the first inventor who gets the credit, but the last re-inventor.
+David Rumelhart reinvented it in 1982. As he freely admits, he didn't cite previous work because they were so obscure. The 1986 paper he coauthored [@rumelhartLearningRepresentationsBackpropagating1986] became popular enough that nobody would need to reinvent it again. He has no priority, but paternity. As usual in science, it is not the first inventor who gets the credit, but the last re-inventor.
 
 I was puzzled by how none of the first wave of neural network researchers developed backpropagation. I still am. My guesses are, from most to least likely:
 
@@ -426,11 +426,59 @@ It's said that Seppo Linnainmaa's master's thesis in 1970 contains the backpropa
 
 I checked all his English papers during the 1970s, and it seems only [@linnainmaaTaylorExpansionAccumulated1976] has been cited non-negligibly before 2000, and may have had some impact on automatic differentiation, but I cannot tell by how much. It contains two algorithms, one for computing the first derivative, one for computing the first two. Both were special cases of the general backpropagation algorithm for computing arbitrary orders of derivatives.
 
-## Rumelhart and Sejnowski
+## David Rumelhart
 
-Rumelhart rediscovered backpropagation around 1982 and immediately set about publishing and telling others about it. Some still resisted, such as Geoffrey Hinton, but others immediately grasped it and set about using it, such as Terrence Sejnowski. In the interview, he was rather unbothered by the priority dispute [@rosenfeldTalkingNetsOral2000, Chapter 12]:
+This section is mainly based on a 1995 interview with David Rumelhart [@rosenfeldTalkingNetsOral2000, Chapter 12].
+
+In 1979-06, Rumelhart attended a conference organized by James A. Anderson, who knew many of those who were still doing neural network research even through this AI winter. This got him interested in neural networks, especially those done by Geoffrey Hinton and James L. McClelland. He couldn't get the idea out of his head, and during a train ride, decided to just do a "five-year plan" to figure out what the fuss is about, and maybe compile a comprehensive literature review. The world would know this book as *Parallel Distributed Processing* (1986).
+
+> "I think it's important enough that I should spend at least five years figuring out what's going on." ... When I came back to San Diego from this trip, I went to see McClelland, and I said to Jay, "Look, Geoffrey's coming back in December. Let's spend two quarters going over all the stuff on these neural network things... We'll have meetings every day. I'm on sabbatical. I can do this." Jay was on a Young Investigator Award, and Geoffrey was coming as a kind of a postdoctoral continuation... "Six months, that's plenty of time for doing this", we thought.
+
+So they set about reading all the literature they could find about neural networks. Rumelhart saw that the XOR problem was the key. Solve that with a general method, and neural networks would be reborn.
+
+> I'd read *Perceptrons*. And I thought, 'Well , somehow we have to figure out how to teach, how to train, a network that has more than one layer. Why can't we do this?" ... I knew about, as I say, the work of Rosenblatt and about the way he tried to do it. He had this idea of sending error signals back across layers, but he didn't have a very principled way of doing it.
+
+Rumelhart knew that Bernard Widrow's ADALINE essentially performs a linear regression $Wx + b$, trained by the ADALINE learning rule, also called the "[delta rule](https://en.wikipedia.org/wiki/Delta_rule)":
+
+$$
+\Delta W = -\eta(Wxx^T + (b-y)x^T), \quad \Delta b = -\eta(b + Wx - y)
+$$
+
+So he thought, how do I extend this to a "generalized delta rule"?
+
+> So what we thought was we'd pretend they were linear, and we would compute the derivatives as if they were linear, and then we could train them. We did this on a one-layer system. That was what we called delta learning... "Well, we'll just pretend like it's linear, and figure out how to train it as if it were linear, and then we'll put in these sigmoids. In that way, we can make a system that would work."
+
+So he thought, well, if the activation functions are linear functions, then we just get a deep linear network, so we can still do the delta rule. If the activation functions are nonlinear, but differentiable, then we can approximate these by linear activations... and that should be a working, generalized delta rule!
+
+Thus, by a long and almost accidental route, Rumelhart arrived at the gradient descent algorithm without thinking about gradients. In hindsight, the ADALINE learning rule is really a special case of gradient descent on the loss function $L = \frac 12 \|Wx + b - y\|^2$, but people back then didn't think of it that way. They just thought of it as a not particularly efficient way to solve the linear equation $y \approx Wx + b$. Of course, once he had discovered the generalized delta rule, he recognized it is really just gradient descent on L2 loss. Once you have figured out the result, you often become embarrassed by the pages upon pages of wasteful calculations you used to get there. A very relatable moment!
+
+Backpropagation was rediscovered in 1982. The world would soon know it, and this time, it would not forget.
+
+It was not all smooth-sailing though. Backpropagation was terribly slow, taking over 1000 steps to converge, and Hinton believed it would get stuck in local minima. Indeed, these two objections, that backpropagation is slow, and gets stuck in local minima, are perennial objections, as we would see in the [history of the second neural network winter](https://yuxi-liu-wired.github.io/TODO).
+
+Somewhat disappointed by the two objections, Rumelhart tried other methods, such as [competitive learning](https://en.wikipedia.org/wiki/Competitive_learning). Hinton left the book project to focus on his beloved Boltzmann machines, and would not return until 1985.
+
+In fact, Rumelhart avoided backprop whenever he could, as well! When he was trying to make a neural network to convert verbs (represented as a list of [phonemes](https://en.wikipedia.org/wiki/Phoneme)) to their past tense forms, he thought that he had to resort to an MLP with backprop, but then realized that, no, you can completely avoid backprop if you [hand-design some features](https://en.wikipedia.org/wiki/Feature_engineering), then just train a single layer over those features. An inauspicious omen of the second neural network winter, during which computer vision was stuck with the same paradigm of shallow learning ([SVM](https://en.wikipedia.org/wiki/Support_vector_machine), [random forests](https://en.wikipedia.org/wiki/Random_forest), etc) over cleverly hand-designed features ([SIFT](https://en.wikipedia.org/wiki/Scale-invariant_feature_transform), [HoG](https://en.wikipedia.org/wiki/Histogram_of_oriented_gradients), etc).
+
+> But then McClelland and I figured out another trick for learning past tenses, the so-called "[Wickelfeature](https://en.wikipedia.org/wiki/Wickelphone)" representation. We thought, "Oh well, we don't need multiple layers." So I put that aside and went off, and we realized that if we made fancier input representations, we wouldn't need this intermediate layer.
+
+The first phoneme of the Bitter Lesson has been spoken.[^first-phoneme-borges]
+
+[^first-phoneme-borges]: *Death and the Compass* (Borges, 1942).
+
+Years later, they did train an MLP by backprop for this task, and its publication in 1986 ignited the past tense debate [@pinkerFutureTense2002]. But at the moment, they didn't really want to use backprop. Indeed, in 1983, backprop was looking so uninteresting that at a lecture, Rumelhart elected to talk about competitive learning instead.
+
+> \[In 1983, Hinton and Sejnowski\] held a meeting in Pittsburgh... I remember electing at the last minute to talk about the competitive learning work rather than the backpropagation work. I had my slides all made out to do both of these talks, and I gave that one.
+
+Around 1984, Rumelhart started getting a vibe that they couldn't just keep doing this, that they really needed MLPs with learned hidden layers, so he tried it again. Things really picked up at this point. Hinton had realized that Boltzmann machines were even more painfully slow than backprop, so he went back. They wrote the famous *Nature* paper in 1985, and this time, the world listened. [@rumelhartLearningRepresentationsBackpropagating1986]
+
+> We had pretty much sorted this out and were working on how to do backpropagation in time. Geoff and I decided we really should write this up, so we start~d wriHng our paper and did a whole bunch of experiments in order to have something to say in this paper. The paper was really written in the spring of '85. I think the Nature paper was in the fall of '85. By then I was fairly committed to learning how it might work. I guess I've now spent about another ten years sorHng all of this out the best I could.
+
+In the interview, he was rather unbothered by the priority dispute:
 
 > I had no idea that Paul Werbos had done work on it. ... There are other examples of work in the control literature in the '60s \[the [adjoint method](https://en.wikipedia.org/wiki/Adjoint_state_method)\]. ... it's just no one had really done anything with them. My view is that we not only discovered them, but we realized what we could do with them and did a lot of different things. I consider them independent discoveries, at least three and maybe more. [\[Shun'ichi\] Amari](https://en.wikipedia.org/wiki/Shun'ichi_Amari), I think, suggests that he had another discovery, and you know, I believe that. You can look at his paper. He had, but he didn't do anything with it. I think that was in the late '60s. I don't feel any problem. You know, maybe we should have done better scholarship and searched out all of the precursors to it, but we didn't know there were any.
+
+## Terence Sejnowski
 
 In 1983, Rumelhart showed backpropagation to Sejnowski, who immediately tried it and found that it was much faster than the Boltzmann machine learning rule. What a refreshing change from all those others who stubbornly refused to try it.
 
