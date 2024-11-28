@@ -1,0 +1,230 @@
+---
+title: "Eulogy to Logical AI"
+author: "Yuxi Liu"
+date: "2024-01-23"
+date-modified: "2024-01-23"
+categories: [AI, scaling, history]
+format:
+  html:
+    toc: true
+description: "Good Old-Fashioned AI never die. They just fade away."
+
+# image: "figure/banner.png"
+status: "finished"
+confidence: "likely"
+importance: 3
+---
+
+{{< include ../../../utils/blog_utils/_macros.tex >}}
+
+## Translation
+
+> One naturally wonders if the problem of translation could conceivably be treated as a problem in cryptography. When I look at an article in Russian, I say: "This is really written in English, but it has been coded in some strange symbols. I will now proceed to decode."
+> 
+> -- Warren Weaver, Letter to Norbert Wiener, 1947-03-04
+
+During WWII, the science of communication and control took on a life-and-death importance. The mathematically perfect Enigma forced Allied mathematicians to turn their art of code into the science of information, so as to extract every last bit of information leaked out from the unknown enemy who was less than mathematically perfect, who made mistakes, who stuttered with verbal tics like `WETTER` or `KEINE BESONDEREN EREIGNISSE`. On two sides of the Atlantic, Alan Turing of computer science, and Claude Shannon of information theory, fought in this information warfare.
+
+Before the war, some feared that the bombers would finally be the ultimate weapon, as a fleet of [them will always get through](https://en.wikipedia.org/wiki/The_bomber_will_always_get_through). Bombing was becoming a cyborg activity. The bombers were flying so high and so fast, the bombardiers needed [intricate bombsights](https://en.wikipedia.org/wiki/Norden_bombsight) filled with mechanical calculators, just to calculate the correct time to drop the bombs.
+
+But the bombers would not go through after all, as radar screens and flak cannons raised invisible walls in the sky, and the anti-aircraft fire became another cyborg activity. Norbert Wiener developed his control theory in the context of anti-aircraft fire and radar screening. He thought of both as a form of deadly communication. A radar speaks to the aircraft, "Who and where are you?" Despite itself, the aircraft must answer. The radar's job is to speak clearly with the right ping and listen carefully with the right filter. In this context, he developed the [Wiener filter](https://en.wikipedia.org/wiki/Wiener_filter).
+
+Anti-aircraft (AA) seems even less like a deadly communication, yet Wiener made it work. To shoot down an aircraft, one must predict where it will be a few seconds into the future, since that is how long bullets take to fly that high. The AA looks to the sky and asks, "Where are you going?". Despite itself, the aircraft speaks with where it had been in the past few seconds, as if writing a cursive word in the sky. The AA reads and understands this writing, and act accordingly. The past is a code for the future, like the Enigma is a code for the plaintext. [@yeangFilteringNoiseAntiaircraft2023]
+
+If the soldiers are always preparing to fight the previous war, the same seems true for some mathematicians. Wiener and his collaborator, Warren Weaver, decided to tackle the problem of machine translation with the same tools they developed for war. If information theory helps with breaking the Enigma code, would it not also help with breaking the language codes?
+
+The wartime metaphor would become ominously appropriate with the Cold War.
+
+### Georgetown--IBM experiment
+
+During the 1950s, electronic computers were mainly understood and used as tools for real-valued calculations, such as simulating nuclear explosions, the aerodynamics of ballistic missiles, macroeconomic planning, and other important real-valued functions that are necessary to safeguard freedom. However, there was already early attempts at using computers for symbolic calculations.
+
+In a sense, this was quite old. Whereas Charles Babbage designed his computer as an arithmetic mill to grind out numerical tables, Ada Lovelace speculated that computers can grind out symbolic music too, as long as music and its transformation rules are encoded into integers.
+
+On 1954-01-07, the famous [Georgetown--IBM experiment](https://en.wikipedia.org/wiki/Georgetown%E2%80%93IBM_experiment) took place. It was the first public demonstration of machine translation -- from Russian to English, and was widely reported with titles like "Electronic brain translates Russian" or "Robot brain translates Russian into King's English". The project originated when a conference on machine translation took place at MIT in 1952-06, and Leon Dostert, the director of the project, came away convinced that instead of arguments about whether MT works *in theory*, they needed to try it out on an actual problem to see if it would work.
+
+The program took up 2400 instructions $2400 \;\mathrm{instruction} \times 18 \;\mathrm{bit/instruction} = 5.4 \;\mathrm{kB}$, whereas the dictionary took up $6000 \;\mathrm{word} \times 36 \;\mathrm{bit/word} = 27 \;\mathrm{kB}$.
+
+The dictionary is a table with 6 columns: Russian, English equivalent I, English equivalent II, Code 1, Code 2, Code 3. As we see, each Russian word has 1 or 2 possible English translations. The three `Code`s are essentially grammar categories. As an example, the suffix `-a` is coded as `(-a, of, ---, 131, 222, 25)`, while the word stem `ugl-` is coded as `(ugl-, coal, angle, 121, ***, 25)`.
+
+The dictionary contains just 250 lexical items (stems and endings). Its grammar has just 6 rules. All input sentences must be made of words that are of form either `stem` or `stem-ending`. Some example translations included:
+
+* Mi pyeryedayem mislyi posryedstvom ryechyi.
+* We transmit thoughts by means of speech.
+
+The algorithm is essentially a word-substitution program, using the 6 rules to disambiguate, and to decide whether to switch a word with a previous word. The word-order switch is necessary since Russian puts prepositions as word suffixes. For example, `ugl-a` would be word-substituted to `angle-by`, but must be translated as `by angle`.
+
+The experiment was a hit, and there were some predictions of imminent breakthrough [@hutchinsFirstPublicDemonstration2005]:
+
+* Such a device should be ready within three to five years... As soon as cards for Russian are completed, sets will be made for German and French. Then other Slavic, Germanic and Romance languages can be set up at will.
+* 100 rules would be needed to govern 20,000 words for free translation.
+
+From our perspective, these seem painfully optimistic. However, it was a common belief that electronic computers, like the IBM 701, were designed for numerical computation, something that is more difficult than natural language processing. As such, a machine translator needed not faster computers, but more data. Yet among the general optimism, there was a disquieting note:
+
+> the formulation of logic required to convert word meanings properly even in a small segment of two languages necessitates two and a half times as many instructions to the computer as are required to simulate the flight of a guided missile.
+>
+> ["701 Translator", IBM Press release](https://aclanthology.org/www.mt-archive.info/IBM-1954.pdf) (1954-01-08)
+
+::: {.callout-note title="Give me code or give me nothing!" collapse="true" }
+
+One thing I dislike about some technical histories and overviews is that I keep getting a cotton-like, vaporwave feeling in the brain after reading them. It is easy to read an abstract story. 
+
+For example, many AI papers by OpenAI after 2020 has become like that. In any case, I looked up the program, which appeared in [@ornsteinMechanicalTranslationNew1955] as a single giant flowchart. I didn't read the spaghetti code in detail, but it seems to me that it first parses the input sequence into words and sub-words, then it starts from left to right, for each word/sub-word, find the rule that applies to it. Executing the rule would pick an English translation for that word/sub-word, and either switch that fragment of translation with the previous fragment, or not. There are 6 rules, of which I just copy one, since the others look similarly boring:
+
+> Choice-Rearrangement. If first code is `131`, is third code of preceding complete word or either portion (root or ending) of preceding subdivided word equal to `23`? If so, adopt English equivalent II of word carrying `131` and retain order of appearance of words in output; if not, adopt English equivalent I and reverse order of appearance of words in output.
+
+The following is a rough sketch. It implements just rule 3, and even that is not quite correct, but it gives you an idea of how the program would go. I estimate that it should take about 100 lines to implement a fully correct version.
+
+```python
+def parse(sentence):
+    words = sentence.split(' ')
+    for word in words:
+        if word == stem ++ prefix for some stem in stems and prefix in prefixes:
+            replace word in words by [stem, prefix]
+    return words
+
+def translate(words):
+    translation = []
+    for i in range(words):
+        word = words[i]
+        ...
+        elif dictionary[word]['code 1'] == 131: # rule 3
+            if dictionary[words[i-1]]['code 3'] == 23:
+                translation.append(dictionary[word]['English equivalent II'])
+            else:
+                translation.append(dictionary[word]['English equivalent I'])
+                translation[i-2, i-1] = [translation[i-1], translation[i-2]]
+        elif dictionary[word]['code 1'] == 141: # rule 4
+        ...
+    return translation.join(' ')
+```
+
+:::
+
+The exact details on how the program was implemented on the IBM was highly non-trivial, since both the machine and the programming environment around it were designed for numerical computations, not discrete symbolic manipulations. [@sheridanResearchLanguageTranslation1955] described the details. The programming language LISP must wait until 1960 to appear. Dedicated to symbolic manipulations. It would dominate most of AI research until the 1980s.
+
+Another interesting fact is the amount of restrictions placed on the demo: 250 words, each word having just 1 or 2 possible translations, and each Russian word is either a full word or a `stem-suffix`, etc. An even deeper restriction was entirely hidden from view: pronouns. In Russian, pronouns are often dropped when the verb form makes it clear. To avoid this problem, for all demonstrated sentences, the English pronouns occur only in translations of verbs in the third person plural.
+
+The demo worked. The CIA started funding MT research at Georgetown University (eventually up to \$1,500,000), and other MT groups sprang up in America, Europe, and the Soviet Union. Subsequent research at Georgetown was based on a multi-level analysis (morphological, syntagmatic, syntax), later formalized as the [Vanquois triangle](https://en.wikipedia.org/wiki/Bernard_Vauquois#Vauquois_triangle).
+
+![The Vanquois triangle.](figure/Vauquois%20triangle.png)
+
+### Winter comes
+
+In 1964, the US government established ALPAC, a committee of 7 linguists, to review the progress on machine translation. 2 years later, the committee released the ALPAC report.
+
+[@hutchinsALPACFamousReport2003]
+
+Evaluation by demo is bad, because 
+
+1. Demos are cherry-picked, and don't tell you how the system would work in practice.
+2. Demos encourage an empirical kind of AI, an "artful deception" that is not science.
+
+The argument against full machine translation was simple but devastating:
+
+1. Natural language is highly ambiguous.
+2. Disambiguation is not purely syntactical, and requires semantics -- world knowledge, or common sense.
+3. The amount of world knowledge, or common sense, is extremely large, since after decades of manual entry, the machines still do not seem any closer to having common sense.
+
+There were several solutions:
+
+1. Intelligence amplification: Instead of trying the mirage of fully automatic MT, we should 
+2. Brute force logical programming: Scale up common sense by hiring more linguists to program in increasingly large chunks of the world.
+3. The contrarian: AI is a mirage, and the failures of MT is a symptom of that.
+
+From our vantage point, none of the solutions were correct. The actual solution turned out to be:
+
+4. The bitter lesson: Wait a few decades, then just train a giant neural network on a trillion words from the Internet.
+
+There is a common mistake about the bitter lesson, that even Richard Sutton makes. It is not just that the bitter lesson is bitter, but also that it is *difficult*. People did not believe in it, not because they were afraid of bitterness, but because it was obviously stupid, a kind of straw man's argument.
+
+Case study in not taking the bitter lesson:
+
+> The case against machine translation as a solution to practical problems is overwhelming and has been made many times. I do not propose to repeat it in any detail here. It will, however, be worth a few words to make a *prima facie* case for the implausibility of practical machine translation if only so that the contrast with realistic approaches to the problem will be more striking... There is a great deal that computer scientists and linguists could contribute to the practical problem of producing translations, but, in their own interests as well as those of their customers, they should **never** be asked to provide an engineering solution to a problem that they only dimly understand.
+> 
+> I want to advocate a view of the problem in which machines are gradually, almost imperceptibly, allowed to take over certain functions in the overall translation process. First they will take over functions not essentially related to translation. Then, little by little, they will approach translation itself. The keynote will be *modesty*. At each stage, we will do only what we know we can do reliably.
+>
+> [@kayProperPlaceMen1997]
+
+### Expert systems
+
+### Collapse
+
+
+### The Bitter Lesson
+
+
+In 2011, Kenneth proposed a 20-year cycle between "Empiricism" (turns out it works) and "Rationalism" (it must work if you think carefully about it), and argued that we were on the brink of a return to Rationalism:
+
+* 1950s: Empiricism (Shannon, Skinner, Firth, Harris)
+* 1970s: Rationalism (Chomsky, Minsky)
+* 1990s: Empiricism (IBM Speech Group, AT&T Bell Labs)
+* 2010s: A Return to Rationalism?
+
+![The shift from Rationalism to Empiricism, as measured by the proportion of statistical papers submitted to the Association for Computational Linguistics. Based on two independent surveys by Bob Moore and Fred Jelinek.](figure/Kenneth_2011_fig_1.png)
+
+> When we revived empiricism in the 1990s, we chose to reject the position of our teachers for pragmatic reasons. Data had become available like never before. What could we do with it? We argued that it is better to do something simple than nothing at all. Let's go pick some low hanging fruit. While trigrams cannot capture everything, they often work better than the alternatives... That argument made a lot of sense in the 1990s, especially given unrealistic expectations that had been raised during the previous \[expert systems\] boom. But today's students might be faced with a very different set of challenges in the not-too-distant future. What should they do when most of the low hanging fruit has been pretty much picked over? ... we should expect Machine Translation research to make more and more use of richer and richer linguistic representations. So too, there will soon be a day when stress will become important for speech recognition.
+>
+> [@churchPendulumSwungToo2011]
+
+As of 2025, the pendulum has swung even deeper into Empiricism.
+
+## Vision
+
+
+
+## Speech
+
+
+DARPA and the Speech Understanding Research program at Carnegie Mellon University
+
+Whither Speech Recognition? (1971)
+
+Whither speech recognition: The next 25 years (1993)
+
+## Language
+
+### Chomsky
+
+HMM models, and indeed, *all* probabilistic models of English, must fail, because English has central embedding.
+
+
+
+### ELIZA
+
+Weizenbaum became a fully human-centric critique of AI, culminating with *Computer Power and Human Reason: From Judgment to Calculation* (1976). In brief, the book had three theses:
+
+1. Computers might be intelligent, but they will never be wise (or to feel emotions, to love, etc). To "calculate" requires just intelligence, but to "judge" requires wisdom.
+2. The development of AI threatens to replace judgment with calculation, which will destroy human dignity. This replacement of judgment with calculation is an unwise political project, and must be resisted politically.
+3. This dangerous development of AI did not come from a wise scientific project of understanding how human intelligence works, but from a megalomaniac, obsessive-compulsive desire to make machine parodies of human behavior. The method of AI development was heuristic, empirical, a kind of "I wonder what the machine would do if I write this program...", without a scientific theory.
+
+When the book came out, it received many reviews, and Weizenbaum wrote replies to these reviews. I found this one the funniest:
+
+> I have in mind also the teaching urged on us by some leaders of the AI community that there is nothing unique about the human species, that in fact, the embrace of the illusion of human uniqueness amounts to a kind of species prejudice and is unworthy of enlightened intellectuals. If we find nothing abhorrent in the use of artificially sustained, disembodied animal brains as computer components, and if there is nothing that uniquely distinguishes the human species from animal species, then -- need I spell out where that idea leads?
+>
+> [@mccorduckMachinesWhoThink2004, page 370]
+
+Apparently Weizenbaum, in his human-centered wisdom, rejected Darwinism as well. In any case, he stopped doing AI research since 1970, so it is quite useless to talk more about him.
+
+### SHRDLU
+
+For his PhD in mathematics, Terry Winograd programmed the SHRDLU during the years 1968--1970. In the program, the user carries on a conversation with the computer, moving objects, naming collections and querying the state of a simplified "blocks world", essentially a virtual box filled with different blocks. It was in around 500 KB of LISP code.
+
+![](figure/SHRDLU.png)
+
+> it occupies around 200k of core (caution: indiscriminately running a job that big in the middle of the day is a good way to make enemies!!!!! Alway check the level of system usage before loading...)
+>
+> -- `mannew` from [the SHRDLU archive](code/SHRDLU.zip).
+
+> The system answers questions, executes commands, and accepts information in normal English dialog. It uses semantic information and context to understand discourse and to disambiguate sentences. It combines a complete syntactic analysis of each sentence with a "heuristic understander" which uses different kinds of information about a sentence, other parts of the discourse, and general information about the world in deciding what the sentence means. It is based on the belief that a computer cannot deal reasonably with language unless it can "understand" the subject it is discussing. The program is given a detailed model of the knowledge needed by a simple robot having only a hand and an eye. We can give it instructions to manipulate toy objects, interrogate it about the scene, and give it information it will use in deduction. In addition to knowing the properties of toy objects, the program has a simple model of its own mentality. It can remember and discuss its plans and actions as well as carry them out. It enters into a dialog with a person, responding to English sentences with actions and English replies, and asking for clarification when its heuristic programs cannot understand a sentence through use of context and physical knowledge.
+
+## The Fifth Generation
+
+In 1982, the Japanese was ready to take on the world.
+
+With some irony, the Japanese might look back and call them the Gosei \[五世\].
+
+
+
+## Intelligence in the age of war machines
+
