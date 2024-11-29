@@ -41,11 +41,15 @@ During the 1950s, electronic computers were mainly understood and used as tools 
 
 In a sense, this was quite old. Whereas Charles Babbage designed his computer as an arithmetic mill to grind out numerical tables, Ada Lovelace speculated that computers can grind out symbolic music too, as long as music and its transformation rules are encoded into integers.
 
-On 1954-01-07, the famous [Georgetown--IBM experiment](https://en.wikipedia.org/wiki/Georgetown%E2%80%93IBM_experiment) took place. It was the first public demonstration of machine translation -- from Russian to English, and was widely reported with titles like "Electronic brain translates Russian" or "Robot brain translates Russian into King's English". The project originated when a conference on machine translation took place at MIT in 1952-06, and Leon Dostert, the director of the project, came away convinced that instead of arguments about whether MT works *in theory*, they needed to try it out on an actual problem to see if it would work.
+On 1954-01-07, the world's first non-human translator appeared in the body of an IBM 701. At least, that is what the newspapers made it seam to be.
 
-The program took up 2400 instructions $2400 \;\mathrm{instruction} \times 18 \;\mathrm{bit/instruction} = 5.4 \;\mathrm{kB}$, whereas the dictionary took up $6000 \;\mathrm{word} \times 36 \;\mathrm{bit/word} = 27 \;\mathrm{kB}$.
+Back in 1952-06, at a MIT conference on machine translation, Leon Dostert was convinced that instead of arguments about whether MT works *in theory*, they needed to try it out on an actual problem to see if it would work *in practice*. This led to the [Georgetown--IBM experiment](https://en.wikipedia.org/wiki/Georgetown%E2%80%93IBM_experiment) 1.5 years later. It was the first public demonstration of machine translation -- from Russian to English, and was widely reported with titles like "Electronic brain translates Russian" or "Robot brain translates Russian into King's English". The project originated when a conference on machine translation took place at MIT i
 
-The dictionary is a table with 6 columns: Russian, English equivalent I, English equivalent II, Code 1, Code 2, Code 3. As we see, each Russian word has 1 or 2 possible English translations. The three `Code`s are essentially grammar categories. As an example, the suffix `-a` is coded as `(-a, of, ---, 131, 222, 25)`, while the word stem `ugl-` is coded as `(ugl-, coal, angle, 121, ***, 25)`.
+The IBM 701 machine operated at $2000 \;\mathrm{FLOP/s}$ with read/write speed $3.6 \;\mathrm{kB/s}$ (in the form of 80-column punched cards). 
+
+The program took up $2400 \;\mathrm{instruction} \times 18 \;\mathrm{bit/instruction} = 5.4 \;\mathrm{kB}$, whereas the dictionary took up $6000 \;\mathrm{word} \times 36 \;\mathrm{bit/word} = 27 \;\mathrm{kB}$. 
+
+The dictionary is a table with 6 columns: Russian, English equivalent I, English equivalent II, Code 1, Code 2, Code 3. As we see, each Russian word has 1 or 2 possible English translations. The three `Code`s are essentially grammar categories. As an example, the suffix `-a` is coded as `(-a, of, , 131, 222, 25)`, while the word stem `ugl-` is coded as `(ugl-, coal, angle, 121, ***, 25)`.
 
 The dictionary contains just 250 lexical items (stems and endings). Its grammar has just 6 rules. All input sentences must be made of words that are of form either `stem` or `stem-ending`. Some example translations included:
 
@@ -101,13 +105,15 @@ def translate(words):
 
 :::
 
-The exact details on how the program was implemented on the IBM was highly non-trivial, since both the machine and the programming environment around it were designed for numerical computations, not discrete symbolic manipulations. [@sheridanResearchLanguageTranslation1955] described the details. The programming language LISP must wait until 1960 to appear. Dedicated to symbolic manipulations. It would dominate most of AI research until the 1980s.
+The exact details on how the program was implemented on the IBM was non-trivial, since both the machine and the programming environment around it were designed for numerical computations, not discrete symbolic manipulations. [@sheridanResearchLanguageTranslation1955] described the details. The programming language LISP must wait until 1960 to appear. Dedicated to symbolic manipulations. It would dominate most of AI research until the 1980s.
 
 Another interesting fact is the amount of restrictions placed on the demo: 250 words, each word having just 1 or 2 possible translations, and each Russian word is either a full word or a `stem-suffix`, etc. An even deeper restriction was entirely hidden from view: pronouns. In Russian, pronouns are often dropped when the verb form makes it clear. To avoid this problem, for all demonstrated sentences, the English pronouns occur only in translations of verbs in the third person plural.
 
 The demo worked. The CIA started funding MT research at Georgetown University (eventually up to \$1,500,000), and other MT groups sprang up in America, Europe, and the Soviet Union. Subsequent research at Georgetown was based on a multi-level analysis (morphological, syntagmatic, syntax), later formalized as the [Vanquois triangle](https://en.wikipedia.org/wiki/Bernard_Vauquois#Vauquois_triangle).
 
 ![The Vanquois triangle.](figure/Vauquois%20triangle.png)
+
+### Natural language compiler
 
 ### Winter comes
 
@@ -123,13 +129,13 @@ Evaluation by demo is bad, because
 The argument against full machine translation was simple but devastating:
 
 1. Natural language is highly ambiguous.
-2. Disambiguation is not purely syntactical, and requires semantics -- world knowledge, or common sense.
-3. The amount of world knowledge, or common sense, is extremely large, since after decades of manual entry, the machines still do not seem any closer to having common sense.
+2. Disambiguation is not purely syntactical, and requires semantics -- world knowledge, or commonsense.
+3. The amount of world knowledge, or commonsense, is extremely large, since after decades of manual entry, the machines still do not seem any closer to having commonsense.
 
 There were several solutions:
 
 1. Intelligence amplification: Instead of trying the mirage of fully automatic MT, we should 
-2. Brute force logical programming: Scale up common sense by hiring more linguists to program in increasingly large chunks of the world.
+2. Brute force logical programming: Scale up commonsense by hiring more linguists to program in increasingly large chunks of the world.
 3. The contrarian: AI is a mirage, and the failures of MT is a symptom of that.
 
 From our vantage point, none of the solutions were correct. The actual solution turned out to be:
@@ -182,6 +188,30 @@ Whither Speech Recognition? (1971)
 
 Whither speech recognition: The next 25 years (1993)
 
+## Games
+
+This chapter would be short since logical AI in games is well-known.
+
+Artificial intelligence has abandoned the quest
+for certainty and truth. The new patchwork rationalism is built upon
+mounds of _micro-truths_ gleaned through common sense introspection, ad
+hoc programming and so-called _knowledge acquisition_ techniques for
+interviewing experts. The grounding on this shifting sand is pragmatic
+in the crude sense__If it seems to be working, it_s right.
+
+Samuel Checkers, DeepBlue.
+
+## General
+
+General Problem Solver, Symbolic hypothesis, McCarthy, Minsky
+
+## Expert systems
+
+> The miracle product is knowledge, and the Japanese are planning to package and sell it the way other nations package and sell energy, food, or manufactured goods... The essence of the computer revolution is that the burden of producing the future knowledge of the world will be transferred from human heads to machine artifacts.  
+>
+> [@feigenbaumFifthGenerationArtificial1984, Chapter 4]
+
+
 ## Language
 
 ### Chomsky
@@ -211,7 +241,7 @@ Apparently Weizenbaum, in his human-centered wisdom, rejected Darwinism as well.
 
 For his PhD in mathematics, Terry Winograd programmed the SHRDLU during the years 1968--1970. In the program, the user carries on a conversation with the computer, moving objects, naming collections and querying the state of a simplified "blocks world", essentially a virtual box filled with different blocks. It was in around 500 KB of LISP code.
 
-![](figure/SHRDLU.png)
+![The result of typing "Will you please stack up both of the red blocks and either a green cube or a pyramid?" [@winogradUnderstandingNaturalLanguage1972, figure 5]](figure/SHRDLU.png)
 
 > it occupies around 200k of core (caution: indiscriminately running a job that big in the middle of the day is a good way to make enemies!!!!! Alway check the level of system usage before loading...)
 >
@@ -233,7 +263,249 @@ In 1982, the Japanese was ready to take on the world.
 
 With some irony, the Japanese might look back and call them the Gosei \[五世\].
 
+## Expert systems
 
+### Origins
+
+Beginning in 1965, Edward Feigenbaum and Joshua Lederberg developed DENDRAL, first as a model to understand how organic chemists do their daily work: Given a molecule with this kind of mass spectra, this melting point, or other experimental data, what might be its chemical formula and molecular structure?
+
+
+
+### The hype
+
+### The fall
+
+> One system for medical diagnosis, called [CADUCEUS](https://en.wikipedia.org/wiki/CADUCEUS_(expert_system)) (originally INTERNIST), has 500 disease profiles, 350 disease variations, several thousand symptoms, and 6,500 rules describing relations among symptoms. After fifteen years of development, the system is still not on the market. According to one report, it gave a correct diagnosis in only 75 percent of its carefully selected test cases. Nevertheless, Myers, the medical expert who developed it, "believes that the addition of another 50 [diseases] will make the system workable and, more importantly, practical."
+>
+> [@winograd10ThinkingMachines1991]
+
+[@wolframAppraisalINTERNISTI1995]
+
+Winograd argued that expert systems are structured like human bureaucracies, with formalized explicit rules, and so they have same strengths and weaknesses. This explains why they work only in stable and precise technical areas, where exceptions are not the rule. [@winograd10ThinkingMachines1991]
+
+### Cyc
+
+> AI has for many years understood enough about representation and inference to tackle this project, but no one has sat down and done it... only by pulling together the latest human interface tools, Lisp machines, ideas of enforced semantics, and funding for a decade-long effort could we attempt a project of this scale. [@lenatCycUsingCommon1985]
+
+In 1984, [Douglas Lenat](https://en.wikipedia.org/wiki/Douglas_Lenat) began the Cyc project, an ambitious attempt to scale symbolic AI up to the real world. Like most expert systems, the Cyc project consists of a giant knowledge base encoded in a LISP-like symbolic logic language, upon which inference engines can be run to produce logical reasoning. Unlike most expert systems, the ambition of Cyc was universal: Its knowledge base would not be restricted to expert knowledge in a particular domain, but *all* commonsense knowledge in *all* domains that humans have commonsense about.
+
+Even from the vantage point of 1985, it was clear to all that there was a lot of commonsense to code in, although few could have predicted that Lenat would persevere at it for over 30 years.
+
+They themselves underestimated the difficulty. In 1990, they confidently titled a paper "Cyc: A midterm report" [@lenatCycMidtermReport1990], suggesting that they expected to be done around 1995.
+
+The progress report in 1995 stated that, while the system is far from done, they have at least manually entered $10^5$ "general concepts" and $10^6$ "commonsense axioms" into Cyc, at the price of 100 person-years. [@lenatCycLargescaleInvestment1995]
+
+> Moreover, statistics, colocation, and frequency do not resolve such questions. But the task goes from impossible to trivial if one already knows a few things about boxes and pens, police and demonstrators, and water and teakettles. The same sort of chicken-and-egg relationship characterizes CYC and ML because learning occurs at the fringe of what one already knows. Therefore, in the early 1980s, when the rest of the world was so enthusiastic about Natural Language Understanding, Machine Learning, and AI in general, we were pessimistic. We concluded the only way out of this codependency would be to prime the pump by manually crafting a million axioms covering an appreciable fraction of the required knowledge. That knowledge would serve as a critical mass, enabling further knowledge collection through NLU and ML, beginning in the mid-1990s. Mary Shepherd and I embarked on that task in 1984, knowing we had little chance of success, but seeing no alternative but to try... we are now moving toward the transition point where NLU and ML are supported. The rest of the world is disillusioned and pessimistic about symbolic AI, but ironically, as CYC reaches closure, our hopes for NLU and ML in the next 10 years are very high.
+>
+> [@lenatCycLargescaleInvestment1995]
+
+In 2016, Lenat finally declared the Cyc project "done" and set about commercializing it.
+
+> Having spent the past 31 years memorizing an astonishing collection of general knowledge, the artificial-intelligence engine created by Doug Lenat is finally ready to go to work... most of what is left to be added is relevant to a specific area of expertise, such as finance or oncology.
+> 
+> Among other projects, the company is developing a personal assistant equipped with Cyc's general knowledge. This could perhaps lead to something similar to Siri... the CEO of Lucid says the new company is in talks with various others interested in using the Cyc knowledge base. Lucid has been working with the Cleveland Clinic, for example, to help automate the process of finding patients for clinical studies.
+> 
+> [@knightAI30Years2016]
+
+That was essentially the last we heard from Cyc.
+
+When looking at this figure from 1985, one is simultaneously filled with respect and sadness, for they were facing impossible odds, and yet they charged right into it.
+
+![[@lenatCycUsingCommon1985, Figure 1]](figure/cyc_project_ontology.png)
+
+Their "midterm report" only accentuates this sense of tragedy, of seeing them fighting impossible odds, and losing. They saw with clarity that there is no shortcut to intelligence, no "Maxwell's equations of thought".
+
+> The majority of work in knowledge representation has dealt with the technicalities of relating predicate calculus to other formalisms and with the details of various schemes for default reasoning. There has almost been an aversion to addressing the problems that arise in actually representing large bodies of knowledge with content. However, deep, important issues must be addressed if we are to ever have a large intelligent knowledge-based program: What ontological categories would make up an adequate set for carving up the universe? How are they related? What are the important facts and heuristics most humans today know about solid objects? And so on. In short, we must bite the bullet.
+>
+> We don't believe there is any shortcut to being intelligent, any yet-to-be-discovered Maxwell's equations of thought, any AI Risc architecture that will yield vast amounts of problem-solving power. Although issues such as architecture are important, no powerful formalism can obviate the need for a lot of knowledge.
+>
+> By knowledge, we don't just mean dry, almanac-like or highly domain-specific facts. Rather, most of what we need to know to get by in the real world is prescientific (knowledge that is too commonsensical to be included in reference books; for example, animals live for a single solid interval of time, nothing can be in two places at once, animals don't like pain), dynamic (scripts and rules of thumb for solving problems) and metaknowledge (how to fill in gaps in the knowledge base, how to keep it organized, how to monitor and switch among problem-solving methods, and so on). Perhaps the hardest truth to face, one that AI has been trying to wriggle out of for 34 years, is that there is probably no elegant, effortless way to obtain this immense knowledge base. Rather, the bulk of the effort must (at least initially) be manual entry of assertion after assertion. [@lenatCycMidtermReport1990]
 
 ## Intelligence in the age of war machines
 
+### Early war machines
+
+The dream of peace produces war machines. Ancient Athenians dreamed of [Talos](https://en.wikipedia.org/wiki/Talos), a bronze giant who defended Crete, while the Jews of Prague dreamed of [Golem](https://en.wikipedia.org/wiki/Golem#Etymology). The ages has been too kind to Zhuge Liang, and his wheelbarrow, invented for carrying war supplies, became the legend of [wooden robot oxen](https://en.wikipedia.org/wiki/Wooden_ox).
+
+The industrial revolution produced early ideas of feedback mechanism, such as the [centrifugal governor](https://en.wikipedia.org/wiki/Centrifugal_governor) and the [gyro autopilot](https://en.wikipedia.org/wiki/Gyroscopic_autopilot). It took until WWII for someone to put together high explosives, slow burning fuel, and the feedback mechanism, to create the cruise missile. The first of its kind was the V-1 rocket, which already incorporates the basic features of all cruise missiles.
+
+The V-1 looks like a small unmanned jet airplane. It has the following senses: roll (gyro), pitch (gyro), yaw (magnetic compass), altitude (barometer), distance traveled (vane anemometer). The roll, pitch, yaw, and altitude are maintained by negative feedback. So for example, if the missile is heading east to the set-point of yaw, a valve would open, and compressed gas would force the rudder to turn, which yaws the missile west. As soon as the vane anemometer has turned a designated number, the missile considers itself to have reached the target. It turns off the engine and sharply dives to the ground, and explodes upon impact.
+
+Other than V-1 and V-2, there were no autonomous war machines during WWII, though there were several radio-controlled weapons such as [explosive little tanks](https://en.wikipedia.org/wiki/Goliath_tracked_mine) and [little planes for target practice](https://en.wikipedia.org/wiki/Radioplane_OQ-2). Skinner, thinking outside (inside?) the box, worked on [Project Pigeon](https://en.wikipedia.org/wiki/Project_Pigeon). He trained pigeons in skinner boxes to peck at the ship appearing on a screen. If the pigeon is pecking on the top-left, then the missile would turn to the bottom-right. In effect, the pigeon becomes the negative feedback controller. Though it was cancelled, it would have been considerably cheaper than [the Japanese version](https://en.wikipedia.org/wiki/Kamikaze) should it have ever reached production.
+
+<video controls width=100%>
+  <source src="figure/Project%20Pigeon.webm" type="video/webm" />
+</video>
+
+After WWII, some autonomous defense systems were developed and deployed, such as [close-in weapon systems](https://en.wikipedia.org/wiki/Close-in_weapon_system) on ships. These detect incoming incoming missiles and enemy aircraft by radar, computes their trajectories, and shoots them down. Since they must operate on the time-scale of seconds, they are fully automatic with no human in the loop. Despite this, these are quite uncontroversial and do not typically earn the title of "killer robots", presumably because compared to autonomous *offense*, defense is inherently more controllable and predictable in effect.
+
+### Nuclear war machines
+
+> Deterrence is the art of producing in the mind of the enemy the fear to attack. And so, because of the automated and irrevocable decision making process which rules out human meddling, the doomsday machine is terrifying. It's simple to understand. And completely credible, and convincing... When you merely wish to bury bombs, there is no limit to the size. After that they are connected to a gigantic complex of computers. Now then, a specific and clearly defined set of circumstances, under which the bombs are to be exploded, is programmed into a tape memory bank.
+>
+> --- [Dr. Strangelove](https://en.wikipedia.org/wiki/Dr._Strangelove) (1964)
+
+During the Cold War, the following technological factors of nuclear weapons determined the grand nuclear strategy.
+
+1. First-strike nuclear offense is impossible to defend against. Some bombs will get through all defense.
+2. Nuclear weapon is so much more powerful than non-nuclear weapons, that the only proportionate deterrence to a nuclear attack is another nuclear attack.
+3. First-strike capability is indistinguishable from second-strike capability.
+
+Because of (1) and (2), the only way to deter a nuclear first-strike was to threaten a nuclear second-strike. This is the [MAD](https://en.wikipedia.org/wiki/Mutual_assured_destruction) nuclear deterrence doctrine. Because deterrence requires enough bombs to survive a first-strike, both sides would rather build up more second-strike bombs than the other side's first-strike bombs. Because of (3), there aren't "second-strike bombs" vs "first-strike bombs", only bombs. Therefore, we have a positive feedback loop where both sides aim to have more bombs than the other -- the [nuclear arms race](https://en.wikipedia.org/wiki/Nuclear_arms_race). Because having too many bombs increases the chance of accidents, both sides are motivated to slow down the race. Thus the [ABM Treaty](https://en.wikipedia.org/wiki/Anti-Ballistic_Missile_Treaty), where both sides agree to *not* build many missile defense systems! This paradoxical treaty was designed to make both sides *more* vulnerable to second-strike, meaning that less bombs are needed to ensure second-strike capability.
+
+Both sides' nuclear technology went through several iterations, with increasing second-strike capability, and ended up with the "nuclear triad" of bombers that stay in the air 24/7, submarines hidden under the sea, and ICBMs hardened inside silos. Each of the three has different tradeoffs, necessitating all three to be maintained.
+
+Of course, even if the triad survives the first-strike, it is no good if they won't activate. The command center might be destroyed. The communication lines might be cut. The soldiers might refuse to launch based on their own conscience. All these dangers lead to the pressure to automate second-strike. The pinnacle of this logic was the [Supersonic Low Altitude Missile (SLAM)](https://en.wikipedia.org/wiki/Supersonic_Low_Altitude_Missile), a cruise missile powered by a nuclear engine. The nuclear engine is like a fission nuclear reactor in nuclear power plants, except that the fission power does not boil water, but heat up air, which expands and shoots out from the tail of the missile, allowing it to fly at Mach 3.
+
+Despite having no GPS (it was the 1960s!), because the SLAM would fly $\sim 200 \;\mathrm{m}$ above ground, it could navigate itself by [terrain contour matching](https://en.wikipedia.org/wiki/TERCOM): It compares a height-scan of the local terrain against a stored copy of the terrain. Even after dropping all its nuclear warheads, it can remain airborne for weeks, destroying the ground with sonic booms as overkill. The project was shelved in 1964, apparently considered too destabilizing, and they settled for just drilling the nuclear launch routines into the missileers until they work like robots that would not hesitate to execute the launch command.
+
+![The terrain contour matching algorithm. By a curious coincidence, the algorithm typically attempts to find a line segment within the stored terrain map that minimizes the [Mean Absolute Deviation](https://en.wikipedia.org/wiki/Average_absolute_deviation) with the local terrain of the missile... also with the "MAD" acronym. [@goldenTerrainContourMatching1980, figure 2]](figure/TERCOM.png)
+
+In the movie *Dr. Strangelove* (1964), nuclear deterrence was taken to its logical end point. In the movie, the Soviet Union built a "doomsday machine", which is a Cobalt bomb that when exploded, makes enough fallout to render the entire earth uninhabitable for a century. This was then connected to sensors around the Soviet Union, so that any nuclear attack automatically triggers it. Finally, the machine triggers if it detects attempts to un-trigger it, thus closing the logic loop and making it a fully automatic deterrence machine.[^dead-hand]
+
+[^dead-hand]: I was going to write something about the [Dead Hand](https://en.wikipedia.org/wiki/Dead_Hand) system, but after a brief search, the available information looks too much like conspiracy theory and rumors, so I will not.
+
+### Intelligence
+
+During the Cold War, intelligence, in the sense of intelligence-gathering and reconnaissance was a vital area of artificial intelligence. 
+
+Some of the early neural networks, such as MINOS II, was explicitly built with an objective of scanning aerial photographs for interesting military targets like tanks. [@nilssonQuestArtificialIntelligence2009, pages 98--109] The CIA even experimented with Rosenblatt's Mark I Perceptron machine for the same purpose [@irwinArtificialWorldsPerceptronic2024]. As an example, [@kanalRecognitionSystemDesign1964] describes a two-layered perceptron network, of type $\R^{N \times N} \to \{0, 1\}^{32\times 32} \to \{0, 1\}^{24} \to \{0, 1\}$. It works as follows:
+
+* The grayscale photo is down-scaled and binarized by convolution with a [discrete Laplace filter](https://en.wikipedia.org/wiki/Discrete_Laplace_operator): $\R^{N \times N} \to \{0, 1\}^{32\times 32}$.
+* The weights for the 24 hidden perceptrons are constructed by [linear discriminant analysis](https://en.wikipedia.org/wiki/Linear_discriminant_analysis): $\{0, 1\}^{32\times 32} \to \{0, 1\}^{24}$
+* The output perceptron is learned by the [perceptron learning rule](https://en.wikipedia.org/wiki/Perceptron#Learning_algorithm_for_a_single-layer_perceptron): $\{0, 1\}^{24} \to \{0, 1\}$.
+
+::: {#fig-kanal-1964-neural-tanks layout-ncol=2}
+
+![Grayscale photos, some containing tanks, and some not.](figure/kanal_1964_fig_tank_nontank_mosaic.png){#fig-kanal-1964-neural-tanks-tank-nontank-mosaic}
+
+![A picture of a tank after convolution with a discrete Laplace filter.](figure/kanal_1964_fig_binary_image_tank.png){#fig-kanal-1964-neural-tanks-binary-image-tank}
+
+![The architecture of the network.](figure/kanal_1964_fig_architecture.png){#fig-kanal-1964-neural-tanks-architecture}
+
+Images from [@kanalRecognitionSystemDesign1964].
+:::
+
+### Strategic Computing Project
+
+The Strategic Computing Project (SCI) was named to resemble the [Strategic Defense Initiative](https://en.wikipedia.org/wiki/Strategic_Defense_Initiative), better known as "Star Wars". The SDI was a project to 
+
+
+## Philosophy
+
+Astrophysicists, measuring the motion of galaxies, notice that the stars are rotating too fast. There is not enough matter to tether them, and they ought to fly out into the intergalactic emptiness. To solve this problem, they proposed "dark matter", unknown matter that provides the missing gravitational force, and physicists ever since had been searching them.
+
+Similarly, sometimes when you read through a field of study, you notice that the arguments seem to rotate around some kind of unspoken assumption that you might see if you just take all the books and throw them to the ground, so that they are all opened at random places. Then you turn your head and squint at the words refracted through the eyelids, the pupils, and the cornea, which you have repurposed as a primitive kind of optical computer. And you see the dark matter, the intellectual centers of gravity.
+
+> Under an invisible spell, they will each start out anew, only to end up revolving in the same orbit once again... their thinking is not nearly as much a discovery as it is a recognition, remembrance, a returning and homecoming into a distant, primordial, total economy of the soul, from which each concept once grew: -- to this extent, philosophizing is a type of atavism of the highest order.
+>
+> [@nietzscheGoodEvilPrelude2002, Section 1.20]
+
+### The Symbolic Hypothesis
+
+General Problem Solver
+
+*Human Problem Solving*
+
+![[@newellHumanProblemSolving1972, page 533]](figure/human_problem_solving_behavior_graph.png)
+
+![[@newellHumanProblemSolving1972, page 534]](figure/human_problem_solving_transcript.png)
+
+
+In [their Turing award lecture of 1975](https://yuxi-liu-wired.github.io/docs/posts/1975-herbert-simon-allen-newell/), Allen Newell and Herbert Simon gave a definitive statement of the Physical Symbol System Hypothesis for AI, which they had labored under, first unconsciously but then consciously, since the early 1950s.
+
+They began by some examples of "qualitative structure" in science, which do not deal with numbers, but with symbols. For example, a basic statement of cell theory -- "organisms are made of little cells that are mostly alike" -- doesn't contain a single number, yet it has great significance. Such non-numerical discrete statements are made of "symbols", and they stated their **Physical Symbol System Hypothesis** (PSSH):
+
+> A physical symbol system has the necessary and sufficient means for general intelligent action.
+
+where a physical symbol system is essentially a machine that can be built in our physical world, and that manipulates with symbols. As an example, a digital computer running a LISP interpreter is a physical symbol system. We can attach cameras and wheels to the computer, so that the camera sends into the interpreter a symbolic representation of what it sees, and the wheels receives symbolic commands for motion. This is basically a robot according to the PSSH.
+
+They also gave a **Heuristic Search Hypothesis**:
+
+> A physical symbol system exercises its intelligence in problem solving by search-that is, by generating and progressively modifying symbol structures until it produces a solution structure.
+
+What is not said is equally revealing. In the lecture, there were over 100 mentions of the word "search", but the only statement about learning is... a mention of Plato's theory of [anamnesis](https://en.wikipedia.org/wiki/Anamnesis_(philosophy))! For them, a symbolic system starts out already with a solution generator and a solution tester, and problem-solving is nothing but heuristically searching over the generated solutions until one passes the tester. Indeed, in their telling, AI research is just search, not learning.
+
+> ... During the first decade or so of artificial intelligence research, the study of problem solving was almost synonymous with the study of search processes. From our characterization of problems and problem solving, it is easy to see why this was so. In fact, it might be asked whether it could be otherwise. ...  There is no mystery where the information that guided the search came from. We need not follow Plato in endowing the symbol system with a previous existence in which it already knew the solution. A moderately sophisticated generator-test system did the trick without invoking reincarnation.
+
+### Cognitivism
+
+There was a persistent legend about a certain psychologist, that he educated his own children with [skinner boxes](https://en.wikipedia.org/wiki/Operant_conditioning_chamber). While just a legend, the real B. F. Skinner did have a philosophy as radical as the legend suggests.
+
+In the 1950s, Skinner dominated behaviorism, which dominated American psychology. In short, behaviorism models animal behavior as stimulus-response reflexes, which can be understood as parameterized functions $a_\theta(o)$, where $o$ stands for the observational stimulus, $\theta$ the internal parameters of the animal, and $a_\theta(o)$ the response action. The parameters $\theta$ is a function of the previous history of stimuli and reward/punishments: $(o_0, a_0, r_0, o_1, a_1, r_1, \dots)$. The set up is the same as modern reinforcement learning (RL).
+
+[^skinner-box]:
+    [Feynman told of the following maze-running rat legend](https://gwern.net/maze):
+
+    > He had a long corridor with doors all along one side where the rats came in, and doors along the other side where the food was. He wanted to see if he could train the rats to go in at the third door down from wherever he started them off. No. The rats went immediately to the door where the food had been the time before. The question was, how did the rats know, because the corridor was so beautifully built and so uniform, that this was the same door as before? Obviously there was something about the door that was different from the other doors. So he painted the doors very carefully, arranging the textures on the faces of the doors exactly the same. Still the rats could tell. Then he thought maybe the rats were smelling the food, so he used chemicals to change the smell after each run. Still the rats could tell. Then he realized the rats might be able to tell by seeing the lights and the arrangement in the laboratory like any commonsense person. So he covered the corridor, and, still the rats could tell. He finally found that they could tell by the way the floor sounded when they ran over it. And he could only fix that by putting his corridor in sand. So he covered one after another of all possible clues and finally was able to fool the rats so that they had to learn to go in the third door. If he relaxed any of his conditions, the rats could tell.
+
+The great thing about skinner boxes is that they are standardized to be lightproof, soundproof, and whatever-proof, thus controlling for all confounding variables. Before skinner boxes, mouse experiments were full of confounding variables, and had a kind of replication crisis in the 1930s. With the skinner box, the degrees of rat freedom are minimized, turning rats into standardized systems. This finally allowed measurable progress, allowing the breakout success of behaviorism in the 1950s.[^skinner-box]
+
+Skinner's ambitions went far beyond rats. In 1957, he published [*Verbal Behavior*](https://en.wikipedia.org/wiki/Verbal_Behavior), in which he explained human language as stimulus-response networks, built up piece by piece during child development. To give an example, when one searches for a book with a title "Verbal Behavior", one would say "Verbal Behavior, Verbal Behavior, Verbal Behavior..." (a "self-echoic") while the eye scans the shelf. When the visual stimulus matches the verbal stimulus, the "grab book" action is triggered (a "tact"). The touch of the hand with the book then stops self-echoic behavior. In Skinner's terms, this verbal behavior is a "[descriptive autoclitic](https://en.wikipedia.org/wiki/Autoclitic)".
+
+He was at his most radical in [*Beyond Freedom and Dignity* (1971)](https://en.wikipedia.org/wiki/Beyond_Freedom_and_Dignity), which essentially argued that human society will be reorganized according to behaviorist principles. Instead of the indirect and unreliable behavior control using verbal moral judgment, a society would use more direct operant conditioning methods that are experimentally proven by behaviorist psychologists.
+
+Though behaviorism has remained alive and well to this day, linguistics took a sudden turn around 1960 thanks to Noam Chomsky. According to legend, Chomsky wrote a review of *Verbal Behavior* in 1959, in which he soundly routed behaviorist linguistics [@chomskyReviewSkinnersVerbal1959]. The truth is more complicated, since Chomsky also wrote several other famous works like [*Syntactic Structures* (1957)](https://en.wikipedia.org/wiki/Syntactic_Structures), [*Aspects of the Theory of Syntax* (1967)](https://en.wikipedia.org/wiki/Aspects_of_the_Theory_of_Syntax), and the foundational papers on formal grammar like the [Chomsky hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy).
+
+Chomsky argued that there are two ways of doing research in psychology and linguistics: "empiricism" and "rationalism". Skinner's book was the best example of empiricism, and since Skinner's book is wrong, the book becomes a *reductio ad absurdum* of empiricism. Instead, one must turn back to rationalist psychology and linguistics.
+
+> I had intended this review not specifically as a criticism of Skinner's speculations regarding language, but rather as a more general critique of behaviorist (I would now prefer to say "empiricist") speculation as to the nature of higher mental processes... I do not, in other words, see any way in which his proposals can be substantially improved within the general framework of behaviorist or neobehaviorist, or, more generally, empiricist ideas that has dominated much of modern linguistics, psychology, and philosophy. The conclusion that I hoped to establish in the review, by discussing these speculations in their most explicit and detailed form, was that the general point of view was largely mythology, and that its widespread acceptance is not the result of empirical support, persuasive reasoning, or the absence of a plausible alternative.
+> 
+> -- Preface to the 1967 reprint. [@chomskyReviewBFSkinners1967]
+
+### The Sub-symbolic Hypothesis
+
+The dominance of the Symbolic Hypothesis was never complete. There were often objections to it.
+
+In 1972, Hubert Dreyfus raised a fuss with a book *What Computers Can't Do: The Limits of Artificial Intelligence*. Unfortunately, his work was based on the phenomenology of Merleau-Ponty and Heidegger, who wrote like *real and genuine* philosophers,[^feigenbaum-cotton-candy] so I just resorted to checking [his Wikipedia article](https://en.wikipedia.org/wiki/Hubert_Dreyfus%27s_views_on_artificial_intelligence). From what I gathered, his argument was that the Symbolic Hypothesis is flawed in the sense that it is too "closed".
+
+[^feigenbaum-cotton-candy]: 
+    Edward Feigenbaum's reaction is representative of most AI scientists:
+    
+    > What artificial intelligence needs is a good Dreyfus. The conceptual problems in AI are really rough, and a guy like that could be an enormous help... But Dreyfus bludgeons us over the head with stuff he's misunderstood and is obsolete anyway -- and every time you confront him with one more intelligent program, he says, "I never said a computer couldn't do that." And what does he offer us instead? Phenomenology! That ball of fluff! That cotton candy! [@mccorduckMachinesWhoThink2004, pages 229--230]
+
+[Douglas Hofstadter](https://en.wikipedia.org/wiki/Douglas_Hofstadter) raised a similar objection, but from within the logical AI tradition. His essential point was that logical AI, as conceived by Simon and Newell, is a closed system. For example, a chess computer might play a perfect chess even when the room is on fire. The concept of fire, or indeed anything that is beyond the mathematical strucure of chess, does not feature in the computer's symbolic universe, and so it does not exist for the computer.[^holt-chess-fire] Whereas Dreyfus argued that intelligence is open by the "cotton candy" of phenomenology, sieging the head from the outside in, Hofstadter used the Gödel incompleteness theorems to break the head open, from the inside out.
+
+[^holt-chess-fire]:
+    This example was given by Anatol Holt at ARPA Principal Investigators' Conference in 1974, and quoted in [@winograd10ThinkingMachines1991]:
+
+    > A brilliant chess move while the room is filling with smoke because the house is burning down does not show intelligence. If the capacity for brilliant chess moves without regard to life circumstances deserves a name, I would naturally call it "artificial intelligence."
+
+The rough idea is that any symbolic system that is powerful enough would be incomplete, and furthermore, would "reflect" its own incompleteness. The incompleteness theorems state that in any sufficiently powerful formal system, there are statements that are true about the system that cannot be proven within the system. For example, let $\Sigma$ be the logical system of Peano arithmetics, then by the incompleteness theorems, there are sentences like [Rosser's sentence](https://en.wikipedia.org/wiki/Rosser%27s_trick), or "PA is consistent", which are *provably unprovable* assuming PA is consistent.
+
+Stated in another way, arithmetical truth cannot be defined in arithmetic -- [Tarski's undefinability](https://en.wikipedia.org/wiki/Tarski%27s_undefinability_theorem).
+
+> O God, I could be bounded in a nut shell and count
+> myself a king of infinite space, were it not that I
+> have bad dreams.
+>
+> --- Hamlet, Act 2, Scene 2
+
+In the context of AI, this means that a symbolic system, no matter how complex, will always have limitations in representing and reasoning about the world, even if the world is but itself. We need not assume there is an "outside". The symbolic system, even when floating in a mathematical vacuum, creates its own outside.
+
+His solution was to add in some "strange loops", which would both create general intelligence and create consciousness in one fell swoop. These strange loops are hierarchical structures where crossing levels leads back to the starting point. In the context of AI, Hofstadter proposed that implementing strange loops within a symbolic system would allow the system to refer to itself and its own structure, potentially leading to self-awareness and general intelligence. This self-referential capability would enable the system to overcome the limitations imposed by the incompleteness theorems and exhibit more flexible and human-like intelligence.
+
+Hofstadter was a far better writer than Dreyfus, and his 1979 book *Gödel, Escher, Bach* was a popular hit among both the common people and the computer scientists. Despite this, the trajectory of AI did not go as he expected.
+
+> There may be programs which can beat anyone at chess, but they will not be exclusively chess players. They will be programs of general intelligence, and they will be just as temperamental as people. "Do you want to play chess?" "No, I'm bored with chess. Let's talk about poetry." [@hofstadterGodelEscherBach1999, page 678]
+
+In the preface to the second edition (1999), Hofstadter admitted that this prediction went way off, but still committed to the philosophical belief behind these. Unfortunately, the disappointments did not stop coming. In 
+
+With the rise of Transformer-based language models, . He expressed his confusion and traumatic response in a 2023 interview:
+
+> \[In 1960,\] I knew how computers worked, and I knew how extraordinarily rigid they were. You made the slightest typing error and it completely ruined your program... It felt as if artificial intelligence was the art of trying to make very rigid systems behave as if they were fluid... I felt it would be hundreds of years before anything even remotely like a human mind would be asymptotically approaching the level of the human mind, but from beneath... But when certain systems started appearing maybe 20 years ago, they gave me pause. And then this started happening at an accelerating pace where unreachable goals and things that computers shouldn't be able to do started toppling. The defeat of Gary Kasparov by Deep Blue, and then going on to Go systems, systems that could defeat some of the best Go players in the world. And then systems got better and better at translation between languages and then at producing intelligible responses to difficult questions in natural language, and even writing poetry.
+> 
+> My whole intellectual edifice, my system of beliefs--it's a very traumatic experience when some of your most core beliefs about the world start collapsing... I think about it practically all the time, every single day... and it overwhelms me and depresses me in a way that I haven't been depressed for a very long time.
+>
+> [Reflections on AI](https://www.buzzsprout.com/222312/episodes/13125914), interview with Douglas Hofstadter by Amy Jo Kim (2023-06-29)
+
+### Connectionism, the past tense debate, and whatever
+
+"Connectionism" is a word you don't see much nowadays, but it was a big word back in the 1980s. It is hard to pin down, but if I summarize it, it is the result of philosophers in the 1980s noticing how researchers were trying neural networks on problems that had defied logical AI approaches, and somehow achieved state of the art, way past expectations. They say, "Weird! How is it possible for neural networks, written by people not having a deep knowledge of the problem domain, using such simplistic features, to work better than the best logical AI? I must philosophize this at once!"
+
+Two clear camps immediately formed. On one side were the connectionists with [Paul Churchland](https://en.wikipedia.org/wiki/Paul_Churchland), [Patricia Churchland](https://en.wikipedia.org/wiki/Patricia_Churchland), [Paul Smolensky](https://en.wikipedia.org/wiki/Paul_Smolensky), [Jeffrey Elman](https://en.wikipedia.org/wiki/Jeffrey_Elman). On the other side were the cognitivists (or perhaps the rationalists) [Jerry Fodor](https://en.wikipedia.org/wiki/Jerry_Fodor), [Zenon Pylyshyn](https://en.wikipedia.org/wiki/Zenon_Pylyshyn), with the spirit of Noam Chomsky always present in the background.
+
+Chapter 18 of *Parallel Distributed Processing* vol. 2 bore the unassuming title "On learning the past tenses of verbs in English" [@rumelhartLearningTensesEnglish1986]. Nobody would have predicted that it ignited a long and bitter dispute "the past tense debate". 
+
+
+[@seidenbergQuasiregularityItsDiscontents2014]
