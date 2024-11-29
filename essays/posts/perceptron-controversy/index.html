@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-01-01">
 <meta name="description" content="Connectionism died in the 60s from technical limits to scaling, then resurrected in the 80s after backprop allowed scaling. The Minsky–Papert anti-scaling hypothesis explained, psychoanalyzed, and buried.">
 
-<title>Yuxi on the Wired - The Perceptron Controversy</title>
+<title>The Perceptron Controversy – Yuxi on the Wired</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -36,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -92,12 +92,12 @@ div.csl-indent {
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-02dbcd97b8f3f8f7231673c1d5e4b7bf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-64d6e61f7496feb4de6eb78c8a3b8add.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -125,7 +125,7 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -155,14 +155,14 @@ window.Quarto = {
 };
 </script>
 
-<meta property="og:title" content="Yuxi on the Wired - The Perceptron Controversy">
+<meta property="og:title" content="The Perceptron Controversy – Yuxi on the Wired">
 <meta property="og:description" content="Connectionism died in the 60s from technical limits to scaling, then resurrected in the 80s after backprop allowed scaling. The Minsky–Papert anti-scaling hypothesis explained, psychoanalyzed, and buried.">
 <meta property="og:image" content="https://yuxi-liu-wired.github.io/essays/posts/perceptron-controversy/figure/banner_2_cropped.png">
 <meta property="og:site_name" content="Yuxi on the Wired">
 <meta property="og:image:height" content="891">
 <meta property="og:image:width" content="1437">
 <meta property="og:image:alt" content="Brutalist architecture representing a single perceptron. A hexagonal building in the center representing the unit itself, with multiple arc legs representing the input weights, and antennas projecting off the top representing the output. High contrast, monochromatic, minimalistic, in the style of vector svg art.">
-<meta name="twitter:title" content="Yuxi on the Wired - The Perceptron Controversy">
+<meta name="twitter:title" content="The Perceptron Controversy – Yuxi on the Wired">
 <meta name="twitter:description" content="Connectionism died in the 60s from technical limits to scaling, then resurrected in the 80s after backprop allowed scaling. The Minsky–Papert anti-scaling hypothesis explained, psychoanalyzed, and buried.">
 <meta name="twitter:image" content="https://yuxi-liu-wired.github.io/essays/posts/perceptron-controversy/figure/banner_2_cropped.png">
 <meta name="twitter:image-height" content="891">
@@ -186,7 +186,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -223,13 +223,13 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:yuxi.liu.1995@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="mailto:yuxi_liu@berkeley.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -324,7 +324,7 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
@@ -916,7 +916,7 @@ Interjection
 <p>Well, this particular example has taken on a life of its own. For one thing, it’s a poverty of stimulus problem, like Descartes’ triangle. There’s been a huge effort to show that it’s not a problem, that if you just do a complex statistical analysis of complex data, you’ll find that that’s what the child will determine from the data. The approaches are odd in several respects. First, every one is not only a failure but a colossal failure. I’m not going to talk about that. I actually have a recent paper about it with a computer scientist at MIT, Bob Berwick, where we run through a lot of the current proposals but it’s easy to show that they’re all just wildly wrong. But they keep coming. Almost every issue of the main cognitive science journals has another proposal of this sort, so that’s one odd fact. There are many efforts to show that there is nothing puzzling about it, they’re all colossal failures. <span class="citation" data-cites="chomskyPovertyStimulusUnfinished2010">(<a href="#ref-chomskyPovertyStimulusUnfinished2010" role="doc-biblioref">Chomsky 2010</a>)</span></p>
 </blockquote>
 <p>At last, a testable hypothesis! I asked GPT-4 to <code>Draw a syntax tree for "Can eagles that fly swim?"</code>, and received this:<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a></p>
-<div class="no-row-height column-margin column-container"><div id="fn22"><p><sup>22</sup>&nbsp;The code it gave failed on the first try, due to an environment variable issue on the Linux virtual machine it ran on. We fixed it after two more plies of conversation.</p></div></div><div id="069f8a37" class="cell" data-execution_count="1">
+<div class="no-row-height column-margin column-container"><div id="fn22"><p><sup>22</sup>&nbsp;The code it gave failed on the first try, due to an environment variable issue on the Linux virtual machine it ran on. We fixed it after two more plies of conversation.</p></div></div><div id="3247d779" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install svgling</span>
@@ -1028,7 +1028,7 @@ Breiman, Leo. 1995. <span>“Reflections <span>After Refereeing Papers</span> fo
 Brown, Peter F., Stephen A. Della Pietra, Vincent J. Della Pietra, and Robert L. Mercer. 1993. <span>“The Mathematics of Statistical Machine Translation: <span>Parameter</span> Estimation.”</span>
 </div>
 <div id="ref-carianiEvolveEarEpistemological1993" class="csl-entry" role="listitem">
-Cariani, Peter. 1993. <span>“To Evolve an Ear. <span>Epistemological</span> Implications of Gordon Pask’s Electrochemical Devices.”</span> <em>Systems Research</em> 10 (3): 19–33. <a href="https://doi.org/bv3vd8">https://doi.org/bv3vd8</a>.
+Cariani, Peter. 1993. <span>“To Evolve an Ear. <span>Epistemological</span> Implications of Gordon Pask’s Electrochemical Devices.”</span> <em>Systems Research</em> 10 (3): 19–33. <a href="https://doi.org/10/bv3vd8">https://doi.org/10/bv3vd8</a>.
 </div>
 <div id="ref-chomskyEmpiricalAssumptionsModern1969" class="csl-entry" role="listitem">
 Chomsky, Noam. 1969. <span>“Some <span>Empirical Assumptions</span> in <span>Modern Philosophy</span> of <span>Language</span>.”</span> In <em>Philosophy, Science, and Method</em>, edited by Ernest Nagel, Sidney Morgenbesser, Patrick Suppes, and Morton White. St. Martin’s Press.
@@ -1061,7 +1061,7 @@ Foerster, Jakob. 2017. <span>“Nonlinear Computation in Deep Linear Networks.�
 Fukushima, Kunihiko. 1969. <span>“Visual Feature Extraction by a Multilayered Network of Analog Threshold Elements.”</span> <em>IEEE Transactions on Systems Science and Cybernetics</em> 5 (4): 322–33. <a href="https://ieeexplore.ieee.org/abstract/document/4082265/">https://ieeexplore.ieee.org/abstract/document/4082265/</a>.
 </div>
 <div id="ref-galisonOntologyEnemyNorbert1994" class="csl-entry" role="listitem">
-Galison, Peter. 1994. <span>“The Ontology of the Enemy: <span>Norbert Wiener</span> and the Cybernetic Vision.”</span> <em>Critical Inquiry</em> 21 (1): 228–66. <a href="https://doi.org/fpfd3b">https://doi.org/fpfd3b</a>.
+Galison, Peter. 1994. <span>“The Ontology of the Enemy: <span>Norbert Wiener</span> and the Cybernetic Vision.”</span> <em>Critical Inquiry</em> 21 (1): 228–66. <a href="https://doi.org/10/fpfd3b">https://doi.org/10/fpfd3b</a>.
 </div>
 <div id="ref-gordonNaturalHistoryNetworks1959" class="csl-entry" role="listitem">
 Gordon, Pask. 1959. <span>“The Natural History of Networks.”</span> <em>Proceedings of International Tracts In Computer Science and Technology and Their Application</em> 2: 232–63. <a href="https://www.pangaro.com/pask/Pask-1960-TheNaturalHistoryofNetworks.pdf">https://www.pangaro.com/pask/Pask-1960-TheNaturalHistoryofNetworks.pdf</a>.
@@ -1106,7 +1106,7 @@ Marcus, Gary F., Steven Pinker, Michael Ullman, Michelle Hollander, T. John Rose
 Marcus, Gary, and Ernest Davis. 2018. <span>“Opinion <span></span> <span>A</span>.<span>I</span>. <span>Is Harder Than You Think</span>.”</span> <em>The New York Times</em>, May. <a href="https://www.nytimes.com/2018/05/18/opinion/artificial-intelligence-challenges.html">https://www.nytimes.com/2018/05/18/opinion/artificial-intelligence-challenges.html</a>.
 </div>
 <div id="ref-mccullochLogicalCalculusIdeas1943" class="csl-entry" role="listitem">
-McCulloch, Warren S., and Walter Pitts. 1943. <span>“A Logical Calculus of the Ideas Immanent in Nervous Activity.”</span> <em>The Bulletin of Mathematical Biophysics</em> 5 (4): 115–33. <a href="https://doi.org/djsbj6">https://doi.org/djsbj6</a>.
+McCulloch, Warren S., and Walter Pitts. 1943. <span>“A Logical Calculus of the Ideas Immanent in Nervous Activity.”</span> <em>The Bulletin of Mathematical Biophysics</em> 5 (4): 115–33. <a href="https://doi.org/10/djsbj6">https://doi.org/10/djsbj6</a>.
 </div>
 <div id="ref-metzGeniusMakersMavericks2021" class="csl-entry" role="listitem">
 Metz, Cade. 2021. <em>Genius Makers: The Mavericks Who Brought <span>A</span>.<span>I</span>. To <span>Google</span>, <span>Facebook</span>, and the World</em>. New York: Dutton, an imprint of Penguin Random House LLC.
@@ -1160,7 +1160,7 @@ Papert, Seymour. 1988. <span>“One <span>AI</span> or Many?”</span> <em>Daeda
 Papert, Seymour A. 1994. <em>The <span>Children</span>’s <span>Machine</span>: <span>Rethinking School In The Age Of The Computer</span></em>. Revised ed. edition. New York: Basic Books.
 </div>
 <div id="ref-pickeringScienceUnknowableStafford2004" class="csl-entry" role="listitem">
-Pickering, Andrew. 2004. <span>“The Science of the Unknowable: <span>Stafford Beer</span>’s Cybernetic Informatics.”</span> <em>Kybernetes</em> 33 (3/4): 499–521. <a href="https://doi.org/dqjsk8">https://doi.org/dqjsk8</a>.
+Pickering, Andrew. 2004. <span>“The Science of the Unknowable: <span>Stafford Beer</span>’s Cybernetic Informatics.”</span> <em>Kybernetes</em> 33 (3/4): 499–521. <a href="https://doi.org/10/dqjsk8">https://doi.org/10/dqjsk8</a>.
 </div>
 <div id="ref-pinkerFutureTense2002" class="csl-entry" role="listitem">
 Pinker, Steven, and Michael T. Ullman. 2002. <span>“The Past and Future of the Past Tense.”</span> <em>Trends in Cognitive Sciences</em> 6 (11): 456–63. <a href="https://doi.org/10.1016/S1364-6613(02)01990-3">https://doi.org/10.1016/S1364-6613(02)01990-3</a>.
@@ -1196,7 +1196,7 @@ Thompson, Adrian. 1996. <span>“An Evolved Circuit, Intrinsic in Silicon, Entwi
 ———. 1998. <em>Hardware <span>Evolution</span>: <span>Automatic Design</span> of <span>Electronic Circuits</span> in <span>Reconfigurable Hardware</span> by <span>Artificial Evolution</span></em>. 1st edition. Springer.
 </div>
 <div id="ref-thompsonAnalysisUnconventionalEvolved1999" class="csl-entry" role="listitem">
-Thompson, Adrian, and Paul Layzell. 1999. <span>“Analysis of Unconventional Evolved Electronics.”</span> <em>Communications of the ACM</em> 42 (4): 71–79. <a href="https://doi.org/bpnp42">https://doi.org/bpnp42</a>.
+Thompson, Adrian, and Paul Layzell. 1999. <span>“Analysis of Unconventional Evolved Electronics.”</span> <em>Communications of the ACM</em> 42 (4): 71–79. <a href="https://doi.org/10/bpnp42">https://doi.org/10/bpnp42</a>.
 </div>
 <div id="ref-thompsonExplorationsDesignSpace1999" class="csl-entry" role="listitem">
 Thompson, Adrian, Paul Layzell, and Ricardo Salem Zebulum. 1999. <span>“Explorations in Design Space: <span>Unconventional</span> Electronics Design Through Artificial Evolution.”</span> <em>IEEE Transactions on Evolutionary Computation</em> 3 (3): 167–96. <a href="https://doi.org/10.1109/4235.788489">https://doi.org/10.1109/4235.788489</a>.
@@ -1390,18 +1390,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1433,7 +1422,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -1492,7 +1501,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1589,7 +1598,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -2617,7 +2625,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-802"><a href="#cb2-802" aria-hidden="true" tabindex="-1"></a>    It would be funny if someone could train a language model to pass the "Gary Marcus test": impersonate Gary Marcus in a Turing test setup. If such a model were to pass, Marcus would either have to admit that the language model makes sense or accept that what he says is indistinguishable from nonsense.</span>
 <span id="cb2-803"><a href="#cb2-803" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb2-804"><a href="#cb2-804" aria-hidden="true" tabindex="-1"></a><span class="in">    The same could work for Noam Chomsky -- a statistical language model who can editorialize against every one of GPT-5, Gemini 2, GPT-6, etc, as soon as they come out. A [performative contradiction](https://en.wikipedia.org/wiki/Performative_contradiction).</span></span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
