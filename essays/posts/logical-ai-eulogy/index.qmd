@@ -1133,19 +1133,126 @@ In 2016, AlphaGo defeated the 9-dan player Lee Sedol at 4 wins and 1 loss,[^alph
 
 ## Expert systems
 
-intelligence comes with knowledge
-
-### DENDRAL
-
 > The miracle product is knowledge, and the Japanese are planning to package and sell it the way other nations package and sell energy, food, or manufactured goods... The essence of the computer revolution is that the burden of producing the future knowledge of the world will be transferred from human heads to machine artifacts.  
 >
 > [@feigenbaumFifthGenerationArtificial1984, Chapter 4]
 
+### DENDRAL
+
+Spectroscopy means taking an unknown chemical, then do some physics experiment on it to obtain a line-graph, then discover what that chemical is based on that line-graph. A mathematician would write something like this:
+
+$$
+(\text{chemical}) \xrightarrow{\text{spectroscopy}} (\R \to \R) \xrightarrow{\text{chemist}} (\text{chemical})
+$$
+
+[Mass spectroscopy](https://en.wikipedia.org/wiki/Mass_spectrometry), for example, breaks a chemical into fragments, and measures the mass-to-charge ratios of the fragments, in units of $\frac{\text{atomic mass unit}}{\text{electron charge}}$. Many fragments carry just +1 electron charge, so the mass-to-charge ratio can be interpreted as roughly the atomic mass of the fragment. A peak at $x$, for example, means when the chemical breaks, it often results in some fragments with mass $x$. Trained chemists would be able to study a mass spectroscopy plot and figure out what it means. 
+
+Given a chemical species, by standard [stiochiometry](https://en.wikipedia.org/wiki/Stoichiometry) one can measure the chemical formula of the species, but it remains to discover its chemical structure. This is what DENDRAL[^dendral-name] was designed to do: given the mass spectroscopy, the chemical formula, and some additional information (a later version could incorporate the NMR spectrum), output possible molecular structures for the species.
+
+[^dendral-name]: The full name is "heuristic dendritic algorithm". It is "dendritic" because it originally only could process chemical structures with no cycles.
+
+Like the IPS of Simon and Newell, DENDRAL started as a heuristic search program. Its problem space is enumerated by a structure generator, which, given a chemical formula, generates all chemically stable structures according to some chemical rules. For example, [geminal diols](https://en.wikipedia.org/wiki/Geminal_diol) are unstable, so those are not enumerated. Each generated structure is then broken into fragments, again according to some heuristic rules. For example, in a ketone (R-(C=O)-R'), it is very unlikely for the C=O double bond to be broken, while it is quite easy for the R-(C=O) and the (C=O)-R' bonds to be broken.
+
+If that is all there is, then we have something not much better than exhaustive search, and would not scale. The breakthrough of DENDRAL was that the DENDRAL team had a professional chemist, who entered a large number of heuristic rules for interpreting mass spectroscopy lines. These greatly decrease the number of solutions to verify.
+
+Consider an illustrative example from [@feigenbaumGeneralityProblemSolving1970, table 1]. Let $m$ be the mass of the whole molecule. Then there is a [ketone carbonyl group](https://en.wikipedia.org/wiki/Ketone) (R-(C=O)-R', mass 28) if there are 2 peaks at mass $x_1, x_2$ such that
+
+1. $x_1+x_2 = m+28$,
+2. $x_1 - 28$ is a high peak,
+3. $x_2 - 28$ is a high peak,
+4. At least one of $x_1$ or $x_2$ is high.
+
+A molecule R-(C=O)-R' containing a ketone group often breaks at the bond next to the carbonyl group. This results in 4 possible fragments: R-(C=O)-, -(C=O)-R', R-, -R'. Since the -(C=O)- fragment has mass 28, the first 3 rules would be satisfied. The 4th rule ensures the fragments are statistically significant, not noise. (What counts as "high" is a parameter that the expert sets.)
+
+The full architecture is as follows:
+
+```python
+def plan(chemical_formula, spectroscopic_data):
+    # use the rules and data to list plausible and implausible structural elements
+    # e.g., if the ketone carbonyl group is plausible, then put it into good_list
+    # else, put it into the bad_list
+    return good_list, bad_list
+
+def generate(chemical_formula, good_list, bad_list):
+    # enumerate all plausible structures 
+    # containing groups from the good_list, but not the bad_list
+    return plausible_structures
+
+def test(plausible_structures, spectroscopic_data):
+    structures = []
+    for structure in plausible_structures:
+        simulated_data = simulate_spectroscopy(chemical_formula)
+        score = distance(simulated_data, spectroscopic_data)
+        structures.append((score, structure))
+    structures.sort(key=lambda x: x[0])
+    return structures
+
+def main(chemical_formula, spectroscopic_data):
+    good_list, bad_list = plan(chemical_formula, spectroscopic_data)
+    plausible_structures = generate(chemical_formula, good_list, bad_list)
+    structures = test(plausible_structures, spectroscopic_data)
+    return structures
+```
+
+![[@duffieldApplicationsArtificialIntelligence1969, figure 1]](figure/DENDRAL_flowchart.png)
+
+During the period of 1965 to 1969, DENDRAL's performance increased steadily as more chemical knowledge was entered. In the discussion section, they summarized their lessons learned as a tradeoff. Whereas previous logical AI systems like GPS focused on generic heuristic search over solution spaces, they concluded that generality of the solver has a price being paid in speed and power of finding actual solutions. 
+
+> In recognition of these difficulties, a vienpoint at the other extreme has ewerged, informally called "the big switch hypothesis"... generality in problem solving is achieved by arraying specialists at the terminals of a big switch. The big switch is moved from specialist toi specialist as the problem solver switches its attention from one problem area to another... The general methods do solve DENDRAL problems, sometimes well as with some amino acid spectra, but they ara relatively weak and inefficient.
+> 
+> ... This is remarkable. The planner, which is the specialist at "understanding" the data and inferrirg conditions on tho solution, is so powerful that the need for the general problem solving processes of the system is obviated. Another way to view this is that all the relevant theoretical knowledge to solve these [amine](https://en.wikipedia.org/wiki/Amine) problems has been mapped over from its general form in the predictor ("first principles") to efficient special forms in the planner ("cookbook recipes").
+>
+> [@feigenbaumGeneralityProblemSolving1970]
+
+In another paper [@buchananRediscoveringProblemsArtificial1970], the authors expressed their surprise that they could split the program into two parts, which would become the "inference engine" and the "knowledge base". It was as if they have discovered that, instead of manually writing in a lot of if-then statements, they could write a single `eval` function, and then just write a lot of entries in a giant database of rules in a uniform format, and run the `eval` function over the rules. It reminds me of von Neumann discovering the code is data, data is code idea, and thus avoid the trouble of having to physically rewire ENIAC every time the program changes.
+
+TODO the meta-DENDRAL
+
+### MYCIN
+
+MYCIN
+
+EMYCIN stands for either "empty MYCIN" or "extensible MYCIN"
+
+```lisp
+;;;; -*- Mode: Lisp; Syntax: Common-Lisp -*-
+;;;; Code from Paradigms of AI Programming
+;;;; Copyright (c) 1991 Peter Norvig
+
+;;;; File mycin-r.lisp: Sample parameter list and rulebase for mycin.
+
+(requires "mycin")
+
+;;; Parameters for patient:
+(defparm name patient t "Patient's name: " t read-line)
+(defparm sex patient (member male female) "Sex:" t)
+(defparm age patient number "Age:" t)
+(defparm burn patient (member no mild serious)
+  "Is ~a a burn patient?  If so, mild or serious?" t)
+(defparm compromised-host patient yes/no
+  "Is ~a a compromised host?")
+
+;;;; ...
+
+(defrule 165
+  if (gram organism is pos)
+     (morphology organism is coccus)
+     (growth-conformation organism is chains)
+  then .7
+     (identity organism is streptococcus))
+```
+
+Unfortunately, unlike the famous ELIZA, it is quite hard to get a working copy of DENDRAL or MYCIN. However, you can experience the fun of MYCIN by asking a modern LLM to roleplay as one. If you still want to do it the old-school way, follow the [tutorial here](code/run_mycin.md).
+
 ### Knowledge Principle
 
-What was new about expert systems? Compared to previous AI systems like the GPS, which had the elegance of a short mathematical program, expert systems were meant to work only with a large enough knowledge base. This was an early appearance of *data* in AI, compared to the previous kind of algorithm-centric AI. From our scaling-hypothesis point of view, the appearance of data was a step in the right direction, but it was yet incomplete, since the data was heavily distilled by human experts into rules.
+> \[Edward Feigenbaum:\] In 1968, I was writing a paper with Bruce \[Buchanan\] and Josh Lederberg in which we chose to summarize the evidence from the many DENDRAL experiments from mid-1965 to mid-1968. It was evident that the improvement in DENDRAL's performance as a mass spectrum analyst was almost totally a function of the amount and quality of the knowledge that we had obtained from Djerassi's experts, and that it was only weakly related to any improvements that the AI scientists like me and Bruce had made to the reasoning processes used in DENDRAL's hypothesis formation. So in 1968, I called this observation the “Knowledge is Power Hypothesis.” One data point. Later, as the evidence accumulated from dozens of -- or hundreds of -- expert systems, I changed the word “hypothesis” to “principle.”
+>
+> \[Bruce Buchanan:\] Art Samuel's work on the checker player: Art had interviewed experts to understand ... the feature vector and then he did a good deal of reading about checkers... That impressed me a great deal and I always wanted to be able to do that. \[META-DENDRAL\] did learn the rules of mass spectrometry from empirical data. A footnote on that. The data were very sparse. It took about one graduate student one year to obtain and interpret one mass spectrum, so we couldn't ask for very much data. This was not a big data problem.
+>
+> quoted in [@brockLearningArtificialIntelligences2018]
 
-The previous approach to logical AI focused on general algorithms (usually search) and problem representation. In short, the promise of logical AI (or at least, the kind of logical AI that expert systems were challenging) is this: 
+What was new about expert systems? The previous approach to logical AI focused on general algorithms (usually search) and problem representation. In short, the promise of logical AI (or at least, the kind of logical AI that expert systems were challenging) is this: 
 
 ```python
 def class Representation:
@@ -1171,21 +1278,58 @@ That is, most of AI work was in two areas:
 * Representations of data for effective search.
 
 On the general algorithms side, examples included [A* search](https://en.wikipedia.org/wiki/A*_search_algorithm) developed for Shakey the robot, [dynamic time warping](https://en.wikipedia.org/wiki/Dynamic_time_warping) developed for speech recognition, [KMP algorithm](https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm) for string matching, etc. 
+
 While it is anachronistic, a good example of non-trivial data representation for effective search is the [bitboard](https://www.chessprogramming.org/Bitboards) used for computer chess. It represents the entire chess board with a bit array in a clever way, so that many operations, like finding which pieces are attacking a square, becomes bitwise operations, allowing fast game tree search.
 
-In a position paper coauthored by Feigenbaum and Lenat, we have a clear statement of the assumptions behind expert systems AI.
+Compared to previous AI systems like the GPS, which had the elegance of a short mathematical program, expert systems were meant to work only with a large enough knowledge base. This was an early appearance of *data* in AI, compared to the previous kind of algorithm-centric AI. From our scaling-hypothesis point of view, the appearance of data was a step in the right direction, but it was yet incomplete, since the data was heavily distilled by human experts into rules.
 
-> "Knowledge is Power" or, more cynically "Intelligence is in the eye of the (uninformed) beholder."
-> 
-> The Knowledge Principle (KP): A system exhibits intelligent understanding and action at a high level of competence primarily because of the specific knowledge that it can bring to bear: the concepts, facts, representations, methods, models, metaphors, and heuristics about its domain of endeavor... Knowledge is often considered Compiled Search; despite that, the KP claims that only a small portion of the knowledge can be generalized so it applies across domains, without sacrificing most of its power.
+Philosophically, expert systems has more in common with inductive, scientific reasoning, while the previous logical AI with deductive, mathematical reasoning  [@lindsayDENDRALCaseStudy1993]. In a position paper coauthored by Feigenbaum and Lenat, we have a clear statement of the assumptions behind expert systems AI.
+
+> "Knowledge is Power" or, more cynically "Intelligence is in the eye of the (uninformed) beholder."... The Knowledge Principle (KP): A system exhibits intelligent understanding and action at a high level of competence primarily because of the specific knowledge that it can bring to bear: the concepts, facts, representations, methods, models, metaphors, and heuristics about its domain of endeavor... Knowledge is often considered Compiled Search; despite that, the KP claims that only a small portion of the knowledge can be generalized so it applies across domains, without sacrificing most of its power.
 >
 > Explicit Knowledge Principle: Much of the knowledge in an intelligent system needs to be represented explicitly.
 >
 > The Competence Threshold: Difficult tasks succumb nonlinearly to knowledge. There is an ever greater "payoff" to adding each piece of knowledge, up to some level of competence (e.g., where an NP complete problem becomes Polynomial). Beyond that, additional knowledge is useful but not frequently needed (e.g., handling rare cases.). Crossing the Competence Threshold, one enters the realm of experts. There, the knowledge-search tradeoff is fairly evenly balanced.
->
 > 
->
 > [@lenatThresholdsKnowledge2000]
+
+### AI boom
+
+![A typical expert system architecture during the 1980s. [@harmonExpertSystemsBusiness2022, figure 2]](figure/expert_system_architecture.png)
+
+During the late 1970s, expert systems got noticed outside the small scholarly community, and as the 1980s went on, knowledge became money. The first wave of commercial AI arrived that lasted for about 10 years.
+
+> analysis of physical objects (like buildings or bridges), SACON; determining the structure of proteins from X-ray crystallographic data, in collaboration with experts at UC San Diego, CRYSALIS; interpreting data about a person's lung functioning coming from an instrument called a spirometer, in collaboration with a doctor at California Pacific Medical Center, PUFF; managing ventilator machines in intensive care units, another collaboration with a CPMC ICU lead physician, VM... Feigenbaum's lab was funded by IBM to help them develop their first expert system—final diagnosis of errors in disk drives before they were shipped to the customer... GEO, to analyze and form hypotheses about the geology of the bore hole as drilling proceeded down inch by inch... \[DARPA\], which funded half of the research in Feigenbaum's lab, wanted an expert system to hypothesize about the behavior of enemy submarines hiding in U.S. coastal waters, interpreting data from ocean noises, and reconnaissance aircraft sightings, and using a large compendium of mostly secret intelligence knowledge about those enemy submarines and their behaviors... the classified expert system HASP for enemy submarine surveillance. Importantly, it included explanations in English for all of its inferred hypotheses, thereby gaining the trust of the Navy personnel at the coastal stations.
+> 
+> ...
+> 
+> By 1988, Paul Harmon, an expert systems newsletter editor, counted several thousand expert systems operating in fields as varied as construction, finance, heavy manufacturing, and computer configuration and sales.
+>
+> [@mccorduckScientificLifeEdward2022]
+
+A best-selling book was full of miraculous stories of growth and business profits:
+
+> Mike-in-the-Box, "God in the works" (the captured expertise of an aging, irreplaceable blast furnace expert at Nippon-Kokan), ‘‘Geoff’s Book” (thousands of expert rules from the head of the senior, top estimator at building contractor Lend Lease of Australia), and J. A. Gilreath (Schlumberger’s ace oilfield data interpreter, whose expertise is now enshrined in that company’s Dipmeter Advisor system) are among the stars we meet. Much of the priceless skill of these experts has been captured by "knowledge engineer": translators.
+> 
+> At IBM Burlington (the chip operation), a 10 to 20 percent increase in throughput has been realized; this adds up to tens of millions of dollars’ annual savings from just the one system. At the British National Health Service, a demanding and critical evaluation task that took six experts two hours is now done (better) in nine minutes. At American Express, the "decline rate" (decisions not to grant credit) has been reduced by fully one-third, and the value of the single, new AI system is already estimated at \$27 million a year. A Westinghouse system (a new service which that firm sells to utilities), aimed at enhancing the utilization of giant electric power generation turbines, contributes a whopping $2 to $3 million per year per customer machine. Then there’s a sales support system at Digital, called XSEL, which has reduced a three-hour system configuration/alternative generation task to fifteen minutes; moreover, less than 1 percent of the systems so specified turn out not to be manufacturable, down from 30 percent before the system was installed—all of which is worth $70 million a year, says DEC, not including immeasurable added customer satisfaction that accrues from providing the customer with more options. And an AI system that aids product design at Canon has made scarce, highly skilled lens designers fully twelve times more productive!
+>
+> ...
+> 
+> For a customer, NKK Steel, IBM built a system that schedules the movement of materials and products and does the assignment of workers to tasks. The expert system was put into operation in September, 1987. It produces in half an hour a schedule that previously took ten hours to prepare and overall saves the company 100 million yen per year (about $700 thousand).
+> 
+> ...
+> 
+> Force Requirements Expert System, an expert system to advise on the deployment of ships in the U.S. Pacific Fleet. According to TI, a typical deployment problem would take an experienced operations officer and his staff as much as a week to solve, but with the help of Fresh, the officer can produce a solution by himself in six to eight hours.
+>
+> [@feigenbaumRiseExpertCompany1988]
+
+Wait, the US Pacific Fleet? Yes! The military took on many expert systems. More on this [below](#sec-sci).
+
+The market segmented into the following parts:
+
+* Language: Some companies marketed basic language development and consulting, mainly in Lisp and Prolog.
+* Expert system building tools: Some companies marketed software for building expert systems. They might be expert system "shells" like the EMYCIN, with some extras to make it easier for non-researchers like engineers to enter their knowledge into the computer.
+* Application builders: Some companies would build expert systems on demand. They would send in knowledge engineers into the field and elicit knowledge from experts, by interview, observing, asking questions, etc. At the end of the process, they would deliver the finished expert system.
 
 The focus of AI research changed from problem-solving algorithms (usually search) and problem representations to knowledge representation and acquisition (manual or automatic), with a little bit of inference engine on top. There was apparently a persistent confusion as to the point of expert systems, however, since even deep into the AI boom period, people still often thought the expert system shell was "the AI" that the AI companies were selling, even when it's the knowledge engineering that they sold. It was kind of a [shell game](https://en.wikipedia.org/wiki/Shell_game).
 
@@ -1193,40 +1337,49 @@ The focus of AI research changed from problem-solving algorithms (usually search
 > 
 > [@schankWheresAI1991]
 
-Notably absent was machine learning. With the exception of Arthur Samuel's checkers learning program, much of logical AI during this period did not use learning.
-
-Compared to [@lindsayDENDRALCaseStudy1993]
-
-### AI boom
-
-> analysis of physical objects (like buildings or bridges), SACON; determining the structure of proteins from X-ray crystallographic data, in collaboration with experts at UC San Diego, CRYSALIS; interpreting data about a person's lung functioning coming from an instrument called a spirometer, in collaboration with a doctor at California Pacific Medical Center, PUFF; managing ventilator machines in intensive care units, another collaboration with a CPMC ICU lead physician, VM... Feigenbaum's lab was funded by IBM to help them develop their first expert system—final diagnosis of errors in disk drives before they were shipped to the customer... GEO, to analyze and form hypotheses about the geology of the bore hole as drilling proceeded down inch by inch... \[DARPA\], which funded half of the research in Feigenbaum's lab, wanted an expert system to hypothesize about the behavior of enemy submarines hiding in U.S. coastal waters, interpreting data from ocean noises, and reconnaissance aircraft sightings, and using a large compendium of mostly secret intelligence knowledge about those enemy submarines and their behaviors... the classified expert system HASP for enemy submarine surveillance. Importantly, it included explanations in English for all of its inferred hypotheses, thereby gaining the trust of the Navy personnel at the coastal stations.
->
-> [@mccorduckScientificLifeEdward2022]
-
-
-> By 1988, Paul Harmon, an expert systems newsletter editor, counted several thousand expert systems operating in fields as varied as construction, finance, heavy manufacturing, and computer configuration and sales.
->
-> [@mccorduckScientificLifeEdward2022]
-
-
-
 ### The knowledge bottleneck
 
 Knowledge acquisition vs knowledge engineering
 
-In the very first paper on DENDRAL, the authors already recognized the problem of "knowledge bottleneck":
+In the very first paper on DENDRAL, 
 
-> we could get rid of the ‘middle man’ in the information transfer by educating a programmer in mass spectroscopy or by educating a chemist in Lisp. Or we could replace the middle man with a program designed to perform the same function as B (the layman/programmer) in the dialog above. In effect, we have been moving slowly in all three of these directions at once. But what we would most like to pursue is the design of a program to elicit information from an expert who is not also a programmer.
+already recognized the problem of "knowledge bottleneck":
+
+> we could get rid of the "middle man" in the information transfer by educating a programmer in mass spectroscopy or by educating a chemist in Lisp. Or we could replace the middle man with a program designed to perform the same function as B (the layman/programmer) in the dialog above. In effect, we have been moving slowly in all three of these directions at once. But what we would most like to pursue is the design of a program to elicit information from an expert who is not also a programmer.
 > 
-> One obvious reason for the encouragingly high level of performance of the computer is the large amount of mass spectrometry knowledge which chemists have imparted to the program. Yet this has been one of the biggest bottlenecks in developing the program. When there was only one theory of mass spectrometry in the program, viz., the complex theory in the PREDICTOR, we were relatively insensitive to the difficulty of adding new information to the theory. Although it was a time-consuming process, it was still manageable by one programmer, working with one chemist, with most of the time spent programming as opposed to criticizing. By the time the planning phase was added to the program, it was easier to see how to shorten the task of programming by separating the chemical theory from the routines which work on the theory. The separation was by no means complete here, but it was successful enough to reduce the programming time drastically for the addition of new pieces of theory. Because the theory could be changed by changing an entry in a table, many iterations with the expert were now possible in a single one or two hour session at the console. The preponderance of time was now spent by the chemist deciding how to change the rules in the table to bring the program’s behaviour more in line with real data. The organization of the PRELIMINARY INFERENCE MAKER made the process of examining its chemical knowledge relatively simple, compared to the process of putting knowledge into the sTRUCTURE GENERATOR and PREDICTOR programs. Both of these programs are on their way to becoming ‘table driven’ in much the same way as the PRELIMINARY INFERENCE MAKER is now. (See Part 4.) Yet, re-designing the programs to allow easyadditions and changes to the chemical knowledge will not solve all ourproblems. Because mass spectroscopy is a relatively young discipline, the theory does not exist in any sort of comprehensive codified form. Part 2 will discuss some of the problems of obtaining the chemical theory that has been incorporated into the programs so far. Further, the presence of any body of knowledge in the programs brings up questions of how and where this knowledge is to be represented, stored, and referenced within the programs. Part 3 will elaborate on these issues
-> 
+> One obvious reason for the encouragingly high level of performance of the computer is the large amount of mass spectrometry knowledge which chemists have imparted to the program. Yet this has been one of the biggest bottlenecks in developing the program... The preponderance of time was now spent by the chemist deciding how to change the rules in the table to bring the program’s behaviour more in line with real data.
+>  
 > [@buchananRediscoveringProblemsArtificial1970]
 
 > The power of the expert systems comes from the knowl- edge they contain. That knowledge is, at present, stored in the heads of human experts, and getting it out—what AI researchers call the knowledge acquisition problem—is the biggest bottleneck that the knowledge engineers currently face. Expert systems are now proven performers. But knowledge acquisition is the great research problem that AI laboratories must face and solve in the coming decade.
 > 
 > [@feigenbaumFifthGenerationArtificial1984, chapter 3]
 
-### Success by boredom
+
+
+> One system for medical diagnosis, called [CADUCEUS](https://en.wikipedia.org/wiki/CADUCEUS_(expert_system)) (originally INTERNIST), has 500 disease profiles, 350 disease variations, several thousand symptoms, and 6,500 rules describing relations among symptoms. After fifteen years of development, the system is still not on the market. According to one report, it gave a correct diagnosis in only 75 percent of its carefully selected test cases. Nevertheless, Myers, the medical expert who developed it, "believes that the addition of another 50 [diseases] will make the system workable and, more importantly, practical."
+>
+> [@winograd10ThinkingMachines1991]
+
+[@wolframAppraisalINTERNISTI1995]
+
+Winograd argued that expert systems are structured like human bureaucracies, with formalized explicit rules, and so they have same strengths and weaknesses. This explains why they work only in stable and precise technical areas, where exceptions are not the rule. [@winograd10ThinkingMachines1991]
+
+### This section is so boring I don't know what to even title it with
+
+Harmon argued that expert systems failed to ["cross the chasm"](https://en.wikipedia.org/wiki/Crossing_the_Chasm). A new technology is adopted in two waves, with the first wave driven by small companies ("innovators" and "early adopters") who were optimistic about its future, and the second wave driven by large companies that sell to the "majority" who have been convinced that it grows the bottom-line. The first wave typically appears at technology fairs, while the second wave typically appears at [trade fairs](https://en.wikipedia.org/wiki/Trade_show). The "chasm" between the two waves happen because some technologies never get past the "a good idea" stage, and end up being "a good idea that didn't work out for most", and it may remain in use only in niche places.
+
+![Moore's technology adoption life cycle curve. [@harmonExpertSystemsBusiness2022, figure 3]](figure/Moore_chasm.png)
+
+> By the late 1990s, most expert systems vendors had disappeared. Some expert systems tool companies survived until later, and large companies like IBM simply shifted their emphasis to other product lines as demand changed. In essence, the expert systems market never really achieved take-off.
+>
+> [@harmonExpertSystemsBusiness2022]
+
+Most expert systems vendors died. Some survived by pivoting:
+
+* to object-oriented programming tools or databases, which are similar to knowledge bases;
+* to relational databases, which are similar to knowledge bases;
+* to [business rules](https://en.wikipedia.org/wiki/Business_rule), which are particularly cheap to construct, because instead of living inside expert heads, they are already written down as business policies and top-down procedural guidelines
 
 According to the mythos of AI, after the 1980s hype of AI came second AI winter. This was half correct. The greatest dreams of AI did not pan out, but ES had become practical, invisible, even boring.
 
@@ -1236,13 +1389,9 @@ According to the mythos of AI, after the 1980s hype of AI came second AI winter.
 > 
 > [@blanchardAAAI94StateAI1994]
 
-In short, ES behind boring acronyms like Systems Applications and Products (SAP), Automated Reasoning Tool (ART), and Knowledge Management Systems (KMS)[^expert-system-acronym]
+In short, ES behind boring acronyms like Systems Applications and Products (SAP), Automated Reasoning Tool (ART), and Knowledge Management Systems (KMS).[^expert-system-acronym] As a pattern, the areas where expert systems succeeded include logistics planning, business rules, tax code, bureaucratic rules, while they failed basically at any kind of general intelligence in even slightly unstructured environments. The common intuition that they are fragile is largely correct, and they work precisely in standardized environments with minimal change, much like bureaucracies. Indeed, a good intuition is that expert systems are digitized bureaucracies, with the same strengths and weaknesses.
 
 [^expert-system-acronym]: Are you bored yet? Here are more! Knowledge base management system (KBMS), enterprise resource planning (ERP), business process management (BPM), process-oriented knowledge management (PKM), business process management system (BPMS), online transactional processing (OLTP), recency, frequency, monetary value analysis (RFM), earnings before interest, taxes, depreciation and amortization (EBITDA)... The last one was not about expert systems, but it might as well be, haha.
-
-Successes and failures. Successes include logistics planning, business rules, tax code, bureaucratic rules, . Failures are basically any kind of general intelligence in even slightly unstructured environments.
-
-And knowledge acquisition? Some of it failed, and some of it spun off into "data mining". Roughly speaking, it consisted of discovering logical rules that are approximately true over a large database. In our time, we might call it data science for the 2000s.
 
 Meanwhile, Feigenbaum became the Chief Scientist of [US Air Force](https://en.wikipedia.org/wiki/United_States_Air_Force), and tried to teach them about software engineering. With regard to technology, the military was still doing it the same way as they did in the 1950s. They prioritized hardware before software, and what software they developed was by the waterfall model they used for [SAGE](https://en.wikipedia.org/wiki/Semi_Automatic_Ground_Environment) [@boehmView20th21st2006]. Needless to say, his attempts to teach them about post-1950s software engineering went nowhere. I feel like his story is somehow a reflection of this larger story of how expert system AI became boring.
 
@@ -1250,7 +1399,7 @@ Meanwhile, Feigenbaum became the Chief Scientist of [US Air Force](https://en.wi
 >
 > [@mccorduckScientificLifeEdward2022]
 
-they  are one piece of a larger business Solution. That one piece, however, is often what encapsulates and distributes the actual problem-solving capability of the system.’ All told, these systems are responsible for tens of millions of dollars in savings and increased earnings for their developers.  TODO source
+And knowledge acquisition, or machine learning? Some of it failed, and some of it spun off into "data mining". Roughly speaking, it consisted of discovering logical rules that are approximately true over a large database. In our time, we might call it data science for the 2000s.
 
 > Harmon: ... how many vendors are advertising at the major conferences. When you start to see attendance and vendors dropping off, you know that the market is closing down for some reason. That certainly happened in that expert systems array. The second thing is that expert systems knowledge isn't a constant... If a company had a knowledge base and passed it to somebody else, it would be certainly at the cutting edge. But it would be out of date within a year or two anyway. The ability of these systems to be maintained, to have people bring them up to date is critical, too.
 > 
@@ -1283,6 +1432,62 @@ they  are one piece of a larger business Solution. That one piece, however, is o
 > [AI: Expert Systems Pioneer Meeting Session 8: Artificial Intelligence and Machine Learning in the 1990s.](https://archive.computerhistory.org/resources/access/text/2020/05/102781128-05-01-acc.pdf) (2018-05-14)
 
 
+### Was it all a dream?
+
+So what was so new about it? Was it just one big hype? In our perspective, expert systems seem like the most boring kind of if-then statement plus database engineering. Although computer scientists had long known that computers could perform symbolic and logical reasoning, in the 1980s, it was a genuine revelation to people outside.
+
+> even high-ranking computing executives. Many did not believe that computers could be programmed to reason and to reach uncertain conclusions. They were so familiar with lock-step algorithms that always reached the correct answer that anything less than certainty simply did not seem like real computing. In a similar way, AI languages like LISP and Prolog were nearly incomprehensible to those who had always imagined that Fortran and COBOL pretty much-defined software development. The excitement about AI and expert systems was almost as if experienced computer professionals were being asked to go back to college and learn computer science all over again.
+>
+> [@harmonExpertSystemsBusiness2022]
+
+And while the grandest dreams of expert system AI did not pan out, it still offered incremental profit of a few million dollars at a time. The pieces that worked quickly became too boring to mention, and the pieces that didn't work got forgotten, or returned to academia, where ideas hope for their eventual justification.
+
+Except the thing called "Cyc".
+
+### Cyc {#sec-cyc}
+
+AI alignment people often tell the legend of EURISKO, a program that discovered loopholes in a sci-fi ship-building tournament, allowing its creator to win two years in a row.
+
+> AI has for many years understood enough about representation and inference to tackle this project, but no one has sat down and done it... only by pulling together the latest human interface tools, Lisp machines, ideas of enforced semantics, and funding for a decade-long effort could we attempt a project of this scale. [@lenatCycUsingCommon1985]
+
+In 1984, [Douglas Lenat](https://en.wikipedia.org/wiki/Douglas_Lenat) began the Cyc project, an ambitious attempt to scale symbolic AI up to the real world. Like most expert systems, the Cyc project consists of a giant knowledge base encoded in a LISP-like symbolic logic language, upon which inference engines can be run to produce logical reasoning. Unlike most expert systems, the ambition of Cyc was universal: Its knowledge base would not be restricted to expert knowledge in a particular domain, but *all* commonsense knowledge in *all* domains that humans have commonsense about.
+
+Even from the vantage point of 1985, it was clear to all that there was a lot of commonsense to code in, although few could have predicted that Lenat would persevere at it for over 30 years.
+
+They themselves underestimated the difficulty. In 1990, they confidently titled a paper "Cyc: A midterm report" [@lenatCycMidtermReport1990], suggesting that they expected to be done around 1995.
+
+The progress report in 1995 stated that, while the system is far from done, they have at least manually entered $10^5$ "general concepts" and $10^6$ "commonsense axioms" into Cyc, at the price of 100 person-years. [@lenatCycLargescaleInvestment1995]
+
+> Moreover, statistics, colocation, and frequency do not resolve such questions. But the task goes from impossible to trivial if one already knows a few things about boxes and pens, police and demonstrators, and water and teakettles. The same sort of chicken-and-egg relationship characterizes CYC and ML because learning occurs at the fringe of what one already knows. Therefore, in the early 1980s, when the rest of the world was so enthusiastic about Natural Language Understanding, Machine Learning, and AI in general, we were pessimistic. We concluded the only way out of this codependency would be to prime the pump by manually crafting a million axioms covering an appreciable fraction of the required knowledge. That knowledge would serve as a critical mass, enabling further knowledge collection through NLU and ML, beginning in the mid-1990s. Mary Shepherd and I embarked on that task in 1984, knowing we had little chance of success, but seeing no alternative but to try... we are now moving toward the transition point where NLU and ML are supported. The rest of the world is disillusioned and pessimistic about symbolic AI, but ironically, as CYC reaches closure, our hopes for NLU and ML in the next 10 years are very high.
+>
+> [@lenatCycLargescaleInvestment1995]
+
+> ... give CYC enough knowledge by the late 1990s to enable it to learn more by means of natural language conversations and reading. Soon thereafter, say by 2001, we planned to have it learning on its own, by automated-discovery methods guided by models or minitheories of the real world. To a large extent, that's just what we did. At the end of 1994, the CYC program was mature enough to spin off from MCC as a new company -- Cycorp -- to commercialize the technology and begin its widespread deployment.
+>
+> [@lenat20012001Common2001]
+
+In 2016, Lenat finally declared the Cyc project "done" and set about commercializing it.
+
+> Having spent the past 31 years memorizing an astonishing collection of general knowledge, the artificial-intelligence engine created by Doug Lenat is finally ready to go to work... most of what is left to be added is relevant to a specific area of expertise, such as finance or oncology.
+> 
+> Among other projects, the company is developing a personal assistant equipped with Cyc's general knowledge. This could perhaps lead to something similar to Siri... the CEO of Lucid says the new company is in talks with various others interested in using the Cyc knowledge base. Lucid has been working with the Cleveland Clinic, for example, to help automate the process of finding patients for clinical studies.
+> 
+> [@knightAI30Years2016]
+
+That was essentially the last we heard from Cyc.
+
+When looking at this figure from 1985, one is simultaneously filled with respect and sadness, for they were facing impossible odds, and yet they charged right into it.
+
+![[@lenatCycUsingCommon1985, Figure 1]](figure/cyc_project_ontology.png)
+
+Their "midterm report" only accentuates this sense of tragedy, of seeing them fighting impossible odds, and losing. They saw with clarity that there is no shortcut to intelligence, no "Maxwell's equations of thought".
+
+> The majority of work in knowledge representation has dealt with the technicalities of relating predicate calculus to other formalisms and with the details of various schemes for default reasoning. There has almost been an aversion to addressing the problems that arise in actually representing large bodies of knowledge with content. However, deep, important issues must be addressed if we are to ever have a large intelligent knowledge-based program: What ontological categories would make up an adequate set for carving up the universe? How are they related? What are the important facts and heuristics most humans today know about solid objects? And so on. In short, we must bite the bullet.
+>
+> We don't believe there is any shortcut to being intelligent, any yet-to-be-discovered Maxwell's equations of thought, any AI Risc architecture that will yield vast amounts of problem-solving power. Although issues such as architecture are important, no powerful formalism can obviate the need for a lot of knowledge.
+>
+> By knowledge, we don't just mean dry, almanac-like or highly domain-specific facts. Rather, most of what we need to know to get by in the real world is prescientific (knowledge that is too commonsensical to be included in reference books; for example, animals live for a single solid interval of time, nothing can be in two places at once, animals don't like pain), dynamic (scripts and rules of thumb for solving problems) and metaknowledge (how to fill in gaps in the knowledge base, how to keep it organized, how to monitor and switch among problem-solving methods, and so on). Perhaps the hardest truth to face, one that AI has been trying to wriggle out of for 34 years, is that there is probably no elegant, effortless way to obtain this immense knowledge base. Rather, the bulk of the effort must (at least initially) be manual entry of assertion after assertion. [@lenatCycMidtermReport1990]
+
 ## Language
 
 ### Chomsky
@@ -1292,6 +1497,8 @@ HMM models, and indeed, *all* probabilistic models of English, must fail, becaus
 
 
 ### ELIZA
+
+Fortunately, unlike the others like EPAM or SHRDLU, ELIZA is so famous that it is available everywhere.
 
 Weizenbaum became a fully human-centric critique of AI, culminating with *Computer Power and Human Reason: From Judgment to Calculation* (1976). In brief, the book had theese theses:
 
@@ -1335,68 +1542,6 @@ It is pretty amusing now that
 In 1982, the Japanese was ready to take on the world.
 
 With some irony, the Japanese might look back and call them the Gosei \[五世\].
-
-## Expert systems
-
-### Origins
-
-Beginning in 1965, Edward Feigenbaum and Joshua Lederberg developed DENDRAL, first as a model to understand how organic chemists do their daily work: Given a molecule with this kind of mass spectra, this melting point, or other experimental data, what might be its chemical formula and molecular structure?
-
-
-
-### The hype
-
-### The fall
-
-> One system for medical diagnosis, called [CADUCEUS](https://en.wikipedia.org/wiki/CADUCEUS_(expert_system)) (originally INTERNIST), has 500 disease profiles, 350 disease variations, several thousand symptoms, and 6,500 rules describing relations among symptoms. After fifteen years of development, the system is still not on the market. According to one report, it gave a correct diagnosis in only 75 percent of its carefully selected test cases. Nevertheless, Myers, the medical expert who developed it, "believes that the addition of another 50 [diseases] will make the system workable and, more importantly, practical."
->
-> [@winograd10ThinkingMachines1991]
-
-[@wolframAppraisalINTERNISTI1995]
-
-Winograd argued that expert systems are structured like human bureaucracies, with formalized explicit rules, and so they have same strengths and weaknesses. This explains why they work only in stable and precise technical areas, where exceptions are not the rule. [@winograd10ThinkingMachines1991]
-
-### Cyc {#sec-cyc}
-
-> AI has for many years understood enough about representation and inference to tackle this project, but no one has sat down and done it... only by pulling together the latest human interface tools, Lisp machines, ideas of enforced semantics, and funding for a decade-long effort could we attempt a project of this scale. [@lenatCycUsingCommon1985]
-
-In 1984, [Douglas Lenat](https://en.wikipedia.org/wiki/Douglas_Lenat) began the Cyc project, an ambitious attempt to scale symbolic AI up to the real world. Like most expert systems, the Cyc project consists of a giant knowledge base encoded in a LISP-like symbolic logic language, upon which inference engines can be run to produce logical reasoning. Unlike most expert systems, the ambition of Cyc was universal: Its knowledge base would not be restricted to expert knowledge in a particular domain, but *all* commonsense knowledge in *all* domains that humans have commonsense about.
-
-Even from the vantage point of 1985, it was clear to all that there was a lot of commonsense to code in, although few could have predicted that Lenat would persevere at it for over 30 years.
-
-They themselves underestimated the difficulty. In 1990, they confidently titled a paper "Cyc: A midterm report" [@lenatCycMidtermReport1990], suggesting that they expected to be done around 1995.
-
-The progress report in 1995 stated that, while the system is far from done, they have at least manually entered $10^5$ "general concepts" and $10^6$ "commonsense axioms" into Cyc, at the price of 100 person-years. [@lenatCycLargescaleInvestment1995]
-
-> Moreover, statistics, colocation, and frequency do not resolve such questions. But the task goes from impossible to trivial if one already knows a few things about boxes and pens, police and demonstrators, and water and teakettles. The same sort of chicken-and-egg relationship characterizes CYC and ML because learning occurs at the fringe of what one already knows. Therefore, in the early 1980s, when the rest of the world was so enthusiastic about Natural Language Understanding, Machine Learning, and AI in general, we were pessimistic. We concluded the only way out of this codependency would be to prime the pump by manually crafting a million axioms covering an appreciable fraction of the required knowledge. That knowledge would serve as a critical mass, enabling further knowledge collection through NLU and ML, beginning in the mid-1990s. Mary Shepherd and I embarked on that task in 1984, knowing we had little chance of success, but seeing no alternative but to try... we are now moving toward the transition point where NLU and ML are supported. The rest of the world is disillusioned and pessimistic about symbolic AI, but ironically, as CYC reaches closure, our hopes for NLU and ML in the next 10 years are very high.
->
-> [@lenatCycLargescaleInvestment1995]
-
-> ... give CYC enough knowledge by the late 1990s to enable it to learn more by means of natural language conversations and reading. Soon thereafter, say by 2001, we planned to have it learning on its own, by automated-discovery methods guided by models or minitheories of the real world. To a large extent, that's just what we did. At the end of 1994, the CYC program was mature enough to spin off from MCC as a new company -- Cycorp -- to commercialize the technology and begin its widespread deployment.
->
-> [@lenat20012001Common2001]
-
-In 2016, Lenat finally declared the Cyc project "done" and set about commercializing it.
-
-> Having spent the past 31 years memorizing an astonishing collection of general knowledge, the artificial-intelligence engine created by Doug Lenat is finally ready to go to work... most of what is left to be added is relevant to a specific area of expertise, such as finance or oncology.
-> 
-> Among other projects, the company is developing a personal assistant equipped with Cyc's general knowledge. This could perhaps lead to something similar to Siri... the CEO of Lucid says the new company is in talks with various others interested in using the Cyc knowledge base. Lucid has been working with the Cleveland Clinic, for example, to help automate the process of finding patients for clinical studies.
-> 
-> [@knightAI30Years2016]
-
-That was essentially the last we heard from Cyc.
-
-When looking at this figure from 1985, one is simultaneously filled with respect and sadness, for they were facing impossible odds, and yet they charged right into it.
-
-![[@lenatCycUsingCommon1985, Figure 1]](figure/cyc_project_ontology.png)
-
-Their "midterm report" only accentuates this sense of tragedy, of seeing them fighting impossible odds, and losing. They saw with clarity that there is no shortcut to intelligence, no "Maxwell's equations of thought".
-
-> The majority of work in knowledge representation has dealt with the technicalities of relating predicate calculus to other formalisms and with the details of various schemes for default reasoning. There has almost been an aversion to addressing the problems that arise in actually representing large bodies of knowledge with content. However, deep, important issues must be addressed if we are to ever have a large intelligent knowledge-based program: What ontological categories would make up an adequate set for carving up the universe? How are they related? What are the important facts and heuristics most humans today know about solid objects? And so on. In short, we must bite the bullet.
->
-> We don't believe there is any shortcut to being intelligent, any yet-to-be-discovered Maxwell's equations of thought, any AI Risc architecture that will yield vast amounts of problem-solving power. Although issues such as architecture are important, no powerful formalism can obviate the need for a lot of knowledge.
->
-> By knowledge, we don't just mean dry, almanac-like or highly domain-specific facts. Rather, most of what we need to know to get by in the real world is prescientific (knowledge that is too commonsensical to be included in reference books; for example, animals live for a single solid interval of time, nothing can be in two places at once, animals don't like pain), dynamic (scripts and rules of thumb for solving problems) and metaknowledge (how to fill in gaps in the knowledge base, how to keep it organized, how to monitor and switch among problem-solving methods, and so on). Perhaps the hardest truth to face, one that AI has been trying to wriggle out of for 34 years, is that there is probably no elegant, effortless way to obtain this immense knowledge base. Rather, the bulk of the effort must (at least initially) be manual entry of assertion after assertion. [@lenatCycMidtermReport1990]
 
 ## Intelligence in the age of war machines
 
