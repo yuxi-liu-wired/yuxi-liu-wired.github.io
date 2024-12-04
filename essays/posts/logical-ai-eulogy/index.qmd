@@ -43,18 +43,26 @@ In a sense, this was quite old. Whereas Charles Babbage designed his computer as
 
 On 1954-01-07, the world's first non-human translator appeared in the body of an IBM 701. At least, that is what the newspapers made it seam to be.
 
-Back in 1952-06, at a MIT conference on machine translation, Leon Dostert was convinced that instead of arguments about whether MT works *in theory*, they needed to try it out on an actual problem to see if it would work *in practice*. This led to the [Georgetown--IBM experiment](https://en.wikipedia.org/wiki/Georgetown%E2%80%93IBM_experiment) 1.5 years later. It was the first public demonstration of machine translation -- from Russian to English, and was widely reported with titles like "Electronic brain translates Russian" or "Robot brain translates Russian into King's English". The project originated when a conference on machine translation took place at MIT i
+Back in 1952-06, at a MIT conference on machine translation (MT),[^mt-acronym] Leon Dostert was convinced that instead of arguments about whether MT works *in theory*, they needed to try it out on an actual problem to see if it would work *in practice*. This led to the [Georgetown--IBM experiment](https://en.wikipedia.org/wiki/Georgetown%E2%80%93IBM_experiment) 1.5 years later. It was the first public demonstration of machine translation -- from Russian to English, and was widely reported with titles like "Electronic brain translates Russian" or "Robot brain translates Russian into King's English".
 
-The IBM 701 machine operated at $2000 \;\mathrm{FLOP/s}$ with read/write speed $3.6 \;\mathrm{kB/s}$ (in the form of 80-column punched cards). 
+[^mt-acronym]: The acronym "MT" now stands for "machine translation", but in the early days, it stood for "mechanical translation".
 
-The program took up $2400 \;\mathrm{instruction} \times 18 \;\mathrm{bit/instruction} = 5.4 \;\mathrm{kB}$, whereas the dictionary took up $6000 \;\mathrm{word} \times 36 \;\mathrm{bit/word} = 27 \;\mathrm{kB}$. 
+To put some meat to the bones, consider the following hardware specs for the IBM 701 and the demo:
+
+* The IBM 701 machine operated at $2000 \;\mathrm{FLOP/s}$
+* It performed read/write speed $3.6 \;\mathrm{kB/s}$ (in the form of 80-column punched cards).
+* The program took up $2400 \;\mathrm{instruction} \times 18 \;\mathrm{bit/instruction} = 5.4 \;\mathrm{kB}$
+* The dictionary took up $6000 \;\mathrm{word} \times 36 \;\mathrm{bit/word} = 27 \;\mathrm{kB}$.
 
 The dictionary is a table with 6 columns: Russian, English equivalent I, English equivalent II, Code 1, Code 2, Code 3. As we see, each Russian word has 1 or 2 possible English translations. The three `Code`s are essentially grammar categories. As an example, the suffix `-a` is coded as `(-a, of, , 131, 222, 25)`, while the word stem `ugl-` is coded as `(ugl-, coal, angle, 121, ***, 25)`.
 
 The dictionary contains just 250 lexical items (stems and endings). Its grammar has just 6 rules. All input sentences must be made of words that are of form either `stem` or `stem-ending`. Some example translations included:
 
-* Mi pyeryedayem mislyi posryedstvom ryechyi.
-* We transmit thoughts by means of speech.
+> Mi pyeryedayem mislyi posryedstvom ryechyi.
+> 
+> We transmit thoughts by means of speech.
+
+![A punched card from the demo. The Russian sentence is encoded with the hole patterns and then read by the IBM 701. The output was not by punched cards, but by a printer.](figure/Georgetown-IBM_punched_card.png)
 
 The algorithm is essentially a word-substitution program, using the 6 rules to disambiguate, and to decide whether to switch a word with a previous word. The word-order switch is necessary since Russian puts prepositions as word suffixes. For example, `ugl-a` would be word-substituted to `angle-by`, but must be translated as `by angle`.
 
@@ -496,6 +504,7 @@ They first designed a complete context-free grammar that incorporates phonetics,
 To perform speech recognition, the lower part gives the upper part the featurized sequence of the audio $v_1, v_2, \dots, v_n$, and the upper part beam-searches for a path $x_1, x_2, \dots, x_n$ that approximately minimizes $\sum_i \| v_i - v(x_n)\|$, where $v(x_i)$ is the template feature vector for the sound $x_i$.
 
 To finetune the system for a new speaker, the new speaker simply speaks 20 sentences designed for finetuning, and the system would recalculate the 98 template feature vectors.
+
 ::: {#fig-harpy layout-ncol=2}
 
 ![Overall design of Harpy. Note how semantic, syntactic, lexical, and word juncture rules are all compiled into a single network. [@reddyMachineModelsSpeech1980, figure 9.4]](figure/Reddy_1980_fig_9_4.png)
@@ -596,6 +605,8 @@ $$
 
 Step 1 of this framework turned out to be the critical idea. In the pure Chomskyan viewpoint, step 1 is illegitimate. In the information-theoretic viewpoint, step 1 is essential.
 
+TODO Write about how this forced them to think about a different way to measure success. If they gave up the idea of either-or, then how does one tell if the program was improving? Inspired by Harpy, they decided to measure the branching factor ... then perplexity.
+
 It was of course possible, and even obvious, that one can combine the best of both worlds, to combine both linguistic insights and statistical methods, such as a probabilistic CFG. However, they simply trained a dumb trigram language model on a large corpus. From what Jelinek said later,[^never-reluctant-linguistic] my guess is that they did try such "best of both worlds" approach, but the dumb trigram model just worked better.
 
 [^never-reluctant-linguistic]:
@@ -682,7 +693,7 @@ More presciently, he was even considering the possibility of throwing away the p
 > 
 > [@jelinekSelfOrganizedContinuousSpeech1982]
 
-Previous MT systems typically performs multi-step processing on a raw audio signal, and somewhere in the middle, the audio signal would be transformed into a phonetic transcription. Jelinek, instead of following tradition and featurize audio into a list of phonemes ("an artificial phonetician"), just proposed to featurize audio in whatever way that seemed to work better for the system. As far as I see, this was not used in HMM ASR during the 1990s, but we know that automatic feature learning would finally be vindicated by neural networks around 2010 as the encoder-decoder architectures trained fully end-to-end [@gravesConnectionistTemporalClassification2006; @chorowskiEndtoendContinuousSpeech201]
+Previous MT systems typically performs multi-step processing on a raw audio signal, and somewhere in the middle, the audio signal would be transformed into a phonetic transcription. Jelinek, instead of following tradition and featurize audio into a list of phonemes ("an artificial phonetician"), just proposed to featurize audio in whatever way that seemed to work better for the system. As far as I see, this was not used in HMM ASR during the 1990s, but we know that automatic feature learning would finally be vindicated by neural networks around 2010 as the encoder-decoder architectures trained fully end-to-end [@gravesConnectionistTemporalClassification2006; @chorowskiEndtoendContinuousSpeech2014]
 
 In 2005, near the end of his life, Jelinek admitted that his quote was, despite his best hopes, genuine. 
 
@@ -712,6 +723,7 @@ In 1983, Digital Equipment Corporation started selling one of the first commerci
 
 ![Architecture of Klattalk. [@klattReviewTexttospeechConversion1987, figure 3]](figure/Klatt_1987_fig_3.png){#fig-todo}
 
+TODO
 :::
 
 In his literature review, Klatt did take notice of two upstart systems from the statistical side, one being [NETtalk of Sejnowski](https://yuxi-liu-wired.github.io/essays/posts/backstory-of-backpropagation/index.html#terence-sejnowski), a neural network model, and another being a statistical TTS system very similar to the IBM alignment model, by the same IBM team. He brushed both off as being inferior to a logical TTS system:
@@ -736,23 +748,388 @@ Klatt had been progressively losing his voice from thyroid cancer, and died in 1
 
 ## Vision
 
+### Scene analysis
 
-## Games
+Since a perceptron-only architecture is not the right way, they illustrated what they believe to be the "right" way to do computer vision by describing in detail the scene analysis algorithm. In short, it starts by discovering edges, then performs some computational geometry on them to recover outlines of basic shapes, such as cubes, then fills in the faces, then fills in the bodies between the faces. The algorithm had to do something clever to deal with occlusions. In the end, a complete 3D scene populated with 3D objects is recovered.
 
-This chapter would be short since logical AI in games is well-known.
+![Scene analysis. Figure from [@guzmanDecompositionVisualScene1968]](figure/guzman_1968.png)
 
-Artificial intelligence has abandoned the quest
-for certainty and truth. The new patchwork rationalism is built upon
-mounds of _micro-truths_ gleaned through common sense introspection, ad
-hoc programming and so-called _knowledge acquisition_ techniques for
-interviewing experts. The grounding on this shifting sand is pragmatic
-in the crude sense__If it seems to be working, it_s right.
+### Shakey
 
-Samuel Checkers, DeepBlue.
+In 1973, Duda and Hart published the famous "Duda and Hart" book on pattern classification [@dudaPatternClassificationScene1973]. The book contained two halves. The first half was statistical: Bayes, nearest neighbors, perceptron, clustering, etc. The second half was on scene analysis, a symbolic-AI method for computer vision. Indeed, [Minsky and Papert promoted it as superior to perceptron networks](https://yuxi-liu-wired.github.io/essays/posts/reading-perceptron-book/#chapter-13).[^duda-hart-2] [Shakey the robot](https://en.wikipedia.org/wiki/Shakey_the_robot), built between 1966 and 1972, was a *tour de force* of scene analysis, and it could traverse a room in as short as an hour, avoiding geometric obstacles along the way. Its program was written in LISP, the staple programming language for symbolic AI.
 
-## General
+[^duda-hart-2]:
+    It is instructive to compare the first edition with the second, published in 2001 [@dudaPatternClassification2001]. It had become almost completely statistical. There were new chapters on neural networks, Boltzmann machines, decision trees, and so on. In contrast, scene analysis was completely removed.
 
-General Problem Solver, Symbolic hypothesis, McCarthy, Minsky
+    It says something about the obsolescence of scene analysis even in 2001, as Duda and Hart deleted half of their most famous book just to avoid talking about it. In fact, the only mention of "scene analysis" is a condemnation:
+
+    > Some of the earliest work on three-dimensional object recognition relied on complex grammars which described the relationships of corners and edges, in block structures such arches and towers. It was found that such systems were very brittle; they failed whenever there were errors in feature extraction, due to occlusion and even minor misspecifications of the model. For the most part, then, grammatical methods have been abandoned for object recognition and scene analysis. [@dudaPatternClassification2001, section 8.8]
+
+## Logic and logistics
+
+### Planning
+
+WWII was said to be a war of the physicists, or the code-breakers. It could equally said to be a war of the economists. The side that could sustain a higher industrial output slowly but surely ground down the other side, as strategic bombing destroyed industrial production.
+
+It is either a myth or an obvious point that the soviet union had a bad economic system. In either case, there were two Soviet Nobel laureates in economics. The first was Wassily Leontief, who saw economics not as a simple feedforward network of wheat-to-bread-to-stomach, but as a feedback network of hundreds of industries making commodities for and taking commodities from each other, as made clear in his PhD thesis *The Economy as Circular Flow* (1928).
+
+Leaving the Soviet Union as a dissident in 1925, he settled in America and performed his input-output analysis of the American economy. Let us divide the economy into $N$ sectors, from "agriculture" to "electricity" to "rubber". For simplicity, suppose each sector $i$ only makes one kind of commodity $x_i$ -- "agriculture" only outputs a generic kind of "food", etc. Each sector $i$, in order to create one unit of commodity $x_i$, requires some commodities $A_{1i}, A_{2i}, \dots, A_{Ni}$ as inputs. Then, if the entire economy produces $x_1, x_2, \dots, x_N$, then it requires total input $Ax$, where $A$ is the demand matrix. With this we have the fundamental equation:
+
+$$
+x = Ax + y
+$$
+
+where $y$ is the surplus that comes out of the economy, which Leontieff calls "demand", since that is what is demanded by consumers outside of the economic production. It seems simplistic -- just a linear equation? Yet this was the origin of linear programming.
+
+In 1949, Leontief used an early computer at Harvard and data from the U.S. Bureau of Labor Statistics to divide the U.S. economy into 500 sectors, and balanced the linear equation on the grand scale.
+
+![Part of an input-output matrix drawn by Leontief. [@leontiefStructureDevelopment1963, page 150]](figure/Leontieff_matrix.png)
+
+Near the end of the war, Stigler wrote a paper calculating what is the cheapest possible nutritionally complete diet. He concluded that at 1939 prices, a minimal viable diet cost \$40 per year for an adult American man, which was 1/3 the price of previous results. He concluded that the previous dieticians were not ruthless enough, and confused biological needs with cultural needs:
+
+> The dieticians take account of the palatability of foods, variety of diet, prestige of various foods, and other cultural facets of consumption. Primarily on such grounds can one explain their emphasis on meats and the inclusion of sugar... If the dieticians persist in presenting minimum diets, they should at least report separately the physical and cultural components of these diets.
+>
+> [@stiglerCostSubsistence1945]
+
+In 1947, George Dantzig was tasked with the US Air Force to mechanize its planning. Inspired by the paper as well as Leontief's input-output analysis, he thought that constraint-optimization with linear algebra was just the tool to use. As a start, he attacked the same problem of diet, and from there, he developed the [simplex method](https://en.wikipedia.org/wiki/Simplex_algorithm). [@dantzigDietProblem1990]
+
+> In the fall of 1947 ... undertook as a test of the newly proposed simplex method the determination of a least cost adequate diet based on Stigler's data. It was the first "large scale" computation in the field. The system consisted of 9 equations in 77 unknowns. Jack parcelled out a different 8 or 9 columns (of the 77 columns) to each of the 9 clerks who were assigned to process them. Using hand-operated desk calculators... the 9 clerks took approximately 120 man-days to obtain an optimal solution of \$39.69. Stigler's heuristic solution was only off from the true annual optimal cost by 24 cents: not bad!
+>
+> [@dantzigDietProblem1990]
+
+While linear programming became the great success story of early AI -- when it was still considered as the "mechanization of thought process", and often subsumed under operations research -- and was quickly taken up by military logisticians and business managers, its original application in diet planning was less successful. Dantzig recounts how he unsuccessfully tried to go on a diet by running a 500-ingredient linear programming problem on an IBM 701. Hilarity ensues.
+
+> One day I said to Anne, my wife, "Today is Der Tag, whatever the 701 says that's what I want you to feed me each day starting with supper tonight." ... I then read off the amounts of foods in the optimal diet. Her reaction: "The diet is a bit weird but conceivable. Is that it?" "Not exactly," I replied, "AND 500 gallons of vinegar." ... It turned out that our data source listed vinegar as a very weak acid with water content = zero. Therefore, according to the way the model was formulated the more vinegar you drank the greater would be your feeling of feeling full. I decided that vinegar wasn't a food.
+>
+> The next day the above scene was repeated except this time ... calling for the consumption of 200 bouillon cubes per day... I called my doctor and asked him how come the nutritional requirements didn't show a limit on the amount of salt? "Isn't too much salt dangerous?" He replied that it wasn't necessary; most people had enough sense not to consume too much. I placed an upper bound of three on the number of bouillon cubes consumed per day. That was how upper bounds on variables in linear programming first began.
+> 
+> The next day the above scene was repeated, except this time the diet called, among other things, for two pounds of bran per day... The model was revised with an upper bound put on the amount of bran. The next day the proposed menu was almost exactly the same except this time it was two pounds of blackstrap molasses which substituted for the bran... she said, "I have been studying the various menus the computer has been generating. There are some good ideas there that I can use. I'll put you on MY diet. She did and I lost 22 pounds.
+> 
+> [@dantzigDietProblem1990]
+
+In our hindsight, we say that the AI performed an adversarial attack on the input data and the reward model misspecification, something that gaming and planning AI are wont to do.
+
+The second Soviet Nobel laureate, Leonid Kantorovich, managed to win it while remaining *within* the USSR. This was no small feat, for in the USSR, the academic study of economics meant only *political* economy, and mathematical economics was merely a minor branch of political economy, with mathematical economists having to frame their research as a "critique of bourgeois economic thought". [@boldyrevCulturesMathematicalEconomics2017]
+
+Like Dantzig, Kantorovich discovered linear programming in the context of a practical problem. Feeling burnt out by too much pure math, he decided to do something practical for a change of scenery, and to do something about the imminent threat of Nazi Germany. So he went to a plywoord factory in 1937, and worked on how to cut plywood sheets in such a way as to meet a specified assortment of pieces with minimum waste. And just like Dantzig, he reduced the problem to a maximization problem with linear objective and linear inequality constraints. 
+
+Dizzy with success, he tried the same trick again and again, and accidentally improved efficiency so much that he almost ended up in jail.
+
+> ... one of the major materials handling operations at the Leningrad E. I. Egorov Railroad Car Building Plant was the cutting of sheet metal for railroad cars. Ordinarily, this cutting produced tremendous quantities of scrap. After introducing Kantorovich's solution technique to the problem of minimizing waste, officials were able to reduce the amount of scrap by 50%. This had the unfortunate side effect of greatly reducing the amount of scrap metal available to steel plants in the region, and Kantorovich was ordered to appear at Leningrad party headquarters for allegedly sabotaging the economy. In this instance, he was rescued by the military, which needed him for its atomic program.
+> 
+> According to Stalin, the planned economy of the USSR was already "[dizzy with success](https://ru.wikipedia.org/wiki/Головокружение_от_успехов)"; hence any criticism of it was anti-Soviet propaganda, a serious crime. In particular, anyone openly suggesting that waste could be cut substantially was at great personal risk. Nevertheless, Kantorovich ... wrote a letter to Gosplan suggesting a reform of the price system used in planning. 
+> 
+> [@gardnerLVKantorovichPrice1990]
+
+Being a socially clueless nerd was not the stuff of romantic comedy in Soviet Russia, but gallows comedy. Fortunately for mathematical economics, his luck held:
+
+> Gosplan wrote back saying that no such reform was necessary. This outcome was rather fortunate for its author, as similar letters critical of the authorities -- for example, one by Solzhenitsin -- landed their authors promptly in jail.
+> 
+> [@gardnerLVKantorovichPrice1990]
+
+Reading Kantorovich's repeated attempts to reform Soviet economy, I imagined those old silent movies where a protagonist stumbles around, blindfolded, crossing a highway where the cars always *just missed*. Accidental economic sabotage was not the end of his misadventures, however. His luck was really tested when it came to the "shadow price" affair.
+
+Consider the problem of managing a factory. It has some input constraints (fuel, woods, etc), and the objective of maximizing the total utility of output goods. This is simply solved by the Lagrangian multiplier method, and it turns out that the Lagrangian multipliers themselves have a natural interpretation: the multiplier $\lambda_i$ is the amount of extra utility that the factory can achieve, if the factory were to obtain one more unit of constraint $i$.
+
+So Kantorovich had the great idea of calling it the "shadow price",[^shadow-price-kantorovich] and considered it a way to find the proper price of something, better than the free market mechanism. The free market mechanism leads to maximizing some kind of utility function, but that utility function is not designed by anyone. In contrast, the shadow price naturally falls out of attempts to maximize a social utility function designed by the [Gosplan (State Planning Committee)](https://en.wikipedia.org/wiki/Gosplan). It is a utility designed by humans, for humans, not a utility function emergent from capitalism, for capitalism.
+
+[^shadow-price-kantorovich]: In his original terms, "objectively determined valuation" \[объективно обусловленные оценки\], where the "objectively" means "according to an objective function (the social utility function)".
+
+This is, in short, how market socialism should work, according to Kantorovich:
+
+1. Design a social utility function (the "social" part of "socialism").
+2. Collect data on how the factories *should ideally* work (big data).
+3. Compute the shadow prices by linear programming (big compute).
+4. Set the prices on every commodity.
+5. Let the factories compete on this market for goods and money, secure in the knowledge that this socialist market would maximize a properly designed social utility, and the market mechanism would allow only the factories that achieve the highest efficiency: The slackers are competed out, and only those who can perform as efficiently as the "ideal factories" (see step 2) can make a profit and thus survive.
+
+The whole thing is not hard to prove in a simple model of economy, where all factories are linear functions, and the social utility function is also a linear function. Then the proof is just writing down the "[linear duality theorem](https://en.wikipedia.org/wiki/Dual_linear_program)", and interpreting it as economics.
+
+> \[Boyarskii:\] You write, "any increase in the requirements of some article entails a corresponding increase in costs and consequently in its o.d. valuation. A decrease in requirements entails a reduction in its o.d. valuation." What is this, what can this possibly be, but a suggestion that value is determined by supply and demand? Supply and demand, for heaven’s sake: bourgeois ideology’s most transparent disguise for exploitation!
+>
+> ...
+> 
+> \[Kantorovich:\] It’s true that there is a formal resemblance, but they have a completely different origin, and therefore a completely different meaning. Whereas market prices are formed spontaneously, objective valuations -- shadow prices -- must be computed on the basis of an optimal plan. As the plan targets change, the valuations change. They are subordinate to the very different production relationships of a socialist society. Yet, yet, the scope for their use is actually bigger under socialism. The capitalists actually agree with you, Dr Boyarskii, that the mathematical methods we’re talking about should only be applied on the small scale, on the level of the individual firm. They have no choice: there is no larger structure, in the economy of West Germany or the United States, in which they can be set to work. They have had some success, I believe. I’m sorry to say that, since George Danzig and Tjalling Koopmans made their discoveries of “linear programming” in America during the war, the techniques have been adopted there far more eagerly, far more quickly, than in the Soviet Union. Linear programmers in the USA calculate routes for airlines, and devise the investment policies of Wall Street corporations. But we still have an opportunity before us which is closed to the capitalists. Capitalism cannot calculate an optimum for a whole economy at once. We can. There is a fundamental harmony between optimal planning and the nature of socialist society.
+> 
+> [@spuffordRedPlenty2010, chapter 5]
+
+Though he kept trying to propose his idea of socialist optimal planning, and kept sending letters to leaders from Stalin to Andropov, his idea remained a linear programmer's fanatsy.
+
+### Mechanizing Mathematics
+
+Circa 1900, as mathematicians learned to manufacture paradoxes, mathematics modernized, upgraded paranoia, and tried to get a grip. The angel of topology and the devil of abstract algebra fought for the soul of each individual mathematical domain in this "Foundational Crisis". With palpable disdain, Poincaré deplored the Hilbert school of formal logic that threatened to bleed even geometry of meaning:
+
+>  "Imagine," says Hilbert," three kinds of things, which we will call points, straight lines, and planes; let us agree that a straight line shall be determined by two points, and that, instead of saying that this straight line is determined by these two points, we may say that it passes through these two points, or that these two points are situated on the straight line." What these things are, not only do we not know, but we must not seek to know... We might replace geometry by the reasoning piano imagined by Stanley Jevons; or, if we prefer, we might imagine a machine where we should put in axioms at one end and take out theorems at the other, like that legendary machine in Chicago where pigs go in alive and come out transformed into hams and sausages. It is no more necessary for the mathematician than it is for these machines to know what he is doing.
+>
+> [@poincareScienceMethod1914, page 147]
+
+But what is taken as an *reductio ad absurdum* by one side is often a Roadmap for the Next 20 Yaers by the other. The mechanical logician came as soon as the electronic computers arrived.
+
+During undergrad years, Edward Feigenbaum took a course "Mathematical Models in the Social Sciences" taught by Herbert Simon. One class, he walked in and annouced to the 6 students
+
+> Over the Christmas holidays, Al Newell and I invented a thinking machine.
+
+Stunned, Feigenbaum asked Simon, whereupon he received a manual of IBM 701. Feigenbaum read it all through the night, and in the morning light, he felt a "born-again experience". AI has won itself a new convert.
+
+The thinking machine was Logic Theorist [@newellEmpiricalExplorationsLogic1957], perhaps the first AI mathematician.
+
+> The Logic Theory Machine found proofs for 38 of the 52 theorems it was presented with from the Principia, in particular finding a straightforward proof of theorem 2.85 (a simple propositional logic theorem) where Whitehead and Russell had given a more cumbersome - indeed, defective -- proof. Lord Russell was impressed... The editor of the prestigious *Journal of Symbolic Logic*, however. was not won over, and the journal refused to publish an article coauthored by the Logic Theory Machine describing the proof of theorem 2.85.
+>
+> [@mackenzieAutomationProofHistorical1995]
+
+The working of Logic Theorist was simple. It simply performs a tree search in the space of possible proofs. At the root of the tree is the theorem to be proved. Each branch then transforms the state of the proof, adding assumptions (which then become sub-goals that themselves need to be proved), substitute logical variables, quoting axioms, perform modus ponens, etc. If at some leaf-node, the list of goals is empty, then the solution is found, and the Logical Theorist backtracks to get the final proof.
+
+As an example, it proved Theorem 2.17 as follows. The final proof had 7 steps, and took 89k basic operations to discover. [@newellHumanProblemSolving1972, page 133]
+
+* $\mathrm{A} \supset \sim \sim \mathrm{A}$ (Start with Theorem 2.17)
+* $\mathrm{P} \supset \sim \sim \mathrm{P}$ (Theorem 2.12)
+* ...
+* $(\sim \mathrm{Q} \supset \sim \mathrm{P}) \supset(\mathrm{P} \supset \mathrm{Q})$ (chain 7 and 5)
+
+A later version mechanized Poincaré's nightmare by converting Euclidean geometry problems to symbolic logic, and managed to discover a particularly elegant proof that in a triangle $ABC$, if $AB = AC$ then $\angle ABC = \angle ACB$, by the SAS theorem. Only later did the authors discover that this was a previously known solution. [@mackenzieAutomationProofHistorical1995]
+
+### Information Processing System
+
+Simon and Newell were unhappy with Logic Theorist, for the simple reason that when they read the trace-outs of its "thought process", they noted that it is very different from how humans would go about proving the same problems. Patiently plodding, they brute forced through the whole search tree, whereas humans would tastefully pick some branches and search deeply, and others not at all.
+
+In their magnum opus, *Human Problem Solving* (1972), they have compiled their decades of research into a definitive statement of what AI is about in their view. According to them, AI is logical AI, and the fundamental architecture for logical AI is Information Processing System. [@newellHumanProblemSolving1972]
+
+The axioms of logical AI:
+
+* It is symbols all the way down. Everything "sub-symbolic", like the neural biology, are just implementation, and not part of what intelligence is about, much like software is independent of hardware.
+* Intelligent behavior is the combination of simple goals, simple algorithms, and complex environment.
+* Intelligent algorithms are fairly simple, and consist of serial, deterministic, heuristic search over the space of solutions.
+* The space of solutions is structured like a directed graph, where the edges are "generators" or "search operators".
+* At each step, the search algorihm runs a "verifier" subroutine to check if a solution has been found. If so, then it backtracks to produce the full solution. If not, then it updates an internal state and uses a heuristic to decide which edge to follow next.
+
+They called their vision of logical AI the "General Problem Solver" (GPS), a grandiose title for a grandiose dream.
+
+![The architecture of the GPS. [@newellHumanProblemSolving1972, figure 4.1]](figure/Simon_Newell_fig_4_1.png)
+
+Curiously, they argued that Chomskyan linguistics and the IPS formalism are essentially the same:
+
+| IPS logical AI | Chomskyan linguistics |
+|-----|-----|
+| Symbols | Symbols  |
+| Problem input | Surface structure of a sentence |
+| Symbolic representations | Deep structures; representations of meanings |
+| Problem space | Space of deep structures of strings |
+| Problem solving | Parsing, or grammatical analyses from the surface structure to the deep structure |
+| Stored patterns | Stored words, phrases, syntax trees, etc |
+: Equivalence between Chomskyan linguistics and the IPS logical AI.
+
+> It should be evident from the discussion of symbols, symbol structures, the designation relation, and programs that an information processing system of the sort we have described in this chapter is, in some fundamental sense, a language processor. As a matter of historical fact, the basic concepts that have entered into our description of an IPS have almost the same origins as the concepts that underlie the formalized transformational grammars that linguists have developed over the past fifteen years [@chomskySyntacticStructures1957]... our theory of problem solving can properly be viewed as also a partial theory of linguistics-specifically, a theory of the nature of the deep structures used by the human IPS in the course of its problem solving activities.
+> 
+> [@newellHumanProblemSolving1972, page 38]
+
+As we have seen and will see, the relation between Chomsky and logical AI runs deep.
+
+The IPS is not just an algorithm for AI, but also a psychological theory for what humans really do when they solve problems. As such, Simon and Newell spent over a decade carefully studying the behavior of real humans solving real problems, such as propositional logic proofs (the same task as Logic Theorist), cryptograms, chess puzzles, and so on. And by "detailed" I mean it. They had subjects working through problems in a lab, with the entire session tape-recorded, fully transcribed, annotated, and parsed into the form of a heuristic tree search. It was like looking at the debugger output to a human being.
+
+![Annotated transcript of a human subject solving a propositional logic puzzle. The session lasted about 40 minutes, and ends with a failure. The transcript has 535 lines. [@newellHumanProblemSolving1972, page 533]](figure/human_problem_solving_transcript.png)
+
+![The same transcript parsed into a heuristic tree search over the problem space. [@newellHumanProblemSolving1972, page 534]](figure/human_problem_solving_behavior_graph.png)
+
+In a popularization (well, as popular as abstract AI theories can get), Simon analogized their theory with a crawling ant:
+
+> We watch an ant make his laborious way across a wind- and wave- molded beach. He moves ahead, angles to the right to ease his climb up a steep dunelet, detours around a pebble, stops for a moment to exchange information with a compatriot. Thus he makes his weaving, halting way back to his home. So as not to anthropomorphize about his purposes, I sketch the path on a piece of paper. It is a sequence of irregular, angular segments--not quite a random walk, for it has an underlying sense of direction, of aiming toward a goal. I show the unlabeled sketch to a friend. Whose path is it? An expert skier, perhaps, slaloming down a steep and somewhat rocky slope. Or a sloop, beating upwind in a channel dotted with islands or shoals. Perhaps it is a path in a more abstract space: the course of search of a student seeking the proof of a theorem in geometry... Human beings, viewed as behaving systems, are quite simple. The apparent complexity of our behavior over time is largely a reflection of the complexity of the environment in which we find ourselves.
+> 
+> [@simonSciencesArtificial1996, chapter 3]
+
+If we squint at the following diagram, we can almost see it as they saw it: a human, as simple minded as an ant, crawling and stumbling through the problem space of logic.
+
+![Searching over the problem space of propositional logic puzzles. [@newellHumanProblemSolving1972, page 575]](figure/Simon_Newell_1975_fig_10_13.png)
+
+At this point, we might be seeing a pattern here. Checking every use of the word "learning" in the book, I confirmed that, indeed, they were uninterested in learning, other than claiming that learning consists of adding more symbols to the internal environment, which is just one more kind of environment. One can look up lemmas and formulas on an external book, or an internal blackboard. It is all the same. The ant of the brain just need to crawl over the inner landscape as much as it crawls over the outer landscape.
+
+> We will deal hardly at all with earning phenomena in this book. Yet the approach to earning from the direction just illustrated, where we have the internal structure of the performing program laid out before us, shows clearly (1) that experience is simply one more source of information that can be exploited to attain adaptive performance and (2) that to affect performance experience must find some variable aspect of the performance program's structure that it can specify.
+>
+> [@simonSciencesArtificial1996, page 137]
+
+It is not that they completely ignored the problem of learning, but rather, they understood learning as a simple kind of associative memorization. Feigenbaum's PhD project was the Elementary Perceiver and Memorizer (EPAM), an algorithmic model of human associative memory. As a concrete realization of the learning theory of Simon and Newell, we describe it to show how little learning their framework contained.
+
+EPAM modeled people performing the following memorization task:
+
+* "DAX" is displayed to the subject
+* Subject should say "JIR" in response
+* Regardless of what subject responds, "JIR" is displayed after a few seconds.
+* Repeat this until the subject manages to memorize all 12 pairs.
+
+During a session, every time EPAM sees a new stimulus-response pair, it stores the response, and updates its decision tree. Each node of the decision tree has two children, and which way EPAM goes is determined by testing one letter of the stimulus. It looks like 
+
+```python
+if stimulus[0] == "D":
+    return "JIR"
+elif stimulus[2] == "J":
+    ...
+```
+
+In short, what counts as a paradigm of learning is simply memorization, and updating a big if-then search tree, so that a stimulus results in going down the search tree and arriving at the correct response stored in the leaf node.
+
+### The drosophila of AI
+
+> Within 10 years, a computer would routinely beat the world's best player.
+>
+> --- Herbert Simon, 1957
+
+In introductions to AI or even just machine learning. Arthur Samuel's checker program was usually given as the first great example of machine learning. In short, it performs alpha-beta search to a few plies[^samuel-checkers-plies] during playing, using up to 16 hand-crafted feature functions. It uses two learning rules [@samuelStudiesMachineLearning1959, @suttonReinforcementLearningIntroduction2018, chapter 16.2; @russellArtificialIntelligenceModern1995, pages 616--617]:
+
+* Rote learning: After performing an alpha-beta search, it would store the score for the root node. Later, if the root node is encountered during search, its score would be used without needing to search deeper. This allows it to increase the effective search depth over time, as it memorizes more and more positions' values. To save memory, if a board does not reappear after a maximum number of moves, it is "forgotten". The whole system managed to memorize 53,000 board positions (averaging 3.8 words each on a IBM 704)
+* Generalization learning: Something very similar to TD-learning in reinforcement learnig, except that the reward function is not whether the board is won (1 for winning, -1 for losing, 0 otherwise), but the *piece advantage* feature.
+
+[^samuel-checkers-plies]: Annoyingly I can't find any information, but considering that an IBM 704 has $5\times 10^4 \;\mathrm{MIP/sec}$, and checkers has a branching factor of 400, it would take on the order of 10 minute to search 2 plies. So my bet is 2 plies. Indeed, the paper appendix says it takes $10^{-2} \;\mathrm{sec}$ to play and evaluate one position, which means it takes about 500 instructions for one play and evaluation, and that searching 2 plies already takes 30 minutes. 
+
+The whole program ran on an [IBM 704](https://en.wikipedia.org/wiki/IBM_704), and took up about 8000 instructions.
+
+Just when you thought there is finally some learning, nope. Samuel got the features from interviewing the checker experts. In fact, it had a formative influence on a later pioneer of expert systems:
+
+> Art Samuel's work on the checker player: Art had interviewed experts to understand... the feature vector and then he did a good deal of reading about checkers... And the influential part about that was.. his machine learning component -- that once you had the expertise in, in a first-order form, it could be improved... automatically. That impressed me a great deal and I always wanted to be able to do that.
+>
+> [@brockLearningArtificialIntelligences2018]
+
+Compared to checkers, computer chess had been much more high-profile, and it has been a textbook example of logical AI. The three parts of computer chess are move generator, evaluation function, and search control, corresponding to the solution space, verifier, and heuristic search algorithm of the IPS.
+
+The IPS framework, with its talk of heuristic search, resembles most of all how people play board games. Indeed, [@newellHumanProblemSolving1972] devoted over 100 pages to chess, "the drosophila of AI". Indeed, chess seems like the perfect illustration: simply do an alpha-beta search with a heuristic evaluation function on it. This was essentially the algorithm proposed by Alan Turing in 1948 -- the [Turochamp](https://en.wikipedia.org/wiki/Turochamp), and it was still the algorithm used in [Deep Blue (1997)](https://en.wikipedia.org/wiki/Deep_Blue_(chess_computer)). In fact, the architecture has changed so little that we can write a single "prototypical chess program":
+
+```python
+def score(board):
+    # return a real number
+def move_generator(board):
+    # return a list of legal moves
+def make_move(board, move):
+    # return the next board
+def search(board):
+    # do the minimax search, 
+    # or the alpha-beta tree search, etc
+    for moves in move_generator(board):
+        ...
+    return best_move
+```
+
+Progress in chess computers has come from three sources: faster computers allowing bigger search trees, better scoring functions, and better heuristic tree search algorithms (from minimax to alpha-beta to tricks like singular extensions). As an illustrative example, here is (part of) the Turochamp scoring function [@newellHumanProblemSolving1972, pag 672]:
+
+```python
+material_value = {
+    "Pawn" : 1, "Knight": 3, "Bishop": 3.5,
+    "Rook": 5, "Queen": 10, "Checkmate": 1000
+}
+def mobility(board, piece):
+    # Square root of legal moves for the piece
+    legal_moves = move_generator(board)
+    return sqrt(len([move for move in legal_moves if piece in move]))
+...
+def score(board):
+    q_value = mobility(board, "Queen")
+    ...
+    return q_value + ...
+```
+
+Like its predecessors, Deep Blue used alpha-beta tree search, except it searched *a lot of positions*. To support this, it used [ASIC](https://en.wikipedia.org/wiki/Application-specific_integrated_circuit) [VLSI](https://en.wikipedia.org/wiki/Very-large-scale_integration) "chess chips",[^chess-chip-mosis] each with four parts: the move generator, the smart-move stack, the evaluation function, and the search control. The move generator is a 8×8 combinational logic circuit, a chess board in miniature. [@hsuIBMsDeepBlue1999; @campbellDeepBlue2002]
+
+[^chess-chip-mosis]: Just when you thought DARPA can't possibly be behind this, guess what, Hsu developed the earlier iterations of chess chips by taking advantage of [MOSIS](https://en.wikipedia.org/wiki/MOSIS), which was developed [@rolandStrategicComputingDARPA2002, chapter 4]. More on this [below](#todo).
+
+![The flowchart of Deep Blue. [@hsuIBMsDeepBlue1999]](figure/chess_chip.png)
+
+Describing the software of Deep Blue in detail would be not particularly enlightening, so here's a pseudocode sketch:
+
+```python
+opening_book = ... # 4000 positions
+extended_book = ... # several million positions from 0.7M grandmaster games
+endgame_table = ... # all endgames with <= 5 pieces, and many endgames with 6 pieces
+
+def eval_function(board):
+    weight_vector = ... # contains 8000 real numbers
+    feature_vector = features(board) # contains 8000 handcrafted terms
+    return weight_vector @ feature_vector
+
+def play(board):
+    if board in opening_book:
+        move = retrieve_opening_move(board, opening_book)
+    elif board in extended_book:
+        best_score = -1
+        best_move = ''
+        for move in legal_moves(board):
+            score = evaluate(move, board, extended_book)
+            if score > best_score:
+                best_score = score
+                best_move = move
+    elif size(board) <= 5 or (size(board) == 6 and board in endgame_table):
+        move = retrieve_ending_move(board, endgame_table)
+    else:
+        move = alpha_beta_search(board, eval_function) # evaluate 200M pos/sec
+    play(move)
+```
+
+I know you are eager to hear about how Deep Blue learned. So did I. The bad news is that it barely learned anything. First, its evaluation function was just a linear sum over ~8000 hand-crafted features,[^deep-blue-features] with changeable linear weights. It actually had two evaluation functions, fast and slow. Only if the fast one already shows a clear advantage would the slow one be called. Further, the linear weights were mostly handcrafted too, except a small amount of automation:
+
+> The first tool had the goal of identifying features in the Deep Blue I evaluation function that were “noisy”, i.e., relatively insensitive to the particular weights chosen... A hill-climbing approach was used to explore selected features (or feature subsets), and those that did not converge were candidates for further hand examination... A second tool was developed with the goal of tuning evaluation function weights. This tool used a comparison training methodology to analyze weights related to pawn shelter. Training results showed that the hand-tuned weights were systematically too low, and they were increased prior to the 1997 match. There is some evidence that this change led to improved play.
+
+I didn't understand it, so I turned to a previous paper [@hsuGrandmasterChessMachine1990] that seems to explain it better, according to which they did two kinds of "automated" training, which were both supervised learning without backpropagation:
+
+```python
+def hill_climbing(t, games):
+    search_depth = 5
+    dt = learning_rate * random(t.shape)
+    wins = 0
+    for (board, move) from random_sample(grandmaster_games, N):
+        old_move = alpha_beta_search(board, search_depth, evaluation_function, t)
+        new_move = alpha_beta_search(board, search_depth, evaluation_function, t + dt)
+        wins += (new_move == move) - (old_move == move)
+    if wins > 0:
+        t += dt
+    return t
+
+def comparison_training(t, games):
+    dt = learning_rate * random(t.shape)
+    wins = 0
+    for (board, move) from random_sample(grandmaster_games, N):
+        moves = legal_moves(board)
+        next_board = make_move(board, move)
+        reference_score = evaluation_function(t, next_board)
+        old_scores = []
+        new_scores = []
+        for alt_move in moves if alt_move != move:
+            next_board = make_move(board, alt_move)
+            old_scores.append(evaluation_function(t, next_board))
+            new_scores.append(evaluation_function(t + dt, next_board))
+        wins += all(reference_score > new_scores) - all(reference_score > old_scores)
+    if wins > 0:
+        t += dt
+    return t
+```
+
+[^deep-blue-features]:
+    And there were a lot of features, with words I barely understand:
+    
+    > The most significant part of the fast evaluation is the “piece placement” value, i.e., the sum of the basic piece values with square-based location adjustments. Positional features that can be computed quickly, such as “pawn can run”, are also part of the fast evaluation. The slow evaluation scans the chess board one column at a time, computing values for chess concepts such as square control, pins, X-rays, king safety, pawn structure, passed pawns, ray control, outposts, pawn majority, rook on the 7th, blockade, restraint, color complex, trapped pieces, development, and so on. The features recognized in both the slow and fast evaluation functions have programmable weights, allowing their relative importance to be easily adjusted.
+    >
+    > [@campbellDeepBlue2002]
+
+Deep Blue contains 480 chess chips, each capable of $2.5 \times 10^6 \;\mathrm{position/sec}$. But the total hardware had only a sustained peak rate $2 \times 10^8 \;\mathrm{position/sec}$, meaning its utilization rate was only 16%.[^deep-blue-rmax] [@hsuCrackingGo2007] To Hsu, it was an exercise in chip design. To Kasparov, it was a dirty business. To some journalists, it was another "Man vs Machine" story. And to us, it was the last great project of logical AI in the style of Simon and Newell.
+
+[^deep-blue-rmax]:
+    The $R_{max}$ of Deep Blue on LINPACK was 11.38 GFLOP according to [TOP500 List - June 1997](https://web.archive.org/web/20090213103245/http://www.top500.org/list/1997/06/300), meaning that each positional evaluation is worth 10 FLOP, although I have doubts about just how they managed to cram the LINPACK benchmark onto the chess chips.
+
+    An earlier report in 1995 [@hsuDeepBlueSystem1995], published a year before Deep Blue was assembled, estimated that a general-purpose computer would take 1000 FLOP to evaluate one position. It also estimated Deep Blue would take up around 1 kW of electric power.
+
+> Deep Thought was not an "expert system"... Several members of the team would probably consider it an insult to call Deep Thought an expert system. In fact, at least two members of the team had used the word *bullshit* to describe "expert systems", or for that matter, Artificial Intelligence. Second, the Deep Thought research was supported in part by the VLSI project, and none of the money came from the DARPA funding for expert systems research.
+>
+> [@hsuDeepBlueBuilding2002, page 98]
+
+10 years after the historic win, Hsu wrote a brief essay describing how to make a superhuman Go machine. He estimated that it was already possible to get a *single* Go-chip to evaluate $2 \times 10^{10} \;\mathrm{position/sec}$, and so with 10 years of Moore's law giving another 100×, a machine with 480 Go-chips would be able to evaluate $10^{14} \;\mathrm{position/sec}$ by 2017.
+
+> ... with some optimization a machine that can search a trillion positions per second would be enough to play Go at the very highest level. It would then be cheaper to build the machine out of FPGAs (field-programmable gate arrays) instead of the much more expensive and highly unwieldy full-custom chips. That way, university students could easily take on the challenge. At Microsoft Research Asia we are seeding university efforts in China with the goal of solving some of the basic problems. 
+>
+> [@hsuCrackingGo2007]
+
+In 2016, AlphaGo defeated the 9-dan player Lee Sedol at 4 wins and 1 loss,[^alphago-move-37] and it "\[evaluated\] thousands of times fewer positions than Deep Blue". [@silverMasteringGameGo2016] The subsequent AlphaZero reached superhuman performance with just $10^4$ evaluated positions per move. [@silverGeneralReinforcementLearning2018]
+
+[^alphago-move-37]:
+    In game 2, AlphaGo played black. Media made much out of the 19th move of AlphaGo ("Move 37"), which the supervised learning policy network (which was supervise-trained to predict what a human would play, as according to a large dataset of human games) predicted a probability of $10^{-4}$. This was given much media attention. Something similar happened with Deep Blue vs Kasparov, game 2, when Deep Blue (White) played 36.axb5, with immediate effect:
+
+    > so fluid was its play that the grandmasters in attendance all understood Benjamin's contention that Blue "played real chess" that day. What really shook Garry Kasparov, though, was a move that the computer didn't make. On Move 36, Blue had an opportunity to shift its queen to a devastating position -- clearly the smart choice. Instead it took a subtler but superior tack that wound up to be near decisive in defeating Kasparov. After the champ resigned, he rushed back to his Plaza suite, cranked up his own computers and tried in vain to understand how a hunk of sand and metal could have understood chess so deeply. Apparently this puzzlement crossed into the realm of suspicion: the Kasparov camp was soon demanding to see Deep Blue's printouts. "It was a masterpiece by computer", said Kasparov second Michael Khodarkovsky. "We would like to understand why it was possible." (Eventually, a neutral arbiter examined the printout.) Later Kasparov blurted out his real complaint. "Suddenly \[Deep Blue\] played like a god for one moment," he said.
+    > 
+    > [@levyBigBluesHand1997]
 
 ## Expert systems
 
@@ -951,6 +1328,8 @@ As a fun side-note. The original SHRDLU had some manual fixes in the compiled as
 
 It is pretty amusing now that 
 
+> Artificial intelligence has abandoned the quest for certainty and truth. The new patchwork rationalism is built upon mounds of _micro-truths_ gleaned through common sense introspection, ad hoc programming and so-called _knowledge acquisition_ techniques for interviewing experts. The grounding on this shifting sand is pragmatic in the crude sense -- If it seems to be working, it's right.
+
 ## The Fifth Generation
 
 In 1982, the Japanese was ready to take on the world.
@@ -1100,15 +1479,6 @@ Similarly, sometimes when you read through a field of study, you notice that the
 > [@nietzscheGoodEvilPrelude2002, Section 1.20]
 
 ### The Symbolic Hypothesis
-
-General Problem Solver
-
-*Human Problem Solving*
-
-![[@newellHumanProblemSolving1972, page 533]](figure/human_problem_solving_behavior_graph.png)
-
-![[@newellHumanProblemSolving1972, page 534]](figure/human_problem_solving_transcript.png)
-
 
 In [their Turing award lecture of 1975](https://yuxi-liu-wired.github.io/docs/posts/1975-herbert-simon-allen-newell/), Allen Newell and Herbert Simon gave a definitive statement of the Physical Symbol System Hypothesis for AI, which they had labored under, first unconsciously but then consciously, since the early 1950s.
 
