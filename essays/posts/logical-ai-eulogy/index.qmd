@@ -565,7 +565,7 @@ It was unclear what exactly frustrated the linguists, but probably it was becaus
 >
 > [@jelinekMyBestFriends2005]
 
-This dedication to toys rather than would appear again later in the saga of SHRDLU.
+This dedication to toys rather than would appear again later in the saga of [SHRDLU](#sec-shrdlu).
 
 [^jelinek-famous-last-words]:
     More details about this funny episode:
@@ -1293,6 +1293,25 @@ Philosophically, expert systems has more in common with inductive, scientific re
 > 
 > [@lenatThresholdsKnowledge2000]
 
+### What is knowledge?
+
+It is hard to write this section. I tried it a few times, but it always end up being way too boring. So I will describe it briefly. Knowledge, in the context of expert systems, is basically object-oriented programming + relational database + first-order logic.
+
+There, now I've said it. It explains why expert systems is so boring. The useful parts of it ended up being Java + SQL. 
+
+To see this, consider a few examples of what counts as "knowledge" in expert systems.
+
+The frame: Looks exactly like data types in Java. Multiple frames connected in a semantic graph: Looks exactly like a [UMD diagrams](https://en.wikipedia.org/wiki/Unified_Modeling_Language).
+
+![A frame system. It looks exactly the same as those UMD diagram I hated back when I learned Java programming. [@russellArtificialIntelligenceModern1995, figure 10.7]](figure/frame_system.png)
+
+Unification: This is finally something new. It is an operation in first-order logic. You can just generalize a single example:
+
+$$
+\frac{\forall x, IsHuman(x)\to Hates(x, Java) \quad IsHuman(Socrates)}{Hates(Socrates, Java)}{(x \leftarrow Socrates)}
+$$
+
+
 ### AI boom
 
 ![A typical expert system architecture during the 1980s. [@harmonExpertSystemsBusiness2022, figure 2]](figure/expert_system_architecture.png)
@@ -1488,54 +1507,221 @@ Their "midterm report" only accentuates this sense of tragedy, of seeing them fi
 >
 > By knowledge, we don't just mean dry, almanac-like or highly domain-specific facts. Rather, most of what we need to know to get by in the real world is prescientific (knowledge that is too commonsensical to be included in reference books; for example, animals live for a single solid interval of time, nothing can be in two places at once, animals don't like pain), dynamic (scripts and rules of thumb for solving problems) and metaknowledge (how to fill in gaps in the knowledge base, how to keep it organized, how to monitor and switch among problem-solving methods, and so on). Perhaps the hardest truth to face, one that AI has been trying to wriggle out of for 34 years, is that there is probably no elegant, effortless way to obtain this immense knowledge base. Rather, the bulk of the effort must (at least initially) be manual entry of assertion after assertion. [@lenatCycMidtermReport1990]
 
-## Language
-
-### Chomsky
-
-HMM models, and indeed, *all* probabilistic models of English, must fail, because English has central embedding.
-
-
+## Bots
 
 ### ELIZA
 
-Fortunately, unlike the others like EPAM or SHRDLU, ELIZA is so famous that it is available everywhere.
+> Science promised man power. But as so often happens when people are seduced by promises of power ... the price actually paid is servitude and impotence.
+> 
+> -- the book jacket to [@weizenbaumComputerPowerHuman1976]
 
-Weizenbaum became a fully human-centric critique of AI, culminating with *Computer Power and Human Reason: From Judgment to Calculation* (1976). In brief, the book had theese theses:
+ELIZA is well-known as the first popular chatbot. Fortunately, unlike the others like EPAM or SHRDLU, ELIZA is so famous that it is available everywhere. We will simply describe how ELIZA works. The detailed code and further information is online at [ELIZAGEN](https://sites.google.com/view/elizagen-org/).
+
+According to the original paper [@weizenbaumELIZAComputerProgram1966], ELIZA is essentially a word substitution program of minimal content, roleplaying as a Rogerian therapist. This role was chosen because a psychotherapist is one of the few roles that can pretend to know nothing about the world.
+
+> If, for example, one were to tell a psychiatrist "I went for a long boat ride" and he responded "Tell me about boats", one would not assume that he knew nothing about boats, but that he had some purpose in so directing the subsequent conversation.
+>
+> [@weizenbaumELIZAComputerProgram1966]
+
+ELIZA is programmable: It reads in an "ELIZA script" (a dialect of LISP) that looks like 
+
+```lisp
+(SORRY ((0) (PLEASE DON'T APOLOGIZE)
+            (APOLOGIES ARE NOT NECESSARY)
+            (WHAT FEELINGS DO YOU HAVE WHEN YOU APOLOGIZE)))
+
+(EVERYONE 2 ((0 (* EVERYONE EVERYBOOY NOBODY NOONE) 0)
+             (REALLY, 2) (SURELY NOT 2) 
+             (CAN YOU THINK OF ANYONE IN PARTICULAR) (WHO, FOR EXAMPLE)))
+(EVERYBODY 2 (= EVERYONE))
+(NOBOOY 2 (= EVERYONE))
+(NOONE 2 (= EVERYONE))
+```
+
+This snippet shows several features of the ELIZA script. A script is a list of rules. Each rule begins with a keyword like `SORRY`, followed by an optional rank, which determines how early the rule applies. A higher-ranked rule would beat out a lower-ranked rule. If there is no rank, then whatever appears first in the script applies. After that, there is a list of rewrite rules, which were essentially the same as regex expressions. For example, `(0 (* EVERYONE EVERYBOOY NOBODY NOONE) 0)` would, in regex expression, be `(.*) (EVERYONE|EVERYBODY|NOBODY|NOONE) (.*)`, and the rewrite rule `(REALLY, 2)` then corresponds to `REALLY $2`.
+
+Indeed, once we see this, we can write a short ELIZA in python:
+
+```python
+import re
+
+rules = {
+    "everyone": {
+        "rank": 2,
+        "decomposition": r"(.*) (everyone|everybody|nobody|noone) (.*)",
+        "reassembly": ["Really $2?", "Surely not $2?", "Can you think of anyone in particular?"]
+    },
+    "i am": {
+         "rank" : 1,
+         "decomposition": r"(.*) i am (.*)",
+         "reassembly": ["How long have you been $2?", "Do you believe you are $2?"]
+    },
+    "sorry": {
+        "rank": 0,
+        "decomposition": r"(.*) sorry (.*)",
+        "reassembly": ["Please don't apologize.", "Apologies are not necessary."]
+    }
+}
+
+def eliza_response(user_input):
+    user_input = user_input.lower()
+    matched_rules = []
+    for keyword, rule in rules.items():
+        match = re.match(rule["decomposition"], user_input)
+        if match:
+            matched_rules.append(
+               (rule["rank"], match, rule["reassembly"])
+            )
+    if matched_rules:
+        # Apply precedence, fallback to first match if ranks are equal
+        matched_rules.sort(reverse=True, key = lambda x : x[0])
+        _, match, reassembly_options = matched_rules[0]
+        response = reassembly_options[0]
+        return response
+    return "I am not sure I understand you fully."
+
+while True:
+    user_input = input("You: ")
+    if user_input.lower() == "quit":
+        break
+    response = eliza_response(user_input)
+    print("> " + response)
+```
+
+The full ELIZA also has a single MEMORY keyword which allows it to refer to what the user has said previously, though the core idea is there: it is regex parsing and rewriting.
+
+ELIZA was designed to be extensible, and extensions had been used by writing other ELIZA scripts. In the language of expert systems, ELIZA is a shell which can use the scripts as knowledge bases. See [ELIZAGEN](https://sites.google.com/view/elizagen-org/resources) for some references to using ELIZA in education, such as for teaching poetry and the 4-vector. [@taylorAutomatedTutoringIts1968]
+
+Weizenbaum was dismayed to find that people treated ELIZA as if it understood what they said, and became increasly concerned with AI and started arguing against it in various ways. To us, the most interesting critique is that he rejected the philosophical position behind the Turing test, that to simulate understanding is to understand. After all, ELIZA knew nothing at all, yet people treated it as if it understood a lot. He pointed to Chomsky's work as a good example of theory-guided AI science, contrasted with the "it seems to work" AI performance. In Chomsky's terms, it is the contrast between *competence* and *performance*.
+
+> After all, a plain typowriter in some sense mirrors the behavior of tic child (one types a question and gets no response whatever), but it does not help us to understand autism. A model must be made to stand or fall on the basis of its theory... The failure to make distinctions between descriptions, even those that "work," and theories accounts in large part for the fact that those who refuse to accept the view of man as machine have been put on the defensive.
+> 
+> Recent advances in computer understanding of natural language offer an excellent case in point. Halle and Chomsky, to mention only the two with whom I am most familiar, have long labored on a theory of language which any model of language behavior must satisfy. Their aim is like that of the physicist who writes a set of differential equations that anyone riding a bicycle must satisfy. No physicist claims that a person need know, let alone be able to solve, such differential equations in order to become a competent cyclist. Neither do Halle and Chomsky claim that humans know or knowingly obey the rules they believe to govern language behavior. Halle and Chomsky also strive, as do physical theorists, to identify the constants and parameters of their theories with components of reality. Workers in computer comprehension of natural language operate in what is usually called performance mode. It is as if they are building machines that can ride bicycles by following heuristics like "if you feel a displacement to the left, move your weight to the left."
+>
+> [@weizenbaumImpactComputerSociety1972]
+
+So far, this is fairly standard critique of a performance-over-competence culture in AI. However, Weizenbaum was driven by a moral urgency as he looked into the deeper source for this mistake, and finding a moral-philosophical error:
+
+1. There are multiple categories of things.
+2. Humans (and perhaps sufficiently human-like objects, like chimpanzees) are the only category where morality makes sense.
+3. If $x$ is an object in the human-like category, then asking "Is $x$ a meat machine?" is a category error, of treating objects in the human category as if they are objects in the technological category. The right answer is to reject this "technological question" and ask a "human question" instead, like "What is wrong with you to ask such a question?".
+
+He was particularly incensed by Kenneth Colby's DOCTOR program, which was similar to ELIZA, except intended for production. Colby was a psychiatrist who saw the plight of patients who saw therapists maybe once a month -- if lucky. He argued that if an artificial DOCTOR could provide some help, it is better than nothing, and some people agreed.
+
+> How is Al bad? Are we hurting people by doing it? I don't know anyone who has suffered from it yet. (In fact, despite Weizenbaum's arguments about Colby and automated psychotherapy, I remember a non-speaking adult and several autistic children who began to talk because they were talking to Colby's non-threatening machine.)
+> 
+> [@schankWeizenbaumControversy1976]
+
+To Weizenbaum, this is dehumanizing and disrespectful, a moral error, and whether it actually helps patients improve -- as measured by quantitative evidence like whether non-verbal people started speaking again -- is irrelevant. Thinking that it is a relevant question just shows confusion of the performance of therapy with the competence of therapy, and a deeply technological mentality:
+
+> The question "Is the brain merely a meat machine?", which Simon puts in a so much more sophisticated form, is typical of the kind of question formulated by, indeed formulatable only by, a technological mentality. Once it is accepted as legitimate, arguments as to what a computer can or cannot do "in principle" begin to rage and themselves become legitimate. But the legitimacy of the technological question -- for example, is human behavior to be understood either in terms of the organization or of the physical properties of "components" - -need not be admitted in the first instance. A human question can be asked instead. Indeed, we might begin by asking what has already become of "the whole man" when he can conceive of computers organized in his own image... Whoever dictates the questions in large part determines the answers. In that sense, technology, and especially computer technology, has become a self-fulfilling nightmare... We must come to see that technology is our dream and that we must ultimately decide how it is to end.
+> 
+> [@weizenbaumImpactComputerSociety1972]
+
+He presented his full thesis in a book *Computer Power and Human Reason: From Judgment to Calculation* (1976), with the following theses:
 
 1. Computers might be intelligent, but they will never be wise (or to feel emotions, to love, etc). To "calculate" requires just intelligence, but to "judge" requires wisdom.
 2. The development of AI threatens to replace judgment with calculation, which will destroy human dignity. This replacement of judgment with calculation is an absurd political ideology, and must be resisted politically.
 3. If, however, we do not resist, but keep following this political ideology, we would end up with the obviously absurd conclusion that "the brain is merely a meat machine". *Reductio ad absurdum*.
 4. This dangerous development of AI did not come from a wise scientific project of understanding how human intelligence works, but from a megalomaniac, obsessive-compulsive desire to make machine parodies of human behavior. The method of AI development was heuristic, empirical, a kind of "I wonder what the machine would do if I write this program...", without a scientific theory.
 
-When the book came out, it received many reviews, and Weizenbaum wrote replies to these reviews. I found this one the funniest:
+When the book came out, it received many reviews and counter-reviews, resulting in a "Weizenbaum controversy". I found this reply by Weizenbaum the funniest:
 
 > I have in mind also the teaching urged on us by some leaders of the AI community that there is nothing unique about the human species, that in fact, the embrace of the illusion of human uniqueness amounts to a kind of species prejudice and is unworthy of enlightened intellectuals. If we find nothing abhorrent in the use of artificially sustained, disembodied animal brains as computer components, and if there is nothing that uniquely distinguishes the human species from animal species, then -- need I spell out where that idea leads?
 >
-> [@mccorduckMachinesWhoThink2004, page 370]
+> quoted in [@mccorduckMachinesWhoThink2004, page 370]
 
-Apparently Weizenbaum, in his human-centered wisdom, rejected Darwinism as well. In any case, he stopped doing AI research since 1970, so it is quite useless to talk more about him.
+Apparently Weizenbaum, in his human-centered wisdom, rejected Darwinism as well. In any case, his critiques seem perennial,[^weizenbaum-nightmare] though irrelevant for the further evolution of technology, which is exactly the techno-drenched nightmare he was trying to warn us away from, to no effect. We sleepwalk yet deeper into this nightmare.
 
-### SHRDLU
+[^weizenbaum-nightmare]:
+    Witness some modern critiques of AI, especially from the Critical Humanities. Though a few critical humanists really were critical *of* humanity, which brings the amusing prospect of *another* nightmare of Weizenbaum, this time from the opposite direcion of "We must come to see that humanity is our dream and that we must ultimately decide how it is to end."
 
-For his PhD in mathematics, Terry Winograd programmed the SHRDLU during the years 1968--1970. In the program, the user carries on a conversation with the computer, moving objects, naming collections and querying the state of a simplified "blocks world", essentially a virtual box filled with different blocks. It was in around 500 KB of LISP code.
+    > As the archaeology of our thought easily shows, man is an invention of recent date. And one perhaps nearing its end. If those arrangements were to disappear as they appeared, if some event of which we can at the moment do no more than sense the possibility – without knowing either what its form will be or what it promises – were to cause them to crumble, as the ground of Classical thought did, at the end of the eighteenth century, then one can certainly wager that man would be erased, like a face drawn in sand at the edge of the sea.
+    > 
+    > [@foucaultOrderThings2012, page 422]
+
+### SHRDLU {#sec-shrdlu}
+
+During the early days, robots were literally just arms blindly performing preprogrammed motions, but there had always been the dream and hope of a robot that can see and act, wih proper hand-eye coordination. Perhaps even to speak.
+
+By writing the famous SHRDLU, Terry Winograd took a small step towards this dream for his PhD in mathematics during 1968--1970, and published it in a long journal article [@winogradUnderstandingNaturalLanguage1972]. Again like ELIZA, it is better played than explained, so please play with it now. In the program, the user carries on a conversation with the computer, moving objects, naming collections and querying the state of a simplified "blocks world", essentially a virtual box filled with different blocks. It totaled ~500 KB of LISP code. I have saved the [original code](code/SHRDLU.zip) for safe-keeping.[^shrdlu-original-code]
+
+[^shrdlu-original-code]: 
+    I really don't recommend reading it. Though it was in a dialect of LISP, it was written in the impenetrable style of assembly code. I will just write some amusing discoveries in the code base:
+
+    > it occupies around 200k of core (caution: indiscriminately running a job that big in the middle of the day is a good way to make enemies!!!!! Alway check the level of system usage before loading...)
+    >
+    > -- `mannew` from the SHRDLU archive
+
+    The original SHRDLU had some manual fixes in the compiled assembly code (!). Terry Winograd's first research student rewrote much of SHRDLU so that it is portable. Some people sent letters (physical letters!) to request the code, and they would duly mail it out (by magnetic tape?). As one can imagine, only a few dozen source codes were mailed out, according to [SHRDLU resurrection](https://web.archive.org/web/20171117063022/http://www.semaphorecorp.com/misc/shrdlu.html) (created in 2002, and last updated on 2013-08-22).
 
 ![The result of typing "Will you please stack up both of the red blocks and either a green cube or a pyramid?" [@winogradUnderstandingNaturalLanguage1972, figure 5]](figure/SHRDLU.png)
 
-> it occupies around 200k of core (caution: indiscriminately running a job that big in the middle of the day is a good way to make enemies!!!!! Alway check the level of system usage before loading...)
->
-> -- `mannew` from [the SHRDLU archive](code/SHRDLU.zip).
+The main part of SHRDLU has the following parts:
+
+* A natural language understanding (NLU) module, which uses `DICTIONARY`, `GRAMMAR`, `SEMANTICS`, and so on, to parse user input into a logical expression.
+* `PLANNER`, which takes the state of the world (as a logical expression) and the user input (as another logical expression), and compute a motion plan for the simulated arm.
+* `MOVER`, which simulates a robot arm. It has only three kinds of commands: `MOVETO`, `GRASP`, `UNGRASP`.
+* Blocks world simulator.
+
+![Architecture of SHRDLU. The NLU module takes up most of the region on the right.[@winogradUnderstandingNaturalLanguage1972, figure 1]](figure/SHRDLU_architecture.png)
+
+The key parts of the system are the NLU and the `PLANNER`.
+
+The `PLANNER`, just like the GPS of Simon and Newell, starts with the goal as the root node, and searches for a chain of logical operations that would eventually lead to a leaf node equal to the current state of the world.[^shrdlu-logic] This was called "backward chaining". It then stores this chain of logical operations, and converts it into a sequence of `MOVER` commands and sends them to `MOVER`. When asked "Why did you do it?", it would convert this plan into an explanation in English.
+
+[^shrdlu-logic]: For a detailed exposition of how SHRDLU-like AI systems perform planning by symbolic logic, see [@russellArtificialIntelligenceModern2021, chapter 11.2].
+
+The NLU module parses the sentence into a tree by "systemic grammar" which while different from Chomskyan generative grammar in details, is the same in spirit.
+
+For example, "Harry slept on the porch after he gave Alice the jewels." is parsed to:
+
+```lisp
+(#SLEEP :HARRY :RELl)
+(#LOCATION :REL1 :PORCH)
+(#GIVE :HARRY :ALICE :JEWELS :REL2)
+(#AFTER :REL1 :REL2)
+```
+
+Instead of analyzing syntax and semantics independently, SHRDLU combines them closely to determine the correct parse of a sentence. For example, a user input "Pick up the red cube." would only be parsed correctly if SHRDLU actually checks the state of the world that there really is exactly one `(#SHAPE :CUBE :REL1) (#COLOR :RED :REL1)`. If there are two, it would then reply "I don't know which one you meant." and if there are none, it would reply "I can't pick up a nonexistent object.".
+
+![A blocks world much simpler than the one used by SHRDLU, along with its logical representation. Combination of [@russellArtificialIntelligenceModern2021, figure 11.3] and [@russellArtificialIntelligenceModern2021, figure 11.4].](figure/blocks_world_logic.png)
 
 > The system answers questions, executes commands, and accepts information in normal English dialog. It uses semantic information and context to understand discourse and to disambiguate sentences. It combines a complete syntactic analysis of each sentence with a "heuristic understander" which uses different kinds of information about a sentence, other parts of the discourse, and general information about the world in deciding what the sentence means. It is based on the belief that a computer cannot deal reasonably with language unless it can "understand" the subject it is discussing. The program is given a detailed model of the knowledge needed by a simple robot having only a hand and an eye. We can give it instructions to manipulate toy objects, interrogate it about the scene, and give it information it will use in deduction. In addition to knowing the properties of toy objects, the program has a simple model of its own mentality. It can remember and discuss its plans and actions as well as carry them out. It enters into a dialog with a person, responding to English sentences with actions and English replies, and asking for clarification when its heuristic programs cannot understand a sentence through use of context and physical knowledge.
 >
 > Procedures as a Representation for Data in a Computer Program for Understanding Natural Language
 
-As a fun side-note. The original SHRDLU had some manual fixes in the compiled assembly code (!). Terry Winograd's first research student rewrote much of SHRDLU so that it is portable. Some people sent letters (physical letters!) to request the code, and they would duly mail it out (by magnetic tape?). As one can imagine, only a few dozen source codes were mailed out.[^shrdlu-resurrection]
+![Marvin Minsky and Builder the robot. It's hard to tell who is having more fun here.](figure/minsky_robot_arm_blocks.jpg)
 
-[^shrdlu-resurrection]: [SHRDLU resurrection](https://web.archive.org/web/20171117063022/http://www.semaphorecorp.com/misc/shrdlu.html). Created in 2002, and last updated on 2013-08-22.
+SHRDLU was a milestone, and perhaps it was too good to be true. Like the Georgetown--IBM demo, it attracted and impressed, but led to inevitable disappointment when the success failed to scale up. Why was there a hype in the first place, though?
 
-It is pretty amusing now that 
+In 1991, as the expert systems hype was dying down, Schank wrote an essay trying to diagnose the source of the hype. One source, he argued, was the focus on designing a good theoretical framework that is verified on small scale demos, and expect it to simply scale up.
 
-> Artificial intelligence has abandoned the quest for certainty and truth. The new patchwork rationalism is built upon mounds of _micro-truths_ gleaned through common sense introspection, ad hoc programming and so-called _knowledge acquisition_ techniques for interviewing experts. The grounding on this shifting sand is pragmatic in the crude sense -- If it seems to be working, it's right.
+> Nevertheless, there were otherwise intelligent people claiming that Winograd's (1972) SHRDLU program that worked on 31 examples had solved the natural language problem or that MYCIN (Shortliffe 1976) had solved the problem of getting expertise into a computer. Prior to 1982, it is safe to say that no one had really tried to build an AI program that was more than simply suggestive of what could be built. AI had a real definition then, and it was the gee whiz definition given earlier.
+>
+> [@schankWheresAI1991]
+
+Winograd in an interview shortly afterwards concurred:
+
+> WINOGRAD: Well, implementation and product are two stages. That is, implementation was always there as the coin of the realm. Implementation meant something you could show off. It didn't mean something that somebody else could use... there was no attempt to get it to the point where you could actually hand it to somebody and they could use it to move blocks around... Pressure was for something you could demo... I think AI suffered from that a lot, because it led to "Potemkin villages", things which -- for the things they actually did in the demo looked good, but when you looked behind that there wasn't enough structure to make it really work more generally.
+>
+> NORBERG: Is that a question of size, or is it a question of the idea itself - the idea's too small?
+>
+> WINOGRAD: The idea of --?
+>
+> NORBERG: Well, let's say the ideas behind the blocks world, SHRDLU.
+>
+> WINOGRAD: Well, I think it was based on a presupposition -- at least an attitude -- that making things work in the large, really working, was just like getting a demo except more details to be filled in. That is, if you had a basic idea and you could show it worked on something then it was just a sort of grubby, detail work to fill in all, you know, the hundreds of entries you would need to make it work for real. But that -- an idea -- and this is tied to the top-down, rationalistic way of approaching it, right. An idea which said, "here's a nice logical way this should work -- would work in practice if you just went far enough with the details." And I think that's been a problem with AI all along. It's true in problem-solving, right? Problem-solving, as conceived by Newell and Simon and developed, and so on, has a certain realm of applicability but it's very different from, you know, you coming to me and saying, "I have a problem. Would you help me solve it?", in terms of -- to take the most obvious things - the hard part is figuring out what the problem space is, not searching it.
+> 
+> [An Interview with Terry Allen Winograd (1991-12-11)](https://conservancy.umn.edu/server/api/core/bitstreams/a0a8ffa6-0149-4606-88e8-4eec0690d794/content#page=7)
+
+Philosophically, it seems like the rational methodology of theoretical physics: One has a good theory, which can be checked in a precise experiment in a vacuum. If the observation is as predicted, then one assumes it would simply scale up. Similarly, if a theory, such as neural networks, cannot perform something as simple as testing for connectivity (as [Minsky and Papert argued](https://yuxi-liu-wired.github.io/essays/posts/reading-perceptron-book/index.html#chapter-13)), then that theory is disproven. In this case, systemic grammar was the linguistic theory to be tested, and the blocks world of SHRDLU constituted a laboratory proof. That it never scaled up was a shame, but not something people expected back then.
+
+We know better now. The actual trajectory of AI has destroyed faith this methodology, but why? It is still mysterious, and many still argue that we should not accept this.
+
+### Shakey
+
+
 
 ## The Fifth Generation
 
@@ -1612,6 +1798,25 @@ Images from [@kanalRecognitionSystemDesign1964].
 
 The Strategic Computing Project (SCI) was named to resemble the [Strategic Defense Initiative](https://en.wikipedia.org/wiki/Strategic_Defense_Initiative), better known as "Star Wars". The SDI aimed to shoot down Soviet ICBMs during their spaceflight with tools including lasers, particle-beam weapons, and ground and space-based missile systems. 
 
+Lest some, out of moral integrity, claim that mixing military and AI only hurts everyone, there was one definite success story: DART.
+
+> [Desert Shield/Storm](https://en.wikipedia.org/wiki/Gulf_War) in 1990--91 \[... had\] no prior buildup of troops or supplies. The US Department of Defense sealifted 2.4 million tons of cargo during the first six months of Desert Shield -- more than four times the cargo carried across the English Channel to Normandy during the D-Day invasion... About halfway through the six months of Desert Shield, Kral installed the system at the [USTRANSCOM](https://en.wikipedia.org/wiki/United_States_Transportation_Command) transportation command and the [US European command](https://en.wikipedia.org/wiki/United_States_European_Command), where it was used for the duration.
+>
+> [@hedbergDARTRevolutionizingLogistics2002]
+
+We don't have any pictures of this, or even source code, as it is probably a state secret. Still, it is described as
+
+> a GUI-based scheduler that took a mainframe flat file of the details of all items to be moved--dates to move, places to move to and from, and so forth--and loaded the data into an Oracle database. The scheduling was done on a front-end Sun-4 workstation.
+> 
+> [@hedbergDARTRevolutionizingLogistics2002]
+
+And did it work?
+
+> It enabled users to examine schedules at a higher level of abstraction, because it could readily aggregate modules. Planners could run strategic transportation models using DART in a matter of minutes rather than in hours or days. This enabled them to consider more alternatives and develop a more realistic action plan in far less time... The DART scheduling application paid back all of DARPA's 30 years of investment in AI in a matter of a few months, according to Victor Reis, Director of DARPA at the time.
+>
+> [@hedbergDARTRevolutionizingLogistics2002]
+
+I guess one can interpret it as either "wars are really expensive" or "DARPA had invested too little in AI".
 
 ## Philosophy
 
