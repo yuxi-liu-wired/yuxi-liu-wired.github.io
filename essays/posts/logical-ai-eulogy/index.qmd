@@ -1210,15 +1210,29 @@ TODO the meta-DENDRAL
 
 ### MYCIN
 
-MYCIN
+After the success of DENDRAL, another team developed MYCIN, an expert system for diagnosing bacterial infections like a doctor. Compared to DENDRAL, MYCIN's main breakthrough was in allowing reasoning with uncertainty. Instead of using probability, it uses "Certainty Factors" (CF), which ranges from $[-1, +1]$, with $-1$ meaning "certainly false", $+1$ "certainly true", and $0$ "complete uncertainty". Given two statements $p, q$ with CF $x, y$, the CF for $p \;\mathrm{AND} q$ is combined according to
 
-EMYCIN stands for either "empty MYCIN" or "extensible MYCIN"
+$$
+CF(x, y)=\begin{cases} X+Y -XY   & \text{if } X,Y>0 \\ 
+ X+Y+XY & \text{if } X,Y<0 \\
+ \frac{X+Y}{1-\min(|X|,|Y|)} & \text{otherwise} 
+\end{cases}
+$$
+
+This combination has these desirable properties:
+
+* Combining unknown with anything leaves it unchanged.
+* Combining true with anything (except false) gives true. Similarly for false.
+* Combining true and false is a division-by-zero error.
+* Combining +x and -x gives unknown.
+* Combining two positives (except true) gives a larger positive. Similarly for negatives.
+* Combining a positive and a negative gives something in between.
+
+At this point, we strongly recommend that you try out MYCIN for yourself. Unfortunately, unlike the famous ELIZA, it is quite hard to get a working copy of DENDRAL or MYCIN. However, you can experience the fun of MYCIN by asking a modern LLM to roleplay as one. If you still want to do it the old-school way, follow the [tutorial here](code/run_mycin.md).
+
+Done? Good. MYCIN is very cleanly implemented in Common Lisp for Chapter 16 of *Paradigms of artificial intelligence programming*, which is available on [GitHub](https://github.com/norvig/paip-lisp/tree/main). Like all expert systems, it has a logical inference engine (shell) and a knowledge base. The shell performs logical inference under uncertainty according to the rules of certainty factors, while the knowledge base consists of statemets of this kind:
 
 ```lisp
-;;;; -*- Mode: Lisp; Syntax: Common-Lisp -*-
-;;;; Code from Paradigms of AI Programming
-;;;; Copyright (c) 1991 Peter Norvig
-
 ;;;; File mycin-r.lisp: Sample parameter list and rulebase for mycin.
 
 (requires "mycin")
@@ -1242,7 +1256,55 @@ EMYCIN stands for either "empty MYCIN" or "extensible MYCIN"
      (identity organism is streptococcus))
 ```
 
-Unfortunately, unlike the famous ELIZA, it is quite hard to get a working copy of DENDRAL or MYCIN. However, you can experience the fun of MYCIN by asking a modern LLM to roleplay as one. If you still want to do it the old-school way, follow the [tutorial here](code/run_mycin.md).
+The MYCIN caugh the eye of people outside of AI community. Here seemed like a system that might actually be commercialized and do the work of doctors. And not just doctors -- what else might it do?
+
+To explore this, EMYCIN ("empty MYCIN" or "extensible MYCIN") was created, which was essentially MYCIN with its knowledge base removed, and some functions added so that one can enter new rules interactively. The experience of an EMYCIN session is that of being interviewed by some programmer who is trying to write down a precise program of how you do your job.
+
+It is more fun, again, to try EMYCIN for yourself by creating a new knowledge base for whatever interests you, and it is easy to get an LLM to roleplay as an EMYCIN. If you prefer reading, then the following example comes from [@buchananRuleBasedExpert1984, page 325] (`>` in front of user input), showing a user creating a new rule for diagnosing hemophilia:
+
+```
+Enter Parms, Rules, Save changes, or Go?
+> Rules
+Rule number of NEW: 
+> NEW
+RULE025
+PREMISE: 
+> (REASON = BLEEDING, SIGBLD, FINALDEF = COAGULATION,
+>  DEFPATH = INTRINSIC ~ INTERFERENCE)
+RULE025
+ACTION: 
+> (DX = DXHEMOPHILIA)
+BLEEDING → BLEEDING-HISTORY? 
+> Yes
+COAGULATION → COAGULATION-DEFECT?
+> Yes
+Translate, No further changes, or prop name:
+```
+
+After this rule is entered, it can be displayed as follows:
+
+```
+RULE025
+IF: 1) Bleeding-history is one of the reasons for this consultation,
+    2) There is an episode of significant bleeding in the patient,
+    3) Coagulation-defect is one of the bleeding disorders in the patient,
+    4) The defective coagulation pathway of the patient is intrinsic, and
+    5) There are not factors which interfere with the patient's normal bleeding
+
+THEN: It is definite (1.0) that the following is one of the bleeding diagnoses of 
+      the patient: The patient has one or more of the following conditions: Hemophilia A,
+      von Willebrand's syndrome, an IX, XI, or XII deficiency, or a high molecular weight
+      Kallikrein defect.
+
+PREMISE: (AND (SAME CNTXT REASON BLEEDING-HISTORY)
+              (SAME CNTXT SIGBLD)
+              (SAME CNTXT FINALDEF COAGULATION-DEFECT)
+              (SAME CNTXT DEFPATH INTRINSIC)
+              (NOTSAME CNTXT INTERFERENCE))
+ACTION: (CONCLUDETEXT CNTXT DX (TEXT DXHEMOPHILIA) TALLY 1000)
+```
+
+Some from the "EMYCIN gang" summarized their lessons learned in [@buchananRuleBasedExpert1984]. With certainty factors, shell, and knowledge base, the main pieces of the expert system boom have fallen into place.
 
 ### Knowledge Principle
 
@@ -1721,6 +1783,13 @@ We know better now. The actual trajectory of AI has destroyed faith this methodo
 
 ### Shakey
 
+In 1964-04, the Stanford Research Institute (SRI) submitted a proposal to ARPA to build a sci-fi robot that could move through a cluttered room using its own cameras, with the unassuming name "Intelligent Automata". This resulted in Shakey the robot, developed during 1966--1972.
+
+Even before it was finished, it became a celebrity. The *Life* magazine called Shakey the "first electronic person" [in 1970](https://gwern.net/doc/reinforcement-learning/robot/1970-darrach.pdf).
+
+![Shakey the robot in 1972. Standing *square*ly away from the uncanny valley, it is almost cute in its boxy appearance. Just watching it makes me want to make "beep-boop" sound. [Source](https://en.wikipedia.org/wiki/File:SRI_Shakey_with_callouts.jpg)](figure/SRI_Shakey_with_callouts.jpg)
+
+It was a fine example of logical AI, and several classical algorithms were developed specifically for it, including the A* search for pathfinding on a graph, the Hough transform for its vision; and the visibility graph method specifically for pathfinding in a Euclidean plane with obstacles.
 
 
 ## The Fifth Generation
