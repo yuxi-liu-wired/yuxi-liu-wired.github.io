@@ -883,9 +883,10 @@ The axioms of logical AI:
 * Intelligent behavior is the combination of simple goals, simple algorithms, and complex environment.
 * Intelligent algorithms are fairly simple, and consist of serial, deterministic, heuristic search over the space of solutions.
 * The space of solutions is structured like a directed graph, where the edges are "generators" or "search operators".
-* At each step, the search algorihm runs a "verifier" subroutine to check if a solution has been found. If so, then it backtracks to produce the full solution. If not, then it updates an internal state and uses a heuristic to decide which edge to follow next.
+* At each step, the search algorihm runs a "verifier" subroutine to check if a solution has been found. If so, then it backtracks to produce the full solution. If not, then it updates an internal state and decide how to grow the path towards the goal.
+* To grow the path towards the goal, it conducts "means-ends analysis": Take a small forward step to a new place in the space of solutions ("means"), and move the goalpost by a small backward step, to a new goalpost closer to you ("ends").
 
-They called their vision of logical AI the "General Problem Solver" (GPS), a grandiose title for a grandiose dream.
+They designed an algorithm according to the axioms and called it "General Problem Solver" (GPS), a grandiose title for a grandiose dream.
 
 ![The architecture of the GPS. [@newellHumanProblemSolving1972, figure 4.1]](figure/Simon_Newell_fig_4_1.png)
 
@@ -907,7 +908,7 @@ Curiously, they argued that Chomskyan linguistics and the IPS formalism are esse
 
 As we have seen and will see, the relation between Chomsky and logical AI runs deep.
 
-The IPS is not just an algorithm for AI, but also a psychological theory for what humans really do when they solve problems. As such, Simon and Newell spent over a decade carefully studying the behavior of real humans solving real problems, such as propositional logic proofs (the same task as Logic Theorist), cryptograms, chess puzzles, and so on. And by "detailed" I mean it. They had subjects working through problems in a lab, with the entire session tape-recorded, fully transcribed, annotated, and parsed into the form of a heuristic tree search. It was like looking at the debugger output to a human being.
+The IPS is not just a logical framework AI, but also a psychological theory for what humans really do when they solve problems. As such, Simon and Newell spent over a decade carefully studying the behavior of real humans solving real problems, such as propositional logic proofs (the same task as Logic Theorist), cryptograms, chess puzzles, and so on. And by "detailed" I mean it. They had subjects working through problems in a lab, with the entire session tape-recorded, fully transcribed, annotated, and parsed into the form of a heuristic tree search. It was like looking at the debugger output to a human being.
 
 ![Annotated transcript of a human subject solving a propositional logic puzzle. The session lasted about 40 minutes, and ends with a failure. The transcript has 535 lines. [@newellHumanProblemSolving1972, page 533]](figure/human_problem_solving_transcript.png)
 
@@ -1122,21 +1123,21 @@ In 2016, AlphaGo defeated the 9-dan player Lee Sedol at 4 wins and 1 loss,[^alph
 
 ### DENDRAL
 
-Spectroscopy means taking an unknown chemical, then do some physics experiment on it to obtain a line-graph, then discover what that chemical is based on that line-graph. A mathematician would write something like this:
+Spectrometry means taking an unknown chemical, then do some physics experiment on it to obtain a line-graph, then discover what that chemical is based on that line-graph. A mathematician would write something like this:
 
 $$
-(\text{chemical}) \xrightarrow{\text{spectroscopy}} (\R \to \R) \xrightarrow{\text{chemist}} (\text{chemical})
+(\text{chemical}) \xrightarrow{\text{spectrometry}} (\R \to \R) \xrightarrow{\text{chemist}} (\text{chemical})
 $$
 
-[Mass spectroscopy](https://en.wikipedia.org/wiki/Mass_spectrometry), for example, breaks a chemical into fragments, and measures the mass-to-charge ratios of the fragments, in units of $\frac{\text{atomic mass unit}}{\text{electron charge}}$. Many fragments carry just +1 electron charge, so the mass-to-charge ratio can be interpreted as roughly the atomic mass of the fragment. A peak at $x$, for example, means when the chemical breaks, it often results in some fragments with mass $x$. Trained chemists would be able to study a mass spectroscopy plot and figure out what it means. 
+[Mass spectrometry](https://en.wikipedia.org/wiki/Mass_spectrometry), for example, breaks a chemical into fragments, and measures the mass-to-charge ratios of the fragments, in units of $\frac{\text{atomic mass unit}}{\text{electron charge}}$. Many fragments carry just +1 electron charge, so the mass-to-charge ratio can be interpreted as roughly the atomic mass of the fragment. A peak at $x$, for example, means when the chemical breaks, it often results in some fragments with mass $x$. Trained chemists would be able to study a mass spectrometry plot and figure out what it means. 
 
-Given a chemical species, by standard [stiochiometry](https://en.wikipedia.org/wiki/Stoichiometry) one can measure the chemical formula of the species, but it remains to discover its chemical structure. This is what DENDRAL[^dendral-name] was designed to do: given the mass spectroscopy, the chemical formula, and some additional information (a later version could incorporate the NMR spectrum), output possible molecular structures for the species.
+Given a chemical species, by standard [stiochiometry](https://en.wikipedia.org/wiki/Stoichiometry) one can measure the chemical formula of the species, but it remains to discover its chemical structure. This is what DENDRAL[^dendral-name] was designed to do: given the mass spectrometry, the chemical formula, and some additional information (a later version could incorporate the NMR spectrum), output possible molecular structures for the species.
 
 [^dendral-name]: The full name is "heuristic dendritic algorithm". It is "dendritic" because it originally only could process chemical structures with no cycles.
 
 Like the IPS of Simon and Newell, DENDRAL started as a heuristic search program. Its problem space is enumerated by a structure generator, which, given a chemical formula, generates all chemically stable structures according to some chemical rules. For example, [geminal diols](https://en.wikipedia.org/wiki/Geminal_diol) are unstable, so those are not enumerated. Each generated structure is then broken into fragments, again according to some heuristic rules. For example, in a ketone (R-(C=O)-R'), it is very unlikely for the C=O double bond to be broken, while it is quite easy for the R-(C=O) and the (C=O)-R' bonds to be broken.
 
-If that is all there is, then we have something not much better than exhaustive search, and would not scale. The breakthrough of DENDRAL was that the DENDRAL team had a professional chemist, who entered a large number of heuristic rules for interpreting mass spectroscopy lines. These greatly decrease the number of solutions to verify.
+If that is all there is, then we have something not much better than exhaustive search, and would not scale. The breakthrough of DENDRAL was that the DENDRAL team had a professional chemist, who entered a large number of heuristic rules for interpreting mass spectrometry lines. These greatly decrease the number of solutions to verify.
 
 Consider an illustrative example from [@feigenbaumGeneralityProblemSolving1970, table 1]. Let $m$ be the mass of the whole molecule. Then there is a [ketone carbonyl group](https://en.wikipedia.org/wiki/Ketone) (R-(C=O)-R', mass 28) if there are 2 peaks at mass $x_1, x_2$ such that
 
@@ -1150,7 +1151,7 @@ A molecule R-(C=O)-R' containing a ketone group often breaks at the bond next to
 The full architecture is as follows:
 
 ```python
-def plan(chemical_formula, spectroscopic_data):
+def plan(chemical_formula, spectrometric_data):
     # use the rules and data to list plausible and implausible structural elements
     # e.g., if the ketone carbonyl group is plausible, then put it into good_list
     # else, put it into the bad_list
@@ -1161,19 +1162,19 @@ def generate(chemical_formula, good_list, bad_list):
     # containing groups from the good_list, but not the bad_list
     return plausible_structures
 
-def test(plausible_structures, spectroscopic_data):
+def test(plausible_structures, spectrometric_data):
     structures = []
     for structure in plausible_structures:
-        simulated_data = simulate_spectroscopy(chemical_formula)
-        score = distance(simulated_data, spectroscopic_data)
+        simulated_data = simulate_spectrometry(chemical_formula)
+        score = distance(simulated_data, spectrometric_data)
         structures.append((score, structure))
     structures.sort(key=lambda x: x[0])
     return structures
 
-def main(chemical_formula, spectroscopic_data):
-    good_list, bad_list = plan(chemical_formula, spectroscopic_data)
+def main(chemical_formula, spectrometric_data):
+    good_list, bad_list = plan(chemical_formula, spectrometric_data)
     plausible_structures = generate(chemical_formula, good_list, bad_list)
-    structures = test(plausible_structures, spectroscopic_data)
+    structures = test(plausible_structures, spectrometric_data)
     return structures
 ```
 
@@ -1189,7 +1190,30 @@ During the period of 1965 to 1969, DENDRAL's performance increased steadily as m
 
 In another paper [@buchananRediscoveringProblemsArtificial1970], the authors expressed their surprise that they could split the program into two parts, which would become the "inference engine" and the "knowledge base". It was as if they have discovered that, instead of manually writing in a lot of if-then statements, they could write a single `eval` function, and then just write a lot of entries in a giant database of rules in a uniform format, and run the `eval` function over the rules. It reminds me of von Neumann discovering the code is data, data is code idea, and thus avoid the trouble of having to physically rewire ENIAC every time the program changes.
 
-TODO the meta-DENDRAL
+It was reported to have been used in "terpenoid natural products from plant and marine animal sources, marine sterols, organic acids in human urine and other body fluids..." and was found to reach expert performance. What it lacked in knowledge it made up in thoroughness, and so it outperformed the experts when the sample is a mixture of several chemicals. [@buchananDendralMetaDendral1981]
+
+### Meta-DENDRAL
+
+The Meta-DENDRAL was an early example of a logical AI system that could learn from data. It was developed near the end of DENDRAL, when the number of rules became hard to manage. The team decided to see if they could design an expert system that is an expert at *learning* organic chemical mass spectrometric data -- not *generic* learning from *generic* data. Their hypothesis was "knowledge acquisition is itself a knowledge-based task". [@buchananDENDRALMetaDENDRALTheir1981]
+
+1. `INTSUM` ("interpretation and summary") takes a list. Each list item is a molecular structure and its mass spectrum. It computes an explanation for the spetrum by molecular bond clevages and atomic transfers. It returns the cleavages, atomic transfers, and spectrum peaks as supporting evidence for each cleavage and transfer.
+2. `RULEGEN` ("rule generation") takes the output from `INTSUM` and infer cleavage rules from it. For example, `X*X` means "any bond can be cleaved", `-CO*NH-` means that "any peptide bond can be cleaved", etc. It always starts with the most generic rule `X*X`, and then tree-searches for more and more specific rules by adding (never removing) more atoms or features to the rule, until reaching a rule whose child rules all perform less well than it.
+   * Each atom, like the `X` in `X*C`, could be annotated with some or all features from a list of 4: atom type (`type`, could be carbon, oxygen...), the number of other carbons connected to (`nbrs`), numbers of hydrogens connected to (`nhs`), or number of multiple bonds (`dots`).
+   * For example, `-CO*NH-` is similar (though not exactly the same) as `-X[type=C, dots=1]*X[type=N, nbrs=2, nhs=1, dots=0]-`.
+   * How well a rule performs is measured by the number of positive examples (a predicted peak that is really there), negative examples (a predicted peak that is not there), and rule specificity (the more atoms or features, the better).
+3. `RULEMOD` ("rule modification") takes the rules output from `RULEGEN`, scores them according to how many positive and negative examples it has, merges near-duplicate rules by Robinson unification, and generalize them (with a penalty score if the generalized rule has more negative examples).
+
+![Architecture of Meta-DENDRAL. [@buchananDENDRALMetaDENDRALTheir1981]](figure/meta-DENDRAL.png)
+
+In a 1978 report, they first verified that Meta-DENDRAL reproduced 8 well-known rules for [aliphatic amines](https://en.wikipedia.org/wiki/Aliphatic_amine) and [estrogens](https://en.wikipedia.org/wiki/Estrogen), such as the famous [α-cleavage](https://en.wikipedia.org/wiki/Alpha_cleavage). Some new rules discovered by Meta-DENDRAL for classifying keto[androstanes](https://en.wikipedia.org/wiki/Androstane). An androstane has 11 ways for attaching a keto group, 55 ways to attach 2 ketos, etc, and though there was a mass of mass spectrometric data for them, there were few cleavage rules due to the complexity of the molecules.
+
+> On the three classes of ketoandrostanes for which no general class rules have been reported, the mono-, di-, and triketoandrostanes, the program found general rules describing the mass spectrometric behavior of those classes... The program has discovered consistent fragmentation behavior in sets of molecules which have not appeared by manual examination to behave homogeneously in the mass spectrometer... it comes close to capturing in a computer program all we could discern by observing human problem-solving behavior. It is intended to relieve chemists of the need to exercise their personal heuristics over and over again, and thus we believe it can aid chemists in suggesting more novel extensions to existing theory.
+>
+> [@buchananDENDRALMetaDENDRALTheir1981]
+
+![Cleavage and transfer rules for diketoandrostanes discovered by Meta-DENDRAL. [@buchananDENDRALMetaDENDRALTheir1981, table 4]](figure/meta-DENDRAL_diketoandrostane.png)
+
+They concluded that it was already possible to create AI assistants to perform tedious tasks for organic chemists.
 
 ### MYCIN
 
@@ -1295,23 +1319,26 @@ It is hard to write this section. I tried it a few times, but it always end up b
 
 There, now I've said it. It explains why expert systems is so boring. The useful parts of it ended up being Java + SQL. 
 
-To see this, consider a few examples of what counts as "knowledge" in expert systems.
+To see this, consider a few examples of what is "knowledge" in expert systems.
 
 The frame: Looks exactly like data types in Java. Multiple frames connected in a semantic graph: Looks exactly like a [UMD diagrams](https://en.wikipedia.org/wiki/Unified_Modeling_Language).
 
 ![A frame system. It looks exactly the same as those UMD diagram I hated back when I learned Java programming. [@russellArtificialIntelligenceModern1995, figure 10.7]](figure/frame_system.png)
 
-Unification: This is finally something new. It is an operation in first-order logic. You can just generalize a single example:
+TODO example that looks like relational databases, and first-order logic.
+
+Robinson unification is an operation in first-order logic, where we have two formulas with variables in them, and unification finds a way to substitute the variables, so that the two formulas become equal. For example:
 
 $$
 \frac{\forall x, IsHuman(x)\to Hates(x, Java) \quad IsHuman(Socrates)}{Hates(Socrates, Java)}{(x \leftarrow Socrates)}
 $$
 
+
 ### Knowledge Principle
 
 > \[Edward Feigenbaum:\] In 1968, I was writing a paper with Bruce \[Buchanan\] and Josh Lederberg in which we chose to summarize the evidence from the many DENDRAL experiments from mid-1965 to mid-1968. It was evident that the improvement in DENDRAL's performance as a mass spectrum analyst was almost totally a function of the amount and quality of the knowledge that we had obtained from Djerassi's experts, and that it was only weakly related to any improvements that the AI scientists like me and Bruce had made to the reasoning processes used in DENDRAL's hypothesis formation. So in 1968, I called this observation the “Knowledge is Power Hypothesis.” One data point. Later, as the evidence accumulated from dozens of -- or hundreds of -- expert systems, I changed the word “hypothesis” to “principle.”
 >
-> \[Bruce Buchanan:\] Art Samuel's work on the checker player: Art had interviewed experts to understand ... the feature vector and then he did a good deal of reading about checkers... That impressed me a great deal and I always wanted to be able to do that. \[META-DENDRAL\] did learn the rules of mass spectrometry from empirical data. A footnote on that. The data were very sparse. It took about one graduate student one year to obtain and interpret one mass spectrum, so we couldn't ask for very much data. This was not a big data problem.
+> \[Bruce Buchanan:\] Art Samuel's work on the checker player: Art had interviewed experts to understand ... the feature vector and then he did a good deal of reading about checkers... That impressed me a great deal and I always wanted to be able to do that. \[Meta-DENDRAL\] did learn the rules of mass spectrometry from empirical data. A footnote on that. The data were very sparse. It took about one graduate student one year to obtain and interpret one mass spectrum, so we couldn't ask for very much data. This was not a big data problem.
 >
 > quoted in [@brockLearningArtificialIntelligences2018]
 
@@ -1353,6 +1380,12 @@ Instead of describing in detail these systems, we can just admire tha sudden exp
 >
 > [@mccorduckScientificLifeEdward2022]
 
+The AI boom caught even the imagination of the experts themselves:
+
+> at the moment the expert system takes hold of the expert's own imagination. For weeks, perhaps longer, he has watched what is most charitably described as a burlesque of his thinking processes dancing across a display. All of a sudden (or so it seems) the burlesque sharpens into adroit imitation: there before him are the very reasoning processes he has originated, nourished, and cherished over a professional lifetime. His excitement mounts, and he becomes an enthusiastic partner in the last few steps of perfecting the electronic image of his mind. He becomes infected by the "immortality syndrome" as one researcher calls it—elation at the thought that what he knows, has so painstakingly acquired over a lifetime of experience, will live on beyond him.
+>
+> [@feigenbaumFifthGenerationArtificial1984, page 93]
+
 A best-selling book was full of miraculous stories of growth and business profits:
 
 > Mike-in-the-Box, "God in the works" (the captured expertise of an aging, irreplaceable blast furnace expert at Nippon-Kokan), ‘‘Geoff’s Book” (thousands of expert rules from the head of the senior, top estimator at building contractor Lend Lease of Australia), and J. A. Gilreath (Schlumberger’s ace oilfield data interpreter, whose expertise is now enshrined in that company’s Dipmeter Advisor system) are among the stars we meet. Much of the priceless skill of these experts has been captured by "knowledge engineer": translators.
@@ -1387,7 +1420,7 @@ However, there was a persistent confusion as to the point of expert systems, sin
 
 If knowledge is power, then how does one acquire more power? The "knowledge bottleneck" already appeared in the earliest papers on DENDRAL:
 
-> we could get rid of the "middle man" in the information transfer by educating a programmer in mass spectroscopy or by educating a chemist in Lisp. Or we could replace the middle man with a program designed to perform the same function as B (the layman/programmer) in the dialog above. In effect, we have been moving slowly in all three of these directions at once. But what we would most like to pursue is the design of a program to elicit information from an expert who is not also a programmer.
+> we could get rid of the "middle man" in the information transfer by educating a programmer in mass spectrometry or by educating a chemist in Lisp. Or we could replace the middle man with a program designed to perform the same function as B (the layman/programmer) in the dialog above. In effect, we have been moving slowly in all three of these directions at once. But what we would most like to pursue is the design of a program to elicit information from an expert who is not also a programmer.
 > 
 > One obvious reason for the encouragingly high level of performance of the computer is the large amount of mass spectrometry knowledge which chemists have imparted to the program. Yet this has been one of the biggest bottlenecks in developing the program... The preponderance of time was now spent by the chemist deciding how to change the rules in the table to bring the program’s behaviour more in line with real data.
 >  
@@ -1405,15 +1438,11 @@ From various reading, it seems to me that the largest possible expert systems as
 >
 > [@allenExpertSystemsPioneer2018a]
 
-There were many attempts at automatic knowledge acquisition, starting with meta-DENDRAL, and culminating with Cyc. They all failed to scale up. Since we will describe the Cyc in detail, we will just briefly describe the meta-DENDRAL.
+There were many attempts at automatic knowledge acquisition, starting with Meta-DENDRAL, and culminating with Cyc. They all failed to scale up. We will do a detailed case-study of Cyc and its scalability problems.
 
 > This is the stuff of excellent AI science. But did Meta-DENDRAL find any application in any industrial setting? No. Nor have any of the other complex machine learning procedures (however, machine induction based on algorithms of [Quinlan](https://en.wikipedia.org/wiki/Ross_Quinlan) have had a marginal success). The industry of AI applications is still awaiting the dawn of an era of knowledge engineering significantly aided by machine learning.
 > 
 > [@lindsayDENDRALCaseStudy1993]
-
-The meta-DENDRAL was developed near the end of DENDRAL, when the number of rules became hard to manage. The team decided to see if they could design an expert system that is an expert at learning from spectroscopic data -- not *generic* learning from *generic* data. Their hypothesis was "knowledge acquisition is itself a knowledge-based task". To do this, they 
-
-In 1976, they reported some new rules discovered by meta-DENDRAL for classifying [androstanes](https://en.wikipedia.org/wiki/Androstane).
 
 ### Where did it go?
 
@@ -1424,6 +1453,14 @@ Around mid-1990s, it was pretty much official: the Expert System hype died. Acco
 > Both Monte Zweben, President of Red Pepper Software (San Mateo, CA), and Tom Laffey, Chief Technology Officer of Talarian (Mountain View, CA), had similar stories to tell regarding the successful launch of companies selling real-time expert system tools: never, ever call the products "AI". "Don’t mention AI if you want any venture capital money," Laffey warned. "Call it something else, such as advanced decision systems. These days, people come to AI almost as a last resort." Zweben’s company shared the same fate as Talarian: he had to remove or restate every mention of AI from the Red Pepper prospectus before investors would take him seriously. Despite the literally thousands of successfully deployed intelligent ap- plications, AI’s reputation continues to suffer because nobody is giving credit to the AI component. Zweben suggested wish- fully that AI companies insist on being recognized for their contribution to applications, perhaps even demanding an ‘AI inside’ label, it la Intel’s ‘Intel inside’ label on PCs.
 > 
 > [@blanchardAAAI94StateAI1994]
+
+Schank, writing near the end of the expert systems hype, argued that AI researchers missed the point about scaling. They thought AI is about designing an algorithm, when it is really quite tedious -- real AI is 1% inspiration and 99% perspiration. He used the experience of getting ATRANS to work in practice, a program that read international bank money transfer messages:
+
+> Any of Cognitive Systems' programmers would have been justified in complaining that they had come to work there to do AI, and all they were doing was working on endless details about determining various abbreviations for bank names. They also asked, Where’s the AI? The lesson to be learned from ATRANS is simple enough... AI entails massive software engineering. To paraphrase Thomas Edison, “AI is 1-percent inspiration and 99-percent perspiration.” AI people will never build any real AI unless they are willing to make the tremendously complex effort that is involved in making sophisticated software work.
+> 
+> One serious problem in AI these days is that we keep producing researchers instead of builders. Every new Ph.D. recipient, it seems, wants to continue to work on some obscure small problem whose solution will benefit some mythical program that no one will ever write. We are in danger of creating a generation of computationally sophisticated philosophers.
+> 
+> [@schankWheresAI1991]
 
 Winograd argued that expert systems are structured like human bureaucracies, with formalized explicit rules, and so they have same strengths and weaknesses. This explains why they work only in stable and precise technical areas, where exceptions are not the rule. He gave an example expert system that was stuck in development hell for 15 years, presumably as it was in an era (internal medicine) that has too many exceptions to the rules:
 
@@ -1486,11 +1523,21 @@ I imagine the world of knowledge in rings around a mineshaft. Directly inside th
 
 Numerical computing started as research projects on the early giant mainframes, which are then turned into numerical programs written in C, which then gets turned into packaged systems like Matlab and Macsyma, usable by people outside the numerical computing community, who just need to calculate the pressure of an oil well or the tension in a building beam.
 
-My guess is that the expert system boom took place because there was something genuinely new: In 1980, laypeople outside the computer community knew very well that computers can crunch statistical datasets and numerical simulations, and that they can perform if-then-else logical control flows, but they thought that's *all* they could do. In the 1970s, expert systems with uncertainty quantification was something new in the research level, as barely refined ore. Around 1980, it had been roughly packaged up as EMYCIN by researchers and technologists, who had used EMYCIN to solve real problems. So, during 1980s, expert systems reached the last stage: to be hammered into a tool for business.
+My guess is that the expert system boom took place because there was something genuinely new: it was the brith of non-numerical software engineering.
+
+Mechanical calculators were present since the 19th century, and numerical methods such as finite elements, weather prediction, linear programming, cybernetics, etc, simply migrated wholesale to electronic computers in the 1940s, and the mathematics and engineering department could simply churn out numerical programmers by giving them a course in ALGOL -- a name that means "\[numerical\] algorithm language".
+
+In contrast, there was very little *symbolic* algorithms before computers came around, and it was born essentially around the 1950s as "symbolic AI" or "computer science". Entire university departments for computer science had to be invented. MIT's CS department was established in 1963, MIT 1965, and Berkeley 1967. The story makes too much if we assume progress marches [one generation at a time](https://en.wikipedia.org/wiki/Planck's_principle): 
+
+* The heroic age: Preliminary theoretical AI studies by Turing, McCulloch, Pitts, etc, in the 1940s.
+* The classical age: Universities create a department of AI and CS and start teaching graduate students the subject with canonical textbooks, creating a reliable stream of professors and lecturers of the subject, in the 1960s.
+* The civilized age: The technology spills out into the commercial world, and universities create undergraduate degrees in computer science dedicated to churning out software engineers, as SWE becomes a professional class with stock options and a retirement plan, in the 1980s.
+
+In 1980, laypeople outside the computer community knew very well that computers can crunch statistical datasets and numerical simulations, and that they can perform if-then-else logical control flows, but they thought that's *all* they could do. In the 1970s, expert systems with uncertainty quantification was something new in the research level, as barely refined ore. Around 1980, it had been roughly packaged up as EMYCIN by researchers and technologists, who had used EMYCIN to solve real problems. So, during 1980s, expert systems reached the last stage: to be hammered into a tool for business.
 
 Indeed, at the start of the boom, there was a serious lack of computer science graduates who could write the expert systems. This seemed rather silly, now that we've seen that much of what expert systems did are now done by object-oriented programming and relational databases. But remember that back in 1980s, computer science was a purer science, unlike electric engineering. Software engineering was just getting started.
 
-Similarly, there was also the promise of logic programming over imperative programming, of [formal program synthesis](https://en.wikipedia.org/wiki/Program_synthesis): the user specifies the results, and a logical inference engine would synthesize a way to get there. This was a development from robot planning, where the user would input a goal state of the world, and the planner would compute a motion plan to reach that state. This was also a revelation. Compared to the previous method of programming directly the motion plan like writing assembly code, this was like compiling a source code into assembly. This was a major promise of Prolog-based logic programming. I am less certain about where this has ended up, but my hypothesis is the same: When it is *possible* to specify a task domain by formal logic, then it works, and this lives today in logistical planning software, robotic path-finding, automated compiler design, etc. However, this does not work in domains not logically specified.
+Similarly, there was also the promise of logic programming over imperative programming, of [formal program synthesis](https://en.wikipedia.org/wiki/Program_synthesis): the user specifies the results, and a logical inference engine would synthesize a way to get there. This was a development from robot planning (especially [Shakey](#sec-shakey)), where the user would input a goal state of the world, and the planner would compute a motion plan to reach that state. This was also a revelation. Compared to the previous method of programming directly the motion plan like writing assembly code, this was like compiling a source code into assembly. This was a major promise of Prolog-based logic programming. I am less certain about where this has ended up, but my hypothesis is the same: When it is *possible* to specify a task domain by formal logic, then it works, and this lives today in logistical planning software, robotic path-finding, automated compiler design, etc. However, this does not work in domains not logically specified.
 
 So what happened to expert systems? The working parts (knowledge representation, retrieval, logical inference, logistical planning, data dashboards, automatic industrial process control) got rolled into standard software engineering and became too boring to be considered AI. The not working parts (automatic knowledge acquisition, machine learning, vision, speech, translation) got abandoned, only to be resurrected again by statistical machine learning, and then deep learning.
 
@@ -1500,7 +1547,13 @@ The working parts of expert systems live behind boring acronyms like Systems App
 
 [^expert-system-acronym]: Are you bored yet? Here are more! Knowledge base management system (KBMS), enterprise resource planning (ERP), business process management (BPM), process-oriented knowledge management (PKM), business process management system (BPMS), online transactional processing (OLTP), recency, frequency, monetary value analysis (RFM), earnings before interest, taxes, depreciation and amortization (EBITDA)... The last one was not about expert systems, but it might as well be, haha.
 
-Meanwhile, Feigenbaum left the MYCIN-gang life and became the Chief Scientist of [US Air Force](https://en.wikipedia.org/wiki/United_States_Air_Force), and tried to teach them about software engineering. With regard to technology, the military was still doing it the same way as they did in the 1950s. They prioritized hardware before software, and what software they developed was by the waterfall model they used for [SAGE](https://en.wikipedia.org/wiki/Semi_Automatic_Ground_Environment) [@boehmView20th21st2006]. Needless to say, his attempts to teach them about post-1950s software engineering went nowhere. I feel like his story is somehow a reflection of this larger story of how expert system AI became boring.
+We also have another hint of what mattered in the old days. In the 1978 report on Meta-DENDRAL, the authors claimed that a serious problem was simply that software on one machine doesn't run on another machine. "Just copy it" did not work, because the machines had incompatible, bespoke operating systems. The "write once, compile it everywhere" that we take for granted in software engineering only came around circa 1990.
+
+> While the software is almost too complex to export, our research-oriented computer facility has too little capacity for import. Support of an extensive body of outside users means that resources (people as well as computers) must be diverted from the research goals of the project. At considerable cost in money and talent, it has been possible to export the programs to Edinburgh. But such extensive and expensive collaborations for technology transfer are almost never done in AI.
+>
+> [@buchananDENDRALMetaDENDRALTheir1981]
+
+Meanwhile, Feigenbaum left the MYCIN-gang life and became the Chief Scientist of [US Air Force](https://en.wikipedia.org/wiki/United_States_Air_Force), and tried to teach them about software engineering. With regard to technology, the military was still doing it the same way as they did in the 1950s. They prioritized hardware before software, and what software they developed was by the waterfall model they used for [SAGE](https://en.wikipedia.org/wiki/Semi_Automatic_Ground_Environment) [@boehmView20th21st2006]. Needless to say, his attempts to teach them about post-1950s software engineering went nowhere. I feel like his story is somehow a reflection of this larger story of how expert system AI became boring software engineering.
 
 > He recalls visiting the offices of a defense contractor working on a half-billion-dollar missile defense system under construction. While the innovative physics in the hardware seemed to be on track, the crucial and difficult software controlling the remarkable aiming system was being handled by only two software engineers, who admitted they hadn't yet made much progress.
 >
@@ -1753,7 +1806,7 @@ The main part of SHRDLU has the following parts:
 
 The key parts of the system are the NLU and the `PLANNER`.
 
-The `PLANNER`, just like the GPS of Simon and Newell, starts with the goal as the root node, and searches for a chain of logical operations that would eventually lead to a leaf node equal to the current state of the world.[^shrdlu-logic] This was called "backward chaining". It then stores this chain of logical operations, and converts it into a sequence of `MOVER` commands and sends them to `MOVER`. When asked "Why did you do it?", it would convert this plan into an explanation in English.
+The `PLANNER`, just like the GPS of Simon and Newell, starts with the goal as the root node, and searches for a chain of logical operations that would eventually lead to a leaf node equal to the current state of the world.[^shrdlu-logic] This was called "backward chaining", though it was the same as the means-end analysis of GPS. It then stores this chain of logical operations, and converts it into a sequence of `MOVER` commands and sends them to `MOVER`. When asked "Why did you do it?", it would convert this plan into an explanation in English.
 
 [^shrdlu-logic]: For a detailed exposition of how SHRDLU-like AI systems perform planning by symbolic logic, see [@russellArtificialIntelligenceModern2021, chapter 11.2].
 
@@ -1803,24 +1856,7 @@ This focus on toy models, "microworlds", and proofs of concepts, was prevalent, 
 
 We know better now. The actual trajectory of AI has destroyed faith this methodology, but why? It is still mysterious, and many still argue that we should not accept this.
 
-### Scene analysis
-
-Since a perceptron-only architecture is not the right way, they illustrated what they believe to be the "right" way to do computer vision by describing in detail the scene analysis algorithm. In short, it starts by discovering edges, then performs some computational geometry on them to recover outlines of basic shapes, such as cubes, then fills in the faces, then fills in the bodies between the faces. The algorithm had to do something clever to deal with occlusions. In the end, a complete 3D scene populated with 3D objects is recovered.
-
-![Scene analysis. Figure from [@guzmanDecompositionVisualScene1968]](figure/guzman_1968.png)
-
-### Shakey
-
-In 1973, Duda and Hart published the famous "Duda and Hart" book on pattern classification [@dudaPatternClassificationScene1973]. The book contained two halves. The first half was statistical: Bayes, nearest neighbors, perceptron, clustering, etc. The second half was on scene analysis, a symbolic-AI method for computer vision. Indeed, [Minsky and Papert promoted it as superior to perceptron networks](https://yuxi-liu-wired.github.io/essays/posts/reading-perceptron-book/#chapter-13).[^duda-hart-2] [Shakey the robot](https://en.wikipedia.org/wiki/Shakey_the_robot), built between 1966 and 1972, was a *tour de force* of scene analysis, and it could traverse a room in as short as an hour, avoiding geometric obstacles along the way. Its program was written in LISP, the staple programming language for symbolic AI.
-
-[^duda-hart-2]:
-    It is instructive to compare the first edition with the second, published in 2001 [@dudaPatternClassification2001]. It had become almost completely statistical. There were new chapters on neural networks, Boltzmann machines, decision trees, and so on. In contrast, scene analysis was completely removed.
-
-    It says something about the obsolescence of scene analysis even in 2001, as Duda and Hart deleted half of their most famous book just to avoid talking about it. In fact, the only mention of "scene analysis" is a condemnation:
-
-    > Some of the earliest work on three-dimensional object recognition relied on complex grammars which described the relationships of corners and edges, in block structures such arches and towers. It was found that such systems were very brittle; they failed whenever there were errors in feature extraction, due to occlusion and even minor misspecifications of the model. For the most part, then, grammatical methods have been abandoned for object recognition and scene analysis. [@dudaPatternClassification2001, section 8.8]
-
-### Shakey
+### Shakey {#sec-shakey}
 
 In 1964-04, the Stanford Research Institute (SRI) submitted a proposal to ARPA to build a robot that could move through a cluttered room using its own cameras, with the unassuming name "Intelligent Automata" so that it did not appear to be a sci-fi project. It was later renamed to "Intelligent Automata to Reconnaissance".[^shakey-reconnaissance] This resulted in Shakey the robot, developed during 1966--1972. Despite the deliberately unassuming name, it had the ambition of integrating all the subfields of AI as then understood into a single package.
 
@@ -1830,7 +1866,14 @@ In 1964-04, the Stanford Research Institute (SRI) submitted a proposal to ARPA t
 
 [^shakey-reconnaissance]: Annoyingly, I have checked all the official reports -- the interim reports [1](https://web.archive.org/web/20060316080944/http://www.ai.sri.com/pubs/files/rosen66-p5953-interim1.pdf), [2](https://web.archive.org/web/20060316081210/http://www.ai.sri.com/pubs/files/rosen67-p5953-interim2.pdf), [3](https://web.archive.org/web/20060316081226/http://www.ai.sri.com/pubs/files/rosen67-p5953-interim3.pdf), [4](https://web.archive.org/web/20060316081638/http://www.ai.sri.com/pubs/files/nilsson68-p5953-interim4.pdf), and the [final report](https://web.archive.org/web/20060316081339/http://www.ai.sri.com/pubs/files/nilsson68-p5953-final.pdf), and *none* of them told me what it is supposed to reconnoiter for!
 
-Even before it was finished, it became a celebrity. The *Life* magazine called Shakey the "first electronic person" [in 1970](https://gwern.net/doc/reinforcement-learning/robot/1970-darrach.pdf). A [1972 documentary](https://www.youtube.com/watch?v=GmU7SimFkpU) shows its operations, in which one can see its shaking motion, and how it stops after each straight-line motion. [@stanfordresearchinstituteShakeyExperimentRobot1972] The shaking is due to the springs in two wheels, and the stopping is to wait for computer vision and planning to finish, and for the shaking to stop. Early during development, it was tethered. A bit later, the tether was removed, and the researchers found it to mysteriously rotate once in a while. It turned out to be a vestigial subroutine meant to untwist the tether.
+Even before it was finished, it became a celebrity. The *Life* magazine called Shakey the "first electronic person" [in 1970](https://gwern.net/doc/reinforcement-learning/robot/1970-darrach.pdf).[^shakey-life-magazine] A [1972 documentary](https://www.youtube.com/watch?v=GmU7SimFkpU) shows its operations, in which one can see its shaking motion, and how it stops after each straight-line motion. [@stanfordresearchinstituteShakeyExperimentRobot1972] The shaking is due to the springs in two wheels, and the stopping is to wait for computer vision and planning to finish, and for the shaking to stop. Early during development, it was tethered. A bit later, the tether was removed, and the researchers found it to mysteriously rotate once in a while. It turned out to be a vestigial subroutine meant to untwist the tether. (Peter Hart, at 05:55)
+
+[^shakey-life-magazine]:
+    This article was considered sensational and misleading by most of the people who worked on Shakey.
+
+    > an article that was more than science fiction: the AI community feels it was victimized in this instance by outright lies. Said Rosen, *He came here and all of us spent a great deal of time being very honest and candid with him. Then he didn’t present the whole story. He picked the sensational things and left out the others...* Bert Raphael, who had spent a lot of time with Darrach, goes further: *...He wrote it as if he’d seen many things he never saw, and wrote about seeing Shakey going down the hall and hurrying from office to office, when in fact all the time he’d been here we were in the process of changing one computer system to another and never demonstrated anything for him. There were many direct quotes that were imaginary or completely out of context.*
+    > 
+    > [@mccorduckMachinesWhoThink2004, page 273]
 
 ::: {#fig-shakey layout-ncol=2}
 
@@ -1850,19 +1893,39 @@ Even before it was finished, it became a celebrity. The *Life* magazine called S
 
 :::
 
-It was a fine example of logical AI, and several classical algorithms were developed specifically for it, including the A* search for pathfinding on a graph, the Hough transform for its vision; and the visibility graph method specifically for pathfinding in a Euclidean plane with obstacles. Like SHRDLU, it represented the state of the world and the goal state using formal logic, and planned by backward chaining and automated theorem proving. It also understood natural English commands. It had a primitive level of rote learning, in the sense that it memorized previous plans ("macros"), which could then be used as single components in later plans. These all worked and still continue to work.
+It was a fine example of logical AI, and several classical algorithms were developed specifically for it, including the A* search for pathfinding on a graph, the Hough transform for its vision; and the visibility graph method specifically for pathfinding in a Euclidean plane with obstacles. Like SHRDLU, it represented the state of the world and the goal state using first-order predicate logic, and planned by logic programming (mostly backward chaining and [Robinson resolution](https://en.wikipedia.org/wiki/Resolution_(logic))). It also understood natural English commands. It had a primitive level of rote learning, in the sense that it memorized previous plans ("macros"), which could then be used as single components in later plans. These all worked and still continue to work.
+
+Shakey also demonstrated the same lesson of expert systems against the generic logical AI approach:
+
+> Shakey showed that you could not, for example, take a graph-searching algorithm from a chess program and hand-printed-character-recognizing algorithm from a vision program and, having attached them together, expect the robot to understand the world. As Raphael put it, there are serious questions about the interaction between knowledge in different domains... the overwhelming message--not always recognized by those doing the robotics work themselves--was that general principles of intelligence were insufficient... there was considerable resistance to that idea. Edward Feigenbaum and his \[DENDRAL group\] were coming to the same conclusion, but they felt very lonely in that discovery. Joel Moses, whose thesis had relied on expertise instead of general principles, remembers the frustration of trying to expound that point of view. "Papert almost cried once," Moses remembers. "He said, 'How can you get those guys to listen?' That was 1966, maybe 1968." But the robots seemed to prove the view beyond a shadow of a doubt.
+>
+> [@mccorduckMachinesWhoThink2004, page 269--276]
 
 But since AI is whatever doesn't work yet, we will focus on what barely worked: its vision. Shakey's natural habitat was a toy model of an office space, designed specifically to be as easy to see as possible. If computer vision could not approach the real world, the real world could approach computer vision.
-
-[@briceSceneAnalysisUsing1970] 
 
 > The project team was well aware of Shakey’s limited mechanical and sensory capabilities, and designed a correspondingly simple experimental environment consisting of half a dozen rooms populated with large, geometric blocks. The blocks were painted so that edges were visible to the low-resolution TV camera, while still being sufficiently reflective for our homemade laser rangefinder to work. We also used dark baseboards, again for visibility, and exploited them to update the position error that accumulated in the dead reckoning process that relied on Shakey’s stepping motors.
 >
 > [@kuipersShakeyConceptionHistory2017]
 
-### Collapse of computer vision
+Shakey's vision system was "scene analysis". In short, it analyzes a picture as a geometer would expect. It starts by discovering edges, then performs some computational geometry on them to recover outlines of basic shapes, such as cubes, then fills in the faces, then fills in the bodies between the faces. The algorithm had to do something clever to deal with occlusions. In the end, a complete 3D scene populated with 3D objects is recovered.
 
-Unfortunately, logical AI approach to computer vision simply could not handle any realm slightly more complex than geometric perfection.
+![Scene analysis. Figure from [@guzmanDecompositionVisualScene1968]](figure/guzman_1968.png)
+
+After converting a grayscale image to a line drawing, the system uses a "formal grammar" of line drawings (look up "Huffman--Clowes scene labeling") to identify 4 kinds of objects: wedge, cube, wall, floor. For example, `Wedge = TRIANGLE OR TRIANGLE + QUAD`, while `Cube = QUAD + QUAD + QUAD`. The more grammatical rules, the more object classes the system could identify.
+
+![The same 4 scenes in: digitized grayscale image, divided into sets of equal grayscale level, merged into regions, converted to line drawings. [@briceSceneAnalysisUsing1970, figure 7, figure 8, figure 12, figure 14]](figure/Shakey_vision.png)
+
+One might question why they decided to identy only 4 kinds of objects. The reality is that it is simply very difficult to perform scene analysis on anything more complicated. Indeed, in a 1972 PhD thesis, David Waltz extended scene analysis to shadows, and had to catalog "thousands of junctions, in order to deal with cracks and shadows". [@waltzSheddingLightShadows1972, page 48; nilssonQuestArtificialIntelligence2009, page 185]
+
+![The junction rules used in analyzing a cube with a shadow. [@waltzSheddingLightShadows1972, page 54]](figure/Waltz_1972_scene_analysis.png)
+
+In 1973, Duda and Hart from the Shakey team published the famous "Duda and Hart" book on pattern classification [@dudaPatternClassificationScene1973]. The book contained two halves. The first half was statistical: Bayes, nearest neighbors, perceptron, clustering, etc. The second half was on scene analysis. It is instructive to compare the first edition with the second, published in 2001 [@dudaPatternClassification2001], almost completely statistical. There were new chapters on neural networks, Boltzmann machines, decision trees, and so on. In contrast, scene analysis was completely removed. It says something about the obsolescence of scene analysis even in 2001, as Duda and Hart deleted half of their most famous book just to avoid talking about it. In fact, the only mention is a condemnation:
+
+> Some of the earliest work on three-dimensional object recognition relied on complex grammars which described the relationships of corners and edges, in block structures such arches and towers. It was found that such systems were very brittle; they failed whenever there were errors in feature extraction, due to occlusion and even minor misspecifications of the model. For the most part, then, grammatical methods have been abandoned for object recognition and scene analysis.
+> 
+> [@dudaPatternClassification2001, section 8.8]
+
+Concurrent to Shakey, in 1966, some undergraduate students were assigned to constructing "a significant part of a visual system" in a single summer. Of course, it failed at this task, as vision turned out to be the part of AI least amenable to logical approaches.
 
 > its most impressive feat -- moving a wedge to a block, ascending it, and pushing off a smaller block -- was recorded on film piecemeal, requiring multiple takes -- and several hours -- for each error-prone stage... Shakey's vision programs, as most others of the time, reduced images to a short list of geometric edges before doing anything else. The approach was quite inappropriate for outdoor scenes containing few simple edges, but many complicated shapes and color patterns.
 >
@@ -1872,21 +1935,119 @@ Still, since Shakey's computer ran at just 0.3 MIPS, it was doing its best. As c
 
 ![A particular example computer vision system `ISUPPOSEW` (1971) that processes the scene as a list of line segments. I picked this mainly for its aesthetic quality. [@raphaelResearchApplicationsArtificial1971, page 197]](figure/ISUPPOSEW.png)
 
-TODO quote Duda Hart, compare Guzman, 
-
 Moravec reports an early 1977 robot that featurizes camera images taken between two steps in the robot trajectory and compares them to triangulate the scene. It only worked on very clean and uncluttered scenes with sharp images:
 
 > \[early 1977\] The program would take a picture and choose up to a hundred features. It would then drive the robot forward about a meter, stop, take another picture, and search for the same features in the second image. Then it would invoke the camera solver to find the robot movement and the three-dimensional locations of the features that explained their apparent motion from one image to the other. Despite much fine-tuning, the program's error rate never dropped below about one wrong motion solution in four, meaning the robot could move about four meters before becoming confused about its position--discouraging. The camera solver repeatedly tweaked an estimate of the robot's motion to make the features line up as well as possible, and threw away those that seemed too far off... 10--20% of the feature matches were wrong, often because an area chosen in a first image had, in a second image, been eclipsed or changed in appearance by point-of-view or lighting effects or camera noise... It was necessary to track about one hundred features to succeed even three steps in four, consuming several minutes of computer time. Months of fiddling with the program's mathematics and assumptions made little difference.
 >
 > [@moravecRobotMereMachine1999, page 30]
 
-
-
 ## The Fifth Generation
 
-In 1982, the Japanese was ready to take on the world.
+### Japan Was Number One
 
-With some irony, the Japanese might look back and call them the Gosei \[五世\].
+> Tactically, the attack on Pearl Harbor was one of the most brilliantly executed strokes of the war.  But politically, it was most unwise, for America fought back. Today, 40 years after the end of World War II, the Japanese are on the move again in one of history’s most brilliant commercial offensives, as they go about dismantling American industry. Whether they are still only smart, or have finally learned to be wiser than we, will be tested in the next 10 years. Only then will we know who finally won the war 50 years before.
+>
+> [@whiteDangerJapan1985]
+
+In 1980, the Japanese was ready to take on the world. Despite the devastation of war, Japan quickly emerged as a peer competitor to America, leading to the Japan-panic symbolized by [*Japan as Number One* (1979)](https://en.wikipedia.org/wiki/Japan_as_Number_One%3A_Lessons_for_America). Cyberpunk stories tell of a neon future with equal mindshare in English and Japanese, where massive zaibatsus battle with conglomerates over the emergent planetary commercium. By GDP, Japan became Number 2 in 1968, and by 1990 it was just 30% smaller than America's, and it had been growing about 1%/yr more. At this rate, it would have become Number 1 in 2020.
+
+The future is now, and we were robbed of this cyberpunk future. Its GDP reached a high point in 1995, and . Many people gave many reasons, such as the liquidity trap, the demographic crisis, the Plaza Accords, and so on. For our purposes, we just need to know that Japan had been knocked out of the AI game after this.
+
+Like how the American ARPA pushed behind the development of AI and computing, the Japanese [MITI](https://en.wikipedia.org/wiki/Ministry_of_International_Trade_and_Industry) had coordinated the development of many industries in Japan, and seeing the rise of expert systems, the time seemed ripe for a coordinated attack on AI. On the back of great optimism, the Fifth Generation Computer System (FGCS) project launched in 1982, led by Kazuhiro Fuchi. Its goals was ambitious to the point of revolutionary, and so was its schedule.
+
+> Even those who adore--the word is not too strong--their unusual director are often dismayed by him. A month after the center formally opened, the hardware committee met with Fuchi and showed him the fast-track two-year plan they'd devised for producing the prototype hardware scheduled for the first three-year phase. Instead of being pleased, Fuchi flew into a rage. That alone is unusual enough among Japanese managers, but what Fuchi wants is even more upsetting: cut that schedule down to a year and a half, he demands. The hardware committee is in shock. They already think themselves reckless in their two-year schedule. Fuchi will have none of it. "We have to manage to do this!" he says angrily. After a little while he calms down. "Go and think it over," he says more reasonably. "If you absolutely have them. But see if it can't be done in a year and a half. Loosen up on the quality assurance and give me a real machine in a year and a half."
+>
+> ...
+> 
+> Everybody knows that Fuchi has irrevocably resigned from his former post at the Electrotechnical Laboratory, a startling step for any Japanese employee, all the more one with such seniority. A high roller, he's placing all his bets on the Fifth Generation project. The legends add that Fuchi would have been eligible for a comfortable government pension if he'd only waited two or three months to resign his position at ETL, but he spurned anything so trivial as personal financial security to delay his project even by months. This is sensational to the young researchers who have grown up in the lifetime employment system of Japan.
+> 
+> [@feigenbaumFifthGenerationArtificial1984, pages 110--112]
+
+::: {#fig-fgcp-orgchart layout-ncol=2}
+
+![[@aisoFifthGenerationComputer1988, figure 6]](figure/FGCS_orgchart_1.png)
+
+![[@feigenbaumFifthGenerationArtificial1984, page 123]](figure/FGCS_orgchart_2.png)
+
+Overall plan of the FGCS
+
+:::
+
+The name "fifth generation" came from the idea of 4 generations of hardware: vacuum tube, transistor, integrated circuits, VLSI. The generation following these would be the fifth, consisting of massively parallel computers natively running logical programs, including logical AI systems. The project had the following parts: parallel logic programming, hardware, and AI.
+
+The project saw the future, and it would be parallel logic programming, for which they decided on a variant of [Prolog](https://en.wikipedia.org/wiki/Prolog) that uses "flat guarded Horn clauses". [@feigenbaumJapaneseNationalFifth1993] But why did they pick an obscure language, not the famed Lisp?
+
+> "Prolog can be seen as an extension of Lisp." He says Prolog provides the extra functionality of “pattern matching and non-determinism,” and is "capable of integrating interesting features of other languages such as Smalltalk, PS, and APL."
+>
+> [@warrenViewFifthGeneration1982]
+
+Vague, but that is as good an explanation as I could find.
+
+In terms of hardware, they planned for parallel computers that runs Prolog operations natively, aiming to eventually reach a target of $10^9 \;\mathrm{LIPS}$, with VLSI chips of $10^7$ transistors per chip. Since in 1982, a standard computer could perform Prolog operations at $10^5 \;\mathrm{LIPS}$, this implied they planned for doubling every 9 months. [@bramerFifthGenerationAnnotated1984, page 6]
+
+They aimed to develop multiple AI systems, each of which would be an expert system written in their version of Prolog. The inference engine would be a standard logic programming system, similar to the planner used in Shakey. The knowledge base was the key. It would be written in a "knowledge-base management software using relational algebra", which probably meant a [relational database](https://en.wikipedia.org/wiki/Relational_database). They planned that, at the end of the project, they would have the software and the hardware to handle expert systems with $10^4$ rules and $10^4$ objects, with "semi-automated" knowledge acquisition. [@warrenViewFifthGeneration1982; @feigenbaumJapaneseNationalFifth1993]
+
+Specific plans they had for AI systems [@feigenbaumJapaneseNationalFifth1993; @moto-okaFifthGenerationComputers1984; @feigenbaumFifthGenerationArtificial1984, pages 121--131; @bramerFifthGenerationAnnotated1984, page 6; @feigenbaumRiseExpertCompany1988, pages 202--203]:
+
+* Computer-readable dictionaries with around 2 million entries in total. These would include a word dictionary with 800K words, a "concept classification dictionary" of 400K concepts, including a general thesaurus, and a "concept description dictionary" of another 400K concepts. These would serve as a general-purpose knowledge base that any expert system could utilize.
+* English-Japanese translator with vocabulary size ≥100,000, at ≥90% accuracy (with the last 10% fixed up by humans).
+* Continuous ASR with vocabulary size ≥50,000 words and 95% per-word accuracy from at least "a few hundred" speakers, in both English and Japanese, at ≤3× real time.
+* A question-answering system built on top of the ASR system. It would converse with the user with synthesized speech in Japanese or English. The first planned system would handle document queries in the computing literature. It would have vocabulary size ≥5,000 and ≥10,000 inference rules. After its success, more systems would be built for other professional fields.
+* Natural language processing with vocabulary size ≤100,000, and ≤2000 grammatical rules, achieving ≥99% accuracy in syntactic analysis.
+* An image processing system with hardware featurizers, that can store ≥10,000 pieces of graphic and image information in its knowledge base. It would be applied to computer-aided design and manufacture and analysis of aerial and satellite images, medical images, etc.
+
+### Autopsy
+
+> ICOT set out to build a machine that could provide upwards of a 100 MLIPs of 'symbol crunching' power. However, there was no application whose clear need for such horsepower drove the development and whose success (or failure) would serve as the tangible evaluation of the effort. From our current perspective it is clear that there could not have been such an application, since any such application would necessarily have had to contain very large stores of knowledge; but in 1982 when the project began, there were no techniques available for capturing and managing such a large knowledge base. Even today, after more than a decade of research into knowledge representation, we have only a small base of experience and very few tested techniques for this task.
+>
+> [@feigenbaumJapaneseNationalFifth1993]
+
+After 10 years and \$400M, the FGCS wrapped up in 1992. The MITI announced that it would give away the developed software for free.
+
+> The problem for Japan is that the computer industry shifted so rapidly that the technological path the Fifth Generation took -- which seemed a wise choice in 1982 -- turned out to be at odds with the computer industry's direction by 1992. In a sense, Japan's ability to stay the course in pursuit of a long-term payoff -- usually considered one of the country's strongest assets -- turned into a liability. A similar challenge for Japan may now be arising in high-definition television. Japan's HDTV system, which has been in development for two decades, is now coming to market just as some engineers believe that a major shift to digital television technology will make the Japanese analog approach obsolete.
+> 
+> ... "If it had really caught on, the Japanese companies would not have let it go," said Edward Feigenbaum... While the project developed some interesting computer designs and software, he said, even in Japan "no one is using the technology."
+> 
+> [@pollackFifthGenerationBecame1992]
+
+> On the research side, it made little progress in AI, NLP, natural interface, knowledge acquisition, construction of large knowledge bases. On the commercial side, its architectures were a commercial failure as they require the user to use an unfamiliar paradigm (parallel logical programming) on hardware that is not better than standard hardware. The promised applied expert systems were not developed because the research did not progress as planned.
+> 
+> [@feigenbaumJapaneseNationalFifth1993, table 2]
+
+> The PIM hardware seems destined for the same fate. The processing elements in the PIMs have cycle times no better than 60 ns; even assuming that the features which provide direct support for XLI offer a speedup factor of 3, this leaves the uniprocessor performance lagging behind the best of today's conventional microprocessors. Both HP and DEC have announced the imminent introduction of uniprocessors of between 100 and 200 MIPS. The interconnection networks in the PIMs do not seem to constitute an advance over those explored in other parallel systems. Finally, the PIMs are essentially 'integer machines'; they do not have floating point hardware. While the interconnection networks of the PIMs have reasonable performance, this performance is comparable to that of commercial parallel machines in the US such as the CM-5.
+> 
+> But these days, few people want specialized computers for artificial intelligence, preferring powerful general-purpose machines like those made by Sun Microsystems Inc., a fast-growing Silicon Valley company that did not exist when the Fifth Generation Project was conceived. And a host of scrappy American companies have sprung up to sell massively parallel computers with tens of thousands of processors, far more than the Fifth Generation machines.
+>
+> [@pollackFifthGenerationBecame1992]
+
+
+::: {.callout-note title="LIP-counting" collapse="true" }
+
+According to [@bramerFifthGenerationAnnotated1984, page 6], as of 1984, the computers operated at 100 KLIPS.
+
+ICOT documents estimated that 1 LIP takes about 100 operations on a conventional computer. At the end of the project, there should be a machine with 1000 processors achieving 1 GLIPS, implying at least 1 MLIPS per processor. [@feigenbaumJapaneseNationalFifth1993]
+
+:::
+
+Specifically, according to TOP500 list, the fastest computer in the world was a parallel computer CM-5 (developed by the [Strategic Computing Initiative](#sec-sci)), which ran at 60 GFLOP/sec, or about 1000 MLIP/sec if we go by the 1 LIP = 100 FLOP conversion rate. So just by making a parallel computer with 1000 standard floating-point processors, they made something that reached the Japanese target of 1 GLIP/sec, without ever dealing with specialized hardware!
+
+Though the FGCS project was a failure, and Japan no longered mattered in AI since its end, it had an indirect effect. Feigenbaum and the long-time AI journalist [Pamela McCorduck](https://en.wikipedia.org/wiki/Pamela_McCorduck) coauthored a book [@feigenbaumFifthGenerationArtificial1984] that became the hottest book inside the Beltway. Ominously, they warned of imminent Japanese domination:
+
+> We calculate that in 1982, the aggregate spent in the United States on artificial intelligence research from all sources -- governmental and private -- was about 50 million. This is just about equal to the amount the Japanese government expects to spend on an average per year over the next ten years for its Fifth Generation (and does not count Japanese internal industrial AI support that may double or triple the amount). If we continue as we have, we two nations will act as guinea pigs for an interesting experiment in planned, as opposed to unplanned, research... The Japanese have announced that in ten years they will produce knowledge information processors. Several options are open to Americans, but few of them offer truly palatable alternatives to undertaking our own version... The United States should form a national center for knowledge technology... The center we propose would be an expression and institutional embodiment of national will \[like NASA\].
+>
+> [@feigenbaumFifthGenerationArtificial1984, pages 261--269]
+
+The hardware developed, but there was no use for it. Parallel logic programming was difficult for the outside programmers, used to serial imperative programming. 
+
+And they were not the first to raise the alarm:
+
+> In January 1981, Professor [Arvind](https://en.wikipedia.org/wiki/Arvind_(computer_scientist)) of MIT returned from Tokyo with an early report on the Fifth Generation Project, the same report Feigenbaum had put in his "to read sometime" pile at Stanford a few months earlier. Arvind showed it to [Michael Dertouzos](https://en.wikipedia.org/wiki/Michael_Dertouzos), a professor and director of the MIT Laboratory for Computer Science. Dertouzos recollected in notes: "I panic. My colleagues are (way too) relaxed about it and tell me that I am over-reacting." One of the things that troubled Dertouzos was the similarities between the Japanese plan and long-range plans at MIT.
+>
+> [@feigenbaumFifthGenerationArtificial1984, pages 199]
+
+Partly as a result of this, multiple countries launched their own national AI projects,[^fgcs-list] the most notable of which was the [Strategic Computing Initiative](#sec-sci), funded by the ARPA -- I mean, DARPA at this point -- which would be much more successful.
+
+[^fgcs-list]: FGCS (Japan, 1982--1992), Alvey Programme (UK, 1984--1990), ESPRIT programs (Europe, 1983--1998), and the Strategic Computing Initiative (America, 1984--1993).
 
 ## Intelligence in the age of war machines
 
@@ -1918,7 +2079,7 @@ During the Cold War, the following technological factors of nuclear weapons dete
 2. Nuclear weapon is so much more powerful than non-nuclear weapons, that the only proportionate deterrence to a nuclear attack is another nuclear attack.
 3. First-strike capability is indistinguishable from second-strike capability.
 
-Because of (1) and (2), the only way to deter a nuclear first-strike was to threaten a nuclear second-strike. This is the [MAD](https://en.wikipedia.org/wiki/Mutual_assured_destruction) nuclear deterrence doctrine. Because deterrence requires enough bombs to survive a first-strike, both sides would rather build up more second-strike bombs than the other side's first-strike bombs. Because of (3), there aren't "second-strike bombs" vs "first-strike bombs", only bombs. Therefore, we have a positive feedback loop where both sides aim to have more bombs than the other -- the [nuclear arms race](https://en.wikipedia.org/wiki/Nuclear_arms_race). Because having too many bombs increases the chance of accidents, both sides are motivated to slow down the race. Thus the [ABM Treaty](https://en.wikipedia.org/wiki/Anti-Ballistic_Missile_Treaty), where both sides agree to *not* build many missile defense systems! This paradoxical treaty was designed to make both sides *more* vulnerable to second-strike, meaning that less bombs are needed to ensure second-strike capability.
+Because of (1) and (2), the only way to deter a nuclear first-strike was to threaten a nuclear second-strike. This is the [MAD](https://en.wikipedia.org/wiki/Mutual_assured_destruction) nuclear deterrence doctrine. Because deterrence requires enough bombs to survive a first-strike, both sides would rather build up more second-strike bombs than the other side's first-strike bombs. Because of (3), there aren't "second-strike bombs" vs "first-strike bombs", only bombs. Therefore, we have a positive feedback loop where both sides aim to have more bombs than the other -- the [nuclear arms race](https://en.wikipedia.org/wiki/Nuclear_arms_race). Because having too many bombs increases the chance of accidents, both sides are motivated to slow down the race. Thus the [ABM Treaty](https://en.wikipedia.org/wiki/Anti-Ballistic_Missile_Treaty), where both sides agree to *not* build many missile defense systems! This paradoxical treaty was designed to make both sides *more* vulnerable to second-strike, meaning that less bombs are needed to ensure second-strike capability, thus complementing the [SALT treaties](https://en.wikipedia.org/wiki/Strategic_Arms_Limitation_Talks) that limited the number of bombs.
 
 Both sides' nuclear technology went through several iterations, with increasing second-strike capability, and ended up with the "nuclear triad" of bombers that stay in the air 24/7, submarines hidden under the sea, and ICBMs hardened inside silos. Each of the three has different tradeoffs, necessitating all three to be maintained.
 
@@ -1934,7 +2095,7 @@ In the movie *Dr. Strangelove* (1964), nuclear deterrence was taken to its logic
 
 ### Intelligence
 
-The previous sections has made it clear that ARPA was (and is) everywhere behind AI developments since the 1960s. Though this essay is on logical AI, a brief detour about neural network is in order.
+The previous sections has made it clear that ARPA has been inevitable behind every AI development since the 1960s. Indeed, ARPA funded 75--95% of all AI projects during the 1960s [@guiceControversyStateLord1998]. Though this essay is on logical AI, a brief detour about neural network is in order.
 
 During the Cold War, intelligence, in the sense of intelligence-gathering and reconnaissance was a vital area of artificial intelligence. Some of the early neural networks, such as MINOS II, was explicitly built with an objective of scanning aerial photographs for interesting military targets like tanks. [@nilssonQuestArtificialIntelligence2009, pages 98--109] The CIA even [experimented with Rosenblatt's Mark I Perceptron machine](https://www.cia.gov/readingroom/document/cia-rdp78b04770a002300030027-6) for the same purpose [@irwinArtificialWorldsPerceptronic2024]. As an example, [@kanalRecognitionSystemDesign1964] describes a two-layered perceptron network, of type $\R^{N \times N} \to \{0, 1\}^{32\times 32} \to \{0, 1\}^{24} \to \{0, 1\}$. It works as follows:
 
@@ -1953,11 +2114,23 @@ During the Cold War, intelligence, in the sense of intelligence-gathering and re
 Images from [@kanalRecognitionSystemDesign1964].
 :::
 
-### Strategic Computing Project
+Neural networks (such as Minsky's [SNARC](https://en.wikipedia.org/wiki/Stochastic_Neural_Analog_Reinforcement_Calculator) and Rosenblatt's perceptrons) were funded by the Office of Naval Research (ONR) on the order of \$50K, while logical AI was funded by ARPA, whose contracts were on the order of \$500K. This made a real difference in the days of mainframes. [@guiceControversyStateLord1998] See my essay on the [*Perceptron Controversy*](https://yuxi-liu-wired.github.io/essays/posts/perceptron-controversy/) for details.
 
-The Strategic Computing Project (SCI) was named to resemble the [Strategic Defense Initiative](https://en.wikipedia.org/wiki/Strategic_Defense_Initiative), better known as "Star Wars". The SDI aimed to shoot down Soviet ICBMs during their spaceflight with tools including lasers, particle-beam weapons, and ground and space-based missile systems. 
+### Strategic Computing Project {#sec-sci}
+
+The [Strategic Defense Initiative](https://en.wikipedia.org/wiki/Strategic_Defense_Initiative) (SDI), better known as "Star Wars", was announced by President Reagan in 1983. It aimed to shoot down Soviet ICBMs during their spaceflight with tools including lasers, particle-beam weapons, and ground and space-based missile systems. If this was successful, it would cripple Soviet second-strike capability. Although President Reagan claimed the project aimed to make nuclear weapons "impotent and obsolete", it would be incredible, even [idealists](https://en.wikipedia.org/wiki/Idealism_in_international_relations), to suppose that other countries would believe it. Indeed, the Soviet Premier Andropov immediately condemned this, suspecting it was in fact a plan to make America the only nuclear power immune to a second-strike and become the global hegemon.
+
+Though the SDI did not bring the Star Wars, or make plans for AI, it had an indirect effect on intelligence in the age of war machines. In the same year, the Strategic Computing Project (SCI) began, and its funding was facilitated by the SDI, as well as the Japan scare from the Fifth Generation.
+
+![The SCI plan according to the bureaucrats. Yawn.]
+
+### Computing
+
+
 
 ### Self-driving
+
+Navlab
 
 ### Expert systems
 
@@ -2053,7 +2226,7 @@ Chomsky made a multi-pronged rejection of empiricism:
 * Colorless green ideas sleep furiously: Because there are many meaningless but grammatical sentences, grammar is independent of meaning. Thus, grammar, unlike meaning, can be a small closed system that fits inside a brain at birth.
 * Probability is meaningless: A sentence is either grammatical or not. THere is no in-between. Therefore it is meaningless to talk about the "probability of a sentence" like the empiricists.
 * Impersonal abstraction: Real humans can make mistakes, but language itself makes no mistake. A tired human might say "Ideas sleep furiously." is ungrammatical 10\% of the times, but the English language *itself* would always say it is grammatical. Thus, the probabilities measured from real human behavior is meaningless for theoretical linguistics.
-* Competence, not performance: Even if an empirical model of language, like the HMM, works 99% of the times, a single counterexample disproves it. To work "most of the times" is capacity. To work all the time is adequacy. Linguistic science is about adequacy, and capacity is sufficient only for engineering. Competence either/or, while performance is usually/rarely. Linguistics is about competence, and performance is left for the psychologists and engineers.
+* Competence, not performance: Even if an empirical model of language, like the HMM, works 99% of the times, a single counterexample disproves it. To work "most of the times" is performance. To work all the time is competence. Linguistic science is about competence, and performance is sufficient only for engineering. Competence either/or, while performance is usually/rarely. Linguistics is about competence, and performance is left for the psychologists and engineers.
 
 The 60 years afterwards have been one long struggle against empiricism along these lines. For example, he had repeatedly simplified the Universal Grammar down to the minimalist core, so that it could possibly fit inside a single gene that appeared once in the evolution of humans, "switching on" language for humans and no other species. And by "60 years", I meant it. He was nothing if not consistent:
 
@@ -2113,7 +2286,34 @@ The influence of Chomsky had been immense, both in linguistics and psychology. C
 |                           | Who did what to whom             | Noisy Channel Applications       |
 : [@churchIntroductionSpecialIssue1993, Table 5]
 
+
+Outside of linguistics and abstract science, Chomskyan ideas appeared as "[structuralism](https://en.wikipedia.org/wiki/Structuralism)" of [Claude Lévi-Strauss](https://en.wikipedia.org/wiki/Claude_L%C3%A9vi-Strauss). As an example, the Kareira society was divided into 4 sections: Banaka (0), Karimera (1), Burung (2), Palyeri (3). A Banaka man can only marry a Palyeri woman, and their children will be Karimera. In total, we have a table:
+
+| father | mother | child |
+|---|---|---|
+| 0 | 3 | 1 |
+| 1 | 2 | 0 |
+| 2 | 1 | 3 |
+| 3 | 0 | 2 |
+: Kareira kinship system
+
+This structure has the following good properties:
+- Exogamy.
+- Equal women exchange. Sections 0 and 3 exchange women. Sections 1 and 2 exchange women.
+- Equal child exchange. Sections 1 and 0 exchange children in the sense that a man in section 1 would have children in section 0, and vice versa. The same for 2 and 3.
+- Stable over time.
+
+Lévi-Strauss found many such recurring structures across human societies, and proposed to analyze human mythologies with the same method as well (a pinnacle example was [*The Hero with a Thousand Faces*](https://en.wikipedia.org/wiki/The_Hero_with_a_Thousand_Faces) which literally proposed a single structure for all human mythologies). This then got picked up by sociologists and commentators, followed by the "post-structuralists" who had even less to contribute to AI than Dreyfus.
+
 ### The Sub-symbolic Hypothesis
+
+> ... we had two major misconceptions: first, that learning is a *problem* rather than a *solution*. If back at the beginning you asked an AI researcher what the major problem areas in the field were, they would have listed computer vision, inference, knowledge representation, understanding language, ... and learning. You would no more set out to translate between languages by writing a program to learn how to do so than you would create a rocket that learned to go to the moon. When put that way, it seems like common sense, but it is wrong. Our second big mistake was our allegiance to the physical symbol hypothesis... Newell and Simon were the first to state this explicitly, but ... virtually everyone believed it at that time--certainly your author.
+>
+> [@charniakAIIntellectualHistory2024]
+
+> AI research has foundered in a sea of incrementalism. No one is quite sure where to go save improving on earlier demonstrations of techniques in symbolic manipulation of ungrounded representations. At the same time, small AI companies are folding, and attendance is well down at national and international AI conferences... the *it symbol system hypothesis* upon which *it classical AI* is based is fundamentally flawed... Traditional AI has tried to demonstrate sophisticated reasoning in rather impoverished domains. The hope is that the ideas used will generalize to robust behavior in more complex domains. Nouvelle AI tries to demonstrate less sophisticated tasks operating robustly in noisy complex domains. The hope is that the ideas used will generalize to more sophisticated tasks.
+>
+> [@brooksElephantsDonPlay1990]
 
 The dominance of the Symbolic Hypothesis was never complete. There were often objections to it.
 
