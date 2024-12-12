@@ -746,8 +746,6 @@ Indeed, though the word "rules" appears over 200 times in the review, the above 
 
 Klatt had been progressively losing his voice from thyroid cancer, and died in 1988. His voice was the template for "Perfect Paul" in DECTalk, which was the voice of Stephen Hawking, which he kept using even after better TTS systems were available. [@medeirosHowIntelGave2015]
 
-## Vision
-
 ## Logic and logistics
 
 ### Planning
@@ -2012,7 +2010,9 @@ The project saw the future, and it would be parallel logic programming, for whic
 
 Vague, but that is as good an explanation as I could find.
 
-In terms of hardware, they planned for parallel computers that runs Prolog operations natively, aiming to eventually reach a target of $10^9 \;\mathrm{LIPS}$, with VLSI chips of $10^7$ transistors per chip. Since in 1982, a standard computer could perform Prolog operations at $10^5 \;\mathrm{LIPS}$, this implied they planned for a doubling time of 9 months. [@bramerFifthGenerationAnnotated1984, page 6]
+In terms of hardware, they planned for parallel computers that runs Prolog operations natively, aiming to eventually reach a target of $10^9 \;\mathrm{LIPS}$ -- 1 giga logical inferences per second.[^lips-definition] They also aimed for VLSI chips of $10^7$ transistors per chip. Since in 1982, a standard computer could perform Prolog operations at $10^5 \;\mathrm{LIPS}$, this implied they planned for a doubling time of 9 months. [@bramerFifthGenerationAnnotated1984, page 6]
+
+[^lips-definition]: A "logical inference" is technically defined as any Prolog procedure call, but can be thought of as any atomic logical operation, such as performing one *modus ponens*, one variable substitution, etc.
 
 They aimed to develop multiple AI systems, each of which would be an expert system written in their version of Prolog. The inference engine would be a standard logic programming system, similar to the planner used in Shakey. The knowledge base was the key. It would be written in a "knowledge-base management software using relational algebra", which probably meant a [relational database](https://en.wikipedia.org/wiki/Relational_database). They planned that, at the end of the project, they would have the software and the hardware to handle expert systems with $10^4$ rules and $10^4$ objects, with "semi-automated" knowledge acquisition. [@warrenViewFifthGeneration1982; @feigenbaumJapaneseNationalFifth1993]
 
@@ -2027,11 +2027,7 @@ Specific plans they had for AI systems [@feigenbaumJapaneseNationalFifth1993; @m
 
 ### Autopsy
 
-> ICOT set out to build a machine that could provide upwards of a 100 MLIPs of 'symbol crunching' power. However, there was no application whose clear need for such horsepower drove the development and whose success (or failure) would serve as the tangible evaluation of the effort. From our current perspective it is clear that there could not have been such an application, since any such application would necessarily have had to contain very large stores of knowledge; but in 1982 when the project began, there were no techniques available for capturing and managing such a large knowledge base. Even today, after more than a decade of research into knowledge representation, we have only a small base of experience and very few tested techniques for this task.
->
-> [@feigenbaumJapaneseNationalFifth1993]
-
-After 10 years and \$400M, the FGCS wrapped up in 1992. The MITI announced that it would give away the developed software for free.
+After 10 years and \$400M, the FGCS wrapped up in 1992. The MITI announced that it would give away the developed software for free. Takers were few among academia, and none among business. Even Feigenbaum regarded it as a failure, when he had motivation to present it in the best light, as the unofficial face of the expert system approach.
 
 > The problem for Japan is that the computer industry shifted so rapidly that the technological path the Fifth Generation took -- which seemed a wise choice in 1982 -- turned out to be at odds with the computer industry's direction by 1992. In a sense, Japan's ability to stay the course in pursuit of a long-term payoff -- usually considered one of the country's strongest assets -- turned into a liability. A similar challenge for Japan may now be arising in high-definition television. Japan's HDTV system, which has been in development for two decades, is now coming to market just as some engineers believe that a major shift to digital television technology will make the Japanese analog approach obsolete.
 > 
@@ -2043,13 +2039,15 @@ After 10 years and \$400M, the FGCS wrapped up in 1992. The MITI announced that 
 > 
 > [@feigenbaumJapaneseNationalFifth1993, table 2]
 
-> The PIM hardware seems destined for the same fate. The processing elements in the PIMs have cycle times no better than 60 ns; even assuming that the features which provide direct support for XLI offer a speedup factor of 3, this leaves the uniprocessor performance lagging behind the best of today's conventional microprocessors. Both HP and DEC have announced the imminent introduction of uniprocessors of between 100 and 200 MIPS. The interconnection networks in the PIMs do not seem to constitute an advance over those explored in other parallel systems. Finally, the PIMs are essentially 'integer machines'; they do not have floating point hardware. While the interconnection networks of the PIMs have reasonable performance, this performance is comparable to that of commercial parallel machines in the US such as the CM-5.
-> 
-> But these days, few people want specialized computers for artificial intelligence, preferring powerful general-purpose machines like those made by Sun Microsystems Inc., a fast-growing Silicon Valley company that did not exist when the Fifth Generation Project was conceived. And a host of scrappy American companies have sprung up to sell massively parallel computers with tens of thousands of processors, far more than the Fifth Generation machines.
->
-> [@pollackFifthGenerationBecame1992]
+On the software side, they had 100 MLIPS machines, but no expert system to run with. Like the American expert systems companies, the FGCS researchers found that knowledge bases simply did not reach up to that scale.
 
-THe fastest systems they built were the PIM/p with 512 processors at peak performance 156 MLIPS, and PIM/m with 256 processors at 153 MLIPS. Both had clock frequency 16 MHz. They sticked to the original estimate, made at the start of the project, that their logic-specific chips could run logical inferences at approximately 100 times faster than a general computer. [^pim-p-citation]
+> ICOT set out to build a machine that could provide upwards of a 100 MLIPs of 'symbol crunching' power. However, there was no application whose clear need for such horsepower drove the development and whose success (or failure) would serve as the tangible evaluation of the effort. From our current perspective it is clear that there could not have been such an application, since any such application would necessarily have had to contain very large stores of knowledge; but in 1982 when the project began, there were no techniques available for capturing and managing such a large knowledge base. Even today, after more than a decade of research into knowledge representation, we have only a small base of experience and very few tested techniques for this task.
+>
+> [@feigenbaumJapaneseNationalFifth1993]
+
+On the hardware side, the fastest systems they built were the PIM/p with 512 processors at peak performance 156 MLIPS, and PIM/m with 256 processors at 153 MLIPS. Both had clock frequency 16 MHz. They sticked to the original estimate, made at the start of the project, that their logic-specific chips could run logical inferences at approximately 100 times faster than a general computer. [^pim-p-citation]
+
+![The PIM/p computer with 512 processors. [Source](https://www.ueda.info.waseda.ac.jp/AITEC_ICOT_ARCHIVES/ICOT/Museum/MACHINE/pim-spec-J.html)](figure/PIM-P-512.jpg)
 
 [^pim-p-citation]: 
     > たとえば、512 台のプロセッサを持つ PIM モデル p ではピーク性能で156 MLIPS (1秒間に1億5600万回の推論処理を行なう速度)、256 台のプロセッサを持 つモデル m では153 MLIPSという、汎用大型機の約100倍に当たる世界最高の 推論処理速度を達成している。実際の応用システムでの利用でも、アルゴリズ ムの工夫とあいまって、512 台にいたるまでほぼプロセッサの台数に比例する並 列処理効果を得ている。
@@ -2059,7 +2057,7 @@ THe fastest systems they built were the PIM/p with 512 processors at peak perfor
     [Top Page for FGCS Museum: ５つのＰＩＭの概要](https://www.ueda.info.waseda.ac.jp/AITEC_ICOT_ARCHIVES/ICOT/Museum/MACHINE/pim-spec-J.html)
 
 
-![The LIPS of computers produced by the FGCS at its ending in 1992, with forecasts up to 2000. [@FGCS_scaling_plot.png, page 27, figure 2]](figure/FGCS_scaling_plot.png)
+![The LIPS of computers produced by the FGCS at its ending in 1992, with forecasts up to 2000. [@furukawaFifthGenerationComputer1993, figure 7]](figure/FGCS_scaling_plot.png)
 
 ::: {.callout-note title="1 LIPS = 100 OPS?" collapse="true" }
 
@@ -2072,6 +2070,16 @@ As far as I see, they probably just got that number by running some Prolog progr
 :::
 
 Now, assuming that 1 LIPS = 100 OPS, then to reach 1 GLIPS on a conventional computer would require 100 GFLOPS. Now, according to [TOP500 list of 1993-11](https://www.top500.org/lists/top500/1993/11/), the second-fastest computer in the world was a 1024-core [Connection Machine](https://en.wikipedia.org/wiki/Connection_Machine)-5 (developed by the [Strategic Computing Initiative](#sec-sci)), which ran at 60 GFLOPS. So just by making a parallel computer with 1000 standard floating-point processors, they made something that reached the Japanese target of 1 GLIP/sec, without ever dealing with specialized hardware! Yet another example of specialized hardware overtaken by general computers, like Rosenblatt's [Tobermory](https://yuxi-liu-wired.github.io/essays/posts/perceptron-controversy/index.html#the-perceptron-controversy-1960s), and the [Lisp machines](https://en.wikipedia.org/wiki/Lisp_machine).
+
+> The PIM hardware seems destined for the same fate. The processing elements in the PIMs have cycle times no better than 60 ns \[= 16 MHz\]... this leaves the uniprocessor performance lagging behind the best of today's conventional microprocessors \[like [i486 at 50 MHz](https://en.wikipedia.org/wiki/I486)\]. Both HP and DEC have announced the imminent introduction of uniprocessors of between 100 and 200 MIPS. The interconnection networks in the PIMs do not seem to constitute an advance over those explored in other parallel systems. Finally, the PIMs ... do not have floating point hardware. While the interconnection networks of the PIMs have reasonable performance, this performance is comparable to that of commercial parallel machines in the US such as the CM-5.
+> 
+> But these days, few people want specialized computers for artificial intelligence, preferring powerful general-purpose machines like those made by Sun Microsystems... And a host of scrappy American companies have sprung up to sell massively parallel computers with tens of thousands of processors, far more than the Fifth Generation machines.
+>
+> [@pollackFifthGenerationBecame1992]
+
+Optimistically, MITI launched two more projects at the end of FGCS, with even more vague names ["Real World Computing Partnership"](https://web.archive.org/web/19961220074411/http://rwcp.or.jp/) and "Sixth Generation Computing Project" on neural network computers with ≥10,000 optical-computing processors. [@crossJapaneseClashComputers1990][^japanese-vagueness]
+
+[^japanese-vagueness]: Japanese bureaucracies seem to be particularly vague, even in scientific projects like the FGCS. In *Japan as Number One* (1979), Vogel mentioned the same thing about the vagueness in government policy plans. He argued it was because of ["Nemawashi"](https://en.wikipedia.org/wiki/Nemawashi), where each plan must offend nobody and everyone gets a "fair share".
 
 Though the FGCS project was a failure, and Japan no longered mattered in AI since its end, it had an indirect effect. Feigenbaum and the long-time AI journalist [Pamela McCorduck](https://en.wikipedia.org/wiki/Pamela_McCorduck) coauthored a book [@feigenbaumFifthGenerationArtificial1984] that became the hottest book inside the Beltway. Ominously, they warned of imminent Japanese domination:
 
@@ -2087,7 +2095,7 @@ And they were not the first to raise the alarm:
 >
 > [@feigenbaumFifthGenerationArtificial1984, pages 199]
 
-Partly as a result of this, multiple countries launched their own national AI projects,[^fgcs-list] the most notable of which was the [Strategic Computing Initiative](#sec-sci), funded by the ARPA -- I mean, DARPA at this point -- which would be much more successful.
+Partly as a result of this, multiple countries launched their own national AI projects,[^fgcs-list] the most notable of which was the [Strategic Computing Initiative](#sec-sci), funded by the DARPA (*they really are everywhere*), which would be much more successful.
 
 [^fgcs-list]: FGCS (Japan, 1982--1992), Alvey Programme (UK, 1984--1990), ESPRIT programs (Europe, 1983--1998), and the Strategic Computing Initiative (America, 1984--1993).
 
@@ -2135,7 +2143,7 @@ In the movie *Dr. Strangelove* (1964), nuclear deterrence was taken to its logic
 
 [^dead-hand]: I was going to write something about the [Dead Hand](https://en.wikipedia.org/wiki/Dead_Hand) system, but after a brief search, the available information looks too much like conspiracy theory and rumors, so I will not.
 
-### Intelligence
+### That tank thing again
 
 The previous sections has made it clear that ARPA has been inevitable behind every AI development since the 1960s. Indeed, ARPA funded 75--95% of all AI projects during the 1960s [@guiceControversyStateLord1998]. Though this essay is on logical AI, a brief detour about neural network is in order.
 
@@ -2172,13 +2180,42 @@ It's war. America could not lose the AI race. The congress approved the SCI, a 1
 
 ![The SCI plan according to the bureaucrats. Yawn. [@rolandStrategicComputingDARPA2002, pages 77--78], which were cleaned up from [@darpaStrategicComputingNew1983, figure 4.1, figure 4.2]](figure/SCI_plan.png)
 
+Other than the external reason of keeping up with the Japanese, there was an internal reason of SCI: The technology demands it. A large wave of computing is coming, and America could surf the wave into the age of machine intelligence, with the guidance of DARPA.
+
+> In the early 1980s, advances in microelectronics design and manufacturing held out the promise of greatly improved computer chips. New concepts of computer architecture could conceivably exploit these chips in machines of unprecedented speed and power. Such computers might finally have the muscle necessary to achieve artificial intelligence -- machine capabilities comparable to those of human thought. This image of Strategic Computing credits the technology itself with driving the program. Ripe technology imposed an imperative to act.
+>
+> [@rolandStrategicComputingDARPA2002]
+
+The SCI plan, like computer architecture, is a stack:
+
+* Military applications
+* General AI technologies: Speech recognition, natural language understanding, computer vision, and general expert systems.
+* Computer architecture: Massively parallel computers (≥1000 processors at 1 teraFLOPS).
+* Hardware: Better VLSI chips.
+
 The project has 3 application areas: the "Battlem Management System" for the Navy, "Pilot's Associate" for the Air Force, and "Autonomous Land Vehicle" (ALV) for the Army. To develop these areas, it would develop 4 technologies: speech (for Pilot's Associate and Battle Management), language (for Battle Management), vision (for ALV), and general expert systems (for all). It would also develop massively parallel (≥1000 processors) teraFLOPS computers as its own bet on the fifth generation of computing.
 
 How did it go? Spoiler: massively parallel computers at the teraOPS level succeeded, language abandoned, vision failed, self-driving cars improved but failed to reach the promise, generic expert systems failed, a few specific expert systems worked.
 
-### Computing
+### Massively parallel
 
-> Many veterans and supporters of the program believe that it was created in response to a compelling technological opportunity. In the early 1980s, advances in microelectronics design and manufacturing held out the promise of greatly improved computer chips. New concepts of computer architecture could conceivably exploit these chips in machines of unprecedented speed and power. Such computers might finally have the muscle necessary to achieve artificial intelligence -- machine capabilities comparable to those of human thought.
+> Based on today's results and rationales, a petaflop before its time is as bad an investment as the teraflop before its time. Evolution and market forces are just fine... if we will just let them work.
+>
+> --- [Gordon Bell](https://en.wikipedia.org/wiki/Gordon_Bell) invoking the [Gods of Straight Lines](https://slatestarcodex.com/2018/11/26/is-science-slowing-down-2/) in 1992 [@bellUltracomputersTeraflopIts1992]
+
+The planners recognized that the most demanding part of AI would be real-time computer vision, so SCI supported three types of massively parallel computers in the hopes that at least one of these would work for vision AI: [SIMD](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data) ([Connection Machines](https://en.wikipedia.org/wiki/Connection_Machine)), [MIMD](https://en.wikipedia.org/wiki/Multiple_instruction,_multiple_data) (the [BBN Butterfly](https://en.wikipedia.org/wiki/BBN_Butterfly)), [systolic array](https://en.wikipedia.org/wiki/Systolic_array) (the [Warp](https://en.wikipedia.org/wiki/WARP_(systolic_array))). Each of these was applied to "low-level vision", meaning that they convert the incoming stream of images into a featurized stream for higher-level logical processing [@weemsParallelProcessingDARPA1991]. Indeed, they estimated that to reach the final objective of "Reconnaissance in a dynamically changing environment. Ability to recognize targets and threats.", they needed a computer that ran at 1 teraOPS with 100 GB of memory.[^teraops-vision] Compared with this, they estimated that speech understanding required just 20 GLIPS (~1 teraOPS if we go by 1 LIPS = 50 OPS), and natural language understanding required a tiny 1 GLIPS. [@stefikStrategicComputingDARPA1985] There is also a vaguer objective of expert systems running 30,000 rules and firing 72,000 rules per second, which implies they expected each rule-firing to trigger 15 logical inferences on average.
+
+[^teraops-vision]: Interestingly, [AlexNet](https://en.wikipedia.org/wiki/AlexNet) ran on two Nvidia GTX 580 with theoretical peak performance 1.6 TFLOPS. In [*When will computer hardware match the human brain?*](https://yuxi-liu-wired.github.io/docs/posts/1998-hans-moravec/), Hans Moravec argued that 10 MIPS for 1 hour is necessary for finding 3D objects in a cluttered bin well enough to pick the objects up, that is, to perform the [bin picking](https://en.wikipedia.org/wiki/Bin_picking) task. This translates to 36 GFLOPS for real-time vision. The 2022 SOTA vision system `OpenAI CLIP ViT-L/14` requires 150 GFLOP per forward pass, according to the formula from [Casson](https://www.adamcasson.com/posts/transformer-flops), so it requires 4 TFLOPS for real-time vision at 24 fps. All in all, the 1 TFLOPS estimate was so remarkably accurate for 1982.
+
+> Compared to existing expert systems running 2,000 rules at 50--100 rules per second, SCI promised" multiple cooperating expert systems with planning capability" running 30,000 rules firing at 12,000 rules per second and six times real time.
+>
+> [@rolandStrategicComputingDARPA2002, page 195]
+
+The previous scaling regime for supercomuting was Seymour Cray's crazy computers that pushed the clock rate to the limit. The Cray-1 (1972) had a single CPU at 80 MHz, and with pipeline parallelism could reach 240 MFLOPS. Since Cray thought silicon had reached the clock rate limit, he picked gallium arsenide for the Cray-3. The plan was to produce a system with 64 CPUs each capable of 1 GFLOPS.
+
+The main rationale for massively parallel, distributed memory was two. One, low-level vision tasks, such as edge detection, are intrinsically local tasks. One does not need a Cray-level crazy CPU to run it, but can simply use many cheap slow chips running in parallel accessing local memories. This is particularly clear for Connection Machines, where each chip is a 1-bit processor and processes over its own RAM, and mostly communicates with just the neighbors.
+
+THe 100 GB storage requirement was fairly easy, and it was simply a matter of scaling up the I/O speed and decreasing price. Connection Machines were shipped with [DataVaults](https://en.wikipedia.org/wiki/DataVault), which had up to 80 GB and I/O speed 320 MB/s.
 
 Near the end of SCI, computers were within 10x of the teraFLOPS goal. Congress approved the [High Performance Computing Act of 1991](https://en.wikipedia.org/wiki/High_Performance_Computing_Act_of_1991) to fund the development of Internet infrastructure and more massively parallel computers -- rebranded as "high performance computing".
 
@@ -2188,23 +2225,21 @@ Near the end of SCI, computers were within 10x of the teraFLOPS goal. Congress a
 
 ![Progress towards the teraFLOPS computer. [@bellUltracomputersTeraflopIts1992, figure 1]](figure/Bell_1992_teraOPS.png)
 
-The desired "1000 core computer" did come in 1991 as CM-5 at about 60 GFLOP/sec, 4300 FLOPS/\$ [@bellUltracomputersTeraflopIts1992], and a little late on schedule. The first teraFLOPS computer, [ASCI Red](https://en.wikipedia.org/wiki/ASCI_Red), arrived in 1996, with 9298 CPUs.[^asci-red] It was designed for simulating nuclear bomb tests.
+The desired "1000 core computer" did come in 1991 as CM-5 at about 60 GFLOP/sec, 4300 FLOPS/\$ [@bellUltracomputersTeraflopIts1992], and a little late on schedule. The first teraFLOPS computer, [ASCI Red](https://en.wikipedia.org/wiki/ASCI_Red), arrived in 1996, with 9298 CPUs.[^asci-red] It was designed for simulating nuclear bomb tests. Indeed, since then 1993, almost all supercomputers in the world were massively parallel, as single-chip performance could not scale as fast as just packing more chips.
 
-[^asci-red]: I couldn't find its price, but its successor ASCI White cost \$110 million, so if we assume ASCI Red cost \$100 million, then Gordon Bell's prediction that a teraFLOPS computer would sell for about \$40 million at 25 KFLOPS/\$, in 1995 was nearly right. [@bellUltracomputersTeraflopIts1992]
+[^asci-red]: I couldn't find its price, but its successor ASCI White cost \$110 million, so if we assume ASCI Red cost \$100 million, then Gordon Bell was nearly right to predict that a teraFLOPS computer would sell for about \$40 million at 25 KFLOPS/\$ in 1995. [@bellUltracomputersTeraflopIts1992]
 
-The previous paradigm of supercomputers were hitting the limits of what you can do with just ~10 cores and shared memory architectures. For example, the Cray-2, an exemplar of 1980s supercomputers, had only 8 processors. Experts saw that future supercomputers needed to be "massively parallel", i.e. over 1000 cores. Indeed, the Japanese FGCS project produced parallel computers of up to 512 cores for the same rationale.
+In short, the hardware delivered. The software mostly did not.
 
-> During the 1980s, as the demand for computing power increased, the trend to a much larger number of processors began, ushering in the age of massively parallel systems, with distributed memory and distributed file systems, given that shared memory architectures could not scale to a large number of processors.
-> 
-> Greg Astfalk (1996). Applications on Advanced Architecture Computers. SIAM. pp. 62.
-
-> Compared to existing expert systems running 2,000 rules at 50--100 rules per second, SCI promised" multiple cooperating expert systems with planning capability" running 30,000 rules firing at 12,000 rules per second and six times real time.
->
-> [@rolandStrategicComputingDARPA2002, page 195]
-
-Other than massively parallel computers, there were also a few odds and ends. At the start of the program, there were brief efforts to get [gallium arsenide (GaAs)](https://en.wikipedia.org/wiki/Gallium_arsenide) chips working. Compared to silicon, GaAs has a wider bandgap, thus it tolarates higher temperatures and generally more extreme conditions. It started a running joke that GaAs would be the big silicon-chip killer in the next 10 years. 40 years later, it has yet to happen.
+Other than massively parallel computers, there were also a few odds and ends. At the start of the program, there were brief efforts to get [gallium arsenide (GaAs)](https://en.wikipedia.org/wiki/Gallium_arsenide) chips working. Compared to silicon, GaAs has a wider bandgap, thus it tolarates higher temperatures and generally more extreme conditions. It started a running joke that GaAs would be the big silicon-chip killer in the next 10 years. 40 years later, it has yet to happen. And [Josephson junctions](https://en.wikipedia.org/wiki/Josephson_effect) were dropped from the final plan in 1983. 
 
 More relevant was [MOSIS](https://en.wikipedia.org/wiki/MOSIS), an on-demand chip fabrication service that was affordable enough even for university projects, especially university courses that taught the new [VLSI](https://en.wikipedia.org/wiki/Very-large-scale_integration) method -- just send in the design and get your final project back! Indeed, Feng-hsiung Hsu fabbed earlier iterations of chess chips by MOSIS.
+
+And the famed Lisp machines of Symbolics ended up with the same fate as the Japanese counterparts: why buy a specialized computer with a specialized language when you can wait a few years and get a general computer with a familiar language?
+
+> By early 1986 researchers were choosing general-purpose work stations, such as the Sun Sparc, over LISP machines. The specialized architectures and low-volume production of the latter machines kept their prices near \$50,000 to \$100,000. Even with SC discounts, these machines were still three to four times as expensive as the new work stations entering the marketplace.. The computing power now available to individual researchers was unimagined by most when SC was first conceived. Capabilities then available only through time-sharing on mainframes could now be delivered by an affordable work station.
+>
+> [@rolandStrategicComputingDARPA2002, pages 144--145]
 
 ### Pilot's associate
 
@@ -2234,7 +2269,7 @@ However, we know that the Navy did get what they wanted, and they did work.
 > 
 > [@rolandStrategicComputingDARPA2002, pages 265--266]
 
-Lest some, out of moral integrity, claim that mixing military and AI only hurts everyone, there was one definite success story in practice: DART.
+Lest some, out of moral integrity, claim that mixing military and AI only hurts everyone, there was one definite success story in practice: [DART](https://en.wikipedia.org/wiki/Dynamic_Analysis_and_Replanning_Tool).
 
 > [Desert Shield/Storm](https://en.wikipedia.org/wiki/Gulf_War) in 1990--91 \[... had\] no prior buildup of troops or supplies. The US Department of Defense sealifted 2.4 million tons of cargo during the first six months of Desert Shield -- more than four times the cargo carried across the English Channel to Normandy during the D-Day invasion... About halfway through the six months of Desert Shield, Kral installed the system at the [USTRANSCOM](https://en.wikipedia.org/wiki/United_States_Transportation_Command) transportation command and the [US European command](https://en.wikipedia.org/wiki/United_States_European_Command), where it was used for the duration.
 >
@@ -2330,7 +2365,24 @@ A team at Martin Marietta Denver Aerospace was responsible for putting together 
 
 ![How Alvin represents the road. [@turkVITSaVisionSystem1988, figure 4, figure 5]](figure/Alvin_scene_representation.png)
 
-Alvin's vision system was plagued by the same problem of logical AI: fragility. Every time a part upgrades, something breaks. Much of the high-level planning was written to deal with the fragility of the vision system. If the high-level planner detects that the scene model output by the vision system is probably nonsense, it simply discard it. The endless trouble encountered by Alvin deserves quotation in full:
+The Alvin vision system is simple. [@turkVideoRoadfollowingAutonomous1987] First, it uses a hand-picked[^alvin-hand-picked] vector of RGB values and dot-product it with every pixel in the image. If the result is greater than a threshold, then it's a road-pixel. Next, it fit the geometric model of a road so that as many road-pixels fall within the road model as possible. 
+
+[^alvin-hand-picked]:
+    Hand-picked?? Yes!
+
+    > The orientation of the separating plane is relatively consistent under given weather and camera conditions. It can often be chosen by hand at the beginning of a run and not modified thereafter. However, we have found that some segmentation failures have occurred... We have therefore developed a method to dynamically compute the optimal plane orientation based on data from the image currently being processed.
+    >
+    > [@turkVideoRoadfollowingAutonomous1987]
+
+```python
+def alvin_vision(image):
+    vector_rgb = np.array([..., ..., ...])
+    threshold = ...
+    road_pixel_coordinates = where(image @ vector_rgb > threshold)
+    return fit_road_shape(road_pixels)
+```
+
+As we might expect by looking at this janky setup, Alvin's vision system was plagued by the same problem of logical AI: fragility. Every time a part upgrades, something breaks. Much of the high-level planning was written to deal with the fragility of the vision system. If the high-level planner detects that the scene model output by the vision system is probably nonsense, it simply discard it. The endless trouble encountered by Alvin deserves quotation in full:
 
 > The vision system proved highly sensitive to environmental conditions--the quality of light, the location of the sun, shadows, and so on. The system worked differently from month to month, day to day, and even test to test. Sometimes it could accurately locate the edge of the road, sometimes not. The system reliably distinguished the pavement of the road from the dirt on the shoulders, but it was fooled by dirt that was tracked onto the roadway by heavy vehicles maneuvering around the ALV. In the fall, the sun, now lower in the sky, reflected brilliantly off the myriads of polished pebbles in the tarmac itself, producing glittering reflections that confused the vehicle. Shadows from trees presented problems, as did asphalt patches from the frequent road repairs made necessary by the harsh Colorado weather and the constant pounding of the eight-ton vehicle.
 > 
@@ -2366,17 +2418,25 @@ The aspiration of the speech recognition task was to allow pilots to speak to th
 >
 > [@rolandStrategicComputingDARPA2002, page 224]
 
-The aspiration of the vision task was to allow armored vehicles to drive through hostile environments autonomously. Among 
-
-TODO David Marr's theory
+The aspiration of the vision task was to allow armored vehicles to drive through hostile environments autonomously. The planners assumed that the correct computer vision architecture is hierarchical, in the style of David Marr's theory. Like Chomsky had done for language, Marr did for vision.
 
 > Developments in vision were far more disappointing. Part of the reason is that expectations at the beginning of SC were so high. Prior research on computer vision may be grouped in three eras. In the 1950s and 1960s techniques from signal processing and statistical decision theory produced important developments in areas such as Synthetic Aperture Radar, image-enhancement, and terrain-matching, cruise-missile guidance. These were essentially ad hoc inventions, innocent of a conceptual paradigm. 
 > 
 > In the late 1970s, when DARPA was funding an image-understanding program aimed at photo interpretation, a “signals-to-symbols” paradigm gained currency. It was, however, a theory of low-level, general-purpose vision, limited essentially to two-dimensional analysis. Optimism that this limitation might be breached grew in the late 1970s, culminating in the 1982 publication of David Marr’s pathbreaking study, *Vision*, just as the SC plan was taking shape.
 > 
-> As Noam Chomsky had done for speech in the 1950s, Marr refined a new paradigm based on modeling visual cues such as shading, stereopsis, texture, edges, and color to arrive at what he called a “2-D sketch.” His theoretical models, combined with the magnified computing power of SC’s new architectures, suggested to many researchers that high-level vision was within reach, that a computer would soon employ standard algorithms to distill visual and other signals into machine understanding of what it was “seeing.”
-> 
 > [@rolandStrategicComputingDARPA2002, page 212]
+
+In detail, a computer vision system [according to Marr](#fig-marr-cylinder) would take input images as 2D arrays, then compute some local low-level features over them, such as edge detection by Sobel filtering, optical flows, etc, to create a "primal sketch". This featurized 2D array would then be globally processed to create a "2.5D sketch". Aided by the 2.5D sketch, the higher levels would then construct a 3D model of the scene.
+
+In accordance to this, SCI had two benchmarks for computer vision. The first Image Understanding Benchmark tested for how fast the machine could do the primal sketches, with tasks like "Label connected components in a binary image" and "Hough transform of a binary image". The second one tested for how fast the machine could do the 2.5D sketches on simulated images of a 3D scene consisting of 2D rectangles of various sizes, brightnesses, orientations, and depths. [@weemsParallelProcessingDARPA1991; @weemsDARPAImageUnderstanding1991]
+
+Did it work?
+
+> \[By 1987, \] No longer did the program plan to achieve by 1993 a capability for “reconnaissance in a dynamically changing environment.” Neither did it claim to run programs in 1992 for 3-D vision at one trillion instructions per second or achieve “knowledge-based vision” on a parallel machine of one million processors running at one megahertz symbolic processing rate. Vision itself had proved to be a thorny problem, and the other technologies in the pyramid, such as architectures and expert systems, were not in place to break the impasse... Of the remaining realms of AI, vision proved the most disappointing. It fell farthest short of the goals originally planned, and it proved least responsive to the imposition of vastly increased computing power. Ma- chines could process the data coming in; they just couldn’t deploy algo- rithms that could interpret the images with human speed and accuracy.
+>
+> [@rolandStrategicComputingDARPA2002, page 213]
+
+The ALV program was cancelled in 1988-04.
 
 As for the general AI integration, the idea was similar to Shakey. Just like Shakey integrated the main logical AI techniques up to 1970, SCI called for integrating the main logical AI techniques up to 1980s. The SCI planners thought that the success of expert systems had shown that the time was ripe for a concerted push for a general expert system that combines the best ideas so far: blackboards (developed during the ARPA-funded speech understanding project), forward and reverse chaining, default reasoning, etc. This integration proved a failure, like the dream of a generally intelligent expert system. [@rolandStrategicComputingDARPA2002, page 243]
 
@@ -2414,7 +2474,7 @@ What is not said is equally revealing. In the lecture, there were over 100 menti
 
 > ... During the first decade or so of artificial intelligence research, the study of problem solving was almost synonymous with the study of search processes. From our characterization of problems and problem solving, it is easy to see why this was so. In fact, it might be asked whether it could be otherwise. ...  There is no mystery where the information that guided the search came from. We need not follow Plato in endowing the symbol system with a previous existence in which it already knew the solution. A moderately sophisticated generator-test system did the trick without invoking reincarnation.
 
-### Cognitivism
+### The Chomskyans
 
 There was a persistent legend about a certain psychologist, that he educated his own children with [skinner boxes](https://en.wikipedia.org/wiki/Operant_conditioning_chamber). While just a legend, the real B. F. Skinner did have a philosophy as radical as the legend suggests.
 
@@ -2495,7 +2555,7 @@ Now, when Chomsky took a look at GPT-4, all he saw was another "success as appro
 
 [^blurry-jpeg]: Some critics of recent large models, like Ted Chiang's "blurry jpeg of the Internet", and Emily Bender's "stochastic parrot", are analogous to the Chomskyan critique of "success as approximating unanalyzed data". And Gary Marcus has been a committed Chomskyan since the 1990s, so analyzing his criticisms of AI in the Chomskyan framework is left as an exercise for the reader. Indeed, they had been much less circumspect compared to Chomsky, since they had been predicting the imminent *empirical* failure of large models at performance because of their lack of *rational* competence.
 
-The influence of Chomsky had been immense, both in linguistics and psychology. Chomskyan linguistics is the theoretical foundation to early MT systems like Vanquois' (TODO). In psychology, his approach became "cognitivism" TODO
+The influence of Chomsky had been immense, both in linguistics and psychology. Chomskyan linguistics is the theoretical foundation to early MT systems like Vanquois'. In psychology, his approach became "cognitivism" or "cognitive psychology". And the AI of languages became the place where rationalism and empiricism approaches fought. 
 
 |                           | Rationalism                      | Empiricism                      |
 | ------------------------- | -------------------------------- | -------------------------------- |
@@ -2514,6 +2574,23 @@ The influence of Chomsky had been immense, both in linguistics and psychology. C
 |                           | Who did what to whom             | Noisy Channel Applications       |
 : [@churchIntroductionSpecialIssue1993, Table 5]
 
+Computer vision was also influenced by cognitivism, though the contest between rationalists and empiricists were less bitter. The purely rationalist approach ("scene analysis") essentially ended around 1980 as the visual world proved too statistical to handle. David Marr was an early representative of a more sophisticated rationalist approach, where the vision system analyzes the visual wordl in stages. At the lowest stage, many fast and cheap local algorithms are run over the input images, such as optical flow, edge detection, convolution, blurring, texture clustering, etc. This results in a "primal sketch".
+
+![Some primal sketches. [marrVisionComputationalInvestigation2010, figure 2.7]](figure/Marr_primal_sketch.png)
+
+At the next level, more complex and global calculations produce a "2.5D sketch" of the image, which is almost a 3D model of the scene.
+
+![A 2.5D sketch of a layered cake. [marrVisualInformationProcessing1980, figure 3.12]](figure/Marr_2_5D_sketch.png)
+
+The higher levels then use this sketch to construct a full 3D model of the scene (including the locations and orientations of the eyeballs themselves) which would have recreated the image. The 3D model does not have to be accurate. It can be quite crude, approximating a person with a few dozen cylinders. This was essentially by design, as Marr argued that the reason we can recognize object despite their changes in details is proof that we construct in our heads a logically structured 3D model of the we live in, structured like a language, which is independent of the precise shapes we see.
+
+::: {#fig-marr-cylinder layout-ncol=2}
+
+![Some animals made of pipecleaners. Marr used this example to show that the 3D model inside our heads is crude but effective, and probably made of a hierarchy of cylinder-like objects. [@marrVisualInformationProcessing1980, figure 7]](figure/Marr_pipecleaner_sculptures.png)
+
+![A 3D reconstruction of a human using a hierarchy of cylinders, structured like a syntax tree. [@bermudezCognitiveScienceIntroduction2020, figure 2.13]](figure/Marr_3D_reconstruction.png)
+
+:::
 
 Outside of linguistics and abstract science, Chomskyan ideas appeared as "[structuralism](https://en.wikipedia.org/wiki/Structuralism)" of [Claude Lévi-Strauss](https://en.wikipedia.org/wiki/Claude_L%C3%A9vi-Strauss). As an example, the Kareira society was divided into 4 sections: Banaka (0), Karimera (1), Burung (2), Palyeri (3). A Banaka man can only marry a Palyeri woman, and their children will be Karimera. In total, we have a table:
 
@@ -2532,6 +2609,8 @@ This structure has the following good properties:
 - Stable over time.
 
 Lévi-Strauss found many such recurring structures across human societies, and proposed to analyze human mythologies with the same method as well (a pinnacle example was [*The Hero with a Thousand Faces*](https://en.wikipedia.org/wiki/The_Hero_with_a_Thousand_Faces) which literally proposed a single structure for all human mythologies). This then got picked up by sociologists and commentators, followed by the "post-structuralists" who had even less to contribute to AI than Dreyfus.
+
+### David Marr
 
 ### The Sub-symbolic Hypothesis
 
