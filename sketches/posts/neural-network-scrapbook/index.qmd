@@ -45,6 +45,26 @@ Echos of "The last bits are deepest" from a very early paper on using a trigram 
 > 
 > We see this paper as a gauntlet thrown down before the computational linguistics community. The Brown Corpus is a widely available, standard corpus and the subject of much linguistic research. By predicting the corpus character by character, we obviate the need for a common agreement on a vocabulary. Given a model, the computations required to determine the cross-entropy are within reach for even a modest research budget. We hope by proposing this standard task to unleash a fury of competitive energy that will gradually corral the wild and unruly thing that we know the English language to be. [@brownEstimateUpperBound1992]
 
+## Making NN work is unglamorous
+
+State of the art in pattern recognition (G Nagy - Proceedings of the IEEE, 1968)
+
+> Practical considerations of computer economics often prevent the wholesale application of the methods mentioned above to real-life situations. The somewhat **undignified and haphazard** manipulation invoked in such cases to render the problem amenable to orderly solution is referred to variously as preprocessing, filtering or prefiltering, feature or measurement extraction, or dimensionality reduction.
+
+
+Troubling Trends in Machine Learning Scholarship (2018)
+
+> we focus on the following four patterns that appear to us to be trending in ML scholarship: (i) failure to distinguish between explanation and speculation; (ii) failure to identify the sources of empirical gains, e.g., emphasizing unnecessary modifications to neural architectures when gains actually stem from hyper-parameter tuning; (iii) mathiness: the use of mathematics that obfuscates or impresses rather than clarifies, e.g., by confusing technical and non-technical concepts; and (iv) misuse of language, e.g., by choosing terms of art with colloquial connotations or by overloading established technical terms
+> 
+> Drew McDermott [53] criticized a (mostly pre-ML) AI community in 1976 on a number of issues, including suggestive definitions and a failure to separate out speculation from technical claims. In 1988, Paul Cohen and Adele Howe [13] addressed an AI community that at that point “rarely publish[ed] performance evaluations” of their proposed algorithms and instead only described the systems. They suggested establishing sensible metrics for quantifying progress, and also analyzing “why does it work?”, “under what circumstances won’t it work?” and “have the design decisions been justified?”, questions that continue to resonate today. Finally, in 2009 Armstrong and co-authors [2] discussed the empirical rigor of information retrieval research, noting a tendency of papers to compare against the same weak baselines, producing a long series of improvements that did not accumulate to meaningful gains.
+
+[The Importance of Deconstruction (Kilian Weinberger, ML-Retrospectives at NeurIPS 2020)](https://slideslive.com/38938218/the-importance-of-deconstruction): Sometimes empirical gains come from "trivial" modifications.
+
+> And that's when we realized that the only reason we got these good results was not because of the error-correcting alpha codes, the stuff that we were so excited about. No, it was just that we used nearest neighbors and we did simple preprocessing. Actually, we used the cosine distance, which makes a lot of sense in this space. Because everything is positive (because you're after ReLU, or the error-correcting upper codes are all non-zero), they subtracted the mean, and we normalized the features. And if you do that, in itself, you, at the time, could beat every single paper that was out there—pretty much every paper that was out there. Now, that was so trivial that we didn't know how to write a paper about it, so we wrote a tech report about it, and we called it "SimpleShot". But it's a tech report I'm very proud of because, actually, it says something very, very profound. Despite that there's many, many, many papers—there were so many papers out there on few-shot learning—and we almost made the mistake of adding yet another paper to this telling people that they should use error-correcting alpha code applications. It would have been total nonsense, right? Instead, what we told the community was: "Actually, this problem is really, really easy. In fact, **most of the gains probably came from the fact that these newer networks got better and better, and people just had better features, and what classifier used afterward—all this few-shot learning—just use nearest neighbors**, right?" That's a really, really strong baseline. And the people—**the reason people probably didn't discover that earlier is because they didn't normalize the features properly and didn't subtract the mean**, which is something you have to do if you use cosine similarity. All right, so it turns out, at this point, you should hopefully see that there's some kind of system to this madness. Um, actually, most of my papers follow this kind of theme, right? That—but you basically come up with something complicated, then we try to deconstruct it. So in 2019, we had a paper on simplifying graph convolutional neural networks.
+
+[I fixed 8 bugs in Google's 6 trillion token Gemma model : r/singularity](https://www.reddit.com/r/singularity/comments/1bep10q/i_fixed_8_bugs_in_googles_6_trillion_token_gemma/) (2024-03-14)
+
+> Must add `<bos>` or else losses will be very high... `sqrt(3072)=55.4256` but `bfloat16` is `55.5`...  RoPE is sensitive to `y*(1/x)` vs `y/x`...  GELU should be approx `tanh` not exact. Adding all these changes allows the Log L2 Norm to decrease... from 10_000 to now 100 now - a factor of 100! The fixes are primarily for long sequence lengths.
 
 ## Neural networks want to work
 
@@ -67,6 +87,18 @@ Researchers at OpenAI (2018) reported that fixing RL bugs is as important as bet
 Around 2019, Gwern, Shawn Presser, and others, trained $512\times 512$ image generation models using the BigGAN architecture. However, they used [`compare_gan`](https://github.com/google/compare_gan), which had a multiply-by-zero bug. Somehow it still worked, but not well enough compared to the original [`BigGAN`](https://github.com/ajbrock/BigGAN-PyTorch).
 
 > Our primary goal was to train & release 512px BigGAN models on not just ImageNet but all the other datasets we had like anime datasets. The compare_gan BigGAN implementation turned out to have a subtle +1 gamma bug which stopped us from reaching results comparable to the model; while we beat our heads against the wall trying to figure out why it was working but not well enough (figuring it out far too late, after we had disbanded) ... "Neural nets want to work" -- even if they start out being effectively multiplied by zero. [@branwenGANsDidnFail2022]
+
+[The Adventure of the Errant Hardware](https://www.adept.ai/blog/sherlock-sdc) (2023-09-19). At Adept.ai, there are 3 kinds of loss curves:
+
+1. Down, then up. Training diverged, probably because the hyperparameters were set wrong.
+2. Suddenly, NaN. Probably a hardware problem. (In the days of training with fp16, it could also indicate numerical overflow. In even older days of training RNNs, it could also just indicate a training dynamics issue. Modern transformers, with proper initialization and normalization almost never go from completely fine to NaN in one step without a hardware problem.)
+3. Loss converges to a low but irreducible limit. Success? Or a silent error degrading performance?
+
+> One number amongst the billions involved in our equations might change a little, or even a lot, and we wouldn’t immediately notice. This Happens. ECC won’t save you. And it should scare you. This is a story of how we noticed this happening while training our models
+
+So they ran a training in "fully deterministic" mode several times, and found the loss differed after a while. ECC showed no errors, so it was a real silent hardware error.
+
+> We launched training jobs on every node (each using all the accelerators attached to that node), and waited for a node to produce a different result.  Within the first 1000 seconds a machine produced a different result! With more experience, we know now this was typical. If an error is going to occur, our experience is that it usually happens within 1000 seconds, rarely within 10000 seconds and almost never after 10000 seconds. Replacing the machine and restarting the job led to a job that ran for weeks without encountering a NaN.
 
 Personal story at the [Berkeley CS 285, *Deep Reinforcement Learning*, 2022 Fall](https://rail.eecs.berkeley.edu/deeprlcourse-fa22/).
 
