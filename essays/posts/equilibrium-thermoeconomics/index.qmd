@@ -51,17 +51,19 @@ The prerequisites are multivariate calculus and mathematical maturity. It's good
 * $N$: number of particles of a chemical species
 * $n$: number of moles of a chemical species
 * $\xi$: extent of reaction
-* $X$: "other properties that we are not concerned with". 
+* $X$: "other properties that we are not concerned with"
   * For example, with an ideal gas trapped in a copper box, its macroscopic state is determined by $U, N, V$. If we want to focus on $U$, then we can let $X = (N, V)$, and write $S = S(U, X)$. 
-  * Similarly, for a photon gas in a blackbody chamber, its macroscopic state is determined by $U, V$, since photons can be created and destroyed on the inner surface of the blackbody chamber. We can then write $S = S(U, X)$.
+  * Similarly, for a photon gas in a blackbody chamber, its macroscopic state is determined by $U, V$, since photons can be created and destroyed on the inner surface of the blackbody chamber. We can then write $S = S(U, X)$ if we are concerned only about how entropy changes with $U$, holding the other state constant. We can also write $S = S(V, X)$ vice versa.
 
-Thermodynamics is notorious for having too many partial differentials and coordinate changes. $(\partial_{x_1} f)_{x_1, x_2, \dots, x_n}$ means that we lay down a coordinate system defined by $x_1, \dots, x_n$, then calculate $\partial_{x_1}f$, fixing the other coordinates constant. In particular, $(\partial_{x_1} f)_{x_2, \dots, x_n}$ is likely different from $(\partial_{x_1} f)_{x_1, y_2, \dots, y_n}$.
+Thermodynamics is notorious for having too many partial differentials and coordinate changes. $(\partial_{x_1} f)_{x_1, x_2, \dots, x_n}$ means that we lay down a coordinate system defined by $x_1, \dots, x_n$, then calculate $\partial_{x_1}f$, fixing the other coordinates constant. In particular, $(\partial_{x_1} f)_{x_1, x_2, \dots, x_n}$ is likely different from $(\partial_{x_1} f)_{x_1, y_2, \dots, y_n}$.
 
 If in doubt, write down
 
 $$df = \sum_{i=1}^n (\partial_{x_i} f)_{x_1, \dots, x_n} dx_i$$
 
 and reason thenceforth.
+
+Sometimes people write $(\partial_{x_i} f)_{x_2, \dots, x_n}$ instead of $(\partial_{x_i} f)_{x_1, x_2, \dots, x_n}$ to save them one stroke of the pen. I try to avoid that, but be aware and beware.
 
 ### Further readings
 
@@ -1264,7 +1266,7 @@ Josiah Willard Gibbs was an otherworldly figure who thought of abstract surfaces
 
 Gibbs wrote his [hefty](https://en.wiktionary.org/wiki/hefty) [Heft](https://en.wiktionary.org/wiki/Heft#German) on thermodynamics, *On the Equilibrium of Heterogeneous Substances* (1876), to answer one question: why are some "heterogeneous substances" in equilibrium, while others not? Why, when we drop a block of salt into pure water, does the block of salt become smaller, but after a while, it stops getting smaller? His answer was always the same: heterogeneous substances are in equilibrium precisely when the entropy of the total system is maximized under constraint.
 
-Paul Samuelson is a decidedly worldly economist in a 20th century America, where economists are expected to dispense advice to presidents and contribute to the public discourse. Indeed, he did both, serving as an advisor to presidents Kennedy and Johnson, and publishing a [best-selling textbook in economics](https://en.wikipedia.org/wiki/Economics_(textbook)). Although unlike other worldly economists like Marx and Keynes, his economic achievements were highly mathematical.
+Paul Samuelson was a decidedly worldly economist in a 20th century America, where economists were expected to dispense advice to presidents and contribute to the public discourse. Indeed, he did both, serving as an advisor to presidents Kennedy and Johnson, and publishing a [best-selling textbook in economics](https://en.wikipedia.org/wiki/Economics_(textbook)). Although unlike other worldly economists like Marx and Keynes, his economic achievements were highly mathematical.
 
 Samuelson wrote his landmark book, *Foundations of Economic Analysis* (1947), to answer one question: Why are some economic systems in equilibrium, while others are not? Why, when we drop a block of agents into a market, do they buy and sell things, but after a while, they stop buying and selling? His answer was always the same: a crowd of economic agents is in equilibrium precisely when some parameter of the total economic system (which can be interpreted as utility, profit, etc, depending on context) is maximized under constraint.
 
@@ -1312,7 +1314,7 @@ $$
 \end{cases}
 $$
 
-which has exactly the same number of unknowns and equations, so in general it should have a solution.
+which has exactly the same number of unknowns and equations, so in general it should have at least one solution.
 
 The state space of the system has 2 dimensions: $n_{NO_2}$ and $n_{N_2 O_4}$. Starting at any point in the state space, the system can move on a single line, and it would equilibrate at exactly the point at which its Helmholtz energy is minimized. We can find the point of equilibrium by drawing the surfaces of constant Helmholtz free energy, and find the tangent point, as pictured.
 
@@ -1461,7 +1463,9 @@ The second meaning, that of $\int_0^1 (\partial_\xi G)_{T, P} d\xi$, can be inte
 
 ![The reaction chamber, demonstrating the concrete meaning of $\Delta G$. [@glasserCorrectUseHelmholtz2016, figure 2]](figure/glasser_2016_fig_2.png)
 
-For example, such a situation occurs approximately occurs in the Haber--Bosch industrial method for producing ammonia: $N_2 + 3H_2 \to 2NH_3$. In the HB method, room-temperature (25 $^\circ C$ ) and room-pressure (1 atm) nitrogen and hydrogen continuously pipe into the chamber, and ammonia is continuously extracted out of the chamber by cooling liquefaction. When the reaction chamber is operating at a stable state, the energy released per mole of reaction is $\Delta G = -32.8 \mathrm{~kJ/mol}$, as one can calculate from a table of chemical thermodynamics. With this setup, after $1\mathrm{~mol}$ of nitrogen is consumed and $2\mathrm{~mol}$ of ammonium is produced, a thermal energy of $32.8\mathrm{~kJ}$ is produced, and must be cooled off somehow [@glasserCorrectUseHelmholtz2016].
+For example, such a situation occurs approximately occurs in the [Haber--Bosch method](https://en.wikipedia.org/wiki/Haber_process) for producing ammonia on the industrial scale: $N_2 + 3H_2 \to 2NH_3$. In the HB method, room-temperature (25 $^\circ C$) and room-pressure (1 atm) nitrogen and hydrogen continuously pipe into the chamber, and ammonia is continuously extracted out of the chamber by cooling liquefaction. When the reaction chamber is operating at a stable state, the energy released per mole of reaction is $\Delta G = -32.8 \mathrm{~kJ/mol}$, as one can calculate from a table of chemical thermodynamics. With this setup, after $1\mathrm{~mol}$ of nitrogen is consumed and $2\mathrm{~mol}$ of ammonium is produced, a thermal energy of $32.8\mathrm{~kJ}$ is produced, and must be cooled off somehow [@glasserCorrectUseHelmholtz2016].
+
+Note that throughout this process, $\frac{dG}{d\xi} = 0$ always within the box, even as $\Delta G = -32.8 \mathrm{~kJ/mol}$ across the box. If $\frac{dG}{d\xi} \neq 0$, the reaction box would shake and shudder as it rushes towards equilibrium, and probably crack the walls. If $\Delta G \not\lt 0$, then all those giant [cooling towers](https://en.wikipedia.org/wiki/Cooling_tower) would have been pointless. Both $\frac{dG}{d\xi} = 0$ and $\Delta G = -32.8 \mathrm{~kJ/mol}$ are true, and the physical reality of an ammonia factory is the living smoking proof.
 
 ### Practical considerations
 
@@ -1994,11 +1998,11 @@ We assumed that the universe was made of two parts. The first was the empty spac
 
 ### From the Closed World to the Infinite Universe
 
-The search for other bubbles began in earliest antiquity. We had spun many fascinatingly alluring myths around these distant spaces and almost all of our literature dealt with the fantasy of other bubbles. We explored the rock in cylindrical "bubble ships". In front, the explorers chipped off solid rock, while in the back, the explorers compacted the rubble back to solid rock. In this way, the bubble ship moved through solid rock like a worm.
+The search for other bubbles began in earliest antiquity. We had spun many alluring myths around these distant spaces and almost all of our literature dealt with the fantasy of other bubbles. We explored the rock in cylindrical "bubble ships". In front, the explorers chipped off solid rock, while in the back, the explorers compacted the rubble back to solid rock. In this way, the bubble ship moved through solid rock like a worm.
 
-Every mission meant a bubble ship-sized pile of debris in our core space and we would have to wait for the ship to return before we could return those rocks into the wall. If the bubble ship failed to return, this small pile would mean another small piece of space lost to us forever. Soon, exploration was forbidden on pain of death by short-circuiting. Despite this, the urge for space drove many to secretly sail off illegally.
+Every mission meant a bubble-ship-sized pile of debris in our core space and we would have to wait for the ship to return before we could return those rocks into the wall. If the bubble ship failed to return, this small pile would mean another small piece of space lost to us forever. Soon, exploration was forbidden on pain of death by short-circuiting. Despite this, the urge for space drove many to secretly launch off illegally.
 
-One day, an illegally launched bubble ship returned after eight years of voyage. The ship had dug 200 km deep into the rock, a world record. It returned with rock samples labelled by depth. By measuring the mass of the rocks on an inertial balance, scientists discovered that the density of the rocks decreased. Encouraged by the discovery, legions of bubble ships journeyed forth in all directions. Penetrating deeper than ever, they returned with rock samples. It turned out that rock density decreased as a function of depth and was independent of direction.
+One day, an illegally launched bubble ship returned after eight years of voyage. The ship had dug 200 km deep into the rock, a world record. It returned with rock samples labelled by depth. By measuring the mass of the rocks on an [inertial balance](https://en.wikipedia.org/wiki/Inertial_balance), scientists discovered that the density of the rocks decreased. Encouraged by the discovery, legions of bubble ships shot off in all directions. Penetrating deeper than ever, they returned with rock samples. It turned out that rock density decreased as a function of depth and was independent of direction.
 
 It stood to reason that the density would eventually reach zero. Using the gathered data, scientists predicted that this would happen at a distance of about 40,000 km. This led to the Open Universe Theory, where our world is a hollow rock shell about 40,000 km thick, floating in infinite space.
 
@@ -2012,9 +2016,7 @@ Our cities floated in space, with no defensible geographical separations. Becaus
 
 A battleship was built to be very long and thin. Long, because the longer it is, the more volume it can contain. Thin, because the thinner it is, the smaller the area of rock that the ship would need to dig through, and the faster the ship would be able to move.
 
-When a ship encountered the enemy, its first course of action was to dig out a wide bow to present the largest possible front of weaponry to bear. It could also split out into multiple sections, like a nail-head with needles on top, to attack from multiple directions at once.
-
-Every warship could separate at will, transforming into multiple smaller ships. Ships could also combine to a single, giant ship. Whenever opposing battle groups met, the question whether to form up or split up was an object of profound tactical analysis.
+When a ship encountered the enemy, its first course of action was to dig out a wide bow, like a nail-head with needles on top, to concentrate firepower in the front. It could also segment into multiple small ships to swarm the enemy. Conversely, multiple ships could also combine to a single, giant ship. Whenever opposing sides met in battle, the question whether to form up or split up was an object of profound tactical analysis.
 
 Seismoscopes were invented to communicate through the layers of rock and to detect enemy ships like a radar. Directed seismic wave generators were used as weapons. The most sophisticated seismic communication devices could even transmit pictures.
 
@@ -2024,17 +2026,17 @@ Being outmatched by the warships launched by the World Government, the explorers
 
 After the battle, the Explorer Alliance gathered all the space left over by the battle into a single sphere 100 km in diameter. In this new space the Alliance declared its independence from the Bubble World. A constant stream of explorer ships left the core to join the Alliance, bringing considerable amounts of space with them. In this way, our world was split into two. The Alliance launched more ships, coming closer and closer to the predicted edge of the rock shell.
 
-Finally, a bubble ship *Helix* was the first to pierce the shell. However, back at home, we only received a strange sound before the seismic communication channel abruptly ended. It was the sound of tons upon tons of water bursting into the vacuum of the Helix. We had never come into contact with water before. The powerful electric current produced by short-circuiting life and equipment vaporized everything.
+Finally, a bubble ship *Helix* was the first to pierce the shell. However, back at home, we only received a strange sound before the seismic communication channel abruptly ended. It was the sound of tons upon tons of water bursting into the vacuum of the *Helix*. We had never come into contact with water before. The powerful electric current produced by short-circuiting life and equipment vaporized everything.
 
 Following this event, the Alliance sent more than a dozen bubble ships to fan out in many directions, but all met a similar fate when they reached that apparently impenetrable height. Bubble ships following these missions attempted to scan what lay above with their seismoscopes, but their instruments showed only mangled data, indicating that what lay above was neither space nor rock.
 
-These discoveries shook the Open Universe Theory to its core and academic circles began discussing the possibility of a new model. This new model stipulated that outside the rock shell was a void, which is inert when in contact with rock but upon contact with space, converts space into more void.
+These discoveries shook the Open Universe Theory to its core and academic circles began discussing the possibility of a new model. This new model stipulated that outside the rock shell is a void, which is inert when in contact with rock but upon contact with space, converts space into more void.
 
 To explore the void, a bubble ship very slowly approached the edge of the rock shell, and by a stroke of luck, its roof had a tiny crack that allowed water to shoot in. It took over an hour for the water to fully fill the ship, and in the mean time, data transmitted back to the Alliance world allowed scientists to confirm that it was not void, but liquid.
 
 Scientists had already predicted the theoretical possibility of liquids by condensed matter physics. Now, in those transmitted images, they clearly saw it with their own eyes. It took many lives, but eventually we developed the sealant technology to safely handle liquid.
 
-Finally, we launched an exploration submarine. It was encased in a hard spherical shell, placed in the center of an empty chamber under the ocean floor. The astronaut Gagarin was secured in a seat in the shell. The ceiling was pierced, and as water rushed in, the submarine floated, faster and faster, until it shot out of the ocean surface like a cannonball. Gagarin carefully opened a door on the shell and looked out upon the half-infinite water and half-infinite space. Up there in half-infinite space, tiny specks blinked.
+Finally, we launched an exploration submarine. It was encased in a hard spherical shell, placed in the center of an empty chamber under the ocean floor. The astronaut Gagarin was secured in a seat in the shell. The ceiling was pierced, and as water rushed in, the submarine floated, faster and faster, until it shot out of the ocean surface like a cannonball. Gagarin carefully opened a door on the shell and looked all around at the half-infinite water. Up there, in half-infinite space, tiny specks blinked.
 
 ### Classical stereodynamics
 
@@ -2065,6 +2067,8 @@ We say that a state $\vec q'$ is impermeably accessible from another state $\vec
 In any neighborhood of any point $\vec q$, there are points impermeably inaccessible from it.
 
 For any two points, $\vec q, \vec q'$, one of them is impermeably accessible from the other.
+
+By the Caradiodorian theorem, there exists an entropy function $S$ that maps a state to a real number, such that $\vec q'$ is impermeably accessible from $\vec q$ iff $S(\vec q') \geq S(\vec q)$.
 
 ### Karnot space engine
 
@@ -2160,11 +2164,13 @@ And there was room --
 
 <small>I don't think these appendices are any good, even though I had fun writing them. Thus, they are buried here to avoid wasting the readers' time.</small>
 
-The most common breakdown of extensivity occurs in gravitational systems. We can imagine a galaxy as a "gas", where each particle is a star. If we put two boxes of galaxy-gases side-by-side, we obtain a system whose total entropy is not equal to the sum of entropy of each box in isolation. This is a general lesson: if the entropy is nonextensive, then it is quite meaningless to even talk about the "entropy of the subsystem 1", just like it would talk about the "consciousness of the temporal lobe".
+The most common breakdown of extensivity occurs in gravitational systems. We can imagine a galaxy as a "gas", where each particle is a star. If we put two boxes of galaxy-gases side-by-side, we obtain a system whose total entropy is not equal to the sum of entropy of each box in isolation. This is a general lesson: if the entropy is nonextensive, then it is quite meaningless to even talk about the "entropy of the subsystem 1", just like it would talk about the "consciousness of the temporal lobe". In fact, a finite number of particles bounded within a ball of fixed radius can have unlimited phase space volume, and thus unlimited entropy.
 
-In fact, a finite number of particles bounded within a ball of fixed radius can have unlimited phase space volume, and thus unlimited entropy. In high school, I was studying physics with a standard textbook used in Chinese universities. It had a curious section on the second law of thermodynamics. I could not find it again, but the gist is as follows: The heat death of the universe is an unjustified implication of the second law, on two grounds. First, gravitational systems allow for unlimited entropy production. Second, it opposes the historical science of dialectical materialism, where every development creates its own contradiction and sublation, endlessly. I will always remember this comment, as the only intrusion of religious sentiment in an otherwise sober textbook.
+In high school, I was studying physics with a standard textbook used in Chinese universities. It had a curious section on the second law of thermodynamics. I could not find it again, but the gist is as follows: *The heat death of the universe is an unjustified implication of the second law, on two grounds. First, gravitational systems allow for unlimited entropy production. Second, it opposes the historical science of dialectical materialism, where every development creates its own contradiction and sublation, endlessly.*
 
-Actually, since we are on the topic of Marxism and science in China, here is another amusing anecdote: In 1981, there was a sci-fi novel *Dream of Comfort Country* (温柔之乡的梦, by 魏雅华). It was a cautionary story about a robotic wife, who was so obedient as to cause the protagonist degenerate into a tyrannical person. Just a standard pro-human-relationship morality play. During the [campaign against spiritual pollution](https://en.wikipedia.org/wiki/Campaign_against_spiritual_pollution) of 1983, sci-fi novels were denounced, causing a 15-year-long draught in sci-fi. The particular novel was denounced for the following reason: The robotic wives were supposedly reading all kinds of books -- then why didn't they read Marx's and Lenin's books? [@LiuZuiZaoDeYuZhouZuiHaoDeDiQiu2015, page 87]
+I will always remember this comment, as the only intrusion of religious sentiment in an otherwise sober textbook.
+
+Actually, since we are on the topic of Marxism and science in China, here is another amusing anecdote: In 1981, there was a sci-fi novel *Dream of Comfort Country* (温柔之乡的梦, by 魏雅华). It was a cautionary story about a robotic wife, who was so obedient as to cause the protagonist to degenerate into a tyrannical person. Yawn. Just a standard pro-human-relationship morality play? During the [campaign against spiritual pollution](https://en.wikipedia.org/wiki/Campaign_against_spiritual_pollution) of 1983, sci-fi novels were denounced, causing a 15-year-long draught in sci-fi. That particular novel was denounced for the following reason: The robotic wives were supposedly reading all kinds of books -- then why didn't they read Marx's and Lenin's books? [@LiuZuiZaoDeYuZhouZuiHaoDeDiQiu2015, page 87]
 
 Marx, for all his interest in changing the world instead of describing it, did attempt to mathematically model aspects of a capitalist economy, though it is only of historical interest now. Samuelson wrote several papers trying to update Marx's theory into modern mathematical language, and described Marx -- qua mathematical economist -- as a "minor post-Ricardian". [@bronfenbrennerSamuelsonMarxTheir1973]
 
@@ -2196,7 +2202,7 @@ And just like when I rediscovered [Wigner rotation](https://yuxi-liu-wired.githu
 
 As an enlightened one, I see classical thermodynamics as the worst-taught subject out of all of undergraduate physics education.[^physics-education] Imagine my surprise when I realized that it is not about the conservation of energy ("thermo-"), not about change ("-dynamics"), not about statistical mechanics, not about time... but just about constrained optimization, and nothing more than that! To really understand it, one must unlearn a lot of the nonsense. Indeed, I hope that with this essay I will have slain all those mistakes, which is why the essay is filled with warnings against this and that error.
 
-[^physics-education]: How long does it take for something as simple as constrained-optimization thermodynamics to be actually taught in undergraduate classes? It has been over 100 years since Caratheodory's thermodynamics. Why is it thermodynamics still taught so badly? It has been over 100 years since the geometry of Wigner rotation has been discovered. Why is it still taught so badly? It has been over 190 years since Hamiltonian mechanics and over 70 years since dynamical programming has clarified the last obscure points of it. Why is it still taught so badly? It seems to me that physics education is a broken institution that takes all its effort just to not get worse, let alone making any progress.
+[^physics-education]: How long does it take for something as simple as constrained-optimization thermodynamics to be actually taught in undergraduate classes? It has been over 100 years since Caratheodory's thermodynamics. Why is it thermodynamics still taught so badly? It has been over 100 years since the geometry of Wigner rotation has been discovered. Why is it still taught so badly? It has been over 190 years since Hamiltonian mechanics and over 70 years since dynamical programming has clarified the last obscure points of it. Why is it still taught so badly? It seems to me that physics education is a broken institution that takes all its effort just to not get worse, let alone progress.
 
 ## Appendix: How confusingly chemical thermodynamics is taught {.appendix}
 
@@ -2215,12 +2221,12 @@ $$
 Q = \frac{[C]^c [D]^d}{[A]^a[B]^b},
 $$
 
-At this point, I was lost. It is plain to see that $Q$ has units of $(\mathrm{~mol/L})^{c+d-a-b}$, and I knew from physics that you can never ever take the logarithm of something with a unit. What's worse, $\Delta G$ has units of $\mathrm{~J/mol}$ when it obviously should have units of $\mathrm{~J}$, because $\Delta G$ is just a difference in $G$, and since $G$ is "Gibbs free energy", both $G$ and $\Delta G$ should have the same units of $\mathrm{~J}$.
+At this point, I was lost. It is plain to see that $Q$ has units of $(\mathrm{mol/L})^{c+d-a-b}$, and I knew from physics that you can never ever take the logarithm of something with a unit. What's worse, $\Delta G$ has units of $\mathrm{~J/mol}$ when it obviously should have units of $\mathrm{~J}$, because $\Delta G$ is just a difference in $G$, and since $G$ is "Gibbs free energy", both $G$ and $\Delta G$ should have the same units of $\mathrm{~J}$.
 
 And it got even worse when I read on and found questions that asked me to calculate the "total Gibbs free energy released during the reaction". I thought, well, since you end up at an equilibrium, and the textbook said that at equilibrium, $\Delta G = 0$, obviously there is no total Gibbs free energy released. That is of course wrong. At that point, I gave up trying to understand and simply practiced until I could solve the questions without understanding.
 
 It certainly didn't help when I kept seeing both $\Delta G^\circ$ and $\Delta G^\ominus$, and sometimes even $\Delta G$⦵ (the [Plimsoll symbol](https://en.wikipedia.org/wiki/Standard_state)), which is the "standard state" when the substance is a gas -- but only for some gasses... Point is, the notation is a complete mess, and the pedagogy is nonsensical.
 
-After I finally understood thermodynamics, I turned my sights on chemical thermodynamics, and remembered this $\Delta G$ nonsense. I started with the idea "No matter what they say, one can't possibly get the units wrong." and got into a shouting match with ChatGPT-4, who kept mumbling about "fugacity" and "real gasses". An hour of shouting later, I finally figured it out.
+After I finally understood thermodynamics, I turned my sights on chemical thermodynamics, and remembered this $\Delta G$ nonsense. I started with the idea "No matter what they say, one can't possibly get the units wrong." and got into a shouting match with ChatGPT-4, who kept mumbling about "fugacity" and "real gasses". An hour of shouting later, I finally figured it out. (The new Feynman technique: Try to convince ChatGPT that a widely-held opinion is actually wrong. It worked for me!)
 
 As usual, as soon as I unlearned this, I knew the right phrase to search, and discovered that this is a common error, the entire anatomy of which has been autopsied carefully [@raffSpontaneityEquilibriumWhy2014; @raffSpontaneityEquilibriumII2014; @raffSpontaneityEquilibriumIII2014].

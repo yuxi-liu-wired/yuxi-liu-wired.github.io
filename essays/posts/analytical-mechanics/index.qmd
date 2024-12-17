@@ -70,7 +70,7 @@ I wrote this as "Analytical Mechanics done right", or "What every graduate stude
 
 In my physics Olympiad years, I saw the Lagrangian a few times, but we had no use for that. During my undergraduate years, I studied analytical mechanics. The construction of the Lagrangian was reasonable enough, and I understood how the Euler--Lagrange equation was derived by $\delta \int L = 0$. However, as soon as they proceeded to the Hamiltonian, I was entirely lost.
 
-What is $H(p, q) = p \dot q - L(q, \dot q)$? Why does the right side depend on $\dot q$ but not the left side? How does anyone just *make up* the Legendre transform out of thin air? It's named "Legendre transform" -- well, if it has such a fancy name, surely this has many more applications than $H = p \dot q - L$ -- else, why not call it "Legendre's one-time trick"? Canonical transform? Point transform? Aren't they all coordinate transforms? Poisson bracket? Infinitesimal generators? It was all a giant mess. Reading Goldstein's classic textbook only supplemented my confusion.
+What is $H(p, q) = p \dot q - L(q, \dot q)$? Why does the right side depend on $\dot q$ but not the left side? How does anyone just *make up* the Legendre transform out of thin air? It's named "Legendre transform" -- well, if it has such a fancy name, surely this has many more applications than $H = p \dot q - L$ -- else, why not call it "Legendre's one-time trick"? Canonical transform? Point transform? Aren't they all coordinate transforms? Poisson bracket? Infinitesimal generators? It was all a giant mess. Reading Goldstein's classic textbook only made my confusion more well-rounded.
 
 Early 2023, I studied mathematical microeconomics. When I was studying [Ramsey's theory of optimal saving](https://en.wikipedia.org/wiki/Ramsey%E2%80%93Cass%E2%80%93Koopmans_model), I saw, to my great surprise, something they call a "Hamiltonian" [@campanteAdvancedMacroeconomicsEasy2021, chapter 3]. I was shocked, but after studying it carefully, and thinking it over, I realized that it was no mistake -- the "Hamiltonian" in economics and in physics really are the same. Physics has an economic interpretation. Everything fell into place over the course of a few hours. Guided by this vision, I worked through analytical mechanics again, this time with true understanding.
 
@@ -194,12 +194,12 @@ The marginal utility of amusement $i$ is $\ln(1/p_i) - 1$, and the same for $j$.
 
 Unfortunately, the amusement park is actually infinite. You can take this news in two ways: optimistically "I can earn arbitrarily high utility by spending $1/N$ of a day on $N$ amusements each, and let $N$ be as large as I want!" and pessimistically "No matter how much I try, I can never achieve the perfect day.". Fortunately, the amusement park has a token system: when you enter the park, you would buy a certain number of tokens. Then you spend some tokens at the rides, proportional to the time you spend there.
 
-Your parents lay down three rules:
+There are some rules to the game:
 
 1. You will be given a certain number of tokens $E$ at the start of the day.
 2. The prices of amusements are $0 = E_0 \leq E_1 \leq E_2 \leq \cdots$. Here $E_0$ is the "zero-point energy", or in other words, "just relax".
 3. You must spend exactly all your tokens. Your parents hate wastefulness and would beat you up if you don't use all the tokens.
-It is possible to spend exactly all your tokens: $E_0 \leq E \leq \max_i E_i$.
+4. Your parents are kind enough to supply you with the right number of tokens $E$, such that you can avoid getting beat up: $E_0 \leq E \leq \max_i E_i$.
 
 Thus we have reduced the problem to
 $$
@@ -2009,7 +2009,7 @@ where $\gamma_1, \dots, \gamma_d$ range over the $d$ topologically distinct loop
 
 [^homology-torus]: In the jargon of topology, this is a linear function on $T^d$, [the homology group of the torus](https://en.wikipedia.org/wiki/Homology_(mathematics)). Here, $d$ is the dimension of the torus.
 
-![A particle moving in a central potential. Its angular momentum $p_\theta$ is conserved, so we do not plot it. Plotting its other three phase-space variables $(r, \theta, p_r)$, we see that its orbit makes a spiralling and rotating pattern on a torus. There are two fundamental ways to cycle around the torus, and each has a corresponding Poincaré--Cartan integral that is independent of the precise shape of the cycle. The two integrals are quantized according to the EBK quantization.](figure/EBK_quantization.jpg)
+![A particle moving in a central potential. Its angular momentum $p_\theta$ is conserved, so we do not plot it. Plotting its other three phase-space variables $(r, \theta, p_r)$, we see that its orbit makes a spiralling and rotating pattern on a torus. There are two fundamental ways to cycle around the torus, and each has a corresponding Poincaré--Cartan integral that is independent of the precise shape of the cycle. Both integrals are quantized. This is the meaning of the EBK quantization.](figure/EBK_quantization.jpg)
 
 ::: {.callout-warning}
 
@@ -2021,7 +2021,7 @@ In general, the physically real trajectories look like a braiding on the torus, 
 
 :::
 
-There is only one problem left: What happens when we don't have a torus? It is all well and good when we can construct a torus in phase space with as many dimensions as possible. However, when we have a classically chaotic system, such as the three body problem, we cannot have something this simple.
+There is only one problem left: What happens when we don't have a torus? It is all well and good when we can construct a torus in phase space with as many dimensions as possible. However, when we have a classically chaotic system, such as the three-body problem, we cannot have something this simple.
 
 Consider the simplest case of the three-body problem: We put two suns in a circular orbit around each other, and a speck of dust orbiting them. The two suns' orbit is perfectly predictable, so we consider only the trajectory of the dust. We also assume the dust only moves in the plane of the suns. Thus, the system has only 2 dimensions of configuration, or 4 dimensions of phase.
 
@@ -2031,7 +2031,9 @@ Without a torus in phase space, we cannot find trajectories around the torus, an
 
 > If there exist fewer than $d$ \[constants of motion\], as is the case, for example, according to Poincaré in the three-body problem, then the $p_i$ are not expressible by the $q_i$ and the quantum condition of Sommerfeld-Epstein fails also in the slightly generalized form that has been given here.
 
-This failure of the EBK quantization on classically chaotic systems was forgotten for many years, but eventually rediscovered [@stoneEinsteinUnknownInsight2005]. When it did, it became a seed of quantum chaos, which I hope to explain clearly some day. In the mean time, I leave you with some beautiful pictures of quantum chaos instead.
+This failure of the EBK quantization on classically chaotic systems was forgotten for many years, but eventually rediscovered.[^einstein-quantum-chaos] When it did, it became a seed of [quantum chaos](https://en.wikipedia.org/wiki/Quantum_chaos), which I hope to explain clearly some day. In the mean time, I leave you with some beautiful pictures of quantum chaos instead.
+
+[^einstein-quantum-chaos]: See [@stoneEinsteinUnknownInsight2005] for a brief history and more cool pictures. It was written in 2005, the "Einstein Year", the 100th anniversary of Einstein's *annus mirabilis*.
 
 ![The nonchaotic quantum circular billiard and the chaotic quantum cardioid billiard. Figure from [@backerQuantumChaosBilliards2007]](figure/chaotic_integrable_quantum_billiard.png)
 
