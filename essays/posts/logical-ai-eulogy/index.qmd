@@ -1,8 +1,8 @@
 ---
-title: "Eulogy to Logical AI"
+title: "The Rise and Fall of Logical AI"
 author: "Yuxi Liu"
-date: "2024-01-23"
-date-modified: "2024-01-23"
+date: "2024-12-23"
+date-modified: "2024-12-23"
 categories: [AI, scaling, history]
 format:
   html:
@@ -12,10 +12,16 @@ description: "Good Old-Fashioned AI never die. They just fade away."
 # image: "figure/banner.png"
 status: "wip"
 confidence: "likely"
-importance: 3
+importance: 5
 ---
 
 {{< include ../../../utils/blog_utils/_macros.tex >}}
+
+## Abstract
+
+Talk about the scale-first viewpoint.
+
+DARPA was behind everything in AI.
 
 ## Translation
 
@@ -334,11 +340,9 @@ When a user makes a search request like "IBM", Google's servers must retrieve no
 
 In 2006, Google Translate was launched. Early reactions were a mixture of fascination and sarcasm, leading to memes of hilarious Google translations that has survived to this day, even though the improvements has made it very difficult to do nowadays. Despite this, it was agreed that Google had achieved state of the art in statistical machine translation. How did it do it? By brutally scaling up.
 
-In [@brantsLargeLanguageModels2007], the authors described how Google achieved such a feat. Despite possibly lower quality than a more sophisticated algorithm, the "stupid backoff" allowed them to train on 60× more data and run 10000× faster during inference. The largest model was trained on a dump of the Internet (January 2006) with 2 trillion tokens, 300M 5-grams, 16M vocab, 1.8 TB language model, took 1 day to train on 1500 machines. They noted that the more data they used, the higher the BLEU score got, and simply drew a straight line, expecting the model to keep improving if they did it on even more data. 
+Work on Google Translate led to perhaps the first use of "Large Language Models" in the 2007 paper [@brantsLargeLanguageModels2007]. Despite possibly lower quality than a more sophisticated algorithm, the "stupid backoff" allowed them to train on 60× more data and run 10000× faster during inference. The largest model was trained on a dump of the Internet (January 2006) with 2 trillion tokens, 300M 5-grams, 16M vocab, 1.8 TB language model, took 1 day to train on 1500 machines. They noted that the more data they used, the higher the BLEU score got, and simply drew a straight line, expecting the model to keep improving if they did it on even more data.
 
-The title was "Large Language Models in Machine Translation". 10 years later, Large Language Models would be reborn in the guise of the Transformer, again out of research efforts to improve Google Translate.
-
-### ABBYY's last stand
+It would be 2017 when work on Google Translate led to the Transformer architecture, the current pinnacle of large language models.
 
 18 years after his introduction [@churchIntroductionSpecialIssue1993], Kenneth Church proposed in 2011 a 20-year cycle between Empiricism and Rationalism, and argued that we were on the brink of a return to Rationalism:
 
@@ -353,7 +357,13 @@ The title was "Large Language Models in Machine Translation". 10 years later, La
 >
 > [@churchPendulumSwungToo2011]
 
-It has been 15 years. The pendulum is still probing the unknown depths of Empiricism.
+![Language modeling in 1990. [@winogradComputerSoftwareWorking1984]](figure/Winograd_language_analysis.png)
+
+It has been another 15 years, yet the pendulum still probes the unknown depths of Empiricism.
+
+![Language modeling in 2020. [@robertsExploringTransferLearning2020]](figure/T5_language_model.png)
+
+### ABBYY's last stand
 
 In 1989, ABBYY was founded in Moscow. Its first product was an electronic dictionary, followed by an [ABBYY FineReader optical character recognition (OCR)](https://en.wikipedia.org/wiki/ABBYY_FineReader), which became an international hit. With such a stable cash flow, ABBYY aimed higher: It would develop Compreno, a "Natural Language [Compiler](https://en.wikipedia.org/wiki/Compiler)" (NLC) based on linguistic theory. Compreno would take the lowest level of Vauquois triangle (actual language) to the highest level (language-independent meaning, interlingua), which can then be decompiled to another language. It was Meaning--Text Theory in action.
 
@@ -719,11 +729,10 @@ In 1983, Digital Equipment Corporation started selling one of the first commerci
 
 ::: {#fig-klatt-1987 layout-ncol=2}
 
-![General architecture of a TTS system according to the Chomskyan orthodoxy. [@klattReviewTexttospeechConversion1987, figure 2]](figure/Klatt_1987_fig_2.png){#fig-todo}
+![General architecture of a TTS system according to the Chomskyan orthodoxy. [@klattReviewTexttospeechConversion1987, figure 2]](figure/Klatt_1987_fig_2.png)
 
-![Architecture of Klattalk. [@klattReviewTexttospeechConversion1987, figure 3]](figure/Klatt_1987_fig_3.png){#fig-todo}
+![Architecture of Klattalk. [@klattReviewTexttospeechConversion1987, figure 3]](figure/Klatt_1987_fig_3.png)
 
-TODO
 :::
 
 In his literature review, Klatt did take notice of two upstart systems from the statistical side, one being [NETtalk of Sejnowski](https://yuxi-liu-wired.github.io/essays/posts/backstory-of-backpropagation/index.html#terence-sejnowski), a neural network model, and another being a statistical TTS system very similar to the IBM alignment model, by the same IBM team. He brushed both off as being inferior to a logical TTS system:
@@ -840,13 +849,13 @@ Though he kept trying to propose his idea of socialist optimal planning, and kep
 
 Circa 1900, as mathematicians learned to manufacture paradoxes, mathematics modernized, upgraded paranoia, and tried to get a grip. The angel of topology and the devil of abstract algebra fought for the soul of each individual mathematical domain in this "Foundational Crisis". With palpable disdain, Poincaré deplored the Hilbert school of formal logic that threatened to bleed even geometry of meaning:
 
->  "Imagine," says Hilbert," three kinds of things, which we will call points, straight lines, and planes; let us agree that a straight line shall be determined by two points, and that, instead of saying that this straight line is determined by these two points, we may say that it passes through these two points, or that these two points are situated on the straight line." What these things are, not only do we not know, but we must not seek to know... We might replace geometry by the reasoning piano imagined by Stanley Jevons; or, if we prefer, we might imagine a machine where we should put in axioms at one end and take out theorems at the other, like that legendary machine in Chicago where pigs go in alive and come out transformed into hams and sausages. It is no more necessary for the mathematician than it is for these machines to know what he is doing.
+> "Imagine," says Hilbert," three kinds of things, which we will call points, straight lines, and planes; let us agree that a straight line shall be determined by two points, and that, instead of saying that this straight line is determined by these two points, we may say that it passes through these two points, or that these two points are situated on the straight line." What these things are, not only do we not know, but we must not seek to know... We might replace geometry by the reasoning piano imagined by Stanley Jevons; or, if we prefer, we might imagine a machine where we should put in axioms at one end and take out theorems at the other, like that legendary machine in Chicago where pigs go in alive and come out transformed into hams and sausages. It is no more necessary for the mathematician than it is for these machines to know what he is doing.
 >
 > [@poincareScienceMethod1914, page 147]
 
 But what is taken as an *reductio ad absurdum* by one side is often a Roadmap for the Next 20 Yaers by the other. The mechanical logician came as soon as the electronic computers arrived.
 
-During undergrad years, Edward Feigenbaum took a course "Mathematical Models in the Social Sciences" taught by Herbert Simon. One class, he walked in and annouced to the 6 students
+During undergrad years, Edward Feigenbaum took a course "Mathematical Models in the Social Sciences" taught by Herbert Simon. One class, he walked in and annouced to the 6 students that
 
 > Over the Christmas holidays, Al Newell and I invented a thinking machine.
 
@@ -892,7 +901,7 @@ Curiously, they argued that Chomskyan linguistics and the IPS formalism are esse
 
 | IPS logical AI | Chomskyan linguistics |
 |-----|-----|
-| Symbols | Symbols  |
+| Symbols | Symbols |
 | Problem input | Surface structure of a sentence |
 | Symbolic representations | Deep structures; representations of meanings |
 | Problem space | Space of deep structures of strings |
@@ -946,7 +955,51 @@ elif stimulus[2] == "J":
     ...
 ```
 
-In short, what counts as a paradigm of learning is simply memorization, and updating a big if-then search tree, so that a stimulus results in going down the search tree and arriving at the correct response stored in the leaf node.
+In short, what counts as a paradigm of learning is simply memorization, and updating a big if-then search tree, so that a stimulus results in going down the search tree and arriving at the correct response stored in the leaf node. That is, it was the first [structural induction](https://en.wikipedia.org/wiki/Structural_induction) program.
+
+### The gears of logic
+
+Logic originated in the early Greek studies on language. Aristotle's logic, the syllogism, won out and became *the* logic in the Western world until the 19th century. In our modern language (first-order predicate logic), the syllogism is a logic system that allows only the following 4 kinds of sentences:
+
+$$
+\forall x \in b : (x \in a); \exists x \in b : (x \in a); \neg\forall x \in b : (x \in a); \neg\exists x \in b : (x \in a)
+$$
+
+For example, "All birds are animals." would be $\forall x \in \text{Bird} : (x \in \text{Animal})$. An inference has two premise sentences and one conclusion sentence. Aristotle enumerated all possible such inferences and found that there are just 14 valid inferences, starting with
+
+$$
+\forall x \in b : (x \in a), \forall x \in c : (x \in b)\vdash \forall x \in b : (x \in a)
+$$
+
+and ending with 
+
+$$
+\neg \forall x \in c : (x \in a), \exists x \in c : (x \in b) \vdash \neg \forall x \in b : (x \in a)
+$$
+
+And Western logic stood there essentially unchanged until the 19th century with the invasion of the mathematicians. While nowadays logic is understood as *mathematical* logic, it was understood as a philosophical subject back then, as a kind of mental callisthenics training for making convincing verbal arguments. Students would get the 14 rules drilled into their heads using catechisms. Logic was theo-logic. Boole's great innovation was essentially symbolic: The tedious sentence of "Some b are not a" gets converted to a single formula $b(1-a) \neq 0$, opening it up for algebraic manipulation, mindless and soon electro-mechanical. The Whitehead of "Whitehead and Russell" had this to say about the power of mindlessness:
+
+> It is a profoundly erroneous truism, repeated by all copy-books and by eminent people when they are making speeches, that we should cultivate the habit of thinking of what we are doing. The precise opposite is the case. Civilization advances by extending the number of important operations which we can perform without thinking about them. Operations of thought are like cavalry charges in a battle -- they are strictly limited in number, they require fresh horses, and must only be made at decisive moments.
+>
+> --- Alfred North Whitehead
+
+Some limited and waning memory of John Robinson persists in the textbooks on AI, amongst the effusive variables and in the illusory depths of the predicates. In his lifetime, he labored under obscurity but for one season, as do so many logicians; once dead, he is not even the ghost he was then.
+
+In 1965, he published the Robinson resolution method, an algorithm for performing logical inferences in first-order logic. It was refutation-complete, meaning that if a set of statements cannot all be true, then it will derive a contradiction in exponential time. This allows one to prove $p_1, p_2, \dots, p_n \vdash q$ by deriving a contradiction from $p_1, p_2, \dots, p_n, \neg q$. (What of Gödel-incompleteness? If $p_1, p_2, \dots, p_n \not\vdash q$, then Robinson resolution might run forever.)
+
+![Example of using Robinson resolution to prove that Marcus hated Caesar, by assuming not, and deriving a contradiction. (Illstrative only. The Marcus does not match the historical Marcus Brutus.) [@lenatComputerSoftwareIntelligent1984]](figure/logic_resolution_example_tree.png)
+
+Feigenbaum was unimpressed: “It’s very awkward to translate your knowledge of a task domain into predicate calculus, and the difficulty of doing it is exceeded only by the awkwardness of how it looks after you’ve done it.” [@mccorduckMachinesWhoThink2004, page 255] However, many AI researchers were deeply impressed, and a brief AI race was on:
+
+> It seemed as if McCarthy’s dream of a uniform problem solver had been realized, and a rush to Resolution was on. Several of McCarthy’s graduate students went to work applying Robinson’s method to the world of facts... But all this effort eventually collapsed. It seemed that the Robinson method generated search spaces as large as ordinary heuristic methods. There was no way by which the Resolution Method theorem provers could use real-world facts to constrain those spaces. 
+> 
+> ...
+> 
+> He underwent an unwanted spectacular rise to stardom in AI research, unwanted because Alan is a logician and views his activity from the point of view of that peer group... and suddenly felt heavy obligation to extract the AI researchers from the pit into which they were falling, the pit of the combinatorial explosion. He understood this, but was really helpless to do anything about it since he was a logician who invented a method, not an AI... As AI moved away from the Resolution Method, he moved back to logic and resigned his position on the editorial board of the AI Journal, and retreated from the whole scene.
+>
+> [@mccorduckMachinesWhoThink2004, pages 254--256]
+
+Robinson resolution turned out insufficient for getting logical AI to work "from scratch", since the runtime is exponential in the number of axioms, making it impractical. The reasons are essentially the same as the reason that Boolean satisfiability (SAT problem) is exponential: In the worst case, you have no way to find the proof tree except by trying every proof tree. However, just like how NP problems can be solved in practice with practical SAT solvers that search over the trees with clever heuristics, Robinson resolution would prove practical when augmented with enough heuristics and intermediate results, with the expert systems boom 20 years later.
 
 ### The drosophila of AI
 
@@ -1132,6 +1185,8 @@ $$
 Given a chemical species, by standard [stiochiometry](https://en.wikipedia.org/wiki/Stoichiometry) one can measure the chemical formula of the species, but it remains to discover its chemical structure. This is what DENDRAL[^dendral-name] was designed to do: given the mass spectrometry, the chemical formula, and some additional information (a later version could incorporate the NMR spectrum), output possible molecular structures for the species.
 
 [^dendral-name]: The full name is "heuristic dendritic algorithm". It is "dendritic" because it originally only could process chemical structures with no cycles.
+
+![An example DENDRAL run on a chemical with formula C20H43N. Starting with 43M candidate structures, each stage used more data and heuristics to decrease the number of candidates, until NMR data allowed a unique identification. [@lenatComputerSoftwareIntelligent1984]](figure/DENDRAL_example.png)
 
 Like the IPS of Simon and Newell, DENDRAL started as a heuristic search program. Its problem space is enumerated by a structure generator, which, given a chemical formula, generates all chemically stable structures according to some chemical rules. For example, [geminal diols](https://en.wikipedia.org/wiki/Geminal_diol) are unstable, so those are not enumerated. Each generated structure is then broken into fragments, again according to some heuristic rules. For example, in a ketone (R-(C=O)-R'), it is very unlikely for the C=O double bond to be broken, while it is quite easy for the R-(C=O) and the (C=O)-R' bonds to be broken.
 
@@ -1337,11 +1392,11 @@ $$
 \frac{\forall x, IsHuman(x)\to Hates(x, Java) \quad IsHuman(Socrates)}{Hates(Socrates, Java)}{(x \leftarrow Socrates)}
 $$
 
-The frame: Looks exactly like data types in Java. 
+The [frame](https://en.wikipedia.org/wiki/Frame_(artificial_intelligence)): A "frame" is a datastructure where more data can "slot" into. Invented by Marvin Minsky in 1974, they are essentially class hierarchies in object-oriented languages like Java, and were used in most knowledge bases to code for objects and their properties, relationships, etc.
 
 A semantic graph: a network of frames. Looks exactly like a [UMD diagrams](https://en.wikipedia.org/wiki/Unified_Modeling_Language).
 
-![A frame system. It looks exactly the same as those UMD diagram I hated back when I learned Java programming. [@russellArtificialIntelligenceModern1995, figure 10.7]](figure/frame_system.png)
+![A semantic graph of a frame system. Each frame contains slots like `Legs` and `Flies`. It looks exactly the same as those UMD diagram I hated back when I learned Java programming. [@russellArtificialIntelligenceModern1995, figure 10.7]](figure/frame_system.png)
 
 ### Knowledge Principle
 
@@ -1381,7 +1436,7 @@ During the late 1970s, expert systems got noticed outside the small scholarly co
 
 Instead of describing in detail these systems, we can just admire tha sudden explosion of commercial expert systems:
 
-> analysis of physical objects (like buildings or bridges), SACON; determining the structure of proteins from X-ray crystallographic data, in collaboration with experts at UC San Diego, CRYSALIS; interpreting data about a person's lung functioning coming from an instrument called a spirometer, in collaboration with a doctor at California Pacific Medical Center, PUFF; managing ventilator machines in intensive care units, another collaboration with a CPMC ICU lead physician, VM... Feigenbaum's lab was funded by IBM to help them develop their first expert system—final diagnosis of errors in disk drives before they were shipped to the customer... GEO, to analyze and form hypotheses about the geology of the bore hole as drilling proceeded down inch by inch... \[DARPA\], which funded half of the research in Feigenbaum's lab, wanted an expert system to hypothesize about the behavior of enemy submarines hiding in U.S. coastal waters, interpreting data from ocean noises, and reconnaissance aircraft sightings, and using a large compendium of mostly secret intelligence knowledge about those enemy submarines and their behaviors... the classified expert system HASP for enemy submarine surveillance. Importantly, it included explanations in English for all of its inferred hypotheses, thereby gaining the trust of the Navy personnel at the coastal stations.
+> ... analysis of physical objects (like buildings or bridges), SACON; determining the structure of proteins from X-ray crystallographic data, in collaboration with experts at UC San Diego, CRYSALIS; interpreting data about a person's lung functioning coming from an instrument called a spirometer, in collaboration with a doctor at California Pacific Medical Center, PUFF; managing ventilator machines in intensive care units, another collaboration with a CPMC ICU lead physician, VM... Feigenbaum's lab was funded by IBM to help them develop their first expert system—final diagnosis of errors in disk drives before they were shipped to the customer... GEO, to analyze and form hypotheses about the geology of the bore hole as drilling proceeded down inch by inch... \[DARPA\], which funded half of the research in Feigenbaum's lab, wanted an expert system to hypothesize about the behavior of enemy submarines hiding in U.S. coastal waters, interpreting data from ocean noises, and reconnaissance aircraft sightings, and using a large compendium of mostly secret intelligence knowledge about those enemy submarines and their behaviors... the classified expert system HASP for enemy submarine surveillance. Importantly, it included explanations in English for all of its inferred hypotheses, thereby gaining the trust of the Navy personnel at the coastal stations.
 > 
 > ...
 > 
@@ -1517,6 +1572,12 @@ From a purely business perspective, the profit margins were too thin. Those sell
 > 
 > [@allenExpertSystemsPioneer2018]
 
+Duda and Hart concurred that there was a business angle to this. They formed Syntelligence to commercialize expert systems. First, they tried selling to financial companies, but there was no product-market fit:
+
+> First, while every investment manager on Wall Street is a self-proclaimed expert, those with the most impressive track records are not notably interested in syndicating their expertise to others. A second strike against us was that the value proposition of an expert system is distributing expertise to more-junior, less experienced, professionals. But since no one in the investment business will accept the “junior” label, there was no population of willing users. Finally, we found no support at the institutional level for our preconception that there would be institutional value in our proposed system.  
+
+So they tried to get into [insurance underwriting](https://en.wikipedia.org/wiki/Insurance_underwriting). It took 3 years and "millions of dollars more than planned" to build the first system, but it did work. The company was profitable in the late 1980s. But then [the recession of 1990s](https://en.wikipedia.org/wiki/Early_1990s_recession) came. Companies suddenly stopped buying expert systems, and Syntelligence went bankrupt. In their view, their kind of expert systems was working and profitable, but simply suffered from the recession since expert systems were still considered inessential [capital expenditure](https://en.wikipedia.org/wiki/Capital_expenditure). [@hartArtificialIntelligenceOdyssey2022]
+
 Those that survived, survived by pivoting:
 
 * to object-oriented programming tools or databases, which are similar to knowledge bases;
@@ -1582,6 +1643,8 @@ The non-working parts of expert systems were all about massive learning. It is f
 * A network of many medium rules, weakly held. They are strongly interacting with each other, clobbering over each other, so that it is hard to make sure the network behaves correctly unless the priority weights are set correctly. If the interaction weights are too low, the system is not "contextual" enough. If the weights are too high, it would become "chaotic". Expert systems are typcially stuck in this regime. Trying to extend beyond this regime leads to fragile systems and development hell.
 * Innumerable little rules and one-off corner cases, piercing through the network like so many porcupine spikes. This is the "unreasonable effectiveness of data" regime. Essentially all unstructured environments like speech, language, and vision are here.
 
+So again, where's the AI?
+
 ### But why the hype?
 
 In our perspective, expert systems seem like boring database and Java programming, and it is hard to imagine people getting hyped about databases or Java, so we tend to imagine the computer scientists promising some miracle technology they could not deliver. But it seems to me that, while they did overestimate what their technologies could deliver, the technologies themselves worked exactly as specified -- databases, logical inference, and object-oriented programming!
@@ -1598,25 +1661,28 @@ Although computer scientists had long known that computers could perform symboli
 >
 > [@harmonExpertSystemsBusiness2022]
 
+Indeed, the most soul-crushing tedium of modern software used to be cool. In 1984-09, *Scientific American* even devoted an entire issue to the miracles of software in spreadsheet, object-oriented programming, databases, industrial process control, etc.
+
+::: {#fig-kay-1984 layout-ncol=2}
+
+![](figure/Kay_1984_OOP_Java.png)
+
+![](figure/Kay_1984_spreadsheet_excel.png)
+
+In 1984, spreadsheet and object-oriented programming was so glamorous they deserved full-page pictures. Now they suffer under the ignonimous boredomn that is Microsoft Excel and Java. [@kayComputerSoftware1984]
+
+:::
+
 And while the grandest dreams of expert system AI did not pan out, it still offered incremental profit of a few million dollars at a time. The pieces that worked quickly became too boring to mention, and the pieces that didn't work got forgotten, or returned to academia, where ideas hope for their eventual justification.
 
 Except the thing called "Cyc".
 
 ## Cyc {#sec-cyc}
 
-> He divided the universe in forty categories or classes, these being further subdivided into differences, which was then subdivided into species. He assigned to each class a monosyllable of two letters; to each difference, a consonant; to each species, a vowel. For example: `de`, which means an element; `deb`, the first of the elements, fire; `deba`, a part of the element fire, a flame. In a similar language invented by Letellier (1850) `a` means animal; `ab`, mammal; `abo`, carnivore; `aboj`, feline; `aboje`, cat; `abi`, herbivore; `abiv`, horse; etc... children would be able to learn this language without knowing it be artificial; afterwards, at school, they would discover it being an universal code and a secret encyclopaedia.
-> 
-> Once we have defined Wilkins' procedure, it is time to examine a problem which could be impossible or at least difficult to postpone: the value of this four-level table which is the base of the language. Let us consider the eighth category, the category of stones. Wilkins divides them into common (silica, gravel, schist), modics (marble, amber, coral), precious (pearl, opal), transparent (amethyst, sapphire) and insolubles (chalk, arsenic). Almost as surprising as the eighth, is the ninth category. This one reveals to us that metals can be imperfect (cinnabar, mercury), artificial (bronze, brass), recremental (filings, rust) and natural (gold, tin, copper). Beauty belongs to the sixteenth category; it is a living brood fish, an oblong one.
->
-> --- Borges, *The analytical language of John Wilkins*
-
-Many years later, surrounded by the humming servers of the Cyc database, Douglas Lenat was to remember that distant afternoon when he first conceived of encoding all of common sense.
+Many years later, surrounded by the humming servers of the database, Douglas Lenat was to remember that distant afternoon when he taught Cyc that everyone can only see their own dream.
 
 ### AM
 
-Why AM and Eurisko Appear to Work
-
-The Nature of Heuristics
 
 ### EURISKO
 
@@ -1624,9 +1690,87 @@ AI alignment people often tell the legend of EURISKO, a program that discovered 
 
 > AI has for many years understood enough about representation and inference to tackle this project, but no one has sat down and done it... only by pulling together the latest human interface tools, Lisp machines, ideas of enforced semantics, and funding for a decade-long effort could we attempt a project of this scale. [@lenatCycUsingCommon1985]
 
+![The only known image of Eurisko reasoning about the Traveller game, probably on the Xerox 1100 Lisp machine. The GUI probably was in [Genera](https://en.wikipedia.org/wiki/Genera_(operating_system)). Lenat claimed Eurisko ran for 1300 CPU-hours in total. [@lenatComputerSoftwareIntelligent1984]](figure/EURISKO_GUI.png)
+
 ### Cyc
 
+> **bogosity**: At CMU, bogosity is measured with a bogometer; in a seminar, when a speaker says something bogus, a listener might raise his hand and say "My bogometer just triggered"... The agreed-upon unit of bogosity is the microLenat.
+> 
+> **microLenat**: The unit of bogosity. Abbreviated µL or mL in ASCII. Consensus is that this is the largest unit practical for everyday use. The microLenat, originally invented by David Jefferson, was promulgated as an attack against noted computer scientist Doug Lenat by a tenured graduate student at CMU. Doug had failed the student on an important exam because the student gave only "AI is bogus" as his answer to the questions. The slur is generally considered unmerited, but it has become a running gag nevertheless.
+>
+> --- [The Jargon File](http://www.catb.org/jargon/html/M/microLenat.html)
+
 In 1984, [Douglas Lenat](https://en.wikipedia.org/wiki/Douglas_Lenat) began the Cyc project, an ambitious attempt to scale symbolic AI up to the real world. Like most expert systems, the Cyc project consists of a giant knowledge base encoded in a LISP-like symbolic logic language, upon which inference engines can be run to produce logical reasoning. Unlike most expert systems, the ambition of Cyc was universal: Its knowledge base would not be restricted to expert knowledge in a particular domain, but *all* commonsense knowledge in *all* domains that humans have commonsense about.
+
+The game plan was simple:
+
+1. "Prime the knowledge pump" by manually encoding a large enough knowledge base of common senses in a logical language.
+2. Construct a natural language interface based on the knowledge base.
+3. Obtain an AI with common sense and natural language, allowing it to learn by reading what people have written down and conversing with people.
+4. When it reaches the human frontier of knowledge, it will start performing experiments to go beyond it.
+
+This would solve three problems in one go: 
+
+1. No more brittleness of expert systems, because Cyc would have all the common senses.
+2. Once it has enough knoweldeg, it would be able to machine-learn, and thus get past the knowledge bottleneck.
+3. Expert systems would be able to talk with each other if they are all based on Cyc's common knowledge base.
+
+Lenat was explicit in rejecting almost all alternatives to AGI, and he had a sharp tongue [@thompsonKnowItAllMachine2001; @lenatVoiceTurtleWhatever2008; @lenatGettingGenerativeAI2023]:
+
+* Logical AI in the style of Simon and Newell's General Problem Solver. Such an elegant framework would not work beyond toy problem domains, since there are no "Maxwell's Equations of Thought" from which knowledge can be computed.
+* Highly accurate models of human behavior, in the style of Simon and Newell's *Human Problem Solving*. Duplicating human cognitive architecture constitutes cargo cult science. AGI need not have the [magic number 7 ± 2](https://en.wikipedia.org/wiki/The_Magical_Number_Seven%2C_Plus_or_Minus_Two).
+* Physical embodiment. It might be great fun to make robots, but physical embodiment is neither necessary nor sufficient for "grounding" the knowledge base. Such a "mystical worship of physical embodiment" would only delay AGI.
+* Genetic algorithms and other evolutionary algorithms. It gets stuck in local minima too often, and runs too slowly.
+* Creating tiny morsels of little expert systems, and hope that bit by bit, AGI would emerge out of that. Though this is basically a "Society of Mind" approach of Marvin Minsky, and Lenat and Minsky likei each other's research, Lenat rejected this approach, since without an overarching plan, they will not fit together, like how the 1980s expert systems could never talk to each other. Similarly, the [subsumption architecture](https://en.wikipedia.org/wiki/Subsumption_architecture) does not lead to AGI either.
+* Logical machine learning without a large knowledge base already in place. It makes for good demos, but quickly exhausts itself. These are examples of the illusory hope for "free lunch" or elegant "Maxwell's equations of thinking", a severe case of laziness and "physics envy". Researchers should stop sitting on their asses mad with "physics evny", and start the dirty work of coding.
+* Statistical machine learning, pattern matching, and neural networks. Just wait for enough compute and data, then magically a large model would learn on its own? Yet more wishful thinking for "free lunch", caused by laziness and "physics envy".
+* Wait until philosophers have figured out the one true ontology for the world, then build the Cyc accordingly. Philosophers suffered from "Hamlet syndrome", unwilling to take decisive action, satisfied with publishing tiny morsels of ontologies that don't cover the whole world, or grand ontologies that cover a caricature of the whole world.
+
+Lenat's rejections progressed with time. In the 1980s, like other expert systems people, he focussed his rejection towards the previous logical AI methods exemplified by Simon and Newell. Logical AI was a dream that a graduate student might build an AGI during a thesis period, if only they knew the "Maxwell's equations of thinking". He took a little effort towards rejecting the *other* logical AI approach, that of *Human Problem Solving*, constructing models that reproduced every little detail of how humans really perform in psychometric experiments, such as their reaction times. Admitting its interest to psychologists, he considered it a distraction for machine intelligence.
+
+In the 1990s, as the expert system hype died down, he turned his criticism towards expert systems. He recalled that, back when he was young, before academia had rejected him, he thought automated discovery with AI, such as AM and Eurisko, would lead the way to self-improving learning machines. [BACON](http://www.isle.org/~langley/discovery.html) discovered Kepler's three laws "only" from data, but that's because Pat Langley was careful in presenting nothing but the data necessary for this. The cost to discover Kepler's laws on the filtered dataset? A few CPU-hours. The cost to filter the dataset? 10 Kepler-years. Similarly, AM started out with the set-theory axioms and discovered prime numbers and some famous conjectures, but quickly ended up enumerating boring complications. Lenat had to keep adding in more heuristics to get something out of it. Similarly, Eurisko would run overnight and Lenat would check its outputs in the morning, remove some bad ideas, add some good ones, and so on. Lenat estimated that the Travellers 1981 win was "60/40% Lenat/Eurisko" [@lenatEURISKOProgramThat1983].
+
+Generalizing, Lenat argued that there is a common thread across all these machine learning systems. They would all start out discovering many interesting basic things, but quickly "run out of steam" enumerating boring complications. Lenat called it having a "veneer of intelligence", but were really just "discharging potential energy that was stored in them". That is, the creators secretly put into the program with their own expert knowledge somehow, either through the right rules, heuristics, dataset, features, or some other thing. Once the expert knowledge is "exhausted", no more discoveries could be made. However, it makes for impressive demos, leading to hype-and-disappointment cycles. The only escape is to prime the knowledge pump. If the knowledge base is large enough, then it wouldn't run out of steam. [@lenatVoiceTurtleWhatever2008]
+
+A metaphor that Lenat had used often is that of a circle of ignorance. The more knowledge Cyc has, the easier it is for Cyc to learn more. At first, it must be spoon-fed knowledge with every entry entered by hand. Sometime around 2000, it started parsing sentences, saving the engineers a little time. The more it knew, the better it could parse, saving more time. The hope was always that one day, it would start parsing without human help. On that day, the pump would finally, triumphantly, be primed. 
+
+In the 2000s, as the Internet took over the world, he turned his criticism towards statistical learning systems. He never tired of pointing out that, if you make a complex query like "Did ", and Google couldn't answer that despite having 15,000 servers running dumb keyword-matching algorithms, while Cyc running on a single server could answer it. Google-style statistical machine learning, like its trillion-token statistical machine translations systems [@brantsLargeLanguageModels2007], was just "shallow fishing", pattern matching, yet another example of hoping for a free lunch. Such systems could not truly understand. As an alternative, he held out Cyc as the foundation to the [Semantic Web](https://en.wikipedia.org/wiki/Semantic_Web), which would build a system that *would* truly understand.
+
+In the 2010s, with the rise of Deep Learning, Lenat turned his . In his view, neural networks are a form of pattern matching algorithm, or statistical machine learning. Thinking that "one large net for everything" would just work is yet another example of the logical AI fallacy that "If only we have the Maxwell's equations of learning, it will just work!". They are always "remembering and espousing", but never "understanding and inferring", and can only ever be the "right brain" to Cyc's "left brain" [@lenatGettingGenerativeAI2023]. As Deep Learning kept blowing past expectations, his warnings became more apocalyptic:
+
+> They may be otherwise quite smart and charming (such as Raymond in *Rain Man* and Chauncey Gardiner in *Being There*), but it would be frankly dangerous to let them drive your car, mind your baby, cook your meals, act as your physician, manage your money, etc. And yet those are the very applications the world is blithely handing over to severely autistic AI programs!
+>
+> [@lenatSometimesVeneerIntelligence2017]
+
+> We would not be comfortable giving a severely neurologically-impaired person -- say someone with no functioning left brain hemisphere -- real-time decision-making authority over our family members' health, our life savings, our cars, or our missile defense systems. Yet we are hurtling in that direction with today’s AI's which are impaired in almost exactly that same fashion! They -- those people and those AI programs -- have trouble doing multi-step abstract reasoning, and that limitation makes their decision-making and behavior brittle, especially when confronted by unfamiliar, unexpected and unusual situations... Machine learning algorithms have scarcely changed at all, in the last 40 years... Current AI’s can form and recognize patterns, but they don’t really *understand* anything. That’s what we humans use our left brain hemispheres for.
+> 
+> ... Researchers and application builders tolerate their AI systems having just the thinnest veneer of intelligence, and that may be adequate for fast internet searching or party conversation or New York Times op-ed pieces, but that simple representation leads to inferences and answers which fall far short of the levels of competence and insight and adaptability that expert humans routinely achieve at complicated tasks, and leads to shallow explanations and justifications of those answers. There is a way out of that trap, though it’s not pleasant or elegant or easy. The solution is not a machine-learning-like “free lunch” or one clap-of-thunder insight about a clever algorithm: it requires a lot of hard work...
+>
+> [@lenatNotGoodGold2019]
+
+I am struck by the irony that a veteran of logical AI would call neural networks "brittle", or make an appeal to sunk cost. Lenat had devoted 2000 person-years to the project, therefore a "free lunch" shouldn't work, nevermind the fact that these "free" lunches [cost \$100 million](https://www.wired.com/story/openai-ceo-sam-altman-the-age-of-giant-ai-models-is-already-over/) per serving, roughly the total budget of Cycorp through its life... But *de mortuis nil nisi bonum*.
+
+Like [ABBYY](https://www.abbyy.com/), [Lucid AI](https://lucid.ai/) and [Cycorp](https://cyc.com/) to this day proudly proclaim on their websites that true AI needs both the left brain and the right brain, and they sell the finest left brains on the planet.
+
+### The logic of Cyc
+
+This allows us to write down predicates about predicates, necessary for metaheuristics, such as `instancesRelatedToInstancesOf(Ducks, imprintedTo, Ducks)` which means "If x is a Duck, and x in imprintedTo y, then y is a Duck". In general,
+
+$$
+\mathrm{instancesRelatedToInstancesOf}(X, A, Y) := \forall x, y, (X(x) \wedge A(x,y) \to Y(y))
+$$
+
+Here, $X, A, Y$ are predicates, so $\mathrm{instancesRelatedToInstancesOf}$ must be a predicate of predicates -- a second-order predicate. This can be repeated to make statements about n-th order predicates. Indeed, human beings in their daily life regularly construct high-order statements like "So you meant to make me upset by spreading rumors about her, which you knew that he would hear about it?" or "The whole point of nuclear deterrence is to credibly signal to the other side that if they were to attack, you would attack despite your best interests if it does happen."
+
+Every logical system must face an impossible trilemma: an expressive language that can describe what people want to say, an efficient inference engine on the language, and a complete inference engine that can perform all correct inferences.
+
+Cyc solved this trilemma by holding onto expressivity, trying to approach efficiency, and giving up completeness. The entire point of the project was to express *all* common sense, and that means expressivity is the core of the mission. Since humans are so impruden as to speak of high-order predicates everyday, CycL must be a higher-order logic. This gives it enough expressivity, but immediately makes it impossible to have a *computable* complete inference engine by Gödel-style incompleteness [@shapiroFoundationsFoundationalismCase1991, theorem 4.14], let alone having an *efficient* one. 
+
+Like most expert systems, the Cyc has a general resolution-based inference engine. Unilke most expert systems, its knowledge base is large and higher-ordered, so its engine runs too slowly for most queries. Thus, the developers kept adding more specialized modules ("pattern-specific heuristic modules"), each capable of inferring on a small domain in a few microtheories. Like Eurisko, each of these module is mostly made of heuristics. Unlike Eurisko, most of these heuristics were entered by hand. There were also ~100M "cached" results so that Cyc need not infer from scratch every time.
+
+The hardest step is step 1, a project that consumed over 2000 person-years, including the remainder of Lenat's life.
+
+![A sketch of how to reason by backward-chaining together triples in a semantic web. The system is asked basically "Why does Clyde want to possess a crescent wrench?", and it eventually replies "Because Clyde has not eaten lately.". Lenat expected that the ontology of Cyc would eventually power generally intelligent agents, which would use forward-chaining to construct goals from current states, and use backward-chaining to explain why others have their goals. [@wallichSiliconBabies1991]](figure/CYC_triple_reasoning.png)
 
 Even from the vantage point of 1985, it was clear to all that there was a lot of commonsense to code in, although few could have predicted that Lenat would persevere at it for over 30 years.
 
@@ -1637,6 +1781,8 @@ The progress report in 1995 stated that, while the system is far from done, they
 > Moreover, statistics, colocation, and frequency do not resolve such questions. But the task goes from impossible to trivial if one already knows a few things about boxes and pens, police and demonstrators, and water and teakettles. The same sort of chicken-and-egg relationship characterizes CYC and ML because learning occurs at the fringe of what one already knows. Therefore, in the early 1980s, when the rest of the world was so enthusiastic about Natural Language Understanding, Machine Learning, and AI in general, we were pessimistic. We concluded the only way out of this codependency would be to prime the pump by manually crafting a million axioms covering an appreciable fraction of the required knowledge. That knowledge would serve as a critical mass, enabling further knowledge collection through NLU and ML, beginning in the mid-1990s. Mary Shepherd and I embarked on that task in 1984, knowing we had little chance of success, but seeing no alternative but to try... we are now moving toward the transition point where NLU and ML are supported. The rest of the world is disillusioned and pessimistic about symbolic AI, but ironically, as CYC reaches closure, our hopes for NLU and ML in the next 10 years are very high.
 >
 > [@lenatCycLargescaleInvestment1995]
+
+Cycorp regarded the semantic web effort as doing essentially the same thing, except with a less expressive frame language (like Java objects) on a much larger scale. During the 2000s, papers from Cycorp often talked of integrating Cyc with the semantic web by encoding knowledge in RDF, OWL, and XML. Well, in a sense, the Semantic Web did arrive, but instead of the dream of Cyc-like thinkers performing long queries over databases, we have forgetful agent swarms talking with each other with API calls, dying, [REST](https://en.wikipedia.org/wiki/REST)ing, and reincarnating, a game of [*Memento*](https://en.wikipedia.org/wiki/Memento_(film)) on the global scale.
 
 > ... give CYC enough knowledge by the late 1990s to enable it to learn more by means of natural language conversations and reading. Soon thereafter, say by 2001, we planned to have it learning on its own, by automated-discovery methods guided by models or minitheories of the real world. To a large extent, that's just what we did. At the end of 1994, the CYC program was mature enough to spin off from MCC as a new company -- Cycorp -- to commercialize the technology and begin its widespread deployment.
 >
@@ -1662,7 +1808,24 @@ Their "midterm report" only accentuates this sense of tragedy, of seeing them fi
 >
 > We don't believe there is any shortcut to being intelligent, any yet-to-be-discovered Maxwell's equations of thought, any AI Risc architecture that will yield vast amounts of problem-solving power. Although issues such as architecture are important, no powerful formalism can obviate the need for a lot of knowledge.
 >
-> By knowledge, we don't just mean dry, almanac-like or highly domain-specific facts. Rather, most of what we need to know to get by in the real world is prescientific (knowledge that is too commonsensical to be included in reference books; for example, animals live for a single solid interval of time, nothing can be in two places at once, animals don't like pain), dynamic (scripts and rules of thumb for solving problems) and metaknowledge (how to fill in gaps in the knowledge base, how to keep it organized, how to monitor and switch among problem-solving methods, and so on). Perhaps the hardest truth to face, one that AI has been trying to wriggle out of for 34 years, is that there is probably no elegant, effortless way to obtain this immense knowledge base. Rather, the bulk of the effort must (at least initially) be manual entry of assertion after assertion. [@lenatCycMidtermReport1990]
+> By knowledge, we don't just mean dry, almanac-like or highly domain-specific facts. Rather, most of what we need to know to get by in the real world is prescientific (knowledge that is too commonsensical to be included in reference books; for example, animals live for a single solid interval of time, nothing can be in two places at once, animals don't like pain), dynamic (scripts and rules of thumb for solving problems) and metaknowledge (how to fill in gaps in the knowledge base, how to keep it organized, how to monitor and switch among problem-solving methods, and so on). Perhaps the hardest truth to face, one that AI has been trying to wriggle out of for 34 years, is that there is probably no elegant, effortless way to obtain this immense knowledge base. Rather, the bulk of the effort must (at least initially) be manual entry of assertion after assertion. 
+> 
+> [@lenatCycMidtermReport1990]
+
+OpenCyc quietly shut down with no fanfare, probably in 2017-03, with a [curt message](https://web.archive.org/web/20170422212642/http://opencyc.org/):
+
+> Part of the Cyc technology was released, starting in 2001, as OpenCyc, which provided an API, RDF endpoint, and data dump, under appropriate Apache and Creative Commons open source licenses. Its distribution was discontinued in early 2017 because such "fragmenting" led to divergence, and led to confusion amongst its users and the technical community generally that that OpenCyc fragment was Cyc.
+
+
+### Everyone can only see their own dream
+
+> He divided the universe in forty categories or classes, these being further subdivided into differences, which was then subdivided into species. He assigned to each class a monosyllable of two letters; to each difference, a consonant; to each species, a vowel. For example: `de`, which means an element; `deb`, the first of the elements, fire; `deba`, a part of the element fire, a flame. In a similar language invented by Letellier (1850) `a` means animal; `ab`, mammal; `abo`, carnivore; `aboj`, feline; `aboje`, cat; `abi`, herbivore; `abiv`, horse; etc... children would be able to learn this language without knowing it be artificial; afterwards, at school, they would discover it being an universal code and a secret encyclopaedia.
+> 
+> Once we have defined Wilkins' procedure, it is time to examine a problem which could be impossible or at least difficult to postpone: the value of this four-level table which is the base of the language. Let us consider the eighth category, the category of stones. Wilkins divides them into common (silica, gravel, schist), modics (marble, amber, coral), precious (pearl, opal), transparent (amethyst, sapphire) and insolubles (chalk, arsenic). Almost as surprising as the eighth, is the ninth category. This one reveals to us that metals can be imperfect (cinnabar, mercury), artificial (bronze, brass), recremental (filings, rust) and natural (gold, tin, copper). Beauty belongs to the sixteenth category; it is a living brood fish, an oblong one.
+>
+> --- Borges, *The analytical language of John Wilkins*
+
+
 
 ## Robots
 
@@ -1866,12 +2029,17 @@ Winograd in an interview shortly afterwards concurred:
 > 
 > [An Interview with Terry Allen Winograd (1991-12-11)](https://conservancy.umn.edu/server/api/core/bitstreams/a0a8ffa6-0149-4606-88e8-4eec0690d794/content#page=7)
 
+Stephen Wolfram recounted a similar demo-only "AI" in the expert systems boom:
+
+> I happened to be visiting a leading university AI group, who told me they had a system for translating stories from Spanish into English. “Can I try it?” I asked, suspending for a moment my feeling that this sounded like science fiction. “I don’t really know Spanish”, I said, “Can I start with just a few words?” “No”, they said, “the system works only with stories.” “How long does a story have to be?” I asked. “Actually it has to be a particular kind of story”, they said. “What kind?” I asked. There were a few more iterations, but eventually it came out: the “system” translated one particular story from Spanish into English!
+>
+> [@wolframRememberingDougLenat2023]
+
 Philosophically, it seems like the rational methodology of theoretical physics: One has a good theory, which can be checked in a precise experiment in a vacuum. If the observation is as predicted, then one assumes it would simply scale up. Similarly, if a theory, such as neural networks, cannot perform something as simple as testing for connectivity (as [Minsky and Papert argued](https://yuxi-liu-wired.github.io/essays/posts/reading-perceptron-book/index.html#chapter-13)), then that theory is disproven. In this case, systemic grammar was the linguistic theory to be tested, and the blocks world of SHRDLU constituted a laboratory proof. That it never scaled up was a shame, but not something people expected back then.
 
 This focus on toy models, "microworlds", and proofs of concepts, was prevalent, and indeed the best way to obtain knowledge, if one accepts the rational methodology.
 
 ![Marvin Minsky and Builder the robot in a physical blocks world, which could use a camera to detect the shape of blocks in one pile, and replicate it with blocks in another pile. It was a microworld for studying hand-eye coordination. It's hard to tell who is having more fun here.](figure/minsky_robot_arm_blocks.jpg)
-
 
 We know better now. The actual trajectory of AI has destroyed faith this methodology, but why? It is still mysterious, and many still argue that we should not accept this.
 
@@ -2109,6 +2277,38 @@ The industrial revolution produced early ideas of feedback mechanism, such as th
 
 The V-1 looks like a small unmanned jet airplane. It has the following senses: roll (gyro), pitch (gyro), yaw (magnetic compass), altitude (barometer), distance traveled (vane anemometer). The roll, pitch, yaw, and altitude are maintained by negative feedback. So for example, if the missile is heading east to the set-point of yaw, a valve would open, and compressed gas would force the rudder to turn, which yaws the missile west. As soon as the vane anemometer has turned a designated number, the missile considers itself to have reached the target. It turns off the engine and sharply dives to the ground, and explodes upon impact.
 
+```python
+class V1Missile:
+    def __init__(self, target_distance, setpoint_yaw, setpoint_pitch, setpoint_altitude):
+        self.target_distance = target_distance
+        self.setpoint_yaw = setpoint_yaw
+        ...
+        self.engine_active = True
+
+    def read_sensors(self):
+        self.current_roll = read_gyro_roll()
+        ...
+        self.distance_traveled = read_vane_anemometer_distance()
+
+    def control_roll(self):
+        roll_error = self.setpoint_roll - self.current_roll
+        adjust_roll_control_surfaces(roll_error)
+    ...
+
+    def run_guidance(self):
+         if self.distance_traveled >= self.target_distance:
+            self.engine_active = False
+            adjust_dive_control_surfaces()
+            time.sleep(calculate_impact_time(self.current_altitude))
+            explode()
+         else:
+             self.read_sensors()
+             self.control_roll()
+             self.control_pitch()
+             self.control_yaw()
+             self.control_altitude()
+```
+
 Other than V-1 and V-2, there were no autonomous war machines during WWII, though there were several radio-controlled weapons such as [explosive little tanks](https://en.wikipedia.org/wiki/Goliath_tracked_mine) and [little planes for target practice](https://en.wikipedia.org/wiki/Radioplane_OQ-2). Skinner, thinking outside (inside?) the box, worked on [Project Pigeon](https://en.wikipedia.org/wiki/Project_Pigeon). He trained pigeons in skinner boxes to peck at the ship appearing on a screen. If the pigeon is pecking on the top-left, then the missile would turn to the bottom-right. In effect, the pigeon becomes the negative feedback controller. Though it was cancelled, it would have been considerably cheaper than [the Japanese version](https://en.wikipedia.org/wiki/Kamikaze) should it have ever reached production.
 
 <video controls width=100%>
@@ -2204,6 +2404,8 @@ How did it go? Spoiler: massively parallel computers at the teraOPS level succee
 > --- [Gordon Bell](https://en.wikipedia.org/wiki/Gordon_Bell) invoking the [Gods of Straight Lines](https://slatestarcodex.com/2018/11/26/is-science-slowing-down-2/) in 1992 [@bellUltracomputersTeraflopIts1992]
 
 The planners recognized that the most demanding part of AI would be real-time computer vision, so SCI supported three types of massively parallel computers in the hopes that at least one of these would work for vision AI: [SIMD](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data) ([Connection Machines](https://en.wikipedia.org/wiki/Connection_Machine)), [MIMD](https://en.wikipedia.org/wiki/Multiple_instruction,_multiple_data) (the [BBN Butterfly](https://en.wikipedia.org/wiki/BBN_Butterfly)), [systolic array](https://en.wikipedia.org/wiki/Systolic_array) (the [Warp](https://en.wikipedia.org/wiki/WARP_(systolic_array))). Each of these was applied to "low-level vision", meaning that they convert the incoming stream of images into a featurized stream for higher-level logical processing [@weemsParallelProcessingDARPA1991]. Indeed, they estimated that to reach the final objective of "Reconnaissance in a dynamically changing environment. Ability to recognize targets and threats.", they needed a computer that ran at 1 teraOPS with 100 GB of memory.[^teraops-vision] Compared with this, they estimated that speech understanding required just 20 GLIPS (~1 teraOPS if we go by 1 LIPS = 50 OPS), and natural language understanding required a tiny 1 GLIPS. [@stefikStrategicComputingDARPA1985] There is also a vaguer objective of expert systems running 30,000 rules and firing 72,000 rules per second, which implies they expected each rule-firing to trigger 15 logical inferences on average.
+
+Looking back from 2024, this was no coincidence: computer vision drove massively parallel programming in the 1980s, and it drove it again with gaming GPUs in the 2000s, and then again with convolutional neural networks around 2010. In each case, the requirement of "low-level" vision -- parallel processing over millions of pixels, with each pixel affected only by a few neighbors -- favored the "thousands of slow and dumb cores with small local memories, and talking with only neighbors" approach of connection machines in the 1980s, and then again with the modern GPUs. The surprise was simply that how much of vision is "low-level" -- we now have CNNs performing many "high-level" tasks like segmentation, height maps, object recognition, etc, with nary a global operation, feedback, or symbolic reasoning. The lesson I would take is that it is really hard to tell, without trying to make a machine to do it, whether a task is "high level" or "low level", and it is increasingly likely that there are no high level tasks.
 
 [^teraops-vision]: Interestingly, [AlexNet](https://en.wikipedia.org/wiki/AlexNet) ran on two Nvidia GTX 580 with theoretical peak performance 1.6 TFLOPS. In [*When will computer hardware match the human brain?*](https://yuxi-liu-wired.github.io/docs/posts/1998-hans-moravec/), Hans Moravec argued that 10 MIPS for 1 hour is necessary for finding 3D objects in a cluttered bin well enough to pick the objects up, that is, to perform the [bin picking](https://en.wikipedia.org/wiki/Bin_picking) task. This translates to 36 GFLOPS for real-time vision. The 2022 SOTA vision system `OpenAI CLIP ViT-L/14` requires 150 GFLOP per forward pass, according to the formula from [Casson](https://www.adamcasson.com/posts/transformer-flops), so it requires 4 TFLOPS for real-time vision at 24 fps. All in all, the 1 TFLOPS estimate was so remarkably accurate for 1982.
 
@@ -2555,7 +2757,9 @@ Now, when Chomsky took a look at GPT-4, all he saw was another "success as appro
 
 [^blurry-jpeg]: Some critics of recent large models, like Ted Chiang's "blurry jpeg of the Internet", and Emily Bender's "stochastic parrot", are analogous to the Chomskyan critique of "success as approximating unanalyzed data". And Gary Marcus has been a committed Chomskyan since the 1990s, so analyzing his criticisms of AI in the Chomskyan framework is left as an exercise for the reader. Indeed, they had been much less circumspect compared to Chomsky, since they had been predicting the imminent *empirical* failure of large models at performance because of their lack of *rational* competence.
 
-The influence of Chomsky had been immense, both in linguistics and psychology. Chomskyan linguistics is the theoretical foundation to early MT systems like Vanquois'. In psychology, his approach became "cognitivism" or "cognitive psychology". And the AI of languages became the place where rationalism and empiricism approaches fought. 
+The influence of Chomsky had been immense, both in linguistics and psychology. Chomskyan linguistics is the theoretical foundation to early MT systems like Vanquois', ASR systems like Hearsay, and chatbot language parsers like SHRDLU. In psychology, his approach became "cognitivism" or "cognitive psychology". And the AI of languages became the place where rationalism and empiricism approaches fought. 
+
+![The grammar parsing network of the LUNAR system, an early expert system used by NASA to allow users to query its moon rocks database in constrained natural English. The graph (an [augmented transition network](https://en.wikipedia.org/wiki/Augmented_transition_network)) was automatically compiled from a Chomskyan generative grammar, and performs efficient parsing. [@batesTheoryPracticeAugmented1978, figure 9]](figure/LUNAR_grammar_ATN.png)
 
 |                           | Rationalism                      | Empiricism                      |
 | ------------------------- | -------------------------------- | -------------------------------- |
@@ -2592,6 +2796,19 @@ The higher levels then use this sketch to construct a full 3D model of the scene
 
 :::
 
+Cognitivism as a *general* program for AI had been mainly championed by Marvin Minsky, whose [criticism of neural networks](https://yuxi-liu-wired.github.io/essays/posts/perceptron-controversy/) is well-known. He thought expert systems would be the way forward, if only they could pool their efforts instead of starting from scratch each time -- much as Feigenbaum's dream of a "Library of Congress" knowledge base. Lenat's Cyc project was the only one on the right road to AI.[^minsky-brooks]
+
+[^minsky-brooks]:
+    Minsky was particularly annoyed by Rodney Brooks, whose sub-symbolic approach to intelligence ("subsumption architecture") must have reminded Minsky too much of the empirical trial-and-error approach of neural networks.
+
+    > "The worst fad has been these stupid little robots," said Minsky. "Graduate students are wasting 3 years of their lives soldering and repairing robots, instead of making them smart. It's really shocking." "Marvin may have been leveling his criticism at me," said Rodney Brooks, director of the MIT Artificial Intelligence Lab, who acknowledged that much of the facility's research is robot-centered.
+    > 
+    > [@baardAIFounderBlasts2003]
+
+> "AI has been brain-dead since the 1970s," said AI guru Marvin Minsky in a recent speech at Boston University... Minsky has spent much of his career studying "commonsense reasoning" – the ability of a computer to grasp the everyday assumptions that human beings take for granted. Unfortunately, the strategies most popular among AI researchers in the 1980s have come to a dead end, Minsky said. So-called "expert systems," which emulated human expertise within tightly defined subject areas like law and medicine, could match users' queries to relevant diagnoses, papers and abstracts, yet they could not learn concepts that most children know by the time they are 3 years old. "For each different kind of problem, the construction of expert systems had to start all over again, because they didn't accumulate common-sense knowledge."
+>  
+> [@baardAIFounderBlasts2003]
+
 Outside of linguistics and abstract science, Chomskyan ideas appeared as "[structuralism](https://en.wikipedia.org/wiki/Structuralism)" of [Claude Lévi-Strauss](https://en.wikipedia.org/wiki/Claude_L%C3%A9vi-Strauss). As an example, the Kareira society was divided into 4 sections: Banaka (0), Karimera (1), Burung (2), Palyeri (3). A Banaka man can only marry a Palyeri woman, and their children will be Karimera. In total, we have a table:
 
 | father | mother | child |
@@ -2610,9 +2827,7 @@ This structure has the following good properties:
 
 Lévi-Strauss found many such recurring structures across human societies, and proposed to analyze human mythologies with the same method as well (a pinnacle example was [*The Hero with a Thousand Faces*](https://en.wikipedia.org/wiki/The_Hero_with_a_Thousand_Faces) which literally proposed a single structure for all human mythologies). This then got picked up by sociologists and commentators, followed by the "post-structuralists" who had even less to contribute to AI than Dreyfus.
 
-### David Marr
-
-### The Sub-symbolic Hypothesis
+### The Anti-symbolic Hypothesis
 
 > ... we had two major misconceptions: first, that learning is a *problem* rather than a *solution*. If back at the beginning you asked an AI researcher what the major problem areas in the field were, they would have listed computer vision, inference, knowledge representation, understanding language, ... and learning. You would no more set out to translate between languages by writing a program to learn how to do so than you would create a rocket that learned to go to the moon. When put that way, it seems like common sense, but it is wrong. Our second big mistake was our allegiance to the physical symbol hypothesis... Newell and Simon were the first to state this explicitly, but ... virtually everyone believed it at that time--certainly your author.
 >
@@ -2651,6 +2866,16 @@ From our vantage point, chess ended up falling to the heuristic search of DeepBl
     > The commonsense knowledge problem, which as Minsky says, stopped AI in the early 70ies, has never been solved; except for Lenat it has just been ignored. Yet Chalmers assumes incremental progress and confidently asserts that "Given the way that computer technology always advances, it is natural enough to think that once there is AI, AI? will be just around the corner." But that just is the first step fallacy. AI is always just round the corner but, as Chalmers himself admits, never succeeds in turning that corner. There is, in fact, *no reason to think that we are making progress towards AI or, indeed, that AI is even possible, in which case claiming incremental progress towards it would make no sense.*
     > 
     > [@dreyfusHistoryFirstStep2012]
+
+Among those that Dreyfus convinced was Terry Winograd, the one who made SHRDLU. He gave up on logical AI research as a mistaken direction based on a mistaken philosophy of rationalism, and aimed to *dissolve* the problems as being morally not worth answering. Instead of rationalism and making machines that think, they proposed phenomenology ([Heidegger](https://en.wikipedia.org/wiki/Martin_Heidegger) and [Gadamar](https://en.wikipedia.org/wiki/Hans-Georg_Gadamer)) and making machines that help humans.
+
+> In the course of developing a new understanding we came across questions that have long been the subject of debate, such as "Can computers think?", "Can computers understand language?", and "What is rational decision-making?" We address these questions not so much to solve them as to *dissolve* them. They arise in a background of understanding about human thought and language, a background that itself needs to be reexamined and revised. In the end, we are not concerned with providing new answers to questions about technology as they have traditionally been posed. We look towards new questions that can lead to the design and use of machines that are suited to human purposes.
+> 
+> ...
+> 
+> Much of our theory is a theory of language, and our understanding of the computer centers on the role it will play in mediating and facilitating linguistic action as the essential human activity. In asking what computers can do, we are drawn into asking what people do with them, and in the end into addressing the fundamental question of what it means to be human. 
+>
+> [@winogradUnderstandingComputersCognition1987]
 
 [Douglas Hofstadter](https://en.wikipedia.org/wiki/Douglas_Hofstadter) raised a similar objection, but from within the logical AI tradition. His essential point was that logical AI, as conceived by Simon and Newell, is a closed system. For example, a chess computer might play a perfect chess even when the room is on fire. The concept of fire, or indeed anything that is beyond the mathematical strucure of chess, does not feature in the computer's symbolic universe, and so it does not exist for the computer.[^holt-chess-fire] Whereas Dreyfus argued that intelligence is open by the "cotton candy" of phenomenology, sieging the head from the outside in, Hofstadter used the Gödel incompleteness theorems to break the head open, from the inside out.
 
