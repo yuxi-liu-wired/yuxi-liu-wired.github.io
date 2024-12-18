@@ -21,35 +21,134 @@ Many years later, surrounded by the humming servers of the knowledge base, Dougl
 
 ## Automated Mathematician
 
-AM occurred in the context of many "automated discovery" systems in the 1970s. In general, such a system begins with some simple rules that allow the system to a low score according to some criteria. and as it runs, it builds, prunes, and modifies the rules, so that in the end, its rule set allows it to achieve a high score.
+Lenat's first claim to fame was the Automated Mathematician (AM), which became a minor legend. It occurred in the context of many "automated discovery" systems in the 1970s. Neural networks and other "self-organized" machine learning methods have mostly [died out in the 1960s](https://yuxi-liu-wired.github.io/essays/posts/perceptron-controversy/), but machine learning did not die, and indeed, was going through its first spring, under the name "automated discovery".
 
-| Planet  | $p$   | $d$   | $d/p$  | $d^2/p$ | $d^3/p^2$ |
-| :------ | :-- | :-- | :--- | :---- | :------ |
-| Mercury | 1   | 1   | 1.0  | 1.0   | 1.0     |
-| Venus   | 8   | 4   | 0.5  | 2.0   | 1.0     |
-| Earth   | 27  | 9   | 0.33 | 3.0   | 1.0     |
+Nowadays, when we think of "machine learning", we think of random forests, neural networks, and such. But back then, machine learning was understood as "logical AI gone meta". Simon and Newell, the two giants of logical AI, showed the way: logical AI is heuristic search. 
+
+* To play chess, one simply write a program that does alpha-beta search over the game tree, guided by heuristics of piece-worth, mobility, and such.
+* To solve planar geometry problems, one simply write a program that construct a path in the space of reasons, until one connects the axioms with the conclusions.
+* To solve problems of type X, one simply write a program that can move through the space of possible solutions to X, and code in the heuristic rules, its north star, so that it will not be lost in the space of solutions.
+
+Well, chess is a game, and so is Euclidean geometry, symbolic integration, and... perhaps scientific discovery itself? The famed scientific method, to deserve the name "method", ought to be one more problem for logical AI to solve.
+
+During 1977--1983, Pat Langley wrote a series of programs named BACON, after [Francis Bacon](https://en.wikipedia.org/wiki/Francis_Bacon), a father of scientific empiricism. It purported to discover scientific laws from mere data. For example, when given a table of the moles $N$, pressures $P$, volumes $V$, and temperatures $T$ of gas samples, BACON would first try out simple equations involving two of the terms. It would discover that the data for $PV$ appears more "clusterly" than either $P$ or $V$, so it makes a new quantity $PV$, and add that to the table. It then repeat this process, discovering that $PV/T$ is an interesting quantity, and finally discovers that $PV/NT$ is a *constant* quantity -- the ideal gas law discovered! [@langleyDataDrivenDiscoveryPhysical1981]
+
+In the logical AI framework, the problem space of BACON is the space of all elementary functions involving the table columns, and a *solution* is a (nontrivial) function that results in a nearly constant column. At each step, the program tries out simple combinations of the current columns, and heuristically pick the one most nearly constant.
+
+As another example, the famed Meta-Dendral was a further development of Dendral. With Dendral, the problem space is the space of possible molecular cleavages and atomic transfers, and the heuristics are the chemical rules for plausible and implausible cleavages and transfers. For example, it is plausible for a protein to be cleaved at the `-CO-*-NH-` peptide bond, but implausible to be cleaved at the double bond between `C` and `O`. The goal is, given molecular spectroscopic data for a single molecule, construct a molecular structure and a sequence of cleavages and transfers, such that it would produce the data. 
+
+With Meta-Dendral, the problem space becomes the space of possible chemical rules, and the goal is to find plausible rules (plausible according to heuristic meta-rules) that can explain a large collection of molecular structures and their spectroscopic data. Meta-Dendral proved useful for workig chemists by discovering some cleavage rules for a family of [steroids](https://en.wikipedia.org/wiki/Steroid). For details, see my essay on [TODO](TODO).
+
+In general, such a system begins with some simple rules that allow the system to a low score according to some criteria. and as it runs, it builds, prunes, and modifies the rules, so that in the end, its rule set allows it to achieve a high score. The following tabulates a few [@walkerHowFeasibleAutomated1987]:
 
 | System Name | Date | Task | Data | Rules | Discovery Method |
 |---|---|---|---|---|---|
-| Meta-Dendral | 1976 | Discovering molecular fragmentation rules for mass spectrometry | Descriptions of molecules (training set) and their mass spectra | Rules of how molecules break into fragments | Heuristic search for similar structures around bonds that break, inferring plausible fragmentation rules (model-driven, generate-and-test search of the rule space) |
-| Bacon | 1977--1983 | Replicating the finding of mathematical relationships (e.g., Ohm's law, Kepler's third law) | Numeric data from experiments | Heuristic rules to process data, formulate hypotheses, define theoretical terms, and postulate intrinsic properties | Search data for constancies, trends, common divisors, constant differences, and other mathematical relations |
-| Prospector | 1978 | Assisting geologists in mineral exploration, predicting the location of ore deposits | Digitized maps indicating rock types, rock ages, copper concentrations in soil samples, etc. | Geological knowledge encoded as if/then rules with certainty measures | Forward chaining of rule 
-| RX | 1982 | Discovering previously unknown medical relationships, specifically drug side effects | Patient information database | Medical relationships, statistical methods | Correlate each attribute in the database with every other attribute, with different time lags. Pass relationships with greatest statistical value to Study Module. |
-| Radix | 1986 | Discovering previously unknown medical relationships | Patient information database | Medical knowledge | Use medical knowledge to focus discovery |
+| Meta-Dendral | 1976 | Discover molecular cleavage and transfer rules for mass spectrometry | Molecular structures and their spetra | Molecular cleavage and transfer rules | Use meta-heuristic rules to generate possible rules, and test on data |
+| Bacon | 1977--1983 | Discover physical laws | Numeric data from experiments | Elementary functions | Symbolic regression |
+| RX | 1982 | Discover drug side effects and interactions | Patient information database | Drug effect and interaction rules | Symbolic regression with time-lag |
 
+Out of this context, AM is different. It is still a logical AI with a problem space and a heuristic search. However, there is no data: It is mostly "self-play". Lenat would begin by entering 115 concepts in set theory and ~300 heuristic rules, and AM would just keep running, discovering more and more constructions are uninteresting, but a few would be interesting, and these interesting constructions would be stored, allowing further constructions upon them. It was a minor legend, since it reportedly rediscovered many concepts, such as natural numbers, prime numbers, and the Goldbach conjecture.
 
-> AM started with 78 basic concepts such as mathematical sets and 243 “rules of thumb” for making hypotheses, judging the intellectual value of its discoveries on a scale of 0 to 1,000, and so on. If it found something intriguing, such as multiplication, it looked for its inverse, thus discovering division... Eventually, AM acquired an uncommon ailment for a computing system: intellectual exhaustion. Having explored the esoteric reaches of mathematics, AM suddenly downshifted into a preoccupation with rudimentary arithmetic. Finally, with the remark, “Warning! No task on the agenda has priority over 200,” the system virtually expired, as though from boredom.
+A **concept** is essentially a [frame](https://en.wikipedia.org/wiki/Frame_(artificial_intelligence)), which are essentially objects in [object-oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming). A concept has 25 possible **facets**, which are "slots", or "data fields". The following is an example concept with many facets populated:
+
+- NAME: Prime Numbers
+- DEFINITIONS:
+    - ORIGIN: Number-of-divisors-of(x) = 2
+    - PREDICATE-CALCULUS: Prime(x):= $(\forall z)(z | x \to z = 1 \wedge z = x)$
+    - ITERATIVE: (for x>1): For i from 2 to $\sqrt x,\neg(i | x)$
+- EXAMPLES: 2,3,5,7,11,13,17
+    - BOUNDARY: 2, 3
+    - BOUNDARY-FAILURES: 0,1
+    - FAILURES: 12
+- GENERALIZATIONS: Nos., Nos. with an even number of divisors, Nos. with a prime number of divisors.
+- SPECIALIZATIONS: Odd Primes, Prime Pairs, Prime Uniquely-addables
+- CONJECTURES: Unique factorization, Goldbach's conjecture, Extremes of Number-of-divisors-of
+- INTUITIONS: A metaphor to the effect that Primes are the building blocks of all numbers
+- ANALOGIES:
+    - Maximally-divisible numbers are converse extremes of Number-of-divisors-of
+    - Factor a non-simple group into simple groups.
+- INTEREST: Conjectures tying Primes to TIMES, to Divisors-of, to closely related operations
+- WORTH: 800
+
+AM has an **agenda**, a list of **tasks** along with their **reasons**. Each task is of form "Do operation A to facet F of concept C". A task's **worth** is the sum of its reasons' worths. AM always performs the task with the highest worth.
+
+To perform a task, AM looks for **heuristic rules** whose conditions are (mostly) satisfied, and whose worth is (pretty) high. Each heuristic rule is of form "if `<condition>`, then run `<actions>`". Each action has 3 kinds of possible effects:
+
+- Add a new task to agenda.
+- Create a new concept.
+- Add or delete an entry to a facet of a concept.
+
+Some example heuristic rules:
+
+- If the task is to fill in examples of X, and X is a special case of Y, then for each example of Y, check if it a definition of X. If so, then add it to the list of examples of X.
+- If some but not most examples of X are also examples of Y, then create a new concept "X and Y".
+- If very few examples of X are found, then add the following task to the agenda: "Generalize the concept X", for the following reason: "X are quite rare; a slightly less restrictive concept might be more interesting".
+
+At this point, the careful reader would notice several problems:
+
+How does AM know that the concept should be called "Prime Numbers"? Ah, that's because Lenat would regularly interrupt and inspect AM, and if Lenat notices that AM has rediscovered, say, prime numbers, he would rename that from something like `concept-421` to `prime-numbers`.
+
+To discover prime numbers, AM must have a way to check if a Lisp object is a prime number or not. That is, the definition must also be a program. Ah, the famous [homoiconicity](https://en.wikipedia.org/wiki/Homoiconicity) of Lisp came to the rescue! A definition, as stored within a facet of a concept, is a data, but for Lisp, data is program, and program data. Consequently, AM can run a subroutine that enumerates possible programs *as data*, and for each, interpret it *as program*, until AM hits upon a program that works (or times out). 
+
+How does it check that two definitions actually define the same thing? In general, this is impossible by [Rice's theorem](https://en.wikipedia.org/wiki/Rice's_theorem), so Lenat must have used some heuristic rules. I looked, but can't find Lenat explaining this anywhere. It seemed like a trick of the hand.
+
+If we look carefully at the example heuristic rules, then something odd happens. The heuristic rule "If some but not most examples of X are also examples of Y, then..." just talks about X and Y, but what is the context? Compare this with "If the task is to fill in examples of X, and X is a special case of Y, then...", where X is specified by the context "the task is to fill in examples of X". Now, we might be charitable and assume Lenat made a slip. However, there are even vaguer rules: "Formulate a parameterized conjecture, a 'template', which gets slowly specialized or instantiated into a definite conjecture". 
+
+The issue came to a head with the publication of [@ritchieAMCaseStudy1984], which argued that AM was badly documented. The control structure probably was not "simply pick the task with the highest worth", but more complicated. Some crucial *quantitative* heuristic rules were probably hidden behind vague *qualitative* words like "A nonconstructive existence conjecture is interesting". The source code was unpublished and not available for other researchers for reproduction.
+
+In short, because of the various issues, AM was a thing that happened, but not a thing that could be built upon. One cannot build upon it directly in source code, since it's unavailable. One cannot build upon it by reimplementing the pseudocode, since the rules were vaguely specified, and the control structure was probably wrong. One cannot build upon it by reimplementing the high-level ideas, since it's unclear which part, out of the several dozen tightly integrated parts of AM, was responsible for AM's good outputs, and which were just implementation details. (In our language, there was no ablation study.)
+
+Lenat quickly replied with [@lenatWhyAmEurisko1984]. He dismissed the criticism as mostly miscommunication, and went on to describe the *real* lesson of AM. If I were to be dab, Lenat was saying that it is fine for AM's source,[^am-source-code] or even pseudocode, to be unavailable, because Lenat had learned the lessons, and you, dear reader, need only listen to the lessons from him.
+
+> The AM thesis never explained, precisely, how concepts such as 'not very often' and 'related to' were implemented. By and large, these omissions were due to the fact that the code Lenat wrote for these predicates was quite trivial... inevitable, yet regrettable process of simplifying large pieces of code, translating them to brief English phrases. This process left out many exceptional cases, and made the English condensations less accurate... Some problems that Ritchie and Hanna cite... are simply errors of mis-reading what was stated in the thesis or articles... A few of the problems raised in Ritchie and Hanna's article are, annoyingly, genuine inconsistencies in the thesis document, such as whether or not facets had subfacets. These reflect the fact that AM was a running and evolving program, changing daily in small ways even as the thesis document was being written... the changes in representation were driven simply by AM'S running out of list space in 1975 [INTERLISP](https://en.wikipedia.org/wiki/Interlisp) code; we were forced to shift representations time and time again just to gain a few hundred precious list cells.
+>
+> [@lenatWhyAmEurisko1984]
+
+[^am-source-code]: Though Lenat admitted that "the code ought to have been provided", he would never publish the code, not with AM, nor with Eurisko. He had often claimed it had been long lost, yet the source code for AM and Eurisko had [recently been found](https://white-flame.com/am-eurisko.html), right where it should be -- the [DBL folder in the Stanford AI Laboratory backup data](https://www.saildart.org/DBL). It could only be found because Lenat had died, thus releasing the password protection on the folder. I wonder if Lenat had lied, and simply wished to protect his source code.
+
+And what are the lessons?
+
+First lesson: AM exhausts itself. Roughly speaking, each new interesting discovery depends on ~24 heuristics, and each heuristic has a hand in ~24 discoveries. Therefore, with ~N heuristic rules, there would be ~N interesting discoveries. Because AM cannot discover heuristic rules, with ~300 starting heuristic rules, it would run out of interesting discoveries and "die of boredom". Lenat could help AM by adding new heuristics, and AM would make some new discoveries, but this never lasted.
+
+> Eventually, AM acquired an uncommon ailment for a computing system: intellectual exhaustion. Having explored the esoteric reaches of mathematics, AM suddenly downshifted into a preoccupation with rudimentary arithmetic. Finally, with the remark, “Warning! No task on the agenda has priority over 200,” the system virtually expired, as though from boredom.
 >
 > [@hiltzikBirthThinkingMachine2001]
 
+Second lesson: Representation matters a lot. AM works so well, because AM uses Lisp code as data. Lisp is the perfect tool if you want to search over the space of interesting mathematical functions. You can modify a Lisp expression, and get a different mathematical function that is possibly interesting. In contrast, if you modify an assembly code, you'd most likely end up with nonsense. Indeed, Lenat found that he could not extend AM to "go meta" and discover new heuristics, because Lisp is good for math, not "heuretics" (the study of heuristics). Modifying a Lisp expression for a heuristic most likely ends up with nonsense, much like assembly code.
+
+> It was only because of the intimate relationship between LISP and Mathematics that the mutation operators (loop unwinding, recursion elimination, composition, argument elimination, function substitution, etc.) turned out to yield a WHY AM AND EURISKO APPEAR TO WORK 273 high 'hit rate' of viable, useful new math concepts when applied to previously- known, useful math concepts--concepts represented as LiSP functions. But no such deep relationship existed between LISP and Heuretics, and when the basic automatic programming (mutations) operators were applied to viable, useful heuristics, they almost always produced useless (often worse than useless) new heuristic rules.
+>
+> ...
+> 
+> We did not perceive until writing this paper that the way in which Similar-To, Not-Often, Notice-Regularity, and scores of other 'primitives' were coded do themselves embody a large amount of heuristic knowledge. We exploited the structure of (or, if you prefer, partially encoded) the domain of elementary mathematics, in the process of making trivial yet adequate usP versions of those extremely complex and subtle notions (such as similarity of concepts).
+>
+> [@lenatWhyAmEurisko1984]
+
+Third lesson: There is no free lunch. Intelligence is a lot of work. You need to put in the right representational language for reasoning and discovery -- not just Lisp, but a lot more. You need to put in a lot of loosely organized, kind of correct heuristic rules -- not just a few eternal truths of discovery. You need to put in a lot of facts. You need to interact with the program, to help it along and to be helped along, not just to .
+
+Fourth lesson: Intelligence is messy. Some might wish for a neat unitary framework for intelligence, and point at the messiness of AM's ~300 heuristic rules as a failing, but we should take it as strength and embrace the messiness.
+
+> The apparent adhoc-ness in both the heuristics' content themselves, and in the control knowledge guiding the application of those heuristics, is clearly the source of many methodological objections to the work. But we believe that this adhocracy -- indeed, adhocracy controlling adhocracy -- may be the source of EURISKO'S underlying potential especially as a model for cognition.
+>
+> [@lenatWhyAmEurisko1984]
+
+How do we know that Lenat learned the lessons? Introducing... Eurisko.
 
 ## Eurisko
 
 AI alignment people often tell the legend of Eurisko, a program that discovered loopholes in a sci-fi ship-building tournament, allowing its creator to win two years in a row.
 
-> AI has for many years understood enough about representation and inference to tackle this project, but no one has sat down and done it... only by pulling together the latest human interface tools, Lisp machines, ideas of enforced semantics, and funding for a decade-long effort could we attempt a project of this scale. [@lenatCycUsingCommon1985]
-
 ![The only known image of Eurisko reasoning about the Traveller game, probably on the Xerox 1100 Lisp machine. The GUI probably was in [Genera](https://en.wikipedia.org/wiki/Genera_(operating_system)). Lenat claimed Eurisko ran for 1300 CPU-hours in total. [@lenatComputerSoftwareIntelligent1984]](figure/Eurisko_GUI.png)
+
+In his review article, Lenat made a brief philosophical comment that Eurisko is the new perceptron:
+
+> ... the paradigm underlying AM and EURISKO may be thought of as the new generation of perceptrons, perceptrons based on collections or societies of evolving, self-organizing, symbolic knowledge structures. In classical perceptrons, all knowledge had to be encoded as topological networks of linked neurons, with weights on the links. The representation scheme being used by EURISKO provides much more powerful linkages, taking the form of heuristics about concepts, including heuristics for how to use and evolve heuristics. Both types of perceptrons rely on the law of large numbers, on a kind of local-global property of achieving adequate performance through the interactions of many small, relatively simple parts.
+> 
+> The classical perceptrons did hill-climbing, in spaces whose topology was defined explicitly by weights on arcs between nodes (nodes which did straightforward Boolean combinations plus thresholding). The EURISKO style of system does hill-climbing at both the object- (performance-program) and meta- (control decision) levels, in spaces whose terrain is defined implicitly, symbolically, by the contents of the nodes (nodes which are full-fledged concepts, at both object- and meta-levels). The new scheme fully exploits the same source of power (synergy through abundance) yet it is free from many of the limitations of the classical perceptron scheme.
+> 
+> [@lenatWhyAmEurisko1984]
+
+If this sounds familiar, it is because this Lenat had the same idea as Marvin Minsky, and he was writing in 1984, at the second coming of neural networks. Minsky would soon write his *Society of Mind* (1986), and [re-reject neural networks by writing a long epilogue](https://yuxi-liu-wired.github.io/essays/posts/perceptron-controversy/#minsky-and-papert-struck-back) to his infamous *Perceptrons* (1969), often blamed for the first neural network winter. Indeed, Lenat's objection to neural networks was essentially the same as Minsky's, if you compare that with Minsky's epilogue. Lenat's approach to Cyc was the same as the Society of Mind of Minsky. Reciprocating, Minsky had often called the field of AI "brain-dead", holding Lenat's Cyc as the only one worth mentioning. [@baardAIFounderBlasts2003]
 
 ## 10 million common senses
 
@@ -58,6 +157,10 @@ AI alignment people often tell the legend of Eurisko, a program that discovered 
 > **microLenat**: The unit of bogosity. Abbreviated µL or mL in ASCII. Consensus is that this is the largest unit practical for everyday use. The microLenat, originally invented by David Jefferson, was promulgated as an attack against noted computer scientist Doug Lenat by a tenured graduate student at CMU. Doug had failed the student on an important exam because the student gave only "AI is bogus" as his answer to the questions. The slur is generally considered unmerited, but it has become a running gag nevertheless.
 >
 > --- [The Jargon File](http://www.catb.org/jargon/html/M/microLenat.html)
+
+> AI has for many years understood enough about representation and inference to tackle this project, but no one has sat down and done it... only by pulling together the latest human interface tools, Lisp machines, ideas of enforced semantics, and funding for a decade-long effort could we attempt a project of this scale.
+> 
+> [@lenatCycUsingCommon1985]
 
 In 1984, [Douglas Lenat](https://en.wikipedia.org/wiki/Douglas_Lenat) began the Cyc project, an ambitious attempt to scale symbolic AI up to the real world. Like most expert systems, the Cyc project consists of a giant knowledge base that encodes all of common sense, upon which inference engines run. Unlike most expert systems, the ambition of Cyc was universal: Its knowledge base would not be restricted to expert knowledge in a particular domain, but *all* commonsense knowledge in *all* domains that humans have commonsense about.
 
@@ -233,7 +336,7 @@ In the 1990s, as the expert system hype died down, he turned his criticism towar
 
 Generalizing, Lenat argued that there is a common thread across all these machine learning systems. They would all start out discovering many interesting basic things, but quickly "run out of steam" enumerating boring complications. Lenat called it having a "veneer of intelligence", but were really just "discharging potential energy that was stored in them". That is, the creators secretly put into the program with their own expert knowledge somehow, either through the right rules, heuristics, dataset, features, or some other thing. Once the expert knowledge is "exhausted", no more discoveries could be made. However, it makes for impressive demos, leading to hype-and-disappointment cycles. The only escape is to prime the knowledge pump. If the knowledge base is large enough, then it wouldn't run out of steam. [@lenatVoiceTurtleWhatever2008]
 
-Lenat's approach was unwelcome from the academics, and the feeling was mutual. AI researchers thought the Cyc project was hyped, and was unhappy with the secretive nature of Cycorp. Philosophers considered the Cyc project premature -- how could Lenat build an ontology for the world when philosophers haven't even figured out what the ontology is? Lenat shot back, calling academics lazy, abstract, and unable to persist through decades of hard engineering work. [@thompsonKnowItAllMachine2001] Among the academics, the only one that still supported him was Marvin Minsky, who had no problem calling AI research "brain-dead since the 1970s", especially robotics: "Graduate students are wasting 3 years of their lives soldering and repairing robots, instead of making them smart.". [@baardAIFounderBlasts2003]
+Lenat's approach was unwelcome from the academics, and the feeling was mutual. AI researchers thought the Cyc project was hyped, and was unhappy with the secretive nature of Cycorp. Philosophers considered the Cyc project premature -- how could Lenat build an ontology for the world when philosophers haven't even figured out what the ontology is? Lenat shot back, calling academics lazy, abstract, and unable to persist through decades of hard engineering work. [@thompsonKnowItAllMachine2001] Among the academics, the only one that still supported him was Marvin Minsky, who had no problem calling the rest of AI research "brain-dead since the 1970s", especially robotics: "Graduate students are wasting 3 years of their lives soldering and repairing robots, instead of making them smart.". [@baardAIFounderBlasts2003]
 
 During this period, there were two main challengers to his idea of a monolithic logical system. On the one side, there was the challenge of bottom-up non-symbolic reasoning promoted by Rodney Brooks' subsumption architecture [@brooksElephantsDonPlay1990], and the statistical machine learning methods like support vector machines. He did not have much to say about the statistical methods -- not yet -- but he did reject the subsumption architecture as a mistaken attempt to reach AGI through robotics, much as Minsky did. Motors, sensors, etc, are simply not needed -- common sense, specified in logical language, is all you need. 
 
