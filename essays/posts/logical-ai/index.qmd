@@ -1,0 +1,715 @@
+---
+title: "Logical AI"
+author: "Yuxi Liu"
+date: "2024-12-23"
+date-modified: "2024-12-23"
+categories: [AI, scaling, history]
+format:
+  html:
+    toc: true
+description: "Good Old-Fashioned AI never die. They just fade away."
+
+# image: "figure/banner.png"
+status: "wip"
+confidence: "likely"
+importance: 5
+---
+
+{{< include ../../../utils/blog_utils/_macros.tex >}}
+
+## Abstract
+
+Talk about the scale-first viewpoint.
+
+DARPA was behind everything in AI.
+
+## The gears of logic
+
+Logic originated in the early Greek studies on language. Aristotle's logic, the syllogism, won out and became *the* logic in the Western world until the 19th century. In our modern language (first-order predicate logic), the syllogism is a logic system that allows only the following 4 kinds of sentences:
+
+$$
+\forall x \in b : (x \in a); \exists x \in b : (x \in a); \neg\forall x \in b : (x \in a); \neg\exists x \in b : (x \in a)
+$$
+
+For example, "All birds are animals." would be $\forall x \in \text{Bird} : (x \in \text{Animal})$. An inference has two premise sentences and one conclusion sentence. Aristotle enumerated all possible such inferences and found that there are just 14 valid inferences, starting with
+
+$$
+\forall x \in b : (x \in a), \forall x \in c : (x \in b)\vdash \forall x \in b : (x \in a)
+$$
+
+and ending with 
+
+$$
+\neg \forall x \in c : (x \in a), \exists x \in c : (x \in b) \vdash \neg \forall x \in b : (x \in a)
+$$
+
+And Western logic stood there essentially unchanged until the 19th century with the invasion of the mathematicians. While nowadays logic is understood as *mathematical* logic, it was understood as a philosophical subject back then, as a kind of mental callisthenics training for making convincing verbal arguments. Students would get the 14 rules drilled into their heads using catechisms. Logic was theo-logic. Boole's great innovation was essentially symbolic: The tedious sentence of "Some b are not a" gets converted to a single formula $b(1-a) \neq 0$, opening it up for algebraic manipulation, mindless and soon electro-mechanical. The Whitehead of "Whitehead and Russell" had this to say about the power of mindlessness:
+
+> It is a profoundly erroneous truism, repeated by all copy-books and by eminent people when they are making speeches, that we should cultivate the habit of thinking of what we are doing. The precise opposite is the case. Civilization advances by extending the number of important operations which we can perform without thinking about them. Operations of thought are like cavalry charges in a battle -- they are strictly limited in number, they require fresh horses, and must only be made at decisive moments.
+>
+> --- Alfred North Whitehead
+
+Some limited and waning memory of John Robinson persists in the textbooks on AI, amongst the effusive variables and in the illusory depths of the predicates. In his lifetime, he labored under obscurity but for one season, as do so many logicians; once dead, he is not even the ghost he was then.
+
+In 1965, he published the Robinson resolution method, an algorithm for performing logical inferences in first-order logic. It was refutation-complete, meaning that if a set of statements cannot all be true, then it will derive a contradiction in exponential time. This allows one to prove $p_1, p_2, \dots, p_n \vdash q$ by deriving a contradiction from $p_1, p_2, \dots, p_n, \neg q$. (What of Gödel-incompleteness? If $p_1, p_2, \dots, p_n \not\vdash q$, then Robinson resolution might run forever.)
+
+![Example of using Robinson resolution to prove that Marcus hated Caesar, by assuming not, and deriving a contradiction. (Illstrative only. The Marcus does not match the historical Marcus Brutus.) [@lenatComputerSoftwareIntelligent1984]](figure/logic_resolution_example_tree.png)
+
+Feigenbaum was unimpressed: “It’s very awkward to translate your knowledge of a task domain into predicate calculus, and the difficulty of doing it is exceeded only by the awkwardness of how it looks after you’ve done it.” [@mccorduckMachinesWhoThink2004, page 255] However, many AI researchers were deeply impressed, and a brief AI race was on:
+
+> It seemed as if McCarthy’s dream of a uniform problem solver had been realized, and a rush to Resolution was on. Several of McCarthy’s graduate students went to work applying Robinson’s method to the world of facts... But all this effort eventually collapsed. It seemed that the Robinson method generated search spaces as large as ordinary heuristic methods. There was no way by which the Resolution Method theorem provers could use real-world facts to constrain those spaces. 
+> 
+> ...
+> 
+> He underwent an unwanted spectacular rise to stardom in AI research, unwanted because Alan is a logician and views his activity from the point of view of that peer group... and suddenly felt heavy obligation to extract the AI researchers from the pit into which they were falling, the pit of the combinatorial explosion. He understood this, but was really helpless to do anything about it since he was a logician who invented a method, not an AI... As AI moved away from the Resolution Method, he moved back to logic and resigned his position on the editorial board of the AI Journal, and retreated from the whole scene.
+>
+> [@mccorduckMachinesWhoThink2004, pages 254--256]
+
+Robinson resolution turned out insufficient for getting logical AI to work "from scratch", since the runtime is exponential in the number of axioms, making it impractical. The reasons are essentially the same as the reason that Boolean satisfiability (SAT problem) is exponential: In the worst case, you have no way to find the proof tree except by trying every proof tree. However, just like how NP problems can be solved in practice with practical SAT solvers that search over the trees with clever heuristics, Robinson resolution would prove practical when augmented with enough heuristics and intermediate results, with the expert systems boom 20 years later.
+
+## Mechanizing Mathematics
+
+Circa 1900, as mathematicians learned to manufacture paradoxes, mathematics modernized, upgraded paranoia, and tried to get a grip. The angel of topology and the devil of abstract algebra fought for the soul of each individual mathematical domain in this "Foundational Crisis". With palpable disdain, Poincaré deplored the Hilbert school of formal logic that threatened to bleed even geometry of meaning:
+
+> "Imagine," says Hilbert," three kinds of things, which we will call points, straight lines, and planes; let us agree that a straight line shall be determined by two points, and that, instead of saying that this straight line is determined by these two points, we may say that it passes through these two points, or that these two points are situated on the straight line." What these things are, not only do we not know, but we must not seek to know... We might replace geometry by the reasoning piano imagined by Stanley Jevons; or, if we prefer, we might imagine a machine where we should put in axioms at one end and take out theorems at the other, like that legendary machine in Chicago where pigs go in alive and come out transformed into hams and sausages. It is no more necessary for the mathematician than it is for these machines to know what he is doing.
+>
+> [@poincareScienceMethod1914, page 147]
+
+But what is taken as an *reductio ad absurdum* by one side is often a Roadmap for the Next 20 Years by the other. The mechanical logician came as soon as the electronic computers arrived.
+
+During undergrad years, Edward Feigenbaum took a course "Mathematical Models in the Social Sciences" taught by Herbert Simon. One class, he walked in and announced to the 6 students that
+
+> Over the Christmas holidays, Al Newell and I invented a thinking machine.
+
+Stunned, Feigenbaum asked Simon, whereupon he received a manual of IBM 701. Feigenbaum read it all through the night, and in the morning light, he felt a "born-again experience". AI has won itself a new convert.
+
+The thinking machine was Logic Theorist [@newellEmpiricalExplorationsLogic1957], perhaps the first AI mathematician.
+
+> The Logic Theory Machine found proofs for 38 of the 52 theorems it was presented with from the Principia, in particular finding a straightforward proof of theorem 2.85 (a simple propositional logic theorem) where Whitehead and Russell had given a more cumbersome - indeed, defective -- proof. Lord Russell was impressed... The editor of the prestigious *Journal of Symbolic Logic*, however. was not won over, and the journal refused to publish an article coauthored by the Logic Theory Machine describing the proof of theorem 2.85.
+>
+> [@mackenzieAutomationProofHistorical1995]
+
+The working of Logic Theorist was simple. It simply performs a tree search in the space of possible proofs. At the root of the tree is the theorem to be proved. Each branch then transforms the state of the proof, adding assumptions (which then become sub-goals that themselves need to be proved), substitute logical variables, quoting axioms, perform modus ponens, etc. If at some leaf-node, the list of goals is empty, then the solution is found, and the Logical Theorist backtracks to get the final proof.
+
+As an example, it proved Theorem 2.17 as follows. The final proof had 7 steps, and took 89k basic operations to discover. [@newellHumanProblemSolving1972, page 133]
+
+* $\mathrm{A} \supset \sim \sim \mathrm{A}$ (Start with Theorem 2.17)
+* $\mathrm{P} \supset \sim \sim \mathrm{P}$ (Theorem 2.12)
+* ...
+* $(\sim \mathrm{Q} \supset \sim \mathrm{P}) \supset(\mathrm{P} \supset \mathrm{Q})$ (chain 7 and 5)
+
+A later version mechanized Poincaré's nightmare by converting Euclidean geometry problems to symbolic logic, and managed to discover a particularly elegant proof that in a triangle $ABC$, if $AB = AC$ then $\angle ABC = \angle ACB$, by the SAS theorem. Only later did the authors discover that this was a previously known solution. [@mackenzieAutomationProofHistorical1995]
+
+### Information Processing System
+
+Simon and Newell were unhappy with Logic Theorist, for the simple reason that when they read the trace-outs of its "thought process", they noted that it is very different from how humans would go about proving the same problems. Patiently plodding, they brute forced through the whole search tree, whereas humans would tastefully pick some branches and search deeply, and others not at all.
+
+In their magnum opus, *Human Problem Solving* (1972), they have compiled their decades of research into a definitive statement of what AI is about in their view. According to them, AI is logical AI, and the fundamental architecture for logical AI is Information Processing System. [@newellHumanProblemSolving1972]
+
+The axioms of logical AI:
+
+* It is symbols all the way down. Everything "sub-symbolic", like the neural biology, are just implementation, and not part of what intelligence is about, much like software is independent of hardware.
+* Intelligent behavior is the combination of simple goals, simple algorithms, and complex environment.
+* Intelligent algorithms are fairly simple, and consist of serial, deterministic, heuristic search over the space of solutions.
+* The space of solutions is structured like a directed graph, where the edges are "generators" or "search operators".
+* At each step, the search algorihm runs a "verifier" subroutine to check if a solution has been found. If so, then it backtracks to produce the full solution. If not, then it updates an internal state and decide how to grow the path towards the goal.
+* To grow the path towards the goal, it conducts "means-ends analysis": Take a small forward step to a new place in the space of solutions ("means"), and move the goalpost by a small backward step, to a new goalpost closer to you ("ends").
+
+They designed an algorithm according to the axioms and called it "General Problem Solver" (GPS), a grandiose title for a grandiose dream.
+
+![The architecture of the GPS. [@newellHumanProblemSolving1972, figure 4.1]](figure/Simon_Newell_fig_4_1.png)
+
+Curiously, they argued that Chomskyan linguistics and the IPS formalism are essentially the same:
+
+| IPS logical AI | Chomskyan linguistics |
+|-----|-----|
+| Symbols | Symbols |
+| Problem input | Surface structure of a sentence |
+| Symbolic representations | Deep structures; representations of meanings |
+| Problem space | Space of deep structures of strings |
+| Problem solving | Parsing, or grammatical analyses from the surface structure to the deep structure |
+| Stored patterns | Stored words, phrases, syntax trees, etc |
+: Equivalence between Chomskyan linguistics and the IPS logical AI.
+
+> It should be evident from the discussion of symbols, symbol structures, the designation relation, and programs that an information processing system of the sort we have described in this chapter is, in some fundamental sense, a language processor. As a matter of historical fact, the basic concepts that have entered into our description of an IPS have almost the same origins as the concepts that underlie the formalized transformational grammars that linguists have developed over the past fifteen years [@chomskySyntacticStructures1957]... our theory of problem solving can properly be viewed as also a partial theory of linguistics-specifically, a theory of the nature of the deep structures used by the human IPS in the course of its problem solving activities.
+> 
+> [@newellHumanProblemSolving1972, page 38]
+
+As we have seen and will see, the relation between Chomsky and logical AI runs deep.
+
+The IPS is not just a logical framework AI, but also a psychological theory for what humans really do when they solve problems. As such, Simon and Newell spent over a decade carefully studying the behavior of real humans solving real problems, such as propositional logic proofs (the same task as Logic Theorist), cryptograms, chess puzzles, and so on. And by "detailed" I mean it. They had subjects working through problems in a lab, with the entire session tape-recorded, fully transcribed, annotated, and parsed into the form of a heuristic tree search. It was like looking at the debugger output to a human being.
+
+![Annotated transcript of a human subject solving a propositional logic puzzle. The session lasted about 40 minutes, and ends with a failure. The transcript has 535 lines. [@newellHumanProblemSolving1972, page 533]](figure/human_problem_solving_transcript.png)
+
+![The same transcript parsed into a heuristic tree search over the problem space. [@newellHumanProblemSolving1972, page 534]](figure/human_problem_solving_behavior_graph.png)
+
+In a popularization (well, as popular as abstract AI theories can get), Simon analogized their theory with a crawling ant:
+
+> We watch an ant make his laborious way across a wind- and wave- molded beach. He moves ahead, angles to the right to ease his climb up a steep dunelet, detours around a pebble, stops for a moment to exchange information with a compatriot. Thus he makes his weaving, halting way back to his home. So as not to anthropomorphize about his purposes, I sketch the path on a piece of paper. It is a sequence of irregular, angular segments--not quite a random walk, for it has an underlying sense of direction, of aiming toward a goal. I show the unlabeled sketch to a friend. Whose path is it? An expert skier, perhaps, slaloming down a steep and somewhat rocky slope. Or a sloop, beating upwind in a channel dotted with islands or shoals. Perhaps it is a path in a more abstract space: the course of search of a student seeking the proof of a theorem in geometry... Human beings, viewed as behaving systems, are quite simple. The apparent complexity of our behavior over time is largely a reflection of the complexity of the environment in which we find ourselves.
+> 
+> [@simonSciencesArtificial1996, chapter 3]
+
+If we squint at the following diagram, we can almost see it as they saw it: a human, as simple minded as an ant, crawling and stumbling through the problem space of logic.
+
+![Searching over the problem space of propositional logic puzzles. [@newellHumanProblemSolving1972, page 575]](figure/Simon_Newell_1975_fig_10_13.png)
+
+At this point, we might be seeing a pattern here. Checking every use of the word "learning" in the book, I confirmed that, indeed, they were uninterested in learning, other than claiming that learning consists of adding more symbols to the internal environment, which is just one more kind of environment. One can look up lemmas and formulas on an external book, or an internal blackboard. It is all the same. The ant of the brain just need to crawl over the inner landscape as much as it crawls over the outer landscape.
+
+> We will deal hardly at all with earning phenomena in this book. Yet the approach to earning from the direction just illustrated, where we have the internal structure of the performing program laid out before us, shows clearly (1) that experience is simply one more source of information that can be exploited to attain adaptive performance and (2) that to affect performance experience must find some variable aspect of the performance program's structure that it can specify.
+>
+> [@simonSciencesArtificial1996, page 137]
+
+It is not that they completely ignored the problem of learning, but rather, they understood learning as a simple kind of associative memorization. Feigenbaum's PhD project was the Elementary Perceiver and Memorizer (EPAM), an algorithmic model of human associative memory. As a concrete realization of the learning theory of Simon and Newell, we describe it to show how little learning their framework contained.
+
+EPAM modeled people performing the following memorization task:
+
+* "DAX" is displayed to the subject
+* Subject should say "JIR" in response
+* Regardless of what subject responds, "JIR" is displayed after a few seconds.
+* Repeat this until the subject manages to memorize all 12 pairs.
+
+During a session, every time EPAM sees a new stimulus-response pair, it stores the response, and updates its decision tree. Each node of the decision tree has two children, and which way EPAM goes is determined by testing one letter of the stimulus. It looks like 
+
+```python
+if stimulus[0] == "D":
+    return "JIR"
+elif stimulus[2] == "J":
+    ...
+```
+
+In short, what counts as a paradigm of learning is simply memorization, and updating a big if-then search tree, so that a stimulus results in going down the search tree and arriving at the correct response stored in the leaf node. That is, it was the first [structural induction](https://en.wikipedia.org/wiki/Structural_induction) program.
+
+
+### The drosophila of AI
+
+> Within 10 years, a computer would routinely beat the world's best player.
+>
+> --- Herbert Simon, 1957
+
+In introductions to AI or even just machine learning. Arthur Samuel's checker program was usually given as the first great example of machine learning. In short, it performs alpha-beta search to a few plies[^samuel-checkers-plies] during playing, using up to 16 hand-crafted feature functions. It uses two learning rules [@samuelStudiesMachineLearning1959, @suttonReinforcementLearningIntroduction2018, chapter 16.2; @russellArtificialIntelligenceModern1995, pages 616--617]:
+
+* Rote learning: After performing an alpha-beta search, it would store the score for the root node. Later, if the root node is encountered during search, its score would be used without needing to search deeper. This allows it to increase the effective search depth over time, as it memorizes more and more positions' values. To save memory, if a board does not reappear after a maximum number of moves, it is "forgotten". The whole system managed to memorize 53,000 board positions (averaging 3.8 words each on a IBM 704)
+* Generalization learning: Something very similar to TD-learning in reinforcement learnig, except that the reward function is not whether the board is won (1 for winning, -1 for losing, 0 otherwise), but the *piece advantage* feature.
+
+[^samuel-checkers-plies]: Annoyingly I can't find any information, but considering that an IBM 704 has $5\times 10^4 \;\mathrm{MIP/sec}$, and checkers has a branching factor of 400, it would take on the order of 10 minute to search 2 plies. So my bet is 2 plies. Indeed, the paper appendix says it takes $10^{-2} \;\mathrm{sec}$ to play and evaluate one position, which means it takes about 500 instructions for one play and evaluation, and that searching 2 plies already takes 30 minutes. 
+
+The whole program ran on an [IBM 704](https://en.wikipedia.org/wiki/IBM_704), and took up about 8000 instructions.
+
+Just when you thought there is finally some learning, nope. Samuel got the features from interviewing the checker experts. In fact, it had a formative influence on a later pioneer of expert systems:
+
+> Art Samuel's work on the checker player: Art had interviewed experts to understand... the feature vector and then he did a good deal of reading about checkers... And the influential part about that was.. his machine learning component -- that once you had the expertise in, in a first-order form, it could be improved... automatically. That impressed me a great deal and I always wanted to be able to do that.
+>
+> [@brockLearningArtificialIntelligences2018]
+
+Compared to checkers, computer chess had been much more high-profile, and it has been a textbook example of logical AI. The three parts of computer chess are move generator, evaluation function, and search control, corresponding to the solution space, verifier, and heuristic search algorithm of the IPS.
+
+The IPS framework, with its talk of heuristic search, resembles most of all how people play board games. Indeed, [@newellHumanProblemSolving1972] devoted over 100 pages to chess, "the drosophila of AI". Indeed, chess seems like the perfect illustration: simply do an alpha-beta search with a heuristic evaluation function on it. This was essentially the algorithm proposed by Alan Turing in 1948 -- the [Turochamp](https://en.wikipedia.org/wiki/Turochamp), and it was still the algorithm used in [Deep Blue (1997)](https://en.wikipedia.org/wiki/Deep_Blue_(chess_computer)). In fact, the architecture has changed so little that we can write a single "prototypical chess program":
+
+```python
+def score(board):
+    # return a real number
+def move_generator(board):
+    # return a list of legal moves
+def make_move(board, move):
+    # return the next board
+def search(board):
+    # do the minimax search, 
+    # or the alpha-beta tree search, etc
+    for moves in move_generator(board):
+        ...
+    return best_move
+```
+
+Progress in chess computers has come from three sources: faster computers allowing bigger search trees, better scoring functions, and better heuristic tree search algorithms (from minimax to alpha-beta to tricks like singular extensions). As an illustrative example, here is (part of) the Turochamp scoring function [@newellHumanProblemSolving1972, pag 672]:
+
+```python
+material_value = {
+    "Pawn" : 1, "Knight": 3, "Bishop": 3.5,
+    "Rook": 5, "Queen": 10, "Checkmate": 1000
+}
+def mobility(board, piece):
+    # Square root of legal moves for the piece
+    legal_moves = move_generator(board)
+    return sqrt(len([move for move in legal_moves if piece in move]))
+...
+def score(board):
+    q_value = mobility(board, "Queen")
+    ...
+    return q_value + ...
+```
+
+Like its predecessors, Deep Blue used alpha-beta tree search, except it searched *a lot of positions*. To support this, it used [ASIC](https://en.wikipedia.org/wiki/Application-specific_integrated_circuit) [VLSI](https://en.wikipedia.org/wiki/Very-large-scale_integration) "chess chips",[^chess-chip-mosis] each with four parts: the move generator, the smart-move stack, the evaluation function, and the search control. The move generator is a 8×8 combinational logic circuit, a chess board in miniature. [@hsuIBMsDeepBlue1999; @campbellDeepBlue2002]
+
+[^chess-chip-mosis]: Just when you thought DARPA can't possibly be behind this, guess what, Hsu developed the earlier iterations of chess chips by taking advantage of [MOSIS](https://en.wikipedia.org/wiki/MOSIS), which was part of the Strategic Computing Initiative [@rolandStrategicComputingDARPA2002, chapter 4]. More on this [TODO](todo).
+
+![The flowchart of Deep Blue. [@hsuIBMsDeepBlue1999]](figure/chess_chip.png)
+
+Describing the software of Deep Blue in detail would be not particularly enlightening, so here's a pseudocode sketch:
+
+```python
+opening_book = ... # 4000 positions
+extended_book = ... # several million positions from 0.7M grandmaster games
+endgame_table = ... # all endgames with <= 5 pieces, and many endgames with 6 pieces
+
+def eval_function(board):
+    weight_vector = ... # contains 8000 real numbers
+    feature_vector = features(board) # contains 8000 handcrafted terms
+    return weight_vector @ feature_vector
+
+def play(board):
+    if board in opening_book:
+        move = retrieve_opening_move(board, opening_book)
+    elif board in extended_book:
+        best_score = -1
+        best_move = ''
+        for move in legal_moves(board):
+            score = evaluate(move, board, extended_book)
+            if score > best_score:
+                best_score = score
+                best_move = move
+    elif size(board) <= 5 or (size(board) == 6 and board in endgame_table):
+        move = retrieve_ending_move(board, endgame_table)
+    else:
+        move = alpha_beta_search(board, eval_function) # evaluate 200M pos/sec
+    play(move)
+```
+
+I know you are eager to hear about how Deep Blue learned. So did I. The bad news is that it barely learned anything. First, its evaluation function was just a linear sum over ~8000 hand-crafted features,[^deep-blue-features] with changeable linear weights. It actually had two evaluation functions, fast and slow. Only if the fast one already shows a clear advantage would the slow one be called. Further, the linear weights were mostly handcrafted too, except a small amount of automation:
+
+> The first tool had the goal of identifying features in the Deep Blue I evaluation function that were “noisy”, i.e., relatively insensitive to the particular weights chosen... A hill-climbing approach was used to explore selected features (or feature subsets), and those that did not converge were candidates for further hand examination... A second tool was developed with the goal of tuning evaluation function weights. This tool used a comparison training methodology to analyze weights related to pawn shelter. Training results showed that the hand-tuned weights were systematically too low, and they were increased prior to the 1997 match. There is some evidence that this change led to improved play.
+
+I didn't understand it, so I turned to a previous paper [@hsuGrandmasterChessMachine1990] that seems to explain it better, according to which they did two kinds of "automated" training, which were both supervised learning without backpropagation:
+
+```python
+def hill_climbing(t, games):
+    search_depth = 5
+    dt = learning_rate * random(t.shape)
+    wins = 0
+    for (board, move) from random_sample(grandmaster_games, N):
+        old_move = alpha_beta_search(board, search_depth, evaluation_function, t)
+        new_move = alpha_beta_search(board, search_depth, evaluation_function, t + dt)
+        wins += (new_move == move) - (old_move == move)
+    if wins > 0:
+        t += dt
+    return t
+
+def comparison_training(t, games):
+    dt = learning_rate * random(t.shape)
+    wins = 0
+    for (board, move) from random_sample(grandmaster_games, N):
+        moves = legal_moves(board)
+        next_board = make_move(board, move)
+        reference_score = evaluation_function(t, next_board)
+        old_scores = []
+        new_scores = []
+        for alt_move in moves if alt_move != move:
+            next_board = make_move(board, alt_move)
+            old_scores.append(evaluation_function(t, next_board))
+            new_scores.append(evaluation_function(t + dt, next_board))
+        wins += all(reference_score > new_scores) - all(reference_score > old_scores)
+    if wins > 0:
+        t += dt
+    return t
+```
+
+[^deep-blue-features]:
+    And there were a lot of features, with words I barely understand:
+    
+    > The most significant part of the fast evaluation is the “piece placement” value, i.e., the sum of the basic piece values with square-based location adjustments. Positional features that can be computed quickly, such as “pawn can run”, are also part of the fast evaluation. The slow evaluation scans the chess board one column at a time, computing values for chess concepts such as square control, pins, X-rays, king safety, pawn structure, passed pawns, ray control, outposts, pawn majority, rook on the 7th, blockade, restraint, color complex, trapped pieces, development, and so on. The features recognized in both the slow and fast evaluation functions have programmable weights, allowing their relative importance to be easily adjusted.
+    >
+    > [@campbellDeepBlue2002]
+
+Deep Blue contains 480 chess chips, each capable of $2.5 \times 10^6 \;\mathrm{position/sec}$. But the total hardware had only a sustained peak rate $2 \times 10^8 \;\mathrm{position/sec}$, meaning its utilization rate was only 16%.[^deep-blue-rmax] [@hsuCrackingGo2007] To Hsu, it was an exercise in chip design. To Kasparov, it was a dirty business. To some journalists, it was another "Man vs Machine" story. And to us, it was the last great project of logical AI in the style of Simon and Newell.
+
+[^deep-blue-rmax]:
+    The $R_{max}$ of Deep Blue on LINPACK was 11.38 GFLOP according to [TOP500 List - June 1997](https://web.archive.org/web/20090213103245/http://www.top500.org/list/1997/06/300), meaning that each positional evaluation is worth 10 FLOP, although I have doubts about just how they managed to cram the LINPACK benchmark onto the chess chips.
+
+    An earlier report in 1995 [@hsuDeepBlueSystem1995], published a year before Deep Blue was assembled, estimated that a general-purpose computer would take 1000 FLOP to evaluate one position. It also estimated Deep Blue would take up around 1 kW of electric power.
+
+> Deep Thought was not an "expert system"... Several members of the team would probably consider it an insult to call Deep Thought an expert system. In fact, at least two members of the team had used the word *bullshit* to describe "expert systems", or for that matter, Artificial Intelligence. Second, the Deep Thought research was supported in part by the VLSI project, and none of the money came from the DARPA funding for expert systems research.
+>
+> [@hsuDeepBlueBuilding2002, page 98]
+
+10 years after the historic win, Hsu wrote a brief essay describing how to make a superhuman Go machine. He estimated that it was already possible to get a *single* Go-chip to evaluate $2 \times 10^{10} \;\mathrm{position/sec}$, and so with 10 years of Moore's law giving another 100×, a machine with 480 Go-chips would be able to evaluate $10^{14} \;\mathrm{position/sec}$ by 2017.
+
+> ... with some optimization a machine that can search a trillion positions per second would be enough to play Go at the very highest level. It would then be cheaper to build the machine out of FPGAs (field-programmable gate arrays) instead of the much more expensive and highly unwieldy full-custom chips. That way, university students could easily take on the challenge. At Microsoft Research Asia we are seeding university efforts in China with the goal of solving some of the basic problems. 
+>
+> [@hsuCrackingGo2007]
+
+In 2016, AlphaGo defeated the 9-dan player Lee Sedol at 4 wins and 1 loss,[^alphago-move-37] and it "\[evaluated\] thousands of times fewer positions than Deep Blue". [@silverMasteringGameGo2016] The subsequent AlphaZero reached superhuman performance with just $10^4$ evaluated positions per move. [@silverGeneralReinforcementLearning2018]
+
+[^alphago-move-37]:
+    In game 2, AlphaGo played black. Media made much out of the 19th move of AlphaGo ("Move 37"), which the supervised learning policy network (which was supervise-trained to predict what a human would play, as according to a large dataset of human games) predicted a probability of $10^{-4}$. This was given much media attention. Something similar happened with Deep Blue vs Kasparov, game 2, when Deep Blue (White) played 36.axb5, with immediate effect:
+
+    > so fluid was its play that the grandmasters in attendance all understood Benjamin's contention that Blue "played real chess" that day. What really shook Garry Kasparov, though, was a move that the computer didn't make. On Move 36, Blue had an opportunity to shift its queen to a devastating position -- clearly the smart choice. Instead it took a subtler but superior tack that wound up to be near decisive in defeating Kasparov. After the champ resigned, he rushed back to his Plaza suite, cranked up his own computers and tried in vain to understand how a hunk of sand and metal could have understood chess so deeply. Apparently this puzzlement crossed into the realm of suspicion: the Kasparov camp was soon demanding to see Deep Blue's printouts. "It was a masterpiece by computer", said Kasparov second Michael Khodarkovsky. "We would like to understand why it was possible." (Eventually, a neutral arbiter examined the printout.) Later Kasparov blurted out his real complaint. "Suddenly \[Deep Blue\] played like a god for one moment," he said.
+    > 
+    > [@levyBigBluesHand1997]
+
+## Robots
+
+### ELIZA
+
+> Science promised man power. But as so often happens when people are seduced by promises of power ... the price actually paid is servitude and impotence.
+> 
+> -- the book jacket to [@weizenbaumComputerPowerHuman1976]
+
+ELIZA is well-known as the first popular chatbot. Fortunately, unlike the others like EPAM or SHRDLU, ELIZA is so famous that it is available everywhere. We will simply describe how ELIZA works. The detailed code and further information is online at [ELIZAGEN](https://sites.google.com/view/elizagen-org/).
+
+According to the original paper [@weizenbaumELIZAComputerProgram1966], ELIZA is essentially a word substitution program of minimal content, roleplaying as a Rogerian therapist. This role was chosen because a psychotherapist is one of the few roles that can pretend to know nothing about the world.
+
+> If, for example, one were to tell a psychiatrist "I went for a long boat ride" and he responded "Tell me about boats", one would not assume that he knew nothing about boats, but that he had some purpose in so directing the subsequent conversation.
+>
+> [@weizenbaumELIZAComputerProgram1966]
+
+ELIZA is programmable: It reads in an "ELIZA script" (a dialect of LISP) that looks like 
+
+```lisp
+(SORRY ((0) (PLEASE DON'T APOLOGIZE)
+            (APOLOGIES ARE NOT NECESSARY)
+            (WHAT FEELINGS DO YOU HAVE WHEN YOU APOLOGIZE)))
+
+(EVERYONE 2 ((0 (* EVERYONE EVERYBOOY NOBODY NOONE) 0)
+             (REALLY, 2) (SURELY NOT 2) 
+             (CAN YOU THINK OF ANYONE IN PARTICULAR) (WHO, FOR EXAMPLE)))
+(EVERYBODY 2 (= EVERYONE))
+(NOBOOY 2 (= EVERYONE))
+(NOONE 2 (= EVERYONE))
+```
+
+This snippet shows several features of the ELIZA script. A script is a list of rules. Each rule begins with a keyword like `SORRY`, followed by an optional rank, which determines how early the rule applies. A higher-ranked rule would beat out a lower-ranked rule. If there is no rank, then whatever appears first in the script applies. After that, there is a list of rewrite rules, which were essentially the same as regex expressions. For example, `(0 (* EVERYONE EVERYBOOY NOBODY NOONE) 0)` would, in regex expression, be `(.*) (EVERYONE|EVERYBODY|NOBODY|NOONE) (.*)`, and the rewrite rule `(REALLY, 2)` then corresponds to `REALLY $2`.
+
+Indeed, once we see this, we can write a short ELIZA in python:
+
+```python
+import re
+
+rules = {
+    "everyone": {
+        "rank": 2,
+        "decomposition": r"(.*) (everyone|everybody|nobody|noone) (.*)",
+        "reassembly": ["Really $2?", "Surely not $2?", "Can you think of anyone in particular?"]
+    },
+    "i am": {
+         "rank" : 1,
+         "decomposition": r"(.*) i am (.*)",
+         "reassembly": ["How long have you been $2?", "Do you believe you are $2?"]
+    },
+    "sorry": {
+        "rank": 0,
+        "decomposition": r"(.*) sorry (.*)",
+        "reassembly": ["Please don't apologize.", "Apologies are not necessary."]
+    }
+}
+
+def eliza_response(user_input):
+    user_input = user_input.lower()
+    matched_rules = []
+    for keyword, rule in rules.items():
+        match = re.match(rule["decomposition"], user_input)
+        if match:
+            matched_rules.append(
+               (rule["rank"], match, rule["reassembly"])
+            )
+    if matched_rules:
+        # Apply precedence, fallback to first match if ranks are equal
+        matched_rules.sort(reverse=True, key = lambda x : x[0])
+        _, match, reassembly_options = matched_rules[0]
+        response = reassembly_options[0]
+        return response
+    return "I am not sure I understand you fully."
+
+while True:
+    user_input = input("You: ")
+    if user_input.lower() == "quit":
+        break
+    response = eliza_response(user_input)
+    print("> " + response)
+```
+
+The full ELIZA also has a single MEMORY keyword which allows it to refer to what the user has said previously, though the core idea is there: it is regex parsing and rewriting.
+
+ELIZA was designed to be extensible, and extensions had been used by writing other ELIZA scripts. In the language of expert systems, ELIZA is a shell which can use the scripts as knowledge bases. See [ELIZAGEN](https://sites.google.com/view/elizagen-org/resources) for some references to using ELIZA in education, such as for teaching poetry and the 4-vector. [@taylorAutomatedTutoringIts1968]
+
+Weizenbaum was dismayed to find that people treated ELIZA as if it understood what they said, and became increasly concerned with AI and started arguing against it in various ways. To us, the most interesting critique is that he rejected the philosophical position behind the Turing test, that to simulate understanding is to understand. After all, ELIZA knew nothing at all, yet people treated it as if it understood a lot. He pointed to Chomsky's work as a good example of theory-guided AI science, contrasted with the "it seems to work" AI performance. In Chomsky's terms, it is the contrast between *competence* and *performance*.
+
+> After all, a plain typowriter in some sense mirrors the behavior of tic child (one types a question and gets no response whatever), but it does not help us to understand autism. A model must be made to stand or fall on the basis of its theory... The failure to make distinctions between descriptions, even those that "work," and theories accounts in large part for the fact that those who refuse to accept the view of man as machine have been put on the defensive.
+> 
+> Recent advances in computer understanding of natural language offer an excellent case in point. Halle and Chomsky, to mention only the two with whom I am most familiar, have long labored on a theory of language which any model of language behavior must satisfy. Their aim is like that of the physicist who writes a set of differential equations that anyone riding a bicycle must satisfy. No physicist claims that a person need know, let alone be able to solve, such differential equations in order to become a competent cyclist. Neither do Halle and Chomsky claim that humans know or knowingly obey the rules they believe to govern language behavior. Halle and Chomsky also strive, as do physical theorists, to identify the constants and parameters of their theories with components of reality. Workers in computer comprehension of natural language operate in what is usually called performance mode. It is as if they are building machines that can ride bicycles by following heuristics like "if you feel a displacement to the left, move your weight to the left."
+>
+> [@weizenbaumImpactComputerSociety1972]
+
+So far, this is fairly standard critique of a performance-over-competence culture in AI. However, Weizenbaum was driven by a moral urgency as he looked into the deeper source for this mistake, and finding a moral-philosophical error:
+
+1. There are multiple categories of things.
+2. Humans (and perhaps sufficiently human-like objects, like chimpanzees) are the only category where morality makes sense.
+3. If $x$ is an object in the human-like category, then asking "Is $x$ a meat machine?" is a category error, of treating objects in the human category as if they are objects in the technological category. The right answer is to reject this "technological question" and ask a "human question" instead, like "What is wrong with you to ask such a question?".
+
+He was particularly incensed by Kenneth Colby's DOCTOR program, which was similar to ELIZA, except intended for production. Colby was a psychiatrist who saw the plight of patients who saw therapists maybe once a month -- if lucky. He argued that if an artificial DOCTOR could provide some help, it is better than nothing, and some people agreed.
+
+> How is Al bad? Are we hurting people by doing it? I don't know anyone who has suffered from it yet. (In fact, despite Weizenbaum's arguments about Colby and automated psychotherapy, I remember a non-speaking adult and several autistic children who began to talk because they were talking to Colby's non-threatening machine.)
+> 
+> [@schankWeizenbaumControversy1976]
+
+To Weizenbaum, this is dehumanizing and disrespectful, a moral error, and whether it actually helps patients improve -- as measured by quantitative evidence like whether non-verbal people started speaking again -- is irrelevant. Thinking that it is a relevant question just shows confusion of the performance of therapy with the competence of therapy, and a deeply technological mentality:
+
+> The question "Is the brain merely a meat machine?", which Simon puts in a so much more sophisticated form, is typical of the kind of question formulated by, indeed formulatable only by, a technological mentality. Once it is accepted as legitimate, arguments as to what a computer can or cannot do "in principle" begin to rage and themselves become legitimate. But the legitimacy of the technological question -- for example, is human behavior to be understood either in terms of the organization or of the physical properties of "components" - -need not be admitted in the first instance. A human question can be asked instead. Indeed, we might begin by asking what has already become of "the whole man" when he can conceive of computers organized in his own image... Whoever dictates the questions in large part determines the answers. In that sense, technology, and especially computer technology, has become a self-fulfilling nightmare... We must come to see that technology is our dream and that we must ultimately decide how it is to end.
+> 
+> [@weizenbaumImpactComputerSociety1972]
+
+He presented his full thesis in a book *Computer Power and Human Reason: From Judgment to Calculation* (1976), with the following theses:
+
+1. Computers might be intelligent, but they will never be wise (or to feel emotions, to love, etc). To "calculate" requires just intelligence, but to "judge" requires wisdom.
+2. The development of AI threatens to replace judgment with calculation, which will destroy human dignity. This replacement of judgment with calculation is an absurd political ideology, and must be resisted politically.
+3. If, however, we do not resist, but keep following this political ideology, we would end up with the obviously absurd conclusion that "the brain is merely a meat machine". *Reductio ad absurdum*.
+4. This dangerous development of AI did not come from a wise scientific project of understanding how human intelligence works, but from a megalomaniac, obsessive-compulsive desire to make machine parodies of human behavior. The method of AI development was heuristic, empirical, a kind of "I wonder what the machine would do if I write this program...", without a scientific theory.
+
+When the book came out, it received many reviews and counter-reviews, resulting in a "Weizenbaum controversy". I found this reply by Weizenbaum the funniest:
+
+> I have in mind also the teaching urged on us by some leaders of the AI community that there is nothing unique about the human species, that in fact, the embrace of the illusion of human uniqueness amounts to a kind of species prejudice and is unworthy of enlightened intellectuals. If we find nothing abhorrent in the use of artificially sustained, disembodied animal brains as computer components, and if there is nothing that uniquely distinguishes the human species from animal species, then -- need I spell out where that idea leads?
+>
+> quoted in [@mccorduckMachinesWhoThink2004, page 370]
+
+Apparently Weizenbaum, in his human-centered wisdom, rejected Darwinism as well. In any case, his critiques seem perennial,[^weizenbaum-nightmare] though irrelevant for the further evolution of technology, which is exactly the techno-drenched nightmare he was trying to warn us away from, to no effect. We sleepwalk yet deeper into this nightmare.
+
+[^weizenbaum-nightmare]:
+    Witness some modern critiques of AI, especially from the Critical Humanities. Though a few critical humanists really were critical *of* humanity, which brings the amusing prospect of *another* nightmare of Weizenbaum, this time from the opposite direcion of "We must come to see that humanity is our dream and that we must ultimately decide how it is to end."
+
+    > As the archaeology of our thought easily shows, man is an invention of recent date. And one perhaps nearing its end. If those arrangements were to disappear as they appeared, if some event of which we can at the moment do no more than sense the possibility – without knowing either what its form will be or what it promises – were to cause them to crumble, as the ground of Classical thought did, at the end of the eighteenth century, then one can certainly wager that man would be erased, like a face drawn in sand at the edge of the sea.
+    > 
+    > [@foucaultOrderThings2012, page 422]
+
+### SHRDLU {#sec-shrdlu}
+
+During the early days, the only robots were "[Unimates](https://en.wikipedia.org/wiki/Unimate)", arms blindly performing preprogrammed motions, but there had always been the dream and hope of a robot that can see and act, wih proper hand-eye coordination. Perhaps even to speak.
+
+By writing the famous SHRDLU, Terry Winograd took a small step towards this dream for his PhD in mathematics during 1968--1970, and published it in a long journal article [@winogradUnderstandingNaturalLanguage1972]. Again like ELIZA, it is better played than explained, so please play with it now. In the program, the user carries on a conversation with the computer, moving objects, naming collections and querying the state of a simplified "blocks world", essentially a virtual box filled with different blocks. It totaled ~500 KB of LISP code. I have saved the [original code](code/SHRDLU.zip) for safe-keeping.[^shrdlu-original-code]
+
+[^shrdlu-original-code]: 
+    I really don't recommend reading it. Though it was in a dialect of LISP, it was written in the impenetrable style of assembly code. I will just write some amusing discoveries in the code base:
+
+    > it occupies around 200k of core (caution: indiscriminately running a job that big in the middle of the day is a good way to make enemies!!!!! Alway check the level of system usage before loading...)
+    >
+    > -- `mannew` from the SHRDLU archive
+
+    The original SHRDLU had some manual fixes in the compiled assembly code (!). Terry Winograd's first research student rewrote much of SHRDLU so that it is portable. Some people sent letters (physical letters!) to request the code, and they would duly mail it out (by magnetic tape?). As one can imagine, only a few dozen source codes were mailed out, according to [SHRDLU resurrection](https://web.archive.org/web/20171117063022/http://www.semaphorecorp.com/misc/shrdlu.html) (created in 2002, and last updated on 2013-08-22).
+
+![The result of typing "Will you please stack up both of the red blocks and either a green cube or a pyramid?" [@winogradUnderstandingNaturalLanguage1972, figure 5]](figure/SHRDLU.png)
+
+The main part of SHRDLU has the following parts:
+
+* A natural language understanding (NLU) module, which uses `DICTIONARY`, `GRAMMAR`, `SEMANTICS`, and so on, to parse user input into a logical expression.
+* `PLANNER`, which takes the state of the world (as a logical expression) and the user input (as another logical expression), and compute a motion plan for the simulated arm.
+* `MOVER`, which simulates a robot arm. It has only three kinds of commands: `MOVETO`, `GRASP`, `UNGRASP`.
+* Blocks world simulator.
+
+![Architecture of SHRDLU. The NLU module takes up most of the region on the right.[@winogradUnderstandingNaturalLanguage1972, figure 1]](figure/SHRDLU_architecture.png)
+
+The key parts of the system are the NLU and the `PLANNER`.
+
+The `PLANNER`, just like the GPS of Simon and Newell, starts with the goal as the root node, and searches for a chain of logical operations that would eventually lead to a leaf node equal to the current state of the world.[^shrdlu-logic] This was called "backward chaining", though it was the same as the means-end analysis of GPS. It then stores this chain of logical operations, and converts it into a sequence of `MOVER` commands and sends them to `MOVER`. When asked "Why did you do it?", it would convert this plan into an explanation in English.
+
+[^shrdlu-logic]: For a detailed exposition of how SHRDLU-like AI systems perform planning by symbolic logic, see [@russellArtificialIntelligenceModern2021, chapter 11.2].
+
+The NLU module parses the sentence into a tree by "systemic grammar" which while different from Chomskyan generative grammar in details, is the same in spirit.
+
+For example, "Harry slept on the porch after he gave Alice the jewels." is parsed to:
+
+```lisp
+(#SLEEP :HARRY :RELl)
+(#LOCATION :REL1 :PORCH)
+(#GIVE :HARRY :ALICE :JEWELS :REL2)
+(#AFTER :REL1 :REL2)
+```
+
+Instead of analyzing syntax and semantics independently, SHRDLU combines them closely to determine the correct parse of a sentence. For example, a user input "Pick up the red cube." would only be parsed correctly if SHRDLU actually checks the state of the world that there really is exactly one `(#SHAPE :CUBE :REL1) (#COLOR :RED :REL1)`. If there are two, it would then reply "I don't know which one you meant." and if there are none, it would reply "I can't pick up a nonexistent object.".
+
+![A blocks world much simpler than the one used by SHRDLU, along with its logical representation. Combination of [@russellArtificialIntelligenceModern2021, figure 11.3] and [@russellArtificialIntelligenceModern2021, figure 11.4].](figure/blocks_world_logic.png)
+
+SHRDLU was a milestone, and perhaps it was too good to be true. Like the Georgetown--IBM demo, it attracted and impressed, but led to inevitable disappointment when the success failed to scale up. Why was there a hype in the first place, though?
+
+In 1991, as the expert systems hype was dying down, Schank wrote an essay trying to diagnose the source of the hype. One source, he argued, was the focus on designing a good theoretical framework that is verified on small scale demos and "microworlds", and expect it to simply scale up.
+
+> Nevertheless, there were otherwise intelligent people claiming that Winograd's (1972) SHRDLU program that worked on 31 examples had solved the natural language problem or that MYCIN (Shortliffe 1976) had solved the problem of getting expertise into a computer. Prior to 1982, it is safe to say that no one had really tried to build an AI program that was more than simply suggestive of what could be built. AI had a real definition then, and it was the gee whiz definition given earlier.
+>
+> [@schankWheresAI1991]
+
+Winograd in an interview shortly afterwards concurred:
+
+> WINOGRAD: Well, implementation and product are two stages. That is, implementation was always there as the coin of the realm. Implementation meant something you could show off. It didn't mean something that somebody else could use... there was no attempt to get it to the point where you could actually hand it to somebody and they could use it to move blocks around... Pressure was for something you could demo... I think AI suffered from that a lot, because it led to "Potemkin villages", things which -- for the things they actually did in the demo looked good, but when you looked behind that there wasn't enough structure to make it really work more generally.
+>
+> NORBERG: Is that a question of size, or is it a question of the idea itself - the idea's too small?
+>
+> WINOGRAD: The idea of --?
+>
+> NORBERG: Well, let's say the ideas behind the blocks world, SHRDLU.
+>
+> WINOGRAD: Well, I think it was based on a presupposition -- at least an attitude -- that making things work in the large, really working, was just like getting a demo except more details to be filled in. That is, if you had a basic idea and you could show it worked on something then it was just a sort of grubby, detail work to fill in all, you know, the hundreds of entries you would need to make it work for real. But that -- an idea -- and this is tied to the top-down, rationalistic way of approaching it, right. An idea which said, "here's a nice logical way this should work -- would work in practice if you just went far enough with the details." And I think that's been a problem with AI all along. It's true in problem-solving, right? Problem-solving, as conceived by Newell and Simon and developed, and so on, has a certain realm of applicability but it's very different from, you know, you coming to me and saying, "I have a problem. Would you help me solve it?", in terms of -- to take the most obvious things - the hard part is figuring out what the problem space is, not searching it.
+> 
+> [An Interview with Terry Allen Winograd (1991-12-11)](https://conservancy.umn.edu/server/api/core/bitstreams/a0a8ffa6-0149-4606-88e8-4eec0690d794/content#page=7)
+
+Stephen Wolfram recounted a similar demo-only "AI" in the expert systems boom:
+
+> I happened to be visiting a leading university AI group, who told me they had a system for translating stories from Spanish into English. “Can I try it?” I asked, suspending for a moment my feeling that this sounded like science fiction. “I don’t really know Spanish”, I said, “Can I start with just a few words?” “No”, they said, “the system works only with stories.” “How long does a story have to be?” I asked. “Actually it has to be a particular kind of story”, they said. “What kind?” I asked. There were a few more iterations, but eventually it came out: the “system” translated one particular story from Spanish into English!
+>
+> [@wolframRememberingDougLenat2023]
+
+Philosophically, it seems like the rational methodology of theoretical physics: One has a good theory, which can be checked in a precise experiment in a vacuum. If the observation is as predicted, then one assumes it would simply scale up. Similarly, if a theory, such as neural networks, cannot perform something as simple as testing for connectivity (as [Minsky and Papert argued](https://yuxi-liu-wired.github.io/essays/posts/reading-perceptron-book/index.html#chapter-13)), then that theory is disproven. In this case, systemic grammar was the linguistic theory to be tested, and the blocks world of SHRDLU constituted a laboratory proof. That it never scaled up was a shame, but not something people expected back then.
+
+This focus on toy models, "microworlds", and proofs of concepts, was prevalent, and indeed the best way to obtain knowledge, if one accepts the rational methodology.
+
+![Marvin Minsky and Builder the robot in a physical blocks world, which could use a camera to detect the shape of blocks in one pile, and replicate it with blocks in another pile. It was a microworld for studying hand-eye coordination. It's hard to tell who is having more fun here.](figure/minsky_robot_arm_blocks.jpg)
+
+We know better now. The actual trajectory of AI has destroyed faith this methodology, but why? It is still mysterious, and many still argue that we should not accept this.
+
+## Philosophy
+
+Astrophysicists, measuring the motion of galaxies, notice that the stars are rotating too fast. There is not enough matter to tether them, and they ought to fly out into the intergalactic emptiness. To solve this problem, they proposed "dark matter", unknown matter that provides the missing gravitational force, and physicists ever since had been searching them.
+
+Similarly, sometimes when you read through a field of study, you notice that the arguments seem to rotate around some kind of unspoken assumption that you might see if you just take all the books and throw them to the ground, so that they are all opened at random places. Then you turn your head and squint at the words refracted through the eyelids, the pupils, and the cornea, which you have repurposed as a primitive kind of optical computer. And you see the dark matter, the intellectual centers of gravity.
+
+> Under an invisible spell, they will each start out anew, only to end up revolving in the same orbit once again... their thinking is not nearly as much a discovery as it is a recognition, remembrance, a returning and homecoming into a distant, primordial, total economy of the soul, from which each concept once grew: -- to this extent, philosophizing is a type of atavism of the highest order.
+>
+> [@nietzscheGoodEvilPrelude2002, Section 1.20]
+
+### The Symbolic Hypothesis
+
+In [their Turing award lecture of 1975](https://yuxi-liu-wired.github.io/docs/posts/1975-herbert-simon-allen-newell/), Allen Newell and Herbert Simon gave a definitive statement of the Physical Symbol System Hypothesis for AI, which they had labored under, first unconsciously but then consciously, since the early 1950s.
+
+They began by some examples of "qualitative structure" in science, which do not deal with numbers, but with symbols. For example, a basic statement of cell theory -- "organisms are made of little cells that are mostly alike" -- doesn't contain a single number, yet it has great significance. Such non-numerical discrete statements are made of "symbols", and they stated their **Physical Symbol System Hypothesis** (PSSH):
+
+> A physical symbol system has the necessary and sufficient means for general intelligent action.
+
+where a physical symbol system is essentially a machine that can be built in our physical world, and that manipulates with symbols. As an example, a digital computer running a LISP interpreter is a physical symbol system. We can attach cameras and wheels to the computer, so that the camera sends into the interpreter a symbolic representation of what it sees, and the wheels receives symbolic commands for motion. This is basically a robot according to the PSSH.
+
+They also gave a **Heuristic Search Hypothesis**:
+
+> A physical symbol system exercises its intelligence in problem solving by search-that is, by generating and progressively modifying symbol structures until it produces a solution structure.
+
+What is not said is equally revealing. In the lecture, there were over 100 mentions of the word "search", but the only statement about learning is... a mention of Plato's theory of [anamnesis](https://en.wikipedia.org/wiki/Anamnesis_(philosophy))! For them, a symbolic system starts out already with a solution generator and a solution tester, and problem-solving is nothing but heuristically searching over the generated solutions until one passes the tester. Indeed, in their telling, AI research is just search, not learning.
+
+> ... During the first decade or so of artificial intelligence research, the study of problem solving was almost synonymous with the study of search processes. From our characterization of problems and problem solving, it is easy to see why this was so. In fact, it might be asked whether it could be otherwise. ...  There is no mystery where the information that guided the search came from. We need not follow Plato in endowing the symbol system with a previous existence in which it already knew the solution. A moderately sophisticated generator-test system did the trick without invoking reincarnation.
+
+### The Anti-symbolic Hypothesis
+
+> ... we had two major misconceptions: first, that learning is a *problem* rather than a *solution*. If back at the beginning you asked an AI researcher what the major problem areas in the field were, they would have listed computer vision, inference, knowledge representation, understanding language, ... and learning. You would no more set out to translate between languages by writing a program to learn how to do so than you would create a rocket that learned to go to the moon. When put that way, it seems like common sense, but it is wrong. Our second big mistake was our allegiance to the physical symbol hypothesis... Newell and Simon were the first to state this explicitly, but ... virtually everyone believed it at that time--certainly your author.
+>
+> [@charniakAIIntellectualHistory2024]
+
+> AI research has foundered in a sea of incrementalism. No one is quite sure where to go save improving on earlier demonstrations of techniques in symbolic manipulation of ungrounded representations. At the same time, small AI companies are folding, and attendance is well down at national and international AI conferences... the *it symbol system hypothesis* upon which *it classical AI* is based is fundamentally flawed... Traditional AI has tried to demonstrate sophisticated reasoning in rather impoverished domains. The hope is that the ideas used will generalize to robust behavior in more complex domains. Nouvelle AI tries to demonstrate less sophisticated tasks operating robustly in noisy complex domains. The hope is that the ideas used will generalize to more sophisticated tasks.
+>
+> [@brooksElephantsDonPlay1990]
+
+The dominance of the Symbolic Hypothesis was never complete. There were often objections to it.
+
+In 1972, Hubert Dreyfus raised a fuss with a book *What Computers Can't Do: The Limits of Artificial Intelligence*. Unfortunately, his work was based on the phenomenology of Merleau-Ponty and Heidegger, who wrote like *real and genuine* philosophers,[^feigenbaum-cotton-candy] so I just resorted to checking [his Wikipedia article](https://en.wikipedia.org/wiki/Hubert_Dreyfus%27s_views_on_artificial_intelligence). From what I gathered, his argument was that the Symbolic Hypothesis is flawed in the sense that it is too "closed".
+
+[^feigenbaum-cotton-candy]: 
+    Edward Feigenbaum's reaction is representative of most AI scientists:
+    
+    > What artificial intelligence needs is a good Dreyfus. The conceptual problems in AI are really rough, and a guy like that could be an enormous help... But Dreyfus bludgeons us over the head with stuff he's misunderstood and is obsolete anyway -- and every time you confront him with one more intelligent program, he says, "I never said a computer couldn't do that." And what does he offer us instead? Phenomenology! That ball of fluff! That cotton candy! [@mccorduckMachinesWhoThink2004, pages 229--230]
+
+Fortunately, before I gave up, someone pointed me to a better, previous report [@dreyfusAlchemyArtificialIntelligence1965]:
+
+> having read "Alchemy and Artificial Intelligence" for this investigation... It seems to me that Dreyfus' 1965 critiques of 1960s AI approaches were largely correct, for roughly the right reasons, in a way that seems quite impressive in hindsight... Dreyfus' arguments are inspired by his background in phenomenological philosophy, but he expresses his arguments in clear and straightforward language... the AI community hardly responded to Dreyfus' critique at all -- and when they did, they often misrepresented his claims and arguments in ways that are easy to detect if one merely checks Dreyfus' original report.
+>
+> [@muehlhauserWhatShouldWe2016]
+
+With that, I managed to understand Dreyfus' argument clearly. His main point is that logical AI, exemplified by Simon and Newell's GPS,  cannot reach human-level reasoning, because logical AI cannot perform 3 fundamental human forms of information processing: fringe consciousness, essence/accident discrimination, and ambiguity tolerance. These require brain-like computers to perform.
+
+* Fringe consciousness: Chess players do not analyze positions like the GPS. Whereas the GPS performs a unified heuristic search, chess players seem to unconsciously scan a large number of positions, making some variations seem salient, which they then consciously "count out". The unconscious scanning is *not* search, since otherwise why not perform unconscious search all the way to the finish line? The conscious "counting out" is captured by the GPS, but the unconscious "zeroing in" is not.
+* Essence/accident discrimination: Even on simple, well-defined problems like cryptogram puzzles, the GPS and humans reason very differently. Humans can simplify problems with symmetry like "for basically the same reason...", and backtrack based on an understanding of the overall problem structure. Even Simon and Newell have labelled their human subjects' reasoning steps as either "essential" or "inessential". GPS solves a problem like humans do only if the programmers have so helpfully pre-structured the problem with the essential features. These all show that human reasoning distinguishes some as essential while others as accidental, and focuses their conscious problem solving over the essential features, something GPS cannot do.
+* Ambiguity tolerance: So far, machine translation and language understanding research had only worked on highly artificial and restricted domains, since none of them could handle the ambiguity in natural language. Humans can handle this massive ambiguity because humans process language not according to precise rules, but by unconscious processing that statistically combines context, goals, and background knowledge, and produces *precise enough* outputs.
+
+From our vantage point, chess ended up falling to the heuristic search of DeepBlue, but Go did require combining "fringe consciousness" with heuristic search in the CNN+MCTS architecture of AlphaGo. The three forms of information processing he singled out as requiring brain-like computing turned out to be precisely where neural networks achieved breakout success. Of course, the logical AI camp would not go down without a fight, and with "Parallel Distributed Processing" -- the revival of neural networks in 1980s -- there would be a bitter dispute, centered around, of all things, how to form the past tense of English verbs.[^dreyfus-2012]
+
+[^dreyfus-2012]:
+    Having checked out his latest writing, we regret to inform thee that he was a blind cat that caught a mice by an accidental swipe of the paw, but then starved to death by doing it again and again. He simply did not believe AI was possible at all, that human intelligence requires human existence (really showing off his existentialist colors there), and *all* apparent progress in AI are like climbing a tree and claiming progress on landing on the moon.
+
+    > The commonsense knowledge problem, which as Minsky says, stopped AI in the early 70ies, has never been solved; except for Lenat it has just been ignored. Yet Chalmers assumes incremental progress and confidently asserts that "Given the way that computer technology always advances, it is natural enough to think that once there is AI, AI? will be just around the corner." But that just is the first step fallacy. AI is always just round the corner but, as Chalmers himself admits, never succeeds in turning that corner. There is, in fact, *no reason to think that we are making progress towards AI or, indeed, that AI is even possible, in which case claiming incremental progress towards it would make no sense.*
+    > 
+    > [@dreyfusHistoryFirstStep2012]
+
+Among those that Dreyfus convinced was Terry Winograd, maker of SHRDLU. He gave up on logical AI research as a mistaken direction based on a mistaken philosophy of rationalism, and aimed to *dissolve* the problems as being morally not worth answering. Instead of rationalism and making machines that think, they proposed phenomenology ([Heidegger](https://en.wikipedia.org/wiki/Martin_Heidegger) and [Gadamar](https://en.wikipedia.org/wiki/Hans-Georg_Gadamer)) and making machines that help humans.
+
+> In the course of developing a new understanding we came across questions that have long been the subject of debate, such as "Can computers think?", "Can computers understand language?", and "What is rational decision-making?" We address these questions not so much to solve them as to *dissolve* them. They arise in a background of understanding about human thought and language, a background that itself needs to be reexamined and revised. In the end, we are not concerned with providing new answers to questions about technology as they have traditionally been posed. We look towards new questions that can lead to the design and use of machines that are suited to human purposes.
+> 
+> ...
+> 
+> Much of our theory is a theory of language, and our understanding of the computer centers on the role it will play in mediating and facilitating linguistic action as the essential human activity. In asking what computers can do, we are drawn into asking what people do with them, and in the end into addressing the fundamental question of what it means to be human. 
+>
+> [@winogradUnderstandingComputersCognition1987]
+
+[Douglas Hofstadter](https://en.wikipedia.org/wiki/Douglas_Hofstadter) raised a similar objection, but from within the logical AI tradition. His essential point was that logical AI, as conceived by Simon and Newell, is a closed system. For example, a chess computer might play a perfect chess even when the room is on fire. The concept of fire, or indeed anything that is beyond the mathematical strucure of chess, does not feature in the computer's symbolic universe, and so it does not exist for the computer.[^holt-chess-fire] Whereas Dreyfus argued that intelligence is open by the "cotton candy" of phenomenology, sieging the head from the outside in, Hofstadter used the Gödel incompleteness theorems to break the head open, from the inside out.
+
+[^holt-chess-fire]:
+    This example was given by Anatol Holt at ARPA Principal Investigators' Conference in 1974, and quoted in [@winograd10ThinkingMachines1991]:
+
+    > A brilliant chess move while the room is filling with smoke because the house is burning down does not show intelligence. If the capacity for brilliant chess moves without regard to life circumstances deserves a name, I would naturally call it "artificial intelligence."
+
+The rough idea is that any symbolic system that is powerful enough would be incomplete, and furthermore, would "reflect" its own incompleteness. The incompleteness theorems state that in any sufficiently powerful formal system, there are statements that are true about the system that cannot be proven within the system. For example, let $\Sigma$ be the logical system of Peano arithmetics, then by the incompleteness theorems, there are sentences like [Rosser's sentence](https://en.wikipedia.org/wiki/Rosser%27s_trick), or "PA is consistent", which are *provably unprovable* assuming PA is consistent.
+
+Stated in another way, arithmetical truth cannot be defined in arithmetic -- [Tarski's undefinability](https://en.wikipedia.org/wiki/Tarski%27s_undefinability_theorem).
+
+> O God, I could be bounded in a nut shell and count
+> myself a king of infinite space, were it not that I
+> have bad dreams.
+>
+> --- Hamlet, Act 2, Scene 2
+
+In the context of AI, this means that a symbolic system, no matter how complex, will always have limitations in representing and reasoning about the world, even if the world is but itself. We need not assume there is an "outside". The symbolic system, even when floating in a mathematical vacuum, creates its own outside.
+
+His solution was to add in some "strange loops", which would both create general intelligence and create consciousness in one fell swoop. These strange loops are hierarchical structures where crossing levels leads back to the starting point. In the context of AI, Hofstadter proposed that implementing strange loops within a symbolic system would allow the system to refer to itself and its own structure, potentially leading to self-awareness and general intelligence. This self-referential capability would enable the system to overcome the limitations imposed by the incompleteness theorems and exhibit more flexible and human-like intelligence.
+
+Hofstadter was a far better writer than Dreyfus, and his 1979 book *Gödel, Escher, Bach* was a popular hit among both the common people and the computer scientists. Despite this, the trajectory of AI did not go as he expected.
+
+> There may be programs which can beat anyone at chess, but they will not be exclusively chess players. They will be programs of general intelligence, and they will be just as temperamental as people. "Do you want to play chess?" "No, I'm bored with chess. Let's talk about poetry." [@hofstadterGodelEscherBach1999, page 678]
+
+In the preface to the second edition (1999), Hofstadter admitted that this prediction went way off, but still committed to the philosophical belief behind these. Unfortunately, the disappointments did not stop coming. In 
+
+With the rise of Transformer-based language models, the world became a more threatening place for him. He expressed his confusion and traumatic response in a 2023 interview:
+
+> \[In 1960,\] I knew how computers worked, and I knew how extraordinarily rigid they were. You made the slightest typing error and it completely ruined your program... It felt as if artificial intelligence was the art of trying to make very rigid systems behave as if they were fluid... I felt it would be hundreds of years before anything even remotely like a human mind would be asymptotically approaching the level of the human mind, but from beneath... But when certain systems started appearing maybe 20 years ago, they gave me pause. And then this started happening at an accelerating pace where unreachable goals and things that computers shouldn't be able to do started toppling. The defeat of Gary Kasparov by Deep Blue, and then going on to Go systems, systems that could defeat some of the best Go players in the world. And then systems got better and better at translation between languages and then at producing intelligible responses to difficult questions in natural language, and even writing poetry.
+> 
+> My whole intellectual edifice, my system of beliefs--it's a very traumatic experience when some of your most core beliefs about the world start collapsing... I think about it practically all the time, every single day... and it overwhelms me and depresses me in a way that I haven't been depressed for a very long time.
+>
+> [Reflections on AI](https://www.buzzsprout.com/222312/episodes/13125914), interview with Douglas Hofstadter by Amy Jo Kim (2023-06-29)
+
+### Statistical learning theory
+
+In the 1960s, Vladimir Vapnik was working on a Ph.D. in statistics, but due to multiple political problems, he was forced to withdraw the thesis and republish it as a book, in which he laid out his vision of statistical learning theory.
+
+> From the KGB's point of view I was a wrong person to obtain the doctoral level: I was not a member of the Communist Party, I was Jewish, my PhD adviser, Alexander Lerner, had applied for immigration to Israel and became a "refusenik," some of my friends were dissidents, and so on... The main message that I tried to deliver in the book was that classical statistics could not overcome the curse of dimensionality but the new approach could. I devoted three chapters of the book to different classical approaches and demonstrated that none of them could overcome the curse of dimensionality. Only after that did I describe the new theory.
+> 
+> [@vapnikEstimationDependencesBased2006]
+
+In short, Vapnik's theory is to on the one hand, minimize the training loss ("empirical risk minimization") by any statistical model, but on the other hand, avoid overfitting by controlling capacity ("VC dimension") of the model. This was a radical departure from the previous kind of "classical statistics", which, while not Chomskyan, was very close in spirit.
+
+> (1) There is a group of philosophers who believe that the results of scientific discovery are the real laws that exist in nature. These philosophers are called the realists.
+> 
+> (2) There is another group of philosophers who believe the laws that are discovered by scientists are just an instrument to make a good prediction. The discovered laws can be very different from the ones that exist in Nature. These philosophers are called the instrumentalists.
+> 
+> The two types of approximations defined by classical discriminant analysis (using the generative model of data) and by statistical learning theory (using the function that explains the data best) reflect the positions of realists and instrumentalists in our simple model of the philosophy of generalization, the pattern recognition model. Later we will see that the position of philosophical instrumentalism played a crucial role in the success that pattern recognition technology has achieved.
+>
+> [vapnikEstimationDependencesBased2006, page 415]
+
+Vapnik's books were chock-full of philosophical musings, now rarely read. Leo Breiman's philosophical musings, however, has remained famous. As a reference to [C. P. Snow's "Two Cultures" lecture of 1959](https://en.wikipedia.org/wiki/The_Two_Cultures), Breiman wrote [@breimanStatisticalModelingTwo2001] to contrast the "data modeling culture" with the "algorithmic modeling culture".
+
+The data modeling culture first constructs a [generative model](https://en.wikipedia.org/wiki/Generative_model) of the data with a few parameters $\theta$, then construct [ways to estimate](https://en.wikipedia.org/wiki/Estimator) $\theta$ from data, with provable guarantees. This culture includes both the frequestists and the Bayesians.
+
+On the plus side, a generative model with a few parameters is easy to interpret. On the minus side, if the statistician were to interpret parameters subsequently,[^easily-check-statistical-interpretation] then the parameters had better mean something real, which requires the model to be close to reality. That is, the price for interpretability is eternal vigilance (against model misspecification).
+
+[^easily-check-statistical-interpretation]: One can easily check this by opening a journal in economics or medicine and look at the "results" section of some papers. There one would find parameters decorated with error bars, followed by policy recommendations, such as "Since $\theta_{6} > 0$ with statistical significance, we conclude that elevating melatonin has a positive impact...". If $\theta$ in this imaginary example is used in a data model like $y = \sum_i \theta_i x_i + \epsilon$, where $\epsilon$ is noise, then for the sake of this imaginary author, the real biological response of the human had better be sufficiently linear to $x_1, x_2, \dots$, at least for those $x$ within the therapeutic range.
+
+> This enterprise has at its heart the belief that a statistician, by imagination and by looking at the data, can invent a reasonably good parametric class of models for a complex mechanism devised by nature... If the model is a poor emulation of nature, the conclusions may be wrong. These truisms have often been ignored in the enthusiasm for fitting data models. A few decades ago, the commitment to data models was such that even simple precautions such as residual analysis or goodness-of-fit tests were not used.
+
+The algorithmic modeling culture in contrast is very empirical -- if it works on the training set, and if statistical learning theory predicts that its train-test gap is low ("capacity control" again), then it works. Data modeling culture was stuck with generative models, unable to use tools that work despite not interpretable as generative models -- random forests, boosting, bagging, neural networks, all the latest algorithms popping up in the 1990s.
+
+Among the many replies to this bombshell of an editorial, [David Cox](https://en.wikipedia.org/wiki/David_Cox_(statistician)) went directly for the philosophical:
+
+> Professor Breiman takes a rather defeatist attitude toward attempts to formulate underlying processes; is this not to reject the base of much scientific progress?
+
+Whereas [Bradley Efron](https://en.wikipedia.org/wiki/Bradley_Efron) was like "hopefully you are just playing devil's advocate":
+
+> A third front seems to have been opened in the long-running [frequentist-Bayesian wars](https://en.wikipedia.org/wiki/Foundations_of_statistics#Bayesian_inference_versus_frequentist_inference) by the advocates of algorithmic prediction, who don't really believe in any inferential school... The whole point of science is to open up black boxes, understand their insides, and build better boxes for the purposes of mankind. Leo himself is a notably successful scientist, so we can hope that the present paper was written more as an advocacy device than as the confessions of a born-again black boxist.
+
+TODO

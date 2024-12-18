@@ -1,0 +1,914 @@
+---
+title: "The Rise and Fall of Logical AI"
+author: "Yuxi Liu"
+date: "2024-12-23"
+date-modified: "2024-12-23"
+categories: [AI, scaling, history]
+format:
+  html:
+    toc: true
+description: "Good Old-Fashioned AI never die. They just fade away."
+
+# image: "figure/banner.png"
+status: "wip"
+confidence: "likely"
+importance: 5
+---
+
+{{< include ../../../utils/blog_utils/_macros.tex >}}
+
+## Translation
+
+> One naturally wonders if the problem of translation could conceivably be treated as a problem in cryptography. When I look at an article in Russian, I say: "This is really written in English, but it has been coded in some strange symbols. I will now proceed to decode."
+> 
+> -- Warren Weaver, Letter to Norbert Wiener, 1947-03-04
+
+During WWII, the science of communication and control took on a life-and-death importance. The mathematically perfect Enigma forced Allied mathematicians to turn their art of code into the science of information, so as to extract every last bit of information leaked out from the unknown enemy who was less than mathematically perfect, who made mistakes, who stuttered with verbal tics like `WETTER` or `KEINE BESONDEREN EREIGNISSE`. On two sides of the Atlantic, Alan Turing of computer science, and Claude Shannon of information theory, fought in this information warfare.
+
+Before the war, some feared that the bombers would finally be the ultimate weapon, as a fleet of [them will always get through](https://en.wikipedia.org/wiki/The_bomber_will_always_get_through). Bombing was becoming a cyborg activity. The bombers were flying so high and so fast, the bombardiers needed [intricate bombsights](https://en.wikipedia.org/wiki/Norden_bombsight) filled with mechanical calculators, just to calculate the correct time to drop the bombs.
+
+But the bombers would not go through after all, as radar screens and flak cannons raised invisible walls in the sky, and the anti-aircraft fire became another cyborg activity. Norbert Wiener developed his control theory in the context of anti-aircraft fire and radar screening. He thought of both as a form of deadly communication. A radar speaks to the aircraft, "Who and where are you?" Despite itself, the aircraft must answer. The radar's job is to speak clearly with the right ping and listen carefully with the right filter. In this context, he developed the [Wiener filter](https://en.wikipedia.org/wiki/Wiener_filter).
+
+Anti-aircraft (AA) seems even less like a deadly communication, yet Wiener made it work. To shoot down an aircraft, one must predict where it will be a few seconds into the future, since that is how long bullets take to fly that high. The AA looks to the sky and asks, "Where are you going?". Despite itself, the aircraft speaks with where it had been in the past few seconds, as if writing a cursive word in the sky. The AA reads and understands this writing, and act accordingly. The past is a code for the future, like the Enigma is a code for the plaintext. [@yeangFilteringNoiseAntiaircraft2023]
+
+If the soldiers are always preparing to fight the previous war, the same seems true for some mathematicians. Wiener and his collaborator, Warren Weaver, decided to tackle the problem of machine translation with the same tools they developed for war. If information theory helps with breaking the Enigma code, would it not also help with breaking the language codes?
+
+The wartime metaphor would become ominously appropriate with the Cold War.
+
+### Georgetown--IBM experiment
+
+During the 1950s, electronic computers were mainly understood and used as tools for real-valued calculations, such as simulating nuclear explosions, the aerodynamics of ballistic missiles, macroeconomic planning, and other important real-valued functions that are necessary to safeguard freedom. However, there was already early attempts at using computers for symbolic calculations.
+
+In a sense, this was quite old. Whereas Charles Babbage designed his computer as an arithmetic mill to grind out numerical tables, Ada Lovelace speculated that computers can grind out symbolic music too, as long as music and its transformation rules are encoded into integers.
+
+On 1954-01-07, the world's first non-human translator appeared in the body of an IBM 701. At least, that is what the newspapers made it seam to be.
+
+Back in 1952-06, at a MIT conference on machine translation (MT),[^mt-acronym] Leon Dostert was convinced that instead of arguments about whether MT works *in theory*, they needed to try it out on an actual problem to see if it would work *in practice*. This led to the [Georgetown--IBM experiment](https://en.wikipedia.org/wiki/Georgetown%E2%80%93IBM_experiment) 1.5 years later. It was the first public demonstration of machine translation -- from Russian to English, and was widely reported with titles like "Electronic brain translates Russian" or "Robot brain translates Russian into King's English".
+
+[^mt-acronym]: The acronym "MT" now stands for "machine translation", but in the early days, it stood for "mechanical translation".
+
+To put some meat to the bones, consider the following hardware specs for the IBM 701 and the demo:
+
+* The IBM 701 machine operated at $2000 \;\mathrm{FLOP/s}$
+* It performed read/write speed $3.6 \;\mathrm{kB/s}$ (in the form of 80-column punched cards).
+* The program took up $2400 \;\mathrm{instruction} \times 18 \;\mathrm{bit/instruction} = 5.4 \;\mathrm{kB}$
+* The dictionary took up $6000 \;\mathrm{word} \times 36 \;\mathrm{bit/word} = 27 \;\mathrm{kB}$.
+
+The dictionary is a table with 6 columns: Russian, English equivalent I, English equivalent II, Code 1, Code 2, Code 3. As we see, each Russian word has 1 or 2 possible English translations. The three `Code`s are essentially grammar categories. As an example, the suffix `-a` is coded as `(-a, of, , 131, 222, 25)`, while the word stem `ugl-` is coded as `(ugl-, coal, angle, 121, ***, 25)`.
+
+The dictionary contains just 250 lexical items (stems and endings). Its grammar has just 6 rules. All input sentences must be made of words that are of form either `stem` or `stem-ending`. Some example translations included:
+
+> Mi pyeryedayem mislyi posryedstvom ryechyi.
+> 
+> We transmit thoughts by means of speech.
+
+![A punched card from the demo. The Russian sentence is encoded with the hole patterns and then read by the IBM 701. The output was not by punched cards, but by a printer.](figure/Georgetown-IBM_punched_card.png)
+
+The algorithm is essentially a word-substitution program, using the 6 rules to disambiguate, and to decide whether to switch a word with a previous word. The word-order switch is necessary since Russian puts prepositions as word suffixes. For example, `ugl-a` would be word-substituted to `angle-by`, but must be translated as `by angle`.
+
+The experiment was a hit, and there were some predictions of imminent breakthrough [@hutchinsFirstPublicDemonstration2005]:
+
+* Such a device should be ready within three to five years... As soon as cards for Russian are completed, sets will be made for German and French. Then other Slavic, Germanic and Romance languages can be set up at will.
+* 100 rules would be needed to govern 20,000 words for free translation.
+
+From our perspective, these seem painfully optimistic. However, it was a common belief that electronic computers, like the IBM 701, were designed for numerical computation, something that is more difficult than natural language processing. As such, a machine translator needed not faster computers, but more data. Yet among the general optimism, there was a disquieting note:
+
+> the formulation of logic required to convert word meanings properly even in a small segment of two languages necessitates two and a half times as many instructions to the computer as are required to simulate the flight of a guided missile.
+>
+> ["701 Translator", IBM Press release](https://aclanthology.org/www.mt-archive.info/IBM-1954.pdf) (1954-01-08)
+
+::: {.callout-note title="Give me code or give me nothing!" collapse="true" }
+
+One thing I dislike about some technical histories and overviews is that I keep getting a cotton-like, vaporwave feeling in the brain after reading them. It is easy to read an abstract story. 
+
+For example, many AI papers by OpenAI after 2020 has become like that. In any case, I looked up the program, which appeared in [@ornsteinMechanicalTranslationNew1955] as a single giant flowchart. I didn't read the spaghetti code in detail, but it seems to me that it first parses the input sequence into words and sub-words, then it starts from left to right, for each word/sub-word, find the rule that applies to it. Executing the rule would pick an English translation for that word/sub-word, and either switch that fragment of translation with the previous fragment, or not. There are 6 rules, of which I just copy one, since the others look similarly boring:
+
+> Choice-Rearrangement. If first code is `131`, is third code of preceding complete word or either portion (root or ending) of preceding subdivided word equal to `23`? If so, adopt English equivalent II of word carrying `131` and retain order of appearance of words in output; if not, adopt English equivalent I and reverse order of appearance of words in output.
+
+The following is a rough Python sketch. It just implements half of rule 3, but gives you an idea of how the program would go. I estimate that it should take about 100 lines to implement a fully correct version. Even this rough sketch tells you that it is a very 1950s kind of program, with imperatives and if-then statements everywhere, combined with table lookups.
+
+```python
+
+dictionary = {
+    "ugl-": ("coal", "angle", 121, 0, 25),
+    "-a": ("of", "", 131, 222, 25), 
+    ...
+}
+
+stems = [word[:-1] for word in dictionary.keys() if word[-1] = '-']
+suffixes = [word[0:] for word in dictionary.keys() if word[0] = '-']
+
+def class Word:
+    def __init__(self, word, stems, suffixes):
+      self.stem = word
+      self.suffix = ''
+      for stem in stems:
+        for suffix in suffixes:
+            if word = stem ++ suffix:
+                self.stem = stem
+                self.suffix = suffix
+                return
+    
+def parse(sentence, stems, suffixes):
+    words = sentence.split(' ')
+    return [Word(word, stems, suffixes) for word in words]
+
+def translate(words, dictionary):
+    translation = []
+    for i in range(words):
+        word = words[i]
+        if word.suffix = '':
+            ...
+            if dictionary[word.stem]['code 1'] == 131:
+                if i > 0:
+                    previous_word = words[i-1]
+                    if dictionary[previous_word.stem]['code 3'] == 23 or (previous_word.suffix != '' and dictionary[previous_word.suffix]['code 3'] == 23):
+                        flag = 2
+                    else:
+                        flag = 1
+                else:
+                    flag = 1
+                if flag == 1:
+                    translation.append(dictionary[word.stem]['code 1'])
+                    translation[-2:-1] = [translation[-1], translation[-2]]
+                else:
+                    translation.append(dictionary[word.stem]['code 2'])
+            ...
+        else:
+            # Translate stem, then suffix. It's a bit tedious.
+    return translation.join(' ')
+```
+
+:::
+
+The exact details on how the program was implemented on the IBM was non-trivial, since both the machine and the programming environment around it were designed for numerical computations, not discrete symbolic manipulations. [@sheridanResearchLanguageTranslation1955] described the details. The programming language LISP must wait until 1960 to appear. Dedicated to symbolic manipulations. It would dominate most of AI research until the 1980s.
+
+Another interesting fact is the amount of restrictions placed on the demo: 250 words, each word having just 1 or 2 possible translations, and each Russian word is either a full word or a `stem-suffix`, etc. An even deeper restriction was entirely hidden from view: pronouns. In Russian, pronouns are often dropped when the verb form makes it clear. To avoid this problem, for all demonstrated sentences, the English pronouns occur only in translations of verbs in the third person plural.
+
+### Subsequent work
+
+The Georgetown--IBM demo worked. The CIA started funding MT research at Georgetown University (eventually up to \$1,500,000), and other MT groups sprang up in America, Europe, and the Soviet Union. In general, their approaches could be divided into three parts: word-for-word, syntax, and eclectic.
+
+The idea of word-for-word translation is essentially a direct scale-up of the Georgetown--IBM demo, just with a much bigger dictionary and a few more local word-reordering rules. True, there are some ambiguities like "The vodka was good, but the meat was rotten.", but we can just pick the most likely translation, or translate a multi-word Russian phrase directly to a multi-word English phrase, etc. Erwin Reifler exemplified the "solved by lexicography" approach:
+
+> Papers on MT are nowadays heavily weighted on the side of the development of structural linguistic procedures for the solution of MT problems, and very rightly so. But many of these problems can be solved by lexicography... in certain types of cases of higher frequency it is possible to solve grammatical and non-grammatical problems by lexicography and lexicographical procedures alone--that is, without the necessity of logical procedures and logical machine operations. Since our sponsors had asked us to concentrate, at least during the initial phases of our project, on the elaboration of a bilingual lexicon, we decided to try to achieve an optimum of lexicography which would solve as many of our bilingual problems as possible. The results of this lexicographical work were... almost 170,000 MT-operational Russian-English entries.
+>
+> [@reiflerSolutionMTLinguistic1960]
+
+This was the [AN/GSQ-16 translator](https://en.wikipedia.org/wiki/AN/GSQ-16_Automatic_Language_Translator), which would eventually be subsumed by SYSTRAN.
+
+Similarly, at RAND corporation, they performed large-scale statistical analysis of corpus, used the analysis to write some Russian-English dictionary and reordering rules. Ran the program, checked the output, rewrote the dictionary and rules, etc. It was kind of a RAND-om gradient descent.
+
+At MIT under Victor Yngve, the research agenda was fully based on syntax. A sentence in the source language is parsed into a syntax tree, then the syntax tree is transformed by some rotation, grafting, cutting, and pasting, and finally the leaf-words are substituted into the target language. To see an example use of this, consider the German sentence »Hans kommt heute abend an.«, which translates to "Hans arrives this evening".. Here, "arrives" corresponds to »kommt ... an«, and the distance between the two pieces of the verb can be arbitrarily long, thus no local transformation rule would work. However, though this is similar in spirit to Chomskyan linguistics, Chomsky was only briefly in the group, and his generative grammar was not used.
+
+![Some example syntax trees according to Yngve. They show "discontinuous constituents", much like the German example of »Hans kommt heute abend an.«. [@yngveModelHypothesisLanguage1960, figure 31]](figure/Yngve_1960_fig_31.png)
+
+At Georgetown, the approach was more eclectic, with some syntax parsing and some statistical analysis with dictionary. Like most eclectic systems, it defies summary.
+
+Meanwhile in the Soviet Union, MT research was based on a deep analysis of language at multiple levels (phonetic, phonemic, morphemic, surface syntactic, deep syntactic, semantic), similar to the [Vauquois triangle](https://en.wikipedia.org/wiki/Bernard_Vauquois#Vauquois_triangle), though they called it "[Meaning--Text Theory](https://en.wikipedia.org/wiki/Meaning%E2%80%93text_theory)".
+
+![The Vauquois triangle.](figure/Vauquois%20triangle.png)
+
+For details on this period, I refer to [@hutchinsMachineTranslationConcise2007].
+
+### Winter comes
+
+Around 1964, there was an uneasy feeling around AI. The post-war flood of governmental funds was slowing as the optimistic "Science, the Endless Frontier" lost its shine. There were much bigger projects to do, like sending 2 men to the moon or 3 million to Vietnam. The general atmosphere was subdued. Eventually funding would be cut even more with the Mansfield Amendments of 1973, which limited ARPA to only funding projects directly relevant to military applications.
+
+> By 1966, it was estimated that roughly 20 million dollars (in contemporary dollars) had been spent on MT in the US, with Georgetown, at 1,317,239 dollars (93.5 percent from the CIA, 6.5 percent from the NSF) being the largest.. "In comparison, let us notice that in June 1952, when the First conference on Machine Translation convened at MIT, there was probably one person in the world engaged more than half-time in work on MT, namely myself \[Bar-Hillel\]". The budget had been roughly ten thousand dollars.
+>
+> [@gordinForgettingRediscoverySoviet2020]
+
+In 1964, the US government created the ALPAC committee of 7 linguists "to advise the Department of Defense, the Central Intelligence Agency, and the National Science Foundation on research and development in the general field of mechanical translation of foreign languages". The roster of names makes it clear that MT was a matter of state security. It was all well and good if MT could eventually reach human level performance in a few centuries, or if MT research could *right now* inform the science of linguistics and assist the universe's ceaseless striving to rationally know itself, but let us never confuse the universal with the here and now.
+
+> "Are you looking for the Secret Name, Scharlach?" ... in his voice Lönnrot detected a fatigued triumph, a hatred the size of the universe, a sadness no smaller than that hatred. "No. I am looking for something more ephemeral and slippery, I am looking for Erik Lönnrot..."
+>
+> --- Borges, *Death and the Compass* (1942)
+
+The Georgetown--IBM experiment proved to be *too* good of a demo. The sentences were picked to present it in the best light, and the rules were written so that the machine would translate the sentences correctly. Subsequent MT research could not match the demo, and skeptics appeared.
+
+> Dorset is "a great conversationalist ... but as a researcher I was unsure about him, whether he was just a figurehead or whether he was a bit of a fraud -- the Georgetown MT demonstrations seemed always to be contrived; they made impressive publicity for the sponsors, but they soured the atmosphere by raising expectations that nobody could possibly fulfill." ... MT colleague Winifred Lehmann was overheard describing him as "a wart on the field of linguistics".
+>
+> --- Old gossips quoted in [@gordinDostoevskyMachineGeorgetown2016]
+
+The ALPAC committee worked for 2 more years before presenting the final report in 1966 [@automaticlanguageprocessingadvisorycommitteeLanguageMachinesComputers1966]. Most of the report is not on whether MT is possible, but on the economics of translating technical documents from Russian to English, and whether MT would be economically good enough for this within the next few years. For example, it calculated that since a machine-translated document takes longer to read, if a document were to be read by more than 20 people, human translation is more economical. What the report says about MT itself is fairly brief:
+
+> "Machine Translation" presumably means going by algorithm from machine-readable source text to useful target text, without recourse to human translation or editing. In this context, there has been no machine translation of general scientific text, and none is in immediate prospect. The contention that there has been no machine translation of general scientific text is supported by the fact that when, after 8 years of work, the Georgetown University MT project tried to produce useful output in 1962, they had to resort to post-editing. The post-edited translation took slightly longer to do and was more expensive than conventional human translation.
+> 
+> ... Early machine translations of simple or selected text, such as those given above, were as deceptively encouraging as "machine translations" of general scientific text have been uniformly discouraging. However, work toward machine translation has produced much valuable linguistic knowledge and insight that we would not otherwise have attained.
+> 
+>...  it is wise to press forward undaunted, in the name of science, but that the motive for doing so cannot sensibly be any foreseeable improvement in practical translation. Perhaps our attitude might be different if there were some pressing need for machine translation, but we find none.
+
+Despite this, it resulted in a swift deep cut in governmental funding for MT research, not just in America, but also in the Soviet Union. Quite understandable. However, like the concurrent loss of funding for neural network research, it resulted in an AI winter for MT, and a general impression that MT had been debunked.
+
+> Its effect was to bring to an end the substantial funding of MT research in the United States for some twenty years. More significantly, perhaps, was the clear message to the general public and the rest of the scientific community that MT was hopeless. For years afterwards, an interest in MT was something to keep quiet about; it was almost shameful. To this day, the 'failure' of MT is still repeated by many as an indisputable fact... from time to time in the next decades researchers would discuss among themselves whether "another ALPAC" might not be inflicted upon MT.
+>
+> [@hutchinsALPACFamousReport2003]
+
+> The effect of the ALPAC report in 1966 was as great in the Soviet Union as in the United States. Many projects were not funded any more; machine translation went into decline. The authorities had seen the ALPAC documents and concluded that if the Americans did not think it worthwhile to support MT, if they did not think there was any hope of MT, then nor should we... \[But\] we had never pretended that we were doing actual machine translation, we were doing formal linguistics.
+>
+> [Igor A. Mel'čuk](https://en.wikipedia.org/wiki/Igor_Mel'%C4%8Duk)[^igor-melchuk] (2000), quoted in [@gordinForgettingRediscoverySoviet2020]
+
+[^igor-melchuk]: 
+    Melchuk was one of the founders of Meaning--Text Theory, which as you might imagine, believed in deep theoretical understanding, not in programs that seemed to work in practice. In a 2024 interview:
+
+    > 60 years later, this problem has been solved in a completely different way... Today's machine translation using artificial intelligence is admirable, but it has nothing to do with the science of language. The machine translates brilliantly, but we learn nothing new about linguistics from it... In general, I am a typical armchair scientist. I am interested in knowing, not in being able to do something practical.
+    > 
+    > [Igor Melchuk on non-traditional linguistics and machine translation — "System Block"](https://sysblok.ru/interviews/menja-interesuet-znat-a-ne-prosto-umet-igor-melchuk-o-netradicionnoj-lingvistike-mashinnom-perevode-i-zhizni-v-kanade/)
+
+    Such attitude will appear again and again among the "Chomskyans" or "Rationalists", as we will see throughout this essay, is the common trend underlying logical AI research.
+
+[Yehoshua Bar-Hillel](https://en.wikipedia.org/wiki/Yehoshua_Bar-Hillel) against machine translation -- what he called FAHQT (Fully Automatic High-Quality Translation, or as I imagine him saying it, "Machine translation? Ah, FAHQT."). The argument goes like:
+
+1. FAHQT requires general world understanding, because natural language is full of ambiguities that require general world understanding.
+2. General world understanding is "utterly chimerical and hardly deserves any further discussion'.
+
+The standard example he gave was "The box is in the pen.", where the issue is how to disambiguate the word "pen". Does it mean the writing instrument, or an enclosure? For a machine to pick the right meaning, it must know that a pen cannot contain a box, while an enclosure can. This cannot be done by merely looking up every word in a dictionary, or drawing up its the syntax tree. It must have general world understanding, or common sense.
+
+> Assume, for simplicity's sake, that *pen* in English has only the following two meanings: (1) a certain writing utensil, (2) an enclosure where small children can play. I now claim that no existing or imaginable program will enable an electronic computer to determine that the word *pen* in the given sentence within the given context has the second of the above meanings, whereas every reader with a sufficient knowledge of English will do this "automatically".
+> 
+> Whenever I offered \[the challenge\] to one of my colleagues working on MT, their first reaction was: "But why not envisage a system which will put this knowledge at the disposal of the translation machine?" ... What such a suggestion amounts to, if taken seriously, is the requirement that a translation machine should not only be supplied with a dictionary but also with a universal encyclopedia. This is surely utterly chimerical and hardly deserves any further discussion... Reasonable goals are then either fully automatic, low quality translation or partly automatic, high quality translation. Both are theoretically feasible and, for certain language pairs, attainable today though not yet on a commercial scale.
+>
+> [@bar-hillelPresentStatusAutomatic1960]
+
+If FAQHT is impossible for all "existing or imaginable" programs, there can exist only two proper kinds of machine translation. One was automatic low-quality translation, and another was explicitly designed as a help, not a replacement, to human translators. The first kind was all there was, and Bar-Hillel called for researchers to work on the second kind.
+
+Interestingly, it has mentioned "learning machines" only to not discuss it further, even though machine learning would turn out to be the key to general world understanding. This dismissal of machine learning would continue for quite some more years.
+
+He presented his opinion more forcefully 4 years later in an editorial:
+
+> It seems now quite certain to some of us, a small but apparently growing minority, that with all the progress made in hardware (i.e., apparatus), programming techniques and linguistic insight, the quality of fully autonomous mechanical translation, even when restricted to scientific or technological material, will never approach that of qualified human translators and that therefore Machine Translation will only under very exceptional circumstances be able to compete with human translation.
+>
+> ... there is no prospect whatsoever that the employment of electronic digital computers in the field of translation will lead to any revolutionary changes. A complete automation of the activity is wholly utopian, since the fact that books and papers are usually written for readers with a certain background knowledge and an ability for logical deduction and plausible reasoning cannot be over-ridden by even the cleverest utilization of all formal features of a discourse. The hopes to the contrary which many of us had a decade ago just turned out to be by and large unrealizable. The quicker this is understood, the better are the chances that more attention will be paid to finding efficient ways of improving the status of scientific and technological translation--I am not qualified to discuss literary translation--including a judicious and modest use of *mechanical aids*.
+>
+> [@bar-hillelFutureMachineTranslation1964]  
+
+Bar-Hillel's objection is reminiscent of the [Winograd schema challenge](https://en.wikipedia.org/wiki/Winograd_schema_challenge), which also tests for general world understanding. Indeed, even Terry Winograd had a tentative guess that the Winograd challenge is too challenging, though it is clearly just a weak guess, not a firm prediction like the previous quotes.
+
+> The limitations on the formalization of contextual meaning make it impossible at present -- and conceivably forever -- to design computer programs that come close to full mimicry of human language understanding.  
+>
+> [@winogradComputerSoftwareWorking1984]  
+
+What do we make of such criticism? At that point in time, there were three possible replies:
+
+1. Intelligence amplification: Instead of the mirage of replacing human translators, try to build little programs that augment human translators. 
+2. Brute force logical programming: Scale up commonsense by hiring more linguists to program in increasingly large chunks of the world.
+3. AI is a mirage, and the failures of MT is a symptom of that.
+
+From our vantage point, the actual solution turned out to be:
+
+1. The bitter lesson: Wait a few decades, then train a giant neural network on a trillion words from the Internet to give it general world knowledge.
+
+There is a common mistake about the bitter lesson, that even Richard Sutton makes. It is not just that the bitter lesson is bitter, but also that it is *difficult*. People did not believe in it, not because they were afraid of bitterness, but because it was obviously stupid, a kind of straw man's argument.
+
+Consider the arguments of a latter-day Bar-Hillel:
+
+> The case against machine translation as a solution to practical problems is overwhelming and has been made many times. I do not propose to repeat it in any detail here. It will, however, be worth a few words to make a *prima facie* case for the implausibility of practical machine translation if only so that the contrast with realistic approaches to the problem will be more striking... There is a great deal that computer scientists and linguists could contribute to the practical problem of producing translations, but, in their own interests as well as those of their customers, they should **never** be asked to provide an engineering solution to a problem that they only dimly understand.
+> 
+> I want to advocate a view of the problem in which machines are gradually, almost imperceptibly, allowed to take over certain functions in the overall translation process. First they will take over functions not essentially related to translation. Then, little by little, they will approach translation itself. The keynote will be *modesty*. At each stage, we will do only what we know we can do reliably.
+>
+> [@kayProperPlaceMen1997]
+
+Now we know that "engineering solutions to a problem they only dimly understand" was precisely the breakthrough in multiple fields. In this essay we would this appearing in [speech recognition](#sec-speech), TODO, TODO, and TODO. It also happened with AlphaGo, made by a team who only had Go amateurs, or diffusion artists made by engineers with minimal understanding of art. However, just try saying out loud, "I'll solve translation just by training a sequence to sequence neural network, on a few million pairs of English-German sentence pairs. It won't have a probabilistic interpretation, or a syntax tree, or morphological constraints. In fact I haven't even taken a course in intermediate linguistics. But I have trained many neural networks. Surely if I can get the loss low enough, it will work." The reasonable reply would be, "What hubris, to tackle a problem that has stumped decades of linguistic science with the brute reason of engineering! What Goodhart law, to expect minimizing loss will lead to the thing you actually want, which is translation? What alchemy, to expect to put in nothing but data and compute, and somehow create understanding in a machine, an understanding that you don't have yourself?".[^feynman-kac]
+
+[^feynman-kac]
+    Perhaps the [Feynman--Kac](https://en.wikipedia.org/wiki/Feynman%E2%80%93Kac_formula) anecdote illustrates this better.
+    
+    > Kac went to Pasadena to lecture at the California Institute of Technology. Richard Feynman was in the audience. After the lecture, Feynman got up and announced: "If all mathematics disappeared, it would set physics back precisely one week." Without a pause, Kac responded: "Precisely the week in which God created the world."
+    >
+    > [@cohenLifeImmeasurableMind1986]
+
+    So perhaps...
+
+    > "If we fired all the linguists, it would set machine translation back precisely one week."
+    > 
+    > "Precisely the week in which God struck down the Tower of Babel."
+
+To end this section, I quote from one of the authors of the ALPAC report an amusing anecdote about Yngve, which was an omen of the ultimate fate of logical MT:
+
+> There's sometimes a strong scholastic emphasis, or current, which causes some psychologists to produce very closely reasoned ideas that aren't checked at every point with experiment. Some of the theoretical linguists are like that. They are extremely plausible. But I know a fellow, [Victor Yngve](https://en.wikipedia.org/wiki/Victor_Yngve), who tried to write a transformational grammar of the English language, a reasonably complete one. It took him years and years and he never got it written. He kept finding difficulties that don't appear when you have a few nice examples of what a transformation of grammar is supposed to be all about.
+>
+> John Pierce, quoted in [@lyleInterviewJohnRobinson1979]
+
+### The alignment problem
+
+The decade after ALPAC was more subdued. MT research continued, but with minimal government funding, and it often continued as a kind of computational study in service of basic research in linguistics. They typically followed the approach of Vauquois, that is, to take a sentence from one language, and parse it into higher and higher levels of abstraction, reaching an "interlingua" stage that is fully language-independent, then move back down again until one lands safely in the other language. It reminds me of taking an airplane across an ocean.
+
+But MT was about to take a sudden turn away from theory.
+
+In 1986, speech recognition was solved. Well, not exactly, but during the period of 1976--1986, a group of researchers in IBM managed to produce speech recognition systems better than ever before, by "firing the linguists", and returning to the information-theoretic approach that Shannon and Weaver had back in the 1950s. Armed with compute, data, and a disregard for linguistic science, they got it to work, and in 1986, they decided to try the same trick, but this time with MT.
+
+In our language, the idea was encoder-decoder translation, using Bayesian probability. Suppose we want to translate a sentence in foreign language $f$ to an English sentence $e$. We imagine that the foreign speaker was really trying to speak English, but somehow, words came out *encoded* as a foreign language, and our goal is to *decode* from it. This gives us 3 components:
+
+1. English language model: $Pr(e)$, the prior probability of the speaker wanting to say $e$.
+2. Encoder model: $Pr(f | e)$, the conditional probability that the speaker would end up saying $f$, if they wanted to say $e$.
+3. Decoder: $f \mapsto e$, the translator we want to construct.
+
+The decoder is the maximum a posteriori solution:
+
+$$
+e^*(f) := \argmax_e Pr(f|e) Pr(e)
+$$
+
+![The encoder-decoder translation architecture. [@jelinekMyBestFriends2005, figure 3]](figure/source-channel_model_MT.png)
+
+Once we have both $Pr(f|e)$ and $Pr(e)$, we have a machine translator. To obtain $Pr(f|e)$ and $Pr(e)$, the team used simple statistical models, not much more complex than n-gram models, with parameters estimated by [expectation-maximization algorithm](https://en.wikipedia.org/wiki/Expectation-maximization_algorithm).[^ibm-alignment]
+
+[^ibm-alignment]: We are skipping over the word-alignment part of the IBM models, which tells you which words in $f$ corresponds to which words in $e$. We still have an encoder-decoder architecture, but it's more complicated.
+
+The IBM team worked on this from 1986 to the early 1990s, and their state of the art performance led to a statistical revolution in MT. Compared to the theoretically principled MT of the past, the IBM language model was obviously wrong: languages are obviously impossible to be correctly modelled by an n-gram model, or the slightly more complex upgraded models they used. Where are the syntax trees, the constituencies, etc? Yet it did work, and it took over practical MT research.
+
+Their primary dataset was the Canadian [Hansard](https://en.wikipedia.org/wiki/Hansard) corpus -- transcripts of proceedings from the Canadian parliament which were available in both English and French due to Canada's bilingual policy. The Hansard parallel corpus contained around 3 million sentence pairs at the time. While substantial, it pales in comparison to monolingual English corpora to train $Pr(e)$. English text was abundant from government documents, news archives, books, etc. In short, the encoder-decoder structure was adapted for the data regime of abundant monolingual (used to train $Pr(e)$) but limited parallel text (used to train $Pr(f|e)$).
+
+In the introduction to a "Special Issue on Computational Linguistics Using Large Corpora", [@churchIntroductionSpecialIssue1993] argued that "Rationalism", having been reigning since 1970s, was facing legitimate challenge by "Empiricism" again, for three reasons: more compute, more data, and a culture centered on evaluation.
+
+> The emphasis today on empirical methods in the speech recognition community is a reaction to the failure of knowledge-based approaches of the 1970s. It has become popular once again to focus on high-level natural language constraints in order to reduce the search space. But this time, n-gram methods have become the methods of choice because they seem to work better than the alternatives, at least when the search space is measured in terms of entropy. Ideally, we might hope that someday parsers might reduce entropy beyond that of n-grams, but right now, parsers seem to be more useful for other tasks such as understanding who did what to whom, and less useful for predicting what the speaker is likely to say.
+> 
+> Someday parsers might help squeeze out some of this remaining half bit between the trigram model and Shannon's bound, but thus far, parsing has had little impact... The issue remains as controversial as ever, as evidenced by the lively debate on rationalism versus empiricism at TMI-92, a recent conference on MT... The information theoretic approach to MT may fail for reasons advanced by Chomsky and others in the 1950s. But regardless of its ultimate success or failure, there is a growing community of researchers in corpus-based linguistics who believe that it will produce a number of lexical resources that may be of great value.
+>
+> [@churchIntroductionSpecialIssue1993]
+
+That was 1993. And the Internet was coming, and it kept coming, and it is still coming, and it just won't stop coming.
+
+When a user makes a search request like "IBM", Google's servers must retrieve not only website urls like `www.ibm.com`, but also a snippet view like "...**IBM** has been a global technology innovator...".  Therefore, Google had been crawling the Internet and storing a plain-text copy of the Internet regularly, with a size on the order of 100 TB as of 2003. [@barrosoWebSearchPlanet2003] Once with such a large dataset, what could be done with it?
+
+In 2006, Google Translate was launched. Early reactions were a mixture of fascination and sarcasm, leading to memes of hilarious Google translations that has survived to this day, even though the improvements has made it very difficult to do nowadays. Despite this, it was agreed that Google had achieved state of the art in statistical machine translation. How did it do it? By brutally scaling up.
+
+Work on Google Translate led to perhaps the first use of "Large Language Models" in the 2007 paper [@brantsLargeLanguageModels2007]. Despite possibly lower quality than a more sophisticated algorithm, the "stupid backoff" allowed them to train on 60× more data and run 10000× faster during inference. The largest model was trained on a dump of the Internet (January 2006) with 2 trillion tokens, 300M 5-grams, 16M vocab, 1.8 TB language model, took 1 day to train on 1500 machines. They noted that the more data they used, the higher the BLEU score got, and simply drew a straight line, expecting the model to keep improving if they did it on even more data.
+
+It would be 2017 when work on Google Translate led to the Transformer architecture, the current pinnacle of large language models.
+
+18 years after his introduction [@churchIntroductionSpecialIssue1993], Kenneth Church proposed in 2011 a 20-year cycle between Empiricism and Rationalism, and argued that we were on the brink of a return to Rationalism:
+
+* 1950s: Empiricism (Shannon, Skinner, Firth, Harris)
+* 1970s: Rationalism (Chomsky, Minsky)
+* 1990s: Empiricism (IBM Speech Group, AT&T Bell Labs)
+* 2010s: A Return to Rationalism?
+
+![The shift from Rationalism to Empiricism, as measured by the proportion of statistical papers submitted to the Association for Computational Linguistics. Based on two independent surveys by Bob Moore and Fred Jelinek. [@churchPendulumSwungToo2011, figure 1]](figure/Kenneth_2011_fig_1.png)
+
+> When we revived empiricism in the 1990s, we chose to reject the position of our teachers for pragmatic reasons. Data had become available like never before. What could we do with it? We argued that it is better to do something simple than nothing at all. Let's go pick some low hanging fruit. While trigrams cannot capture everything, they often work better than the alternatives... That argument made a lot of sense in the 1990s, especially given unrealistic expectations that had been raised during the previous \[expert systems\] boom. But today's students might be faced with a very different set of challenges in the not-too-distant future. What should they do when most of the low hanging fruit has been pretty much picked over? ... we should expect Machine Translation research to make more and more use of richer and richer linguistic representations. So too, there will soon be a day when stress will become important for speech recognition.
+>
+> [@churchPendulumSwungToo2011]
+
+![Language modeling in 1990. [@winogradComputerSoftwareWorking1984]](figure/Winograd_language_analysis.png)
+
+It has been another 15 years, yet the pendulum still probes the unknown depths of Empiricism.
+
+![Language modeling in 2020. [@robertsExploringTransferLearning2020]](figure/T5_language_model.png)
+
+### ABBYY's last stand
+
+In 1989, ABBYY was founded in Moscow. Its first product was an electronic dictionary, followed by an [ABBYY FineReader optical character recognition (OCR)](https://en.wikipedia.org/wiki/ABBYY_FineReader), which became an international hit. With such a stable cash flow, ABBYY aimed higher: It would develop Compreno, a "Natural Language [Compiler](https://en.wikipedia.org/wiki/Compiler)" (NLC) based on linguistic theory. Compreno would take the lowest level of Vauquois triangle (actual language) to the highest level (language-independent meaning, interlingua), which can then be decompiled to another language. It was Meaning--Text Theory in action.
+
+The founders of ABBYY were students of [Moscow PhysTech](https://en.wikipedia.org/wiki/Moscow_Institute_of_Physics_and_Technology), and ABBYY already had hired linguists to work on its dictionaries and OCR, so it seemed only natural to implement the natural language compiler based on the science of linguistics.
+
+> Along with the programmers and machine learning specialists who held profitable products like FineReader and FlexiCapture (a smart, customizable payment recognition system for banks) on their shoulders, this cozy office houses dozens, and at its peak, hundreds of linguists. All of them are engaged in the formal description of the language within the semantic hierarchy of ABBYY NLC / Compreno. 
+
+![Formal analysis of an English sentence in the ABBYY NLC / Compreno model.](figure/ABBYY_Compreno_sentence_analysis.jpg)
+
+In the early 2010s, the cost of Compreno had reached \$80 million, yet the finished Compreno translator was as distant as ever. Previews of the translator impressed journalists with cherry-picked examples, but they knew they could not compete with Google Translate. Still, too many had sunk their loving labor into Compreno to abandon it, so ABBYY pivoted it to what looks like [CYC](#sec-cyc), something that boasts homonym resolution, filling in the blanks, information retrieval (in corporate archives) and extracting information from text.
+
+![A graph display of semantic information extracted by ABBYY Compreno.](figure/ABBYY_Compreno_semantic_graph.png)
+
+It proved brittle like all logical AI systems do:
+
+> We had customers who needed, for example, to extract data on transaction participants from document scans in which the text was written in a kind of "legal dialect" of American English. When this text (with recognition errors, extra dots due to breadcrumbs on the scan and other artifacts) flew into the sophisticated NLC / Compreno analyzer, the output was most often an absolutely unpredictable mess with a bunch of messages about parsing errors... The variety of syntactic-semantic structures was almost greater than the (comparatively more predictable) variety of simple word chains of the source text. At some point, I realized that most of the time I was engaged in a war with Compreno output using regular expressions and other crutches, and I thought that I needed to leave ABBYY.
+> 
+> After leaving the company, I once took HSE computer linguistics students on a tour of ABBYY... One of the students, Pasha, joked that ABBYY employees climb up there during a thunderstorm and shout “I’m making a correct parser in 2018,” after which lightning strikes them. It was a cruel joke, but it hit the mark.
+>
+> \[Despite the success of Transformers,\] ABBYY continued to cling to this "suitcase without a handle", trying to combine the handwritten language model of Compreno and neural network approaches. And they probably would have continued further, if not for 2022.
+
+After Russia invaded Ukraine in 2022, to avoid Western sanctions, ABBYY quickly distanced itself from its Russian origins, claiming to be a fully American company. To make good on this claim, it finally fired all its Russian employees and became a fully American company in 2024-10. Thus ended Compreno, 20 years and \$80 million later, [ABBYY's bitter lesson](https://sysblok.ru/blog/gorkij-urok-abbyy-kak-lingvisty-proigrali-poslednjuju-bitvu-za-nlp/) [@skorinkinABBYYsBitterLesson2024]
+
+The essay was in Russian, and I read it by pure Google Translate. It worked perfectly.
+
+## Speech {#sec-speech}
+
+### Early days
+
+Automatic speech recognition (ASR) is the conversion of speech audio to text. Its history resembles the history of MT. 
+
+It is hard to know what is closest at hand. Speaking is so natural that it takes effort to even notice that there is structure within the smallest sound, and it required the invention of the phonograph to notice the fine details of even a single vowel. In the early 20th century, as AT&T connected all of America with telephone lines, it funded research into efficient coding of speech, with the hopeful goal of saving on bandwidth. The rough idea is similar to the idea of mp3: If the engineers knew what mattered and what didn't matter in human speech recognition, then they could squeeze more telephone calls within the same line.
+
+Concretely, one could imagine a device on a telephone that converts all the richness of a speech-stream into just 20 bit-streams, then braid those 20 bit-streams into a narrow frequency band, send it all the way across America, whereupon it gets decompressed back to the speech-stream, impoverished but still perfectly recognizable.
+
+It began with recognition of individual spoken words, which was possible by featurizing the sound, then match that sequence of feature vectors against the template feature vectors.
+
+An illustrative example of this early period of ASR was reported in [@denesDesignOperationMechanical1959]. It could spell individual word phonetically (i.e. "cartoon" spelled as "katun") -- if the word is made out of only 4 vowels and 9 consonants, in an alternating fashion (i.e. no two vowels together, or two consonants together).
+
+The machine first uses a filter bank to featurize the input sound. Pairs of outputs from the filter bank are then multiplied to measure how likely the sound is a phoneme. For example, the outputs from 200 Hz and 320 Hz are multiplied together, and that measures how likely the sound is "m", because the two principal frequencies of "m" are close to 200 Hz and 320 Hz. Finally, a computer selects the most likely phoneme, based on the multiplied results and a simple statistical model of how likely a phoneme is to follow the previous phoneme.
+
+The following pseudocode describes how the system works:
+
+```python
+def featurize(audio_segment):
+    filter_bank_features = filter_bank(audio_segment)
+    return {
+        "m": filter_bank_features["200 Hz"] * filter_bank_features["320 Hz"],
+        "i": filter_bank_features["250 Hz"] * filter_bank_features["3200 Hz"],
+        ...
+    }
+def find_phoneme(audio_segment, previous_phoneme, phoneme_probability_model):
+    features = featurize(audio_segment)
+    phoneme_probabilities = phoneme_probability_model(previous_phoneme)
+    best_score = 0
+    best_phoneme = ''
+    for phoneme in features.keys():
+        score = features[phoneme] * phoneme_probabilities[phoneme]
+        if score > best_score:
+            best_phoneme = phoneme
+            best_score = score
+    return best_phoneme
+```
+
+![[@denesDesignOperationMechanical1959, figure 8]](figure/Denes_1959_fig_8.png)
+
+### Logical ASR
+
+In typical generative grammar of language, you start with a `SENTENCE`, and repeatedly rewrite it until you end up with a sentence like `Did you hit Tom?`
+
+Here, we push this one level deeper. After a sentence is generated, you substitute each word with its standard pronunciation, resulting in a sequence like `dɪd/juː/hɪt/tɒm`. Next, apply more rewriting rules to account for the fact that we don't pronounce a whole sentence like individual words, but always "glide two words together". For example, `did you` would actually be pronounced like `dija`, so we account for this with a rewriting rule `d/juː -> jə`. Similarly, the double `t` in `hit Tom` would be merged to a single `t`, so we add a rewriting rule `t/t -> t`. And there is no gliding at `ə/h`, so we add `əh -> əh`.
+
+After this transformation, we obtain `dɪjəhɪtɒm`
+
+This is the basic idea of text-to-speech via generative grammar. For speech-to-text, one would first convert the speech audio into a sequence of phonemes,[^phone-vs-phoneme] then reverse the generative grammar in the same way as one uses generative grammar to parse the syntax tree of a sentence.
+
+[^phone-vs-phoneme]: Sometimes you see people distinguish "phone" from "phoneme". In those cases, they make a finer distinction between what the speaker *intends to say* vs what actually comes out of their mouth. In this example, the phoneme would be `...` while the phone would be `...`. This precision is too annoying to me, so instead I will just say that the "phone" is just another "phoneme", and the speaker intends to say the phoneme sequence `...`, which the speaking cortex in the brain encodes into the phoneme sequence `...` to save work for the throat muscles.
+
+Unlike other aspects of natural language processing, speech-to-text had never abandoned statistics. Even the most ardent logical AI researcher admit that speech is filled with dirty random noise, and so must be processed by statistical filtering before it is clean enough to run symbolic programs over.
+
+There were many logical ASR systems tried, but most of them consisted of 3 layers:
+
+1. Filter and segment speech into phone-like units, usually in steps of 10 milliseconds (because vowel [formants](https://en.wikipedia.org/wiki/Formant) are on the order of 100 Hz).
+2. Use pattern recognition to identify the segments
+3. Find the utterance that best fits the identified segment string.
+
+Roughly speaking, "the fit" is usually measured by how many rules are broken, with the rules written by expert linguists. Some examples would make the structure clear.
+
+### ARPA Speech Understanding Project
+
+Like MT, there was also plenty of funding for ASR from the government. And we have not seen the last of John Pierce! 5 years after the ALPAC report debunked MT, he took aim at ASR with mostly the same arguments, but with even sharper language.
+
+> speech recognition is attractive to money. The attraction is perhaps similar to the attraction of schemes for turning water into gasoline, extracting gold from the sea, curing cancer, or going to the moon... It is clear that glamor and any deceit in the field of speech recognition blind the takers of funds as much as they blind the givers of funds. Thus, we may pity workers whom we cannot respect. People who work in the field are full of innocent (in their own view) enthusiasm. What particular considerations have led to this enthusiasm?
+> 
+> ... Most recognizers behave, not like scientists, but like mad inventors or untrustworthy engineers. The typical recognizer gets it into his head that he can solve "the problem." The basis for this is either individual inspiration (the "mad inventor" source of knowledge) or acceptance of untested rules, schemes, or information (the untrustworthy engineer approach).
+> 
+> [@pierceWhitherSpeechRecognition1969]
+
+Pierce gave the same answer as he gave in the ALPAC report. True ASR is impossible until a machine has a general understanding of language, which was very far away. What *appears* to be ASR is actually "artful deceit" made by mere engineering, not science. A true science of ASR is possible, by having a good scientific theory, then testing it, perhaps by building a device according to the theory, and see if it works as predicted.
+
+> The typical recognizer will have none of this. He builds or programs an elaborate system that either does very little or flops in an obscure way. A lot of money and time are spent. No simple, clear, sure knowledge is gained. The work has been an experience, not an experiment.
+>
+> [@pierceWhitherSpeechRecognition1969]
+
+I don't know what caused Pierce to fire off this fiery missive 3 years after the ALPAC report, but it did cause funding to decrease. [@jelinekMyBestFriends2005] Partly in reaction to this, ARPA started the Speech Understanding Project, a $15 million project to produce ASR, from 1971 to 1976. It funded 4 teams in 4 organizations, with the following goal: Demo a system that can do ASR on a fragment of English limited to 1000 words of vocabulary, and a single tiny domain. Accept new speakers after finetuning. At <10% semantic error, at 100 MIPSS (100 million instructions per second of speech).[^arpa-sur-full-specification]
+
+[^arpa-sur-full-specification]: 
+    The full specification is
+
+    > Accept continuous speech from many cooperative speakers of the general American dialect, in a quiet room over a good quality microphone, allowing slight tuning of the system per speaker, but requiring only natural adaptation by the user, permitting a slightly selected vocabulary of 1,000 words, with a highly artificial syntax, and a task like the data management or computer status tasks (but not the computer consultant task), with a simple psychological model of the user, providing graceful interaction, tolerating less than 10% semantic error, in a few times real time, and be demonstrable in 1976 with a moderate chance of success.
+    >
+    > [@newellSpeechUnderstandingSystems1973, figure 1.1]
+
+    but as noted in [@medressSpeechUnderstandingSystems1977, footnote 8], the report forgot to add in "100 MIPSS".
+
+By the end of 1976, the results were out:
+
+![[@ermanHearsayIISpeechUnderstandingSystem1980, figure 13]](figure/DARPA_SUR_final_results.png)
+
+Out of the 4 teams, only Harpy achieved the target -- barely. It could recognize 1011 words, at 5% semantic error. It has size 1.2 MB. It costs 30 MIP to process one second of speech, and since it ran on a 0.4 MIPS PDP-KAI0, it takes about 5 minutes to process a single 4-second sentence, costing about \$5 to process one sentence. Fine-tuning for a single speaker takes about 30 minutes, or \$30.[^harpy-price]
+
+[^harpy-price]:
+    According to [Cost of CPU Performance Through Time 1944-2003](https://www.jcmit.net/cpu-performance.htm), it cost \$500,000 to rent a PDP-KAI0 for 1 year, or about \$1 per minute.
+
+    As of 2024, the SOTA ASR model is OpenAI Whisper, which OpenAI offers at a price of $\$10^{-4}$ per second. Since \$1 can buy you 1 hour of AI00 at $10^{20} \;\mathrm{FLOP/hour}$, and assuming hardware utilization 10\%, we have about $10^{15} \;\mathrm{FLOP}$ to process 1 second of speech.
+
+    I took a double take on this. Are we really throwing 1 million times more compute on ASR compared to Harpy? But the numbers are numbers, and it does seem to checkout: OpenAI Whisper large has $1.55\times 10^9$ parameters, and it featurizes 1 second of speech into $100$ tokens of $80$ dimensions each. So even if we ignore the quadratic scaling of attention, we would take $10^{13} \;\mathrm{FLOP}$ to process 1 second of speech.
+
+    And $10^{15}$ is also the number of synapses in the brain. The numbers all seem to come together *too* well. Sound-bite for thought...
+
+Who would be willing to pay \$5 to transcribe one sentence? Still, since the target was so ambitious, the project was still considered a great success:
+
+> In 1971, when the program started, perhaps the majority of informed technical opinion put general speech recognition by computers as not possible in the foreseeable future and perhaps not possible at all... Informed technical opinion can now be that general cost-effective speech input to computers is an attainable goal. That is now our opinion.
+>
+> [@medressSpeechUnderstandingSystems1977]
+
+> "How hard is the sentence understanding problem in the limited contexts investigated during the ARPA project?" In 1970, when compared with isolated word recognition, the problems seemed immense. After the limited success of Harpy, one becomes more optimistic about the abilities of future systems.
+>
+> [@klattReviewARPASpeech1977]
+
+Harpy had the simplest architecture, with just two parts. 
+
+* The lower divides the input audio into 10 ms segments. Each segment is featurized to a single $\R^{14}$ vector by [Linear Predictive Coding](https://en.wikipedia.org/wiki/Linear_predictive_coding). If two segments have similar features, they are merged.
+* The upper part is a 15000-state transition graph. Each graph node is an annotated sound symbol. There are 98 sound symbols like `G BURST 1` or `IY`. The annotations allow the system to convert any path through the graph into a text sentence, like "Give me a textbook by Gauss.".
+
+They first designed a complete context-free grammar that incorporates phonetics, syntax, and semantics for making document retrieval requests in a highly simplified and stilted syntax. The 98 sound symbols were constructed by "careful analysis of 747 sentences". After the design was complete, the grammar was automatically compiled into the 15000-state transition graph.
+
+To perform speech recognition, the lower part gives the upper part the featurized sequence of the audio $v_1, v_2, \dots, v_n$, and the upper part beam-searches for a path $x_1, x_2, \dots, x_n$ that approximately minimizes $\sum_i \| v_i - v(x_n)\|$, where $v(x_i)$ is the template feature vector for the sound $x_i$.
+
+To finetune the system for a new speaker, the new speaker simply speaks 20 sentences designed for finetuning, and the system would recalculate the 98 template feature vectors.
+
+::: {#fig-harpy layout-ncol=2}
+
+![Overall design of Harpy. Note how semantic, syntactic, lexical, and word juncture rules are all compiled into a single network. [@reddyMachineModelsSpeech1980, figure 9.4]](figure/Reddy_1980_fig_9_4.png)
+
+![A small fragment of Harpy's network. [@reddyMachineModelsSpeech1980, figure 9.5]](figure/Reddy_1980_fig_9_5.png)
+
+![Example of beam search used in Harpy. [@reddyMachineModelsSpeech1980, figure 9.8]](figure/Reddy_1980_fig_9_8.png)
+
+:::
+
+Significantly, despite using a beam search, Harpy did *not* use a probabilistic model of language. It essentially treats language as Chomsky-nonrandom, and all the randomness comes from imperfect matching between the real feature vectors and the template feature vectors. Despite this, it out-performed other systems that did. It seems that the problem was that there was insufficient data to estimate the probabilities in a probabilistic language model.
+
+> Several of the speech understanding systems used estimates of the probability of a phonetic or lexical decision given the acoustic data in scoring the goodness of a theory, and each seems to have gotten into trouble by so doing. The problem is to analyze enough data to be sure of the probability of infrequent confusions. This is nearly impossible if one wants to take into consideration factors such as phonetic environment.
+> 
+> [@klattReviewARPASpeech1977]
+
+Just as significant, there was a lot of artificial intelligence, but very little machine learning. All the formal grammars were hand-written. It is revealing that in a comprehensive review of ASR [@reddySpeechRecognitionMachine1976], "knowledge acquisition" took up less than 2% of the whole paper. And what little it said comes down to that learning-based methods require a large dataset of carefully and densely annotated audio, which was expensive and did not exist.
+
+The last great attempt at logical ASR was the Hearsay-II, a further development from Hearsay, an unsuccessful entrant to the ARPA Speech Understanding Project. It was a towering giant with 7 levels, from "data base interface" and "phrase" all the way down to the "segment" and "parameter" and 15 knowledge sources (collection of rules) for going up and down the levels of abstraction. To handle this pandemonium of knowledge sources, it uses a "shared blackboard" architecture, so that each source can chime in about whatever is currently being interpreted. This allowed it to still work even if some sources are removed, and to improve whenever any source gets added or upgraded.
+
+On one hand, it is great for interpretability, as one can trace through the entire structure and see exactly how any spoken sentence is parsed into a textual sentence. On the other hand, the interpretation took 39 steps and looks like:
+
+```txt
+Step 23. KS: PREDICT & VERIFY*.
+Stimulus: BY+FEIGENBAUM+AND+FELDMAN+]* (phrase).
+Action: Predict ten preceding words. Reject five: ABSTRACTS, ARE, BOOKS, PAPERS, REFERENCED. Find two already on the blackboard: 
+    ANY* (65,24: 49),
+    THESE (25, 28:49).
+Verify three more:
+    ARTICLE (25, 9:52),
+    WRITTEN (25, 24:52),
+    ARTICLES (10, 9:52).
+```
+
+![The levels and knowledge sources of Hearsay-II as of 1976-09. Knowledge sources are indicated by vertical arcs with the circled ends indicating the input level and the pointed ends indicating output level. [@ermanHearsayIISpeechUnderstandingSystem1980, figure 2]](figure/Hearsay-II_levels.png)
+
+![Overall architecture of Hearsay-II. [@ermanHearsayIISpeechUnderstandingSystem1980, figure 4]](figure/Hearsay-II_architecture.png)
+
+![The example utterance. (a) the waveform of "Are any by Feigenbaum and Feldman?"; (b) the correct words (for reference), (c) segments; (d) syllable classes; (e) words (created by MOW), (f) words (created by VERIFY), (g) word sequences, (h) phrases. [@ermanHearsayIISpeechUnderstandingSystem1980, figure 5]](figure/Hearsay-II_example_sentence.png)
+
+### Linguists fired
+
+> Every time I fire a linguist, the performance of our speech recognition system goes up.
+>
+> --- Frederick Jelinek (1988) (not apocryphal!)
+
+[Frederick Jelinek](https://en.wikipedia.org/wiki/Frederick_Jelinek) would go down in history as the one who fired linguists, but he did not start his life this way. In 1961, he sat in Chomsky's lectures, and "got the crazy notion that I should switch from Information Theory to Linguistics". His PhD advisor forbade him, so he remained in information theory. After graduation, he tried collaborating with the eminent linguist [Charles Hockett](https://en.wikipedia.org/wiki/Charles_F._Hockett), bu Hockett then turned to composing operas. "Discouraged a second time, I devoted the next 10 years to Information Theory." [@jelinekDawnStatisticalASR2009]
+
+In 1972, he left academia and joined IBM, where he worked on ASR. The project started with two linguists, but they got frustrated and left of their own accord, leaving behind engineers and physicists with little understanding of linguistics.[^jelinek-famous-last-words]
+
+> When our Continuous Speech Recognition group started its work at IBM Research, the management wanted to make sure that our endeavors were guided by strict scientific principle. They therefore placed into the group two linguists who were going to guide our progress. Both linguists were quite self-confident, sure that fast progress will be possible. For instance, when we (trained as engineers or physicists) were at a loss how to construct a language model, one of the linguists declared "I'll just write a little grammar."... After about a year of frustration the linguists left our group, returned to their basic research, and we were free to pursue our self-organized, data driven, statistical dream... mostly of engineers and physicists. Only 3 or 4 people out of 10 had any previous experience with speech. None had graduate training in that field. But several of us had a background in Information Theory and that influenced our thinking.
+>
+> [@jelinekMyBestFriends2005]
+
+It was unclear what exactly frustrated the linguists, but probably it was because they did not want, or did not have, the stamina to produce generative grammar for non-toy English:
+
+> In the 1970s NLP and ASR research was dominated by an artificial intelligence approach. Programs were rule-based, expert systems were beginning to take over... The purest linguists based their work on self-constructed examples, not on the prevalence of phenomena in observed data. As already mentioned, strict distinction between training and test was frequently ignored. Grammars were being written that applied to less than dozen verbs.
+>
+> [@jelinekMyBestFriends2005]
+
+This dedication to toys and "microworlds" rather than would appear again later in the saga of [SHRDLU](#sec-shrdlu).
+
+[^jelinek-famous-last-words]:
+    More details about this funny episode:
+
+    > When handling natural speech, the main question was how to estimate the language model $Pr(W)$. There was no simple way of achieving this. We thought that the right approach ought to be somehow related to English grammar. The linguist Stan Petrick, while he still was with us, said "Don't worry, I will just make a little grammar." Of course he never did, and the phrase acquired a mythical status in the manner of "famous last words."
+    > 
+    > [@jelinekDawnStatisticalASR2009]
+
+The group naturally reproduced the information-theoretic framework for MT proposed by Shannon and Weaver, and adapted it directly to ASR.[^reproduced-shannon-weaver] In the framework, there are 4 components:
+
+[^reproduced-shannon-weaver]: 
+    Apparently the idea was obvious as soon as you think about ASR in the mindset of information theory.
+
+    > As to our problem formulation, we were later somewhat surprised when it was revealed to be almost common sense. In fact, it was probably Bob Mercer who found the following quotations in an article by Weaver (1995): 
+    > 
+    > > When I look at an article in Russian I say: This is really written in English but it has been coded in some strange symbols. I will now proceed to decode it... the matter is probably absolutely basic -- namely the statistical character of the problem.
+    > 
+    > [@jelinekDawnStatisticalASR2009]
+
+1. A language model: $Pr(\text{text})$. This models how a human thinks up what to say in its head.
+2. A model of the speaker: $Pr(\text{sound}|\text{text})$. This models how the text to be spoken gets converted into actual sound out of its mouth.
+3. Audio preprocessor: $\text{sound} \mapsto \text{features}$
+4. Decoder: $\text{features} \mapsto \text{text}$
+
+![[@jelinekMyBestFriends2005, figure 2]](figure/source-channel_model_ASR.png)
+
+Step 3 is "feature engineering", and it has been fairly static in speech processing: apply some high-pass filter, compute the spectrogram, do some more filtering, etc. Step 4 is maximum a posteriori estimation, exactly the same as in the IBM alignment model:[^ibm-alignment-model-asr]
+
+$$
+\text{text} = \argmax_{\text{text}} Pr(\text{text}) Pr(\text{sound}|\text{text})
+$$
+
+[^ibm-alignment-model-asr]:
+    Not a coincidence. The IBM team did ASR first, and once that succeeded, proceeded to trying the same trick with MT in 1986.
+
+    > we embarked on MT in 1986 when we sought a new area to which to apply our statistical, self organized techniques. Besides, we had 15 years of ASR work behind us and those who switched were also attracted by the change as well as the possibility of picking some "low hanging fruit". We had two ideas: to use the noisy channel paradigm to formulate the problem (see Figure 3), and to base our learning on parallel texts. [@jelinekMyBestFriends2005]
+
+Step 1 of this framework turned out to be the critical idea. In the pure Chomskyan viewpoint, step 1 is illegitimate. In the information-theoretic viewpoint, step 1 is essential.
+
+TODO Write about how this forced them to think about a different way to measure success. If they gave up the idea of either-or, then how does one tell if the program was improving? Inspired by Harpy, they decided to measure the branching factor ... then perplexity.
+
+It was of course possible, and even obvious, that one can combine the best of both worlds, to combine both linguistic insights and statistical methods, such as a probabilistic CFG. However, they simply trained a dumb trigram language model on a large corpus. From what Jelinek said later,[^never-reluctant-linguistic] my guess is that they did try such "best of both worlds" approach, but the dumb trigram model just worked better.
+
+[^never-reluctant-linguistic]:
+    > We were never reluctant to include linguistic knowledge or intuition into our systems: if we didn't succeed, it was because we didn't find an efficient way to do include it.
+    >
+    > [@jelinekMyBestFriends2005]
+
+The IBM project, compared to the others, was definitely big-data. This served them well for statistical ASR, and would soon serve them well again for statistical MT. They started with a toy model of language called "New Rayleigh", which is essentially a Markov chain model that generates sentences up to 8 words long, from a vocabulary of 250 words.[^old-rayleigh]
+
+[^old-rayleigh]: 
+    It was called such because the team took over a previous logical ASR system called "Rayleigh". Its design was typical Chomskyan:
+    
+    > The front end of the Raleigh system converted the speech signal... into a sequence of phoneme-like labels (100 labels per second), using an elaborate set of hand-tuned rules that would soon be replaced with an automatically trained procedure. The back end converted these labels into a sequence of words using an artificial finite-state grammar that was so small that the finite-state machine could be written down on a single piece of paper... very often phones were simply mislabeled. The back end was designed to overcome these problems by navigating through the finite-state network, applying a complicated set of hand-tuned penalties and bonuses to the various paths in order to favor those paths where the low-level acoustics matched the high-level grammatical constraints. 
+    > 
+    > [@churchIntroductionSpecialIssue1993]
+
+![The New Rayleigh toy language. [@jelinekDawnStatisticalASR2009, figure 1]](figure/New_Rayleigh_toy_language.png)
+
+They soon produced an ASR model that achieved perfect accuracy on this, so they had to go bigger. The next dataset they obtained was the "laser patent corpus", consisting of 2 million words of patent applications in laser technology, with a vocabulary size of 10,000, twice as large as the [Brown Corpus (1961)](https://en.wikipedia.org/wiki/Brown_Corpus). They used this to train a 3-gram language model. The road to this dataset was quite circuitous, which anyone who has tried making a non-toy dataset can relate:
+
+> The struggle to compile a suitable training corpus featured throughout the CSR \[Continuous Speech Recognition\] group's first decade. The researchers first considered using a collection of digitized IBM manuals, but found the vocabulary to be too extensive as well as so technical that it proved "difficult to pass ... off as English." They attempted to produce their own corpus, enlisting the wife of a lab staff member to type approximately a million words of text from children's novels, but there, too, the vocabulary proved too large for their purposes. Next, the group acquired a collection of laser patent text from the US Patent Office, which was both sufficiently extensive in size and sufficiently narrow in vocabulary that they were finally able to extract a million words of running text confined to a thousand-word vocabulary. Though the laser patent corpus was considered "naturally occurring," it was in fact meticulously constructed, even before researchers discarded all sentences containing vocabulary outside of the thousand most frequently occurring words. The complete patent text had to be first "subjected to intensive hand and computerized editing": eliminating duplicates, merging spelling variations, and substituting scientific symbols and formulas. The claims sections of the patents proved especially problematic due to "highly stylized" legal language, and were ultimately excised entirely.
+> 
+> By the 1980s hardware improvements allowed the IBM researchers to expand their recognition vocabulary to five thousand words. They also compiled over 100 million words of data from a variety of sources, including public domain books and magazines from the American Printing House for the Blind, the records of the Amoco oil corporation, and 2.5 million words of office correspondence supplied by physicist Richard Garwin, who, with the aid of four secretaries, maintained computer-formatted duplicates of all of his correspondence. The most substantial collection in this period, however, came as a direct result of IBM's unique industry dominance: the landmark federal antitrust lawsuit filed against the company in 1969. The case, which spanned thirteen years before it was finally dismissed in 1982, included testimony from 974 witnesses with resulting transcripts that totaled over one hundred thousand pages. The operation to digitize the deposition transcripts during the trial was so prodigious that it required a staff of dedicated keypunch operators large enough to fill a facility the size of a football field in White Plains, New York, where IBM's Data Processing Division was headquartered. While the suit itself proved extremely costly for IBM, its transcript digitization efforts provided the CSR group with their largest and most robust text collection, resulting in a corpus of one hundred million words. Finally, the CSR group discovered the Hansard corpus, a collection of digitized transcripts of the Canadian Parliament official proceedings in both English and French, in the mid-1980s and incorporated an additional hundred million words from its English text into their language model.
+>
+> [@liTheresNoData2023]
+
+In 1976, their ASR system had already reached state of the art performance. On the same task as the ARPA project, it reached higher accuracy, and only took 30 MIP to process 1 second of speech. [@reddySpeechRecognitionMachine1976] Though logical ASR continued with systems like Hearsay-II (1980), as the 1980s went on, none could deny the practical success of statistical ASR anymore, even if, compared to logical ASR, statistical ASR was far from linguistic theories of human speech recognition.
+
+In the 1990s, all state of the art ASR were statistical, usually HMM-based. Such a model has multiple levels.
+
+At the top level, there is a Markov chain that serves as a language model, which emits individual words. This is usually an n-gram model, where $n$ is usually 3. In such a model, each node is a 3-gram. For example, the model can have state transitions like "- - what" → "- what is" → "what is the" → "is the last" → ..., and it would emit "what", "is", "the", "last", ...
+
+This sequence of words is then converted to a sequence of phonemes, like "wɒtɪzðəlɑːst". Each phoneme, like "ɪ", corresponds to a trained Markov chain. That is, we have a Markov chain with around 3 to 5 states that emits feature vectors corresponding to a possible pronunciation of "ɪ". 
+
+We can even hand-write such a Markov chain, as an example. We would start by collecting many recordings of "ɪ", then cut these into three parts: the start, the middle, and the end. We convert each part into a feature vector: $v_0, v_1, v_2$. We give each feature vector a state in the Markov chain. A trajectory through the Markov chain would start at $v_0$, stay there for a short while, then randomly jump to $v_1$, stay there for a long while, and then randomly jump to $v_2$, stay there for a short while, and finally jump to the "END" state. We would assign the transition probability $Pr(v_2 | v_2)$ to be roughly $1-1/N$, where $N$ is the average number of 10-ms segments that it takes to pronounce the middle of "ɪ".
+
+The above system is the basic idea. It does not handle the effect of gliding between phonemes, like how "did you" would be pronounced as "dija". The standard way to handle this was the triphone model. The triphone model accounts for how a phoneme is changed by its two neighbors. For example, in the previous example, the "ɪ" should really be pronounced in the context of "tɪz". So, we would have a Markov chain just for "tɪz", which would generate a sequence of feature vectors that corresponds to how "ɪ" would be pronounced if it appears in the context of "tɪz". Since English has about 50 phonemes, a triphone model need ~2500 Markov chains, which explains why quad-phone models, or more, had not been popular. Even if one had the appetite for it, there was not enough data to train them.
+
+By late 1990s, the ASR technology stabilized around the gaussian mixture HMM [@huangHistoricalPerspectiveSpeech2014], where the lowest level of HMM does not emit a feature vector $v$, but a [gaussian mixture distribution](https://en.wikipedia.org/wiki/Mixture_model) $\sum_i p_i \mathcal N(\mu_i, \Sigma_i)$ of feature vectors. You can add even more epicycles upon epicycles to account for more complex features like omitting phonemes, phonotactic constraints, prosody, etc.
+
+![Rough sketch of HMM ASR. [Source](https://www.cs.cmu.edu/~roni/10601-slides/hmm-for-asr-whw.pdf)](figure/HMM_ASR.png)
+
+Unlike in the case of MT, the collapse of logical AI in ASR was decisive. Statistical ASR completely replaced logical ASR in the 1990s, after which logical ASR was never revived. There were two reasons for this. One is the familiar scaling story of data and compute:
+
+> As computers increased in power, ever greater tracts of the heuristic wasteland opened up for colonization by probabilistic models. As greater quantities of recorded data became available, these areas were tamed by automatic training techniques. Today... almost every aspect of most speech recognition systems is dominated by probabilistic models with parameters determined from data.
+>
+> [@churchIntroductionSpecialIssue1993]
+
+Another is the public benchmark culture. The ARPA SUR project not only demonstrated that ASR was possible, but also gave rise to the benchmark-focused culture of ASR, which allowed the best methods to rapidly spread through the community:
+
+> ARPA (and then DARPA) funded a number of new speech research programs, beginning with 1000-word speaker-independent read-speech tasks like "Resource Management" (Price et al., 1988), recognition of sentences read from the Wall Street Journal (WSJ), Broadcast News domain (LDC 1998, Graff 1997) (transcription of actual news broadcasts, including quite difficult passages such as on-the-street interviews) and the Switchboard, CallHome, CallFriend, and Fisher domains (Godfrey et al. 1992, Cieri et al. 2004) (natural telephone conversations between friends or strangers). The ARPA competitions resulted in wide-scale borrowing of techniques among labs since it was easy to see which ideas reduced errors the previous year, and the competitions were probably an important factor in the eventual spread of the HMM paradigm. 
+> 
+> [@jurafskySpeechLanguageProcessing2023, pages 352--353]
+
+![Progress of ASR benchmarks during 1988--2012. Each time one benchmark was saturated, it was replaced by a harder one. The green dot was the 2012 SOTA for the Switchboard task. [@huangHistoricalPerspectiveSpeech2014, figure 1]](figure/ASR_benchmark_progress_1988--2012.jpg)
+
+This was not the end of the history, however. Once ASR became a statistical problem, one immediately has the problem of feature engineering. Here, the history is similar to that of vision. One begins by imitating the human phoneticians with a nearest-neighbor matching to phonemes, and proceeds to handcrafted features computed over the audio spectrogram, to NN features learned over transforms of the spectrogram, and finally to NN features learned directly over the spectrogram. [@huangHistoricalPerspectiveSpeech2014] However, the story must be left for a future essay.
+
+### A farewell to linguists
+
+What was so radical about Jelinek's approach?
+
+One, to believe in the probabilistic system at all was a breakthrough during the Chomskyan period. As Liberman recounts in an anecdote in the 1970s:
+
+> \[Kenneth Church was\] applying context-free parsing to phonotactic speech recognition, assuming a non-stochastic grammar. I suggested that Ken should find or create a collection of phonetic transcriptions, and use it to associate probabilities with his rewrite rules. Ken's response was to quote Richard Nixon's remark about Daniel Ellsberg: "We could kill him--but that would be wrong." Further discussion elicited a quote from one of his AI lab professors: "If you need to count higher than one, you've made a mistake."
+>
+> [@libermanObituaryFredJelinek2010]
+
+Two, to throw away preconceptions of what the language model could be, and let results speak. He proceeded directly to using a 3-gram not because it resembles anything like how people really produce language, but because it works.
+
+> In the future the design of a LM for a naturally generated text will probably involve considerations of syntax. semantics. and discourse pragmatics. So far no one has accomplished this.
+> 
+> [@jelinekSelfOrganizedContinuousSpeech1982] 
+
+Three, to believe in the power of big data and big compute.
+
+> Our models are derived from as much actual speech data as we can obtain and handle computationally. We have devised methods of automatic model computation, thus minimizing or completely eliminating human intervention. Our strategies are not based on rules developed from trying to intuit how people recognize sentences (as is prevalent elsewhere), although the basic structure of our models is, of course, man-made. This approach is both more accurate and more flexible; as the speaker or the components of the system change, our self-organizing programs remain valid, and computer time is all that is required to adjust to a new configuration.
+> 
+> [@jelinekSelfOrganizedContinuousSpeech1982]
+
+More presciently, he was even considering the possibility of throwing away the preconceptions of what the features could be, and let data speak:
+
+> Because we have found it more fruitful to view the acoustic processor as a data compressor than as an artificial phonetician, we do not attempt to identify phonetic segments in the continuous speech.
+> 
+> [@jelinekSelfOrganizedContinuousSpeech1982]
+
+Previous MT systems typically performs multi-step processing on a raw audio signal, and somewhere in the middle, the audio signal would be transformed into a phonetic transcription. Jelinek, instead of following tradition and featurize audio into a list of phonemes ("an artificial phonetician"), just proposed to featurize audio in whatever way that seemed to work better for the system. As far as I see, this was not used in HMM ASR during the 1990s, but we know that automatic feature learning would finally be vindicated by neural networks around 2010 as the encoder-decoder architectures trained fully end-to-end [@gravesConnectionistTemporalClassification2006; @chorowskiEndtoendContinuousSpeech2014]
+
+In 2005, near the end of his life, Jelinek admitted that his quote was, despite his best hopes, genuine. 
+
+> *Whenever I fire a linguist our system performance improves.* I have hoped for many years that this quote was only apocryphal, but at least two reliable witnesses have recently convinced me that I really stated this publicly in a conference talk (Jelinek, 1998). Accepting then that I really said it, I must first of all affirm that I never fired anyone, and a linguist least of all. So my motivation is defensive: to show that neither I nor my colleagues at IBM ever had any hostility to linguists or linguistics. In fact, we all hoped that linguists would provide us with needed help. We were never reluctant to include linguistic knowledge or intuition into our systems: if we didn't succeed, it was because we didn't find an efficient way to do include it.
+>
+> [@jelinekMyBestFriends2005]
+
+Reflecting on a lifetime of multiple near-linguistic experiences, Jelinek seemed regretful. It is not that he wanted to fire linguists, it was simply that, somehow, attempting to incorporate linguistic expertise hurt performance. He died in 2010, just in time to miss the deep learning revolution that fired the last linguists.
+
+> the statistical model of language with which he had so successfully replaced linguistic rules was a simple word trigram – i.e. a very crude model of three word sequences. Whilst it was obvious to everyone that this model was hopelessly impoverished, in practice it had proved almost impossible to improve on. However, in the year 2000, Fred published a paper with one of his students called "Structured language modeling for speech recognition". It sets out a principled way to incorporate linguistics into a statistical framework and as well as representing a significant step forward in language modeling, it has helped bridge the gap between speech engineers and the hitherto diverging computational linguistics community. In 2002, it received a "Best Paper" award and the citation read "for work leading to significant advances in the representation and automatic learning of syntactic structure in statistical language models". It seemed somehow fitting that 25 years after starting the movement towards statistical approaches, Fred sought to re-engage with aspects of more traditional linguistics. I hope Chomsky read the paper and enjoyed it as much as we speech technologists did.
+>
+> [@youngFrederickJelinek193220102010]
+
+### Text to speech
+
+While this section is titled "Speech", we have only discussed speech-to-text. Naturally, there is also the direction of text-to-speech (TTS). Here the history is more compressed, if for the simple reason that humans are *really good* at understanding speech. Even the most primitive kinds of text-to-speech was usable, and it was merely a matter of making it cheaper and less robotic-sounding. Indeed, a very early TTS synthesized speech by gluing together magnetic tape recordings and playing the whole thing at once. [@harrisStudyBuildingBlocks1953]
+
+At the forefront of speech synthesis research was Bell Labs, which was trying to compress and decompress speech to fit more telephone calls into telephone cables. In 1961 at Bell Labs, an IBM 7094 sang "Daisy Bell". Arthur Clarke, while visiting his friend John Pierce (this is the last time we'll see him), saw a demo of this, and he was so impressed that he put this scene into *2001: A Space Odyssey* (1968). [@woodRecollectionsJohnRobinson1991]
+
+![The family tree of TTS systems up to 1987. [@klattReviewTexttospeechConversion1987, figure 4]](figure/TTS_family_tree.png)
+
+In 1983, Digital Equipment Corporation started selling one of the first commercially successful TTS system, the [DECTalk](https://en.wikipedia.org/wiki/DECtalk), at the low price of $4000. It was based on the Klattalk formant synthesizer of Dennis Klatt, who had dedicated his life to research on speech, and had the best TTS system available at the time. In a 1987 review of TTS [@klattReviewTexttospeechConversion1987], Klatt stayed close to the Chomskyan orthodoxy and described TTS as a problem of writing the generative grammar deeper down, from text all the way to the spectrogram of the physical sound.
+
+::: {#fig-klatt-1987 layout-ncol=2}
+
+![General architecture of a TTS system according to the Chomskyan orthodoxy. [@klattReviewTexttospeechConversion1987, figure 2]](figure/Klatt_1987_fig_2.png)
+
+![Architecture of Klattalk. [@klattReviewTexttospeechConversion1987, figure 3]](figure/Klatt_1987_fig_3.png)
+
+:::
+
+In his literature review, Klatt did take notice of two upstart systems from the statistical side, one being [NETtalk of Sejnowski](https://yuxi-liu-wired.github.io/essays/posts/backstory-of-backpropagation/index.html#terence-sejnowski), a neural network model, and another being a statistical TTS system very similar to the IBM alignment model, by the same IBM team. He brushed both off as being inferior to a logical TTS system:
+
+> When evaluated on the words of this training set, \[NETtalk\] was correct for about 90% of the phonemes and stress patterns. In some sense, this is a surprisingly good result in that so much knowledge could be embedded in a moderate number of about 25000 weights, but the performance is not nearly as accurate as that of a good set of letter-to-sound rules (performing without use of an exceptions dictionary, but with rules for recognizing common affixes)... \[The IBM alignment\] approach still results in an inferior words-correct error rate compared with traditional rule systems. Even a very powerful statistical package cannot yet discover much of the underlying structure in a process as complex as natural language... given the attention that NETtalk and other neuron-like devices have received recently, it is disturbing that NETtalk does not learn training set data perfectly, appears to make generalizations suboptimally, and has an overall performance that is not acceptable for a practical system. Furthermore, it is unlikely that larger training lexicons would converge to a more acceptable performance.
+
+Indeed, though the word "rules" appears over 200 times in the review, the above dismissal was the only thing he had to say about learning-based methods. Hostility towards machine learning is a recurring feature among the Chomskyans. However, unlike the Chomskyans, Klatt was not going to be satisfied with writing toy respected the extreme complexity of a proper system of rules. And try he did:
+
+> The hard part of text-to-speech synthesis is to calculate a string of LPC data, or formant-synthesis parameters, not from recorded speech, but from the letters and symbols of typed text... It's possible to write a simple program for this task, which produces robotlike speech-hard to understand and unpleasant to listen to. The alternative, which only Dennis Klatt and a few others have pursued, is to invest years of effort in devising an increasingly lengthy and subtle set of rules to eliminate the robotic accent.
+> 
+> He turns to a table with two volumes about the size of large world atlases, each stuffed with speech spectrograms... Spectrograms usually feature subtle and easily changing patterns. Klatt's task has been to reduce these subtleties to rules so that a computer can routinely translate ordinary text into appropriate spectrograms. "I've drawn a lot of lines on these spectrograms, made measurements by ruler, tabulated the results, typed in numbers, and done computer analyses," says Klatt.
+> 
+> As Klatt puts it, "Why doesn't DECtalk sound more like my original voice, after years of my trying to make it do so? According to the spectral comparisons, I'm getting pretty close. But there's something left that's elusive, that I haven't been able to capture. It has been possible to introduce these details and to resynthesize a very good quality of voice. But to say, 'here are the rules, now I can do it for any sentence' -- that's the step that's failed miserably every time."
+> 
+> But he has hope: "It's simply a question of finding the right model."
+> 
+> [@heppenheimerComputerTalkAmazing1984]
+
+![Formant transitions for `[g]` as a function of preceding and following vowels. [@klattReviewTexttospeechConversion1987, figure 29]](figure/Klatt_1987_fig_29.png)
+
+Klatt had been progressively losing his voice from thyroid cancer, and died in 1988. His voice was the template for "Perfect Paul" in DECTalk, which was the voice of Stephen Hawking, which he kept using even after better TTS systems were available. [@medeirosHowIntelGave2015]
+
+
+### The Chomskyans
+
+There was a persistent legend about a certain psychologist, that he educated his own children with [skinner boxes](https://en.wikipedia.org/wiki/Operant_conditioning_chamber). While just a legend, the real B. F. Skinner did have a philosophy as radical as the legend suggests.
+
+In the 1950s, Skinner dominated behaviorism, which dominated American psychology. In short, behaviorism models animal behavior as stimulus-response reflexes, which can be understood as parameterized functions $a_\theta(o)$, where $o$ stands for the observational stimulus, $\theta$ the internal parameters of the animal, and $a_\theta(o)$ the response action. The parameters $\theta$ is a function of the previous history of stimuli and reward/punishments: $(o_0, a_0, r_0, o_1, a_1, r_1, \dots)$. The set up is the same as modern reinforcement learning (RL).
+
+[^skinner-box]:
+    [Feynman told of the following maze-running rat legend](https://gwern.net/maze):
+
+    > He had a long corridor with doors all along one side where the rats came in, and doors along the other side where the food was. He wanted to see if he could train the rats to go in at the third door down from wherever he started them off. No. The rats went immediately to the door where the food had been the time before. The question was, how did the rats know, because the corridor was so beautifully built and so uniform, that this was the same door as before? Obviously there was something about the door that was different from the other doors. So he painted the doors very carefully, arranging the textures on the faces of the doors exactly the same. Still the rats could tell. Then he thought maybe the rats were smelling the food, so he used chemicals to change the smell after each run. Still the rats could tell. Then he realized the rats might be able to tell by seeing the lights and the arrangement in the laboratory like any commonsense person. So he covered the corridor, and, still the rats could tell. He finally found that they could tell by the way the floor sounded when they ran over it. And he could only fix that by putting his corridor in sand. So he covered one after another of all possible clues and finally was able to fool the rats so that they had to learn to go in the third door. If he relaxed any of his conditions, the rats could tell.
+
+The great thing about skinner boxes is that they are standardized to be lightproof, soundproof, and whatever-proof, thus controlling for all confounding variables. Before skinner boxes, mouse experiments were full of confounding variables, and had a kind of replication crisis in the 1930s. With the skinner box, the degrees of rat freedom are minimized, turning rats into standardized systems. This finally allowed measurable progress, allowing the breakout success of behaviorism in the 1950s.[^skinner-box]
+
+Skinner's ambitions went far beyond rats. In 1957, he published [*Verbal Behavior*](https://en.wikipedia.org/wiki/Verbal_Behavior), in which he explained human language as stimulus-response networks, built up piece by piece during child development. To give an example, when one searches for a book with a title "Verbal Behavior", one would say "Verbal Behavior, Verbal Behavior, Verbal Behavior..." (a "self-echoic") while the eye scans the shelf. When the visual stimulus matches the verbal stimulus, the "grab book" action is triggered (a "tact"). The touch of the hand with the book then stops self-echoic behavior. In Skinner's terms, this verbal behavior is a "[descriptive autoclitic](https://en.wikipedia.org/wiki/Autoclitic)".
+
+He was at his most radical in [*Beyond Freedom and Dignity* (1971)](https://en.wikipedia.org/wiki/Beyond_Freedom_and_Dignity), which essentially argued that human society will be reorganized according to behaviorist principles. Instead of the indirect and unreliable behavior control using verbal moral judgment, a society would use more direct operant conditioning methods that are experimentally proven by behaviorist psychologists.
+
+Though behaviorism has remained alive and well to this day, linguistics took a sudden turn around 1960 thanks to Noam Chomsky. According to legend, Chomsky wrote a review of *Verbal Behavior* in 1959, in which he soundly routed behaviorist linguistics [@chomskyReviewSkinnersVerbal1959]. The truth is more complicated, since Chomsky also wrote several other famous works like [*Syntactic Structures* (1957)](https://en.wikipedia.org/wiki/Syntactic_Structures), [*Aspects of the Theory of Syntax* (1967)](https://en.wikipedia.org/wiki/Aspects_of_the_Theory_of_Syntax), and the foundational papers on formal grammar like the [Chomsky hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy).
+
+Chomsky argued that there are two ways of doing research in psychology and linguistics: "empiricism" and "rationalism". Skinner's book was the best example of empiricism, and since Skinner's book is wrong, the book becomes a *reductio ad absurdum* of empiricism. Instead, one must turn back to rationalist psychology and linguistics.
+
+> I had intended this review not specifically as a criticism of Skinner's speculations regarding language, but rather as a more general critique of behaviorist (I would now prefer to say "empiricist") speculation as to the nature of higher mental processes... I do not, in other words, see any way in which his proposals can be substantially improved within the general framework of behaviorist or neobehaviorist, or, more generally, empiricist ideas that has dominated much of modern linguistics, psychology, and philosophy. The conclusion that I hoped to establish in the review, by discussing these speculations in their most explicit and detailed form, was that the general point of view was largely mythology, and that its widespread acceptance is not the result of empirical support, persuasive reasoning, or the absence of a plausible alternative.
+> 
+> -- Preface to the 1967 reprint. [@chomskyReviewBFSkinners1967]
+
+What is wrong with empiricism? Fundamentally, Chomsky's argument is based on two properties that every human language has:
+
+* Infinity: There exists infinitely many grammatical sentences, and infinitely many ungrammatical sentences.
+* Generativity: Humans can agree with each other whether a never-before-seen sentence is grammatical or ungrammatical.
+
+Plato observed that, though we have only seen imperfect geometric shapes, we have a concept of perfect circles, triangles and so on. He inferred from this that we are born with the ideal concepts within us, to be matched against imperfect shapes out there. Similarly, Chomsky argued that we are born with the ideal Universal Grammar within us, to be matched against the language observations in the world.
+
+For example, in the Universal Grammar, there is a setting called "subject-verb-object order", with 6 possible values: SVO, SOV, ..., OVS. An infant need only observe a few dozen sentences to fix this setting. Chomsky extended this project to all of natural language grammar.
+
+Chomsky made a multi-pronged rejection of empiricism:
+
+* Poverty of stimulus: Humans learn language with just a few years of language instruction. This is impossible if they "start from scratch". Thus, they have a lot of inborn grammar.
+* Colorless green ideas sleep furiously: Because there are many meaningless but grammatical sentences, grammar is independent of meaning. Thus, grammar, unlike meaning, can be a small closed system that fits inside a brain at birth.
+* Probability is meaningless: A sentence is either grammatical or not. THere is no in-between. Therefore it is meaningless to talk about the "probability of a sentence" like the empiricists.
+* Impersonal abstraction: Real humans can make mistakes, but language itself makes no mistake. A tired human might say "Ideas sleep furiously." is ungrammatical 10\% of the times, but the English language *itself* would always say it is grammatical. Thus, the probabilities measured from real human behavior is meaningless for theoretical linguistics.
+* Competence, not performance: Even if an empirical model of language, like the HMM, works 99% of the times, a single counterexample disproves it. To work "most of the times" is performance. To work all the time is competence. Linguistic science is about competence, and performance is sufficient only for engineering. Competence either/or, while performance is usually/rarely. Linguistics is about competence, and performance is left for the psychologists and engineers.
+
+The 60 years afterwards have been one long struggle against empiricism along these lines. For example, he had repeatedly simplified the Universal Grammar down to the minimalist core, so that it could possibly fit inside a single gene that appeared once in the evolution of humans, "switching on" language for humans and no other species. And by "60 years", I meant it. He was nothing if not consistent:
+
+> Evidently, one's ability to produce and recognize grammatical utterances is not based on notions of statistical approximation and the like... a structural analysis cannot be understood as a schematic summary developed by sharpening the blurred edges in the full statistical picture... that grammar is autonomous and independent of meaning, and that probabilistic models give no particular insight into some of the basic problems of syntactic structure.
+>
+> [@chomskySyntacticStructures1957, pages 16--17]
+
+> But it must be recognized that the notion of "probability of a sentence" is an entirely useless one, under any known interpretation of this term.
+>
+> [@chomskyEmpiricalAssumptionsModern1969]
+
+> It's true there's been a lot of work on trying to apply statistical models to various linguistic problems. I think there have been some successes, but a lot of failures. There is a notion of success ... which I think is novel in the history of science. It interprets success as approximating unanalyzed data. 
+> 
+> Chomsky at the MIT150: Brains, Minds and Machines Symposium (2011), quoted in [@norvigChomskyTwoCultures2017]
+
+> Well, first we should ask the question whether large language models have achieved anything, anything, in this domain? Answer: No! They've achieved zero... GPT-4 is coming along, which is supposed to going to have a trillion parameters. It will be exactly the same. It'll use even more energy and achieve exactly nothing, for the same reasons. So there's nothing to discuss.
+>
+> [Machine Learning Street Talk: The Ghost in the Machine and the Limits of Human Understanding (2022)](https://whimsical.com/question-1-large-language-models-such-as-gpt-3-DJmQ8R5kD8tqvsXxgCN9vK)
+
+Knowing his framework, we understand why he rejected both statistical models like n-grams or neural models like GPT-3 as "zero" in terms of advancing theoretical linguistics. They are empirically constructed: thousands of researchers were just trying things out, and eventually they started to work. Worse, both kinds of models assign *nothing but* probabilities to sentences!
+
+When engaging with the modern Chomskyans (they still exist!), one notices a strategic ambiguity on the edge of competence vs performance. On one hand, Chomsky has simply defined scientific linguistics to be the study of language and competence. That is, he made the following kind of definition:
+
+* Language is a kind of mathematical object with associated transformations of it (such as the transformation that converts a verb to a past tense).
+* A person or a computer, has competence for a language iff it can perform the correct transformations on a language object.
+* Scientific linguistics is the study of languages, and how competence is implemented in various algorithms.
+
+Chomsky's definition deliberately draws a line between competence and performance. However, this line immediately gets crossed, because even immortals cannot subsist on only aether. Chomskyan scientific linguistics, to be scientific, still needs to gather empirical data and predict outcomes of empirical experiments, and thus was Chomsky able to influence AI developments, by an implicit empirical claim: "Building an AI like a generative grammar is how you get good empirical performance."
+
+Chomskyans have long engaged with AI. There have been Chomskyan language models, but the idea is very different. When Chomskyans do a language model, it is a scientific experiment to test a linguistic theory. If a program written according to a [merge-grammar](https://en.wikipedia.org/wiki/Merge_(linguistics)) of verbs can convert verbs to the past tense correctly (on a small example of 200 verbs), then that shows merge-grammar theory of verbs is a good theory. The n-gram language model is *trivially* disproven,[^n-gram-proof] so even if an n-gram model achieves better performance according to the entropy, all a Chomskyan needs to do is point at that theorem, and say, "That's not science, that's engineering.".
+
+[^n-gram-proof]:
+    The short explanation: English is not a regular language, so it can't be modeled by a Markov chain.
+    
+    The slightly longer explanation: English has [center embedding](https://en.wikipedia.org/wiki/Center_embedding), so English cannot be parsed by any finite state machine, while n-gram models are probabilistic finite state machines (aka Markov chains). Now prove the following theorem: If a language is not parsable by a finite state machine, then for any Markov model for the language, there exists sentences $s_1, s_2, \dots$ in the language, such that $\lim_{n \to \infty} Pr(s_n) = 0$. To show this, prove that there exists arbitrarily long sentences that are so long that the Markov chain "forgets where it was". The argument is similar to the [pumping lemma for regular languages](https://en.wikipedia.org/wiki/Pumping_lemma_for_regular_languages).
+
+Now, when Chomsky took a look at GPT-4, all he saw was another "success as approximating unanalyzed data", a *reductio ad absurdum* of empiricism at the price of \$100 million. So there's nothing to discuss.[^blurry-jpeg]
+
+[^blurry-jpeg]: Some critics of recent large models, like Ted Chiang's "blurry jpeg of the Internet", and Emily Bender's "stochastic parrot", are analogous to the Chomskyan critique of "success as approximating unanalyzed data". And Gary Marcus has been a committed Chomskyan since the 1990s, so analyzing his criticisms of AI in the Chomskyan framework is left as an exercise for the reader. Indeed, they had been much less circumspect compared to Chomsky, since they had been predicting the imminent *empirical* failure of large models at performance because of their lack of *rational* competence.
+
+The influence of Chomsky had been immense, both in linguistics and psychology. Chomskyan linguistics is the theoretical foundation to early MT systems like Vanquois', ASR systems like Hearsay, and chatbot language parsers like SHRDLU. In psychology, his approach became "cognitivism" or "cognitive psychology". And the AI of languages became the place where rationalism and empiricism approaches fought. 
+
+![The grammar parsing network of the LUNAR system, an early expert system used by NASA to allow users to query its moon rocks database in constrained natural English. The graph (an [augmented transition network](https://en.wikipedia.org/wiki/Augmented_transition_network)) was automatically compiled from a Chomskyan generative grammar, and performs efficient parsing. [@batesTheoryPracticeAugmented1978, figure 9]](figure/LUNAR_grammar_ATN.png)
+
+|                           | Rationalism                      | Empiricism                      |
+| ------------------------- | -------------------------------- | -------------------------------- |
+| Well-known Advocates:     | Noam Chomsky, Marvin Minsky                 | Claude Shannon, B. F. Skinner, J. R. Firth, Zellig Harris |
+| Model:                    | Competence Model                 | Noisy Channel Model             |
+| Contexts of Interest:     | Phrase Structure                | N-grams                         |
+| Goals:                    | All and Only                     | Minimize Prediction Error (Entropy) |
+|                           | Explanatory                     | Descriptive                     |
+|                           | Theoretical                     | Applied                         |
+| Linguistic Generalizations: | Agreement and                   | Collocations and Word Associations |
+|                           | Wh-movement                      |                                 |
+| Parsing Strategies:       | Principle-Based                 | Preference-Based                |
+|                           | CKY (Chart), ATNs,               | Forward-Backward, Inside-Outside |
+|                           | Unification                     |                                 |
+| Applications:             | Understanding                   | Recognition                     |
+|                           | Who did what to whom             | Noisy Channel Applications       |
+: [@churchIntroductionSpecialIssue1993, Table 5]
+
+Computer vision was also influenced by cognitivism, though the contest between rationalists and empiricists were less bitter. The purely rationalist approach ("scene analysis") essentially ended around 1980 as the visual world proved too statistical to handle. David Marr was an early representative of a more sophisticated rationalist approach, where the vision system analyzes the visual wordl in stages. At the lowest stage, many fast and cheap local algorithms are run over the input images, such as optical flow, edge detection, convolution, blurring, texture clustering, etc. This results in a "primal sketch".
+
+![Some primal sketches. [marrVisionComputationalInvestigation2010, figure 2.7]](figure/Marr_primal_sketch.png)
+
+At the next level, more complex and global calculations produce a "2.5D sketch" of the image, which is almost a 3D model of the scene.
+
+![A 2.5D sketch of a layered cake. [marrVisualInformationProcessing1980, figure 3.12]](figure/Marr_2_5D_sketch.png)
+
+The higher levels then use this sketch to construct a full 3D model of the scene (including the locations and orientations of the eyeballs themselves) which would have recreated the image. The 3D model does not have to be accurate. It can be quite crude, approximating a person with a few dozen cylinders. This was essentially by design, as Marr argued that the reason we can recognize object despite their changes in details is proof that we construct in our heads a logically structured 3D model of the we live in, structured like a language, which is independent of the precise shapes we see.
+
+::: {#fig-marr-cylinder layout-ncol=2}
+
+![Some animals made of pipecleaners. Marr used this example to show that the 3D model inside our heads is crude but effective, and probably made of a hierarchy of cylinder-like objects. [@marrVisualInformationProcessing1980, figure 7]](figure/Marr_pipecleaner_sculptures.png)
+
+![A 3D reconstruction of a human using a hierarchy of cylinders, structured like a syntax tree. [@bermudezCognitiveScienceIntroduction2020, figure 2.13]](figure/Marr_3D_reconstruction.png)
+
+:::
+
+Cognitivism as a *general* program for AI had been mainly championed by Marvin Minsky, whose [criticism of neural networks](https://yuxi-liu-wired.github.io/essays/posts/perceptron-controversy/) is well-known. He thought expert systems would be the way forward, if only they could pool their efforts instead of starting from scratch each time -- much as Feigenbaum's dream of a "Library of Congress" knowledge base. Lenat's Cyc project was the only one on the right road to AI.[^minsky-brooks]
+
+[^minsky-brooks]:
+    Minsky was particularly annoyed by Rodney Brooks, whose sub-symbolic approach to intelligence ("subsumption architecture") must have reminded Minsky too much of the empirical trial-and-error approach of neural networks.
+
+    > "The worst fad has been these stupid little robots," said Minsky. "Graduate students are wasting 3 years of their lives soldering and repairing robots, instead of making them smart. It's really shocking." "Marvin may have been leveling his criticism at me," said Rodney Brooks, director of the MIT Artificial Intelligence Lab, who acknowledged that much of the facility's research is robot-centered.
+    > 
+    > [@baardAIFounderBlasts2003]
+
+> "AI has been brain-dead since the 1970s," said AI guru Marvin Minsky in a recent speech at Boston University... Minsky has spent much of his career studying "commonsense reasoning" – the ability of a computer to grasp the everyday assumptions that human beings take for granted. Unfortunately, the strategies most popular among AI researchers in the 1980s have come to a dead end, Minsky said. So-called "expert systems," which emulated human expertise within tightly defined subject areas like law and medicine, could match users' queries to relevant diagnoses, papers and abstracts, yet they could not learn concepts that most children know by the time they are 3 years old. "For each different kind of problem, the construction of expert systems had to start all over again, because they didn't accumulate common-sense knowledge."
+>  
+> [@baardAIFounderBlasts2003]
+
+Outside of linguistics and abstract science, Chomskyan ideas appeared as "[structuralism](https://en.wikipedia.org/wiki/Structuralism)" of [Claude Lévi-Strauss](https://en.wikipedia.org/wiki/Claude_L%C3%A9vi-Strauss). As an example, the Kareira society was divided into 4 sections: Banaka (0), Karimera (1), Burung (2), Palyeri (3). A Banaka man can only marry a Palyeri woman, and their children will be Karimera. In total, we have a table:
+
+| father | mother | child |
+|---|---|---|
+| 0 | 3 | 1 |
+| 1 | 2 | 0 |
+| 2 | 1 | 3 |
+| 3 | 0 | 2 |
+: Kareira kinship system
+
+This structure has the following good properties:
+- Exogamy.
+- Equal women exchange. Sections 0 and 3 exchange women. Sections 1 and 2 exchange women.
+- Equal child exchange. Sections 1 and 0 exchange children in the sense that a man in section 1 would have children in section 0, and vice versa. The same for 2 and 3.
+- Stable over time.
+
+Lévi-Strauss found many such recurring structures across human societies, and proposed to analyze human mythologies with the same method as well (a pinnacle example was [*The Hero with a Thousand Faces*](https://en.wikipedia.org/wiki/The_Hero_with_a_Thousand_Faces) which literally proposed a single structure for all human mythologies). This then got picked up by sociologists and commentators, followed by the "post-structuralists" who had even less to contribute to AI than Dreyfus.
+
+### Connectionism, the past tense debate, and whatever
+
+[@bermudezCognitiveScienceIntroduction2020, chapter 10]
+
+"Connectionism" is a word you don't see much nowadays, but it was a big word back in the 1980s. It is hard to pin down, but if I summarize it, it is the result of philosophers in the 1980s noticing how researchers were trying neural networks on problems that had defied logical AI approaches, and somehow achieved state of the art, way past expectations. They say, "Weird! How is it possible for neural networks, written by people not having a deep knowledge of the problem domain, using such simplistic features, to work better than the best logical AI? I must philosophize this at once!"
+
+Two clear camps immediately formed. On one side were the connectionists with [Paul Churchland](https://en.wikipedia.org/wiki/Paul_Churchland), [Patricia Churchland](https://en.wikipedia.org/wiki/Patricia_Churchland), [Paul Smolensky](https://en.wikipedia.org/wiki/Paul_Smolensky), [Jeffrey Elman](https://en.wikipedia.org/wiki/Jeffrey_Elman). On the other side were the cognitivists (or perhaps the rationalists) [Jerry Fodor](https://en.wikipedia.org/wiki/Jerry_Fodor), [Zenon Pylyshyn](https://en.wikipedia.org/wiki/Zenon_Pylyshyn), with the spirit of Noam Chomsky always present in the background.
+
+Chapter 18 of *Parallel Distributed Processing* vol. 2 bore the unassuming title "On learning the past tenses of verbs in English" [@rumelhartLearningTensesEnglish1986]. Nobody would have predicted that it ignited a long and bitter dispute "the past tense debate". 
+
+[@seidenbergQuasiregularityItsDiscontents2014]
