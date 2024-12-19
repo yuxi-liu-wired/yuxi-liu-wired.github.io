@@ -348,7 +348,7 @@ Who bought the services of Cyc and for what? The details are slim. Trade secrets
 * Paul Allen had funded Cycorp sometime before 2001 for unknown purposes and an unknown sum. In 2003, he funded it by \$0.7M as part of his project of "Digital Aristotle", to create a tutoring AI. [@hiltzikBirthThinkingMachine2001; @richmanAllenClaimsSuccess2003; @friedlandProjectHaloDigital2004]
 * The [Terrorism Knowledge Base](https://en.wikipedia.org/wiki/MIPT_Terrorism_Knowledge_Base) (2004--2008). This is such a big one we will describe in detail how that one worked.
 * [Total Information Awareness](https://en.wikipedia.org/wiki/Total_Information_Awareness) project, in 2003, funded Cycorp for \$9.8 million for a "prototype database" and "identify phone-calling patterns as they might exist among potential terrorists overseas". [@crensonBigBrotherCould2003]
-* Electronic Surveillance System for the Early Notification of Community-Based Epidemics-II, around 2006. Self-explanatory title. [@abbottIntegratedBiologicalWarfare2007]
+* Electronic Surveillance System for the Early Notification of Community-Based Epidemics-II (ESSENCE-II), around 2006. Self-explanatory title. [@abbottIntegratedBiologicalWarfare2007]
 * Advanced Research and Development Activity (ARDA)'s Advanced Question Answering for Intelligence (AQUAINT) program, sometime between 2001 and 2004. [@lenatBuildingMachineSmart2009]
 * Seven unnamed big companies, for expert system things, but probably "common-sense platform for their applications, and as an interlingua to fully, semantically integrate all the data they generate and all the data they license from third parties". [@cycorpCycTechnologyOverview2021; @lenatCreating30MillionRuleSystem2022]
 
@@ -374,46 +374,53 @@ While there were some partial open sources, Cyc is fundamentally a proprietary s
 Eventually, . The general inference engine had been long turned off, and the Cyc system was a mass of over 1000 little inference engines. [@lenatGettingGenerativeAI2023]
 
 
-## The state of Cyc
+## A hostile assessment of Cyc
 
-It is hard to know what to make of this endeavor, if we take Lenat's word for it:
+It is hard to interpret the state of Cyc today, if we take Lenat's word for it:
 
-* there were 150 technical challenges to knowledge engineering at the start of Cyc in 1984, but they were all solved by 1990 [@lenatCreating30MillionRuleSystem2022; @lenatBuildingMachineSmart2009]
-* Cyc could already be tutored in (constrained) natural language 2001 [@anthesComputerizingCommonSense2002]
-* the upper ontology has remained stable for years since 2015 [@lenat50ShadesSymbolic2015]
-* the knowledge pump is 95\% primed in 2015, when there were just 15M assertions [@lenat50ShadesSymbolic2015], and as of 2021, there were over 25M assertions, [@cycorpCycTechnologyOverview2021], so the knowledge pump had been thoroughly primed.
+* there were 150 technical challenges to knowledge engineering and representation at the start of Cyc in 1984, but they were all solved by 1990 [@lenatCreating30MillionRuleSystem2022; @lenatBuildingMachineSmart2009]
+* Cyc could already be tutored in (constrained) natural language in 2001 [@anthesComputerizingCommonSense2002]
+* the upper ontology has remained stable for years as of 2015 [@lenat50ShadesSymbolic2015]
+* the knowledge pump is 95\% primed in 2015, when there were just 15M assertions [@lenat50ShadesSymbolic2015], and as of 2021, there were over 25M assertions, [@cycorpCycTechnologyOverview2021], so the knowledge pump had been more than primed.
 * SubLisp is easy to learn, and knowledge engineering in SubLisp is 1000x more efficient than in a modern language like Python [@lenatCycQuestSolve2021]
 * the Cycorp has been profitable since its inception, had never taken on debt, had been almost entirely employee-owned, and could remain profitable entirely on doing business with non-government corporations in 2022 [@lenatCreating30MillionRuleSystem2022; @lenatCycQuestSolve2021]
 * Cyc has natural language understanding of pragmatics, while statistical machine learning systems have none [@lenatSometimesVeneerIntelligence2017; @lenatNotGoodGold2019]
 
-Well then, what is the holdup? The finances were healthy. It is not subject to perverse interests of the market or middle managers. The tools are built. SubList is good. The employees are aligned. All technical challenges to knowledge engineering had been solved by 1990. The knowledge pump is  primed. What is the benchmark score of Cyc on Winograd schema? Where is the Cyc-translator? Forget about Google Neural Translate -- is it even better than [ABBYY's](TODO_ABBYY's_last_stand)? Where's ChatCYC?
+What is stopping Cyc from learning? The finances were healthy. Cycorp is not subject to perverse interests of the market or middle managers. The employees are aligned. SubList is a great language. All technical challenges to knowledge engineering and representation had been solved by 1990. The knowledge pump has been more than primed.
 
-According to the final work of Lenat [@lenatGettingGenerativeAI2023], the only holdup is natural language understanding. The knowledge pump is thoroughly primed, but Cyc still couldn't learn by reading human texts because natural language understanding is still too hard. In other words, we have the Vauquois triangle again. Cyc can read Epistemological Language perfectly well -- the interlingua -- but it is stubbornly difficult to parse English into the interlingua. But what *is* lacking in the parser? Why is it hard to parse?
+According to the final work of Lenat [@lenatGettingGenerativeAI2023], the only holdup is natural language understanding. The knowledge pump is thoroughly primed, but Cyc still couldn't learn by reading human texts because natural language understanding is still too hard. In other words, we have the Vauquois triangle again. Cyc can read CycL perfectly well -- the interlingua -- but it is stubbornly difficult to parse English into the interlingua. But what *is* lacking in the parser? Why is it hard to parse?
 
 ![The Vauquois triangle of translation.](figure/Vauquois%20triangle.png)
 
-Recall that Lenat had always argued that "just letting a system learn on its own by natural language understanding" is a free lunch, and that real NLU would start [@lenatCycLargescaleInvestment1995]. Indeed, there is a critical tension here:
+Recall that Lenat had always argued that "just letting a system learn on its own by natural language understanding" is a free lunch, and that NLU requires a significant portion (~10--50%) of common sense already encoded. Indeed, there is a critical tension here:
 
 1. The CycL language is enough to represent common sense language about the world. That is, the Vauquois triangle structure is exactly correct: You have natural languages, but they are all joined at the top by a common interlingua -- the CycL.
 2. By the Winograd schema challenge, translation requires common sense.
-3. CycL → English requires no common sense. The result would sound kind of wooden and robotic, but it already works, and it doesn't require any understanding. Just follow the syntax substitution rules. (This has been used in Cyc since around 2000, to generate English explanations for the users.)
-4. Therefore, Japanese → CycL, or any X language → CycL, requires common sense. Indeed, Lenat had from the start argued that Natural Language Understanding (NLU) requires common sense.
+3. CycL → English requires no common sense. The result would sound kind of wooden and robotic, but it doesn't require any understanding: Just follow the syntax substitution rules. Indeed, this already works in Cyc since ~2000.
+4. Therefore, Japanese → CycL, or any X language → CycL, requires common sense. Indeed, Lenat had from always argued that Natural Language Understanding (NLU) requires common sense.
 5. By the no free lunch hypothesis, neural networks trained from scratch can't have common sense.
 6. But in Lenat's last paper, Lenat has argued that the only problem stopping Cyc from learning from natural language is that NLU doesn't yet work well enough, and hoped that neural networks can do the English → CycL translation.
 
-::: {.callout-note title="ABBYY and Cyc" collapse="true" }
+On the topic of interlingua, it is interesting that [ABBYY](TODO_ABBYY's_last_stand) was almost a twin of Cycorp. Whereas Cycorp began building an ontology for the common sense world since 1984, spent \$120M, [@paulheimHowMuchTriple2018] and got stuck on NLU since around 2010, ABBYY began building an interlingua machine translation system since the 1990s, and spent over \$80M. By the early 2010s, they realized that they could not compete with Google statistical machine translation, and pivoted to doing NLU with semantic graph technology based on the knowledge base they produced for the sake of interlingua. [@skorinkinABBYYsBitterLesson2024]
 
-On the topic of interlingua, it is interesting that there was a Russian company, ABBYY, that was almost a twin of Cycorp. Whereas Cycorp began building an ontology for the common sense world since 1984, spent \$120M, [@paulheimHowMuchTriple2018] and got stuck on NLU since around 2010, ABBYY began building an interlingua machine translation system since the 1990s, and spent over \$80M. By the early 2010s, they realized that they could not compete with Google statistical machine translation, and pivoted to doing NLU with semantic graph technology based on the knowledge base they produced for the sake of interlingua. [@skorinkinABBYYsBitterLesson2024]
+Indeed, interlingua-based machine translation projects used to be common, but essentially went extinct (except ABBYY) after the rise of statistical machine translation in the 1990s [@hutchinsMachineTranslationHistory2023].
 
-Indeed, interlingua-based machine translation projects used to be common, but essentially went extinct (ABBYY being a holdout) after the rise of statistical machine translation in the 1990s [@hutchinsMachineTranslationHistory2023].
+I suspect that it is not simply the problem of getting a better English → CycL translator, and then Cyc would finally begin learning, but that much knowledge in sentences doesn't translate to interlingua. If the failures of all interlingua machine translation systems is not enough evidence, then consider some more facts about Cyc's NLU:
 
-I suspect that it is not simply the problem of getting a better English → CycL translator, and then Cyc would finally begin learning, but that a significant amount of knowledge in sentences don't translate to interlingua. If the failures of all interlingua machine translation systems is not enough evidence, then consider the few examples that Cycorp gave for English → CycL: They were quite easy and unambiguous examples, almost as if they began with a CycL sentence, and then converted it to English. I only found two example sentences: "Bill Clinton sleeps." and "Did you touch a blue object located in the capital of France on September 25th, 2022?". Neither involves the "many AI-complete elements, such as correct disambiguation, understanding of idioms, metaphor, sarcasm, foreshadowing, irony, subtext, and so on."
+* I only found two examples that Cycorp gave for English → CycL: "Bill Clinton sleeps." [@pantonCommonSenseReasoning2006] and "Did you touch a blue object located in the capital of France on September 25th, 2022?" [@lenatGettingGenerativeAI2023]. Neither involves the "many AI-complete elements, such as correct disambiguation, understanding of idioms, metaphor, sarcasm, foreshadowing, irony, subtext, and so on." They were quite easy and unambiguous examples, almost as if they began with a CycL sentence, and then converted it to English.
+* [@guhaEnablingAgentsWork1994] states that in 1994-03 "The Syntax module can properly handle about 75% of the sentences found in the news stories of a typical issue of the newspaper USA Today. And in cases in which Cyc knows all the proper nouns in the sentence, the Semantics module can properly handle most of the sentences parsable by the syntax module... as good as what our knowledge enterers independently come up with, when asked to manually translate the material into CycL.".
+* [@pantonCommonSenseReasoning2006] states that in 2006, a search-and-verify system for English → CycL, that combines syntactic parser, statistical parser, and Cyc verification, resulted in "sentences that were correct, according to human review, approximately 50% of the time".
+* Some governmental experimental uses of Cyc, such as ESSENCE-II and Total Information Awareness, might have involved some NLU, but I cannot find details concerning how much NLU is involved.
+* Only one of the commercial applications of Cyc plausibly required NLU.
+  * In [Mathcraft](https://cyc.com/mathcraft/), the "learning by teaching" game powered by Cyc, students could not type anything, but only make multiple choices generated by the Cyc itself.
+  * In the Cleveland Clinic application [@lenatHarnessingCycAnswer2010], the user enters queries already in a constrained language (like "aortic valve replacement patients with a pericardial aortic valve"), and then compose a CycL translation by clicking from Cyc's parser's suggestions. Similarly for the Terrorism Knowledge Base application.
+  * "Maintaining persistent user models in order to support extended, months-long online chats with their famous characters" seems to involve NLU. However, considering the complete lack of details as to what it involved (I can't find out which one it is), and the complete lack of Cyc in the recent chatbot boom, either Lenat was right to say that NN don't understand, but that this application didn't require NLU after all, or that chatbots do require NLU, but that Lenat was wrong.
 
-:::
+Let's take it another way: If there is No Free Lunch to NLU, then what is Cyc's score on Winograd schema benchmark? Where is the Cyc-translator? Forget about Google Neural Translate -- is it even better than ABBYY's? Where's ChatCYC? Why does none of its commercial applications use much NLU, while most commercial applications of NLU use statistical or neural machine learning?
+
+All evidences point to the conclusion that a sentence that can be parsed to CycL is already bureaucratic and formalistic, with the mark of interlingua written on its brow. For those, Cyc appears to have already working NLU in early 2000s, and yet, Cyc is still here, not machine-learning, lacking ... what? `<sarcasm>`A sarcasm parser?`</sarcasm>`
 
 ::: {.callout-note title="An information-theoretic estimate." collapse="true" }
-
-How good is Cyc's NLU? Despite the exhaustive (and exhausting) literature review, I only found two data points. [@pantonCommonSenseReasoning2006] states "the search and verification process produced sentences that were correct, according to human review, approximately 50% of the time", and [@guhaEnablingAgentsWork1994] states that in 1994-03 "The Syntax module can properly handle about 75% of the sentences found in the news stories of a typical issue of the newspaper USA Today. And in cases in which Cyc knows all the proper nouns in the sentence, the Semantics module can properly handle most of the sentences parsable by the syntax module... as good as what our knowledge enterers independently come up with, when asked to manually translate the material into CycL.".
 
 The [information content of English](https://yuxi-liu-wired.github.io/essays/posts/perplexity-turing-test/#entropy-of-natural-languages) is about 0.8 bits per character, and each English sentence contains about 100 characters, giving 80 bits of information.
 
@@ -422,11 +429,13 @@ Now, one might argue that the last bit is the deepest, but it is hard to square 
 * self-organized NN could capture 98.75% of the information content in natural language.
 * self-organized NN don't understand.
 
+[TODO make the argument more correct]
+
 Stated in another way, this means 98.75% of information that people produce as they write is mindless, remembering and espousing, but not understanding or inferring. This is even harder to square with Lenat's assertion that 99\% of language understanding is pragmatics, which self-organized NN don't have. [@lenatSometimesVeneerIntelligence2017]
 
 ::: 
 
-Take another look at the list of known applications of Cyc. Does this look like a path towards AGI, or does this look no different from building custom-made expert systems for specialized purposes, something that those generic professionals of Oracle, IBM, or Accenture have been doing for decades? Perhaps they did have a product differentiation in being able to consistently find particularly good knowledge engineers, and in programming in a particularly efficient language of SubLisp, which allowed them to stay in business despite having just a 50-person crew. It is not something to be dismissed, but is this a path towards AGI, or a veneer of AGI to enterprise solutions?
+Take another look at the list of known applications of Cyc. Does it look like a path towards AGI, or does this look no different from building custom-made expert systems for specialized purposes, something that those generic professionals of Oracle, IBM, or Accenture have been doing for decades? Perhaps they did have a product differentiation in being able to consistently find particularly good knowledge engineers, and in programming in a particularly efficient language of SubLisp, which allowed them to stay in business despite having just a 50-person crew. It is not something to be dismissed, but is this a path towards AGI, or a veneer of AGI to enterprise solutions?
 
 | technical statement | moral coloring |
 |-----------|-------|
