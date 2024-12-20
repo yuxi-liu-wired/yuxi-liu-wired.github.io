@@ -398,7 +398,33 @@ Lenat chose to use a fully higher-order language, giving up completeness, and th
 
 Like most expert systems, the Cyc has a general resolution-based inference engine. Unlike most expert systems, its knowledge base is large and higher-ordered, so its general engine runs too slowly for most queries. Thus, the developers kept adding more specialized modules ("pattern-specific heuristic modules"), each capable of efficiently inferring on a few microtheories. If a specialized engine fails to make progress, a more general engine can be the fall-back, all the way up to the most general one.
 
-There are also "tacticians", modules that pick engines that are probably good for solving a problem, and there are "strategists" that pick tacticians.
+As the simplest example of how inference engine can work, consider the following example of backward-chaining inference, in a semantic web. The system is asked basically "Why does Clyde want to possess a crescent wrench?", and it eventually replies "Because Clyde has not eaten lately.". Lenat expected that the ontology of Cyc would eventually power generally intelligent agents, which would use forward-chaining to construct goals from current states, and use backward-chaining to explain why others have their goals.
+
+![A sketch of how to reason by backward-chaining together triples in a semantic web. Figure from [@wallichSiliconBabies1991]. I can't help but wonder if Lenat meant for a subtle joke against the *Elephants don't play chess* by [@brooksElephantsDonPlay1990] by adding in a "dead end" branch that ends up concluding Clyde is an elephant.](figure/CYC_triple_reasoning.png)
+
+Most inference engines are highly specialized. They can only reason within a few microtheories, but very well. Here is a toy example for reasoning with mutually exclusive categories. We can define `#$MuTex` as 
+
+```lisp
+(#$implies
+  (#$and (#$isa ?X ?A) (#$MuTex ?A ?B))
+         (#$not (#$isa ?X ?B)))
+```
+
+Then this allows the general reasoning engine to reason about mutual exclusivity by always reducing to this definition. However, we can accelerate this by adding in some "lemmas":
+
+```lisp
+(#$implies (#$MuTex ?A ?B) (#$MuTex ?B ?A))
+(#$implies
+  (#$and (#$MuTex ?A ?B) (#$genls ?C ?A))
+  (#$MuTex ?C ?B))
+(#$implies
+  (#$and (#$MuTex ?A ?B) (#$isa ?X ?A))
+  (#$not (#$isa ?X ?B)))
+```
+
+After producing enough lemmas, we can then write a specialized inference engine that would be called upon whenever `#$MuTex` appears in an expression, and try to do some inference and simplifications by calling upon these lemmas. Indeed, most inference engines were constructed in this way: Cyc tried to solve a problem, and times out. An expert was called in and asked, "How did you do this?" and the expert would explain how they solved it with quick rules of thumb, which the knowledge engineers would write into Cyc, resulting in more assertions, and possibly more inference engines. This is essentially the same as "knowledge elicitation" used for making expert systems.
+
+Other than these inference engines, there are also many "tacticians", modules that pick engines that are probably good for solving a problem, and there are a few "strategists" that pick tacticians.
 
 The control structure of Cyc is a commercial secret. The *only* explanation I could find is a few paragraphs in an essay published near the end of his life [@lenatCreating30MillionRuleSystem2022]. According to it, the inference engines use a blackboard architecture similar to the one used in Hearsay-II speech recognition system [@ermanHearsayIISpeechUnderstandingSystem1980]. Lenat described it as:
 
@@ -410,11 +436,6 @@ The control structure of Cyc is a commercial secret. The *only* explanation I co
 
 ![How Cyc processes a user's input as of 1990. The user enters at the EL-KB (epistemological level knowledge base), which gets translated down to the HL, where multiple modules  for generating and comparing arguments for and against a given proposition are run. [@lenatCycMidtermReport1990, figure 1]](figure/Cyc_EL_HL.png)
 
-The hardest step is step 1, a project that consumed over 2000 person-years, including the remainder of Lenat's life.
-
-![A sketch of how to reason by backward-chaining together triples in a semantic web. The system is asked basically "Why does Clyde want to possess a crescent wrench?", and it eventually replies "Because Clyde has not eaten lately.". Lenat expected that the ontology of Cyc would eventually power generally intelligent agents, which would use forward-chaining to construct goals from current states, and use backward-chaining to explain why others have their goals. I can't help but wonder if Lenat meant for a subtle joke against the *Elephants don't play chess* by [@brooksElephantsDonPlay1990] by adding in a "dead end" branch that ends up concluding Clyde is an elephant. Figure from [@wallichSiliconBabies1991].](figure/CYC_triple_reasoning.png)
-
-Even from the vantage point of 1985, it was clear to all that there was a lot of common sense to code in, although few could have predicted that Lenat would persevere at it for over 30 years.
 
 ## Cycorp in 40 years
 
@@ -432,33 +453,17 @@ Cycorp regarded the semantic web effort as doing essentially the same thing, exc
 >
 > [@lenat20012001Common2001]
 
-In 2016, Lenat finally declared the Cyc project "done" and set about commercializing it.
-
-> Having spent the past 31 years memorizing an astonishing collection of general knowledge, the artificial-intelligence engine created by Doug Lenat is finally ready to go to work... most of what is left to be added is relevant to a specific area of expertise, such as finance or oncology.
-> 
-> Among other projects, the company is developing a personal assistant equipped with Cyc's general knowledge. This could perhaps lead to something similar to Siri... the CEO of Lucid says the new company is in talks with various others interested in using the Cyc knowledge base. Lucid has been working with the Cleveland Clinic, for example, to help automate the process of finding patients for clinical studies.
-> 
-> [@knightAI30Years2016]
-
-That was essentially the last we heard from Cyc.
-
-When looking at this figure from 1985, one is simultaneously filled with respect and sadness, for they were facing impossible odds, and yet they charged right into it.
-
-![[@lenatCycUsingCommon1985, Figure 1]](figure/cyc_project_ontology.png)
-
-Their "midterm report" only accentuates this sense of tragedy, of seeing them fighting impossible odds, and losing. They saw with clarity that there is no shortcut to intelligence, no "Maxwell's equations of thought".
-
-> The majority of work in knowledge representation has dealt with the technicalities of relating predicate calculus to other formalisms and with the details of various schemes for default reasoning. There has almost been an aversion to addressing the problems that arise in actually representing large bodies of knowledge with content. However, deep, important issues must be addressed if we are to ever have a large intelligent knowledge-based program: What ontological categories would make up an adequate set for carving up the universe? How are they related? What are the important facts and heuristics most humans today know about solid objects? And so on. In short, we must bite the bullet.
->
-> We don't believe there is any shortcut to being intelligent, any yet-to-be-discovered Maxwell's equations of thought, any AI Risc architecture that will yield vast amounts of problem-solving power. Although issues such as architecture are important, no powerful formalism can obviate the need for a lot of knowledge.
->
-> By knowledge, we don't just mean dry, almanac-like or highly domain-specific facts. Rather, most of what we need to know to get by in the real world is prescientific (knowledge that is too commonsensical to be included in reference books; for example, animals live for a single solid interval of time, nothing can be in two places at once, animals don't like pain), dynamic (scripts and rules of thumb for solving problems) and metaknowledge (how to fill in gaps in the knowledge base, how to keep it organized, how to monitor and switch among problem-solving methods, and so on). Perhaps the hardest truth to face, one that AI has been trying to wriggle out of for 34 years, is that there is probably no elegant, effortless way to obtain this immense knowledge base. Rather, the bulk of the effort must (at least initially) be manual entry of assertion after assertion. 
-> 
-> [@lenatCycMidtermReport1990]
-
 OpenCyc quietly shut down with no fanfare, probably in 2017-03, with a [curt message](https://web.archive.org/web/20170422212642/http://opencyc.org/):
 
 > Part of the Cyc technology was released, starting in 2001, as OpenCyc, which provided an API, RDF endpoint, and data dump, under appropriate Apache and Creative Commons open source licenses. Its distribution was discontinued in early 2017 because such "fragmenting" led to divergence, and led to confusion amongst its users and the technical community generally that that OpenCyc fragment was Cyc.
+
+
+In 2016, Lenat finally declared the Cyc project "done" and set about commercializing it.
+
+> most of what is left to be added is relevant to a specific area of expertise, such as finance or oncology... Among other projects, the company is developing a personal assistant equipped with Cyc's general knowledge. This could perhaps lead to something similar to Siri... the CEO of Lucid says the new company is in talks with various others interested in using the Cyc knowledge base. Lucid has been working with the Cleveland Clinic, for example, to help automate the process of finding patients for clinical studies.
+> 
+> [@knightAI30Years2016]
+
 
 ## 1 billion dollars
 
