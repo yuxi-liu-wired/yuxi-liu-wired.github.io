@@ -347,17 +347,21 @@ In 2006, Cycorp spun out The Cyc Foundation, a non-profit organization promote t
 
 In 2008, Cycorp tried again by putting up a copy of OpenCyc with a user interface and an API, as ["OpenCyc for the Semantic Web"](https://web.archive.org/web/20080826011848/http://sw.opencyc.org/). The API would allow web agents to call on OpenCyc and use the replies to do Semantic Web things. At least, that was presumably the goal. An exhaustive Google search turned up zero actual applications. It shut down in 2017, at the same time as OpenCyc.
 
+In 2008, Cycorp tried again by joining the Large Knowledge Collider (LarKC)[^larkc] project at Europe, "a platform for massive distributed incomplete reasoning that will remove the scalability barriers of currently existing reasoning systems for the Semantic Web". The hope was to produce a common knowledge base with [over 1 billion triples, scalable, and easy to produce expert systems out of](https://active09.ijs.si/wp-content/uploads/2009/06/michael-witbrock.pdf). A few papers and conferences later, the project [ended in 2011](https://web.archive.org/web/20150206003436/http://www.larkc.eu/).
+
+[^larkc]: The name is an obvious shade to the [Large Hadron Collider](https://en.wikipedia.org/wiki/Large_Hadron_Collider#Inaugural_tests_(2008)), which began operation in 2009 and was briefly in the popular imagination.
+
 With the breakout success of the [ESP game](https://en.wikipedia.org/wiki/ESP_game) in 2003, "games with a purpose" was all the rage, so Cyc attempted to keep up with the times with its own [FACTory](https://web.archive.org/web/20120902022607/http://game.cyc.com/) in 2005. It never got out of the `Beta version 1.0.1` and shut down sometime after 2012. According to the [tutorial](https://web.archive.org/web/20061205102605/http://207.207.9.186/helpfiles/HowToPlay.html), it was a single player game, where the player just selects whether the statement is true, false, doesn't make sense, or the player doesn't know. The answers are scored based on the majority of answers. There is no data on how much data they gathered from this game, but this appeared to be the only time Cyc crowdsourced data.
 
-There was also a [blog](https://web.archive.org/web/20120126094742/http://blog.cyc.com/) starting in 2008, that stopped updating in 2011 after 11 inane posts. There was also a Twitter bot `@cyc_ai​`, which started in 2008 and [stopped in 2011](https://web.archive.org/web/20150524003739/https://twitter.com/cyc_ai) after 15764 tweets mostly in the format of "I just leaned `<statement>`, true or false?".
+There was also a [blog](https://web.archive.org/web/20120126094742/http://blog.cyc.com/) starting in 2008, that stopped updating in 2011 after 11 inane posts. There was also a Twitter bot `@cyc_ai​`, which started in 2008 and [stopped in 2011](https://web.archive.org/web/20150524003739/https://twitter.com/cyc_ai) after 15764 tweets mostly in the format of "I just leaned `<statement>`, true or false?". According to Internet Archive, it shut down sometime around 2017.
 
-In 2016, Lenat finally declared the Cyc project "done" and set about commercializing it, both via Cycorp and via Lucid.ai, a company founded in 2015.[^death-of-opencyc]
+In 2016, Lenat finally declared the Cyc project "done" and set about commercializing it, both via Cycorp and via Lucid.ai, a company founded in 2015.
 
 > most of what is left to be added is relevant to a specific area of expertise, such as finance or oncology... Among other projects, the company is developing a personal assistant equipped with Cyc's general knowledge. This could perhaps lead to something similar to Siri... the CEO of Lucid says the new company is in talks with various others interested in using the Cyc knowledge base. Lucid has been working with the Cleveland Clinic, for example, to help automate the process of finding patients for clinical studies.
 > 
 > [@knightAI30Years2016]
 
-The timing coincides suspiciously with the death of OpenCyc in 2017. More ominously, even [the documentation](https://web.archive.org/web/20160825080811/http://www.cyc.com/documentation/) [went offline](https://web.archive.org/web/20170802104610/http://www.cyc.com/documentation/) in 2016 and could now only be accessed for commercially registered accounts.
+This timing of commercialization coincides suspiciously with the end of almost all projects except ResearchCyc. Even [the documentation](https://web.archive.org/web/20160825080811/http://www.cyc.com/documentation/) [went offline](https://web.archive.org/web/20170802104610/http://www.cyc.com/documentation/) in 2016 and could now only be accessed for commercially registered accounts! It looks like a total internal pivot as the company focused on commercialization and shut down all services that are not high priority for the bottom line.
 
 ## Cyc in 1 hour
 
@@ -538,21 +542,25 @@ After producing enough lemmas, we can then write a specialized inference engine 
 
 Other than these inference engines, there are also many "tacticians", modules that pick engines that are probably good for solving a problem, and there are a few "strategists" that pick tacticians.
 
-The control structure of Cyc is a commercial secret. The *only* explanation I could find is a few paragraphs in an essay published near the end of his life [@lenatCreating30MillionRuleSystem2022]. According to it, the inference engines use a blackboard architecture similar to the one used in Hearsay-II speech recognition system [@ermanHearsayIISpeechUnderstandingSystem1980]. Lenat described it as:
+The control structure of Cyc is a commercial secret. There were two brief explanations of it, on in a [2010 Cycorp white paper](https://web.archive.org/web/20130708080327/http://www.cyc.com/sites/default/files/storage/white-papers/The%20Cyc%20Blackboard%20System%20v1.0.pdf), one an essay published near the end of his life [@lenatCreating30MillionRuleSystem2022]. According to it, the inference engines use a blackboard architecture similar to the one used in Hearsay-II speech recognition system [@ermanHearsayIISpeechUnderstandingSystem1980]. Lenat described it as:
 
-> there is a whole battery of specialized inference engines and representations... and, when making progress, broadcasting the results... Whenever progress is made, all of them stop and work on the now-simpler subproblem. Some of the inference engines are very general, and work on general representations--e.g., a theorem prover that works on first-order logic. The more specialized inference engines are much faster whenever they do apply. For example, if some subproblem requires solving $N$ linear equations in $N$ unknowns, there is a very efficient way of representing and solving that.
-> 
-> In 1986, Cyc had two such representations; by 1990, there were 20, each with its own inference engine; today Cyc has over 1100. They work together as a community of agents, communicating by posting their intermediate results on a sort of blackboard that all the other agents can watch and react to if/when/as they see an opportunity that fits their specialty.
+> there is a whole battery of specialized inference engines and representations... and, when making progress, broadcasting the results... Whenever progress is made, all of them stop and work on the now-simpler subproblem. Some of the inference engines are very general, and work on general representations--e.g., a theorem prover that works on first-order logic. The more specialized inference engines are much faster whenever they do apply... In 1986, Cyc had two such representations; by 1990, there were 20, each with its own inference engine; today Cyc has over 1100. They work together as a community of agents, communicating by posting their intermediate results on a sort of blackboard that all the other agents can watch and react to if/when/as they see an opportunity that fits their specialty.
 >
 > [@lenatCreating30MillionRuleSystem2022]
 
 ![How Cyc processes a user's input as of 1990. The user enters at the EL-KB (epistemological level knowledge base), which gets translated down to the HL, where multiple modules  for generating and comparing arguments for and against a given proposition are run. [@lenatCycMidtermReport1990, figure 1]](figure/Cyc_EL_HL.png)
 
-You can imagine a shared working space -- the blackboard -- where agents can scan and find tasks to do, do them, and then post the outputs to the blackboard. Each agent has their own "places to watch". They notice what is posted to their watched areas, and ignore what is outside.[^cyc-blackboard] When an agent completes whatever task it is running, it posts the outputs to particular areas of the board to notify certain agents, "Hey, check this out! I bet you'll find this helpful.".
+You can imagine a shared working space -- the blackboard -- where agents can scan and find tasks to do, do them, and then post the outputs to the blackboard. Each agent has their own "places to watch". They notice (or get notified) what is posted to their watched areas, and ignore what is outside.[^cyc-blackboard] When an agent completes whatever task it is running, it posts the outputs to particular areas of the board to notify certain agents, "Hey, check this out! I bet you'll find this helpful.". To prevent race conditions or general conflict between agents, an agent can claim a lock on something, so that other agents can't work on it until it times out, or releases the lock.
 
 [^cyc-blackboard]: Lenat seemed to suggest that each inference engine watches *the entire board*, but every large-scale blackboard system I know of doesn't do that. Hearsay-II certainly did not. It is slow and creates much of unintended complexities. Imagine a microservice where every process pings every process whenever it outputs something, or a conference where everyone broadcasts to everyone.
 
 You can imagine this as a [microservices framework](https://en.wikipedia.org/wiki/Microservices), with over 1100 microservices, [multicast](https://en.wikipedia.org/wiki/Multicast), with SubLisp as the [serialization language](https://en.wikipedia.org/wiki/Serialization). Indeed, [apparently](https://www.planettechnews.com/planettech-interviews-michael-stewart-founder-chairman-and-ceo-of-lucid-ai/) some of the inference engines used neural networks, so their numerical outputs *definitely* had to be serialized somehow into SubLisp.
+
+The blackboard is also connected to the "external world" through API calls. For example, SQL queries run by an external database can return data that is posted to a region of the blackboard, and what Cyc writes to the blackboard can be read out for external use.
+
+According to a [2006 lecture](https://www.youtube.com/watch?v=KSrUHGaUE_c), the blackboard has 12 "dimensions", because each assertion occurs in a kind of context, and there are 12 dimensions to the context: `Anthropacity`, `Time`, `GeoLocation`, `TypeOfPlace`, `TypeOfTime`, `Culture`, `Sophistication/Security`, `TopicGranularity`, `Modality/Disposition/Epistemology`, `Argument-Preference`, and `Justification`. For example, "Ronald Reagan is president" is true in the context `Time = 1985, GeoLocation = UnitedStates`.
+
+Other than the slightly anarchic microservice structure, Cyc could also use [Simple Hierarchical Ordered Planner](https://www.cs.umd.edu/projects/shop/) to run the engines in order, if the workflow for how the engines should be run is known.
 
 It was known very early on that the most general inference engine is the slowest, which is why they settled on a multi-layered structure of inference engines. Each inference is handled by the lowest engines first, and upon failing, the higher-levels try it. 
 
@@ -594,6 +602,30 @@ The second report is on Cyc used in the Cleveland Clinic, sometime during 2007--
 ![A logical justification constructed by Cyc by backward chaining on a user query. The original query is not shown, but it probably should be "For each instance of pericardial aortic valve replacement event in 2008, which event was it, and which type of pericardial aortic valve prosthesis was it?". [@lenatHarnessingCycAnswer2010, figure 4]](figure/SRA_logical_proof.png)
 
 There was one subsequent report on the system in 2012, which described the SemanticDB project at Cleveland, of which Cyc was only a part. The SemanticDB system contains a database of 120M semantic triples (which Lenat had long dismissed as being too limited). In the system, Cyc parses [cohort identification queries](https://en.wikipedia.org/wiki/Cohort_analysis) written in English into formal queries, then queries the database in [SPARQL](https://en.wikipedia.org/wiki/SPARQL), does some further inference, and shows the result. [@pierceSemanticDBSemanticWeb2012] Unsurprisingly, Oracle Semantic Technologies [was also involved](https://download.oracle.com/otndocs/tech/semantic_web/pdf/oow10_semtech_clvclnc_booth.pdf).
+
+In a [presentation in 2019](https://web.archive.org/web/20210430003227/https://files.gotocon.com/uploads/slides/conference_13/724/original/AI_GOTO%20Lenat%20keynote%2030%20April%202019%20hc.pdf), Lenat claimed it required 120K new assertions for the Cleveland project, or 0.5% of the total knowledge base. However, 95% of the assertions that Cyc called up for answering queries for the project required knowledge Cyc already had, indicating large knowledge reuse (indicating that the whole project required about 2M rules).
+
+### Natural language processing
+
+For parsing natural languages, Cyc uses a tiered system from the fast and inaccurate to the slow and accurate.
+
+Underlying all of its NLP is an English dictionary, also represented as concepts and assertions in CycL. The dictionary contains about 200K words and phrases, and more assertions about them. For example, the word "light" is represented as a concept `Light-theWord`, and there would be assertions stating that it can be a verb, or a noun, or an adjective, etc.
+
+At the fastest tier are keyword matching, or concept spotting. For example, for parsing terrorism articles, it can just quickly match for the existence of keywords in a sentence. Seeing a sentence that looks like "... al-Qaeda ... embassy ... grenade ... suicide attack...", the system can assume, with high probability, what the sentence means, and generate its CycL representation.
+
+At a slower tier is using extraction templates. For example, "\[A\] was involved in kidnapping \[B\]" would be matched to a template that looks for the fragment "involved in kidnapping", which then would parse \[A\] as the `Perpetrator` while \[B\] as the `Victim`. 
+
+At a slower tier is example-based machine translation by syntax templates. For example, in "... the heart of Baghdad ...", the first pass parses Badhdad as a city, then a syntax template activates and it parses the "heart" as `CentralRegion`. This probably needs a few billion example templates, which means it must be acquired mostly automatically.
+
+At the slowest tier is [full syntax tree parsing](https://web.archive.org/web/20130511232427/http://www.cyc.com/cyc/nl). In this tier, the sentence is fully parsed to a syntax tree using a manually written transformational grammar under the [government and binding theory](https://en.wikipedia.org/wiki/Government_and_binding_theory). It is then parsed semantically using [Montague grammar](https://en.wikipedia.org/wiki/Montague_grammar).
+
+For translating CycL back to English, Cyc uses a simple generative grammar template. For example, `(#$genls #$Dog #$Mammal)` would be transformed to "Dogs are mammals.", and so on. This is substantially easier than translating English to CycL. Whereas the CycL-to-English part is already workable mostly in 2001, the English-to-CycL part is still ongoing work, a consummation devoutly to be wished. Even though Lenat originally thought natural language understanding would be finished soon after priming the knowledge pump, it has already been 8 years since the priming, and Cyc is still not reading the world's writings and learning autonomously.
+
+### Machine learning
+
+Cyc has used statistical and machine learning methods in minor parts, such as using neural networks, n-gram methods, random forest, support vector machines, etc, to automatically extract templates for natural language processing, classify the microtheories that a sentence belongs to, etc.
+
+However, none of these were in the same style as Lenat's ultimate plan for machine learning, whereby a Cyc, with knowledge pump primed, would begin to perform experiments and engage in machine discovery, much like AM and Eurisko were meant to do. While this has always been the "phase 3" of the Cyc project, to this day, Cyc has made no progress in this area.
 
 ## 1 billion dollars
 
@@ -695,7 +727,7 @@ Let's take it another way: If there is No Free Lunch to NLU, then what is Cyc's 
 
 All evidences point to the conclusion that a sentence that can be parsed to CycL is already bureaucratic and formalistic, with the mark of interlingua written on its brow. For those, Cyc appears to have already working NLU in early 2000s, and yet, Cyc is still here, not machine-learning, lacking ... what? `<sarcasm>`A sarcasm parser?`</sarcasm>`
 
-::: {.callout-note title="An information-theoretic estimate." collapse="true" }
+<!--::: {.callout-note title="An information-theoretic estimate." collapse="true" }
 
 The [information content of English](https://yuxi-liu-wired.github.io/essays/posts/perplexity-turing-test/#entropy-of-natural-languages) is about 0.8 bits per character, and each English sentence contains about 100 characters, giving 80 bits of information.
 
@@ -708,9 +740,31 @@ Now, one might argue that the last bit is the deepest, but it is hard to square 
 
 Stated in another way, this means 98.75% of information that people produce as they write is mindless, remembering and espousing, but not understanding or inferring. This is even harder to square with Lenat's assertion that 99\% of language understanding is pragmatics, which self-organized NN don't have. [@lenatSometimesVeneerIntelligence2017]
 
-::: 
+::: -->
 
 Take another look at the list of known applications of Cyc. Does it look like a path towards AGI, or does this look no different from building custom-made expert systems for specialized purposes, something that those generic professionals of Oracle, IBM, or Accenture have been doing for decades? Perhaps they did have a product differentiation in being able to consistently find particularly good knowledge engineers, and in programming in a particularly efficient language of SubLisp, which allowed them to stay in business despite having just a 50-person crew. It is not something to be dismissed, but is this a path towards AGI, or a veneer of AGI to enterprise solutions?
+
+Perhaps Lenat could be eternally optimistic despite all the missed predictions and the lack of AGI. Perhaps it is a [selection effect](https://en.wikipedia.org/wiki/Selection_bias). One does not undertake a 40-year project for AGI without being delusionally optimistic about the prospect -- the same could be said of great leaders and startup founders. Or perhaps he was disconnected from what was really going on down there at Cycorp. In a [HackerNews discussion](https://news.ycombinator.com/item?id=21781597), some ex-Cyclists wrote what they thought about Cycorp.
+
+On the pro side, the corporate culture was highly intellectual and philosophical, as one expects for a company that does computable ontology for a living: "it can be pretty fun to be in meetings where you try to explain Davidsonian ontology to perplexed business people". The company had solved many technical problems in large scale inference, and remained profitable, with successful commercial applications.
+
+On the con side were many. The codebase was creaking under 30 years of technical debt:
+
+> I spent some entire days just scrolling through different versions of entire systems that duplicate massive chunks of functionality, written 20 years apart, with no indication of which (if any) still worked or were the preferred way to do things.
+
+The technical solutions and commercial applications were closely guarded secrets, so the outside world does not know. Lenat was unimpressed with open source and so did not commit resources to OpenCyc, tutorials, easier third-party integration, software development kit, or other outreach projects (except those regularly scheduled newspaper reports for publicity). The Cyc culture was also insular, with a true believer's mentality:
+
+> ... veterans there sort of feel like the broader AI community turned their back on symbolic reasoning in the 80s (fair) and they're generally not very impressed by the current trends within the AI community, particularly w.r.t. advances in ML (perhaps unfairly so), so they're going to just keep doing their thing until they can't be ignored anymore.
+
+Most pertinent to the dream of AGI, it was unclear, down in the trenches, whether Cyc was really doing commonsense reasoning, or just a particularly good base for developing expert systems from. It also wasn't clear if commonsense reasoning was really necessary for the successful commercial projects in the first place.
+
+> I personally suspect that some of Cycorp's clients would do better with domain-specific solutions because they don't realize how much of their problem could be solved that way and how much of the analysis coming from Cyc is actually the result of subject matter experts effectively building domain-specific solutions the hard way inside of Cyc. With a lot of Cycorp projects, it's hard to point your finger at exactly where the "AI" is happening... The degree to which it's effective seemed to me to be a case-by-case thing. While working there I tended to suspect that Cyc people underestimated the degree to which you could get a large fraction of their results using something like Datomic and it was an open question (to me at least) whether the extra 10% or whatever was worth how much massively more complicated it is to work with Cyc.
+
+This has caused some ex-Cyclists to quit from disillusionment. Structurally, the Cycorp had two levels. At the upper level are Lenat, Witbrock, and such, who kept the dream alive and believed the Cyc was still going there. At the lower level are the working ontological engineers who just had to deliver the product, AGI or not.
+
+> It turns out there's a kind of reality distortion field around the management there, despite their best intentions - partially maintained by the management's own steadfast belief in the idea that what Cyc does is what it ought to be doing, but partially maintained by a layer of people that actively isolate the management from understanding the dirty work that goes into actually making projects work or appear to. So while a certain amount of "common sense" knowledge factors into the reasoning processes, a great amount of Cyc's output at the project level really comes from hand-crafted algorithms implemented either in the inference engine or the ontology.
+> 
+>Over the years, the Cyc as its actually implemented has drifted pretty far from the Cyc that people like Doug Lenat believe in, and the degree to which they're willing or able to acknowledge that seems to sort of drift around, often dependent on factors like mood. Doug would show up and be very confused about why some things were hard because he just believes that Cyc works differently than it does in practice, and people had project deadlines, so they often implemented features via hacks to shape inference or hand-built algorithms to deliver answers that Doug thought ought to be derived from principles via inference. Doug thinks way more stuff that Cyc does is something that it effectively learned to do by automatically deriving a way to solve the general form of a problem, rather than a programmer up late hand-coding things to make a demo work the next day, and the programmers aren't going to tell him because there's a demo tomorrow too and it's not working yet.
 
 ## Everyone can only see their own dream
 
