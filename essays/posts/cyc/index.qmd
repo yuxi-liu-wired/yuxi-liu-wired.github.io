@@ -304,6 +304,13 @@ They have also estimated that it takes about 80 minutes to encode a single rule,
 
 With these lessons learned, they confidently claimed that they have encoded 1M assertions, 50K concepts, with 0.1% of common sense done. They expected that 10--50% was necessary for knowledge pump to be primed, which they expected to be done by 1995 -- still on schedule, and they looked forward to the day, around 2000, when "no one would even think about having a computer that doesn’t have Cyc running on it". [@lenatBuildingLargeKnowledgebased1989]
 
+They expected that the finished Cyc would know 1M concepts. Why 1M? They held their own "mini-[Dartmouth conference](https://en.wikipedia.org/wiki/Dartmouth_Conference)" and found that multiple estimates all suggest the 1M number [@lenatThresholdsKnowledge1991]:
+
+- Alan Kay: 30K encyclopedia articles with 30 concepts per article gives 0.9M concepts.
+- Japanese Electronic Dictionary Research Project: in several languages, an educated speaker knows about 200K words.
+- Marvin Minsky: 0.2M waking hours between birth and age 21. Assuming 4 new concepts per hour, then 0.8M concepts.
+- There are about 1 trillion brain cells. Assuming each brain cell is responsible for a one-step inference between two concepts, then there are 1M concepts.
+
 However, around 1990, a large rewrite occurred, resetting some progress. This was expected. As Lenat later clamed, they had met about 150 technical obstacles along the way, but they had all been cleared away by 1990, and it remained to just add more knowledge. [@lenatCreating30MillionRuleSystem2022; @lenatBuildingMachineSmart2009] The most important technical obstacles were as follows.
 
 Instead of an object-oriented frame-and-slots language like Eurisko and AM, use a fully general higher-order logic language. This is necessary because people can do common sense higher-order reasoning: modals, reflection, pros and cons, counterfactual hypotheticals, contexts as first-class objects in our ontology, several different useful “species” of negation, etc. [@lenatCreating30MillionRuleSystem2022]
@@ -362,6 +369,10 @@ In 2016, Lenat finally declared the Cyc project "done" and set about commerciali
 > [@knightAI30Years2016]
 
 This timing of commercialization coincides suspiciously with the end of almost all projects except ResearchCyc. Even [the documentation](https://web.archive.org/web/20160825080811/http://www.cyc.com/documentation/) [went offline](https://web.archive.org/web/20170802104610/http://www.cyc.com/documentation/) in 2016 and could now only be accessed for commercially registered accounts! It looks like a total internal pivot as the company focused on commercialization and shut down all services that are not high priority for the bottom line.
+
+After cyberstalking the Cyc for days, I have gathered basically every numerical data about Cyc over the years, and I combined them into a [spreadsheet that you can analyze yourself](code/Cycorp%20claims.xlsx). In short, Cyc has grown to 30M assertions over the years, and is still incomplete. Lenat's claim of "Phase 1 complete by 1995" was amended to around 2015, and he claimed it was basically complete by 2016. Still, Cyc is stuck at that stage, with no self-learning or AGI in sight.
+
+![The progress of Cyc project over the period of 1989--2022. The number of assertions grew to 30M, the cost grew to \$200M, with 2000 person-years. Source: [my obsessive cyberstalking](code/Cycorp%20claims.xlsx).](figure/Cyc_progress_history.png)
 
 ## Cyc in 1 hour
 
@@ -615,7 +626,18 @@ At the fastest tier are keyword matching, or concept spotting. For example, for 
 
 At a slower tier is using extraction templates. For example, "\[A\] was involved in kidnapping \[B\]" would be matched to a template that looks for the fragment "involved in kidnapping", which then would parse \[A\] as the `Perpetrator` while \[B\] as the `Victim`. 
 
-At a slower tier is example-based machine translation by syntax templates. For example, in "... the heart of Baghdad ...", the first pass parses Badhdad as a city, then a syntax template activates and it parses the "heart" as `CentralRegion`. This probably needs a few billion example templates, which means it must be acquired mostly automatically.
+At a slower tier is example-based machine translation by syntax templates. For example, in "... the heart of Baghdad ...", the first pass parses Badhdad as a city, then a syntax template activates and it parses the "heart" as `Downtown`. This can be coded as
+
+```xml
+<template>
+    <nlPattern class="140080">the heart of $City#0</nlPattern>
+    <cyclPattern>
+        (#$equalSymbols ?D (#$DowntownFn $City#0))
+    </cyclPattern>
+    <variable>?D</variable>
+    <type>#$Downtown</type>
+</template>
+```
 
 At the slowest tier is [full syntax tree parsing](https://web.archive.org/web/20130511232427/http://www.cyc.com/cyc/nl). In this tier, the sentence is fully parsed to a syntax tree using a manually written transformational grammar under the [government and binding theory](https://en.wikipedia.org/wiki/Government_and_binding_theory). It is then parsed semantically using [Montague grammar](https://en.wikipedia.org/wiki/Montague_grammar).
 
