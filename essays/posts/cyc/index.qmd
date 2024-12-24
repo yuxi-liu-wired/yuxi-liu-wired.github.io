@@ -374,11 +374,21 @@ After cyberstalking the Cyc for days, I have gathered basically every numerical 
 
 ![The progress of Cyc project over the period of 1989--2022. The number of assertions grew to 30M, the cost grew to \$200M, with 2000 person-years. Source: [my obsessive cyberstalking](code/Cycorp%20claims.xlsx).](figure/Cyc_progress_history.png)
 
+Looking at this diagram, we notice 3 things:
+
+One, the growth of assertions is roughly exponential, doubling every 6 years. At this rate, in 2032 Cyc can expect to reach 100M assertions, the hoped-for point at which Cyc would know as much as a typical human. This might be the dream of Lenat, but I bet it will just become a slightly bigger enterprise solution to expertise management.
+
+Two, the cost of human labor has remained stable throughout the existence of Cycorp, at \$100K/person-year.
+
+Three, The cost of assertions was \$5/assertion before 2010, but \$1/assertion after 2015, around the time when Lenat declared the project mostly complete. We might call this a success of "priming the knowledge pump", or this might just because after 2015, most new assertions came from adding new assertions specialized to particular commercial applications, and thus were easier to handle. Formalizing business rules already written down is easier than extracting the intuitive metaphysics of fruits vs vegetables, after all. In any case, a drop in price by a factor of 5 over 30 years is unimpressive, and indistinguishable from more prosaic arguments about [learning curve](todo) effects observed in most industries: The more you make, the cheaper you can make.
+
 ## Cyc in 1 hour
 
 The Cyc system consists of three main kinds of parts: the CycL language, based on SubLisp, itself based on Lisp; the knowledge bases, consisting of millions of assertions written in CycL; the inference engines, written in SubLisp. To increase speed and compatibility, the programs are compiled to Java, which is then compiled to bytecode.
 
 The CycL language is intended to be the high-level language that humans can read and write, at the "Epistemological Level" (EL). Most inference engines do not process CycL directly, but process low-level translations of CycL at the "Heuristic Level" (HL). Each sentence at the EL can be translated into a multitude of HL sentences, since different translations allow different inference engines to process it, so that hopefully at least one of those would process it efficiently.
+
+![How Cyc processes a user's input as of 1990. The user enters at the EL-KB (epistemological level knowledge base), which gets translated down to the HL, where multiple modules  for generating and comparing arguments for and against a given proposition are run. [@lenatCycMidtermReport1990, figure 1]](figure/Cyc_EL_HL.png)
 
 ### CycL language
 
@@ -559,7 +569,7 @@ The control structure of Cyc is a commercial secret. There were two brief explan
 >
 > [@lenatCreating30MillionRuleSystem2022]
 
-![How Cyc processes a user's input as of 1990. The user enters at the EL-KB (epistemological level knowledge base), which gets translated down to the HL, where multiple modules  for generating and comparing arguments for and against a given proposition are run. [@lenatCycMidtermReport1990, figure 1]](figure/Cyc_EL_HL.png)
+![The blackboard architecture used in Hearsay-II. In this example, a 3-dimensional blackboard allows different modules to read and write to different parts of the blackboard, and collaboratively recognize speech. [@lenatComputerSoftwareIntelligent1984]](figure/Blackboard_architecture.png)
 
 You can imagine a shared working space -- the blackboard -- where agents can scan and find tasks to do, do them, and then post the outputs to the blackboard. Each agent has their own "places to watch". They notice (or get notified) what is posted to their watched areas, and ignore what is outside.[^cyc-blackboard] When an agent completes whatever task it is running, it posts the outputs to particular areas of the board to notify certain agents, "Hey, check this out! I bet you'll find this helpful.". To prevent race conditions or general conflict between agents, an agent can claim a lock on something, so that other agents can't work on it until it times out, or releases the lock.
 
