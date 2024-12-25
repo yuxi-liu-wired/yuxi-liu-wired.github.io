@@ -353,11 +353,11 @@ From our vantage point, we can fairly say that he invented randomization, residu
 
 ![Figure 42. The dashed lines denote variable weights, and the solid lines denote fixed weights. This is the residual connection.](figure/rosenblatt_figure_42.png){width=60%}
 
-What is even more astonishing is that, as far as I can see, he did not make use of gradient descent learning at all, not even on a single layer like Widrow and Hoff. The perceptron learning rule converges, but only for a single-layered perceptron network on linearly separable data. Thus, when it came to two-layered perceptron networks, he randomly wired the first layer, then froze it, and only adapted the second layer. This would prove to be a turning point in the "[perceptron controversy](https://yuxi-liu-wired.github.io/essays/posts/backstory-of-backpropagation/neural-network-winter)".
+What is even more astonishing is that, as far as I can see, he did not make use of gradient descent learning at all, not even on a single layer like Widrow and Hoff. The perceptron learning rule converges, but only for a single-layered perceptron network on linearly separable data. Thus, when it came to two-layered perceptron networks, he randomly wired the first layer, then froze it, and only adapted the second layer. This would become the focal point of the "[perceptron controversy](https://yuxi-liu-wired.github.io/essays/posts/backstory-of-backpropagation/neural-network-winter)".
 
 In the chapter where he talked about backpropagation [@rosenblattPrinciplesNeurodynamicsPerceptrons1962, Chapter 13], he tried to train both layers in the two-layered perceptron network by extending the perceptron learning algorithm. The algorithm works on each individual perceptron unit, but only if the desired output is known. The desired outputs for the output units are supplied by the experimenter, but the desired outputs for the hidden units could not be known, so Rosenblatt tried some hacks. Essentially, he took the error signals at the output units, and used heuristic rules to "backpropagate the error" to synthesize error signals at the hidden units. The precise details are hacky, and no longer of any relevance.
 
-One last thing about his backpropagation rule: he also discovered the per-layer learning rate trick. Because his backpropagation algorithm was so hacky, he found that he had to stabilize it by making the first layer learn at a much lower rate than the second.
+One last thing about his backpropagation rule: he also discovered the layer-wise learning rate trick. Because his backpropagation algorithm was so hacky, he found that he had to stabilize it by making the first layer learn at a much lower rate than the second.
 
 > It is found that if the probabilities of changing the S-A connections are large, and the threshold is sufficiently small, the system becomes unstable, and the rate of learning is hindered rather than helped by the variable S-A network. Under such conditions, the S-A connections are apt to change into some new configuration while the system is still trying to adjust its values to a solution which might be perfectly possible with the old configuration. Better performance is obtained if the rate of change in the S-A network is sufficiently small to permit an attempt at solving the problem before drastic changes occur.
 
@@ -378,6 +378,8 @@ w \leftarrow w - \alpha (w^T x + b - y) w, \quad b \leftarrow b - \alpha (w^T x 
 $$
 
 The first ADALINE machine was a box that learned to classify binary patterns on a $4 \times 4$ grid. It was pretty amusing, as everything was done manually. The patterns were inputted by flipping 16 switches by hand. The error $w^T x + b - y$ was read from a voltmeter, and the parameters $w, b$ were individually adjusted by turning knobs controlling rheostats inside the box. They then automated the knob-turning process using electrochemical devices called memistors, though the pattern input $x$ and the desired output $y$ were still entered by manual switches.
+
+![All components of the ADALINE machine, color-labelled, from the algorithm, to the circuit diagram, to the front-panel of the physical machine.](figure/ADALINE.png){width=80%}
 
 ![A memistor ADALINE with glass-sealed memistors. [@widrowAncientHistory2023, Figure 26.12]](figure/widrow_2022_memistor_adaline.jpg){width=80%}
 
