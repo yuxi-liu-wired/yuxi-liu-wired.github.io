@@ -256,7 +256,7 @@ Even in this tiny problem, we can already draw several lessons, which will appea
 * Self-similarity is a transform on a function (or "theory").
 * We often need to use a "fudge factor" like $\alpha$ to make sure that the transformed function does not collapse to zero, for trivial reasons.
 * If we repeatedly apply the self-similarity transform on a function, we would obtain a scaling limit, a perfectly self-similar object -- a fractal.
-* In the space of all possible theories, the self-similarity transform creates a flow-field in the theory space. The interesting fixed-points of the flow-field are its saddle points.
+* In the space of all possible theories, the self-similarity transform creates a flow-field in the theory-space. The interesting fixed-points of the flow-field are its saddle points.
 * The largest eigenvalue of the saddle point describes what happens when you are close to the saddle point, but not quite there.
 * Bravely calculate using the cheapest approximation you can think of. It often gets you within 50% of the right answer.
 * But if you want accuracy, you can always use a computer and calculate many orders higher.
@@ -832,7 +832,7 @@ $$
 
 where we removed an irrelevant constant term independent of $\phi$, and picked the scale of length so that the coefficient for $\frac{1}{2} \nabla \phi \cdot \nabla \phi$ is one.
 
-This is the space of all possible Ising field theories. Each Ising field theory is completely specified if we specify the real numbers $\mu, g, \dots$. Doing RN would then consist of taking one Ising field theory specified by some $\mu, g, \dots$, then renormalize it to some other Ising field theory specified by $\mu', g', \dots$. We can then find the fixed points in the theory space, and say, "These are the most interesting theories. Let's calculate their properties, scaling exponents, and look-and-feel."
+This is the space of all possible Ising field theories. Each Ising field theory is completely specified if we specify the real numbers $\mu, g, \dots$. Doing RN would then consist of taking one Ising field theory specified by some $\mu, g, \dots$, then renormalize it to some other Ising field theory specified by $\mu', g', \dots$. We can then find the fixed points in the theory-space, and say, "These are the most interesting theories. Let's calculate their properties, scaling exponents, and look-and-feel."
 
 ### RN in momentum space
 
@@ -842,7 +842,7 @@ To "blur and zoom out" in real space -- what does it look like if we take a Four
 
 Now we are ready to meet RN in momentum space.
 
-Let $\tilde \phi$ denote the Fourier transform of a field. Now, solve[^fourier-operator] for $\tilde S$, so that $S[\phi] = \tilde S[\tilde\phi]$ for all $\phi$ in theory space.
+Let $\tilde \phi$ denote the Fourier transform of a field. Now, solve[^fourier-operator] for $\tilde S$, so that $S[\phi] = \tilde S[\tilde\phi]$ for all $\phi$ in theory-space.
 
 [^fourier-operator]: This is typically called "Fourier-transforming the operator". For example, the Fourier transform of the gradient operator $\nabla$ is $ik$, where $k$ is the wave vector.
 
@@ -965,7 +965,7 @@ for two constants $k_I, k_R$, which implies that $R = I^{k_I/k_R}$, a power law.
 > 
 > [@stevensNeuralEventsPsychophysical1970]
 
-### RN as a journey in the space of possible theories
+### RN is a journey in the space of possible theories
 
 So far, we have seen again and again the common refrain of "the space of theories" and "moving to another theory". It is time to make this clear. The space of possible theories is defined by the symmetry of the physical system, and the Renormalization Group (RG) flow defines a journey in this space.
 
@@ -983,11 +983,13 @@ For example, in the Ising model, as we zoom out, the system flows towards either
 
 What defines the space of possible theories? The symmetry of the physical system.
 
-### Symmetries determine the shape of theory space {#sec-symmetries-determine-theory-space}
+### Symmetries determine the shape of theory-space {#sec-symmetries-determine-theory-space}
 
 The Ising model on $\Z^2$ is not a single theory, but an entire infinite-dimensional space of possible theories. Each Ising model can be specified by all coupling strengths for all possible spin configurations -- nearest neighbors, next-nearest neighbors, four in a square, etc. However, they must follow the symmetries. We can't have three-in-a-triangle, because switching up and down gives us the same energy. We can't have $Js_{(0, 0)}s_{(1, 0)}$ different from $J's_{(1, 0)}s_{(2, 0)}$, because translating the whole plane by $(1, 0)$ gives us the same energy.
 
-This is a general fact: the symmetries determine the shape of theory space. Conversely, if two physical systems are constrained under the same symmetries, then their behavior are the same near the critical point, because their renormalization flows are the same.
+This is true in general: Symmetries determine the shape of theory-space.
+
+Conversely, if two physical systems are constrained under the same symmetries, then their behavior are the same near the critical point, because their renormalization flows are the same.
 
 The following table shows many theory-spaces with their corresponding symmetries.
 
@@ -1042,7 +1044,7 @@ Furthermore, each droplet itself is a nearly-critical system, so fluctuations ap
 
 ### More is different {#sec-more-is-different}
 
-Like Wilson, [Philip Anderson](https://en.wikipedia.org/wiki/Philip_W._Anderson) is a physicist who has won a Nobel Prize for his work on surprising things that happen when many particles interact. His Nobel Prize was awarded for his work on magnetism and "Anderson localization". Consider a pure piece of metal. An electron wave can vibrate freely across it from side to side, like a wave on a perfectly uniform infinite ocean. Now if we dope the metal with impurities, like planting wave-breakers in the ocean, then as the amount of impurity increases, an electron wave would suddenly become trapped, and the metal would become an insulator.
+Like Wilson, [Philip Anderson](https://en.wikipedia.org/wiki/Philip_W._Anderson) is a physicist who has won a Nobel Prize for his work on surprising things that happen when many particles interact. His Nobel Prize was awarded for his work on magnetism and "[Anderson localization](https://en.wikipedia.org/wiki/Anderson_localization)". Consider a pure piece of metal. An electron wave can vibrate freely across it from side to side, like a wave on a perfectly uniform infinite ocean. Now if we dope the metal with impurities, like planting wave-breakers in the ocean, then as the amount of impurity increases, an electron wave would suddenly become trapped, and the metal would become an insulator.
 
 In a famous paper [@andersonMoreDifferentBroken1972], he interprets many-body physics like a philosopher (like what I've been doing in this whole section). He called the "constructionist hypothesis" the view that science divides neatly into fundamental laws and applications of those. He countered this view by proposing that scale and complexity create distinct stages in nature. Each stage necessitates new laws, concepts, and generalizations, and requires just as much ingenuity as the other stages. For example, psychology is not merely applied biology, biology is not simply applied chemistry, and condensed matter physics is not only "device engineering".
 
@@ -1077,7 +1079,7 @@ Why is it that we are surprised by the quantum mechanics in the microscopic worl
 
 Look around you. The world is interesting, with power laws, fractal patterns, and details at all scales. You never see a pencil standing on its end without a hand keeping it there. What keeps the mesoscopic world in its critical place? 
 
-One answer is that most of the interestingness did not come from criticality. However, if there exists *some* criticality in the mesoscopic world, and there does not seem to be an intelligent agent keeping the criticality there, then we have a mystery. This is the question that launched a thousand papers, including the famed self-organized criticality paper [@bakSelforganizedCriticalityExplanation1987], itself launching a thousand papers. The idea is typically illustrated by the forest fire model.
+One answer is that most of the interestingness did not come from criticality. However, if there exists *some* criticality in the mesoscopic world, and there does not seem to be an intelligent agent keeping the criticality there, then we have a mystery. This is the question that launched a thousand papers, including the famed [self-organized criticality](https://en.wikipedia.org/wiki/Self-organized_criticality) paper [@bakSelforganizedCriticalityExplanation1987], itself launching a thousand papers. The idea is typically illustrated by the forest fire model.
 
 Consider the standard percolation model on a square grid. Each point might be occupied (a "tree" grows there) or unoccupied (empty plot of land). Randomly, lightning falls, and if it hits a tree, the tree catches on fire and the fire spreads to any neighboring trees. The process ends when there are no more burning trees.
 
@@ -1101,9 +1103,13 @@ Despite the diversity of intermolecular forces, the phase transition behavior of
 
 We see this pattern over and over again in physics. To give another example, imagine water flowing through a porous rock, oil through sand, or electricity through a random network of resistors. These systems, seemingly completely unrelated, share the same underlying mathematical structure and exhibit universal behavior near the percolation threshold. This universality arises because the details of the microscopic interactions become irrelevant at larger scales, and the system's behavior is governed by the collective properties of its components.
 
-It is often noted that quantum mechanics is unintuitive, because the mesoscopic physics is so different from the microscopic physics, so we had evolved to intuit the mesoscopic world, and not the microscopic world. But why is it possible to ignore quantum mechanics? Elephants don't need to know, or don't care about, the Standard Model of particle physics.[^elephants-dont-play-chess] They don't know and don't need to know, because there is no natural selective pressure favoring elephants that have intuitions about quantum mechanics. When they walk, they push dirt around. When water flows, it pushes water around. The long-distance behavior of a system does not depend on the details of the short-distance interactions. The benefit of RN is that it saves us from the effort of understanding the microscopic details. On the flip-side, the details do matter if we are far from the critical point.
+It is often noted that quantum mechanics is unintuitive, because the mesoscopic physics is so different from the microscopic physics, so we had evolved to intuit the mesoscopic world, and not the microscopic world. But why is it possible to ignore quantum mechanics? Elephants don't need to know, or don't care about, the Standard Model of particle physics.[^elephants-dont-play-chess] They don't know and don't need to know, because there is no natural selective pressure favoring elephants that have intuitions about quantum mechanics. When they walk, they push dirt around. When water flows, it pushes water around.
 
 [^elephants-dont-play-chess]: Nor do they play chess. [@brooksElephantsDonPlay1990]
+
+For example, a cup of water is a composite of H2O molecules, so it should be studied by quantum mechanics. However, zooming out and out, we would find that the system falls into one of several possible fixed points (liquid, gas, solid) or critical points (boiling point, freezing point, triple point). In each case, the quantum-mechanical messiness has been renormalized away.
+
+In general, the lesson is that the long-distance behavior of a system does not depend on the details of the short-distance interactions. The benefit of RN is that it saves us from the effort of understanding the microscopic details. On the flip-side, the details do matter if we are far from the critical or fixed point.
 
 This is an overarching theme in renormalization theory, which might be called the **universality hypothesis**:
 
@@ -1119,7 +1125,7 @@ RN theory explains why certain features matter when we zoom out and others are w
 
 > "The details don't matter." said them triumphantly as they declared their independence from biophysics.
 > 
-> "'the details don't matter.'" said them mockingly as they declared their insurrection against sociophysics.
+> "'The details don't matter.'" said them mockingly as they declared their insurrection against sociophysics.
 
 **Yuxi's Comment:**[^tolstoy-sociophysics] The traditional approach of historians, going back to the days of "kings and battles", is to run to personality theory and the individual acts, when confronted by a problem in sociology or economics! One establishes the individual actors, makes some (hopefully) sensible approximations of their personality makeups, and then attempts to explain events, actions, and so on. However, for truly complicated systems that appear what, these days, is much better called "sociophysics", this is a hopeless task; furthermore, the questions it answers are not even the right ones. The modern theorist would rather explain how the stable features of the problem are *invariant* under different assumptions of what individual people do, and arise from features of their interactions. Indeed, if one had a perfect archive of exactly what every person thought and said during the start of WWI, one would still have no understanding of why it started!
 
@@ -1132,7 +1138,7 @@ RN theory explains why certain features matter when we zoom out and others are w
     > 
     > Historical science in its endeavor to draw nearer to truth continually takes smaller and smaller units for examination. But however small the units it takes, we feel that to take any unit disconnected from others, or to assume a beginning of any phenomenon, or to say that the will of many men is expressed by the actions of any one historic personage, is in itself false.
 
-**[Mumon's Comment](https://en.wikipedia.org/wiki/The_Gateless_Barrier):** Historians search for the king's motive and the general's ambition. They build castles of personality, moats of individual acts, yet understand nothing of the war. The great black spider of history weaves between the players so densely, that nothing is lost after it has digested all of them.
+**[Mumon's Comment](https://en.wikipedia.org/wiki/The_Gateless_Barrier):** Historians search for the king's motive and the general's ambition. They build castles of personality, moats of actions, yet understand nothing of the war. The great black spider traps its preys with a net so dense that nothing is lost after it has digested all of them.
 
 ![](figure/banner/thumbnail_3.png)
 
