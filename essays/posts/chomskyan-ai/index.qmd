@@ -269,7 +269,7 @@ Consider the arguments of a latter-day Bar-Hillel:
 >
 > [@kayProperPlaceMen1997]
 
-Now we know that "engineering solutions to a problem they only dimly understand" was precisely the breakthrough in multiple fields. In this essay we would this appearing in [speech recognition](#sec-speech), TODO, TODO, and TODO. It also happened with AlphaGo, made by a team who only had Go amateurs, or diffusion artists made by engineers with minimal understanding of art. However, just try saying out loud, "I'll solve translation just by training a sequence to sequence neural network, on a few million pairs of English-German sentence pairs. It won't have a probabilistic interpretation, or a syntax tree, or morphological constraints. In fact I haven't even taken a course in intermediate linguistics. But I have trained many neural networks. Surely if I can get the loss low enough, it will work." The reasonable reply would be, "What hubris, to tackle a problem that has stumped decades of linguistic science with the brute reason of engineering! What Goodhart law, to expect minimizing loss will lead to the thing you actually want, which is translation? What alchemy, to expect to put in nothing but data and compute, and somehow create understanding in a machine, an understanding that you don't have yourself?".[^feynman-kac]
+Now we know that "engineering solutions to a problem they only dimly understand" was precisely the breakthrough in multiple fields. It would appear first in [speech recognition](#sec-speech), before its success spilled over to MT. It also happened with AlphaGo, made by a team who only had Go amateurs, or diffusion artists made by engineers with minimal understanding of art. However, just try saying out loud, "I'll solve translation just by training a sequence to sequence neural network, on a few million pairs of English-German sentence pairs. It won't have a probabilistic interpretation, or a syntax tree, or morphological constraints. In fact I haven't even taken a course in intermediate linguistics. But I have trained many neural networks. Surely if I can get the loss low enough, it will work." The reasonable reply would be, "What hubris, to tackle a problem that has stumped decades of linguistic science with the brute reason of engineering! What Goodhart law, to expect minimizing loss will lead to the thing you actually want, which is translation? What alchemy, to expect to put in nothing but data and compute, and somehow create understanding in a machine, an understanding that you don't have yourself?".[^feynman-kac]
 
 [^feynman-kac]
     Perhaps the [Feynman--Kac](https://en.wikipedia.org/wiki/Feynman%E2%80%93Kac_formula) anecdote illustrates this better.
@@ -312,15 +312,99 @@ $$
 
 ![The encoder-decoder translation architecture. [@jelinekMyBestFriends2005, figure 3]](figure/source-channel_model_MT.png)
 
-Once we have both $Pr(f|e)$ and $Pr(e)$, we have a machine translator. To obtain $Pr(f|e)$ and $Pr(e)$, the team used simple statistical models, not much more complex than n-gram models, with parameters estimated by [expectation-maximization algorithm](https://en.wikipedia.org/wiki/Expectation-maximization_algorithm).[^ibm-alignment]
+Once we have both $Pr(f|e)$ and $Pr(e)$, we have a machine translator. To obtain $Pr(f|e)$ and $Pr(e)$, the team used simple statistical models, not much more complex than n-gram models, with parameters estimated by [expectation-maximization algorithm](https://en.wikipedia.org/wiki/Expectation-maximization_algorithm).[^ibm-alignment] 
 
-[^ibm-alignment]: We are skipping over the word-alignment part of the IBM models, which tells you which words in $f$ corresponds to which words in $e$. We still have an encoder-decoder architecture, but it's more complicated.
+The key idea of the encoder-decoder method is that, if we have available a large English corpus, we can train a very good $Pr(e)$. With that, we just need a smaller corpus of bilingual parallel corpus to train a good-enough $Pr(f|e)$, and get a good translator back.
 
-The IBM team worked on this from 1986 to the early 1990s, and their state of the art performance led to a statistical revolution in MT. Compared to the theoretically principled MT of the past, the IBM language model was obviously wrong: languages are obviously impossible to be correctly modelled by an n-gram model, or the slightly more complex upgraded models they used. Where are the syntax trees, the constituencies, etc? Yet it did work, and it took over practical MT research.
+[^ibm-alignment]: We are skipping over the word-alignment part of the IBM models, which tells you which words in $f$ corresponds to which words in $e$. We still have an encoder-decoder architecture, but it's more complicated. There would be even further complications down the line.
 
-Their primary dataset was the Canadian [Hansard](https://en.wikipedia.org/wiki/Hansard) corpus -- transcripts of proceedings from the Canadian parliament which were available in both English and French due to Canada's bilingual policy. The Hansard parallel corpus contained around 3 million sentence pairs at the time. While substantial, it pales in comparison to monolingual English corpora to train $Pr(e)$. English text was abundant from government documents, news archives, books, etc. In short, the encoder-decoder structure was adapted for the data regime of abundant monolingual (used to train $Pr(e)$) but limited parallel text (used to train $Pr(f|e)$).
+They began work in 1986, having already gathered most of the datasets from their work on the ASR. The primary bilingual dataset was the Canadian [Hansard](https://en.wikipedia.org/wiki/Hansard) corpus -- transcripts of proceedings from the Canadian parliament which were available in both English and French due to Canada's bilingual policy.[^english-french] The Hansard parallel corpus contained ~3.6 million sentence pairs in 100 million words.
 
-In the introduction to a "Special Issue on Computational Linguistics Using Large Corpora", [@churchIntroductionSpecialIssue1993] argued that "Rationalism", having been reigning since 1970s, was facing legitimate challenge by "Empiricism" again, for three reasons: more compute, more data, and a culture centered on evaluation.
+[^english-french]:
+    Incidentally, this is why in statistical machine translation, it is conventional to call the two languages $E$ and $F$.
+
+The early versions of the system was hopeful but slow. It took 10 minutes to decode 10 words, and the head of their department told them IBM viewed MT as a luxury. Fortunately, DARPA came to the rescue. Like how it [used to fund those speech recognition projects](#sec-TODO), DARPA was funding MT projects.
+
+They immediately realized that they had neither the data nor the compute to do a purely statistical MT system, and began retracing the steps of the bitter lesson:
+
+> In fact, soon after we began to translate some sentences with our crude word-based model, we realized the need to introduce some linguistics into those models. Bob and I signed up for a crash course in French. We sat for two weeks listening to lectures and audio tapes... The first novel we read during that course was Candide, so we called our translation system Candide. Soon after completing our course, Bob created a computer-readable morphology of 12,000 French verbs from Bescherelle, and I began studying transformational grammar.
+>
+> Now around 1992 we also began including information from bilingual dictionaries. Of course, because we really didn’t know how to do otherwise, we just treated the information as additional data to be thrown into the EM maw. We also purchased some lists of proper names (people’s names, place names, company names and the like) and built those into our system. We were willing to prostitute ourselves in whatever way necessary to improve the performance of our system.
+> 
+> [@brownOhYesEverythings2013]
+
+By 1993, the DARPA project was wrapping up, and the systems entered a benchmarking competition. The IBM team's entry was competitive with a symbolic AI approach from [SYSTRAN](https://en.wikipedia.org/wiki/SYSTRAN). [@whiteEvaluationMachineTranslation1993] Not a slam-dunk win -- not yet.
+
+As the project was wrapping up, they documented all they have learned into [@brownMathematicsStatisticalMachine1993], *the* paper that launched the statistical MT as a field. In its last paragraph, there was this charming alternative history example:
+
+> Our work has been confined to French and English, but we believe that this is purely adventitious: had the early Canadian trappers been Manchurians later to be outnumbered by swarms of conquistadores, and had the two cultures clung stubbornly each to its native tongue, we should now be aligning Spanish and Chinese. We conjecture that local alignment of the component parts of any corpus of parallel texts is inherent in the corpus itself, provided only that it be large enough... The linguistic content of our program thus far is scant indeed. It is limited to one set of rules for analyzing a string of characters into a string of words, and another set of rules for analyzing a string of words into a string of sentences. Doubtless even these can be recast in terms of some information theoretic objective function.
+>
+> [@brownMathematicsStatisticalMachine1993]
+
+That is, they understood that they had merely shown good results on English--French translation, but believed that their method works for all language pairs, as long as there is a Hansard-like dataset. An early profession of faith in the unreasonable effectiveness of data [@halevyUnreasonableEffectivenessData2009].
+
+::: {.callout-note title="the language--finance connection" collapse="true" }
+
+Amusingly, [many from the language modeling team at IBM ended up working in Renaissance Technologies, a quantitative trading firm](https://medium.com/@63ey5f4uw3k42v1exp7/chronology-mercer-medallion-fund-9aa719ceeb4f), including every one of the 4 authors of [@brownMathematicsStatisticalMachine1993]. Indeed, right after doing their work on the IBM alignment models, the lead author Peter Brown suggested to IBM that they should be allowed to apply their statistical algorithm to manage the \$28 billion pension fund of IBM. IBM ignored the request. Unappreciated, they departed for the world of quantitative trading.
+
+One might infer that the financial market is a million voices spoken in the Silver Tongue. Peter Brown certainly took the bitter lesson of pure empiricism to heart. Just as how firing the linguists improved the language model's performance, firing the traders improved the trading model's performance:
+
+> We don't impose our own judgment on how the markets behave. Now, there's a danger that comes along with success. To avoid this, we try to remember that we know how to build large mathematical models and that's all we know. We don't know any economics. We don't have any insights in the markets. We just don't interfere with our trading systems...
+> 
+> \[Is it true that you almost exclusively hire people with zero background and finance?\] Yes. We find it much easier to teach mathematicians about the markets than it is to teach mathematics and programming to people who know about the markets. Also, everything we do we figured out for ourselves. And I really like it that way. So, unlike some of our competitors, we try to avoid hiring people who have been at other financial firms.
+> 
+> [@brownConversationRenaissanceTechnologies2023]
+
+Thanks to the [efficient market hypothesis](https://en.wikipedia.org/wiki/Efficient-market_hypothesis), the Silver Tongue is mostly an alien language, since any understandable part would have been arbitraged away:
+
+> ... when it’s cloudy in Paris, the French market is less likely to go up than when it’s sunny in Paris... Now, you can’t make a lot of money from that data because it’s only slightly more likely to go up. But it is statistically significant. The point is that, if there were signals that made a lot of sense that were very strong, they would have long ago been traded out... 90 PhDs in math and physics, who just sit there looking for these signals all day long. We have 10,000 processors... a system from 10 years ago or something like that, gradually degrades with time, and that must be because other people are catching on. So we just have to keep extending the building and hiring more people...
+> 
+> [@brownOhYesEverythings2013]
+
+They have learned to trust the numbers more than their gut, since financial survival is on the line:
+
+> In August 2007, rising mortgage defaults sent several of the largest quant hedge funds, including a \$30 billion giant run by Goldman Sachs, into a tailspin. Managers at these firms were forced to cut positions, worsening the carnage. Insiders say the rout cost Medallion almost \$1 billion--around 1/5 of the fund--in a matter of days. Renaissance executives, wary that continued chaos would wipe out their own fund, braced to turn down their own risk dial and begin selling positions. They were on the verge of capitulating when the market rebounded; over the remainder of the year, Medallion made up the losses and more, ending 2007 with an 85.9\% gain. The Renaissance executives had learned an important lesson: Don’t mess with the models.
+> 
+> [@burtonMoneymakingMachineNo2016]
+
+In the other direction, the [DeepSeek](https://en.wikipedia.org/wiki/DeepSeek) language modeling team originated from [High-Flyer](https://en.wikipedia.org/wiki/High-Flyer_(company)), the best quantitative trading firm in China.
+
+:::
+
+### Rationalism vs Empiricism
+
+After 2 years of work on their project, the IBM team submitted a paper to the COLING conference. One of the reviewers evidently did not like it:
+
+> The validity of a statistical (information theoretic) approach to MT has indeed been recognized, as the authors mention, by Weaver as early as 1949. And was universally recognized as mistaken by 1950 (cf. Hutchins, MT – Past, Present, Future, Ellis Horwood, 1986, p. 30ff and references therein). The crude force of computers is not science. The paper is simply beyond the scope of COLING.
+>
+> quoted in [@jelinekDawnStatisticalASR2009]
+
+Somehow, this "universally recognized" mistake got accepted anyway as [@brownStatisticalApproachLanguage1988]. They continued their project, and 5 years and 5 alignment models later, published the celebrated [@brownMathematicsStatisticalMachine1993], which ends with this curiously diplomatic paragraph:
+
+> ... it is not our intention to ignore linguistics, neither to replace it. Rather, we hope to enfold it in the embrace of a secure probabilistic framework so that the two together may draw strength from one another and guide us to better natural language processing systems in general and to better machine translation systems in particular.
+> 
+> [@brownMathematicsStatisticalMachine1993]
+
+Perhaps they were well aware that their statistics-first stance was controversial with the linguists. Indeed, just 1 year the paper, there was a vi(va)cious controversy at a 1992 conference on MT, almost as an echo of the [connectionist--symbolist controversy](TODO-past-tense-debate):
+
+> The "statistical turn" in MT was just starting to take hold, so the organizers... selected the apposite theme: "Empiricist versus Rationalist Methods in MT". ... Robert Mercer from the Candide project gave an invited talk -- *Rationalist MT: Another Cargo Cult or just Plain Snake Oil?* -- and was quoted as saying that "rationalist methods in MT will be on the scrapheap five years from now". As long as there was access to large corpora (by no means assured), triumphs in empiricist MT would follow. 
+> 
+> Yorick Wilks, one of the few audible oppositional voices at the conference...: "what they’re doing at IBM is not MT: it’s an MT factory." ... The organizers put the stand-off between rationalism and empiricism to playful debate during the final session of the conference. In what they termed a "[medieval disputation](https://en.wikipedia.org/wiki/Disputation)", two advocates from each methodological camp was invited to present arguments, but in favour of the opposite side. The audience was encouraged to heckle and jeer as desired, or as necessary.[^1992-rationalist-empiricist-arguments]
+> 
+> [@mitchellBrightSideDark2015]
+
+[^1992-rationalist-empiricist-arguments]:
+    The two sides made multiple arguments, but it is tangent to the essay, so they go into this footnote:
+
+    > In defense of empiricism were claims about mathematics being grounded in the physical world — the same place the translator’s skill resides. Statistical techniques didn’t trade in abstract symbols and transformational rules that translators wouldn’t even recognize. While empirical methods could never be completely right, at least they weren’t based on flaky intuitions. Empirical methods were at last able to address the difference in scale between the complexity of language and the limitations of the human brain. Brains could “do” language, but could only know so much about it (at any one time).
+    > 
+    > A point made in favour of rationalism was the obvious fact that humans had knowledge and experience that they applied all the time. Extreme empiricism claimed it operated from some place beyond it. Didn’t empiricism presume a kind of cognitive rationalism? Ken Church capped off the debate by characterizing the statistical approach as a “free lunch,” pinning a critique of his own empiricist position to value and accuracy: “easy answers don’t cost too much... their wrong answers are pretty cheap.” One point both camps held in common was that human language did not need to be learned. What none of the researchers addressed was whether translation needed to be.
+    > 
+    > One point both camps held in common was that human language did not need to be learned. What none of the researchers addressed was whether translation needed to be.
+    > 
+    > [@mitchellBrightSideDark2015]
+
+This controversy was framed as the "Rationalism vs Empiricism" debate. As Kenneth Church (a partisan of empiricism) argued, "Rationalism", having been reigning since 1970s, was facing legitimate challenge by "Empiricism" again, for three reasons: more compute, more data, and a culture centered on evaluation.
 
 > The emphasis today on empirical methods in the speech recognition community is a reaction to the failure of knowledge-based approaches of the 1970s. It has become popular once again to focus on high-level natural language constraints in order to reduce the search space. But this time, n-gram methods have become the methods of choice because they seem to work better than the alternatives, at least when the search space is measured in terms of entropy. Ideally, we might hope that someday parsers might reduce entropy beyond that of n-grams, but right now, parsers seem to be more useful for other tasks such as understanding who did what to whom, and less useful for predicting what the speaker is likely to say.
 > 
@@ -328,15 +412,25 @@ In the introduction to a "Special Issue on Computational Linguistics Using Large
 >
 > [@churchIntroductionSpecialIssue1993]
 
-That was 1993. And the Internet was coming, and it kept coming, and it is still coming, and it just won't stop coming.
+[Yorick Wilks](https://en.wikipedia.org/wiki/Yorick_Wilks) made an interesting rationalist-pragmatic position. He pointed out (correctly) that the IBM team incorporated increasing amount of rationalist linguistic structure to improve performance, and claimed (speculatively) that as a matter of practical fact, pure statistical language modeling cannot even solve the Winograd schema, let alone automatic translation.
 
-When a user makes a search request like "IBM", Google's servers must retrieve not only website urls like `www.ibm.com`, but also a snippet view like "...**IBM** has been a global technology innovator...".  Therefore, Google had been crawling the Internet and storing a plain-text copy of the Internet regularly, with a size on the order of 100 TB as of 2003. [@barrosoWebSearchPlanet2003] Once with such a large dataset, what could be done with it?
+> Like connectionism, statistically-based machine translation is a theory one was brought up to believe had been firmly locked away in the attic, but here it is back in the living room. Unlike connectionism, it carries no psychological baggage, in that it seeks to explain nothing and cannot be attacked on grounds of its small scale as connectionist work has been. On the contrary that is how it attacks the rest of us. ...
+> 
+> I resent IBM's use of "linguist" to describe everyone and anyone they are against. There is a great difference between linguistic theory in Chomsky’s sense, as motivated entirely by the need to explain, and theories, whether linguistic/AI or whatever, as the basis of procedural, application-engineering-orientated accounts of language. ... They have taken in whatever linguistics has helped: morphology tables, sense tagging (which is directional and dependent on the properties of French in particular), a transfer architecture with an intermediate representation, plural listings, and an actual or proposed use of bilingual dictionaries. In one sense, the symbolic case has won: they topped out by pure statistics at around 40% of sentences acceptably translated and then added whatever was necessary from a symbolic approach to upgrade the figures. ... Brown et al.'s retreat to incorporating symbolic structures show the pure statistics hypothesis has failed. All we should be haggling about now is how best to derive the symbolic structures we use, and will go on using, for machine translation.
+>
+> [@wilksStoneSoupFrench1994]
 
-In 2006, Google Translate was launched. Early reactions were a mixture of fascination and sarcasm, leading to memes of hilarious Google translations that has survived to this day, even though the improvements has made it very difficult to do nowadays. Despite this, it was agreed that Google had achieved state of the art in statistical machine translation. How did it do it? By brutally scaling up.
+The dispute died down quickly, as it was clear that the best practical results could be obtained by hardcoding linguistic structure and massive dataset. The linguists kept their jobs -- except at Google.
 
-Work on Google Translate led to perhaps the first use of "Large Language Models" in the 2007 paper [@brantsLargeLanguageModels2007]. Despite possibly lower quality than a more sophisticated algorithm, the "stupid backoff" allowed them to train on 60× more data and run 10000× faster during inference. The largest model was trained on a dump of the Internet (January 2006) with 2 trillion tokens, 300M 5-grams, 16M vocab, 1.8 TB language model, took 1 day to train on 1500 machines. They noted that the more data they used, the higher the BLEU score got, and simply drew a straight line, expecting the model to keep improving if they did it on even more data.
+Consider what Google does. When a user makes a search request like "IBM", Google's servers must retrieve not only website urls like `www.ibm.com`, but also a snippet view like "...**IBM** has been a global technology innovator...". Therefore, Google had been crawling the Internet and storing a plain-text copy of the Internet regularly, with a size on the order of 100 TB as of 2003. [@barrosoWebSearchPlanet2003] Once with such a large dataset, it is a sin to let it go to waste.
+
+Work on Google Translate (launched in 2006) led to perhaps the first use of "Large Language Models" in [@brantsLargeLanguageModels2007]. This model basically took the *reductio ad absurdum* of "just train a very big n-gram model" as if it is a blueprint for success, and they simply trained a 5-gram model with the "stupid backoff". Despite being, well, "stupid", it was stupid in a scalable way, allowing them to train on 60× more data and infer 10000× faster. The largest model was trained on a dump of the Internet (January 2006) with 2 trillion tokens. It had 300M 5-grams, occupied 1.8 TB, and took 1 day to train on 1500 machines.
+
+Presciently, they noted that the more data they used, the higher the BLEU score got, and by simply drawing a straight line, they expected the model to keep improving if they did it on even more data -- an early example of [scaling law](https://en.wikipedia.org/wiki/Large_language_model#Scaling_laws).
 
 It would be 2017 when work on Google Translate led to the Transformer architecture, the current pinnacle of large language models.
+
+### ABBYY's last stand
 
 18 years after his introduction [@churchIntroductionSpecialIssue1993], Kenneth Church proposed in 2011 a 20-year cycle between Empiricism and Rationalism, and argued that we were on the brink of a return to Rationalism:
 
@@ -351,13 +445,15 @@ It would be 2017 when work on Google Translate led to the Transformer architectu
 >
 > [@churchPendulumSwungToo2011]
 
-![Language modeling in 1990. [@winogradComputerSoftwareWorking1984]](figure/Winograd_language_analysis.png)
+![Language modeling in 1984, at the pinnacle of Rationalism. [@winogradComputerSoftwareWorking1984]](figure/Winograd_language_analysis.png)
 
-It has been another 15 years, yet the pendulum still probes the unknown depths of Empiricism.
+*record scratch*
 
-![Language modeling in 2020. [@robertsExploringTransferLearning2020]](figure/T5_language_model.png)
+It is 2025.
 
-### ABBYY's last stand
+The pendulum is stuck in the abyss of Empiricism.
+
+![Language modeling in 2020, still far from the pinnacle of Empiricism. [@robertsExploringTransferLearning2020]](figure/T5_language_model.png)
 
 One of the last holdouts to rational MT was ABBYY, a Russian company whose story deserves retelling.
 
@@ -559,11 +655,18 @@ Verify three more:
 
 [Frederick Jelinek](https://en.wikipedia.org/wiki/Frederick_Jelinek) would go down in history as the one who fired linguists, but he did not start his life this way. In 1961, he sat in Chomsky's lectures, and "got the crazy notion that I should switch from Information Theory to Linguistics". His PhD advisor forbade him, so he remained in information theory. After graduation, he tried collaborating with the eminent linguist [Charles Hockett](https://en.wikipedia.org/wiki/Charles_F._Hockett), bu Hockett then turned to composing operas. "Discouraged a second time, I devoted the next 10 years to Information Theory." [@jelinekDawnStatisticalASR2009]
 
-In 1972, he left academia and joined IBM, where he worked on ASR. The project started with two linguists, but they got frustrated and left of their own accord, leaving behind engineers and physicists with little understanding of linguistics.[^jelinek-famous-last-words]
+In 1972, he left academia and joined IBM, where he worked on ASR. The project started with two linguists, but they got frustrated and left of their own accord, leaving behind engineers and physicists with little understanding of linguistics.
 
-> When our Continuous Speech Recognition group started its work at IBM Research, the management wanted to make sure that our endeavors were guided by strict scientific principle. They therefore placed into the group two linguists who were going to guide our progress. Both linguists were quite self-confident, sure that fast progress will be possible. For instance, when we (trained as engineers or physicists) were at a loss how to construct a language model, one of the linguists declared "I'll just write a little grammar."... After about a year of frustration the linguists left our group, returned to their basic research, and we were free to pursue our self-organized, data driven, statistical dream... mostly of engineers and physicists. Only 3 or 4 people out of 10 had any previous experience with speech. None had graduate training in that field. But several of us had a background in Information Theory and that influenced our thinking.
+> When our Continuous Speech Recognition group started its work at IBM Research, the management wanted to make sure that our endeavors were guided by strict scientific principle. They therefore placed into the group two linguists who were going to guide our progress. Both linguists were quite self-confident, sure that fast progress will be possible. For instance, when we (trained as engineers or physicists) were at a loss how to construct a language model, one of the linguists declared "I'll just write a little grammar."...[^jelinek-famous-last-words] After about a year of frustration the linguists left our group, returned to their basic research, and we were free to pursue our self-organized, data driven, statistical dream... mostly of engineers and physicists. Only 3 or 4 people out of 10 had any previous experience with speech. None had graduate training in that field. But several of us had a background in Information Theory and that influenced our thinking.
 >
 > [@jelinekMyBestFriends2005]
+
+[^jelinek-famous-last-words]:
+    More details about this funny episode:
+
+    > When handling natural speech, the main question was how to estimate the language model $Pr(W)$. There was no simple way of achieving this. We thought that the right approach ought to be somehow related to English grammar. The linguist Stan Petrick, while he still was with us, said "Don't worry, I will just make a little grammar." Of course he never did, and the phrase acquired a mythical status in the manner of "famous last words."
+    > 
+    > [@jelinekDawnStatisticalASR2009]
 
 It was unclear what exactly frustrated the linguists, but probably it was because they did not want, or did not have, the stamina to produce generative grammar for non-toy English:
 
@@ -573,12 +676,7 @@ It was unclear what exactly frustrated the linguists, but probably it was becaus
 
 This dedication to toys and "microworlds" rather than would appear again later in the saga of [SHRDLU](#sec-shrdlu).
 
-[^jelinek-famous-last-words]:
-    More details about this funny episode:
-
-    > When handling natural speech, the main question was how to estimate the language model $Pr(W)$. There was no simple way of achieving this. We thought that the right approach ought to be somehow related to English grammar. The linguist Stan Petrick, while he still was with us, said "Don't worry, I will just make a little grammar." Of course he never did, and the phrase acquired a mythical status in the manner of "famous last words."
-    > 
-    > [@jelinekDawnStatisticalASR2009]
+According [@jelinekDawnStatisticalASR2009]
 
 The group naturally reproduced the information-theoretic framework for MT proposed by Shannon and Weaver, and adapted it directly to ASR.[^reproduced-shannon-weaver] In the framework, there are 4 components:
 
@@ -611,9 +709,13 @@ $$
 
 Step 1 of this framework turned out to be the critical idea. In the pure Chomskyan viewpoint, step 1 is illegitimate. In the information-theoretic viewpoint, step 1 is essential.
 
-TODO Write about how this forced them to think about a different way to measure success. If they gave up the idea of either-or, then how does one tell if the program was improving? Inspired by Harpy, they decided to measure the branching factor ... then perplexity.
+Having given up logical correctness, they needed a new way to measure success. Thinking back to systems like Harpy, they realized that an ASR system runs faster if at each step during decoding, the branching factor is low. If the system has decoded "I would li", then a better system would provide the most reasonable continuation "ke", while a dumber system would provide multiple possibilities like "ke", "ne", "st"... 
 
-It was of course possible, and even obvious, that one can combine the best of both worlds, to combine both linguistic insights and statistical methods, such as a probabilistic CFG. However, they simply trained a dumb trigram language model on a large corpus. From what Jelinek said later,[^never-reluctant-linguistic] my guess is that they did try such "best of both worlds" approach, but the dumb trigram model just worked better.
+Not only does a lower branch factor directly translate to faster run time, it also has an elegant theoretical information-theoretic interpretation as the [log-perplexity](https://en.wikipedia.org/wiki/Perplexity) of the model.
+
+For both of these reasons, they decided to measure progress by the branch factor.
+
+It was of course possible, and even obvious, that one can combine the best of both worlds, to combine both linguistic insights and statistical methods, such as a probabilistic CFG. However, they simply trained a dumb trigram language model on a large corpus. From what Jelinek said later,[^never-reluctant-linguistic] my guess is that they did try such "best of both worlds" approach to ASR, but the dumb trigram model just worked better -- unlike in MT, where they did use linguistics for refining their language models.
 
 [^never-reluctant-linguistic]:
     > We were never reluctant to include linguistic knowledge or intuition into our systems: if we didn't succeed, it was because we didn't find an efficient way to do include it.
@@ -631,15 +733,44 @@ The IBM project, compared to the others, was definitely big-data. This served th
 
 ![The New Rayleigh toy language. [@jelinekDawnStatisticalASR2009, figure 1]](figure/New_Rayleigh_toy_language.png)
 
-They soon produced an ASR model that achieved perfect accuracy on this, so they had to go bigger. The next dataset they obtained was the "laser patent corpus", consisting of 2 million words of patent applications in laser technology, with a vocabulary size of 10,000, twice as large as the [Brown Corpus (1961)](https://en.wikipedia.org/wiki/Brown_Corpus). They used this to train a 3-gram language model. The road to this dataset was quite circuitous, which anyone who has tried making a non-toy dataset can relate:
+They soon produced an ASR model that achieved perfect accuracy on this, so they had to go bigger. The next dataset they obtained was the "laser patent corpus", consisting of 2 million words of patent applications in laser technology, with a vocabulary size of 1,000, twice as large as the [Brown Corpus (1961)](https://en.wikipedia.org/wiki/Brown_Corpus), and used it to train a 3-gram language model. The road to this dataset was quite circuitous, which anyone who has tried making a non-toy dataset can relate [@liTheresNoData2023; @brownOhYesEverythings2013].
 
-> The struggle to compile a suitable training corpus featured throughout the CSR \[Continuous Speech Recognition\] group's first decade. The researchers first considered using a collection of digitized IBM manuals, but found the vocabulary to be too extensive as well as so technical that it proved "difficult to pass ... off as English." They attempted to produce their own corpus, enlisting the wife of a lab staff member to type approximately a million words of text from children's novels, but there, too, the vocabulary proved too large for their purposes. Next, the group acquired a collection of laser patent text from the US Patent Office, which was both sufficiently extensive in size and sufficiently narrow in vocabulary that they were finally able to extract a million words of running text confined to a thousand-word vocabulary. Though the laser patent corpus was considered "naturally occurring," it was in fact meticulously constructed, even before researchers discarded all sentences containing vocabulary outside of the thousand most frequently occurring words. The complete patent text had to be first "subjected to intensive hand and computerized editing": eliminating duplicates, merging spelling variations, and substituting scientific symbols and formulas. The claims sections of the patents proved especially problematic due to "highly stylized" legal language, and were ultimately excised entirely.
+* They began with IBM manuals, which were already digitized, but "the vocabulary was too large. We also felt that it would be difficult to pass most of it off as English."
+* So they went to Voice of America's broadcasts, which *purportedly* used only [Basic English](https://en.wikipedia.org/wiki/Basic_English). But they "did not at all cleave to an 850-word vocabulary. Again we had to abandon this area because the vocabulary was too large."
+* They then tried using children's books. They got about 1 million words typed in when suddenly... "the vocabulary was too large."
+* Finally they got the laser patent corpus, whose vocabulary was finally small enough!
+
+> Though the laser patent corpus was considered "naturally occurring," it was in fact meticulously constructed, even before researchers discarded all sentences containing vocabulary outside of the thousand most frequently occurring words. The complete patent text had to be first "subjected to intensive hand and computerized editing": eliminating duplicates, merging spelling variations, and substituting scientific symbols and formulas. The claims sections of the patents proved especially problematic due to "highly stylized" legal language, and were ultimately excised entirely.
 > 
-> By the 1980s hardware improvements allowed the IBM researchers to expand their recognition vocabulary to five thousand words. They also compiled over 100 million words of data from a variety of sources, including public domain books and magazines from the American Printing House for the Blind, the records of the Amoco oil corporation, and 2.5 million words of office correspondence supplied by physicist Richard Garwin, who, with the aid of four secretaries, maintained computer-formatted duplicates of all of his correspondence. The most substantial collection in this period, however, came as a direct result of IBM's unique industry dominance: the landmark federal antitrust lawsuit filed against the company in 1969. The case, which spanned thirteen years before it was finally dismissed in 1982, included testimony from 974 witnesses with resulting transcripts that totaled over one hundred thousand pages. The operation to digitize the deposition transcripts during the trial was so prodigious that it required a staff of dedicated keypunch operators large enough to fill a facility the size of a football field in White Plains, New York, where IBM's Data Processing Division was headquartered. While the suit itself proved extremely costly for IBM, its transcript digitization efforts provided the CSR group with their largest and most robust text collection, resulting in a corpus of one hundred million words. Finally, the CSR group discovered the Hansard corpus, a collection of digitized transcripts of the Canadian Parliament official proceedings in both English and French, in the mid-1980s and incorporated an additional hundred million words from its English text into their language model.
->
 > [@liTheresNoData2023]
 
-In 1976, their ASR system had already reached state of the art performance. On the same task as the ARPA project, it reached higher accuracy, and only took 30 MIP to process 1 second of speech. [@reddySpeechRecognitionMachine1976] Though logical ASR continued with systems like Hearsay-II (1980), as the 1980s went on, none could deny the practical success of statistical ASR anymore, even if, compared to logical ASR, statistical ASR was far from linguistic theories of human speech recognition.
+What is a good statistician to do? Declare victory? Since "there's no data like more data", more data it is.
+
+| Source                                    | millions of words |
+| :---------------------------------------- | --------------: |
+| Laser patent corpus                       | 2 |
+| Richard Garwin                            |    2.5 |
+| Associated Press                          |      20 |
+| Oil company                               |      25 |
+| Federal Register                          |      unknown |
+| American Printing House for the Blind     |      60 |
+| IBM Deposition                            |     100 |
+| Hansard corpus                            |     100 |
+: Table of data.
+
+Getting those early datasets had a kind of wild-west let's-make-a-deal feeling to it:[^hong-kong-hansard]
+
+* [Richard Garwin](https://en.wikipedia.org/wiki/Richard_Garwin), who had kept a digitized copy of all his correspondence typed by 4 secretaries, donated his corpus.
+* "When Peter joined IBM in the early 80s, he negotiated with Verbex, his former employer, to give us their 20 million word collection of text for the Associated Press news wire."
+* "Some oil company... were concerned about turning over complete documents; fortunately, we were able to convince them to allow us to collect a sorted list of all 11-gram snippets that appeared in their text." Then they reconstructed the text as if sequencing [DNA contigs](https://en.wikipedia.org/wiki/Contig)!
+* The [Federal Register](https://en.wikipedia.org/wiki/Federal_Register) was maintained electronically. "Peter went down to Washington to do some work for the government, and in return they gave us access to all that text."
+* The [American Printing House for the Blind](https://en.wikipedia.org/wiki/American_Printing_House_for_the_Blind) had typed in many books and periodicals to produce Braille versions of it, and they donated 20 million words.
+* In 1969, the US Departmen of Justice launched the largest antitrust case against IBM, alleging it was being monopolistic in the computer industry. The suit dragged on until 1982, costing up to around \$100M, when it was finally dismissed "without merit". It was "the Antitrust Division's Vietnam". [@lopatkaUnitedStatesIBM2000] During this litigation, IBM kept "hundreds of key punch operators \[transcribing\] the text of the various depositions that IBM had provided the governments lawyers", and all that 100 million words went to the ASR team.
+* In the 1980s, [John Cocke](https://en.wikipedia.org/wiki/John_Cocke_(computer_scientist)) during a flight heard about the Hansard corpus from the person sitting next to him, and they immediately obtained a 100-million-word section of it.
+
+[^hong-kong-hansard]: The Canadian Hansard took only a small amount of cleaning. A Hong Kong researcher, Dekai Wu, was inspired by the research. It took him 5 months in 1992 to construct an English--Chinese corpus from the Hong Kong Hansard (Both Hong Kong and Canada used to be British colonies, so both have Hansards). It began with "We sort of try to convert it into Mandarin but there’s a lot of things that are said, they use Cantonese words that don’t actually have official characters... We’re making up codes here in this office." and ends with "We store them in all these little 8 mm magtapes in an Apple proprietary cartridge form that Apple canceled five years ago... We have one reader." [@brownOhYesEverythings2013]
+
+Already in 1976, their ASR system had reached state of the art performance. On the same task as the ARPA project, it reached higher accuracy, and only took 30 MIP to process 1 second of speech. [@reddySpeechRecognitionMachine1976] Though logical ASR continued with systems like Hearsay-II (1980), as the 1980s went on, none could deny the practical success of statistical ASR anymore, even if, compared to logical ASR, statistical ASR was far from linguistic theories of human speech recognition.
 
 In the 1990s, all state of the art ASR were statistical, usually HMM-based. Such a model has multiple levels.
 
@@ -754,7 +885,7 @@ Klatt had been progressively losing his voice from thyroid cancer, and died in 1
 
 ### The Chomskyans
 
-There was a persistent legend about a certain psychologist, that he educated his own children with [skinner boxes](https://en.wikipedia.org/wiki/Operant_conditioning_chamber). While just a legend, the real B. F. Skinner did have a philosophy as radical as the legend suggests.
+There was a persistent legend, that a certain Doctor [Skinner](https://en.wikipedia.org/wiki/B._F._Skinner) had educated his own children according to his theory -- by putting them into [skinner boxes](https://en.wikipedia.org/wiki/Operant_conditioning_chamber). While just a legend, the real Skinner did have a philosophy as radical as the legend suggests.
 
 In the 1950s, Skinner dominated behaviorism, which dominated American psychology. In short, behaviorism models animal behavior as stimulus-response reflexes, which can be understood as parameterized functions $a_\theta(o)$, where $o$ stands for the observational stimulus, $\theta$ the internal parameters of the animal, and $a_\theta(o)$ the response action. The parameters $\theta$ is a function of the previous history of stimuli and reward/punishments: $(o_0, a_0, r_0, o_1, a_1, r_1, \dots)$. The set up is the same as modern reinforcement learning (RL).
 
@@ -790,11 +921,11 @@ Chomsky made a multi-pronged rejection of empiricism:
 
 * Poverty of stimulus: Humans learn language with just a few years of language instruction. This is impossible if they "start from scratch". Thus, they have a lot of inborn grammar.
 * Colorless green ideas sleep furiously: Because there are many meaningless but grammatical sentences, grammar is independent of meaning. Thus, grammar, unlike meaning, can be a small closed system that fits inside a brain at birth.
-* Probability is meaningless: A sentence is either grammatical or not. THere is no in-between. Therefore it is meaningless to talk about the "probability of a sentence" like the empiricists.
+* Probability is meaningless: A sentence is either grammatical or not. There is no in-between. Therefore it is meaningless to talk about the "probability of a sentence" like the empiricists.
 * Impersonal abstraction: Real humans can make mistakes, but language itself makes no mistake. A tired human might say "Ideas sleep furiously." is ungrammatical 10\% of the times, but the English language *itself* would always say it is grammatical. Thus, the probabilities measured from real human behavior is meaningless for theoretical linguistics.
 * Competence, not performance: Even if an empirical model of language, like the HMM, works 99% of the times, a single counterexample disproves it. To work "most of the times" is performance. To work all the time is competence. Linguistic science is about competence, and performance is sufficient only for engineering. Competence either/or, while performance is usually/rarely. Linguistics is about competence, and performance is left for the psychologists and engineers.
 
-The 60 years afterwards have been one long struggle against empiricism along these lines. For example, he had repeatedly simplified the Universal Grammar down to the minimalist core, so that it could possibly fit inside a single gene that appeared once in the evolution of humans, "switching on" language for humans and no other species. And by "60 years", I meant it. He was nothing if not consistent:
+The 60 years afterwards have been one long struggle against empiricism along these lines. For example, he had repeatedly simplified the Universal Grammar down to the minimalist core, so that it could possibly fit inside perhaps just a single gene that appeared only once in natural history, "switching on" language for *Homo sapiens* sometime in the past million years. And by "60 years", I meant it. He was nothing if not consistent:
 
 > Evidently, one's ability to produce and recognize grammatical utterances is not based on notions of statistical approximation and the like... a structural analysis cannot be understood as a schematic summary developed by sharpening the blurred edges in the full statistical picture... that grammar is autonomous and independent of meaning, and that probabilistic models give no particular insight into some of the basic problems of syntactic structure.
 >
