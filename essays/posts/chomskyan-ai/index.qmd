@@ -1,5 +1,5 @@
 ---
-title: "The Rise and Fall of Logical AI"
+title: "Firing the Last Linguists"
 author: "Yuxi Liu"
 date: "2024-12-23"
 date-modified: "2024-12-23"
@@ -7,7 +7,7 @@ categories: [AI, scaling, history]
 format:
   html:
     toc: true
-description: "Good Old-Fashioned AI never die. They just fade away."
+description: "The long slow collapse of linguistics."
 
 # image: "figure/banner.png"
 status: "wip"
@@ -738,7 +738,7 @@ They soon produced an ASR model that achieved perfect accuracy on this, so they 
 * They began with IBM manuals, which were already digitized, but "the vocabulary was too large. We also felt that it would be difficult to pass most of it off as English."
 * So they went to Voice of America's broadcasts, which *purportedly* used only [Basic English](https://en.wikipedia.org/wiki/Basic_English). But they "did not at all cleave to an 850-word vocabulary. Again we had to abandon this area because the vocabulary was too large."
 * They then tried using children's books. They got about 1 million words typed in when suddenly... "the vocabulary was too large."
-* Finally they got the laser patent corpus, whose vocabulary was finally small enough!
+* Finally they got the laser patent corpus (h/t to [Fred Damerau](https://en.wikipedia.org/wiki/Frederick_J._Damerau)), whose 1000-word vocabulary was finally small enough!
 
 > Though the laser patent corpus was considered "naturally occurring," it was in fact meticulously constructed, even before researchers discarded all sentences containing vocabulary outside of the thousand most frequently occurring words. The complete patent text had to be first "subjected to intensive hand and computerized editing": eliminating duplicates, merging spelling variations, and substituting scientific symbols and formulas. The claims sections of the patents proved especially problematic due to "highly stylized" legal language, and were ultimately excised entirely.
 > 
@@ -762,14 +762,18 @@ Getting those early datasets had a kind of wild-west let's-make-a-deal feeling t
 
 * [Richard Garwin](https://en.wikipedia.org/wiki/Richard_Garwin), who had kept a digitized copy of all his correspondence typed by 4 secretaries, donated his corpus.
 * "When Peter joined IBM in the early 80s, he negotiated with Verbex, his former employer, to give us their 20 million word collection of text for the Associated Press news wire."
-* "Some oil company... were concerned about turning over complete documents; fortunately, we were able to convince them to allow us to collect a sorted list of all 11-gram snippets that appeared in their text." Then they reconstructed the text as if sequencing [DNA contigs](https://en.wikipedia.org/wiki/Contig)!
+* An unspecified oil company was willing to donate some digitized documents, but they didn't want to provide the complete documents for unspecified concerns, but the team convinced them to send a sorted list of all 11-grams. Then they reconstructed the text as if sequencing [DNA contigs](https://en.wikipedia.org/wiki/Contig)! The conversation went as follows (much artistic liberties taken):
+  * "Why did you reconstruct the documents?"
+  * "Well, you did agree that we can compress the dataset however we want."
+  * "Yes, and?"
+  * "And, since a corpus with $N$ words would result in $N$ 11-grams, the dataset you gave us has $11N$ words, so we were *merely* compressing the dataset by a factor of 11."
+  * "Looks good to me."
 * The [Federal Register](https://en.wikipedia.org/wiki/Federal_Register) was maintained electronically. "Peter went down to Washington to do some work for the government, and in return they gave us access to all that text."
 * The [American Printing House for the Blind](https://en.wikipedia.org/wiki/American_Printing_House_for_the_Blind) had typed in many books and periodicals to produce Braille versions of it, and they donated 20 million words.
 * In 1969, the US Departmen of Justice launched the largest antitrust case against IBM, alleging it was being monopolistic in the computer industry. The suit dragged on until 1982, costing up to around \$100M, when it was finally dismissed "without merit". It was "the Antitrust Division's Vietnam". [@lopatkaUnitedStatesIBM2000] During this litigation, IBM kept "hundreds of key punch operators \[transcribing\] the text of the various depositions that IBM had provided the governments lawyers", and all that 100 million words went to the ASR team.
 * In the 1980s, [John Cocke](https://en.wikipedia.org/wiki/John_Cocke_(computer_scientist)) during a flight heard about the Hansard corpus from the person sitting next to him, and they immediately obtained a 100-million-word section of it.
 
-[^hong-kong-hansard]: The Canadian Hansard took only a small amount of cleaning. A Hong Kong researcher, Dekai Wu, was inspired by the research. It took him 5 months in 1992 to construct an English--Chinese corpus from the Hong Kong Hansard (Both Hong Kong and Canada used to be British colonies, so both have Hansards). It began with "We sort of try to convert it into Mandarin but there’s a lot of things that are said, they use Cantonese words that don’t actually have official characters... We’re making up codes here in this office." and ends with "We store them in all these little 8 mm magtapes in an Apple proprietary cartridge form that Apple canceled five years ago... We have one reader." [@brownOhYesEverythings2013]
-
+ 
 Already in 1976, their ASR system had reached state of the art performance. On the same task as the ARPA project, it reached higher accuracy, and only took 30 MIP to process 1 second of speech. [@reddySpeechRecognitionMachine1976] Though logical ASR continued with systems like Hearsay-II (1980), as the 1980s went on, none could deny the practical success of statistical ASR anymore, even if, compared to logical ASR, statistical ASR was far from linguistic theories of human speech recognition.
 
 In the 1990s, all state of the art ASR were statistical, usually HMM-based. Such a model has multiple levels.
@@ -934,6 +938,10 @@ The 60 years afterwards have been one long struggle against empiricism along the
 > But it must be recognized that the notion of "probability of a sentence" is an entirely useless one, under any known interpretation of this term.
 >
 > [@chomskyEmpiricalAssumptionsModern1969]
+
+> 'Can eagles that fly swim?' ... We're asking 'Can they swim?' We're not asking 'Can they fly?' Well, why is that? A natural answer ought to be that you associate 'can' with 'fly.' After all, 'fly' is the word that's closest to 'can,' so why don't you just take the closest word and interpret it that way? ... There's been a huge effort to show that it's not a problem, that if you just do a complex statistical analysis of complex data, you'll find that that's what the child will determine from the data. The approaches are odd in several respects. First, every one is not only a failure but a colossal failure. I'm not going to talk about that. I actually have a recent paper about it with a computer scientist at MIT, Bob Berwick, where we run through a lot of the current proposals but it's easy to show that they're all just wildly wrong. But they keep coming.
+> 
+> [@chomskyPovertyStimulusUnfinished2010]
 
 > It's true there's been a lot of work on trying to apply statistical models to various linguistic problems. I think there have been some successes, but a lot of failures. There is a notion of success ... which I think is novel in the history of science. It interprets success as approximating unanalyzed data. 
 > 
