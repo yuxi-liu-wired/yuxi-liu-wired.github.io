@@ -105,9 +105,27 @@ $$
 f(x) = -\alpha f\left(f\left(\frac{x}{-\alpha} \right)\right)
 $$
 
-In words, if we scale up the graph for $f^2$ by $\alpha > 0$, and then rotate by 180 degrees, we get back the graph for $f$. 
+In words, if we scale up the graph for $f^2$ by $\alpha > 0$, and then rotate by 180 degrees, we get back the graph for $f$. Why should this be the case?
 
-By eye-balling the curve, we see that $f$ should be an even function. Also, since the $f^2$ can be graphically calculated by doing the cobweb diagram with the graph of $f$, it does not matter if we first scale up the graph of $f$ by a factor of $r$ to $F$, then double it to $F^2$, or if we first double it to $f^2$, then scale its graph. We would get back the same thing. Thus, without loss of generality, we can scale $f$ such that $f(0) = 1$.
+Well, look back at the previous diagram of the first bifurcation:
+
+![The relationship between $x_{n+2}$ and $x_{n}$ as $r$ increases from $2.7$ to $3.3$.](figure/period_doubling_bifurcation.png)
+
+The graph of $f$ is a parabola, and the graph of $f^2$ began by looking like a parabola, but its top eventually collapses like an overbaked pie, down and down, until it punches right through the $y = x$ diagonal line again and ... wait, wait, it looks like a little parabola again, except this time, it's rotated by 180 degrees! And so we can run the same argument on $f^2$, and conclude that the graph of $(f^2)^2 = f^4$ would collapse *upwards*, punching right through the $y=x$ diagonal line again, and then history repeats with $f^8, f^{16}, \dots$, repeating the same story again \& again, but smaller \& smaller.[^again-again-smaller-smaller]
+
+![The center of $f$ rises, until the center of $f^2$ collapses, causing a bifurcation at $r_1$. As $r$ increases beyond that point, the center of $f^2$ looks like a parabola again, looking like $f$ in miniature. Thus, as $r$ increases further, $f^4$ will eventually undergo a bifurcation that is similar to the previous bifurcation, except in miniature. [@strogatzNonlinearDynamicsChaos2015, page 388]](figure/logistics_scaling_invariant_function.png)
+
+[^again-again-smaller-smaller]:
+    As a wise [meteorologist](https://en.wikipedia.org/wiki/Lewis_Fry_Richardson) [has said](https://en.wikipedia.org/wiki/Siphonaptera_(poem)):
+
+    > Big whorls have little whorls,
+    > Which feed on their velocity;
+    > And little whorls have lesser whorls,
+    > And so on to viscosity.
+
+    And indeed, chaos theory, fractals, and RN all made early appearances in the study of turbulence.
+
+By eye-balling the curve, we see that $f$ should be an even function, and that in a neighborhood of its centerpoint, . Also, since the $f^2$ can be graphically calculated by doing the cobweb diagram with the graph of $f$, it does not matter if we first scale up the graph of $f$ by a factor of $r$ to $F$, then double it to $F^2$, or if we first double it to $f^2$, then scale its graph. We would get back the same thing. Thus, without loss of generality, we can scale $f$ such that $f(0) = 1$.
 
 So, our task is to solve the following equation:
 
@@ -418,7 +436,7 @@ Suppose we start with a magnet with interaction strength $J$, then after we zoom
 In particular, it shows that no matter how strong $J$ is, the correlation between distant atoms would decay rapidly, and so there is no ferromagnetism on the 1D Ising model. This disappointment led Ising to abandon this model of magnetism back in 1925.
 
 ::: {.callout-note}
-If you are ambitious, you can try doing the same RN analysis for a "ladder" made of two $\Z$ put side-by-side. If you have "a lot of time" like Onsager, you would be [on your way to solving the Ising model in 2 dimensions](#sec-note-onsager-ising-2d). I have not worked this out, because I don't have a lot of time, but it would involve a 4-by-4 matrix. See [page 12](http://micro.stanford.edu/~caiwei/me334/Chap12_Ising_Model_v04.pdf) for a sketch of solution.
+If you are ambitious, you can try doing the same RN analysis for a "ladder" made of two $\Z$ put side-by-side. If you have "a lot of time" like Onsager, you would be [on your way to solving the Ising model in 2 dimensions](#sec-note-onsager-ising-2d). I have not worked this out, because I don't have a lot of time, but it would involve a 4-by-4 matrix. See [page 12](https://web.archive.org/web/20120713215413/http://micro.stanford.edu/~caiwei/me334/Chap12_Ising_Model_v04.pdf) for a sketch of solution.
 :::
 
 ### Kadanoff decimation, take 1 (abortive) {#sec-kadanoff-decimation-2d-ising}
@@ -475,9 +493,9 @@ Since the system has the same energy if we flip all spins, the Hamiltonian is ev
 
 Well, that's fine, you might say, what's the big deal? The big deal is that, if we were to repeat the decimation again, we will suddenly meet *infinitely many* interaction terms! How so?
 
-Look at the square grid again. Suppose we have already included the nnn interactions, and we were to do a decimation. As we have seen, in order that the partition function before-and-after decimation are the same, we must construct one interaction term for each possible interaction mediated by a decimated spin. Well, $(-1, 0)$ and $(0, +1)$ are mediated by $(0, 0)$, so they must have an interaction term. No problem, that's the nn term, written as $J_{nn}s_{(-1, 0)}s_{(0, +1)}$. Similarly, $(-1, 0)$ and $(0, +1)$ are mediated by $(0, 0)$, so they must have an interaction term. That's the nnn term, written as $J_{nnn}s_{(-1, 0)}s_{(0, +1)}$. Do you see it now?
+Look at the square grid again. Suppose we have already included the nnn interactions, and we were to do a decimation. As we have seen, in order that the partition function before-and-after decimation are the same, we must construct one interaction term for each possible interaction mediated by a decimated spin. Well, $(-1, 0)$ and $(0, +1)$ are mediated by $(0, 0)$, so they must have an interaction term. No problem, that's the nn term, written as $J_{nn}s_{(-1, 0)}s_{(0, +1)}$. Similarly, $(-1, 0)$ and $(+1, 0)$ are mediated by $(0, 0)$, so they must have an interaction term. That's the nnn term, written as $J_{nnn}s_{(-1, 0)}s_{(+1, 0)}$. Do you see it now?
 
-We can connect $(-1, 0)$ and $(3, 0)$ via $(0, 0), (1, -1), (2, 0)$. Not only that, we can connect them by *infinitely many* possible routes: $(0, 0), (1, -1), (2, 0), (3, -1)$, and $(0, 0), (1, -1), (2, 0), (3, 1)$, and etc... And that's not even the worst of it. Just like how we have arbitrary pair-wise interactions, we also have arbitrary group-interactions within subsets with arbitrary shapes. It is all a big mess, which goes to show how difficult the Ising problem already is in 2D, let alone in 3D.
+We can connect $(-1, 0)$ and $(3, 0)$ via $(0, 0), (1, -1), (2, 0)$. Not only that, we can connect them by *infinitely many* possible routes: $(0, 0), (1, -1), (2, 0), (3, -1)$, and $(0, 0), (1, -1), (2, 0), (3, 1)$, etc. And that's not even the worst of it. Just like how we have arbitrary pair-wise interactions, we also have arbitrary group-interactions within subsets with arbitrary shapes. It is all a big mess, which goes to show how difficult the Ising problem already is in 2D, let alone in 3D.
 
 We can of course deal with the problem by cutting off the weak interaction terms, like how we did the logistic map example. For example, we can preserve all interaction terms between spins that are at most 6 distances away, then compute the RN flow on the space of all Ising models on the square grid, find a saddle point, and compute the largest eigenvalue of the RN flow near the saddle point. The more terms we account for, the better the approximation is.
 
@@ -798,13 +816,13 @@ Statistical field theory employs various tricks to calculate the partition funct
 
 Interestingly, statistical field theory is almost isomorphic with quantum field theory. The general idea is that if you take the dimension of time in a quantum field theory over space of dimension $n$, and do a substitution $t \mapsto it$, you somehow end up with a statistical field theory over space of dimension $n+1$. This is the [Wick rotation](https://en.wikipedia.org/wiki/Wick_rotation).
 
-For example, the 1D Ising model is analogous to a particle in a double well. Whereas the single particle might switch from left to right after time $\Delta T$, the Ising model chain might switch from $+1$ to $-1$ after space $\Delta L$. Because of quantum tunneling, it is impossible to confine a particle in one side of the well -- it will always jump to the other side, and the jumping probability is on the order of $1 - e^{-kt}$ for some constant $k$. This corresponds to the fact that there is no way to "freeze" an Ising model in one dimension. Even at low temperatures, the system cannot be entirely frozen. Long stretches of "up" spins can suddenly flip to "down" spins.  Similarly, in the quantum analogy, the particle can tunnel between the two wells, even as they become deeper.
+For example, the 1D Ising model is analogous to a particle in a double well. Whereas the single particle might switch from left to right after time $\Delta T$, the Ising model chain might switch from $+1$ to $-1$ after space $\Delta L$. Because of quantum tunneling, it is impossible to confine a particle in one side of the well -- it will always jump to the other side, and the jumping probability is on the order of $1 - e^{-kt}$ for some constant $k$. This corresponds to the fact that there is no way to "freeze" an Ising model in one dimension. Even at low temperatures, the system cannot be entirely frozen. Long stretches of "up" spins can suddenly flip to "down" spins, no matter how cold the chain gets.  Similarly, in the quantum analogy, the particle can tunnel between the two wells, no matter how high the barrier between them gets.
 
-Generally, 1D statistical fields lack phase transitions, just like how a single particle with finitely many states would always quantum-tunnel between states, no matter how cold it gets. Conversely, since the 2D Ising model can be frozen, indicating that the quantum field theory on one dimension should have some kind of phase transition.[^1d-qft-phase-transition]
+Generally, 1D statistical fields lack phase transitions, just like how a single particle with finitely many states would always quantum-tunnel between states, no matter how cold it gets. Conversely, since the 2D Ising model can be frozen, we naturally suspect that the quantum field theory on one dimension should have some kind of phase transition.[^1d-qft-phase-transition]
 
-[^1d-qft-phase-transition]: I don't know what it is, but perhaps Bose--Einstein condensation? I mean, I just flipped through [@herbutModernApproachCritical2007] and it looks like this is it. Don't quote me on this.
+[^1d-qft-phase-transition]: I don't know what it is, but perhaps Bose--Einstein condensation? I mean, I just flipped through [@herbutModernApproachCritical2007] and the book suggests that this is it. Don't quote me on this.
 
-Another perspective is by noting that magnetism requires spontaneous symmetry breaking: you have more spins pointing up than down, even though the underlying energy function does not distinguish up from down. No symmetry breaking, no phase transition. And since the quantum states of a single particle can always tunnel between each other, it cannot fall into a symmetry-breaking state. However, with infinitely many points, phenomena like [spontaneous symmetry breaking](#sec-more-is-different) can occur, leading to more complex behavior.
+You get another perspective by noting that magnetism requires spontaneous symmetry breaking: you have more spins pointing up than down, even though the underlying energy function does not distinguish up from down. No symmetry breaking, no phase transition. And since the quantum states of a single particle can always tunnel between each other, it cannot fall into a symmetry-breaking state. However, since magnets can exist in 2D, we see that [spontaneous symmetry breaking](#sec-more-is-different) can occur for a 1D line of quantum particles evolving through time.
 
 ### RN flow in the space of field theories
 
@@ -863,7 +881,7 @@ $$
 
     In modern QFT, this compromise has been converted into a triumph. Instead of a hack to remove infinities, it is now interpreted as a necessary fact about the world. To see high-frequency features in space, we have to be able to probe it. To probe it, we need to fire some high-frequency particles at a space. High-frequency particles have high energy, and the higher the energy gets, the more complicated the interaction gets, and in this way, the quantum field theory actually changes depending on our choice of frequency-cutoff.
 
-    > Wilson's analysis takes just the opposite point of view, that any quantum field theory is defined fundamentally with a cutoff A that has some physical significance. In statistical mechanical applications, this momentum scale is the inverse atomic spacing. In QED and other quantum field theories appropriate to elementary particle physics, the cutoff would have to be associated with some fundamental graininess of spacetime, perhaps a result of quantum fluctuations in gravity. ... whatever this scale is, it lies far beyond the reach of present-day experiments. The argument we have just given shows that this circumstance explains the renormalizability of QED and other quantum field theories of particle interactions. Whatever the Lagrangian of QED was at its fundamental scale, as long as its coupUngs are sufficiently weak, it must be described at the energies of our experiments by a renormalizable effective Lagrangian.
+    > Wilson's analysis takes just the opposite point of view, that any quantum field theory is defined fundamentally with a cutoff A that has some physical significance. In statistical mechanical applications, this momentum scale is the inverse atomic spacing. In QED and other quantum field theories appropriate to elementary particle physics, the cutoff would have to be associated with some fundamental graininess of spacetime, perhaps a result of quantum fluctuations in gravity. ... whatever this scale is, it lies far beyond the reach of present-day experiments. The argument we have just given shows that this circumstance explains the renormalizability of QED and other quantum field theories of particle interactions. Whatever the Lagrangian of QED was at its fundamental scale, as long as its couplings are sufficiently weak, it must be described at the energies of our experiments by a renormalizable effective Lagrangian.
     > 
     > [@peskinIntroductionQuantumField1995, pages 402--403]
 
@@ -897,10 +915,10 @@ This is as far as we are going to discuss the RN in momentum space. Any more and
 1. Work through a textbook and learn RN in momentum space.
 2. Learn group theory and group representation theory.
 3. Write down many groups with some nice geometry, like $SO(3)$.
-4. Construct a group out of those. For example, $H = SO(4) \rtimes SU(3) \times SU(2) \times U(1)$. The group $G$ should have around 10--20 dimensions, but if you are a string theory enthusiast, then 500 dimensions is perfectly fine.
-5. Construct another group $G$.
-6. Pick a nice space $Y$. For example, $X = \R^4 \times \C^6$. It must be a space that $H$ can act upon.
-7. Pick another space $X$. It must be a space that $G$ can act upon.
+4. Construct a group out of those. For example, $G = SO(4) \rtimes SU(3) \times SU(2) \times U(1)$. The group $G$ should have around 10--20 dimensions, but if you are a string theory enthusiast, then 500 dimensions is perfectly fine.
+5. Construct another group $H$.
+6. Pick a nice space $X$. For example, $X = \R^4 \times \C^6$. It must be a space that $H$ can act upon.
+7. Pick another space $Y$. It must be a space that $G$ can act upon.
 8. Construct the most generic possible functional of type $S: (X \to Y) \to \C$ that is still compatible with the two symmetry groups $G, H$.
 9.  Spend the next month doing RN calculations about $Z := \int_{\phi: X \to Y} D[\phi] \; e^{-S[\phi]}$, probably with Feynman diagrams scribbled everywhere.
 
@@ -1127,7 +1145,7 @@ RN theory explains why certain features matter when we zoom out and others are w
 > 
 > "'The details don't matter.'" said them mockingly as they declared their insurrection against sociophysics.
 
-**Yuxi's Comment:**[^tolstoy-sociophysics] The traditional approach of historians, going back to the days of "kings and battles", is to run to personality theory and the individual acts, when confronted by a problem in sociology or economics! One establishes the individual actors, makes some (hopefully) sensible approximations of their personality makeups, and then attempts to explain events, actions, and so on. However, for truly complicated systems that appear what, these days, is much better called "sociophysics", this is a hopeless task; furthermore, the questions it answers are not even the right ones. The modern theorist would rather explain how the stable features of the problem are *invariant* under different assumptions of what individual people do, and arise from features of their interactions. Indeed, if one had a perfect archive of exactly what every person thought and said during the start of WWI, one would still have no understanding of why it started!
+**Yuxi's Comment:**[^tolstoy-sociophysics] The traditional approach of historians, going back to the days of "kings and battles", is to run to personality theory and the individual acts, when confronted by a problem in sociology or economics! One establishes the individual actors, makes some (hopefully) sensible approximations of their personality makeups, and then attempts to explain events, actions, and so on. However, for truly complicated systems that these days are studied under the name of "sociophysics", this is a hopeless task; furthermore, the questions it answers are not even the right ones. The modern theorist would rather explain how the stable features of the problem are *invariant* under different assumptions of what individual people do, and arise from features of their interactions. Indeed, if one had a perfect archive of exactly what every person thought and said during the start of WWI, one would still have no understanding of why it started!
 
 [^tolstoy-sociophysics]:
     Inspired by Tolstoy's *War and Peace*.
