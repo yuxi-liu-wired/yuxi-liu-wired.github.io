@@ -137,13 +137,15 @@ While classical statistics and machine learning was mainly constrained by how ma
 
 So when the deep learning era came circa 2012, people immediately started  looking into how to perform conditional computing, that is, to save compute by only calling a small portion of the model. The idea is that you would have different portions of the model be specialized for different forms of input, and for each input, the model would first cheaply find out which expert should handle it, then call upon only the few specialized experts to handle this particular input.
 
-The first paper on applying MoE to deep learning was [@eigenLearningFactoredRepresentations2013], one year after [AlexNet](https://en.wikipedia.org/wiki/AlexNet). However, the deep MoE (DMoE) proposed in the paper has no sparsity, and so it has no modern offsprings. Let $f_{1, 1}, f_{1, 2}, \dots, f_{1, n}$ be $n$ layers with the same architecture. Now, each can bo treated as an expert, and be mixed by 
+The first paper on applying MoE to deep learning was [@eigenLearningFactoredRepresentations2013], one year after [AlexNet](https://en.wikipedia.org/wiki/AlexNet). However, the deep MoE (DMoE) proposed in the paper has no sparsity, and so it has no modern offsprings. For history's sake, here's how it worked.
+
+Let $f_{1, 1}, f_{1, 2}, \dots, f_{1, n}$ be $n$ feedforward modules with the same number of input and output neurons. Now, each can be treated as an expert, and be mixed by 
 
 $$
 f_1(x) = \sum_i g_{1, i}(x) f_{1, i}(x)
 $$
 
-where $g_{1, i}$ is a tiny neural network, the **gating network** for the first layer. Now, stack multiple such layers, and we obtain the DMoE. As one can see, such a network still has to use all the parameters in each forward pass, and therefore saves no compute. It is simply a case of the dense MoE.
+where $g_{1, i}$ is a tiny neural network, the **gating network** for this MoE layer. Now, stack multiple such layers, and we would obtain a DMoE. As one can see, such a network still has to use all the parameters in each forward pass, and therefore saves no compute. It is simply a case of the dense MoE.
 
 Modern~2020s~ deep learning really arrived with the sparsely-gated MoE [@shazeerOutrageouslyLargeNeural2017], which saves compute. Specifically, if each layer contains $8$ experts, but only $2$ are consulted, then the cost of compute is only about $1/4$ for the full model.
 
