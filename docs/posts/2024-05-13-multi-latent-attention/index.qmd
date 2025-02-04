@@ -10,7 +10,6 @@ format:
     toc: true
 description: "Translation of a blogpost by the originator of RoPE, describing the GPU-based reasons that guided the design choices of multihead latent atteniotn."
 
-# image: "figure/sparsified_moe_various_levels.png"
 status: "finished"
 confidence: "certain"
 importance: 3
@@ -38,7 +37,12 @@ $$
 \end{equation}
 $$
 
-For simplicity, the scaling factor of the Attention matrix is omitted here. In practice, a common setting is $d_k = d_v = d / h$. For `Llama-2-7b`, we have $d=4096, h=32, d_k = d_v = 128$, and for `Llama-2-70b`, we have $d=8192,h=64, d_k = d_v = 128$.
+For simplicity, the scaling factor of the Attention matrix is omitted here. In practice, a common setting is $d_k = d_v = d / h$, so we have
+
+| model name | $d$ | $h$ | $d_k$ | $d_v$ |
+|---|---|---|---|---|
+| `Llama-2-7b` | 4096 | 32 | 128 | 128 |
+| `Llama-2-70b` | 8192 | 64 | 128 | 128 |
 
 Since we only consider the causal attention used by mainstream autoregressive LLMs here, when generating recursively token by token, the newly predicted $(t+1)$-th token will not affect the already calculated $\boldsymbol{k}_{\leq t}^{(s)} ,\boldsymbol{v}_{\leq t}^{(s)}$. Therefore, we can cache this part of the result for subsequent generation calls, avoiding unnecessary repeated calculations. This is the so-called **KV Cache**.
 
@@ -48,13 +52,13 @@ The subsequent MQA, GQA, and MLA are all products developed around the theme of 
 
 A natural question is: <font color=red>why is reducing the size of the KV Cache so important?</font>
 
-As we all know, LLM inference is generally performed on GPUs, and the video memory of a single GPU is limited. Part of it is used to store the model parameters and activation values of the forward calculation, which depends on the size of the model and is a constant after the model is selected; the other part is used to store the KV Cache of the model, which depends not only on the size of the model, but also on the input length of the model, which means it grows dynamically during the inference process. When the context length is long enough, its size will dominate, possibly exceeding the total video memory of a single card or even a single machine (8 cards).
+As we all know, LLM inference is generally performed on GPUs, and the VRAM of a single GPU is limited. Part of it is used to store the model parameters and activation values of the forward calculation, which depends on the size of the model and is a constant after the model is selected; the other part is used to store the KV Cache of the model, which depends not only on the size of the model, but also on the input length of the model, which means it grows dynamically during the inference process. When the context length is long enough, its size will dominate, possibly exceeding the total VRAM of a single GPU or even a single node (8 GPUs).
 
-The principle of deploying models on GPUs is: if it can be deployed on one card, don't span multiple cards; if it can be deployed on one machine, don't span multiple machines. This is because in terms of communication bandwidth, intra-card > inter-card > inter-machine.
+The principle of deploying models on GPUs is: if it can be deployed on one GPU, don't span multiple GPUs; if it can be deployed on one node, don't span multiple nodes. This is because in terms of communication bandwidth, intra-GPU > inter-GPU > inter-node.
 
-The more devices a model spans during deployment, the more it will be slowed down by the inter-device communication bandwidth, which is the weakest link. In fact, even though the bandwidth of SRAM and HBM in a single H100 card has reached 3 TB/s, this speed is still the bottleneck of inference for short context, not to mention the slower inter-card and inter-machine communication.
+The more nodes a model spans during deployment, the more it will be slowed down by the inter-node communication bandwidth, which is the weakest link. In fact, even though the bandwidth of SRAM and HBM in a single H100 GPU has reached 3 TB/s, this speed is still the bottleneck of inference for short context, not to mention the slower inter-GPU and inter-node communication.
 
-Therefore, the purpose of reducing KV Cache is to achieve inference of longer context on fewer devices, or to allow a larger inference batch size under the same context length, thereby achieving faster inference speed or greater total throughput. Of course, the ultimate goal is to achieve lower inference costs.
+Therefore, the purpose of reducing KV Cache is to achieve inference of longer context on fewer nodes, or to allow a larger inference batch size under the same context length, thereby achieving faster inference speed or greater total throughput. Of course, the ultimate goal is to achieve lower inference costs.
 
 To learn more about this issue, I point the reader towards [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135), [A guide to LLM inference and performance](https://www.baseten.co/blog/llm-transformer-inference-guide/), [LLM inference speed of light](https://zeux.io/2024/03/15/llm-inference-sol/) and other articles. We will not continue to expand here (mainly because I afraid that my limited understanding would mean that the more I write, the more mistakes I will make).
 
@@ -78,13 +82,13 @@ $$
 
 Models that use MQA include [PaLM](https://arxiv.org/pdf/2204.02311), [StarCoder](https://arxiv.org/abs/2305.06161), and [Gemini](https://arxiv.org/abs/2312.11805), among others. It's clear that MQA directly reduces the KV Cache to $1/h$ of its original size, which is very significant and, from the perspective of saving video memory alone, is already the upper limit.
 
-In terms of performance, the loss in most tasks appears to be relatively limited, and MQA's supporters believe that this loss can be compensated for through further training. In addition, it's worth noting that because MQA shares K and V, the number of parameters for Attention will be reduced by nearly half. To keep the total number of model parameters unchanged, the size of FFN/GLU is usually increased accordingly, which can also compensate for some of the performance loss.
+In terms of performance, the loss in most tasks appears to be relatively limited, and MQA's supporters believe that this loss can be compensated for through further training. In addition, it's worth noting that because MQA shares K and V, there is just one matrix for projecting the hidden vector to the key vector, and another for projecting to the value vector, instead of $h$ of them. Thus, the number of parameters for Attention will be reduced by nearly half. To keep the total number of model parameters unchanged, the size of feed-forward or gated linear unit is usually increased accordingly, which can also compensate for some of the performance loss.
 
 ## GQA 
 
 However, some people are concerned that MQA compresses the KV Cache too much, which could affect the model's learning efficiency and the final results. To address this, a transitional version between MHA and MQA, called GQA (<strong><font color=red>G</font></strong>rouped-<strong><font color=red>Q</font></strong>uery <strong><font color=red>A</font></strong>ttention), was developed. It originated from the paper [GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245), which was published last year.
 
-In retrospect, the idea behind GQA is also quite simple: it divides all Heads into $g$ groups (where $g$ is a divisor of $h$), and each group shares the same K and V pair. Mathematically, this can be expressed as:
+In retrospect, the idea behind GQA is also quite naive: it divides all Heads into $g$ groups (where $g$ is a divisor of $h$), and each group shares the same KV pair:
 
 $$
 \begin{equation}
@@ -98,13 +102,15 @@ $$
 \end{equation}
 $$
 
-Here, $\lceil\cdot\rceil$ is the ceiling function. GQA provides a natural transition from MHA to MQA. When $g=h$, it is MHA; when $g=1$, it is MQA. When $1 < g < h$, it only compresses the KV Cache to $g/h$. The compression rate is not as good as MQA, but it also provides greater flexibility and better guarantees in terms of effectiveness. The most well-known users of GQA are probably Meta's open-source [`Llama-2-70B`](https://llama.meta.com/llama2), and the entire [`Llama-3` series](https://llama.meta.com/llama3/). Other models using GQA include [`TigerBot`](https://arxiv.org/abs/2312.08688), [`DeepSeek-V1`](https://arxiv.org/abs/2401.02954), [`StarCoder2`](https://arxiv.org/abs/2402.19173), [Yi](https://arxiv.org/abs/2403.04652), [`ChatGLM2-6B`](https://github.com/THUDM/ChatGLM2-6B), and [`ChatGLM3`](https://github.com/THUDM/ChatGLM3), etc., which are more numerous than models using MQA. Note that although ChatGLM claims to be MQA in its introduction, it is actually GQA with $g=2$.
+Here, $\lceil\cdot\rceil$ is the ceiling function. GQA provides a natural transition from MHA to MQA. When $g=h$, it is MHA; when $g=1$, it is MQA. When $1 < g < h$, it only compresses the KV Cache to $g/h$. The compression rate is not as good as MQA, but it also provides greater flexibility and better guarantees in terms of effectiveness. The most well-known users of GQA are probably Meta's open-source [`Llama-2-70B`](https://llama.meta.com/llama2), and the entire [`Llama-3` series](https://llama.meta.com/llama3/). Other models using GQA include [`TigerBot`](https://arxiv.org/abs/2312.08688), [`DeepSeek-V1`](https://arxiv.org/abs/2401.02954), [`StarCoder2`](https://arxiv.org/abs/2402.19173), [Yi](https://arxiv.org/abs/2403.04652), [`ChatGLM2-6B`](https://github.com/THUDM/ChatGLM2-6B), and [`ChatGLM3`](https://github.com/THUDM/ChatGLM3).[^chatglm] There are many more models using GQA than models using MQA.
 
-`llama2/3-70B` uses $g=8$, and it is the same for most other models of similar parameter count that uses GQA. This is not an accident, but a deliberate choice for efficient inference. We know that a model of 70B scale cannot be deployed on a single card (A100/H100 80G) without extreme quantization. If a single card is not enough, then a single node can be used. Generally, a node contains up to 8 cards. As we said earlier, each attention head is actually computed independently and then concatenated. When $g=8$, it is possible to have each GPU to calculate the Attention Head corresponding to one set of KV. This maximizes KV diversity under the constraint of minimal inter-card communication.
+[^chatglm]: Though the `ChatGLM` report claims to use "Multi-Query Attention" in [page 3 of the report](https://arxiv.org/pdf/2406.12793#page=3), it is actually using GQA with $g=2$, as you can see in [page 5 of the report](https://arxiv.org/pdf/2406.12793#page=5).
+
+`llama-2/3-70B` uses $g=8$, and it is the same for most other models of similar parameter count that uses GQA. This is not an accident, but a deliberate choice for efficient inference. We know that a model of 70B scale cannot be deployed on a single GPU (A100/H100 80G) without extreme quantization. If a single GPU is not enough, then a single node can be used. Generally, a node contains up to 8 GPUs. As we said earlier, each attention head is actually computed independently and then concatenated. When $g=8$, it is possible to have each GPU to calculate the Attention Head corresponding to one set of KV. This maximizes KV diversity under the constraint of minimal inter-GPU communication.
 
 ## MLA
 
-With the groundwork laid by MHA, MQA, and GQA, it becomes relatively easier to understand MLA (<strong><font color=red>M</font></strong>ulti-head <strong><font color=red>L</font></strong>atent <strong><font color=red>A</font></strong>ttention). The technical report for DeepSeek-V2 introduces MLA from the perspective of low-rank projection, leading some readers to ask questions like "Why has LoRA been around for so long, and yet MLA, which is essentially just low-rank projection applied of KV Cache, took such a long time to appear?".
+With the groundwork laid by MHA, MQA, and GQA, it becomes relatively easier to understand MLA (<strong><font color=red>M</font></strong>ulti-head <strong><font color=red>L</font></strong>atent <strong><font color=red>A</font></strong>ttention). The technical report for `DeepSeek-V2` introduces MLA from the perspective of low-rank projection, leading some readers to ask questions like "Why has LoRA been around for so long, and yet MLA, which is essentially just low-rank projection applied of KV Cache, took such a long time to appear?".
 
 However, the author believes that the low-rank projection perspective doesn't get to the heart of the matter. Because if we're talking about low-rank projection, the fact is that if we stack all the K and V of GQA together, we'll find that GQA is *also* basically low-rank projection:
 
@@ -112,11 +118,11 @@ $$
 \begin{equation}\underbrace{\left[\boldsymbol{k}_i^{(1)},\cdots,\boldsymbol{k}_i^{(g)},\boldsymbol{v}_i^{(1)},\cdots,\boldsymbol{v}_i^{(g)}\right]}_{\boldsymbol{c}_i\in\mathbb{R}^{g(d_k+d_v)}} = \boldsymbol{x}_i \underbrace{\left[\boldsymbol{W}_k^{(1)},\cdots,\boldsymbol{W}_k^{(g)},\boldsymbol{W}_v^{(1)},\cdots,\boldsymbol{W}_v^{(g)}\right]}_{\boldsymbol{W}_c\in\mathbb{R}^{d\times g(d_k+d_v)}}\end{equation}
 $$
 
-Here, we combine all $\boldsymbol{k}_i^{(s)},\boldsymbol{v}_i^{(s)}$ and denote them as $\boldsymbol{c}_i$. The corresponding projection matrices are also combined and denoted as $\boldsymbol{W}_c$. Note that generally $d_c = g(d_k+d_v) < d$, so the transformation from $\boldsymbol{x}_i$ to $\boldsymbol{c}_i$ is a low-rank projection. Therefore, the essential improvement of MLA is not the low-rank projection itself, but what is done after the low-rank projection.
+Here, we combine all $\boldsymbol{k}_i^{(s)},\boldsymbol{v}_i^{(s)}$ and denote them as $\boldsymbol{c}_i$. The corresponding projection matrices are also combined and denoted as $\boldsymbol{W}_c$. Note that generally $d_c = g(d_k+d_v) < d$, such as in `Llama-2-70B` where $g = 8, d_k = d_v = 128$, so $d_c = 2048 < d = 8192$, so the transformation from $\boldsymbol{x}_i$ to $\boldsymbol{c}_i$ is *also* a low-rank projection. Therefore, the essential improvement of MLA is not the low-rank projection itself, but what is done after the low-rank projection.
 
 ### Part 1
 
-What does GQA do after the projection? First, it divides the vector into two halves, using them as K and V respectively. Then, each half is further divided into $g$ parts, and each part is copied $h/g$ times, in order to "fill up" the K and V needed by $h$ Attention Heads. We know that splitting and copying are simple linear transformations, so MLA's first key idea is to replace these simple linear transformations with general linear transformations to enhance the model's capacity:
+What does GQA do after the projection? First, it divides the vector $\boldsymbol{c}_i$ into two halves, using them as K and V respectively. Then, each half is further divided into $g$ parts as $\boldsymbol{k}_1^{(s)}, \dots, \boldsymbol{k}_g^{(s)}, \boldsymbol{v}_1^{(s)}, \dots, \boldsymbol{v}_g^{(s)}$, and each is then copied $h/g$ times, in order to "fill up" the K and V needed by $h$ Attention Heads. We know that splitting and copying are simple linear transformations, so MLA's first key idea is to replace these simple linear transformations with general linear transformations to enhance the model's capacity:
 
 $$
 \begin{equation}
@@ -133,17 +139,25 @@ $$
 
 However, while this approach theoretically increases the model's capacity, let's not forget that the main purpose of GQA is to reduce KV Cache. For the sake of saving computation and communication costs, we generally cache the projected $\boldsymbol{k}_i, \boldsymbol{v}_i$ rather than the pre-projected $\boldsymbol{c}_i$ or $\boldsymbol{x}_i$. However, MLA's approach, by using different projection matrices, makes all K and V Heads distinct again. This means the KV Cache size would revert to the same size as MHA, which goes against the very design purpose of GQA.
 
-In response to this, MLA found that we can leverage the specific form of dot-attention and apply a simple clever identity to circumvent this problem. First, we proceed as usual during the training, at which point the optimization space is not large. Then, during the inference, we use this identity
+To solve this problem, MLA uses a simple clever identity on the dot-attention to circumvent this problem. First, we proceed as usual during the training. Then, during the inference, we use this identity
 
 $$
 \begin{equation}\boldsymbol{q}_t^{(s)} \boldsymbol{k}_i^{(s)}{}^{\top} = \left(\boldsymbol{x}_t\boldsymbol{W}_q^{(s)}\right) \left(\boldsymbol{c}_i\boldsymbol{W}_k^{(s)}\right){}^{\top} = \boldsymbol{x}_t\left(\boldsymbol{W}_q^{(s)}\boldsymbol{W}_k^{(s)}{}^{\top}\right)\boldsymbol{c}_i^{\top} \end{equation}
 $$
 
-This means that during the inference phase, we can merge $\boldsymbol{W}_q^{(s)}\boldsymbol{W}_k^{(s)}{}^{\top}$ as the projection matrix for Q. Then, $\boldsymbol{c}_i$ replaces the original $\boldsymbol{k}_i$. Similarly, since there is another projection matrix after $\boldsymbol{o}_t$, the $\boldsymbol{W}_v^{(s)}$ in $\boldsymbol{v}_i^{(s)} = \boldsymbol{c}_i\boldsymbol{W}_v^{(s)}$ can also be absorbed into the subsequent projection matrix. Thus, equivalently, $\boldsymbol{v}_i$ can also be replaced by $\boldsymbol{c}_i$. This means that at this point, the KV Cache only needs to store all $\boldsymbol{c}_i$, instead of all $\boldsymbol{k}_i^{(s)}$ and $\boldsymbol{v}_i^{(s)}$. Note that $\boldsymbol{c}_i$ is independent of ${}^{(s)}$, which means it is shared by all heads. In other words, during the inference phase, MLA can be converted into an MQA via a clever identity.
+This means that during the inference phase, we can merge $\boldsymbol{W}_q^{(s)}\boldsymbol{W}_k^{(s)}{}^{\top}$ as the projection matrix for Q.[^merge_wqk] Then, $\boldsymbol{c}_i$ replaces the original $\boldsymbol{k}_i$.
+
+Similarly, since there is another projection matrix after $\boldsymbol{o}_t$, the $\boldsymbol{W}_v^{(s)}$ in $\boldsymbol{v}_i^{(s)} = \boldsymbol{c}_i\boldsymbol{W}_v^{(s)}$ can also be absorbed into the subsequent projection matrix. Thus, equivalently, $\boldsymbol{v}_i$ can also be replaced by $\boldsymbol{c}_i$. Specifically, after the attention weights $\alpha_{tj}^{(s)}$ are computed using the dot-attention mechanism, we upcast the latent vector $\boldsymbol{c}_i$ to the value vector $\boldsymbol{v}_i^{(s)}$ using $\boldsymbol{W}_v^{(s)}$, do a weighted sum with the attention weights, then use a final output projection by $\boldsymbol{W}_o^{(s)}$. We can do the same merge at inference time:
+
+$$
+\boldsymbol{v}_t = \sum_{j\leq t} \boldsymbol{c}_j \left(\sum_{s=1}^h \alpha_{tj}^{(s)} \boldsymbol{W}_v^{(s)} \boldsymbol{W}_o^{(s)\top}\right)
+$$
+
+This means that at this point, the KV Cache only needs to store all $\boldsymbol{c}_i$, instead of all $\boldsymbol{k}_i^{(s)}$ and $\boldsymbol{v}_i^{(s)}$. Note that $\boldsymbol{c}_i$ is independent of ${}^{(s)}$, which means it is shared by all heads. In other words, during the inference phase, MLA can be converted into an MQA via a clever identity.
+
+[^merge_wqk]: Note a detail here. Merging $\boldsymbol{W}_q^{(s)}\boldsymbol{W}_k^{(s)}{}^{\top}$ into a single matrix is only valid assuming infinite precision. In practice, if we use single precision, especially `BF16`, the precision loss after the matrix-merge is often noticeable. After multiple layers, this loss may become large enough that we would have to post-process.
 
 To reiterate, the key theme of this article has always been reducing the KV Cache. So what has MLA achieved so far? The answer is that it has enhanced the capacity of GQA through different projection matrices, while maintaining the same size of KV Cache during inference. Conversely, if we only need capacities similar to GQA, can we further reduce the KV Cache? In other words, $d_c$ doesn't need to be $g(d_k+d_v)$, but can be a smaller value (`DeepSeek-V2` uses $d_c = 512$), thereby further compressing the KV Cache. This is the key idea of MLA.
-
-(Note a detail here. Merging $\boldsymbol{W}_q^{(s)}\boldsymbol{W}_k^{(s)}{}^{\top}$ into a single matrix is only valid assuming infinite precision. In practice, if we use single precision, especially `BF16`, the precision loss after the matrix-merge is often noticeable. After multiple layers, this loss may become large enough that we would have to post-process.)
 
 ### Part 2
 
@@ -163,7 +177,7 @@ $$
 
 The term $\boldsymbol{W}_q^{(s)}\color{#3ce2f7}{\boldsymbol{\mathcal{R}}_{t-i}}\boldsymbol{W}_k^{(s)}{}^{\top}$ cannot be combined into a static projection matrix (since it's related to the position difference $t-i$, which is not static), thus the key idea of MLA could not be combined with RoPE.
 
-Some time ago, I had the honor of discussing this issue with the DeepSeek team. This problem turned out to be fundamental, so I couldn't actually offer any effective advice at the time. The simplest approach is to just give up RoPE and switch to another position encoding scheme that uses positional encoding based on attention bias, such as [ALiBi](https://arxiv.org/abs/2108.12409). However, DeepSeek's experiments show that it is significantly inferior to RoPE (note that MLA cannot use RoPE, but rather it's that after adding RoPE, the identity transformation trick cannot be used to reduce KV Cache). I also suggested trying [Sandwich](https://arxiv.org/abs/2212.10356), which doesn't monotonically decay to negative infinity like ALiBi, so it might have better results, but it feels like a band-aid hack, not a real solution. Another compromise is to change the input of $\boldsymbol{q}_i$ to $\boldsymbol{c}_i$ as well, and then add RoPE after $\boldsymbol{c}_i$, i.e.,
+Some time ago, I had the honor of discussing this issue with the DeepSeek team. This problem turned out to be fundamental, so I couldn't actually offer any effective advice at the time. The simplest approach is to just give up RoPE and switch to another position encoding scheme that uses positional encoding based on attention bias, such as [ALiBi](https://arxiv.org/abs/2108.12409). However, DeepSeek's experiments show that it is significantly inferior to RoPE (note that MLA *can* use RoPE, but after adding RoPE, the identity transformation trick cannot be used to reduce KV Cache). I also suggested trying [Sandwich](https://arxiv.org/abs/2212.10356), which doesn't monotonically decay to negative infinity like ALiBi, so it might have better results, but it feels like a band-aid hack, not a real solution. Another compromise is to change the input of $\boldsymbol{q}_i$ to $\boldsymbol{c}_i$ as well, and then add RoPE after $\boldsymbol{c}_i$, i.e.,
 
 $$
 \begin{equation}\boldsymbol{q}_i^{(s)} = \boldsymbol{c}_i\color{#3ce2f7}{\boldsymbol{\mathcal{R}}_i}\boldsymbol{W}_q^{(s)},\quad\boldsymbol{k}_i^{(s)} = \boldsymbol{c}_i\color{#3ce2f7}{\boldsymbol{\mathcal{R}}_i}\boldsymbol{W}_k^{(s)}\end{equation}
@@ -192,7 +206,7 @@ In this way, the dimensions without RoPE can repeat the operation described in [
 
 One final detail: the final iteration of MLA also changes the input of Q to a low-rank projection form. This is not related to reducing KV Cache, but mainly to reduce the amount of parameters and the corresponding gradients[^lora-query] during training that occupy GPU memory:
 
-[^lora-query]: The original paper said "Moreover, in order to reduce the activation memory during training, we also perform 7low-rank compression for the queries, even if it cannot reduce the KV cache", which I personally don't quite understand.
+[^lora-query]: The original paper said "Moreover, in order to reduce the activation memory during training, we also perform low-rank compression for the queries, even if it cannot reduce the KV cache", which I personally don't quite understand.
 
 $$
 \begin{equation}
@@ -244,7 +258,7 @@ At this point, the Head Size of Q and K becomes $d_c + d_r$, while the Head Size
 
 So why does it still improve inference efficiency? This brings us back to the issue discussed in the [Bottleneck](#bottleneck) section. We can divide LLM inference into two parts: inference on the prompt for generating the first Token (Prefill) and generating each subsequent token (Generation). The Prefill stage involves parallel computation over all tokens in the prompt and storing the corresponding KV Cache. This stage can be bottlenecked by all of computation, bandwidth, and memory. Although MLA increases the computational cost, the reduction in KV Cache also reduces the pressure on memory and bandwidth, so it's roughly equal trade-off without benefit or cost. However, in the Generation stage, since only one token is computed at each step, it is only bottlenecked by bandwidth and memory. Therefore, the introduction of MLA can theoretically significantly improve the speed of Generation.
 
-There is another detail that fully reflects this characteristic. In a typical LLM architecture, the parameters satisfy $h \times d_k = d$, meaning `num_heads * head_size = hidden_size`. However, DeepSeek-V2 is different. It has $d_k=128, d=5120$, but $h=128$, which is 3 times the usual setting! This is because the KV Cache size of MLA is independent of $h$. Increasing $h$ only increases the computational cost and improves the model's ability, but it does not increase the KV Cache, so it does not cause a speed bottleneck.
+There is another detail that fully reflects this characteristic. In a typical LLM architecture, the parameters satisfy $h \times d_k = d$, meaning `num_heads * head_size = hidden_size`. However, `DeepSeek-V2` is different. It has $d_k=128, d=5120$, but $h=128$, which is 3 times the usual setting! This is because the KV Cache size of MLA is independent of $h$, thus, increasing $h$ only increases the computational cost and improves the model's ability, but it does not increase the KV Cache, so it does not cause a speed bottleneck.
 
 ## Summary
 
@@ -253,3 +267,5 @@ This article briefly outlines the evolution of multi-head attention, particularl
 ## Appendix: Metadata
 
 Original is [缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA](https://kexue.fm/archives/10091) posted on the homepage of Jianlin Su (苏剑林).
+
+I added some extra explanatory notes here and there.
