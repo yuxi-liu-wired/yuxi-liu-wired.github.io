@@ -747,33 +747,33 @@ They soon produced an ASR model that achieved perfect accuracy on this, so they 
 What is a good statistician to do? Declare victory? Since "there's no data like more data", more data it is.
 
 | Source                                    | millions of words |
-| :---------------------------------------- | --------------: |
-| Laser patent corpus                       | 2 |
-| Richard Garwin                            |    2.5 |
+| :---------------------------------------- | ----------------: |
+| Laser patent corpus                       |       2 |
+| Richard Garwin                            |     2.5 |
 | Associated Press                          |      20 |
 | Oil company                               |      25 |
-| Federal Register                          |      unknown |
+| Federal Register                          | unknown |
 | American Printing House for the Blind     |      60 |
 | IBM Deposition                            |     100 |
 | Hansard corpus                            |     100 |
+| Total                                     |    300+ |
 : Table of data.
 
 Getting those early datasets had a kind of wild-west let's-make-a-deal feeling to it:[^hong-kong-hansard]
 
 * [Richard Garwin](https://en.wikipedia.org/wiki/Richard_Garwin), who had kept a digitized copy of all his correspondence typed by 4 secretaries, donated his corpus.
 * "When Peter joined IBM in the early 80s, he negotiated with Verbex, his former employer, to give us their 20 million word collection of text for the Associated Press news wire."
-* An unspecified oil company was willing to donate some digitized documents, but they didn't want to provide the complete documents for unspecified concerns, but the team convinced them to send a sorted list of all 11-grams. Then they reconstructed the text as if sequencing [DNA contigs](https://en.wikipedia.org/wiki/Contig)! The conversation went as follows (much artistic liberties taken):
+* An unspecified oil company was willing to donate some digitized documents, but they didn't want to provide the complete documents for unspecified concerns, but the team convinced them to send a sorted list of all 11-grams. Then they reconstructed the text as if sequencing [DNA contigs](https://en.wikipedia.org/wiki/Contig)! The conversation went somewhat as follows (much artistic liberties taken):
   * "Why did you reconstruct the documents?"
   * "Well, you did agree that we can compress the dataset however we want."
   * "Yes, and?"
   * "And, since a corpus with $N$ words would result in $N$ 11-grams, the dataset you gave us has $11N$ words, so we were *merely* compressing the dataset by a factor of 11."
-  * "Looks good to me."
+  * "Sounds good."
 * The [Federal Register](https://en.wikipedia.org/wiki/Federal_Register) was maintained electronically. "Peter went down to Washington to do some work for the government, and in return they gave us access to all that text."
 * The [American Printing House for the Blind](https://en.wikipedia.org/wiki/American_Printing_House_for_the_Blind) had typed in many books and periodicals to produce Braille versions of it, and they donated 20 million words.
 * In 1969, the US Departmen of Justice launched the largest antitrust case against IBM, alleging it was being monopolistic in the computer industry. The suit dragged on until 1982, costing up to around \$100M, when it was finally dismissed "without merit". It was "the Antitrust Division's Vietnam". [@lopatkaUnitedStatesIBM2000] During this litigation, IBM kept "hundreds of key punch operators \[transcribing\] the text of the various depositions that IBM had provided the governments lawyers", and all that 100 million words went to the ASR team.
 * In the 1980s, [John Cocke](https://en.wikipedia.org/wiki/John_Cocke_(computer_scientist)) during a flight heard about the Hansard corpus from the person sitting next to him, and they immediately obtained a 100-million-word section of it.
 
- 
 Already in 1976, their ASR system had reached state of the art performance. On the same task as the ARPA project, it reached higher accuracy, and only took 30 MIP to process 1 second of speech. [@reddySpeechRecognitionMachine1976] Though logical ASR continued with systems like Hearsay-II (1980), as the 1980s went on, none could deny the practical success of statistical ASR anymore, even if, compared to logical ASR, statistical ASR was far from linguistic theories of human speech recognition.
 
 In the 1990s, all state of the art ASR were statistical, usually HMM-based. Such a model has multiple levels.
