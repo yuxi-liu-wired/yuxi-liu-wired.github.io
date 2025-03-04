@@ -2,7 +2,7 @@
 title: "How to do field-theoretic calculations"
 author: "Yuxi Liu"
 date: "2024-04-11"
-date-modified: "2024-06-20"
+date-modified: "2025-02-16"
 categories: [math, physics, scaling]
 format:
   html:
@@ -43,22 +43,24 @@ $$
 2. The constraint $C$ is handled by introducing a Dirac delta factor:
 
 $$
-=_{\ln} \ub{\int\cdots\int}{$N \to \infty$} (\text{something}) \times (\delta^{(n)}(C' - C))^N
+=_{\ln} \ub{\int\cdots\int}{$N \to \infty$} (\text{something}) \times \delta^{(n)}(C' - C)
 $$
 
-3. Express the Dirac delta function as a Fourier transform using $\delta^{(n)}(x) = \frac{1}{2\pi}\int e^{-i x \lambda} d\lambda$, then exchange the order of integral.
+where $n$ is the number of conditions within $C$. For example, if the constraint says $\sum_i x_i^2 = 1$, then $n=1$. If the constraint also says $\sum_{ij} x_ix_j = 0$, then $n=2$, and so on.
+
+3. Express the Dirac delta function as a Fourier transform using $\delta^{(n)}(x) = \frac{1}{(2\pi)^n}\int_{\R^n} e^{-i x \lambda} d\lambda$, then exchange the order of integral.
 4. Put the inner integral into an exponent, and do some rewriting, resulting in something like
 
 $$
-=_{\ln} \ub{\int\cdots\int}{$n$} (\text{something else}) e^{N \ln \int(\cdots)d^N x} d^n\lambda
+=_{\ln} \ub{\int\cdots\int}{$n$} (\text{something unimportant}) e^{N \ln \int(\cdots)d^N x} d^n\lambda
 $$
 
 Define $S[\lambda] := -\ln \int(\cdots)d^N x$, which is sometimes called the **field free energy**.
 
-5. Argue that, at large $N$, the integral is dominated by the stationary point of $S[\lambda]$.
-6. Write down $\nabla S = 0$, and give it the fancy name of **mean field equation**.
-7. Solve the mean field equation to be some $\lambda^*$.
-8. Declare the result to be 
+1. Argue, at large $N$, the integral is dominated by the point where $\nabla S[\lambda] = 0$. This has many names: method of steepest descent, saddle point method, stationary point method, stationary-phase method, etc.
+2. Write down $\nabla S = 0$, and give it the fancy name of **mean field equation**.
+3. Solve the mean field equation to be some $\lambda^*$.
+4. Declare the result to be 
 
 $$=_{\ln} e^{-N S[\lambda^*]}$$
 

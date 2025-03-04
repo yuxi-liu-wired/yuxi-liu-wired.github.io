@@ -3,7 +3,7 @@ title: "Predicting AGI by the Turing Test"
 
 author: "Yuxi Liu"
 date: "2024-01-20"
-date-modified: "2024-01-20"
+date-modified: "2025-02-25"
 categories: [AI, scaling, math]
 format:
   html:
@@ -290,7 +290,10 @@ Similar to the Hutter prize, the [Large Text Compression Benchmark](https://matt
 | [@coverConvergentGamblingEstimate1978] | guessing game | $\leq 1.3 \;\rm{bit/character}$ | $\leq 1.3$ |
 | [@brownEstimateUpperBound1992] | 3-gram language model | $\leq 1.75 \;\rm{bit/character}$ | $\leq 1.75$ |
 | [@behrjrEstimatingComparingEntropy2002] | n-gram language model | $\leq 1.46 \;\rm{bit/character}$ | $\leq 1.46$ |
-| [@hoffmannTrainingComputeOptimalLarge2022] | Transformer language model, extrapolation | $L_\infty = 1.69 \;\rm{nat/token}$ | $\sim 0.54$ |
+| [@kaplanScalingLawsNeural2020] | Transformer language model, extrapolation | $\sim 1.7 \;\rm{nat/token}$ | $\sim 0.57$ |
+| [@hoffmannTrainingComputeOptimalLarge2022] | Transformer language model, extrapolation | $L_\infty = 1.69 \;\rm{nat/token}$ | $\sim 0.54$[^tokenizer-difference] |
+
+[^tokenizer-difference]: Because the tokenizers differ, the same `nat/token` translates to different `bit/char`.
 
 Notably, the above table has mostly upper bounds, and only one dubious lower bound (by Shannon) from 1951. Perhaps lower bounds can be established by using [randomness extractors](https://en.wikipedia.org/wiki/Randomness_extractor) on a large corpus, and checking that the output from the extractor passes pseudorandomness tests.
 
@@ -453,7 +456,9 @@ If someone has created an infinite sequence of coin flips $X_{-\infty:+\infty}$,
 
 How do we measure the entropy of an English speaker? It speaks token by token, and we have to measure the average information we obtain per token. The problem is that there are two senses of "average". It could be the time-average: we listen to the speaker speak for a very long time, and calculate the entropy in the speech. It could be the ensemble-average: we listen to the speaker speak for a very long time, then do it again, then again, etc, then average together the time-averages.
 
-If the speaker is ergodic, then the speaker essentially has just one speech, and any two samples of its speech are just translations of each other. Consequently, it is intuitively clear that with probability 1, the time-average of the entropy of one speech equals the ensemble-average of the entropy of all speeches. Intuitively, with probability 1,
+If the speaker is ergodic, then the speaker essentially has just one speech, and any two samples of its speech are just translations of each other.[^ergodicity-and-self-averaging] Consequently, it is intuitively clear that with probability 1, the time-average of the entropy of one speech equals the ensemble-average of the entropy of all speeches. Intuitively, with probability 1,
+
+[^ergodicity-and-self-averaging]: Statistical mechanists might recognize this as saying that the language is [self-averaging](https://en.wikipedia.org/wiki/Self-averaging). That is, sampling many speeches from the language is essentially the same as sampling one very long speech that we then cut into many sub-speeches.
 
 $$
 \frac{1}{n} \ln Pr(X_{1:n}) \to \E\lrs{\frac{1}{n} \ln Pr(X_{1:n})}
