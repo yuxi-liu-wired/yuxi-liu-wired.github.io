@@ -16,6 +16,8 @@ confidence: "certain"
 importance: 3
 ---
 
+{{< include ../../../utils/blog_utils/_macros.tex >}}
+
 # How should the learning rate change as batch size increase? {#sec-learning-rate-batch-size}
 
 [当batch size增大时，学习率该如何随之变化？ - 科学空间|Scientific Spaces](https://kexue.fm/archives/10542) (2024-11-14)
@@ -48,7 +50,9 @@ This gives us the square root scaling law between learning rate and batch size. 
 
 Interestingly, linear scaling, i.e., $\eta\propto B$, often performs better in practice. Even those who first proposed square root scaling in [*One weird trick for parallelizing convolutional neural networks*](https://arxiv.org/abs/1404.5997) pointed this out in their paper and stated they couldn't provide a reasonable explanation for it.
 
-In some sense, linear scaling better matches our intuitive understanding, especially as in [*Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour*](https://arxiv.org/abs/1706.02677), where assuming the gradient direction of n consecutive batches doesn't change much, linear scaling is almost obviously valid. However, this assumption is clearly too strong. Relaxing this assumption requires connecting SGD with SDE (Stochastic Differential Equations), which was accomplished by [*Stochastic Modified Equations and Dynamics of Stochastic Gradient Algorithms I: Mathematical Foundations*](https://arxiv.org/abs/1811.01558), but the first paper to use this to analyze the relationship between learning rate and batch size should be [*On the Generalization Benefit of Noise in Stochastic Gradient Descent*](https://arxiv.org/abs/2006.15081).
+In some sense, linear scaling better matches our intuitive understanding, especially as in [*Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour*](https://arxiv.org/abs/1706.02677). Indeed, if the gradient direction of $n$ consecutive minibatches doesn't change much, then if we batch those $n$ minibatches into one batch, we would be dividing by $\frac{1}{nB}$, yielding $\approx \frac{1}{n} \sum_{i=1}^B g_i$. So to compensate for that, we should scale learnig rate by $n$.
+
+However, assuming that all $g_i$ should point in roughly the same direction is clearly too strong. Relaxing this assumption requires connecting SGD with SDE (Stochastic Differential Equations), which was accomplished by [*Stochastic Modified Equations and Dynamics of Stochastic Gradient Algorithms I: Mathematical Foundations*](https://arxiv.org/abs/1811.01558), but the first paper to use this to analyze the relationship between learning rate and batch size should be [*On the Generalization Benefit of Noise in Stochastic Gradient Descent*](https://arxiv.org/abs/2006.15081).
 
 In hindsight, establishing this connection isn't hard to understand. Let the model parameters be $\boldsymbol{\theta}$, then the SGD update rule can be rewritten as:
 
@@ -71,19 +75,19 @@ $$
 \begin{equation}d\boldsymbol{\theta} = - \boldsymbol{g}_t dt - \sqrt{\frac{\eta\boldsymbol{\Sigma}_t}{B}}d\boldsymbol{w}\end{equation}
 $$
 
-Therefore, to ensure the running results don't change significantly when B changes, the form of the above SDE should remain unchanged, which gives us linear scaling $\eta\propto B$. The most crucial step in this process is that <u>the step size of the noise term in SDE is the square root of the non-noise term</u>, thus separating out a term $\sqrt{\eta}$. We've also commented on this in [*A Casual Discussion of Generative Diffusion Models (Part Five): General Framework SDE Chapter*](https://kexue.fm/archives/9209). Simply put, zero-mean Gaussian noise has a certain cancellation effect over the long term, so the step size must be increased to manifest the noise effect.
+Therefore, to ensure the running results don't change significantly when $B$ changes, the form of the above SDE should remain unchanged, which gives us linear scaling $\eta\propto B$. The most crucial step in this process is that <u>the step size of the noise term in SDE is the square root of the non-noise term</u>, thus separating out a term $\sqrt{\eta}$. We've also commented on this in [*A Casual Discussion of Generative Diffusion Models (Part 5): General Framework SDE Chapter*](https://kexue.fm/archives/9209). Simply put, zero-mean Gaussian noise has a certain cancellation effect over the long term, so the step size must be increased to manifest the noise effect.
 
-The above conclusions are all based on the SGD optimizer. The paper [*On the SDEs and Scaling Rules for Adaptive Gradient Algorithms*](https://arxiv.org/abs/2205.10287) extended it to optimizers like RMSprop and Adam, resulting in <u>square root scaling</u>. Similarly, the slightly earlier [*Large Batch Optimization for Deep Learning: Training BERT in 76 minutes*](https://arxiv.org/abs/1904.00962) also applied square root scaling when testing Adam and its variant LAMB. More content can be found in the blog [*How to Scale Hyperparameters as batch size Increases*](https://www.cs.princeton.edu/~smalladi/blog/2024/01/22/SDEs-ScalingRules/).
+The above conclusions are all based on the SGD optimizer. The paper [*On the SDEs and Scaling Rules for Adaptive Gradient Algorithms*](https://arxiv.org/abs/2205.10287) extended it to optimizers like RMSprop and Adam, resulting in <u>square root scaling</u>. Similarly, the slightly earlier [*Large Batch Optimization for Deep Learning: Training BERT in 76 minutes*](https://arxiv.org/abs/1904.00962) also applied square root scaling when testing Adam and its variant LAMB. More content can be found in the blogpost [*How to Scale Hyperparameters as Batch Size Increases*](https://www.cs.princeton.edu/~smalladi/blog/2024/01/22/SDEs-ScalingRules/).
 
 ## Facing losses head on
 
-It's certain that whether it's square root scaling or linear scaling, they can only hold approximately within a local range, because they both include the conclusion that, as long as the batch size is large enough, the learning rate can be arbitrarily large. That is obviously impossible. Additionally, the previous two sections focused on variance, but our fundamental task is to reduce the loss function, so a loss-function-oriented approach might be more essential.
+It's certain that whether it's square root scaling or linear scaling, they can only hold approximately within a local range, because they both include the conclusion that, as long as the batch size is large enough, the learning rate can be arbitrarily large. That is obviously impossible. Additionally, the previous two sections focused on variance, but our fundamental task is to reduce the loss function, so we should start with the loss function.
 
 ### Monotonic convergence
 
 A classic work from this perspective is OpenAI's [*An Empirical Model of Large-Batch Training*](https://arxiv.org/abs/1812.06162), which analyzes the optimal learning rate for SGD through a second-order approximation of the loss function, concluding that the learning rate increases monotonically with batch size, but has an upper bound. The same approach also appeared in the slightly earlier [*Dissecting Adam: The Sign, Magnitude and Variance of Stochastic Gradients*](https://arxiv.org/abs/1705.07774), though that paper wasn't used to analyze the role of batch size.
 
-The most crucial idea in the entire derivation is to view the learning rate as an optimization parameter: Let the loss function be $\mathcal{L}(\boldsymbol{\theta})$, the current batch's gradient be $\tilde{\boldsymbol{g}}_B$, then the loss function after SGD is $\mathcal{L}(\boldsymbol{\theta} - \eta\tilde{\boldsymbol{g}}_B)$. We view the solution of the optimal learning rate as an optimization problem:
+The key to the entire derivation is to view the learning rate as an optimization parameter: Let the loss function be $\mathcal{L}(\boldsymbol{\theta})$, the current batch's gradient be $\tilde{\boldsymbol{g}}_B$, then the loss function after SGD is $\mathcal{L}(\boldsymbol{\theta} - \eta\tilde{\boldsymbol{g}}_B)$. We view the solution of the optimal learning rate as an optimization problem:
 
 $$
 \begin{equation}\eta^* = \mathop{\text{argmin}}_{\eta} \mathbb{E}[\mathcal{L}(\boldsymbol{\theta} - \eta\tilde{\boldsymbol{g}}_B)]\end{equation}
@@ -95,13 +99,13 @@ $$
 \begin{equation}\mathcal{L}(\boldsymbol{\theta} - \eta\tilde{\boldsymbol{g}}_B) \approx \mathcal{L}(\boldsymbol{\theta}) - \eta\tilde{\boldsymbol{g}}_B^{\top}\underbrace{\frac{\partial \mathcal{L}(\boldsymbol{\theta})}{\partial\boldsymbol{\theta}}}_{= \boldsymbol{g}} + \frac{1}{2}\eta^2 \tilde{\boldsymbol{g}}_B^{\top}\underbrace{\frac{\partial^2 \mathcal{L}(\boldsymbol{\theta})}{\partial\boldsymbol{\theta}^2}}_{\triangleq \boldsymbol{H}}\tilde{\boldsymbol{g}}_B = \mathcal{L}(\boldsymbol{\theta}) - \eta\tilde{\boldsymbol{g}}_B^{\top}\boldsymbol{g} + \frac{1}{2}\eta^2 \tilde{\boldsymbol{g}}_B^{\top}\boldsymbol{H}\tilde{\boldsymbol{g}}_B\end{equation}
 $$
 
-Here, $\boldsymbol{H}$ is the Hessian matrix, and $\frac{\partial \mathcal{L}(\boldsymbol{\theta})}{\partial\boldsymbol{\theta}}$ is the gradient of the loss function. The ideal objective function is based on all samples, which is why its gradient is the mean $\boldsymbol{g}$ of $\tilde{\boldsymbol{g}}_B$. Taking the expectation, we get:
+Here, $\boldsymbol{H}$ is the Hessian matrix, and $\frac{\partial \mathcal{L}(\boldsymbol{\theta})}{\partial\boldsymbol{\theta}}$ is the gradient of the loss function. The ideal objective function $\mathcal L$ is the loss averaged over all samples, which is why its gradient $\boldsymbol{g}$ is the average of $\tilde{\boldsymbol{g}}_B$. Taking the expectation, we get:
 
 $$
 \begin{equation}\mathbb{E}[\mathcal{L}(\boldsymbol{\theta} - \eta\tilde{\boldsymbol{g}}_B)] \approx \mathbb{E}[\mathcal{L}(\boldsymbol{\theta}) - \eta\tilde{\boldsymbol{g}}_B^{\top}\boldsymbol{g} + \frac{1}{2}\eta^2 \tilde{\boldsymbol{g}}_B^{\top}\boldsymbol{H}\tilde{\boldsymbol{g}}_B] = \mathcal{L}(\boldsymbol{\theta}) - \eta\boldsymbol{g}^{\top}\boldsymbol{g} + \frac{1}{2}\eta^2 \mathbb{E}[\tilde{\boldsymbol{g}}_B^{\top}\boldsymbol{H}\tilde{\boldsymbol{g}}_B]\end{equation}
 $$
 
-The last term involves a slight trick:
+The last term involves tricks with the cyclic property of trace:
 
 $$
 \begin{equation}\begin{aligned}
@@ -110,7 +114,7 @@ $$
 \end{aligned}\end{equation}
 $$
 
-The transformation process mainly uses $\text{Tr}(\boldsymbol{A}\boldsymbol{B}) = \text{Tr}(\boldsymbol{B}\boldsymbol{A})$. Now, assuming the positive definiteness of $\boldsymbol{H}$, the problem becomes finding the minimum of a quadratic function, which is easily solved as:
+Now, assuming $\boldsymbol{H}$ is positive definite (i.e. the loss function looks like a bowl), the problem becomes finding the minimum of a quadratic function:
 
 $$
 \begin{equation}\eta^* \approx \frac{\boldsymbol{g}^{\top}\boldsymbol{g}}{\boldsymbol{g}^{\top}\boldsymbol{H}\boldsymbol{g} + \text{Tr}(\boldsymbol{\Sigma}\boldsymbol{H})/B} = \frac{\eta_{\max}}{1 + \mathcal{B}_{\text{noise}}/B}\end{equation}
@@ -162,7 +166,7 @@ This is the scaling law between the amount of training data and the number of tr
 
 Additionally, since $\mathcal{B}_{\text{noise}} = E_{\min}/S_{\min}$, the above equation also provides another approach to estimate $\mathcal{B}_{\text{noise}}$: obtain multiple (S,E) pairs through multiple experiments and grid searches, then fit the above equation to estimate $E_{\min}$ and $S_{\min}$, and subsequently calculate $\mathcal{B}_{\text{noise}}$.
 
-## Adaptive version
+## With adaptive learning rates
 
 It must be said that OpenAI, as one of the pioneers of various Scaling Laws, deserves its reputation. The aforementioned analysis is quite brilliant, and the results are quite rich. What's even more remarkable is that the entire derivation process is not complicated, giving a sense of elegant necessity. However, the work we have just worked through is all based on SGD, not applicable to adaptive learning rate optimizers like Adam was still unclear. That analysis was done by [*Surge Phenomenon in Optimal Learning Rate and Batch Size Scaling*](https://arxiv.org/abs/2405.14578).
 
@@ -530,7 +534,7 @@ $$
 \begin{equation}\boldsymbol{U},\boldsymbol{\Sigma},\boldsymbol{V}^{\top} = SVD(\boldsymbol{M}) \quad\Rightarrow\quad \text{msign}(\boldsymbol{M}) = \boldsymbol{U}_{[:,:r]}\boldsymbol{V}_{[:,:r]}^{\top}\end{equation}
 $$
 
-where $\boldsymbol{U}\in\mathbb{R}^{n\times n},\boldsymbol{\Sigma}\in\mathbb{R}^{n\times r},\boldsymbol{V}\in\mathbb{R}^{m\times m}$, and $r$ is the rank of $\boldsymbol{M}$. We will expand on more theoretical details later, but first let's try to intuitively grasp the following fact:
+where $\boldsymbol{U}\in\mathbb{R}^{n\times n},\boldsymbol{\Sigma}\in\mathbb{R}^{r \times r},\boldsymbol{V}\in\mathbb{R}^{m\times m}$, and $r$ is the rank of $\boldsymbol{M}$. We will expand on more theoretical details later, but first let's try to intuitively grasp the following fact:
 
 > Muon is an adaptive learning rate optimizer, like Adam.
 
@@ -598,39 +602,27 @@ $$
 
 Conversely, the difference between Muon and Signum/Tiger is that the elementwise $\text{sign}(\boldsymbol{M})$ is replaced with the matrix version $\text{msign}(\boldsymbol{M})$.
 
-For an $n$-dimensional vector, we can also view it as an $n\times 1$ matrix, in which case $\text{msign}(\boldsymbol{m}) = \boldsymbol{m}/\Vert\boldsymbol{m}\Vert_2$ is exactly $l_2$ normalization. So, in the Muon framework, we have two perspectives for vectors: one as a diagonal matrix, like the $\gamma$ parameter in LayerNorm, resulting in taking $\text{sign}$ of the momentum; the other as an $n\times 1$ matrix, resulting in $l_2$ normalization of the momentum. Additionally, although input and output Embeddings are also matrices, they are used sparsely, so a more reasonable approach is to treat them as multiple independent vectors.
+For an $n$-dimensional vector, we can also view it as an $n\times 1$ matrix, in which case $\text{msign}(\boldsymbol{m}) = \boldsymbol{m}/\Vert\boldsymbol{m}\Vert_2$ is exactly $l_2$ normalization. So, in the Muon framework, we have two perspectives for vectors: one as a diagonal matrix, like the $\gamma$ parameter in LayerNorm, resulting in taking $\text{sign}$ of the momentum; the other as an $n\times 1$ matrix, resulting in $l_2$ normalization of the momentum. Additionally, although input and output embeddings are also matrices, they are used sparsely, so a more reasonable approach is to treat them as lists of independent vectors.
 
-When $m=n=r$, $\text{msign}(\boldsymbol{M})$ also has the meaning of "optimal orthogonal approximation":
+$\text{msign}(\boldsymbol{M})$ also has the meaning of "optimal orthogonal approximation":
 
 $$
-\begin{equation}\text{msign}(\boldsymbol{M}) = \mathop{\text{argmin}}_{\boldsymbol{O}^{\top}\boldsymbol{O} = \boldsymbol{I}}\Vert \boldsymbol{M} - \boldsymbol{O}\Vert_F^2 \end{equation}
+\begin{equation}\text{msign}(\boldsymbol{M}) = \mathop{\text{argmin}}\Vert \boldsymbol{M} - \boldsymbol{O}\Vert_F^2 \end{equation}
 $$ {#eq-nearest-orth}
 
-Similarly, for $\text{sign}(\boldsymbol{M})$ we can write (assuming $\boldsymbol{M}$ has no zero elements):
+where $\boldsymbol{O}$ is constrained by over $\boldsymbol{O}^{\top}\boldsymbol{O} = \boldsymbol{I}$ if $\boldsymbol{M}$ is a tall matrix, or $\boldsymbol{O}\boldsymbol{O}^{\top} = \boldsymbol{I}$ if $\boldsymbol{M}$ is a fat matrix. Furthermore, if the matrix is full-ranked, that is, $r = \min(m, n)$, then $\boldsymbol{O}$ is the *unique* minimizer of the equation.
+
+This is analogous to how
 
 $$
 \begin{equation}\text{sign}(\boldsymbol{M}) = \mathop{\text{argmin}}_{\boldsymbol{O}\in\{-1,1\}^{n\times m}}\Vert \boldsymbol{M} - \boldsymbol{O}\Vert_F^2\end{equation}
 $$
 
+and how $\text{sign}(\boldsymbol{M})$ is the unique solution when $\boldsymbol{M}$ has only nonzero entries.
+
 Whether it's $\boldsymbol{O}^{\top}\boldsymbol{O} = \boldsymbol{I}$ or $\boldsymbol{O}\in\{-1,1\}^{n\times m}$, we can view both as a kind of regularization constraint on the update amount. So Muon and Signum/Tiger can be seen as optimizers under the same approach: they all start from momentum $\boldsymbol{M}$ to construct the update amount, but choose different regularization methods for the update.
 
-Proof of @eq-nearest-orth:
-
-For orthogonal matrix $\boldsymbol{O}$, we have:
-
-$$
-\begin{equation}\begin{aligned}
-\Vert \boldsymbol{M} - \boldsymbol{O}\Vert_F^2 =&\,  \Vert \boldsymbol{M}\Vert_F^2 + \Vert \boldsymbol{O}\Vert_F^2 - 2\langle\boldsymbol{M},\boldsymbol{O}\rangle_F \\
-=&\,  \Vert \boldsymbol{M}\Vert_F^2 + n - 2\text{Tr}(\boldsymbol{M}\boldsymbol{O}^{\top})\\
-=&\,  \Vert \boldsymbol{M}\Vert_F^2 + n - 2\text{Tr}(\boldsymbol{U}\boldsymbol{\Sigma}\boldsymbol{V}^{\top}\boldsymbol{O}^{\top})\\
-=&\,  \Vert \boldsymbol{M}\Vert_F^2 + n - 2\text{Tr}(\boldsymbol{\Sigma}\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U})\\
-=&\,  \Vert \boldsymbol{M}\Vert_F^2 + n - 2\sum_{i=1}^n \boldsymbol{\Sigma}_{i,i}(\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U})_{i,i}
-\end{aligned}\end{equation}
-$$
-
-using properties of the [pseudoinverse](https://kexue.fm/archives/10366). Since $\boldsymbol{U}$, $\boldsymbol{V}$, and $\boldsymbol{O}$ are all orthogonal matrices, $\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U}$ is also an orthogonal matrix. Each component of an orthogonal matrix must not exceed 1, and since $\boldsymbol{\Sigma}_{i,i} > 0$, the minimum value of the above equation corresponds to the maximum value of each $(\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U})_{i,i}$, i.e., $(\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U})_{i,i}=1$. This implies $\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U}=\boldsymbol{I}$, that is, $\boldsymbol{O}=\boldsymbol{U}\boldsymbol{V}^{\top}$.
-
-This conclusion can be carefully generalized to cases where $m$, $n$, and $r$ are not equal, but we will not expand on this further here.
+To prove @eq-nearest-orth, note that the Frobenius norm is preserved by left and right multiplication of orthogonal matrices. That is, $\|\boldsymbol{V}\boldsymbol{A}\|_F = \|\boldsymbol{A}\|_F = |\boldsymbol{A}\boldsymbol{U}\|_F$ for any orthogonal matrices $\boldsymbol{U}, \boldsymbol{V}$ of the suitable shapes. Thus it reduces to the special case where $\boldsymbol{M} = \boldsymbol{\Sigma}$. Now, use the fact that $\|\boldsymbol{A}\|_F^2$ is the sum of its column vectors' norm-squared.
 
 ## Iterative solution
 
@@ -711,7 +703,6 @@ where $x_1 \leq x_2$. The advantage of this parameterization is that it explicit
 
 Next, we determine the number of iterations $T$, so that the iteration process becomes a deterministic function. Once we fix the shape of the matrix (i.e., $n$ and $m$), we can sample a batch of matrices and compute the singular values through SVD. Finally, we treat these singular values as inputs, with the target output being 1, and the loss function being the squared error. The entire model is fully differentiable and can be solved using gradient descent. Note that [\@leloykun](https://x.com/leloykun/status/1846165001746501899) assumed $x_1 + x_2 = 2$ and used grid search to solve it.
 
-Some numerical calculation:
 
 $$
 \begin{array}{ccc|ccc|ccc|c|c}
@@ -737,10 +728,10 @@ $$
 
 Here, $\text{mse}_{\text{Muon}}$ is the result of computation done according to the $(a,b,c)$ provided by the Muon authors. Looking through the table, which choice of $(a, b, c)$ is the best clearly depends on both the matrix size $(m, n)$ and the number of iterations $T$. Looking at the loss function, non-square matrices converge more readily than square matrices. The $(a, b, c)$ given by the authors of Muon are probably the optimal solution for square matrices $m = n$ when the number of iterations is $T = 5$. 
 
-For a fixed number of iterations $T$, the result depends on the size of the matrix, which essentially depends on the distribution of singular values. One result worth mentioning about this distribution is that for any fixed "aspect ratio" $c \in (0, \infty)$, if at the $n \to \infty$ limit, $\frac{m}{n} \to c$, then the singular values of the matrix converges to the [Marchenko–Pastur distribution](https://en.wikipedia.org/wiki/Marchenko%E2%80%93Pastur_distribution).
+For a fixed number of iterations $T$, the result depends on the size of the matrix, which essentially depends on the distribution of singular values. One result worth mentioning about this distribution is that for any fixed "aspect ratio" $r \in (0, \infty)$, if at the $n \to \infty$ limit, $\frac{m}{n} \to r$, then the singular values of the matrix converges to a [Marchenko–Pastur distribution](https://en.wikipedia.org/wiki/Marchenko%E2%80%93Pastur_distribution).
 
-Code for generating the table above:
-
+<details> 
+<summary>Code for generating the table above</summary>
 ```python
 import jax
 import jax.numpy as jnp
@@ -771,10 +762,17 @@ k, x1, x2 = w
 a, b, c = 1 + k * x1**2 * x2**2, -k * (x1**2 + x2**2), k
 print(f'{n} & {m} & {T} & {k:.3f} & {x1:.3f} & {x2:.3f} & {a:.3f} & {b:.3f} & {c:.3f} & {f(w, data):.5f}')
 ```
+</details> 
 
 ## Some thoughts
 
-If we choose the default setting of $T=5$, then for an $n\times n$ matrix parameter, each update step of Muon requires at least 15 matrix multiplications between $n\times n$ matrices, which is undoubtedly a significantly larger computational cost than Adam. This might lead some readers to worry whether Muon is practically feasible.
+If we choose the default setting of $T=5$, then for an $n\times n$ matrix parameter, each update step of Muon requires at least 15 matrix multiplications between $n\times n$ matrices:
+
+$$
+\boldsymbol{X}_t (a + (\boldsymbol{X}_t^\top \boldsymbol{X}_t) (b + c (\boldsymbol{X}_t^\top \boldsymbol{X}_t)) )
+$$
+
+which is undoubtedly a significantly larger computational cost than Adam. This might lead some readers to worry whether Muon is practically feasible.
 
 In fact, such concerns are unnecessary. Although Muon's computation is more complex than Adam's, the additional time per step is minimal. My conclusion is that the additional wallclock time is $\leq 5\%$. The Muon's authors claim it can reach as low as $2\%$. This is because Muon's matrix multiplications occur after the current gradient computation and before the next gradient computation, during which almost all computational power would have sat idle anyway. Since these matrix multiplications are of static size and can be parallelized, they don't significantly increase the wallclock time. Moreover, Muon uses one fewer set of cached variables than Adam, resulting in lower memory consumption.
 
@@ -830,19 +828,15 @@ $$
 \begin{equation}\Vert\boldsymbol{\phi}\Vert_p = \sqrt[\uproot{10}p]{\sum_{i=1}^n |\phi_i|^p}\end{equation}
 $$
 
-then [Hölder's inequality](https://en.wikipedia.org/wiki/H%C3%B6lder%27s_inequality) gives $\boldsymbol{g}^{\top}\boldsymbol{\phi} \leq \Vert \boldsymbol{g}\Vert_q \Vert \boldsymbol{\phi}\Vert_p$, where $1/p + 1/q = 1$. Using this, we get
-
-$$
-\begin{equation}\max_{\Vert\boldsymbol{\phi}\Vert_p=1}\boldsymbol{g}^{\top}\boldsymbol{\phi} = \Vert \boldsymbol{g}\Vert_q\end{equation}
-$$
-
-The condition for equality is
+then by the [Hölder's inequality duality](https://en.wikipedia.org/wiki/H%C3%B6lder%27s_inequality) gives $\boldsymbol{g}^{\top}\boldsymbol{\phi} \leq \Vert \boldsymbol{g}\Vert_q \Vert \boldsymbol{\phi}\Vert_p$, where $1/p + 1/q = 1$. The equality is reached precisely at
 
 $$
 \begin{equation}\boldsymbol{\phi}^* = \frac{1}{\Vert\boldsymbol{g}\Vert_q^{q/p}}\Big[\text{sign}(g_1) |g_1|^{q/p},\text{sign}(g_2) |g_2|^{q/p},\cdots,\text{sign}(g_n) |g_n|^{q/p}\Big]\end{equation}
 $$
 
-The [pbSGD](https://www.ijcai.org/proceedings/2020/451) optimizer uses this as the direction vector. In particular, when $p\to\infty$, we have $q\to 1$ and $|g_i|^{q/p}\to 1$, which degenerates to SignSGD, meaning that we can interpret SignSGD as $\|\cdot \|_\infty$-regularized SGD.
+at which point, $\max_{\Vert\boldsymbol{\phi}\Vert_p=1}\boldsymbol{g}^{\top}\boldsymbol{\phi} = \Vert \boldsymbol{g}\Vert_q$.
+
+The [pbSGD](https://www.ijcai.org/proceedings/2020/451) optimizer uses this as the direction vector. In particular, when $p\to\infty$, we have $q\to 1$ and $|g_i|^{q/p}\to 1$, which degenerates to SignSGD, meaning that we can interpret SignSGD as SGD regularized by $\|\cdot \|_\infty$.
 
 ## Matrix norms
 
@@ -1121,7 +1115,7 @@ $$
 
 This eliminates the need for additional Warmup settings and is more adaptive.
 
-For optimizers like Adam, we can use approximate analysis through $\boldsymbol{u}_t=\text{sign}(\boldsymbol{g}_t)$, as in [*How should the learning rate change as batch size increase?*](#sec-learning-rate-batch-size). In this case:
+For optimizers like Adam, we can use approximate analysis through $\boldsymbol{u}_t=\text{sign}(\boldsymbol{g}_t)$, as [previously described](#sec-learning-rate-batch-size). In this case:
 
 $$
 \begin{equation}\Delta \mathcal{L} = -\eta\, \text{sign}(\boldsymbol{g}_t)\cdot \boldsymbol{g}_t = -\eta\, \Vert\boldsymbol{g}_t\Vert_1\end{equation}
@@ -1242,7 +1236,7 @@ $$
 \begin{equation}\text{RMS}(\boldsymbol{W}) = \frac{\Vert \boldsymbol{W}\Vert_F}{\sqrt{nm}} = \sqrt{\frac{1}{nm}\sum_{i=1}^n\sum_{j=1}^m W_{i,j}^2}\end{equation}
 $$
 
-Simply put, RMS measures the average size of each element in the matrix. We observed that the RMS of Adam's update is relatively stable, usually between 0.2 and 0.4, which is why [theoretical analyses](#sec-learning-rate-batch-size) often use SignSGD as an approximation of Adam. Based on this, we suggest aligning the Update RMS of the new optimizer to 0.2 through RMS normalization:
+Simply put, RMS measures the average size of each element in the matrix. We observed that the RMS of Adam's update is relatively stable, usually between 0.2 and 0.4, which is why [theoretical analyses we described previously](#sec-learning-rate-batch-size) often use SignSGD to approximate Adam. Based on this, we suggest aligning the Update RMS of the new optimizer to 0.2 through RMS normalization:
 
 $$
 \begin{gather}
@@ -1270,9 +1264,126 @@ This final formula indicates that it's not appropriate to use the same learning 
 
 We conducted a fairly comprehensive comparison between Adam and Muon on MoE models of sizes 2.4B/16B and found that Muon has significant advantages in both convergence speed and final performance. For detailed comparison results, we recommend reading the original paper; here we only share some excerpts.
 
-First, here's a relatively objective comparison table, including our own controlled variable training comparing Muon and Adam, as well as comparisons with models trained by others (DeepSeek) using Adam with the same architecture (for ease of comparison, Moonlight's architecture is identical to DSV3-Small), showing Muon's unique advantages:
+First, here's a relatively objective comparison table, including our own controlled variable training comparing Muon and Adam, as well as comparisons with models trained by others (DeepSeek) using Adam with the same architecture (for ease of comparison, Moonlight's architecture is identical to DSV3-Small), showing Muon's unique advantages. The following table from the paper compares between Muon (Moonlight) and Adam (Moonlight-A and DSV3-small):
 
-![Comparison between Muon (Moonlight) and Adam (Moonlight-A and DSV3-small)](figure/2528279021.png)
+```{=html}
+<style>table { border-collapse: collapse; width: 100%; margin: 20px 0; font-family: Arial, sans-serif; } th, td { padding: 8px; text-align: center; } th.left-align, td.left-align { text-align: left; } .border-top { border-top: 2px solid black; } .border-bottom { border-bottom: 2px solid black; } .border-right { border-right: 2px solid black; } .border-left { border-left: 2px solid black; } .bold { font-weight: bold; } .category { text-align: center; }</style>
+
+<table class="table-hover caption-top table">
+  <caption>Table 4: Comparison of different models at around 1.2T tokens.</caption>
+  <thead>
+    <tr class="border-top">
+      <th></th>
+      <th class="left-align">Benchmark (Metric)</th>
+      <th>DSV3-Small</th>
+      <th>Moonlight-A@1.2T</th>
+      <th>Moonlight@1.2T</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="border-top">
+      <th></th>
+      <th class="left-align">Activated Params<sup>†</sup></th>
+      <td>2.24B</td>
+      <td>2.24B</td>
+      <td>2.24B</td>
+    </tr>
+    <tr>
+      <th></th>
+      <th class="left-align">Total Params<sup>†</sup></th>
+      <td>15.29B</td>
+      <td>15.29B</td>
+      <td>15.29B</td>
+    </tr>
+    <tr>
+      <th></th>
+      <th class="left-align">Training Tokens</th>
+      <td>1.33T</td>
+      <td>1.2T</td>
+      <td>1.2T</td>
+    </tr>
+    <tr>
+      <th></th>
+      <th class="left-align">Optimizer</th>
+      <td>AdamW</td>
+      <td>AdamW</td>
+      <td>Muon</td>
+    </tr>
+    <tr class="border-top">
+      <th class="category" rowspan="4">English</th>
+      <th class="left-align">MMLU</th>
+      <td>53.3</td>
+      <td>60.2</td>
+      <td class="bold">60.4</td>
+    </tr>
+    <tr>
+      <th class="left-align">MMLU-pro</th>
+      <td>-</td>
+      <td>26.8</td>
+      <td class="bold">28.1</td>
+    </tr>
+    <tr>
+      <th class="left-align">BBH</th>
+      <td>41.4</td>
+      <td class="bold">45.3</td>
+      <td>43.2</td>
+    </tr>
+    <tr>
+      <th class="left-align">TriviaQA</th>
+      <td>-</td>
+      <td>57.4</td>
+      <td class="bold">58.1</td>
+    </tr>
+    <tr class="border-top">
+      <th class="category" rowspan="2">Code</th>
+      <th class="left-align">HumanEval</th>
+      <td>26.8</td>
+      <td>29.3</td>
+      <td class="bold">37.2</td>
+    </tr>
+    <tr>
+      <th class="left-align">MBPP</th>
+      <td>36.8</td>
+      <td>49.2</td>
+      <td class="bold">52.9</td>
+    </tr>
+    <tr class="border-top">
+      <th class="category" rowspan="3">Math</th>
+      <th class="left-align">GSM8K</th>
+      <td>31.4</td>
+      <td>43.8</td>
+      <td class="bold">45.0</td>
+    </tr>
+    <tr>
+      <th class="left-align">MATH</th>
+      <td>10.7</td>
+      <td>16.1</td>
+      <td class="bold">19.8</td>
+    </tr>
+    <tr>
+      <th class="left-align">CMath</th>
+      <td>-</td>
+      <td>57.8</td>
+      <td class="bold">60.2</td>
+    </tr>
+    <tr class="border-top">
+      <th class="category" rowspan="2">Chinese</th>
+      <th class="left-align">C-Eval</th>
+      <td>-</td>
+      <td>57.2</td>
+      <td class="bold">59.9</td>
+    </tr>
+    <tr class="border-bottom">
+      <th class="left-align">CMMLU</th>
+      <td>-</td>
+      <td>58.2</td>
+      <td class="bold">58.8</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+<small><sup>†</sup>The reported parameter counts exclude the embedding parameters.</small>
 
 What's different about models trained with Muon? Since we said earlier that Muon is steepest descent under the spectral norm, and the spectral norm is the largest singular value, we thought of monitoring and analyzing singular values. Indeed, we found some interesting signals: parameters trained by Muon have a more uniform distribution of singular values. We use singular value entropy to quantitatively describe this phenomenon:
 
@@ -1286,9 +1397,122 @@ Here, $\boldsymbol{\sigma}=(\sigma_1,\sigma_2,\cdots,\sigma_n)$ represents all t
 
 Another interesting finding is that when we use Muon for fine-tuning (SFT), we might get suboptimal solutions if the pre-training didn't use Muon. Specifically, if both pre-training and fine-tuning use Muon, the performance is the best. But for the other three combinations (Adam+Muon, Muon+Adam, Adam+Adam), the effectiveness doesn't show a clear pattern.
 
-![Testing combinations of Muon/Adam for pre-training/fine-tuning](figure/2697758072.png)
+```{=html}
+<style>
+  table {   border-collapse: collapse;   width: 100%;   margin: 20px 0;   font-family: Arial, sans-serif;  }  caption {   margin-bottom: 10px;   font-weight: bold;  }  th, td {   padding: 8px;   text-align: center;   border: 1px solid #ddd;  }  th.left-align, td.left-align {   text-align: left;  }  .border-top {   border-top: 2px solid black;  }  .border-bottom {   border-bottom: 2px solid black;  }  .border-right {   border-right: 2px solid black;  }  .border-left {   border-left: 2px solid black;  }  .bold {   font-weight: bold;  }
+</style>
 
-![Attempts to fine-tune open-source models using Muon/Adam](figure/3565677851.png)
+<table class="table-hover caption-top table">
+  <caption>Table 6: Examining the impact of optimizer interchangeability between pretraining and SFT phases.</caption>
+  <thead>
+    <tr class="border-top">
+      <th class="left-align border-top">Benchmark (Metric)</th>
+      <th class="border-top border-right"># Shots</th>
+      <th class="border-top border-left" colspan="4">Moonlight-1.2T</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="border-top">
+      <th class="left-align">Pretraining Optimizer</th>
+      <td class="border-right">-</td>
+      <td class="border-right">Muon</td>
+      <td class="border-right">AdamW</td>
+      <td class="border-right">Muon</td>
+      <td>AdamW</td>
+    </tr>
+    <tr>
+      <th class="left-align">SFT Optimzier</th>
+      <td class="border-right">-</td>
+      <td class="border-right">Muon</td>
+      <td class="border-right">Muon</td>
+      <td class="border-right">AdamW</td>
+      <td>AdamW</td>
+    </tr>
+    <tr class="border-top">
+      <th class="left-align">MMLU (EM)</th>
+      <td class="border-right">0-shot (CoT)</td>
+      <td class="border-right bold">55.7</td>
+      <td class="border-right">55.3</td>
+      <td class="border-right">50.2</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th class="left-align">HumanEval (Pass@1)</th>
+      <td class="border-right">0-shot</td>
+      <td class="border-right bold">57.3</td>
+      <td class="border-right">53.7</td>
+      <td class="border-right">52.4</td>
+      <td>53.1</td>
+    </tr>
+    <tr>
+      <th class="left-align">MBPP (Pass@1)</th>
+      <td class="border-right">0-shot</td>
+      <td class="border-right bold">55.6</td>
+      <td class="border-right">55.5</td>
+      <td class="border-right">55.2</td>
+      <td>55.2</td>
+    </tr>
+    <tr class="border-bottom">
+      <th class="left-align border-bottom">GSM8K (EM)</th>
+      <td class="border-right border-bottom">5-shot</td>
+      <td class="border-right border-bottom bold">68.0</td>
+      <td class="border-right border-bottom">62.1</td>
+      <td class="border-right border-bottom">64.9</td>
+      <td class="border-bottom">64.6</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+```{=html}
+<style>
+  table {   border-collapse: collapse;   width: 100%;   margin: 20px 0;   font-family: Arial, sans-serif;  }  caption {   margin-bottom: 10px;   font-weight: bold;  }  th, td {   padding: 8px;   text-align: center;   border: 1px solid #ddd;  }  th.left-align, td.left-align {   text-align: left;  }  .border-top {   border-top: 2px solid black;  }  .border-bottom {   border-bottom: 2px solid black;  }  .border-right {   border-right: 2px solid black;  }  .border-left {   border-left: 2px solid black;  }  .bold {   font-weight: bold;  }
+</style>
+
+<table class="table-hover caption-top table">
+  <caption>Table 7: Comparison of Adam and Muon optimizers applied to the SFT of the Qwen2.5-7B pretrained model.</caption>
+  <thead>
+    <tr class="border-top">
+      <th class="left-align border-top">Benchmark (Metric)</th>
+      <th class="border-top border-right"># Shots</th>
+      <th class="border-top border-right">Adam-SFT</th>
+      <th class="border-top">Muon-SFT</th>
+    </tr>
+    <tr class="border-top">
+      <th class="left-align">Pretrained Model</th>
+      <th class="border-right">-</th>
+      <th class="border-left" colspan="2">Qwen2.5-7B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="border-top">
+      <th class="left-align">MMLU (EM)</th>
+      <td class="border-right">0-shot (CoT)</td>
+      <td class="border-right bold">71.4</td>
+      <td>70.8</td>
+    </tr>
+    <tr>
+      <th class="left-align">HumanEval (Pass@1)</th>
+      <td class="border-right">0-shot</td>
+      <td class="border-right bold">79.3</td>
+      <td>77.4</td>
+    </tr>
+    <tr>
+      <th class="left-align">MBPP (Pass@1)</th>
+      <td class="border-right">0-shot</td>
+      <td class="border-right bold">71.9</td>
+      <td>71.6</td>
+    </tr>
+    <tr class="border-bottom">
+      <th class="left-align border-bottom">GSM8K (EM)</th>
+      <td class="border-right border-bottom">5-shot</td>
+      <td class="border-right border-bottom bold">89.8</td>
+      <td class="border-bottom">85.8</td>
+    </tr>
+  </tbody>
+</table>
+```
+
 
 This phenomenon suggests that some special initializations are unfavorable for Muon, and conversely, there might be initializations that are more favorable for Muon. We are still exploring the underlying principles.
 
@@ -1303,3 +1527,8 @@ This is quite thought-provoking. Certainly not all, but at least some works perf
 What work remains for Muon? Quite a bit remains. For instance, we need to analyze further the aforementioned issue that "Adam pre-training + Muon fine-tuning" does not work well, especially since most currently publicly available model weights are trained with Adam. If Muon fine-tuning doesn't work well on Adam-pretrained models, it will hurt its popularity. Of course, we can also take this opportunity to deepen our understanding of Muon (this is bug-oriented learning).
 
 Another thought I had is that Muon is based on the spectral norm, which is the maximum singular value. In fact, there are many norms based on singular values, such as the [Schatten norms](https://en.wikipedia.org/wiki/Schatten_norm) and the [Ky Fan norms](https://en.wikipedia.org/wiki/Ky_Fan_norm). Generalizing to these more general norms and then tuning parameters could theoretically yield even better results. Additionally, after releasing Moonlight, some readers asked how to adapt [µP (maximal update parametrization)](https://papers.cool/arxiv/2203.03466) to Muon, another problem for furher research.
+
+
+## Metadata {.appendix}
+
+These are several blogposts on the homepage of Jianlin Su (苏剑林) that I selected because they are relevant for understanding Muon. I organized them in a chronological sequence, and simplified certain derivations and made certain explanations easier to follow.
