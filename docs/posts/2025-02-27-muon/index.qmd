@@ -412,7 +412,7 @@ This can also explain why Adam's $\beta_2$ is usually greater than $\beta_1$. To
 
 ## Related work
 
-For readers familiar with Hessian matrix theory, their first reaction to the above conclusion might be confusion rather than recognition. This is because a classic approximation of the Hessian matrix is the outer product of the Jacobian matrix (similar to the gradient), while the Hessian approximation here is the square root of the gradient's outer product—the two differ by a square root.
+For readers familiar with Hessian matrix theory, their first reaction to the above conclusion might be confusion rather than recognition. This is because a classic approximation of the Hessian matrix is the outer product of the Jacobian matrix (similar to the gradient), while the Hessian approximation here is the square root of the gradient's outer product -- the two differ by a square root.
 
 Specifically, consider the squared error loss:
 
@@ -628,7 +628,7 @@ $$
 \end{aligned}\end{equation}
 $$
 
-where the operation rules involved have been introduced in [pseudoinverse](https://kexue.fm/archives/10366). Since $\boldsymbol{U}$, $\boldsymbol{V}$, and $\boldsymbol{O}$ are all orthogonal matrices, $\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U}$ is also an orthogonal matrix. Each component of an orthogonal matrix must not exceed 1, and since $\boldsymbol{\Sigma}_{i,i} > 0$, the minimum value of the above equation corresponds to the maximum value of each $(\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U})_{i,i}$, i.e., $(\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U})_{i,i}=1$. This implies $\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U}=\boldsymbol{I}$, that is, $\boldsymbol{O}=\boldsymbol{U}\boldsymbol{V}^{\top}$.
+using properties of the [pseudoinverse](https://kexue.fm/archives/10366). Since $\boldsymbol{U}$, $\boldsymbol{V}$, and $\boldsymbol{O}$ are all orthogonal matrices, $\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U}$ is also an orthogonal matrix. Each component of an orthogonal matrix must not exceed 1, and since $\boldsymbol{\Sigma}_{i,i} > 0$, the minimum value of the above equation corresponds to the maximum value of each $(\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U})_{i,i}$, i.e., $(\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U})_{i,i}=1$. This implies $\boldsymbol{V}^{\top}\boldsymbol{O}^{\top}\boldsymbol{U}=\boldsymbol{I}$, that is, $\boldsymbol{O}=\boldsymbol{U}\boldsymbol{V}^{\top}$.
 
 This conclusion can be carefully generalized to cases where $m$, $n$, and $r$ are not equal, but we will not expand on this further here.
 
@@ -776,7 +776,7 @@ print(f'{n} & {m} & {T} & {k:.3f} & {x1:.3f} & {x2:.3f} & {a:.3f} & {b:.3f} & {c
 
 If we choose the default setting of $T=5$, then for an $n\times n$ matrix parameter, each update step of Muon requires at least 15 matrix multiplications between $n\times n$ matrices, which is undoubtedly a significantly larger computational cost than Adam. This might lead some readers to worry whether Muon is practically feasible.
 
-In fact, such concerns are unnecessary. Although Muon's computation is more complex than Adam's, the additional time per step is minimal. My conclusion is that the additional wallclock time is $\leq 5\%$. The Muon's authors claim it can reach as low as $2\%$. This is because Muon's matrix multiplications occur after the current gradient computation and before the next gradient computation, during which almost all computational power would have sat idle anyway. Since these matrix multiplications are of static size and can be parallelized, they don't significantly increase the time cost. Moreover, Muon uses one fewer set of cached variables than Adam, resulting in lower memory consumption.
+In fact, such concerns are unnecessary. Although Muon's computation is more complex than Adam's, the additional time per step is minimal. My conclusion is that the additional wallclock time is $\leq 5\%$. The Muon's authors claim it can reach as low as $2\%$. This is because Muon's matrix multiplications occur after the current gradient computation and before the next gradient computation, during which almost all computational power would have sat idle anyway. Since these matrix multiplications are of static size and can be parallelized, they don't significantly increase the wallclock time. Moreover, Muon uses one fewer set of cached variables than Adam, resulting in lower memory consumption.
 
 The most thought-provoking aspect of Muon is actually the intrinsic difference between vectors and matrices, and its impact on optimization. Common optimizers like SGD, AdamW, and Lion update parameters in an elementwise manner, treating both vector and matrix parameters essentially the same, as lists of scalars being updated independently according to the same rules. Optimizers with this characteristic are often simpler to analyze theoretically and are convenient for tensor parallelism, since splitting a large matrix into two smaller matrices for independent processing doesn't change the optimization trajectory.
 
@@ -866,7 +866,7 @@ $$
 \end{equation}
 $$
 
-Then it's a case-by-case analysis for specific norms. There are two commonly used matrix norms. One is the [Frobenius norm](https://en.wikipedia.org/wiki/Hilbert%E2%80%93Schmidt_operator), which is actually the Euclidean norm after flattening the matrix into a vector. In this case, the conclusion is the same as for vectors—the answer is SGD, which we won't expand on here. The other is the 2-norm induced by the vector norm, also known as the [spectral norm](https://en.wikipedia.org/wiki/Spectral_norm):
+Then it's a case-by-case analysis for specific norms. There are two commonly used matrix norms. One is the [Frobenius norm](https://en.wikipedia.org/wiki/Hilbert%E2%80%93Schmidt_operator), which is actually the Euclidean norm after flattening the matrix into a vector. In this case, the conclusion is the same as for vectors -- the answer is SGD, which we won't expand on here. The other is the 2-norm induced by the vector norm, also known as the [spectral norm](https://en.wikipedia.org/wiki/Spectral_norm):
 
 $$
 \begin{equation}\Vert \boldsymbol{\Phi}\Vert_2 = \max_{\Vert \boldsymbol{x}\Vert_2 = 1} \Vert \boldsymbol{\Phi}\boldsymbol{x}\Vert_2\end{equation}
@@ -900,7 +900,7 @@ When $\beta > 0$, the moving average takes effect, which can be viewed as a more
 
 A more ancient previous work is [*Shampoo: Preconditioned Stochastic Tensor Optimization*](https://arxiv.org/abs/1802.09568) (2018), which proposed the Shampoo optimizer, which shares a similar design philosophy with Muon.
 
-The strategy of adapting learning rates through the average of squared gradients, first proposed in Adam, originated from the Adagrad paper [*Adaptive Subgradient Methods for Online Learning and Stochastic Optimization*](https://jmlr.org/papers/v12/duchi11a.html) (2011), which suggested directly accumulating squared gradients—equivalent to a global equal-weight average. Later, RMSProp and Adam, inspired by momentum design, switched to moving averages, which were found to perform better in practice.
+The strategy of adapting learning rates through the average of squared gradients, first proposed in Adam, originated from the Adagrad paper [*Adaptive Subgradient Methods for Online Learning and Stochastic Optimization*](https://jmlr.org/papers/v12/duchi11a.html) (2011), which suggested directly accumulating squared gradients -- equivalent to a global equal-weight average. Later, RMSProp and Adam, inspired by momentum design, switched to moving averages, which were found to perform better in practice.
 
 Moreover, Adagrad initially proposed accumulating the outer product $\boldsymbol{g}\boldsymbol{g}^{\top}$, but due to the high space cost of caching outer products, it was changed to the Hadamard product $\boldsymbol{g}\odot\boldsymbol{g}$ in practice. What's the theoretical basis for accumulating outer products? We derived this in [*Adaptive learning rate optimizers from a Hessian approximation point of view*](#sec-learning-rate-hessian-approximation). The conclusion is that the long-term average of gradient outer products $\mathbb{E}[\boldsymbol{g}\boldsymbol{g}^{\top}] \approx \sigma^2\boldsymbol{\mathcal{H}}_{\boldsymbol{\theta}^*}^2$. In other words, this is a [quasi-Newton method](https://en.wikipedia.org/wiki/Quasi-Newton_method).
 
@@ -1086,9 +1086,9 @@ Have you noticed a detail: whether it's a model with hundreds of millions of par
 
 ## What does it mean?
 
-Some readers might think, the default value is not necessarily the optimal value, so why bother with it? Indeed, $\tau=1$ may not be the optimal choice, but it is the default choice for many models, and these models perform reasonably well with this default choice, which in turn suggests that $\tau=1$ has universal reasonableness.
+Some readers might think, the default value is not necessarily the optimal value, so why bother with it? Indeed, $\tau=1$ may not be the optimal choice, but it is the default choice for many models, and these models perform reasonably well with this default choice, which in turn suggests that $\tau=1$ is a "universally reasonable" choice.
 
-What does this "reasonableness" mean? Let's return to the $\text{clip}$ operation. If $\Vert\boldsymbol{g}\Vert$ is always less than $\tau$, then $\text{clip}$ degenerates into an identity transformation; if $\Vert\boldsymbol{g}\Vert$ is always greater than $\tau$, then $\text{clip}$ degenerates into L2 normalization. In other words, the reason $\text{clip}$ is $\text{clip}$ is because $\tau$ produces an appropriate level of distinction, making most $\Vert\boldsymbol{g}\Vert$ less than $\tau$, with only a small portion greater than $\tau$ -- this is the meaning of the reasonableness of $\tau$.
+What does it mean to say a choice of $\tau$ is "reasonable"? Let's return to the $\text{clip}$ operation. If $\Vert\boldsymbol{g}\Vert$ is always less than $\tau$, then $\text{clip}$ degenerates into an identity transformation; if $\Vert\boldsymbol{g}\Vert$ is always greater than $\tau$, then $\text{clip}$ degenerates into L2 normalization. In other words, the reason $\text{clip}$ is $\text{clip}$ is because $\tau$ produces an appropriate level of distinction, making most $\Vert\boldsymbol{g}\Vert$ less than $\tau$, with only a small portion greater than $\tau$ -- this is the meaning of saying this $\tau$ is "reasonable".
 
 Of course, counterexamples can be found, and quite a few at that. Here, I mainly want to emphasize the universality of this phenomenon and the general applicability of this default setting, so meticulous readers need not be overly fixated on individual details.
 
@@ -1096,7 +1096,7 @@ Therefore, we believe that the universal reasonableness of $\tau=1$ means that r
 
 ## Why does this happen?
 
-Why is this such a "coincidence"? My answer might be somewhat unexpected: because only in this way is stable training of the model possible.
+$\tau=1$ seems way too nice. Why is Heaven so nice to us? My answer might be somewhat unexpected: because only in this way is stable training of the model possible.
 
 Let's consider the loss function $\mathcal{L}(\boldsymbol{\theta})$, with the optimizer update rule $\boldsymbol{\theta}_{t+1} = \boldsymbol{\theta}_t - \eta\, \boldsymbol{u}_t$. Then the change in the loss function can be approximated as:
 
@@ -1145,7 +1145,7 @@ This article explicates our latest technical report [*Muon is Scalable for LLM T
 
 ![Muon scaling law and the MMLU scores of Moonlight.](figure/1300601661.png)
 
-The work on optimizers is neither too extensive nor too trivial. Why did we choose Muon as a new direction to try? How can we quickly switch from a well-tuned Adam optimizer to Muon for experimentation? How do the performance differences between Muon and Adam change as models scale up? Next, we will share our thought process.
+Out of all the optimizers we could have tried, why Muon? How can we quickly switch from a well-tuned Adam optimizer to Muon for experimentation? How do the performance differences between Muon and Adam change as models scale up? Next, we will share our thought process.
 
 ## Optimization principles
 
@@ -1174,15 +1174,15 @@ Here, $\rho(\Delta\boldsymbol{W})\geq 0$ is some metric of **stability**, where 
 
 The only uncertainty in @eq-least-action is the stability measure $\rho(\Delta\boldsymbol{W})$. Once $\rho(\Delta\boldsymbol{W})$ is determined, $\Delta\boldsymbol{W}$ can be explicitly solved (at least theoretically). To some extent, we can consider that the essential difference between different optimizers is how they define **stability**.
 
-Many readers probably encountered statements like "the negative gradient direction is the direction of steepest descent for the function value locally" when first learning SGD. In this framework, it actually means choosing the Frobenius norm $\Vert\Delta\boldsymbol{W}\Vert_F$ as the measure of **stability**. In other words, the "direction of steepest descent" is not immutable—it can only be determined after choosing a metric. Change the norm, and it may no longer be the negative gradient direction.
+Many readers probably encountered statements like "the negative gradient direction is the direction of steepest descent for the function value locally" when first learning SGD. In this framework, it actually means choosing the Frobenius norm $\Vert\Delta\boldsymbol{W}\Vert_F$ as the measure of **stability**. In other words, the "direction of steepest descent" is not immutable -- it can only be determined after choosing a metric. Change the norm, and it may no longer be the negative gradient direction.
 
-The next question naturally is: which norm most appropriately measures **stability**? If we impose strong constraints, we achieve stability but the optimizer advances with difficulty, only converging to a suboptimal solution. Conversely, if we weaken the constraints, the optimizer becomes unrestrained, making the training process extremely uncontrollable. So, ideally, we want to find the most precise indicator of **stability**. Considering that neural networks primarily involve matrix multiplication, let's take $\boldsymbol{y}=\boldsymbol{x}\boldsymbol{W}$ as an example:
+The next question naturally is: which norm most appropriately measures **stability**? If we impose strong constraints, sure, we will definitely achieve stability, but the optimizer will crawl like a snail, only converging to a suboptimal solution. Conversely, if we weaken the constraints, the optimizer will fly like a crazy bat, making the training process extremely unstable. So, ideally, we want to find the most precise index of **stability**. Considering that neural networks primarily involve matrix multiplication, let's take $\boldsymbol{y}=\boldsymbol{x}\boldsymbol{W}$ as an example:
 
 $$
 \begin{equation}\Vert\Delta \boldsymbol{y}\Vert = \Vert\boldsymbol{x}(\boldsymbol{W} + \Delta\boldsymbol{W}) - \boldsymbol{x}\boldsymbol{W}\Vert = \Vert\boldsymbol{x} \Delta\boldsymbol{W}\Vert\leq \rho(\Delta\boldsymbol{W}) \Vert\boldsymbol{x}\Vert\end{equation}
 $$
 
-This means that when the parameter changes from $\boldsymbol{W}$ to $\boldsymbol{W}+\Delta\boldsymbol{W}$, the change in model output is $\Delta\boldsymbol{y}$. We hope that the magnitude of this change can be controlled by $\Vert\boldsymbol{x}\Vert$ and a function $\rho(\Delta\boldsymbol{W})$ related to $\Delta\boldsymbol{W}$, and we use this function as an indicator of **stability**. From linear algebra, we know that the most accurate value for $\rho(\Delta\boldsymbol{W})$ is the spectral norm of $\Delta\boldsymbol{W}$, denoted as $\Vert\Delta\boldsymbol{W}\Vert_2$. Substituting into @eq-least-action, we get:
+This means that when the parameter changes from $\boldsymbol{W}$ to $\boldsymbol{W}+\Delta\boldsymbol{W}$, the change in model output is $\Delta\boldsymbol{y}$. We hope that the magnitude of this change can be controlled by $\Vert\boldsymbol{x}\Vert$ and a function $\rho(\Delta\boldsymbol{W})$ related to $\Delta\boldsymbol{W}$, and we use this function as an index of **stability**. From linear algebra, we know that the most accurate value for $\rho(\Delta\boldsymbol{W})$ is the spectral norm of $\Delta\boldsymbol{W}$, denoted as $\Vert\Delta\boldsymbol{W}\Vert_2$. Substituting into @eq-least-action, we get:
 
 $$
 \begin{equation}\mathop{\text{argmin}}_{\Delta\boldsymbol{W}}\text{Tr}(\boldsymbol{G}^{\top}\Delta\boldsymbol{W})\quad\text{s.t.}\quad \Vert\Delta\boldsymbol{W}\Vert_2\leq \eta\end{equation}
@@ -1200,7 +1200,7 @@ When $\beta > 0$, $\boldsymbol{G}$ is replaced with momentum $\boldsymbol{M}$, w
 
 At this point, we can answer the first question: why try Muon? Like SGD, Muon also gives the direction of steepest descent, but its spectral norm constraint is more precise than SGD's Frobenius norm, so it has better potential. On the other hand, improving optimizers from the perspective of "choosing the most appropriate constraint for different parameters" seems more fundamental than various small patches over the same thing.
 
-Of course, potential doesn't always translate to performance, and there are some "traps" when validating Muon on larger models. First is the weight decay problem. Although I included weight decay when introducing Muon in [*Muon Appreciation*](#sec-muon-appreciation), the authors of Muon didn't include it when they first proposing Muon. We initially implemented it according to the official version and found that while Muon converged faster at the beginning, it was soon caught up by Adam, and various "internal issues" showed signs of collapse.
+Of course, potential doesn't always translate to performance, and there are some annoying gotchas when validating Muon on larger models. First is the weight decay problem. Although I included weight decay when introducing Muon in [*Muon Appreciation*](#sec-muon-appreciation), the authors of Muon didn't include it when they first proposing Muon. We initially implemented it according to the official version and found that while Muon converged faster at the beginning, it was soon caught up by Adam, and various "internal issues" showed signs of collapse.
 
 We quickly realized this might be a weight decay issue, so we added weight decay:
 
@@ -1212,7 +1212,7 @@ Continuing the experiment, sure enough, Muon consistently maintained its lead ov
 
 ![With vs without weight decay.](figure/3675708776.png)
 
-What role does weight decay play? In retrospect, it might be crucial in keeping the parameter norm bounded:
+What role does weight decay play? In retrospect, it should have been clear that we should keep the an upper bound on the norm of the matrix parameter:
 
 $$
 \begin{equation}\begin{aligned}
@@ -1230,7 +1230,7 @@ $$
 \Vert\boldsymbol{W}_t\Vert_2 \leq \max(\Vert\boldsymbol{W}_{t-1}\Vert_2,1/\lambda)\leq\cdots \leq \max(\Vert\boldsymbol{W}_0\Vert_2,1/\lambda)\end{equation}
 $$
 
-This guarantees the "internal health" of the model because $\Vert\boldsymbol{x}\boldsymbol{W}\Vert\leq \Vert\boldsymbol{x}\Vert\cdot\Vert\boldsymbol{W}\Vert_2$. When $\Vert\boldsymbol{W}\Vert_2$ is controlled, it means that $\Vert\boldsymbol{x}\boldsymbol{W}\Vert$ is also controlled, eliminating the risk of explosion, which is particularly important for issues like Attention Logits explosion. Of course, this upper bound is quite loose in most cases, and in practice, the spectral norm of parameters is often significantly smaller than this upper bound. This inequality simply shows that weight decay has the property of controlling norms.
+This keeps the model "healthy on the inside", because $\Vert\boldsymbol{x}\boldsymbol{W}\Vert\leq \Vert\boldsymbol{x}\Vert\cdot\Vert\boldsymbol{W}\Vert_2$. When $\Vert\boldsymbol{W}\Vert_2$ is controlled, it means that $\Vert\boldsymbol{x}\boldsymbol{W}\Vert$ is also controlled, eliminating the risk of explosion, which is particularly important for issues like Attention Logits explosion. Of course, this upper bound is quite loose in most cases, and in practice, the spectral norm of parameters is often significantly smaller than this upper bound. This inequality simply shows that weight decay can control norms.
 
 ## RMS alignment
 
@@ -1300,6 +1300,6 @@ Previously, there was a view in the community that Adam performs well because ma
 
 This is quite thought-provoking. Certainly not all, but at least some works perform better because they align better with Adam, so over time, model architectures evolve in a direction favorable to Adam. In this context, an optimizer significantly different from Adam that can "break out" is particularly worth attention and reflection. Note that neither I nor my company are the proposers of Muon, so these remarks are purely "heartfelt words" without any self-promotion.
 
-What work remains for Muon? There's still quite a bit. For instance, the aforementioned issue of "Adam pre-training + Muon fine-tuning" not performing well is worth further analysis, especially since most publicly available model weights are trained with Adam. If Muon fine-tuning doesn't work well, it will inevitably affect its popularity. Of course, we can also take this opportunity to deepen our understanding of Muon (bug-oriented learning).
+What work remains for Muon? Quite a bit remains. For instance, we need to analyze further the aforementioned issue that "Adam pre-training + Muon fine-tuning" does not work well, especially since most currently publicly available model weights are trained with Adam. If Muon fine-tuning doesn't work well on Adam-pretrained models, it will hurt its popularity. Of course, we can also take this opportunity to deepen our understanding of Muon (this is bug-oriented learning).
 
-Another extended thought is that Muon is based on the spectral norm, which is the maximum singular value. In fact, we can construct a series of norms based on singular values, such as the [Schatten norm](https://en.wikipedia.org/wiki/Schatten_norm). Generalizing to these more general norms and then tuning parameters could theoretically yield even better results. Additionally, after releasing Moonlight, some readers asked how to design [µP (maximal update parametrization)](https://papers.cool/arxiv/2203.03466) under Muon, which is also a problem that needs solving.
+Another thought I had is that Muon is based on the spectral norm, which is the maximum singular value. In fact, there are many norms based on singular values, such as the [Schatten norms](https://en.wikipedia.org/wiki/Schatten_norm) and the [Ky Fan norms](https://en.wikipedia.org/wiki/Ky_Fan_norm). Generalizing to these more general norms and then tuning parameters could theoretically yield even better results. Additionally, after releasing Moonlight, some readers asked how to adapt [µP (maximal update parametrization)](https://papers.cool/arxiv/2203.03466) to Muon, another problem for furher research.
