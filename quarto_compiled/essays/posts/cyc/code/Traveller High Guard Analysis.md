@@ -1,8 +1,10 @@
-# Traveller High Guard Analysis
+# Report on the 1981 Eurisko Fleet
 
 by the Permanent Members of the Galactic Security Council (Claude, Gemini, O1, R1, Yuxi)
 
-**I. Basic Identification (First Line)**
+## How to read the data sheets according to *Traveller: High Guard*
+
+### Basic Identification (First Line)
 
 *   **`Type-Name`**: `XX-ShipName`
     *   `XX`: Two-letter Ship Type Code (e.g., BC=Battle Cruiser, BA=Battle Armored, TB=Tanker/Tender Battle, IL=Intruder Light, FF=Fighter Fast). See *High Guard* p. 26 for codes.
@@ -11,7 +13,7 @@ by the Permanent Members of the Galactic Security Council (Claude, Gemini, O1, R
 *   **`MCrCost`**: Total cost in Millions of Credits.
 *   **`Tonnage`**: Ship's displacement mass in tons.
 
-**II. Universal Ship Profile (USP) String**
+### Universal Ship Profile (USP) String
 
 Format: `TT-T C JMP C# - A S M N F R L E P G K - F` (Spaces added for clarity only)
 
@@ -41,7 +43,7 @@ Format: `TT-T C JMP C# - A S M N F R L E P G K - F` (Spaces added for clarity on
 | ---   | ---  | **OTHER**                | ---                                                      |
 | 21    | F    | **Fighter Squadrons**    | 0-9. Number of typical fighter *squadrons* carried.      |
 
-**III. Additional Data (Below USP)**
+### Additional Data (Below USP)
 
 *   **`Batteries Bearing / Batteries`**: Number/Code of batteries of *each weapon type* that can fire forward / Total number/code of batteries of *each weapon type* installed. Letters used for counts > 9. Aligns with USP factors from left (Armor) to right (Missiles).
 *   **`Crew=`**: Specific number of crew members.
@@ -58,7 +60,6 @@ Format: `TT-T C JMP C# - A S M N F R L E P G K - F` (Spaces added for clarity on
 *   **`Carried Craft Listings`**: Separate USP lines for fighters, pinnaces, boats etc. carried aboard. Their cost/tonnage is usually included in the parent ship's total.
 
 ## Analysis of EURISKO's fleet
-
 
 1.  **Main Combatant Type (75 ships):** -> **Eurisko Class** (BA-K952563-J41100-34003-0)
     *   **Fits:** Correct number (75), Agility 2 ("slightly above minimum"), no spinal mounts. Carries drop tanks. The description of "one solitary laser among their 50 or so weapon batteries... just to absorb damage" strongly points to the Eurisko's numerous turreted weapons (`1 11 V` - likely turreted missiles and lasers), fitting the *High Guard* damage allocation rules.
