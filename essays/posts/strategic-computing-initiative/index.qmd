@@ -176,13 +176,13 @@ One might question why they decided to identify only 4 kinds of objects. The rea
 
 ![The junction rules used in analyzing a cube with a shadow. [@waltzSheddingLightShadows1972, page 54]](figure/Waltz_1972_scene_analysis.png)
 
-Still, since Shakey's computer ran at just 0.3 MIPS, it was doing its best. As compute improves, the best paradigm changes from the logical approach, to the statistical, to the neural. This was another early instance of the bitter lesson.
+Still, since Shakey's computer ran at just 0.3 MIPS, it was doing the best it could. As compute improves, the best paradigm changes from the logical approach, to the statistical, to the neural. This was another early instance of the bitter lesson.
 
 ![A particular example computer vision system `ISUPPOSEW` (1971) that processes the scene as a list of line segments. I picked this mainly for its aesthetic quality. [@raphaelResearchApplicationsArtificial1971, page 197]](figure/ISUPPOSEW.png)
 
 Other than the difficulty of programming (enumerating thousands of rules can't be fun), it was also very brittle. Moravec reports an early 1977 robot that featurizes camera images taken between two steps in the robot trajectory and compares them to triangulate the scene. It only worked on very clean and uncluttered scenes with sharp images:
 
-> \[early 1977\] The program would take a picture and choose up to a hundred features. It would then drive the robot forward about a meter, stop, take another picture, and search for the same features in the second image. Then it would invoke the camera solver to find the robot movement and the three-dimensional locations of the features that explained their apparent motion from one image to the other. Despite much fine-tuning, the program's error rate never dropped below about one wrong motion solution in four, meaning the robot could move about four meters before becoming confused about its position--discouraging. The camera solver repeatedly tweaked an estimate of the robot's motion to make the features line up as well as possible, and threw away those that seemed too far off... 10--20% of the feature matches were wrong, often because an area chosen in a first image had, in a second image, been eclipsed or changed in appearance by point-of-view or lighting effects or camera noise... It was necessary to track about one hundred features to succeed even three steps in four, consuming several minutes of computer time. Months of fiddling with the program's mathematics and assumptions made little difference.
+> The program would take a picture and choose up to a hundred features. It would then drive the robot forward about a meter, stop, take another picture, and search for the same features in the second image. Then it would invoke the camera solver to find the robot movement and the three-dimensional locations of the features that explained their apparent motion from one image to the other. Despite much fine-tuning, the program's error rate never dropped below about one wrong motion solution in four, meaning the robot could move about four meters before becoming confused about its position--discouraging. The camera solver repeatedly tweaked an estimate of the robot's motion to make the features line up as well as possible, and threw away those that seemed too far off... 10--20% of the feature matches were wrong, often because an area chosen in a first image had, in a second image, been eclipsed or changed in appearance by point-of-view or lighting effects or camera noise... It was necessary to track about one hundred features to succeed even three steps in four, consuming several minutes of computer time. Months of fiddling with the program's mathematics and assumptions made little difference.
 >
 > [@moravecRobotMereMachine1999, page 30]
 
@@ -206,9 +206,9 @@ As of 2007, such logical AI programs for vision had been completely obsoleted by
 >
 > --- [@nilssonQuestArtificialIntelligence2009, page 20]
 
-# The Fifth Generation
+## That Oriental Threat
 
-## Japan Was Number One
+### Japan was Number One
 
 > Tactically, the attack on Pearl Harbor was one of the most brilliantly executed strokes of the war.  But politically, it was most unwise, for America fought back. Today, 40 years after the end of World War II, the Japanese are on the move again in one of history’s most brilliant commercial offensives, as they go about dismantling American industry. Whether they are still only smart, or have finally learned to be wiser than we, will be tested in the next 10 years. Only then will we know who finally won the war 50 years before.
 >
@@ -217,6 +217,8 @@ As of 2007, such logical AI programs for vision had been completely obsoleted by
 In 1980, the Japanese was ready to take on the world. Despite the devastation of war, Japan quickly emerged as a peer competitor to America, leading to the Japan-panic symbolized by [*Japan as Number One* (1979)](https://en.wikipedia.org/wiki/Japan_as_Number_One%3A_Lessons_for_America). Cyberpunk stories tell of a neon future with equal mindshare in English and Japanese, where massive zaibatsus battle with conglomerates over the emergent planetary commercium. By GDP, Japan became Number 2 in 1968, and by 1990 it was just 30% smaller than America's, and it had been growing about 1%/yr more. At this rate, it would have become Number 1 in 2020.
 
 We have been robbed of this future. Japan's GDP reached a high point in 1995, and promptly got lost for [~~10~~ ~~20~~ 30 years](https://en.wikipedia.org/wiki/Lost_Decades). Many people gave many reasons, such as the liquidity trap, the demographic crisis, the Plaza Accords, and so on. For our purposes, we just need to know that Japan had been knocked out of the AI game after this.
+
+### The Fifth Generation
 
 Like how the American ARPA pushed behind the development of AI and computing, the Japanese [MITI](https://en.wikipedia.org/wiki/Ministry_of_International_Trade_and_Industry) had coordinated the development of many industries in Japan, and seeing the rise of expert systems, the time seemed ripe for a coordinated attack on AI. On the back of great optimism, the Fifth Generation Computer System (FGCS) project launched in 1982, led by Kazuhiro Fuchi. Its goals was ambitious to the point of revolutionary, and so was its schedule.
 
@@ -250,7 +252,7 @@ Vague, but that is as good an explanation as I could find.
 
 In terms of hardware, they planned for parallel computers that runs Prolog operations natively, aiming to eventually reach a target of $10^9 \;\mathrm{LIPS}$ -- 1 giga logical inferences per second.[^lips-definition] They also aimed for VLSI chips of $10^7$ transistors per chip. Since in 1982, a standard computer could perform Prolog operations at $10^5 \;\mathrm{LIPS}$, this implied they planned for a doubling time of 9 months. [@bramerFifthGenerationAnnotated1984, page 6]
 
-[^lips-definition]: A "logical inference" is technically defined as any Prolog procedure call, but can be thought of as any atomic logical operation, such as performing one *modus ponens*, one variable substitution, etc.
+[^lips-definition]: A "logical inference" is technically defined as one Prolog procedure call. More intuitively, it is roughly equivalent to one atomic logical operation, such as performing one *modus ponens*, one variable substitution, etc.
 
 They aimed to develop multiple AI systems, each of which would be an expert system written in their version of Prolog. The inference engine would be a standard logic programming system, similar to the planner used in Shakey. The knowledge base was the key. It would be written in a "knowledge-base management software using relational algebra", which probably meant a [relational database](https://en.wikipedia.org/wiki/Relational_database). They planned that, at the end of the project, they would have the software and the hardware to handle expert systems with $10^4$ rules and $10^4$ objects, with "semi-automated" knowledge acquisition. [@warrenViewFifthGeneration1982; @feigenbaumJapaneseNationalFifth1993]
 
@@ -263,7 +265,7 @@ Specific plans they had for AI systems [@feigenbaumJapaneseNationalFifth1993; @m
 * Natural language processing with vocabulary size ≤100,000, and ≤2000 grammatical rules, achieving ≥99% accuracy in syntactic analysis.
 * An image processing system with hardware featurizers, that can store ≥10,000 pieces of graphic and image information in its knowledge base. It would be applied to computer-aided design and manufacture and analysis of aerial and satellite images, medical images, etc.
 
-## Autopsy
+### Autopsy
 
 After 10 years and \$400M, the FGCS wrapped up in 1992. The MITI announced that it would give away the developed software for free. Takers were few among academia, and none among business. Even Feigenbaum regarded it as a failure, when he had motivation to present it in the best light, as the unofficial face of the expert system approach.
 
@@ -333,7 +335,7 @@ And they were not the first to raise the alarm:
 >
 > [@feigenbaumFifthGenerationArtificial1984, pages 199]
 
-Partly as a result of this, multiple countries launched their own national AI projects,[^fgcs-list] the most notable of which was the [Strategic Computing Initiative](#sec-sci), funded by the DARPA (*they really are everywhere*), which would be much more successful.
+Partly as a result of this, multiple countries launched their own national AI projects,[^fgcs-list] the most notable of which was the [Strategic Computing Initiative](#sec-sci), funded by the DARPA, which would be much more successful.
 
 [^fgcs-list]: FGCS (Japan, 1982--1992), Alvey Programme (UK, 1984--1990), ESPRIT programs (Europe, 1983--1998), and the Strategic Computing Initiative (America, 1984--1993).
 

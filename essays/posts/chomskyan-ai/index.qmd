@@ -7,7 +7,7 @@ categories: [AI, scaling, history]
 format:
   html:
     toc: true
-description: "The long slow collapse of linguistics."
+description: "The long collapse of the Chomskyan-rationalist approach to linguistics."
 
 # image: "figure/banner.png"
 status: "wip"
@@ -269,7 +269,7 @@ Consider the arguments of a latter-day Bar-Hillel:
 >
 > [@kayProperPlaceMen1997]
 
-Now we know that "engineering solutions to a problem they only dimly understand" was precisely the breakthrough in multiple fields. It would appear first in [speech recognition](#sec-speech), before its success spilled over to MT. It also happened with AlphaGo, made by a team who only had Go amateurs, or diffusion artists made by engineers with minimal understanding of art. However, just try saying out loud, "I'll solve translation just by training a sequence to sequence neural network, on a few million pairs of English-German sentence pairs. It won't have a probabilistic interpretation, or a syntax tree, or morphological constraints. In fact I haven't even taken a course in intermediate linguistics. But I have trained many neural networks. Surely if I can get the loss low enough, it will work." The reasonable reply would be, "What hubris, to tackle a problem that has stumped decades of linguistic science with the brute reason of engineering! What Goodhart law, to expect minimizing loss will lead to the thing you actually want, which is translation? What alchemy, to expect to put in nothing but data and compute, and somehow create understanding in a machine, an understanding that you don't have yourself?".[^feynman-kac]
+Now we know that "engineering solutions to a problem they only dimly understand" was precisely the breakthrough in multiple fields. It would appear first in [speech recognition](#sec-speech), before its success spilled over to MT. It also happened with AlphaGo, made by a team who only had Go amateurs, or diffusion artists made by engineers with minimal understanding of art. However, just try saying out loud, and feel how ridiculous it sounds: "I'll solve translation just by training a sequence to sequence neural network, on a few million pairs of English-German sentence pairs. It won't have a probabilistic interpretation, or a syntax tree, or morphological constraints. In fact I haven't even taken a course in intermediate linguistics. But I have trained many neural networks. Surely if I can get the loss low enough, it will work.". The reasonable reply should be, "What hubris, to tackle a problem that has stumped decades of linguistic science with the brute reason of engineering! What Goodhart law, to expect minimizing loss will lead to the thing you actually want, which is translation? What alchemy, to expect to put in nothing but data and compute, and somehow create understanding in a machine, an understanding that you don't have yourself?".[^feynman-kac]
 
 [^feynman-kac]
     Perhaps the [Feynman--Kac](https://en.wikipedia.org/wiki/Feynman%E2%80%93Kac_formula) anecdote illustrates this better.
@@ -323,7 +323,7 @@ They began work in 1986, having already gathered most of the datasets from their
 [^english-french]:
     Incidentally, this is why in statistical machine translation, it is conventional to call the two languages $E$ and $F$.
 
-The early versions of the system was hopeful but slow. It took 10 minutes to decode 10 words, and the head of their department told them IBM viewed MT as a luxury. Fortunately, DARPA came to the rescue. Like how it [used to fund those speech recognition projects](#sec-TODO), DARPA was funding MT projects.
+The early versions of the system was hopeful but slow. It took 10 minutes to decode 10 words, and the head of their department told them that IBM viewed MT as a luxury. Fortunately, DARPA came to the rescue. Like how it [used to fund those speech recognition projects](#sec-TODO), DARPA was funding MT projects. Thus the IBM MT project survived.
 
 They immediately realized that they had neither the data nor the compute to do a purely statistical MT system, and began retracing the steps of the bitter lesson:
 
@@ -432,6 +432,10 @@ It would be 2017 when work on Google Translate led to the Transformer architectu
 
 ### ABBYY's last stand
 
+> Miller and Chomsky's monograph *Finitary Models of Language Users*, which appeared in 1963, had 43 pages on "stochastic models" versus 19 pages on "algebraic models", demonstrating the importance that stochastic models had forThe Trend towards Statistical Models 3 scientists as well as engineers up to that time. By contrast, Osherson, Strob and Weinstein's important book *Systems that Learn: An Introduction to Learning Theory for Cognitive and Computer Scientists*, published in 1986, has 8 (of 205) pages devoted to what is called "A topological perspective", which (a bit shyly) sketches some of the issues that arise in learning languages on which a measure (such as a probability function) is defined. The word stochastic is not in this book's index. Even more strikingly, Partee, ter Meulen and Wall's monumental *Mathematical Methods in Linguistics*, published in 1990, has only one mention of statistical issues in its 663 pages, namely the point in the introduction where they observe that "we have not tried to cover probability..."
+>
+> [@libermanTrendStatisticalModels1991]
+
 18 years after his introduction [@churchIntroductionSpecialIssue1993], Kenneth Church proposed in 2011 a 20-year cycle between Empiricism and Rationalism, and argued that we were on the brink of a return to Rationalism:
 
 * 1950s: Empiricism (Shannon, Skinner, Firth, Harris)
@@ -451,7 +455,10 @@ It would be 2017 when work on Google Translate led to the Transformer architectu
 
 It is 2025.
 
-The pendulum is stuck in the abyss of Empiricism.
+Still waiting for the pendulum to return from the unfathomed depths of Empiricism.[^kenneth-church-2022]
+
+[^kenneth-church-2022]:
+    Squinting at the receding bob, Church has been issuing escalating jeremiads. In 2017, he called deep learning "opaque" that offers no insight [@churchEmergingTrendsDid2017]. In 2019, he pled for tolerance and inclusion: "Computational Linguistics used to be an interdisciplinary combination of Humanities and Engineering... There has been way too much talk about firing linguists." [@todo]. And in 2022, he ratcheted up the rhetoric. The "SOTA-chasing" culture was "sucking the oxygen out of the room", analogous to the replication crisis, and possibly may cause another AI winter [@churchEmergingTrendsSOTAchasing2022]. Guess the revolution does leave all the old guards bitter...
 
 ![Language modeling in 2020, still far from the pinnacle of Empiricism. [@robertsExploringTransferLearning2020]](figure/T5_language_model.png)
 
@@ -548,19 +555,25 @@ Roughly speaking, "the fit" is usually measured by how many rules are broken, wi
 
 Like MT, there was also plenty of funding for ASR from the government. And we have not seen the last of John Pierce! 5 years after the ALPAC report debunked MT, he took aim at ASR with mostly the same arguments, but with even sharper language.
 
-> speech recognition is attractive to money. The attraction is perhaps similar to the attraction of schemes for turning water into gasoline, extracting gold from the sea, curing cancer, or going to the moon... It is clear that glamor and any deceit in the field of speech recognition blind the takers of funds as much as they blind the givers of funds. Thus, we may pity workers whom we cannot respect. People who work in the field are full of innocent (in their own view) enthusiasm. What particular considerations have led to this enthusiasm?
+> speech recognition is attractive to money. The attraction is perhaps similar to the attraction of schemes for turning water into gasoline, extracting gold from the sea, curing cancer, or going to the moon. One doesn't attract thoughtlessly given dollars by means of schemes for cutting the cost of soap by 10%. To sell suckers, one uses deceit and offers glamor.
 > 
-> ... Most recognizers behave, not like scientists, but like mad inventors or untrustworthy engineers. The typical recognizer gets it into his head that he can solve "the problem." The basis for this is either individual inspiration (the "mad inventor" source of knowledge) or acceptance of untested rules, schemes, or information (the untrustworthy engineer approach).
+> ... Most recognizers behave, not like scientists, but like mad inventors or untrustworthy engineers. The typical recognizer gets it into his head that he can solve "the problem". The basis for this is either individual inspiration (the "mad inventor" source of knowledge) or acceptance of untested rules, schemes, or information (the untrustworthy engineer approach).
 > 
 > [@pierceWhitherSpeechRecognition1969]
 
-Pierce gave the same answer as he gave in the ALPAC report. True ASR is impossible until a machine has a general understanding of language, which was very far away. What *appears* to be ASR is actually "artful deceit" made by mere engineering, not science. A true science of ASR is possible, by having a good scientific theory, then testing it, perhaps by building a device according to the theory, and see if it works as predicted.
+Pierce gave the same answer as he gave in the ALPAC report. True ASR is impossible until a machine has a general understanding of language, which was very far away. What *appeared* as ASR was actually "artful deceit" made by mere engineering, not science. A true science of ASR is possible, by having a good scientific theory, then testing it, perhaps by building a device according to the theory, and see if it works as predicted.
 
 > The typical recognizer will have none of this. He builds or programs an elaborate system that either does very little or flops in an obscure way. A lot of money and time are spent. No simple, clear, sure knowledge is gained. The work has been an experience, not an experiment.
 >
 > [@pierceWhitherSpeechRecognition1969]
 
-I don't know what caused Pierce to fire off this fiery missive 3 years after the ALPAC report, but it did cause funding to decrease. [@jelinekMyBestFriends2005] Partly in reaction to this, ARPA started the Speech Understanding Project, a $15 million project to produce ASR, from 1971 to 1976. It funded 4 teams in 4 organizations, with the following goal: Demo a system that can do ASR on a fragment of English limited to 1000 words of vocabulary, and a single tiny domain. Accept new speakers after finetuning. At <10% semantic error, at 100 MIPSS (100 million instructions per second of speech).[^arpa-sur-full-specification]
+I don't know what caused Pierce to fire off this fiery missive 3 years after the ALPAC report, but it did cause funding to decrease. [@jelinekMyBestFriends2005] Partly to avoid getting suckered, ARPA started the Speech Understanding Project (1971--1976), a $15 million project to produce ASR, but this time with measurable numbers. It funded 4 teams in 4 organizations, with the following goal: Demo a system that can do ASR under the conditions of:[^arpa-sur-full-specification]
+
+* with 1000 words of vocabulary;
+* restricted to a tiny domain of one's choice;
+* accepts new speakers after finetuning;
+* at <10% semantic error;
+* at 100 MIPSS (100 million instructions per second of speech).
 
 [^arpa-sur-full-specification]: 
     The full specification is
@@ -569,7 +582,7 @@ I don't know what caused Pierce to fire off this fiery missive 3 years after the
     >
     > [@newellSpeechUnderstandingSystems1973, figure 1.1]
 
-    but as noted in [@medressSpeechUnderstandingSystems1977, footnote 8], the report forgot to add in "100 MIPSS".
+    but as noted in [@medressSpeechUnderstandingSystems1977, footnote 8], the report forgot to add in the further specification of "at 100 MIPSS".
 
 By the end of 1976, the results were out:
 
@@ -586,7 +599,7 @@ Out of the 4 teams, only Harpy achieved the target -- barely. It could recognize
 
     And $10^{15}$ is also the number of synapses in the brain. The numbers all seem to come together *too* well. Sound-bite for thought...
 
-Who would be willing to pay \$5 to transcribe one sentence? Still, since the target was so ambitious, the project was still considered a great success:
+Huh. Who could afford \$5 per sentence? Still, since the target was so ambitious, the project was still considered a partial success. They shot for the moon, and technically someone *did* land on it:
 
 > In 1971, when the program started, perhaps the majority of informed technical opinion put general speech recognition by computers as not possible in the foreseeable future and perhaps not possible at all... Informed technical opinion can now be that general cost-effective speech input to computers is an attainable goal. That is now our opinion.
 >
@@ -790,21 +803,37 @@ By late 1990s, the ASR technology stabilized around the gaussian mixture HMM [@h
 
 ![Rough sketch of HMM ASR. [Source](https://www.cs.cmu.edu/~roni/10601-slides/hmm-for-asr-whw.pdf)](figure/HMM_ASR.png)
 
+This was not the end of the history, however. Where are the neural networks? Once ASR became a statistical problem, one immediately has the problem of feature engineering. Here, the history is similar to that of vision. Researchers began by imitating the human phoneticians, with a nearest-neighbor matching to phonemes, and proceeded to handcrafted features computed over the audio spectrogram, to NN features learned over transforms of the spectrogram, and finally to the modern approach, of NN features learned directly over the spectrogram. [@huangHistoricalPerspectiveSpeech2014] However, the detailed story may be left for a future essay.
+
+### Bitterhart
+
 Unlike in the case of MT, the collapse of logical AI in ASR was decisive. Statistical ASR completely replaced logical ASR in the 1990s, after which logical ASR was never revived. There were two reasons for this. One is the familiar scaling story of data and compute:
 
 > As computers increased in power, ever greater tracts of the heuristic wasteland opened up for colonization by probabilistic models. As greater quantities of recorded data became available, these areas were tamed by automatic training techniques. Today... almost every aspect of most speech recognition systems is dominated by probabilistic models with parameters determined from data.
 >
 > [@churchIntroductionSpecialIssue1993]
 
-Another is the public benchmark culture. The ARPA SUR project not only demonstrated that ASR was possible, but also gave rise to the benchmark-focused culture of ASR, which allowed the best methods to rapidly spread through the community:
+Another is the rise of benchmark culture. Though SUR was a partial success, DARPA chose not to extend the work because 1970s computational power could not support real-time applications. Governmental funding would only resume in 1986, and to avoid Pierce's criticism of "deceit and glamor", the new DARPA project manager, Charles Wayne, proposed to let the numbers do the talking like in the SUR. He called it the "Common Task Method", a strategy centered around benchmarks:[@libermanHumanLanguageTechnology2020]
 
-> ARPA (and then DARPA) funded a number of new speech research programs, beginning with 1000-word speaker-independent read-speech tasks like "Resource Management" (Price et al., 1988), recognition of sentences read from the Wall Street Journal (WSJ), Broadcast News domain (LDC 1998, Graff 1997) (transcription of actual news broadcasts, including quite difficult passages such as on-the-street interviews) and the Switchboard, CallHome, CallFriend, and Fisher domains (Godfrey et al. 1992, Cieri et al. 2004) (natural telephone conversations between friends or strangers). The ARPA competitions resulted in wide-scale borrowing of techniques among labs since it was easy to see which ideas reduced errors the previous year, and the competitions were probably an important factor in the eventual spread of the HMM paradigm. 
+* Because the datasets were growing larger than most researchers could gather practically, Organizations like the [Linguistic Data Consortium](https://en.wikipedia.org/wiki/Linguistic_Data_Consortium) were funded to create and share the huge datasets.
+* Standard organizations like the NIST were tasked to create standard benchmarks and evaluation methods. This creates a common leaderboard where research teams can compete on a level ground. Theory is not enough -- the numbers convince where words fail.
+* NIST and DARPA also organized conferences where researchers would share best ways to hit the benchmark scores.
+
+If the word "NIST" seems familiar, it may because it is the "NIST" in MNIST ("modified NIST") -- the standard benchmark for computer vision in the 1990s. In the late 1980s, the Census Bureau wanted to know if computer vision was finally good enough for reading human handwriting, so it tasked NIST to create several datasets for handwriting recognition. In 1992, NIST ran a competition: given a training set ("Special Dataset 3", or SD-3) 0.3 million images, classify a test set ("Special Dataset 7", or SD-7). The participants were invited to a conference where they presented their methods. The Census Bureau, FBI, IRS, and USPS sent observers to the conference for *obvious* reasons.
+
+Distressingly to many of the participants, their models reached <1% error on the training set, but >10% on the test set. Later investigation showed that it was a classic case of distribution shift: Whereas SD-3 was produced by census employees, SD-7 was produced by high school students, who "may be more motivated than the 500 high school students who were forced to fill out and return the forms in class". [@ The First Census Optical Character Recognition System Conference TODO, page 10] The MNIST was made to avoid precisely this distribution shift, by mixing SD-3 and SD-7 evenly. [@yadavColdCaseLost2019] 
+
+Hitting the benchmark and shooting for the leaderboard is as natural as breathing now, but the very idea of benchmarking was controversial at the time. Skeptics in the funding agency suspected that the benchmarks would be pure [Goodhart](https://en.wikipedia.org/wiki/Goodhart's_law), "you can't turn water into gasoline, no matter what you measure.". Researchers disliked having their funding tied to hitting the benchmark scores, " It’s like being in first grade again – you're told exactly what to do, and then you’re tested over and over.". [@churchEmergingTrendsTribute2018]
+
+Despite these criticisms, DARPA continued using this approach in funding linguistic AI research:
+
+> ARPA (and then DARPA) funded a number of new speech research programs, beginning with 1000-word speaker-independent read-speech tasks like "Resource Management" (Price et al., 1988), recognition of sentences read from the Wall Street Journal (WSJ), Broadcast News domain (LDC 1998, Graff 1997) (transcription of actual news broadcasts, including quite difficult passages such as on-the-street interviews) and the Switchboard, CallHome, CallFriend, and Fisher domains (Godfrey et al. 1992, Cieri et al. 2004) (natural telephone conversations between friends or strangers). The ARPA competitions resulted in wide-scale borrowing of techniques among labs since it was easy to see which ideas reduced errors the previous year, and the competitions were probably an important factor in the eventual spread of the HMM paradigm.
 > 
 > [@jurafskySpeechLanguageProcessing2023, pages 352--353]
 
 ![Progress of ASR benchmarks during 1988--2012. Each time one benchmark was saturated, it was replaced by a harder one. The green dot was the 2012 SOTA for the Switchboard task. [@huangHistoricalPerspectiveSpeech2014, figure 1]](figure/ASR_benchmark_progress_1988--2012.jpg)
 
-This was not the end of the history, however. Once ASR became a statistical problem, one immediately has the problem of feature engineering. Here, the history is similar to that of vision. One begins by imitating the human phoneticians with a nearest-neighbor matching to phonemes, and proceeds to handcrafted features computed over the audio spectrogram, to NN features learned over transforms of the spectrogram, and finally to NN features learned directly over the spectrogram. [@huangHistoricalPerspectiveSpeech2014] However, the story must be left for a future essay.
+As we know, the benchmark-centric culture has long escaped the confinements of ASR and MT, and has won over the entire field of AI research so thoroughly that I may stop the section here. The rest is in the subconscious (if not in the hopes or fears) of all my readers.
 
 ### A farewell to linguists
 
@@ -818,7 +847,7 @@ One, to believe in the probabilistic system at all was a breakthrough during the
 
 Two, to throw away preconceptions of what the language model could be, and let results speak. He proceeded directly to using a 3-gram not because it resembles anything like how people really produce language, but because it works.
 
-> In the future the design of a LM for a naturally generated text will probably involve considerations of syntax. semantics. and discourse pragmatics. So far no one has accomplished this.
+> In the future the design of a LM for a naturally generated text will probably involve considerations of syntax, semantics, and discourse pragmatics. So far no one has accomplished this.
 > 
 > [@jelinekSelfOrganizedContinuousSpeech1982] 
 
@@ -887,7 +916,9 @@ Indeed, though the word "rules" appears over 200 times in the review, the above 
 Klatt had been progressively losing his voice from thyroid cancer, and died in 1988. His voice was the template for "Perfect Paul" in DECTalk, which was the voice of Stephen Hawking, which he kept using even after better TTS systems were available. [@medeirosHowIntelGave2015]
 
 
-### The Chomskyans
+## The Chomskyans
+
+### Noam Chomsky, master of the labyrinth
 
 There was a persistent legend, that a certain Doctor [Skinner](https://en.wikipedia.org/wiki/B._F._Skinner) had educated his own children according to his theory -- by putting them into [skinner boxes](https://en.wikipedia.org/wiki/Operant_conditioning_chamber). While just a legend, the real Skinner did have a philosophy as radical as the legend suggests.
 
@@ -961,12 +992,24 @@ When engaging with the modern Chomskyans (they still exist!), one notices a stra
 
 Chomsky's definition deliberately draws a line between competence and performance. However, this line immediately gets crossed, because even immortals cannot subsist on only aether. Chomskyan scientific linguistics, to be scientific, still needs to gather empirical data and predict outcomes of empirical experiments, and thus was Chomsky able to influence AI developments, by an implicit empirical claim: "Building an AI like a generative grammar is how you get good empirical performance."
 
-Chomskyans have long engaged with AI. There have been Chomskyan language models, but the idea is very different. When Chomskyans do a language model, it is a scientific experiment to test a linguistic theory. If a program written according to a [merge-grammar](https://en.wikipedia.org/wiki/Merge_(linguistics)) of verbs can convert verbs to the past tense correctly (on a small example of 200 verbs), then that shows merge-grammar theory of verbs is a good theory. The n-gram language model is *trivially* disproven,[^n-gram-proof] so even if an n-gram model achieves better performance according to the entropy, all a Chomskyan needs to do is point at that theorem, and say, "That's not science, that's engineering.".
+### The Chomskyans
+
+Chomsky had many disciples, known as the Chomskyans, and they have long engaged with AI. Though they had been nothing but critical since the 1990s, when things turned statistical, before that, they were not critics, but pioneers of linguistic AI.
+
+Indeed, for about two decades from 1960 to 1980, the state of the art in language models was Chomskyan, but if you ask "Cool, what were their benchmark scores?" you'd be looked at with a curious stare, as if you are a straggler of Skinnerism. No, no benchmarks. When Chomskyans do language modeling, it is a scientific experiment to test a linguistic theory. If a program written according to a [merge-grammar](https://en.wikipedia.org/wiki/Merge_(linguistics)) of verbs can convert verbs to the past tense correctly (on a small example of 200 verbs), then that shows merge-grammar theory of verbs is a good theory. The n-gram language model is *trivially* disproven,[^n-gram-proof] so even if an n-gram model achieves better performance according to the entropy, all a Chomskyan needs to do is to point at that theorem and say, "What you're doing is not science, but engineering.".
 
 [^n-gram-proof]:
     The short explanation: English is not a regular language, so it can't be modeled by a Markov chain.
     
     The slightly longer explanation: English has [center embedding](https://en.wikipedia.org/wiki/Center_embedding), so English cannot be parsed by any finite state machine, while n-gram models are probabilistic finite state machines (aka Markov chains). Now prove the following theorem: If a language is not parsable by a finite state machine, then for any Markov model for the language, there exists sentences $s_1, s_2, \dots$ in the language, such that $\lim_{n \to \infty} Pr(s_n) = 0$. To show this, prove that there exists arbitrarily long sentences that are so long that the Markov chain "forgets where it was". The argument is similar to the [pumping lemma for regular languages](https://en.wikipedia.org/wiki/Pumping_lemma_for_regular_languages).
+
+> ... In response to \[[Robert Lees](https://en.wikipedia.org/wiki/Robert_Lees_(linguist))'\] polite question as to what I was doing lately, I answered that I had a grant from the Office of Education to assemble a million-word corpus of present-day American English. He looked at me in amazement and asked: "What in the world do you want to do that for?" I burbled something about finding out the true facts about English grammar. I have never forgotten his reply: "That is a complete waste of your time and the government's money. You are a native speaker of English; in ten minutes you can come up with more illustrations of any point in English grammar than you'll find in many millions of words of random text." Now beyond the fact that Bob Lees is (or at least was) one of the great put-down artists, this remark has important implications for our subject. I don't think that Chomsky had yet coined the terms competence and performance, but that's what Lees (who, you will remember, was Chomsky's first and most articulate disciple) was talking about.
+>
+> [@francisProblemsAssemblingDescribing1975]
+
+> I am wearing a tie clip in the shape of a monkey wrench... The story behind this peculiar piece of jewelry goes back to the early 60s when I was assembling the notorious Brown Corpus and others were using computers to make concordances of William Butler Yeats and other poets. One of my colleagues, a specialist in modem Irish literature, was heard to remark that anyone who would use a computer on good literature was nothing but a plumber. Some of my students responded by forming a linguistic plumber's union, the symbol of which was, of course, a monkey wrench.
+>
+> [@francisDinnerSpeechGiven1985]
 
 Now, when Chomsky took a look at GPT-4, all he saw was another "success as approximating unanalyzed data", a *reductio ad absurdum* of empiricism at the price of \$100 million. So there's nothing to discuss.[^blurry-jpeg]
 
@@ -1041,6 +1084,8 @@ This structure has the following good properties:
 - Stable over time.
 
 Lévi-Strauss found many such recurring structures across human societies, and proposed to analyze human mythologies with the same method as well (a pinnacle example was [*The Hero with a Thousand Faces*](https://en.wikipedia.org/wiki/The_Hero_with_a_Thousand_Faces) which literally proposed a single structure for all human mythologies). This then got picked up by sociologists and commentators, followed by the "post-structuralists" who had even less to contribute to AI than Dreyfus.
+
+
 
 ### Connectionism, the past tense debate, and whatever
 
