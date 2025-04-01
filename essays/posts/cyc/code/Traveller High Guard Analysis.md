@@ -2,6 +2,8 @@
 
 by the Permanent Members of the Galactic Security Council (Claude, Gemini, O1, R1, Yuxi)
 
+Signature: Claude 3.7 Sonnet, Gemini 2.5 Pro Experimental 03-25, OpenAI o1, DeepSeek-R1, YuxiLiu-2025-03-30.
+
 ## How to read the data sheets according to *Traveller: High Guard*
 
 ### Basic Identification (First Line)
@@ -56,36 +58,36 @@ Format: `TT-T C JMP C# - A S M N F R L E P G K - F` (Spaces added for clarity on
 *   **`Agility=`**: Combat maneuverability rating (0 to Maneuver Drive rating). Higher = harder to hit, better dodging. Derived from remaining EP after systems are powered.
 *   **`Marines=/Troops=`**: Number of ship's troops or marines carried.
 *   **`Note:`**: Special information (e.g., L-Hyd drop tanks, design quirks).
-    *   *L-Hyd Tanks*: Usually lists added fuel/mass, the modified USP performance (`XX-T'J'M'P'C#`), new Agility, and cost. Remember the ship is heavier and potentially slower *with* tanks attached.
+    *   **L-Hyd Tanks**: Usually lists added fuel/mass, the modified USP performance (`XX-T'J'M'P'C#`), new Agility, and cost. Remember the ship is heavier and potentially slower *with* tanks attached.
 *   **`Carried Craft Listings`**: Separate USP lines for fighters, pinnaces, boats etc. carried aboard. Their cost/tonnage is usually included in the parent ship's total.
 
 ## Analysis of EURISKO's fleet
 
-1.  **Main Combatant Type (75 ships):** -> **Eurisko Class** (BA-K952563-J41100-34003-0)
-    *   **Fits:** Correct number (75), Agility 2 ("slightly above minimum"), no spinal mounts. Carries drop tanks. The description of "one solitary laser among their 50 or so weapon batteries... just to absorb damage" strongly points to the Eurisko's numerous turreted weapons (`1 11 V` - likely turreted missiles and lasers), fitting the *High Guard* damage allocation rules.
-    *   **Conflicts/Confusion:** Lenat's mention of "an enormous number of small missile weapons" as the primary armament seems less accurate if 'V' (lasers) were numerous for damage absorption, unless '11' (missiles) were also present in large numbers per ship, or he was focusing on the *fleet-wide* missile volleys.
-    *   **Conclusion:** The **Eurisko** class is definitively the main combatant line described.
-2.  **Small, Agile, Defensive "Stalemate Guarantor":** -> **Wasp Class** (IL-A90ZZF2-J00000-00009-0)
-    *   **Fits:** "Small" (1000 tons), "super agile" (Agility 6), fitting the "unhittable lifeboat" or "stalemate guarantor" concept derived from high agility defense.
-    *   **Conflicts/Confusion:** Lenat mentioned "one ship" functionally, but the fleet had 7 Wasps. The Wasp isn't *purely* defensive (likely has standard fighter weapons in its turret `1`).
-    *   **Conclusion:** The **Wasp** is the only ship matching the critical "small and super agile" characteristic central to this described role.
-3.  **Original Stalemate Guarantor "Lifeboat":** -> **Bee Class** (FF-0906661-A30000-00001-0)
-    *   **Fits:** The Bee's tiny 99-ton size (`Tonnage` 0), minimal crew/weapons, and heavy armor (Factor A=10) match the physical "lifeboat" description, potentially surviving hits that would destroy other small craft. It is carried aboard the Queller class.
-    *   **Conflicts/Confusion:** Its Agility 0 directly contradicts the crucial "could not be hit" aspect of Lenat's description. High Agility, like the Wasp's (A6), is the primary driver of evasiveness in *High Guard*.
-    *   **Conclusion:** The Bee might have been the original stalemate guarantor discovered accidentally, as a "lifeboat". Subsequently, learned to both include this *precise ship* in all its future fleets, and *also* began a search for ships that implement the same idea, except better, resulting in the Wasp class.
-4.  **Anti-Agile Counter Type 1: "Monstrous Hulks":** -> **Cisor Class** (BD-K9525F3-E41100-340C5-0)
-    *   **Fits:** Fits the "monstrous hulks" description well (nearly 20k tons). Agility 0 fits "no chance of defense" (via evasion) and implies slow engines. Part of the "couple" of counter types. Its armament (Laser 3, Energy 4, Meson C, Missile 5) could be configured with high fire control (implied by the Model 6fib computer) to provide the "weapons just barely accurate enough to hit" agile targets like the Wasp. Heavy armor (E=14) fits the "hulk" concept, designed to soak damage it cannot evade.
-    *   **Conflicts/Confusion:** Lenat's description of the *other* counter having "no armor" might bleed over confusingly; the Cisor is heavily armored.
-    *   **Conclusion:** The **Cisor** best fits the general description of a large, slow, heavily armed and armored platform designed as a primary counter to agile ships through accurate fire rather than maneuver.
-5.  **Anti-Agile Counter Type 2: Specialized PA "New Ship":** -> **Queller Class** (BH-K1526F3-B41106-34Q02-1)
-    *   **Fits:** This assignment is driven *specifically* by Lenat's description of a ship with "one single, enormous accelerator weapon," which *only* the Queller possesses (Spinal Mount PA `Z`). It also has the "largest possible guidance computer" (Model 6fib, shared with others) and relatively "slow engines" (Maneuver 2, resulting in Agility 0). Part of the "couple" of counter types. This seems to be the specialized ship developed *specifically* to destroy the "stalemate guarantor."
-    *   **Conflicts/Confusion:** This assignment creates *major* conflicts with Lenat's physical description of *this specific ship type*:
+1.  **Main Combatant Type (75 ships)**: -> **Eurisko Class** (BA-K952563-J41100-34003-0)
+    *   **Fits**: Correct number (75), Agility 2 ("slightly above minimum"), no spinal mounts. Carries drop tanks. The description of "one solitary laser among their 50 or so weapon batteries... just to absorb damage" strongly points to the Eurisko's numerous turreted weapons (`1 11 V` - likely turreted missiles and lasers), fitting the *High Guard* damage allocation rules.
+    *   **Conflicts/Confusion**: Lenat's mention of "an enormous number of small missile weapons" as the primary armament seems less accurate if 'V' (lasers) were numerous for damage absorption, unless '11' (missiles) were also present in large numbers per ship, or he was focusing on the *fleet-wide* missile volleys.
+    *   **Conclusion**: The **Eurisko** class is definitively the main combatant line described.
+2.  **Small, Agile, Defensive "Stalemate Guarantor"**: -> **Wasp Class** (IL-A90ZZF2-J00000-00009-0)
+    *   **Fits**: "Small" (1000 tons), "super agile" (Agility 6), fitting the "unhittable lifeboat" or "stalemate guarantor" concept derived from high agility defense.
+    *   **Conflicts/Confusion**: Lenat mentioned "one ship" functionally, but the fleet had 7 Wasps. The Wasp isn't *purely* defensive (likely has standard fighter weapons in its turret `1`).
+    *   **Conclusion**: The **Wasp** is the only ship matching the critical "small and super agile" characteristic central to this described role.
+3.  **Original Stalemate Guarantor "Lifeboat"**: -> **Bee Class** (FF-0906661-A30000-00001-0)
+    *   **Fits**: The Bee's tiny 99-ton size (`Tonnage` 0), minimal crew/weapons, and heavy armor (Factor A=10) match the physical "lifeboat" description, potentially surviving hits that would destroy other small craft. It is carried aboard the Queller class.
+    *   **Conflicts/Confusion**: Its Agility 0 directly contradicts the crucial "could not be hit" aspect of Lenat's description. High Agility, like the Wasp's (A6), is the primary driver of evasiveness in *High Guard*.
+    *   **Conclusion**: The Bee might have been the original stalemate guarantor discovered accidentally, as a "lifeboat". Subsequently, learned to both include this *precise ship* in all its future fleets, and *also* began a search for ships that implement the same idea, except better, resulting in the Wasp class.
+4.  **Anti-Agile Counter Type 1: "Monstrous Hulks"**: -> **Cisor Class** (BD-K9525F3-E41100-340C5-0)
+    *   **Fits**: Fits the "monstrous hulks" description well (nearly 20k tons). Agility 0 fits "no chance of defense" (via evasion) and implies slow engines. Part of the "couple" of counter types. Its armament (Laser 3, Energy 4, Meson C, Missile 5) could be configured with high fire control (implied by the Model 6fib computer) to provide the "weapons just barely accurate enough to hit" agile targets like the Wasp. Heavy armor (E=14) fits the "hulk" concept, designed to soak damage it cannot evade.
+    *   **Conflicts/Confusion**: Lenat's description of the *other* counter having "no armor" might bleed over confusingly; the Cisor is heavily armored.
+    *   **Conclusion**: The **Cisor** best fits the general description of a large, slow, heavily armed and armored platform designed as a primary counter to agile ships through accurate fire rather than maneuver.
+5.  **Anti-Agile Counter Type 2: Specialized PA "New Ship"**: -> **Queller Class** (BH-K1526F3-B41106-34Q02-1)
+    *   **Fits**: This assignment is driven *specifically* by Lenat's description of a ship with "one single, enormous accelerator weapon," which *only* the Queller possesses (Spinal Mount PA `Z`). It also has the "largest possible guidance computer" (Model 6fib, shared with others) and relatively "slow engines" (Maneuver 2, resulting in Agility 0). Part of the "couple" of counter types. This seems to be the specialized ship developed *specifically* to destroy the "stalemate guarantor."
+    *   **Conflicts/Confusion**: This assignment creates *major* conflicts with Lenat's physical description of *this specific ship type*:
         *   Lenat's interpretation of the PA's effectiveness ("glances harmlessly off large armor-plated ships," "very easy to aim") might be specific to his rules interpretation or a simplification.
         *   The rule book described computers that could go as high as 9fib, which is larger than the 6fib equipped by Queller.
-    *   **Conclusion:** Despite the drastic contradictions in size and armor description, the presence of the unique Particle Accelerator spinal mount (`Z`) strongly suggests the **Queller** is the basis for Lenat's "new ship" counter description. He seems to have accurately remembered its unique weapon and tactical purpose (anti-agile specialist) while completely misremembering or conflating its physical characteristics (size, armor).
-6.  **Warship as Rotating Fuel Tender:** -> **Garter Class** (TB-K1567F3-B41106-34009-1)
-    *   **Fits:** Matches Lenat's separate description of using capable *warships* held in reserve as tenders. The Garter is a capable warship (12k tons, Weapons `C 1 EE 7`, Agility 4). It's explicitly designed for large drop tanks. Its Agility 4 makes it suitable for rotating *into* combat. The small number (4 ships) fits a reserve/tender role.
-    *   **Conclusion:** The **Garter class** fits the rotating tender role perfectly.
+    *   **Conclusion**: Despite the drastic contradictions in size and armor description, the presence of the unique Particle Accelerator spinal mount (`Z`) strongly suggests the **Queller** is the basis for Lenat's "new ship" counter description. He seems to have accurately remembered its unique weapon and tactical purpose (anti-agile specialist) while completely misremembering or conflating its physical characteristics (size, armor).
+6.  **Warship as Rotating Fuel Tender**: -> **Garter Class** (TB-K1567F3-B41106-34009-1)
+    *   **Fits**: Matches Lenat's separate description of using capable *warships* held in reserve as tenders. The Garter is a capable warship (12k tons, Weapons `C 1 EE 7`, Agility 4). It's explicitly designed for large drop tanks. Its Agility 4 makes it suitable for rotating *into* combat. The small number (4 ships) fits a reserve/tender role.
+    *   **Conclusion**: The **Garter class** fits the rotating tender role perfectly.
 
 | Lenat's Description                      | Likely JTAS Class          | Key Fits                                                                 | Key Conflicts/Confusions                                                     |
 | :--------------------------------------- | :------------------------- | :----------------------------------------------------------------------- | :--------------------------------------------------------------------------- |
