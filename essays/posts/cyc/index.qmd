@@ -276,7 +276,7 @@ Lenat did not describe why, one July 4 weekend of 1981, he and EURISKO decided t
 
 The tournament was for the tabletop RPG game [*Traveller*](https://en.wikipedia.org/wiki/Traveller_(role-playing_game)). Despite purportedly about space battles in a galactic empire, the game was essentially just a simplified version of WWII-era navy battles draped in space-opera garments. In the tournament, pairs of starship generals line up their fleets and fight until one side loses all their ships or surrender. Each fleet must be built with a budget of 1 trillion credits (thus the name), can contain ≤ 100 ships, and has certain other minor constraints.
 
-At the start, Lenat went through the rule books and coded the rules into EURISKO. Then, every evening EURISKO would run through its tasks, including Traveller games, MOS design, math problems, and so on. And every morning, Lenat would check on the last night's results, removing some heuristics that EURISKO discovered that he deemed bad, and adding some others. Manual intervention was necessary since otherwise EURISKO can be stuck with bad heuristics for a long time, and because of weird meta-bugs. Lenat estimated that the final EURISKO had accumulated 1300 CPU-hours of runtime in total on a Xerox 1100 Lisp machine, and the Traveller win was "60/40% Lenat/EURISKO".
+At the start, Lenat went through the rule books and coded the rules into EURISKO. Then, every evening EURISKO would run through its tasks, including Traveller games, MOS design, math problems, and so on. And every morning, Lenat would check on the last night's results, removing some heuristics that EURISKO discovered that he deemed bad, and adding some others. Manual intervention was necessary since otherwise EURISKO can be stuck with bad heuristics for a long time, and because of weird meta-bugs. Lenat estimated that the final EURISKO had accumulated 1300 CPU-hours of runtime in total on a [Xerox 1100 Lisp machine](https://archive.computerhistory.org/resources/access/text/2010/06/102660634-05-07-acc.pdf), and the Traveller win was "60/40% Lenat/EURISKO".
 
 Some heuristics that Lenat hardcoded at the start were:
 
@@ -381,6 +381,8 @@ At the 1982 championship, rules were changed to plug the loopholes, and the rule
 > Coincidentally, just as the defensive ship made a difference in the 1981 final round, the offensive ships made a difference in the 1982 final round. In each case, their presence caused the opponent to resign without firing a shot... Just as most 'experienced' players jeered at the 1981 fleet because it had practically no large weapons, they jeered at the 1982 fleet because it was unarmored *and* it still had no large weapons, even though the rules changes had made them much cheaper.
 >
 > [@lenatEURISKOProgramThat1983]
+
+Unfortunately there is no information whatsoever about what EURISKO's 1982 fleet was made of. It seems to be lost in the star-dust of history.
 
 As one expect from a program reasoning about and making its own rules, it stumbled into meta-bugs. The simplest example was one that kept triggering itself, creating an infinite loop. [@johnsonMachineryMindNew1986, chapter 10] Others were more amusing.
 
@@ -563,7 +565,7 @@ As you might have noticed if you clicked on any of the above links, almost all t
 
 Why? 
 
-I believe it was for commercial reasons. This mass extinction event closely corresponded to the commercialization wave in 2016. In 2016, Lenat finally declared the Cyc project "done" and set about commercializing it, both via Cycorp and via Lucid.ai, a company founded in 2015.
+I believe it was for commercial reasons. This mass extinction event closely corresponded to the commercialization wave in 2016, the year in which Lenat finally declared the Cyc project "done" and set about commercializing it, both via Cycorp and via Lucid.ai, a company founded in 2015.
 
 > “Part of the reason is the doneness of Cyc,” explains Lenat, who left his post as a professor at Stanford to start the project in late 1984. “Not that there’s nothing else to do,” he says. But he notes that most of what is left to be added is relevant to a specific area of expertise, such as finance or oncology. Among other projects, \[Lucid\] is developing a personal assistant equipped with Cyc's general knowledge. This could perhaps lead to something similar to Siri. ... the CEO of Lucid says the new company is in talks with various others interested in using the Cyc knowledge base. Lucid has been working with the Cleveland Clinic, for example, to help automate the process of finding patients for clinical studies.
 > 
@@ -603,9 +605,9 @@ The CycL language is intended to be the high-level language that humans can read
 
 ### CycL language
 
-Since the CycL language has had been developed since the late 1980s, and Cycorp published very little, I am basing this section mostly on [the Ontological Engineer's Handbook Version 0.7](https://web.archive.org/web/20040107124240/http://www.cyc.com/doc/handbook/oe/oe-handbook-toc-opencyc.html), which seemed to contain the most details, even though technically it only describes the 2002 version of CycL.
+Since the CycL language has had been developed since the late 1980s, and Cycorp published very little, I am basing this section mostly on [the Ontological Engineer's Handbook (version 0.7)](https://web.archive.org/web/20040107124240/http://www.cyc.com/doc/handbook/oe/oe-handbook-toc-opencyc.html), which seemed to contain the most details, even though technically it only describes the 2002 version of CycL.
 
-Like Lisp, the CycL language has almost no syntax:
+Like Common Lisp, the CycL language has almost no syntax:
 
 * An **expression** is from one of the following types: `(#$relation <arg1> … <argn>)`, `?variable`, `#$Term`, text string, and rational number. 
 * A `#$relation` is either a function or a predicate. It always begins with a lowercase.
@@ -649,7 +651,7 @@ This is enough for us to start writing some assertions that would imply "Socrate
       (#$subject ?DE ?X))))
 ```
 
-Assertions can be packaged into a **context**, aka a **microtheory** (Mt), which could be thought of as [scopes](https://en.wikipedia.org/wiki/Scope_(computer_science)), or [modules](https://en.wikipedia.org/wiki/Module_(programming)). Each assertion can belong to exactly one microtheory, though you can have two assertions that are literally the same occur in two microtheories. For example, "Socrates is alive." is true in the context of 500 BC, but not in the context of 1995. For a single problem-and-answer session with a user, Cyc typically sets up a temporary context that is deleted after the session.
+Assertions can be packaged into a **microtheory** (Mt, aka a **context**), which could be thought of as [scopes](https://en.wikipedia.org/wiki/Scope_(computer_science)), or [modules](https://en.wikipedia.org/wiki/Module_(programming)). Each assertion can belong to exactly one microtheory, though you can have two assertions that are literally the same occur in two microtheories. For example, "Socrates is alive." is true in the context of 500 BC, but not in the context of 1995. For a single problem-and-answer session with a user, Cyc typically sets up a temporary context that is deleted after the session.
 
 Microtheories are necessary because human beliefs are incompatible, and there are a lot of humans. For example (very relevant, considering how much Cyc was involved with the War on Terror), `#$ChristianMt` and `#$IslamMt` could have:
 
@@ -725,9 +727,9 @@ And here's the `#$Thing`:
 
 And if the parenthetical note sounds a bit theological, note that among those that Cycorp had hired included philosophers, botanists, chemists, and of course, theologians. Interestingly, they didn't ask botanists to encode what they know about botany, but about what they know about non-botany. Lenat's theory was that botanists' understanding of botany is *not* commonsensical. Instead, what botany he wanted Cyc to encode is common sense botany: how non-botanists think about plants -- even, and especially, those botanical beliefs that a botanist would consider wrong, such as `(#$not (#$isa #$Banana #$BotanicalBerry))`.
 
-Unfortunately for ontology, while everyone has a common sense, few can pull it out of their heads and push it into a compute. Let's take the example of how Cyc encodes events, which Cyc calls "[Davidsonian semantics](https://web.archive.org/web/20040310001317/http://www.cyc.com/doc/handbook/oe/08-cycl-representation-choices.html)", since it's how [Donald Davidson](https://en.wikipedia.org/wiki/Donald_Davidson_(philosopher)) represented [events](https://en.wikipedia.org/wiki/Event_(philosophy)) -- yes, Cyc hired a lot of philosophy PhDs.
+Unfortunately for ontology, while everyone has a common sense, few can pull it out of their heads and push it into a computer. Let's consider how Cyc encodes events, which Cyc calls "[Davidsonian semantics](https://web.archive.org/web/20040310001317/http://www.cyc.com/doc/handbook/oe/08-cycl-representation-choices.html)", since it's how [Donald Davidson](https://en.wikipedia.org/wiki/Donald_Davidson_(philosopher)) represented [events](https://en.wikipedia.org/wiki/Event_(philosophy)) -- yes, Cyc hired a lot of philosophy PhDs.
 
-For example, to represent "John gave Mary a book.", you can write something like `(#$Give #$John #$Mary #$Book1)`. The problem is that this prevents you from adding more details, because for the assertion to be syntactically correct, we must make `#$Give` with arity exactly 3. And then we'd be stuck if we wanted to write "John gave Mary a book yesterday.". And even if we redefine `#$Give` to have arity 4, what if you *also* want to say it happened in the library, or that it was a gift, or that John was happy about it? You'd have to change the definition of the predicate `#$Give` again and again, and there is no end to this.
+To represent "John gave Mary a book.", you can write something like `(#$Give #$John #$Mary #$Book1)`. The problem is that this prevents you from adding more details, because for the assertion to be syntactically correct, we must make `#$Give` with arity exactly 3. And then we'd be stuck if we wanted to write "John gave Mary a book yesterday.". And even if we redefine `#$Give` to have arity 4, what if you *also* want to say it happened in the library, or that it was a gift, or that John was happy about it? You'd have to change the definition of the predicate `#$Give` again and again, and there is no end to this.
 
 To solve this problem, Cyc treats the event itself as an `#$Event`. That is, it reifies the process as an object. Now, instead of cramming everything into one assertion, you can construct an endless sequence of assertions, limited only by your patience:
 
@@ -761,7 +763,7 @@ Suppose we want to allow Cyc express all common sense assertions, then since hum
 
 Lenat chose to use a fully higher-order language, giving up completeness, and then try his best improving efficiency.
 
-Like most expert systems, the Cyc has a general resolution-based inference engine. Unlike most expert systems, its knowledge base is large and higher-ordered, so its general engine runs too slowly for most queries. Thus, the developers kept adding more specialized modules ("pattern-specific heuristic modules"), each capable of efficiently inferring on a few microtheories. If a specialized engine fails to make progress, a more general engine can be the fall-back, all the way up to the most general one.
+Like most expert systems, the Cyc has a general [resolution](https://en.wikipedia.org/wiki/Resolution_(logic))-based inference engine. Unlike most expert systems, its knowledge base is large and higher-ordered, so its general engine runs too slowly for most queries. Thus, the developers kept adding more specialized modules ("pattern-specific heuristic modules"), each capable of efficiently inferring on a few microtheories. If a specialized engine fails to make progress, a more general engine can be the fall-back, all the way up to the most general one.
 
 As the simplest example of how inference engine can work, consider the following example of backward-chaining inference, in a semantic web. The system is asked basically "Why does Clyde want to possess a crescent wrench?", and it eventually replies "Because Clyde has not eaten lately.". Lenat expected that the ontology of Cyc would eventually power generally intelligent agents, which would use forward-chaining to construct goals from current states, and use backward-chaining to explain why others have their goals.
 
@@ -945,7 +947,7 @@ However, none of these were at all what Lenat meant when he talked of "machine l
 
 In America, at least before the Deep Learning era, the military funded most large-scale efforts in AI, and that includes the Cyc project. Indeed, the Cyc project initiated in 1984-07 under the [Microelectronics and Computer Consortium](https://en.wikipedia.org/wiki/Microelectronics_and_Computer_Technology_Corporation) (MCC), which, like the Strategic Computing Initiative,<!-- todo: link to SCI --> was formed in reaction to the threat of the Japanese [Fifth Generation Computer Systems](https://en.wikipedia.org/wiki/Fifth_Generation_Computer_Systems) project. Though not *directly* funded by the government, its head was [Bobby Inman](https://en.wikipedia.org/wiki/Bobby_Ray_Inman), who had previously held high positions in the Navy, the NSA, and the CIA, so draw your own conclusion.
 
-In 1995-01, as MCC wound down, the Cyc group formed Cycorp Inc., a for-profit company, to continue their mission. Academic publication almost immediately ceased after that point. Who bought the services of Cyc and for what? The details are slim. Trade secrets, no doubt. Confirmed results:[^policy-wonk]
+In 1995-01, as MCC wound down, the Cyc group formed Cycorp Inc., a for-profit company, to continue their mission. Immediately after that point, academic publication and generally candid conversation almost ceased. Who bought the services of Cyc, and for what? The details are slim. Trade secrets, no doubt. Confirmed results:[^policy-wonk]
 
 [^policy-wonk]: I swear I'm not a policy wonk, but 3 days of cyberstalking does take its toll.
 
@@ -1026,9 +1028,9 @@ In a [presentation in 2019](https://web.archive.org/web/20210430003227/https://f
 
 ### Is that all?
 
-Well, I tried my best to look for more applications, but the fact is that there were so few of them. out of all the confirmed instances of applications, the above two were the *only* ones reported in detail.
+Well, I tried my best to look for more applications, but the fact is that there were so few of them. Out of all the confirmed instances of applications, the above two were the *only* ones reported in detail.
 
-Indeed, just as OpenCyc failed to bring about the Semantic Web or impress the general public, ResearchCyc failed to bring about a revolution in knowledge engineering or impress the general academia, or essentially anyone outside of Cycorp itself. Even Ernest Davis and Gary Marcus, highly sympathetic to the symbolic approach to AI, found little evidence for the success of Cyc, not because Cyc had provably failed, but simply because there is too little evidence in any direction, success or failure.
+Indeed, just as OpenCyc failed to bring about the Semantic Web or impress the general public, ResearchCyc failed to bring about a revolution in knowledge engineering or impress the general academia, or essentially anyone outside of Cycorp itself. Even Ernest Davis and Gary Marcus, highly sympathetic to the symbolic approach to AI, found little evidence for the success of Cyc, not because Cyc had provably failed, but simply because there was too little evidence in any direction, success or failure.
 
 > ... it is in fact very difficult for an outsider to determine what has been accomplished here. In its first 15 years, CYC published astonishingly little. Since about 2002, somewhat more has been published, but still very little, considering the size of the project. No systematic evaluation of the contents, capacities, and limitations of CYC has been published. A number of organizations have done private evaluations but the results were not published.
 > 
@@ -1057,7 +1059,7 @@ In [@lenatThresholdsKnowledge1991], a paper coauthored with Feigenbaum, Lenat ga
 - The Local Consistency Hypothesis. There is no need--and probably not even any possibility--of achieving a global consistent unification of several expert systems' KBs (or, equivalently, for one very large KB). Large systems need local consistency.
 - The Coherence Hypothesis. Moreover, whenever two large internally consistent chunks C1, C2 are similar, their heuristics and analogies should cohere; e.g., if the "going up" metaphor usually means "getting better" for C1, then it should again mean "getting better" for C2, or else it should not apply at all there.
 
-Lenat is the very example of a [hedgehog](https://en.wikipedia.org/wiki/The_Hedgehog_and_the_Fox): a single philosophy, a vision for AGI, pursued for 40 years. One does not pursue a single vision without rejecting alternative visions, and Lenat has been explicit in rejecting every alternative route to AGI, using his sharp tongue [@thompsonKnowItAllMachine2001; @lenatVoiceTurtleWhatever2008; @lenatGettingGenerativeAI2023; @lenatThresholdsKnowledge1991, section A.2]:
+Lenat is the very example of a [hedgehog](https://en.wikipedia.org/wiki/The_Hedgehog_and_the_Fox): a single philosophy, a vision for AGI, pursued for 40 years. One does not pursue a single vision without rejecting alternative visions, and Lenat has been explicit in rejecting every alternative route to AGI, using his sharp tongue [@lenatThresholdsKnowledge1991, section A.2; @thompsonKnowItAllMachine2001; @lenatVoiceTurtleWhatever2008; @lenatGettingGenerativeAI2023]:
 
 * Logical AI in the style of Simon and Newell's General Problem Solver. Such an elegant framework would not work beyond toy problem domains, by the Knowledge Principle.
 * Highly accurate models of human behavior, in the style of Simon and Newell's *Human Problem Solving* or the [SOAR architecture](https://en.wikipedia.org/wiki/Soar_(cognitive_architecture)). Duplicating human cognitive architecture constitutes cargo cult science. AGI need not have the [magic number 7 ± 2](https://en.wikipedia.org/wiki/The_Magical_Number_Seven%2C_Plus_or_Minus_Two).
@@ -1089,12 +1091,12 @@ The problem is that all these efforts are wasted. Specialized expert systems can
 
 It is hard to interpret the state of Cyc today, if we take Lenat's word for it:[^a-hostile-review]
 
-* There were 150 technical challenges to knowledge engineering and representation at the start of Cyc in 1984, but they were all solved by 1990. [@lenatCreating30MillionRuleSystem2022; @lenatBuildingMachineSmart2009]
+* There were 150 technical challenges to knowledge engineering and representation at the start of Cyc in 1984, but they were all solved by 1990. [@lenatBuildingMachineSmart2009; @lenatCreating30MillionRuleSystem2022]
 * Cyc could already be tutored in (constrained) natural language in 2001. [@anthesComputerizingCommonSense2002]
 * The upper ontology has remained stable for years as of 2015. [@lenat50ShadesSymbolic2015]
 * The knowledge pump is 95\% primed in 2015, when there were just 15M assertions, [@lenat50ShadesSymbolic2015], and as of 2021, there were over 25M assertions [@cycorpCycTechnologyOverview2021].
 * SubLisp is easy to learn, and knowledge engineering in SubLisp is 1000× more efficient than in a modern language like Python. [@lenatCycQuestSolve2021]
-* The Cycorp had been profitable since its inception, had never taken on debt, had been almost entirely employee-owned, had only around 200 employees, a mostly flat corporate structure, and could remain profitable entirely on doing business with non-government corporations in 2022. [@lenatCycQuestSolve2021; @lenatCreating30MillionRuleSystem2022]
+* The Cycorp had been profitable since its inception, had never taken on debt, had been almost entirely employee-owned, had always had only around 50--200 employees, a mostly flat corporate structure, and could remain profitable entirely on doing business with non-government corporations in 2022. [@lenatCycQuestSolve2021; @lenatCreating30MillionRuleSystem2022]
 * Cyc has natural language understanding of pragmatics, while statistical machine learning systems have none. [@lenatSometimesVeneerIntelligence2017; @lenatNotGoodGold2019]
 
 [^a-hostile-review]: Feel free to stop reading at this point. It is about to get polemical. Indeed, I have noticed that articles have the nefarious tendency to start from the personal ("the [hook](https://en.wikipedia.org/wiki/Narrative_hook)"), then become informative, and then subtly slide to the polemical ("the call to action"). In fact, I have mastered the art of first scrolling the page with my eyes blurred so that the [hook](https://en.wikipedia.org/wiki/Hook_(boxing)) cannot land on my head, and then, as soon as the text utters the first syllable of the ca--\[tab closed\]
@@ -1103,15 +1105,15 @@ At this point, Cyc is supposed to be out there doing true machine learning (not 
 
 And yet 9 years after Cyc is declared "done", Cyc is still stuck inside the walls of Cycorp doing nothing of the kind. What is stopping Cyc from learning?
 
-The finances are healthy. Cycorp is not subject to perverse interests of the market or middle managers. There are fewer employees than Dunbar's number. They are aligned to the corporate mission. SubLisp is a great language. All technical challenges to knowledge engineering and representation had been solved by 1990. The knowledge pump is over 160\% primed.
+The finances are healthy. Cycorp is not subject to perverse interests of the market or middle managers. There are fewer employees than [Dunbar's number](https://en.wikipedia.org/wiki/Dunbar's_number). They are aligned to the corporate mission. SubLisp is a great language. All technical challenges to knowledge engineering and representation had been solved by 1990. The knowledge pump is over 160\% primed.
 
 What. Is. Stopping. Cyc. From. Learning??
 
 According to the final work of Lenat [@lenatGettingGenerativeAI2023], the only holdup is natural language understanding. The knowledge pump had been thoroughly primed, but Cyc still couldn't learn by reading human texts because natural language understanding is still too hard. Cyc can read CycL perfectly well -- the interlingua -- but it is stubbornly difficult to parse English into the interlingua. But what *is* lacking in the parser? Why is it hard to parse?
 
-This situation is clarified if we consider a classic model of machine translation, that of the [Vauquois triangle](https://en.wikipedia.org/wiki/Vauquois_triangle): We need to translate from one language (let's say, English) to another (let's say, Japanese). We can  translate word-for-word, which corresponds to the base of the triangle. This direct approach is tempting in its simplicity but notoriously brittle. In particular, it would completely fail to disambiguate homonyms, such as distinguishing "fly" as a verb and "fly" as a noun. Stopgap measures such as using n-grams lead to combinatorial explosions.
+This situation is clarified if we consider a classic model of machine translation, that of the [Vauquois triangle](https://en.wikipedia.org/wiki/Vauquois_triangle): We need to translate from one language (let's say, English) to another (let's say, Japanese). We can  translate word-for-word, which corresponds to the base of the triangle. This direct approach is of course simple but brittle. Not only does it ignore different word-ordering across languages, it would also completely fail to disambiguate homonyms, such as "fly" as a noun versus "fly" as a verb. Stopgap measures such as using n-grams lead to combinatorial explosions.
 
-At a higher level, we can take account of syntax. We first parse the English sentence into a syntax tree, do a word-replacement, transform the syntax tree according to Japanese syntax, and finally generate the Japanese sentence from it. This approach would solve the "fly" vs "fly" problem, since one is a verb and another is a noun, which would be clear according to the syntax tree. from this structure. However, this fails to disambiguate the word "pen" in the two sentences:
+At a higher level, we can take account of syntax. We first parse the English sentence into a syntax tree, do a word-replacement, transform the syntax tree according to Japanese syntax, and finally generate the Japanese sentence from it. This approach would solve the "fly" vs "fly" problem, since one is a verb and another is a noun, which would be clear according to the syntax tree. However, this fails to disambiguate the word "pen" in the two sentences:
 
 * The ink is in the <u>pen</u>.
 * The sheep is in the <u>pen</u>.
@@ -1121,7 +1123,9 @@ In both cases, the word "pen" has exactly the same syntactic category, but has a
 * The city councilmen refused the demonstrators a permit because <u>they</u> feared violence.
 * The city councilmen refused the demonstrators a permit because <u>they</u> advocated violence.
 
-Indeed, Lenat had often claimed that the Winograd schema challenge is a touchstone for true language understanding, something that would prove that Cyc really understands, while unmasking the other systems' veneers of intelligence. And how must the Winograd schema challenge be solved? Lenat's solution is to go to the pinnacle of the triangle -- interlingua, a completely language-neutral, universal conceptual representation. Lenat intended the CycL to be the interlingua. 
+Indeed, Lenat had often claimed that the Winograd schema challenge is a touchstone for true language understanding, something that would prove that Cyc really understands, while unmasking the other systems' veneers of intelligence. And how must the Winograd schema challenge be solved? Lenat's solution is to go to the pinnacle of the triangle -- interlingua, the King of Kings, the Language among Languages, a completely universal conceptual representation for all humans might wish to mean by their speech.
+
+Lenat intended the CycL to be the interlingua.
 
 With this framework, the problems of machine translation and understanding are unified: To understand English, it remains to parse English into the interlingua. To translate Japanese to English, it remains to parse Japanese to interlingua, then verbalize interlingua into English.
 
@@ -1133,14 +1137,16 @@ Recall that Lenat had always argued that "just letting a system learn on its own
 2. By the Winograd schema challenge, translation requires common sense. Therefore, Japanese → English translation requires common sense.
 3. CycL → English requires no common sense. The result would sound kind of wooden and robotic, but it doesn't require any understanding: Just follow the syntax substitution rules. Indeed, CycL → English was already working since ~2000. Therefore, CycL → English requires *no* common sense.
 4. Therefore, by the conservation of common sense, it takes *exactly* the same amount of common sense to perform Japanese → English translation and Japanese → CycL translation.
-5. By the no free lunch hypothesis, neural networks trained from scratch can't have common sense. Thus, neural networks should fail entirely at Japanese → CycL translation.
-6. But in Lenat's last paper, he argued that the only problem stopping Cyc from learning from natural language was that NLU did not work well enough yet, and *hoped* that neural networks could perform the Natural language → CycL translation.
+5. By the no free lunch hypothesis, neural networks trained from scratch can't have common sense. Thus,  neural networks should fail at Japanese → CycL translation.
+6. But in Lenat's last paper, he argued that the only problem stopping Cyc from learning from natural language was that NLU did not work well enough yet, and *hoped* that neural networks could perform the natural language → CycL translation.
 
 On the topic of interlingua, it is interesting that ABBYY<!-- todo: link to ABBYY --> was almost a twin of Cycorp. Whereas Cycorp began building an ontology for the common sense world since 1984, spent \$200M, and got stuck on NLU since around 2010, ABBYY began building an interlingua-based machine translation system since the 1990s, and spent over \$80M. By the early 2010s, they realized that they could not compete with Google statistical machine translation, and pivoted to doing NLU with semantic graph technology based on the knowledge base they produced for the sake of interlingua. [@skorinkinABBYYsBitterLesson2024]
 
 Indeed, interlingua-based machine translation projects used to be common, but essentially went extinct (except for ABBYY) after the rise of statistical machine translation in the 1990s [@hutchinsMachineTranslationHistory2023].
 
-I suspect that it is not simply the problem of getting a better English → CycL translator, and then Cyc would finally begin learning, but that much knowledge in sentences doesn't translate to interlingua. If the failures of all interlingua machine translation systems is not enough evidence, then consider some more facts about Cyc's NLU:
+I suspect that it is not simply the problem of getting a better English → CycL translator, and then Cyc would finally begin learning, but that much knowledge in sentences doesn't translate to interlingua.[^interlingua-latent-space] If the failures of all interlingua machine translation systems is not enough evidence, then consider some more facts about Cyc's NLU:
+
+[^interlingua-latent-space]: Or that the interlingua exists, but it is not symbolic-logical, but linear-algebraic. Indeed, the successful neural machine translation systems' latent spaces may be that consummate interlingua so devoutly wished for, but such an interlingua is very far from what you'd see in Cyc or ABBYY.
 
 * Exhaustively searching the literature, I only found four (four!!) examples that Cycorp gave for English → CycL: "A girl is on a white lounge chair" [@prattCYCReportPratt1994], "Bill Clinton sleeps.", "An AI researcher is a kind of computer scientist." [@pantonCommonSenseReasoning2006], and "Did you touch a blue object located in the capital of France on September 25th, 2022?" [@lenatGettingGenerativeAI2023]. They were quite easy and unambiguous examples, almost as if they began with a CycL sentence, and then converted it to English. None involves the "many AI-complete elements, such as correct disambiguation, understanding of idioms, metaphor, sarcasm, foreshadowing, irony, subtext, and so on." [@lenatGettingGenerativeAI2023].
 * [@guhaEnablingAgentsWork1994] stated that in 1994-03 "The Syntax module can properly handle about 75% of the sentences found in the news stories of a typical issue of the newspaper USA Today. And in cases in which Cyc knows all the proper nouns in the sentence, the Semantics module can properly handle most of the sentences parsable by the syntax module... as good as what our knowledge enterers independently come up with, when asked to manually translate the material into CycL.".
@@ -1159,22 +1165,24 @@ All evidences point to the conclusion that a sentence that can be parsed to CycL
 
 ::: {.callout-note title="An information-theoretic estimate" collapse="true" }
 
-The [minimal description length of English](https://yuxi-liu-wired.github.io/essays/posts/perplexity-turing-test/#entropy-of-natural-languages) is about 0.8 bits per character, and each English sentence contains about 100 characters, giving 80 bits of incompressible information. Since there are 27 characters (we are just counting the 26 lowercase letters and the whitespace), this means that the compressible information is about $\log_2 27 - 0.8 = 4.0$ bits per character. We can think of talking as a process of selection: Out of all the possible letters you can pick next, you picked this *particular* letter, and you do it again and again. Intelligence is good selection, the careful elimination of bad choices. In this particular case, the bad choices to be eliminated come out to about 3.2 bits per character.
+The [minimal description length of English](https://yuxi-liu-wired.github.io/essays/posts/perplexity-turing-test/#entropy-of-natural-languages) is about 0.8 bits per character, and each English sentence contains about 100 characters, giving 80 bits of incompressible information. Since there are 27 characters (we are just counting the 26 lowercase letters and the whitespace), this means that the compressible information is about $\log_2 27 - 0.8 = 4.0$ bits per character.
+
+We can think of writing as a process of selection: Out of all the possible letters you can pick next, you picked this *particular* letter, and you do it again and again. Intelligence is good selection, the careful elimination of bad choices. In this particular case, the bad choices to be eliminated come out to about 3.2 bits per character.
 
 Now, one might argue that the last bit is the deepest, but it is hard to square the two claims:
 
 * Self-organized NN could compress natural text to a bit rate of ~1.0 bits per character, so they already capture $3.0/3.2 = 94\%$ of the selection.
 * Self-organized NN don't understand.
 
-Stated in another way, this means 94% of the selection that humans perform while writing is mindless, mere remembering and espousing, without understanding or inferring. This is even harder to square with Lenat's assertion that 99\% of language understanding is pragmatics, which self-organized NN don't have. [@lenatSometimesVeneerIntelligence2017]
+Stated in another way, this means 94\% of the selection that humans perform while writing is mindless, mere remembering and espousing without understanding or inferring. This is even harder to square with Lenat's assertion that 99\% of language understanding is pragmatics, which self-organized NN don't have. [@lenatSometimesVeneerIntelligence2017]
 
-So does this mean that 93% of pragmatics is mindless. Or are we going to just throw out the information-theoretic understanding of language as another incommensurable  paradigm shift? It would fit the theme of Cyc. Indeed, they had long excised the remnants of probabilistic reasoning when they removed [certainty factors](https://en.wikipedia.org/wiki/Mycin) at some point before 1989, since they found it inadequate compared to reasoning by logical unification [@guhaReCycLingPaper1993]. Cry "Kuhnian" and let slip the dogs of logic...
+So does this mean that 93% of pragmatics is mindless, or are we going to just throw out the information-theoretic understanding of language as another incommensurable  paradigm shift? It would fit the theme of Cyc. Indeed, they had long excised the remnants of probabilistic reasoning when they removed [certainty factors](https://en.wikipedia.org/wiki/Mycin) at some point before 1989, since they found it inadequate compared to reasoning by logical unification [@guhaReCycLingPaper1993]. Cry "Kuhnian" and let slip the dogs of logic...
 
 :::
 
-Take another look at the list of known applications of Cyc. Then take a look at what was even planned for as "short-term uses" of Cyc even back in 1993:
+Take another look at [the list of known applications of Cyc](#cycops-what-is-it-good-for). Then take a look at what was even planned for as "short-term uses" of Cyc even back in 1993:
 
-> the most promising short-term uses of Cyc are not what are traditionally considered A1 problems. Instead, they are in relatively "mundane" problems such as making spreadsheets smarter, providing better access to a heterogeneous set of databases, directed marketing of goods and services, etc.
+> the most promising short-term uses of Cyc are not what are traditionally considered AI problems. Instead, they are in relatively "mundane" problems such as making spreadsheets smarter, providing better access to a heterogeneous set of databases, directed marketing of goods and services, etc.
 >
 > [@guhaReCycLingPaper1993]
 
@@ -1212,24 +1220,24 @@ According to multiple reports, Lenat was charismatic, able to sell his vision of
 
 | technical statement | moral coloring |
 |-----------|-------|
-| the No Free Lunch Hypothesis | we are hardworking, you are lazy |
+| the No Free Lunch Hypothesis | we do honest hard work like the proverbial ant, you are lazy like the proverbial cricket (and the AI Winter is coming) |
 | there are no "Maxwell's Equations of Thought" | we are self-assured, you suffer from physics-envy |
 | the Empirical Inquiry Hypothesis; Cyc is unaesthetic; we are building the Cyc profitably, not publishing academic papers | we are strong engineers that get things done, you are weak aesthetes playing the academic game |
 | the Physical Symbol System Hypothesis | we are building real intelligence, you are just playing with robots |
-| the Breadth Hypothesis | our systems are intelligent, yours are idiot savants |
+| the Breadth Hypothesis | our systems are intelligent, yours are autistic idiot savants |
 | the Explicit Knowledge Principle | our systems understand deeply, yours pattern-match shallowly |
 | we think you are putting pattern-matchers in places that require deep understanding | we are trustworthy, you are reckless |
 | we believe the Cyc is the only current effort towards AGI | we are ambitious, you are academic careerists |
 | writing the Cyc costs a lot and is unpopular with the academia | we rebel and think freely, you sheepishly follow the crowd |
 | Cycorp hires anyone -- including high school dropouts -- good at encoding common sense | we are egalitarian, you are elitists |
-| Cycorp has always had just ~50 people, and has been mostly forgotten now | we are the elect, you will see |
+| Cycorp has always had just ~100 people, and has been mostly forgotten now | we are the elect, you will see |
 : The doubled structure of Lenat's rhetoric
 
-And more than technical, moral, and personal conviction is on the line: If Cyc really would take 1000 person-years (20 years with 50 philosopher PhDs), then it would cost about \$100 million just in human labor. The Cycorp, if it were to survive, has a strong commercial interest in rejecting all alternatives. It can be very hard to get someone to understand something, when one's [product differentiation](https://en.wikipedia.org/wiki/Product_differentiation) depends on them not understanding it.
+And more than technical, moral, and personal conviction is on the line: If Cyc really would take 1000 person-years (20 years with 50 philosopher PhDs), then it would cost about \$100 million just in human labor. The Cycorp, if it were to survive, has a strong commercial interest in rejecting all alternatives. It can be very hard to get someone to understand something, when their [product differentiation](https://en.wikipedia.org/wiki/Product_differentiation) depends on them not understanding it.
 
 Lenat's rejections progressed with time as each new challenger arose, applying the same tenets in different decades.
 
-In the 1980s, like other expert systems people, he aimed his rejection at the previous logical AI methods exemplified by Simon and Newell. Logical AI was a dream that a graduate student might build an AGI during a thesis period, if only they knew the "Maxwell's equations of thinking". He took a little effort towards rejecting the *other* logical AI approach exemplified by [@newellHumanProblemSolving1972], by constructing models that reproduced every little detail of how humans really perform in psychometric experiments, such as their reaction times, their uhhs and oopses. Admitting its interest to psychologists, he considered it a distraction for machine intelligence.
+In the 1980s, like other expert systems people, he aimed his rejection at the previous logical AI methods exemplified by Simon and Newell. Logical AI was a dream that a graduate student might build an AGI during a thesis period, if only they knew the "Maxwell's equations of thinking". Of course, such attempts failed, because there are no such equations. He took a little effort towards rejecting the *other* logical AI approach exemplified by [@newellHumanProblemSolving1972], by constructing models that reproduced every little detail of how humans really perform in psychometric experiments, such as their reaction times, their uhhs and oopses. Admitting its interest to psychologists, he considered it a distraction for machine intelligence.
 
 In the 1990s, as the expert system hype died down, he turned his criticism towards expert systems. He recalled that, back when he was young, before academia had rejected him, he thought automated discovery with AI, such as AM and EURISKO, would lead the way to self-improving learning machines. But then he was disabused of this. BACON discovered Kepler's three laws "only" from data, but that's because Pat Langley was careful in presenting nothing but the relevant data. The cost to discover Kepler's laws on the filtered dataset? A few CPU-hours. The cost to filter the dataset? 10 Kepler-years. Similarly, AM started out with the set-theory axioms and discovered prime numbers and some famous conjectures, but quickly ended up enumerating boring complications. Lenat had to keep adding in more heuristics to get something out of it. Similarly, EURISKO would run overnight and Lenat would check its outputs in the morning, remove some bad ideas, add some good ones, and so on. The *Traveller* 1981 win was "60/40% Lenat/EURISKO" after all.
 
@@ -1237,9 +1245,9 @@ Generalizing, Lenat argued that there is a common thread across all these machin
 
 Lenat's approach was not welcomed by the academics, and the feeling was mutual. AI researchers thought the Cyc project was hyped, and were unhappy with the secretive nature of Cycorp. Philosophers considered the Cyc project premature -- how could Lenat build an ontology for the world when philosophers hadn't even figured out what the ontology is? Lenat shot back, calling academics lazy, abstract, and unable to persist through decades of hard engineering work. [@thompsonKnowItAllMachine2001] Among the academics, the only one that still supported him was Marvin Minsky, who had no problem calling the rest of AI research "brain-dead since the 1970s", especially robotics: "Graduate students are wasting 3 years of their lives soldering and repairing robots, instead of making them smart.". [@baardAIFounderBlasts2003]
 
-Interesting. Why the hate towards robotics? Well, during the 1990s, there were two main challengers to his idea of a symbolic-logical system. On the one side, there was the challenge of bottom-up non-symbolic reasoning promoted by Rodney Brooks' subsumption architecture [@brooksElephantsDonPlay1990], and the statistical machine learning methods like support vector machines. He did not have much to say about the statistical methods -- not yet -- but he did reject the subsumption architecture as a mistaken attempt to reach AGI through robotics, much as Minsky did. Motors, sensors, etc, are simply not needed -- common sense, specified in logical language, is all you need. 
+Interesting. Why the hate towards robotics? Well, during the 1990s, there were two main challengers to his idea of a symbolic-logical system. On the one side, there was the challenge of bottom-up non-symbolic reasoning promoted by Rodney Brooks' subsumption architecture [@brooksElephantsDonPlay1990], and the statistical machine learning methods like support vector machines. He did not have much to say about the statistical methods -- not yet -- but he did reject the subsumption architecture as a mistaken attempt to reach AGI through robotics, much as Minsky did. Motors, sensors, etc, are simply not needed -- common sense, specified in logical language, is all you need. The hard work needed to get the robots to do anything is, you see, the *wrong* kind of hard work.
 
-On the other side, though most expert system researchers had shrunken their ambition in the winter chill, from AGI down to mere commercial survival, a few still believed in the mission. They thought that by building little systems, brick by brick, we can build towards a generally intelligent system. This is basically a "Society of Mind" approach of Marvin Minsky, and even though Lenat and Minsky liked each other's research, Lenat rejected this approach as well. One cannot settle for building common sense bit by bit, expecting a finished system to emerge, but must build the whole thing in one framework, one upper ontology. The ontology does not have to be perfect or efficient, but there has to be one. Without it, the Society of Mind would fragment into a Tower of Babel, with little expert systems of incompatible ontologies, just like how Feigenbaum's dream of a "Library of Congress" of knowledge bases failed to materialize.
+On the other side, though most expert system researchers had shrunken their ambition in the winter chill, from AGI down to mere commercial survival, a few still believed in the mission. They thought that by building little systems, brick by brick, we can build towards a generally intelligent system. This is basically a "Society of Mind" approach of Marvin Minsky, and even though Lenat and Minsky liked each other's research, Lenat rejected this approach as well. One cannot settle for building common sense bit by bit, expecting a finished system to emerge, but must braid the whole thing under one roof, one upper ontology. The ontology does not have to be perfect or efficient, but there has to be one. Without it, the Society of Mind would fragment into a Tower of Babel, with little expert systems of incompatible ontologies, just like how Feigenbaum's dream of a "Library of Congress" of knowledge bases failed to materialize.
 
 In the 2000s, big data arrived with the Internet, and statistical learning became dominant. No doubt trying to preempt customers' "Why don't I just Google it?", he turned his firepower towards statistical learning systems. He never tired of pointing out that, if you make an even slightly complex query like "Is the Space Needle taller than the Eiffel Tower?", Google will happily serve up results saying "The Space Needle is 605 feet high." and "The Eiffel Tower is 1,063 feet high.", unable to actually answer your question. Despite having 15,000 servers, Google only ran dumb statistical algorithms, while Cyc running on a single server could answer it. Google-style statistical machine learning, like its trillion-token statistical machine translations systems [@brantsLargeLanguageModels2007], was just pattern matching, yet another grasping after a free lunch. Such systems could not truly understand. As an alternative, he held out Cyc as the foundation to the [Semantic Web](https://en.wikipedia.org/wiki/Semantic_Web), which would build a system that *would* truly understand.
 
