@@ -7,8 +7,8 @@ categories: [AI, scaling, history]
 format:
   html:
     toc: true
-description: "Obituary for the greatest monument to logical AGI. After 40 years, 30 million rules, 200 million dollars, 2000 person-years, and many promises, Cyc has failed to reach intellectual maturity, and may never will. Exasperated by the secrecy and insularity of Cycorp, there remains no evidence of its general intelligence."
-image-alt: "A symbolic representation of the Cyc project. The vanishing point covered by mist represents the project that keeps growing without ever reaching completion, a destination that is a mirage. The rows of pyramids make up a larger pyramid, due to perspective. This creates the sense of a recursive pyramid, a hierarchy of hierarchies, representing the hierarchy of microtheories in Cyc's ontology. The pyramid is also a monument to the dead, of vast ambitions that failed to secure their design purposes. For Egyptian pyramids, the purpose was a good afterlife. For Cyc, the purpose was AGI.\nA one-point perspective image of a path towards infinity. Two lines of pyramids line the path. The pyramids are stepped pyramids made of concrete. The path fades into a distant mist. The point of view is above the tops of the pyramids. Monochromatic photo. Created by GPT-4o."
+description: "Obituary for the greatest monument to logical AGI. After 40 years, 30 million rules, 200 million dollars, 2000 person-years, and many promises, Cyc has failed to reach intellectual maturity, and may never will. Exacerbated by the secrecy and insularity of Cycorp, there remains no evidence of its general intelligence."
+image-alt: "A symbolic representation of the Cyc project. The vanishing point covered by mist represents the project that keeps growing without ever reaching completion, a destination that is a mirage. The rows of pyramids make up a larger pyramid, due to perspective. This creates the sense of a recursive pyramid, a hierarchy of hierarchies, representing the hierarchy of microtheories in Cyc's ontology. The pyramid is also a monument to the dead, of vast ambitions that failed to secure their design purposes. For Egyptian pyramids, the purpose was a good afterlife. For Cyc, the purpose was AGI.\nA one-point perspective image of a path towards infinity, banked by two rows of pyramids. The pyramids are stepped pyramids made of concrete. The path fades into a distant mist. The point of view is above the tops of the pyramids. Monochromatic photo. Created by GPT-4o."
 
 image: "figure/banner/banner_3.png"
 status: "done"
@@ -60,7 +60,7 @@ Nowadays, when we think of "machine learning", we think of random forests, neura
 
 Well, chess is a game, and so is Euclidean geometry, symbolic integration, and... perhaps scientific discovery itself? The famed scientific method, to deserve the name "method", ought to be just one more problem for logical AI to solve. It merely remained to go meta, to heuristically search over the space of heuristic searches.
 
-During 1977--1983, Pat Langley wrote a series of programs named BACON, after [Francis Bacon](https://en.wikipedia.org/wiki/Francis_Bacon), a father of scientific empiricism. It purported to discover scientific laws from mere data. For example, when given a table of the moles $N$, pressures $P$, volumes $V$, and temperatures $T$ of gas samples, BACON would first try out simple equations involving two of the terms. It would discover that the data for $PV$ appears more "clusterly" than either $P$ or $V$, so it would make a new quantity $PV$, and add that to the table. It would then repeat this process, discovering that $PV/T$ is an interesting quantity, and finally that $PV/NT$ is a *constant* quantity -- the [ideal gas law](https://en.wikipedia.org/wiki/Ideal_gas_law) discovered! [@langleyDataDrivenDiscoveryPhysical1981]
+During 1977--1983, [Pat Langley](http://www.isle.org/~langley/) wrote a series of programs named BACON, after [Francis Bacon](https://en.wikipedia.org/wiki/Francis_Bacon), a father of scientific empiricism. It purported to discover scientific laws from mere data. For example, when given a table of the moles $N$, pressures $P$, volumes $V$, and temperatures $T$ of gas samples, BACON would first try out simple equations involving two of the terms. It would discover that the data for $PV$ appears more "clusterly" than either $P$ or $V$, so it would make a new quantity $PV$, and add that to the table. It would then repeat this process, discovering that $PV/T$ is an interesting quantity, and finally that $PV/NT$ is a *constant* quantity -- the [ideal gas law](https://en.wikipedia.org/wiki/Ideal_gas_law) discovered! [@langleyDataDrivenDiscoveryPhysical1981]
 
 In the logical AI framework, the problem space of BACON is the space of all elementary functions involving the table columns, and a *solution* is a (nontrivial) function that results in a nearly constant column. At each step, the program tries out simple combinations of the current columns, and heuristically pick the one most nearly constant.
 
@@ -86,7 +86,7 @@ In general, such a system begins with some simple rules that allow the system to
 
 Within this context, AM is different. It is still a logical AI with a problem space and a heuristic search. However, there is no data: It was mostly "self-play".
 
-To start AM, Lenat began by entering 115 concepts in set theory and ~300 heuristic rules, and thence AM ran, discovering more and more constructions. Most would be trivial, but a few would be interesting, and these interesting constructions would be stored, allowing further constructions upon them. It secured a place as a minor legend, reportedly rediscovering many concepts, such as the natural numbers, the prime numbers, and the Goldbach conjecture.
+To start AM, Lenat began by entering 115 concepts in set theory and ~250 heuristic rules, and thence AM ran, discovering more and more constructions. Most would be trivial, but a few would be interesting, and these interesting constructions would be stored, allowing further constructions upon them. It secured a place as a minor legend, reportedly rediscovering many concepts, such as the natural numbers, the prime numbers, and the Goldbach conjecture.
 
 A **concept** is essentially a [frame](https://en.wikipedia.org/wiki/Frame_(artificial_intelligence)), which are essentially objects in [object-oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming). A concept has 25 possible **facets**, which are "slots", or "data fields". Not all need to be filled.
 
@@ -242,7 +242,31 @@ Those are the lessons Lenat drew, but what did EURISKO really do?
 
 Other than winning the sci-fi naval battle tournaments, EURISKO also worked on number theory, set theory, simulation of evolution,[^lenat-eurisko-biology] and metal-oxide (MOS) design. In MOS, it designed some new circuit elements that were verified by physical fabrication, such as a more efficient flip-flop that was "difficult to produce masks for and difficult to fabricate, but extremely small and fast".
 
-[^lenat-eurisko-biology]: Lenat had a novel idea about how evolution works, one that I have not seen anywhere else. His idea was that purely random mutations are too slow for evolutionary progress, so that evolution must have gone "meta" as well. A substantial portion of the genome is probably not coding for direct protein transcription, but rather for a kind of heuristics, so that instead of trying out all possible mutations, evolution only tries out mutations that are likely useful. And of course, this would have gone meta, with meta-heuristic genes coding for useful ways to mutate the heuristic genes. [@lenatPlausibleMutationDNA1980]
+::: {.callout-note title="Lenat's meta-Darwinian evolution theory" collapse="true" }
+
+Lenat had a novel idea about how evolution works, one that I have not seen anywhere else. His idea was that purely random mutations are too slow for evolutionary progress, so that evolution must have gone "meta" as well. A substantial portion of the genome is probably not coding for direct protein transcription, but rather for a kind of heuristics, so that instead of trying out all possible mutations, evolution only tries out mutations that are likely useful. And of course, this would have gone meta, with meta-heuristic genes coding for useful ways to mutate the heuristic genes. [@lenatPlausibleMutationDNA1980]
+
+> Here is a mechanism which embodies the heuristic "If a gene has mutated successfully several times in the recent past, then increase its chance of mutating in the next generation, and conversely." All we need to posit is that somehow a short, noncoding sequence—we'll call it an *asterisk—is* added to a gene each time it mutates \[and\] some mechanism (for example, stereochemical) whereby genes with many asterisks are more likely to be mutated, duplicated, and so on, than genes with few or none. Since the asterisks provide no specific benefits to the individual, they will gradually be lost over time, so that when a gene no longer should be mutated, its asterisk count will slowly decline over several generations.
+> 
+> ...
+> 
+> ... recombination among [introns](https://en.wikipedia.org/wiki/Intron) modulates the evolution of a gene. Let's look at an example of this: it is extremely important to keep the [`a`](https://en.wikipedia.org/wiki/Hemoglobin_subunit_alpha), [`b`](https://en.wikipedia.org/wiki/Hemoglobin_subunit_beta), and [`d`](https://en.wikipedia.org/wiki/HBD) globin genes separate, but their internal structure is very similar. To inhibit recombination, the spacers between them can be made very different, and the introns within them can diverge dramatically (since mutations in introns are not as deleterious to the functioning of the gene as mutations to the coding regions). In fact, there is evidence that both of these kinds of divergence do occur for the globins.
+> 
+> [@lenatRoleHeuristicsLearning1983]
+
+At the start, only random mutations would be selected for, but eventually heuristics would arise that create likely advantageous mutations, and then evolution would go meta by one level: it would select for good heuristics. Over the natural history of earth, this can go meta for as many levels as time allows.
+
+The paper goes into further speculative details, and makes a half-humorous--half-horror suggestion that perhaps evolution has worked for so long that the genome now contains a sophisticated intelligent designer, bootstrapped from the billions of years of heuristics-upon-heuristics backstopped by natural selection. The tiny designer would design the progeny's genome, so that almost nothing in the mutation is "random". This designer might regard the human experiment as a failure because of how hard humans are driving the natural world far out of its expectation.
+
+For example, the designer might have learned a rule that is like "If the environment temperature is varying outside of this bound, then undo the previous mutation. We have clearly created an offspring that is wandering too much." Then it would find the human experiment a mistake.
+
+> By now a large knowledge base may exist about ecology, geology, glaciation, seasons, gravity, predation, symbiosis, causality, conservation, behavior, evolution and knowledge itself. In a small number of generations, man has managed to invalidate many of these bits of knowledge, this model of the world. If the heuristics can trace this breakdown to the increasing size of our brains, they might take quick corrective action, preserving homeostasis and the validity of their knowledge base by drastically decreasing human brain size over just a few generations. While this is of course a fanciful tongue-in-cheek extreme case, it (and the longer example above) demonstrates the power, the coordination, that a body of heuristics could evince if it were guiding the process of evolution.
+> 
+> [@lenatRoleHeuristicsLearning1983]
+
+Imagine a species getting so good at adaptation that it is considered a mistake and thus undone. Wouldn't that be the greatest [joke of nature](https://en.wiktionary.org/wiki/lusus_naturae)?
+
+:::
 
 But we're really here to hear about the cool naval battles, not more abstract logics. Unfurl the photonic sails. We go.
 
@@ -767,7 +791,7 @@ After producing enough lemmas, we can then write a specialized inference engine 
 
 Other than these inference engines (or "workers"), there are also many "tacticians", modules that pick engines that are probably good for solving a problem, and a general all-powerful strategist at the very top. It was reported in that there were 1 strategist, 4 tacticians, and 1097 workers. The strategist and tacticians have parameters that can vary, presumably by the user or the ontologists in order to adapt to specific tasks. [@lenatEfficientPathfindingVery2007]
 
-The control structure of Cyc is a commercial secret.[^sublisp-control-structure] I could only find two brief explanations of it, on in a [2010 Cycorp white paper](https://web.archive.org/web/20130708080327/http://www.cyc.com/sites/default/files/storage/white-papers/The%20Cyc%20Blackboard%20System%20v1.0.pdf), one an essay published near the end of his life [@lenatCreating30MillionRuleSystem2022]. According to these, Cyc coordinates the ~1000 inference engines with blackboard architecture similar to the one used in Hearsay-II speech recognition system [@ermanHearsayIISpeechUnderstandingSystem1980]. Lenat described it as:
+The control structure of Cyc is a commercial secret.[^sublisp-control-structure] I could only find two brief explanations of it, one in a [2010 Cycorp white paper](https://web.archive.org/web/20130708080327/http://www.cyc.com/sites/default/files/storage/white-papers/The%20Cyc%20Blackboard%20System%20v1.0.pdf), another in an essay published near the end of his life [@lenatCreating30MillionRuleSystem2022]. According to these, Cyc coordinates the ~1000 inference engines with blackboard architecture similar to the one used in Hearsay-II speech recognition system [@ermanHearsayIISpeechUnderstandingSystem1980]. Lenat described it as:
 
 [^sublisp-control-structure]: [The SubLisp reference](https://web.archive.org/web/20130707133552/http://www.cyc.com/documentation/control-structure) was titled "control structure", and got me excited for a moment. But I was disappointed to find that it described the control structure of the SubLisp programming language (mostly the same as that of Common Lisp), *not* of the Cyc system.
 
@@ -797,7 +821,76 @@ Though there is a most general inference engine on the very top, they had notice
 
 The heaven is high and the emperor is far away. The monologic is dead. Long live the swarm.
 
-### User querying
+### Querying
+
+As a user, the knowledge base would be worth nothing if you cannot ask it questions and receive answers. The Cyc system, like most logical programming systems, answers queries by [logical unification](https://en.wikipedia.org/wiki/Unification_(computer_science)). That is, it converts a query into a logical formula $\phi(x)$ with a certain unknown $x$, then returns all $x$ that makes $\phi(x)$ true, or if no such $x$ exists, then returns `FALSE`.
+
+For a query like 
+
+```lisp
+(#$geopoliticalSubdivision #$Canada ?WHAT)
+```
+
+the Cyc system applies various inference engines to find all bindings (aka substitutions) of the variable `?WHAT` that make the statement true in the knowledge base. The results will include all Canadian provinces and territories that have been asserted explicitly or can be inferred through rules.
+
+Cyc provides 3 types of queries:
+
+* `ASK`: General-purpose queries that generate bindings for free variables along with a formal proof.
+* `PROVE`: Conditional queries that handle universal quantification (`#$forAll`) by constructing temporary microtheories for temporary hypotheticals.
+* `QUERY`: A wrapper around both `ASK` and `PROVE` in the Cyc Browser.
+
+To illustrate how querying works in practice, consider a scenario where we want to find all Canadian provinces. An `ASK` query would look like:
+
+```lisp
+(#$isa ?WHAT #$CanadianProvince)
+```
+
+Cyc processes this by looking for all terms that satisfy the predicate. The system might use transitivity rules, inheritance mechanisms, and various specialized inference engines to gather results. Behind the scenes, Cyc might employ backward-chaining to start from the query and work backward to known facts, or forward-chaining to derive new facts from existing ones, depending on which approach its tacticians determine is more efficient. The reply would be something like
+
+```lisp
+((?WHAT . #$Manitoba-CanadianProvince))
+((?WHAT . #$BritishColumbia-CanadianProvince))
+((?WHAT . #$Alberta-CanadianProvince))
+((?WHAT . #$Ontario-CanadianProvince))
+((?WHAT . #$Quebec-CanadianProvince))
+((?WHAT . #$NovaScotia-CanadianProvince))
+...
+```
+
+When Cyc performs a query, it can also provide a deductive trace (forma proof) showing how it reached its conclusion. For example, when proving that Manitoba is a Canadian province, the deductive trace might look like:
+
+```lisp
+lispCopyQuery: (#$isa #$Manitoba-CanadianProvince #$CanadianProvince)
+  1. (#$isa #$Manitoba-CanadianProvince #$CanadianProvince)
+     [Direct assertion in PoliticalGeographyMt]
+  2. Therefore, Manitoba-CanadianProvince is a CanadianProvince.
+     [TRUE]
+
+Query: (#$geopoliticalSubdivision #$Canada #$Manitoba-CanadianProvince)
+  1. (isa Manitoba-CanadianProvince CanadianProvince)
+     [Established above]
+  2. (implies 
+      (#$isa ?X #$CanadianProvince)
+      (geopoliticalSubdivision Canada ?X))
+     [Rule in PoliticalGMt]
+  3. Therefore, (#$geopoliticalSubdivision #$Canada #$Manitoba-CanadianProvince)
+     [Modus Ponens: 1,2]
+     [TRUE]
+```
+
+For more complex queries involving logical implications, `PROVE` creates hypothetical microtheories to test universal claims. Such microtheories are useful, since the hypotheticals being considered are usually temporary and should not be mixed with the permanent assertions in the knowledge base. For example, to ask "Is every Canadian province a political subdivision of Canada?", we use:
+
+```lisp
+(#$implies
+  (#$isa ?WHAT #$CanadianProvince)
+  (#$geopoliticalSubdivision #$Canada ?WHAT))
+```
+
+`PROVE` handles this by creating a temporary "possible world" where it assumes the existence of a generic Canadian province and tests whether it must also be a political subdivision of Canada.
+
+As previously stated, each time the user begins a question-and-answer session with the Cyc system, it creates a new microtheory just for this session, which allows it to keep track of what has been asked and responded to, so that the user can refer to things like "your previous answer". Such a microtheory is usually deleted after the session is over, though it can also be saved if the user wishes to continue the session at a later date.
+
+The querying interface also provides controls for managing the inference process, such as limiting search depth, maximal time allowed, the inference engines to be used, the parameters for the strategist and the tacticians etc. These can help the Cyc system to solve difficult queries when the default settings are insufficient.
 
 ### Natural language processing
 
@@ -1064,7 +1157,7 @@ Let's take it another way: If there is No Free Lunch to NLU, then what is Cyc's 
 
 All evidences point to the conclusion that a sentence that can be parsed to CycL is already bureaucratic and formalistic, with the mark of interlingua written on its brow. For those, Cyc could already understand in the early 2000s, and yet, Cyc is still here, not machine-learning, lacking ... what? `<sarcasm>`A sarcasm parser?`</sarcasm>`
 
-::: {.callout-note title="An information-theoretic estimate." collapse="true" }
+::: {.callout-note title="An information-theoretic estimate" collapse="true" }
 
 The [information content of English](https://yuxi-liu-wired.github.io/essays/posts/perplexity-turing-test/#entropy-of-natural-languages) is about 0.8 bits per character, and each English sentence contains about 100 characters, giving 80 bits of information.
 
