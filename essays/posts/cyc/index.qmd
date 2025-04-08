@@ -2,7 +2,7 @@
 title: "Cyc"
 author: "Yuxi Liu"
 date: "2025-04-01"
-date-modified: "2025-04-01"
+date-modified: "2025-04-08"
 categories: [AI, scaling, history]
 format:
   html:
@@ -737,7 +737,7 @@ And if the parenthetical note sounds a bit theological,[^meinong-jungle] note th
 
 [^meinong-jungle]: I did not find any mention of Meinong in Lenat's corpus or Cycorp's communications, but this description sounds close to [Meinong's Jungle](https://en.wikipedia.org/wiki/Meinong's_jungle), where every thing exists, even logically impossible things such as "a square circle". The metaphysical difficulties are many, but presumably Cyc has tamed the jungle in practice.
 
-Unfortunately for ontology, while everyone has a common sense, few can pull it out of their heads and push it into a computer. Let's consider how Cyc encodes events, which Cyc calls "[Davidsonian semantics](https://web.archive.org/web/20040310001317/http://www.cyc.com/doc/handbook/oe/08-cycl-representation-choices.html)", since it's how [Donald Davidson](https://en.wikipedia.org/wiki/Donald_Davidson_(philosopher)) represented [events](https://en.wikipedia.org/wiki/Event_(philosophy)) -- yes, Cyc hired a lot of philosophy PhDs.
+Unfortunately for ontology, while everyone has a common sense, few can pull it out of their heads and push it into a computer. Let's consider how Cyc encodes events via "[Davidsonian semantics](https://web.archive.org/web/20040310001317/http://www.cyc.com/doc/handbook/oe/08-cycl-representation-choices.html)", since it's how [Donald Davidson](https://en.wikipedia.org/wiki/Donald_Davidson_(philosopher)) represented [events](https://en.wikipedia.org/wiki/Event_(philosophy)) -- yes, Cyc hired a lot of philosophy PhDs. While everyone can reason about events commonsensically, implicitly, making it explicit required a Davidson.
 
 To represent "John gave Mary a book.", you can write something like `(#$Give #$John #$Mary #$Book1)`, but this prevents you from adding more details, because for the assertion to be syntactically correct, you must define `#$Give` to be a predicate with arity exactly 3. And then you'd be stuck if you want to write "John gave Mary a book last August.", since there is no arity in `#$Give` to insert the "last August" into. And even if you redefine `#$Give` to have arity 4, what if you *also* want to say it happened in the library, or that it was a gift, or that John was happy about it? You'd have to change the definition of the predicate `#$Give` again and again, and there is no end to this.
 
@@ -857,7 +857,7 @@ To illustrate how querying works in practice, consider a scenario where we want 
 (#$isa ?WHAT #$CanadianProvince)
 ```
 
-Cyc processes this by looking for all terms that satisfy the predicate. The system might use transitivity rules, inheritance mechanisms, and various specialized inference engines to gather results. Behind the scenes, Cyc might employ backward-chaining to start from the query and work backward to known facts, or forward-chaining to derive new facts from existing ones, depending on which approach its tacticians determine is more efficient. The reply would be something like
+Cyc processes this by looking for all terms (symbols that begin with `#$`) that satisfy the predicate when plugged into the variable `?WHAT`. The system might use transitivity rules, inheritance mechanisms, and various specialized inference engines to gather results. Behind the scenes, Cyc might employ backward-chaining to start from the query and work backward to known facts, or forward-chaining to derive new facts from existing ones, depending on which approach its tacticians determine is more efficient. The reply would be something like
 
 ```lisp
 ((?WHAT . #$Manitoba-CanadianProvince))
@@ -902,7 +902,7 @@ For more complex queries involving logical implications, `PROVE` creates hypothe
 
 As previously stated, each time the user begins a question-and-answer session with the Cyc system, it creates a new microtheory just for this session, which allows it to keep track of what has been asked and responded to, so that the user can refer to things like "your previous answer". Such a microtheory is usually deleted after the session is over, though it can also be saved if the user wishes to continue the session at a later date.
 
-The querying interface also provides controls for managing the inference process, such as limiting search depth, maximal time allowed, the inference engines to be used, the parameters for the strategist and the tacticians etc. These can help the Cyc system to solve difficult queries when the default settings are insufficient.
+The querying interface also provides controls for managing the inference process, such as limiting search depth, maximal time allowed, the inference engines to be used, the parameters for the strategist and the tacticians, etc. These can help the Cyc system to solve difficult queries when the default settings are insufficient.
 
 ### Natural language processing
 
