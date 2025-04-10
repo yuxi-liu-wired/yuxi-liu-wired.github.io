@@ -579,9 +579,9 @@ This timing of commercialization coincides suspiciously with the end of almost a
 
 ### How expensive was the lunch?
 
-After cyberstalking the Cyc for days, I had captured every numerical datapoint that has ever dripped out of Cycorp over its entire existence, and combined them into a [spreadsheet that you can analyze yourself](code/Cycorp%20claims.xlsx). In short, Cyc has grown to 30M assertions over the years, and is still incomplete, if completeness were measured by its original standard -- a self-learning AGI. Despite Lenat's 2016 claim that it was "done", there is no self-learning or AGI in sight.
+After cyberstalking the Cyc for days, I had captured every numerical datapoint that has ever dripped out of Cycorp over its entire existence, and combined them into a [spreadsheet that you can analyze yourself](https://github.com/yuxi-liu-wired/cyc-archive/blob/main/other_files/Cycorp%20claims.xlsx). In short, Cyc has grown to 30M assertions over the years, and is still incomplete, if completeness were measured by its original standard -- a self-learning AGI. Despite Lenat's 2016 claim that it was "done", there is no self-learning or AGI in sight.
 
-![The progress of Cyc project over the period of 1989--2022. The number of assertions grew to 30M, the cost grew to \$200M, with 2000 person-years. Source: [my obsessive cyberstalking](code/Cycorp%20claims.xlsx).](figure/Cyc_progress_history.svg)
+![The progress of Cyc project over the period of 1989--2022. The number of assertions grew to 30M, the cost grew to \$200M, with 2000 person-years. Source: [my obsessive cyberstalking](https://github.com/yuxi-liu-wired/cyc-archive/blob/main/other_files/Cycorp%20claims.xlsx).](figure/Cyc_progress_history.svg)
 
 Looking at this diagram, we notice 3 things:
 
@@ -1120,7 +1120,13 @@ The finances are healthy. Cycorp is not subject to perverse interests of the mar
 
 What. Is. Stopping. Cyc. From. Learning??
 
-According to the final work of Lenat [@lenatGettingGenerativeAI2023], the only holdup is natural language understanding. The knowledge pump had been thoroughly primed, but Cyc still couldn't learn by reading human texts because natural language understanding is still too hard. Cyc can read CycL perfectly well -- the interlingua -- but it is stubbornly difficult to parse English into the interlingua. But what *is* lacking in the parser? Why is it hard to parse?
+According to his final work, coauthored with Gary Marcus, the last holdup was natural language understanding (NLU). Entry had been accelerated, but was still quite manual:
+
+> This process has been accelerated by gamification, NLU, etc., but each axiom is hand-checked for default correctness, generality, and best placement into the microtheories (contexts) it applies to, before entering it into the Cyc knowledge base.
+>
+> [@lenatGettingGenerativeAI2023]
+
+The knowledge pump had been thoroughly primed, but Cyc still couldn't learn by reading human texts, because NLU remained unsolved. Cyc can read CycL perfectly well -- the interlingua, its mother tongue -- but it is stubbornly difficult to parse English into the interlingua. But why is parsing natural languages hard? Why, indeed, is NLU so difficult, even "AI-complete"?
 
 This situation is clarified if we consider a classic model of machine translation, that of the [Vauquois triangle](https://en.wikipedia.org/wiki/Vauquois_triangle): We need to translate from one language (let's say, English) to another (let's say, Japanese). We can  translate word-for-word, which corresponds to the base of the triangle. This direct approach is of course simple but brittle. Not only does it ignore different word-ordering across languages, it would also completely fail to disambiguate homonyms, such as "fly" as a noun versus "fly" as a verb. Stopgap measures such as using n-grams lead to combinatorial explosions.
 
@@ -1138,7 +1144,7 @@ Indeed, Lenat had often claimed that the Winograd schema challenge is a touchsto
 
 Lenat intended the CycL to be the interlingua.
 
-With this framework, the problems of machine translation and understanding are unified: To understand English, it remains to parse English into the interlingua. To translate Japanese to English, it remains to parse Japanese to interlingua, then verbalize interlingua into English.
+Within this framework, the problems of machine translation and understanding are unified: To understand English, it remains to parse English into the interlingua. To translate Japanese to English, it remains to parse Japanese to interlingua, then verbalize interlingua into English.
 
 ![The Vauquois triangle of translation.](figure/Vauquois%20triangle.png)
 
@@ -1147,9 +1153,9 @@ Recall that Lenat had always argued that "just letting a system learn on its own
 1. The CycL language is enough to represent common sense language about the world. On the Vauquois triangle, all natural languages are joined at the top by a common interlingua, which is the CycL.
 2. By the Winograd schema challenge, translation requires common sense. Therefore, Japanese → English translation requires common sense.
 3. CycL → English requires no common sense. The result would sound kind of wooden and robotic, but it doesn't require any understanding: Just follow the syntax substitution rules. Indeed, CycL → English was already working since ~2000. Therefore, CycL → English requires *no* common sense.
-4. Therefore, by the conservation of common sense, it takes *exactly* the same amount of common sense to perform Japanese → English translation and Japanese → CycL translation.
+4. Therefore, by the conservation of common sense, it takes *exactly* the same amount of common sense to perform Japanese → English translation and Japanese → CycL translation. Indeed, this is why they considered NLU an "AI-complete" problem.
 5. By the no free lunch hypothesis, neural networks trained from scratch can't have common sense. Thus,  neural networks should fail at Japanese → CycL translation.
-6. But in Lenat's last paper, he argued that the only problem stopping Cyc from learning from natural language was that NLU did not work well enough yet, and *hoped* that neural networks could perform the natural language → CycL translation.
+6. But in Lenat's last paper, he argued that the only problem stopping Cyc from learning from natural language was that NLU did not work well enough yet, and *hoped* that neural networks could perform the natural language → CycL translation. Indeed, they considered ChatGPT and [Google Bard](https://en.wikipedia.org/wiki/Google_Bard) to often be better at NLU than Cyc.
 
 On the topic of interlingua, it is interesting that ABBYY<!-- todo: link to ABBYY --> was almost a twin of Cycorp. Whereas Cycorp began building an ontology for the common sense world since 1984, spent \$200M, and got stuck on NLU since around 2010, ABBYY began building an interlingua-based machine translation system since the 1990s, and spent over \$80M. By the early 2010s, they realized that they could not compete with Google statistical machine translation, and pivoted to doing NLU with semantic graph technology based on the knowledge base they produced for the sake of interlingua. [@skorinkinABBYYsBitterLesson2024]
 
