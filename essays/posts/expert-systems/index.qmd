@@ -256,7 +256,7 @@ Philosophically, expert systems has more in common with inductive, scientific re
 > 
 > [@lenatThresholdsKnowledge2000]
 
-From the hindsight of deep learning, the first hypothesis has been amply justified, the second refuted, and the third appears to be differ case-by-case.[^competence-threshold] Lenat, however, bet everything on the three assumptions, in a heroic 30-year-long journey to build [Cyc, an expert system AGI](#sec-cyc).
+From the hindsight of deep learning, the first hypothesis has been amply justified, the second refuted, and the third appears to be differ case-by-case.[^competence-threshold] Lenat, however, bet everything on the three assumptions, in a heroic 30-year-long journey to build Cyc, an expert system AGI.
 
 [^competence-threshold]: In self-driving cars, it is the long tail of rare events that take the longest to learn, yet they were what is required to get the car to drive at expert level. Further, the improvement is smooth: there is no "threshold" at which the value of one additional rare event drops suddenly. Similarly, [Gwern argued that "the last bits are the deepest"](https://gwern.net/scaling-hypothesis#:~:text=The%20last%20bits%20are%20deepest).
 
@@ -276,7 +276,7 @@ Instead of describing in detail these systems, we can just admire tha sudden exp
 >
 > [@mccorduckScientificLifeEdward2022]
 
-> In 1980 John McDermott of Carnegie Mellon delivered to Digital Equipment Corporation the first version of XCON, an expert system designed to help the computer manufacturer configure its machines to suit customer demand; by the middle of the decade the company estimated it was sav- ing $40 million annually by use of XCON. The CBS Evening News re- ported in September 1983 that the expert system PROSPECTOR, instantiating the knowledge of nine geologists, had helped a company discover molybdenum deposits in Washington State’s Mount Tolman. Comparable stories proliferated. Companies scrambled to buy expert systems. New companies sprang up to service them. Bright students were lured away from graduate school with salary offers of \$30,000.
+> In 1980 John McDermott of Carnegie Mellon delivered to Digital Equipment Corporation the first version of XCON, an expert system designed to help the computer manufacturer configure its machines to suit customer demand; by the middle of the decade the company estimated it was saving $40 million annually by use of XCON. The CBS Evening News reported in September 1983 that the expert system PROSPECTOR, instantiating the knowledge of nine geologists, had helped a company discover molybdenum deposits in Washington State’s Mount Tolman. Comparable stories proliferated. Companies scrambled to buy expert systems. New companies sprang up to service them. Bright students were lured away from graduate school with salary offers of \$30,000.
 >
 > [@rolandStrategicComputingDARPA2002, page 191]
 
@@ -332,13 +332,13 @@ There were mainly two kinds of "knowledge acquisition". Most of it was slow and 
 >
 > [@allenExpertSystemsPioneer2018]
 
-From various reading, it seems to me that the largest possible expert systems assembled by such a cottage industry contained around 10,000 rules. For example, the XCON system had around 16,000 rules. [@barkerExpertSystemsConfiguration1989] Anything bigger than that basically was too complicated for its own good. Except the Cyc.
+From various reading, it seems to me that the largest possible expert systems assembled by such a cottage industry contained around 10,000 rules. For example, the XCON system had around 16,000 rules [@barkerExpertSystemsConfiguration1989] and had reached its maintainability limit [@foxAIExpertSystem1990]. Anything bigger than that basically was too complicated for its own good. Except the Cyc.
 
 > Feigenbaum: In 1973 there was a guy named Harold Cohen who made an intelligent painter. You guys should actually do some research on that... It was probably the longest-lived expert system in the history of expert systems. Harold died \[in 2016\]. It was a 15,000-rule system representing the rules that he got out of his own head.
 >
 > [@allenExpertSystemsPioneer2018a]
 
-There were many attempts at automatic knowledge acquisition, starting with Meta-DENDRAL, and culminating with Cyc. They all failed to scale up. We will do a detailed case-study of Cyc and its scalability problems.
+There were many attempts at automatic knowledge acquisition, starting with Meta-DENDRAL, and culminating with Cyc. They all failed to scale up.
 
 > This is the stuff of excellent AI science. But did Meta-DENDRAL find any application in any industrial setting? No. Nor have any of the other complex machine learning procedures (however, machine induction based on algorithms of [Quinlan](https://en.wikipedia.org/wiki/Ross_Quinlan) have had a marginal success). The industry of AI applications is still awaiting the dawn of an era of knowledge engineering significantly aided by machine learning.
 > 
@@ -350,7 +350,7 @@ Around mid-1990s, it was pretty much official: the Expert System hype died. Acco
 
 > The new darling of the media -- virtual reality -- has supplanted AI as having the potential to merge science fiction with real-world applications... Patrick Albert... pointed out the main problem afflicting the AI industry: "companies have been marketing AI technologies, and not solutions." ... the more invisible AI becomes, the more palatable it becomes to the end-user. The day of generic expert system tools is probably over, Arjimand said, to be replaced by off-the-shelf applications. 
 > 
-> Both Monte Zweben, President of Red Pepper Software (San Mateo, CA), and Tom Laffey, Chief Technology Officer of Talarian (Mountain View, CA), had similar stories to tell regarding the successful launch of companies selling real-time expert system tools: never, ever call the products "AI". "Don’t mention AI if you want any venture capital money," Laffey warned. "Call it something else, such as advanced decision systems. These days, people come to AI almost as a last resort." Zweben’s company shared the same fate as Talarian: he had to remove or restate every mention of AI from the Red Pepper prospectus before investors would take him seriously. Despite the literally thousands of successfully deployed intelligent ap- plications, AI’s reputation continues to suffer because nobody is giving credit to the AI component. Zweben suggested wish- fully that AI companies insist on being recognized for their contribution to applications, perhaps even demanding an ‘AI inside’ label, it la Intel’s ‘Intel inside’ label on PCs.
+> Both Monte Zweben, President of Red Pepper Software (San Mateo, CA), and Tom Laffey, Chief Technology Officer of Talarian (Mountain View, CA), had similar stories to tell regarding the successful launch of companies selling real-time expert system tools: never, ever call the products "AI". "Don’t mention AI if you want any venture capital money," Laffey warned. "Call it something else, such as advanced decision systems. These days, people come to AI almost as a last resort." Zweben’s company shared the same fate as Talarian: he had to remove or restate every mention of AI from the Red Pepper prospectus before investors would take him seriously. Despite the literally thousands of successfully deployed intelligent applications, AI’s reputation continues to suffer because nobody is giving credit to the AI component. Zweben suggested wishfully that AI companies insist on being recognized for their contribution to applications, perhaps even demanding an ‘AI inside’ label, it la Intel’s ‘Intel inside’ label on PCs.
 > 
 > [@blanchardAAAI94StateAI1994]
 
@@ -362,13 +362,23 @@ Schank, writing near the end of the expert systems hype, argued that AI research
 > 
 > [@schankWheresAI1991]
 
+In hindsight, there were premonitions of the winter even in an early report on XCON, the system that saved \$40m/year. According to the report [@bachantR1RevisitedFour1984], XCON was originally supposed to be an expert in configuring [VAX](https://en.wikipedia.org/wiki/VAX) and [PDP-11](https://en.wikipedia.org/wiki/PDP-11) machines, and the knowledge base coded everything in a bespoke format. In 1982, DEC wanted to use XCON for configuring other machines using a common database. This apparently minor change in format required an almost complete and nontrivial rewrite.
+
+> The component descriptions had been developed exclusively for R1 and were tailored to the configuration task. As Digital developed other knowledge-based systems for other purposes, it became desirable to have a common data base, where the components were categorized in a less ad hoc fashion. Before Rl could use the new descriptions, nearly all of its rules (about 2000 at the time) had to be changed, and for several hundred of these rules, the task of reformulation took considerable thought.
+
+It was difficult for people to write rules for XCON. Unlike what they expected, expert systems could not be written by the experts. The knowledge engineers, attuned to the ontological pitfalls, were needed. Further, the more rules XCON already had, the harder it was. A form of diminishing returns bit. It is no wonder why XCON eventually stagnated at the maintainability limit of 16,000 rules.
+
+> It was assumed initially that the component descriptions could be created by people who knew a lot about the components, but knew little about how R1 would use the descriptions. As it turned out, creating useful descriptions is not all that straightforward. It often is not clear what "configuration level" means, not clear what attributes are required, and not clear what knowledge to put in the rules and what in the data base. In order to know what information a description should contain, it is necessary to know how the information is going to be used. In order to know how the information is going to be used, it is necessary to know something about the component. 
+> 
+> ... now that R1 has grown substantially, its sheer magnitude seems to serve as a barrier to the would-be developer. It takes much longer now for someone who joins the group to gain an adequate understanding of how Rl does configuration.
+
 Winograd argued that expert systems are structured like human bureaucracies, with formalized explicit rules, and so they have same strengths and weaknesses. This explains why they work only in stable and precise technical areas, where exceptions are not the rule. He gave an example expert system that was stuck in development hell for 15 years, presumably as it was in an era (internal medicine) that has too many exceptions to the rules:
 
 > One system for medical diagnosis, called [CADUCEUS](https://en.wikipedia.org/wiki/CADUCEUS_(expert_system)) (originally INTERNIST), has 500 disease profiles, 350 disease variations, several thousand symptoms, and 6,500 rules describing relations among symptoms. After 15 years of development, the system is still not on the market. According to one report, it gave a correct diagnosis in only 75 percent of its carefully selected test cases. Nevertheless, Myers, the medical expert who developed it, "believes that the addition of another 50 \[diseases\] will make the system workable and, more importantly, practical."
 >
 > [@winograd10ThinkingMachines1991]
 
-In 1992, Feigenbaum admitted that the hope of generally intelligent expert systems failed. They turned out to be like mesas: narrow, brittle, and isolated. They work well within the knowledge base, but immediately fail when even slightly outside of it. Every expert system was unique and custom-made. They couldn't be mass-produced, and their knowledge bases are incompatible, so they couldn't talk to each other or share each other's knowledge. Although, he dreamed of a "Library of Congress of knowledge codified and represented for expert system use", which he saw in the [Cyc](#sec-cyc). [@feigenbaumPersonalViewExpert1992]
+In 1992, Feigenbaum admitted that the hope of generally intelligent expert systems failed. They turned out to be like mesas: narrow, brittle, and isolated. They work well within the knowledge base, but immediately fail when even slightly outside of it. Every expert system was unique and custom-made. They couldn't be mass-produced, and their knowledge bases are incompatible, so they couldn't talk to each other or share each other's knowledge. Although, he dreamed of a "Library of Congress of knowledge codified and represented for expert system use", which he saw in the Cyc. [@feigenbaumPersonalViewExpert1992]
 
 Many years later, in 2018 and 2022, some of the expert systems people reviewed to their younger days to find out what went wrong.
 
@@ -395,6 +405,8 @@ Douglas Lenat argued that some programmers simply used them wrong:
 > In one case, an application program was completely flowcharted out and coded in a procedural programming language, PL1. Explicit line numbers were assigned, and the whole large program was then methodically translated line by line into a set of superficially (i.e., syntactically) if-then rules, each one having the following form: "IF line-number = 918 THEN x ← 2x, line-number ← 919"
 >
 > [@lenatCreating30MillionRuleSystem2022]
+
+... that's one worthy of a [Coding Horrors](https://blog.codinghorror.com/) post, with the title "Real Programmers can write FORTRAN in any language".
 
 The more powerful features of expert systems were too difficult to use for people untrained in computer science, and the features that outsiders could use were pretty simple and boring.
 
@@ -512,13 +524,13 @@ Meanwhile, even tinier irons appeared in the form of IBM PC (1981) and a hundred
 
 > I was attending a seminar in New York state that Isaac Asimov organizes every year. This year the topic was Artificial Intelligence, and the idea was to bring in people from all walks of life ... most of these people make essentially no distinction between computers, broadly defined, and artificial intelligence -- probably for very good reason. As far as they’re concerned, there is no difference; they’re just worried about the impact of very capable, smart computers. Enthusiasm and exaggerated expectations were very much in evidence. The computer seems to be a mythic emblem for a bright, high-tech future that is going to make our lives so much easier... The computer is not only a mythic emblem for this bright, high-technology future, it’s a mythic symbol for much of the anxiety that people have about their own society.
 >
-> TODO that AI Winter paper
+> [@mcdermottDarkAgesAI1985]
 
 IBM PC only went on the market in 1983, and Compaq in 1984. 
 
-In our perspective, expert systems seem like boring database and Java programming, and it is hard to imagine people getting hyped about databases or Java, so we tend to imagine the computer scientists promising some miracle technology they could not deliver. But it seems to me that, while they did overestimate what their technologies could deliver, the technologies themselves worked exactly as specified -- databases, logical inference, and object-oriented programming!
+In our perspective, expert systems seem like boring database and Java programming, and it is hard to imagine people getting hyped about databases or Java, so we tend to imagine the computer scientists promising some miracle technology they could not deliver. But it seems to me that, while they did overestimate what their technologies could deliver, the technologies themselves worked exactly as specified -- database management, inference over large logical rules, and object-oriented programming!
 
-So the problem now becomes: How could people have been hyped about such boring things?
+So the question is instead: How could people have been hyped about such boring things?
 
 Although computer scientists had long known that computers could perform symbolic and logical reasoning, in the 1980s, it was a genuine revelation to people outside.
 
@@ -538,10 +550,22 @@ Indeed, the most soul-crushing tedium of modern software used to be cool. In 198
 
 ![When spreadsheet was cool.](figure/Kay_1984_spreadsheet_excel.png)
 
-In 1984, spreadsheet and object-oriented programming was so glamorous they deserved full-page pictures. Now they suffer under the ignonimous boredomn that is Microsoft Excel and Java. [@kayComputerSoftware1984]
+In 1984, spreadsheet and object-oriented programming was so glamorous they deserved full-page pictures. Now they suffer under the ignominious boredom that is Microsoft Excel and Java. [@kayComputerSoftware1984]
 
 :::
 
 And while the grandest dreams of expert system AI did not pan out, it still offered incremental profit of a few million dollars at a time. The pieces that worked quickly became too boring to mention, and the pieces that didn't work got forgotten, or returned to academia, where ideas hope for their eventual justification.
 
-Except the thing called ["Cyc"](TODO_cyc).
+... but for [Cyc](https://yuxi-liu-wired.github.io/essays/posts/cyc/).
+
+### TODO insert this somewhere
+
+There is a wide-sense and a narrow-sense expert systems, getting confused in the AI spring.
+
+The narrow-sense expert system is the original sense. According to it, an expert system is made of logical inference engines running over a large and extensible knowledge base of rules, written in a formal logical language. "Programming" an expert system is mainly in adding rules to the base, not in changing the engines. The system in general improves with more rules, although it is not guaranteed.
+
+The wide-sense expert system involves spreadsheets, object-oriented programming, and all the other software innovations that came in the 1980s.
+
+Most of the promises of narrow-sense expert systems failed for the given reasons. They were a powerful tool in search of a problem to solve. In practice, most projects turned out to be too easy for expert systems, in which case standard if-then-else over a standard database eventually replaced expert systems. This had the advantage that computer programmers were much cheaper and easier to train than knowledge engineers, and these programs were cheaper to build and maintain than expert systems. Some problems, such as the projects in speech recognition and self-driving (TODO cite SCI) we still recognize as genuine AI projects, turned out to be too hard for expert systems, in which case they suffered dibilitating scaling issues. There just turned out to be few problems for which expert systems were not too powerful, not too powerless, but just right. Such things are hard to predict.
+
+How did the fever start? A coincidence of the two waves coming out of the labs created the fever. To an outsider, everything seemed rather magical. Expert systems were magic. Automatic spreadsheets were magic. Object-oriented programming was magic. Microcomputers were magic. In the exciting confusion, people bought the whole package, wide-sense and narrow-sense. When the reckoning came, the wide-sense survived well, but changed their names. The narrow-sense found itself without a product-market fit, and mostly died out.
