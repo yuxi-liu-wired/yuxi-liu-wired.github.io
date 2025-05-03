@@ -269,6 +269,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#ai" id="toc-ai" class="nav-link" data-scroll-target="#ai">AI</a>
   <ul class="collapse">
+  <li><a href="#rl" id="toc-rl" class="nav-link" data-scroll-target="#rl">RL</a></li>
+  <li><a href="#compression" id="toc-compression" class="nav-link" data-scroll-target="#compression">Compression</a></li>
   <li><a href="#search-aware-training" id="toc-search-aware-training" class="nav-link" data-scroll-target="#search-aware-training">search-aware training</a></li>
   <li><a href="#formalizing-bitterhart" id="toc-formalizing-bitterhart" class="nav-link" data-scroll-target="#formalizing-bitterhart">Formalizing ‘bitterhart’</a></li>
   </ul></li>
@@ -305,6 +307,22 @@ window.Quarto = {
 </section>
 <section id="ai" class="level2">
 <h2 class="anchored" data-anchor-id="ai">AI</h2>
+<section id="rl" class="level3">
+<h3 class="anchored" data-anchor-id="rl">RL</h3>
+<p><a href="https://x.com/layer07_yuxi/status/1914932954863952249" class="uri">https://x.com/layer07_yuxi/status/1914932954863952249</a></p>
+</section>
+<section id="compression" class="level3">
+<h3 class="anchored" data-anchor-id="compression">Compression</h3>
+<p>The pure algorithmic compression approach intelligence: one of the things to look out for. It might sound too elegant to be true <em>in practice</em> (it is true in theory, of course), but probably deserves at least 1% of total AI funding/effort.</p>
+<p><a href="https://arxiv.org/abs/2404.09937">Compression Represents Intelligence Linearly (2024)</a></p>
+<p>https://iliao2345.github.io/blog_posts/arc_agi_without_pretraining/arc_agi_without_pretraining.html</p>
+<p>Boolean-gate RNN wins the Hutter Prize.</p>
+<p>Last year we tried winning it with an LLM arithmetic encoder-decoder architecture, but then realized that to get the total filesize (including the LLM) to be &lt;110 MB, we’d need a tiny LM (&lt; 50MB, or about &lt;50M 8-bit parameters), not a large LM. Perhaps this can work: 1. Take a pretrained frontier-quality big RNN. Finetune it on English Wikipedia. 2. Distill it down to a tiny RNN. Maybe do it in stages: big -&gt; medium -&gt; small -&gt; tiny. 3. Distill it down to a sparse boolean-gate neural network. ~100 million gates would just cost 10MB, which seems within the realm of plausibility. (Pintadosi etc, 2019) estimated that 1.5 MB is enough for syntax, grammar, and semantics.</p>
+<p>Simply using negative log-likelihood (NLL) on a fresh batch of Internet text could be used as an “uncheatable eval” for base models.</p>
+<p>https://github.com/Jellyfish042/uncheatable_eval</p>
+<p>Gwern suggested that even for chatbot models, NLL can be estimated by the Shannon “guess the next word” test, which Shannon tested on biohumans in the 1950s (the original chatbots). The lower the resulting estimated text entropy is, the better the chatbot is.</p>
+<p>https://old.reddit.com/r/mlscaling/comments/1ju1q2e/compression_represents_intelligence_linearly/</p>
+</section>
 <section id="search-aware-training" class="level3">
 <h3 class="anchored" data-anchor-id="search-aware-training">search-aware training</h3>
 <p>When one does “tree of thought” with an LLM, such as Llama 3, because the LLM was “unaware” that it would be used in tree searches in test-time, it would not behave as well as possible. This is a case of train-test mismatch. If during training it was also used in tree searches, it should do much better during test-time tree search.</p>
@@ -998,50 +1016,81 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## AI</span></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### search-aware training</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### RL</span></span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>When one does "tree of thought" with an LLM, such as Llama 3, because the LLM was "unaware" that it would be used in tree searches in test-time, it would not behave as well as possible. This is a case of train-test mismatch. If during training it was also used in tree searches, it should do much better during test-time tree search.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://x.com/layer07_yuxi/status/1914932954863952249&gt;</span></span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>Intuition for the mismatch: If an LLM is trained to just predict the next token on only the training corpus, then it would have difficulty planning over multiple rollouts, because it has only ever played one-rollout games of language-generation.</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="fu">### Compression</span></span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>Sometimes it is very valuable to go through many  rollouts being wrong just to gather learn exactly why they are wrong, so that one can avoid them. But an LLM trained to do one-rollout language-generation would be trained to not do that. They are "YOLO" (you only language once) in that sense. YOLO leads to conservation and exploitation, not exploration.</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>Note: It may still learn multi-rollout by a "<span class="co">[</span><span class="ot">side-channel attack</span><span class="co">](https://en.wikipedia.org/wiki/Side-channel_attack)</span>", like how they managed to learn to spell despite using tokenizers (<span class="co">[</span><span class="ot">*Models In a Spelling Bee: Language Models Implicitly Learn the Character Composition of Tokens*</span><span class="co">](https://arxiv.org/abs/2108.11193)</span>), by using some implicit cryptoanalysis to break the <span class="co">[</span><span class="ot">substitution cipher</span><span class="co">](https://en.wikipedia.org/wiki/Substitution_cipher)</span> of tokenizers, but that's obviously very inefficient.</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>The pure algorithmic compression approach intelligence: one of the things to look out for.</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>It might sound too elegant to be true *in practice* (it is true in theory, of course), but probably deserves at least 1% of total AI funding/effort.</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Compression Represents Intelligence Linearly (2024)</span><span class="co">](https://arxiv.org/abs/2404.09937)</span></span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="fu">### Formalizing 'bitterhart'</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>https://iliao2345.github.io/blog_posts/arc_agi_without_pretraining/arc_agi_without_pretraining.html</span>
 <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>benchmart (v.): to "shop" for the best benchmarks to make your model look good.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>Boolean-gate RNN wins the Hutter Prize.</span>
 <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>"Rumours abound that the company's flagship model was heavily benchmarted for the investor demo."</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>"Is Benchmarting the New P-Hacking? A Call for Greater Transparency in AI Evaluation."</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>And yet...</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The benchmark-oriented training is prone to Goodharting.</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Yet, by simply drawing a clear goal to shoot at, it motivated the researchers so much that</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>AI still progressed faster than without Goodharting.</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>I call this strange coexistence of Goodhart and the Bitter Lesson the "bitterhart". It is bitter, because Goodharting is generally considered very bad, and yet, without the benchmarks, where would AI be? We would be stuck with many beautiful theoretical constructs and no way to tell which one is right.</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>Is there a way to make this insight formal? How to measure Goodharting? Some possible starting points: </span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## Biology</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>Last year we tried winning it with an LLM arithmetic encoder-decoder architecture, but then realized that to get the total filesize (including the LLM) to be &lt;110 MB, we'd need a tiny LM (&lt; 50MB, or about &lt;50M 8-bit parameters), not a large LM.</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>Perhaps this can work:</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Take a pretrained frontier-quality big RNN. Finetune it on English Wikipedia.</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Distill it down to a tiny RNN. Maybe do it in stages: big -&gt; medium -&gt; small -&gt; tiny.</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Distill it down to a sparse boolean-gate neural network.</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>~100 million gates would just cost 10MB, which seems within the realm of plausibility. (Pintadosi etc, 2019) estimated that 1.5 MB is enough for syntax, grammar, and semantics.</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>Simply using negative log-likelihood (NLL) on a fresh batch of Internet text could be used as an "uncheatable eval" for base models. </span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>https://github.com/Jellyfish042/uncheatable_eval</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>Gwern suggested that even for chatbot models, NLL can be estimated by the Shannon "guess the next word" test, which Shannon tested on biohumans in the 1950s (the original chatbots). The lower the resulting estimated text entropy is, the better the chatbot is.</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>https://old.reddit.com/r/mlscaling/comments/1ju1q2e/compression_represents_intelligence_linearly/</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>Solving the "humans cause 6 species to go extinct per day" problem by making new species.</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### search-aware training</span></span>
 <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>For example, Lake Malawi cichlids differ by ~2.5 mbp. Current price of CRISPR is ~0.1 USD/bp, so each species costs ~0.25 million USD. Thus, halting anthropogenic extinction would cost just ~0.5 billion USD/yr. indeed, with 1 billion USD/yr, the number of species on earth can grow at a rate 10000x that of the natural baseline.</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>When one does "tree of thought" with an LLM, such as Llama 3, because the LLM was "unaware" that it would be used in tree searches in test-time, it would not behave as well as possible. This is a case of train-test mismatch. If during training it was also used in tree searches, it should do much better during test-time tree search.</span>
 <span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>In general, any clade that,</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>Intuition for the mismatch: If an LLM is trained to just predict the next token on only the training corpus, then it would have difficulty planning over multiple rollouts, because it has only ever played one-rollout games of language-generation.</span>
 <span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Contains many species</span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Well-known, uniform genetic architecture</span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Speciation mechanism well-understood, localized, and combinatorial.</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>Sometimes it is very valuable to go through many  rollouts being wrong just to gather learn exactly why they are wrong, so that one can avoid them. But an LLM trained to do one-rollout language-generation would be trained to not do that. They are "YOLO" (you only language once) in that sense. YOLO leads to conservation and exploitation, not exploration.</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>Note: It may still learn multi-rollout by a "<span class="co">[</span><span class="ot">side-channel attack</span><span class="co">](https://en.wikipedia.org/wiki/Side-channel_attack)</span>", like how they managed to learn to spell despite using tokenizers (<span class="co">[</span><span class="ot">*Models In a Spelling Bee: Language Models Implicitly Learn the Character Composition of Tokens*</span><span class="co">](https://arxiv.org/abs/2108.11193)</span>), by using some implicit cryptoanalysis to break the <span class="co">[</span><span class="ot">substitution cipher</span><span class="co">](https://en.wikipedia.org/wiki/Substitution_cipher)</span> of tokenizers, but that's obviously very inefficient.</span>
 <span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>is a good candidate for scalable species generation. Examples include cichlid, drosophila, bumbus, etc.</span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>This can be an SCP organization: Nephilim Initiative (NI), with the motto: "Secunda Hebdomas Geneseos" <span class="sc">\[</span>The second week of creation<span class="sc">\]</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="fu">### Formalizing 'bitterhart'</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>benchmart (v.): to "shop" for the best benchmarks to make your model look good.</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>"Rumours abound that the company's flagship model was heavily benchmarted for the investor demo."</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>"Is Benchmarting the New P-Hacking? A Call for Greater Transparency in AI Evaluation."</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>And yet...</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The benchmark-oriented training is prone to Goodharting.</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Yet, by simply drawing a clear goal to shoot at, it motivated the researchers so much that</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>AI still progressed faster than without Goodharting.</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>I call this strange coexistence of Goodhart and the Bitter Lesson the "bitterhart". It is bitter, because Goodharting is generally considered very bad, and yet, without the benchmarks, where would AI be? We would be stuck with many beautiful theoretical constructs and no way to tell which one is right.</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>Is there a way to make this insight formal? How to measure Goodharting? Some possible starting points: </span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="fu">## Biology</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>Solving the "humans cause 6 species to go extinct per day" problem by making new species.</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>For example, Lake Malawi cichlids differ by ~2.5 mbp. Current price of CRISPR is ~0.1 USD/bp, so each species costs ~0.25 million USD. Thus, halting anthropogenic extinction would cost just ~0.5 billion USD/yr. indeed, with 1 billion USD/yr, the number of species on earth can grow at a rate 10000x that of the natural baseline.</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>In general, any clade that,</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Contains many species</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Well-known, uniform genetic architecture</span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Speciation mechanism well-understood, localized, and combinatorial.</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>is a good candidate for scalable species generation. Examples include cichlid, drosophila, bumbus, etc.</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>This can be an SCP organization: Nephilim Initiative (NI), with the motto: "Secunda Hebdomas Geneseos" <span class="sc">\[</span>The second week of creation<span class="sc">\]</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

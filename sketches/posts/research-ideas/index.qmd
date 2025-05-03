@@ -38,6 +38,37 @@ What I think *might* work out is if we find $X, Y$ such that $\nabla_X r_{X,Y} =
 
 ## AI
 
+### RL
+
+<https://x.com/layer07_yuxi/status/1914932954863952249>
+
+### Compression
+
+The pure algorithmic compression approach intelligence: one of the things to look out for.
+It might sound too elegant to be true *in practice* (it is true in theory, of course), but probably deserves at least 1% of total AI funding/effort.
+
+[Compression Represents Intelligence Linearly (2024)](https://arxiv.org/abs/2404.09937)
+
+https://iliao2345.github.io/blog_posts/arc_agi_without_pretraining/arc_agi_without_pretraining.html
+
+Boolean-gate RNN wins the Hutter Prize.
+
+Last year we tried winning it with an LLM arithmetic encoder-decoder architecture, but then realized that to get the total filesize (including the LLM) to be <110 MB, we'd need a tiny LM (< 50MB, or about <50M 8-bit parameters), not a large LM.
+Perhaps this can work:
+1. Take a pretrained frontier-quality big RNN. Finetune it on English Wikipedia.
+2. Distill it down to a tiny RNN. Maybe do it in stages: big -> medium -> small -> tiny.
+3. Distill it down to a sparse boolean-gate neural network.
+~100 million gates would just cost 10MB, which seems within the realm of plausibility. (Pintadosi etc, 2019) estimated that 1.5 MB is enough for syntax, grammar, and semantics.
+
+Simply using negative log-likelihood (NLL) on a fresh batch of Internet text could be used as an "uncheatable eval" for base models. 
+
+https://github.com/Jellyfish042/uncheatable_eval
+
+Gwern suggested that even for chatbot models, NLL can be estimated by the Shannon "guess the next word" test, which Shannon tested on biohumans in the 1950s (the original chatbots). The lower the resulting estimated text entropy is, the better the chatbot is.
+
+https://old.reddit.com/r/mlscaling/comments/1ju1q2e/compression_represents_intelligence_linearly/
+
+
 ### search-aware training
 
 When one does "tree of thought" with an LLM, such as Llama 3, because the LLM was "unaware" that it would be used in tree searches in test-time, it would not behave as well as possible. This is a case of train-test mismatch. If during training it was also used in tree searches, it should do much better during test-time tree search.
