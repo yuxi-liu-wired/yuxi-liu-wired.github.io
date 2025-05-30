@@ -265,7 +265,7 @@ Consider the arguments of a latter-day Bar-Hillel:
 
 > The case against machine translation as a solution to practical problems is overwhelming and has been made many times. I do not propose to repeat it in any detail here. It will, however, be worth a few words to make a *prima facie* case for the implausibility of practical machine translation if only so that the contrast with realistic approaches to the problem will be more striking... There is a great deal that computer scientists and linguists could contribute to the practical problem of producing translations, but, in their own interests as well as those of their customers, they should **never** be asked to provide an engineering solution to a problem that they only dimly understand.
 > 
-> I want to advocate a view of the problem in which machines are gradually, almost imperceptibly, allowed to take over certain functions in the overall translation process. First they will take over functions not essentially related to translation. Then, little by little, they will approach translation itself. The keynote will be *modesty*. At each stage, we will do only what we know we can do reliably.
+> I want to advocate a view of the problem in which machines are gradually, almost imperceptibly, allowed to take over certain functions in the overall translation process. First they will take over functions not essentially related to translation. Then, little by little, they will approach translation itself. The keynote will be *modesty*. At each stage, we will do only what we know we can do reliably. ... One day it will be built because its very modesty assures its success. It is to be hoped that it will be built with taste by people who understand languages and computers well enough to know how little it is that they know.
 >
 > [@kayProperPlaceMen1997]
 
@@ -323,7 +323,7 @@ They began work in 1986, having already gathered most of the datasets from their
 [^english-french]:
     Incidentally, this is why in statistical machine translation, it is conventional to call the two languages $E$ and $F$.
 
-The early versions of the system was hopeful but slow. It took 10 minutes to decode 10 words, and the head of their department told them that IBM viewed MT as a luxury. Fortunately, DARPA came to the rescue. Like how it [used to fund those speech recognition projects](#sec-TODO), DARPA was funding MT projects. Thus the IBM MT project survived.
+The early versions of the system was hopeful but slow. It took 10 minutes to decode a 10-word sentence, and the head of their department told them that IBM viewed MT as a "luxury". Fortunately, DARPA came to the rescue. Like how it [used to fund those speech recognition projects](#sec-TODO), DARPA was funding MT projects. Thus the IBM MT project survived.
 
 They immediately realized that they had neither the data nor the compute to do a purely statistical MT system, and began retracing the steps of the bitter lesson:
 
@@ -458,7 +458,9 @@ It is 2025.
 Still waiting for the pendulum to return from the unfathomed depths of Empiricism.[^kenneth-church-2022]
 
 [^kenneth-church-2022]:
-    Squinting at the receding bob, Church has been issuing escalating jeremiads. In 2017, he called deep learning "opaque" that offers no insight [@churchEmergingTrendsDid2017]. In 2019, he pled for tolerance and inclusion: "Computational Linguistics used to be an interdisciplinary combination of Humanities and Engineering... There has been way too much talk about firing linguists." [@todo]. And in 2022, he ratcheted up the rhetoric. The "SOTA-chasing" culture was "sucking the oxygen out of the room", analogous to the replication crisis, and possibly may cause another AI winter [@churchEmergingTrendsSOTAchasing2022]. Guess the revolution does leave all the old guards bitter...
+    Squinting at the receding bob, Church has been issuing more jeremiads. In 2017, he called deep learning "opaque" that offers no insight [@churchEmergingTrendsDid2017]. In 2019, he pled for tolerance and inclusion: "Computational Linguistics used to be an interdisciplinary combination of Humanities and Engineering... There has been way too much talk about firing linguists." [@churchSurvey25Years2019]. And in 2022, he ratcheted up the rhetoric. The "SOTA-chasing" culture was "sucking the oxygen out of the room", analogous to the replication crisis, and possibly may cause another AI winter [@churchEmergingTrendsSOTAchasing2022]. Guess the revolution does leave all the old guards bitter...
+
+    To reply to Church, linguists have been fired, not because we have a commitment to empiricism against rationalism, but because the rationalism of linguistics is found wanting. Nouns and verbs certainly exist, but must we work with parasitic gaps, X-bars, transformation rules, and the likes? A rationalist interpretation of neural networks, yea, but not with the tools developed by linguists. Seek elsewhere, perhaps to statistics, to neuroscience, to high-dimensional probability. The phenomena must be saved, yea, but some of the phenomena in the heads of linguists will only be exorcised.
 
 ![Language modeling in 2020, still far from the pinnacle of Empiricism. [@robertsExploringTransferLearning2020]](figure/T5_language_model.png)
 
@@ -746,22 +748,19 @@ The IBM project, compared to the others, was definitely big-data. This served th
 
 ![The New Rayleigh toy language. [@jelinekDawnStatisticalASR2009, figure 1]](figure/New_Rayleigh_toy_language.png)
 
-They soon produced an ASR model that achieved perfect accuracy on this, so they had to go bigger. The next dataset they obtained was the "laser patent corpus", consisting of 2 million words of patent applications in laser technology, with a vocabulary size of 1,000, twice as large as the [Brown Corpus (1961)](https://en.wikipedia.org/wiki/Brown_Corpus), and used it to train a 3-gram language model. The road to this dataset was quite circuitous, which anyone who has tried making a non-toy dataset can relate [@liTheresNoData2023; @brownOhYesEverythings2013].
+They soon produced an ASR model that achieved perfect accuracy on this, so they had to go bigger. The next dataset they obtained was the "laser patent corpus", consisting of 1.5 million words of [USPTO](https://en.wikipedia.org/wiki/United_States_Patent_and_Trademark_Office) patent applications in laser technology, twice as large as the [Brown Corpus (1961)](https://en.wikipedia.org/wiki/Brown_Corpus). The road to this dataset was quite circuitous, which anyone who has tried making a non-toy dataset can relate [@bahlRecognitionContinuouslyRead1978; @brownOhYesEverythings2013].
 
 * They began with IBM manuals, which were already digitized, but "the vocabulary was too large. We also felt that it would be difficult to pass most of it off as English."
-* So they went to Voice of America's broadcasts, which *purportedly* used only [Basic English](https://en.wikipedia.org/wiki/Basic_English). But they "did not at all cleave to an 850-word vocabulary. Again we had to abandon this area because the vocabulary was too large."
-* They then tried using children's books. They got about 1 million words typed in when suddenly... "the vocabulary was too large."
-* Finally they got the laser patent corpus (h/t to [Fred Damerau](https://en.wikipedia.org/wiki/Frederick_J._Damerau)), whose 1000-word vocabulary was finally small enough!
+* So they went to Voice of America's broadcasts, which *purportedly* used only the 850 words of [Basic English](https://en.wikipedia.org/wiki/Basic_English). But they "did not at all cleave to an 850-word vocabulary. Again we had to abandon this area because the vocabulary was too large."
+* They then tried using children's books. They got about 1 million words typed in before they suddenly realized... "the vocabulary was too large."
+* Finally they got the laser patent corpus (hat-tip to [Fred Damerau](https://en.wikipedia.org/wiki/Frederick_J._Damerau)) from USPTO, containing 1.8 million words. The corpus still was too difficult, so they performed extensive editing: "duplicate patents were eliminated, [patent claims](https://en.wikipedia.org/wiki/Patent_claim) (which are highly stylized) were excised, words were substituted for chemical and physical symbols and formulas, variant spellings for the same word (e.g., *disc* and *disk*) were unified under a single form, and misspellings and typographical errors were corrected".
+* After this cleaning, the vocabulary was still too large. For example, there were all kinds of English numerals like "one", "two", "three"... To cut down on that, they substituted "eighteen" for all boldface numerals and "nineteen" for all other numerals. At this point, 1.5 million words remain. The vocabulary size has been cut down to just over 12,000, finally within the capacity of their methods. As a test-run, they trained a 3-gram model on a subset with a 1000-word vocabulary.
 
-> Though the laser patent corpus was considered "naturally occurring," it was in fact meticulously constructed, even before researchers discarded all sentences containing vocabulary outside of the thousand most frequently occurring words. The complete patent text had to be first "subjected to intensive hand and computerized editing": eliminating duplicates, merging spelling variations, and substituting scientific symbols and formulas. The claims sections of the patents proved especially problematic due to "highly stylized" legal language, and were ultimately excised entirely.
-> 
-> [@liTheresNoData2023]
-
-What is a good statistician to do? Declare victory? Since "there's no data like more data", more data it is.
+The laser patent dataset was obtained sometime before 1975 [@jelinekDesignLinguisticStatistical1975]. What is a good statistician to do? Declare victory? Since "there's no data like more data", more data it is.
 
 | Source                                    | millions of words |
 | :---------------------------------------- | ----------------: |
-| Laser patent corpus                       |       2 |
+| Laser patent corpus                       |       1.5 |
 | Richard Garwin                            |     2.5 |
 | Associated Press                          |      20 |
 | Oil company                               |      25 |
