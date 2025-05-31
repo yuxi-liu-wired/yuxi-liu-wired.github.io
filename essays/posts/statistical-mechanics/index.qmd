@@ -65,7 +65,7 @@ Unfortunately, I never learned statistical mechanics from any textbook. I just u
   * [@nelsonBiologicalPhysicsEnergy2003] teaches basic statistical thermodynamics in the context of biology, and [@bergRandomWalksBiology1993] teaches random walks.
   * [@ben-naimFarewellEntropyStatistical2008; @feynmanFeynmanLecturesComputation1996] show how to combine (unify?) statistical mechanics with information theory.
   * [@jaynesProbabilityTheoryLogic2003] gives Jaynes' entire philosophy of information, one application of which is his theory of why entropy is maximized in statistical mechanics.
-  * [@lemonsTrailBlackbodyRadiation2022] closely follows the story of how Planck actually derived the blackbody radiation law. Reading it, you almost have the illusion that you too could have discovered what he discovered
+  * [@lemonsTrailBlackbodyRadiation2022] closely follows the story of how Planck actually derived the blackbody radiation law. Reading it, you almost have the illusion that you too could have discovered what he discovered.
   * [@penroseFoundationsStatisticalMechanics2005] gives an elegant mathematical deduction that brings philosophers and mathematical logicians joy. However, it is not useful for applications.
 * Books I did not learn from, but feel obliged to recommend:
   * [@maStatisticalMechanics1985; @tolmanPrinciplesStatisticalMechanics1980; @feynmanStatisticalMechanicsSet2018; @schrodingerStatisticalThermodynamics1989] are books that apparently every real physicist must read before they die. Like those other "1001 books you must read before you die", I did not read them.
@@ -509,11 +509,11 @@ yielding the enthalpic ensemble (or the [isoenthalpic-isobaric ensemble](https:/
 
 Just like in thermodynamics, it is useful to consider free entropies, which are the convex duals of the entropy:
 
-* Helmholtz free entropy: $f[\rho] := S[\rho] - \beta \braket{E} = \int dx \; \rho(x) (-\ln \rho(x) - \beta E(x))$;
-* Gibbs free entropy: $g[\rho] = S[\rho] - \beta \braket{E} - \beta P \braket{V}$;
-* Landau free entropy: $\omega[\rho] = S[\rho] - \beta \braket{E} + \beta \mu \braket{N}$;
+* Helmholtz free entropy: $f[\rho] := S[\rho] - \beta \braket{E} = \int dx \; \rho(x) (-\ln \rho(x) - \beta E(x))$.
+* Gibbs free entropy: $g[\rho] := S[\rho] - \beta \braket{E} - \beta P \braket{V}$.
+* Landau free entropy: $\omega[\rho] := S[\rho] - \beta \braket{E} - \beta (-\mu) \braket{N}$. Note that the sign of $(-\mu)$ is not a typo. It is simply that 19th-century chemists have messed up the sign convention, like how Benjamin Franklin messed up the sign convention of electric charge.
 
-etc. Of those, we would mostly use the Helmholtz free energy, so I will write it down again:
+Etc. Of those, we would mostly use the Helmholtz free energy, so I will write it down again:
 
 $$
 f[\rho] := S[\rho] - \beta \braket{E} = \int dx \; \rho(x) (-\ln \rho(x) - \beta E(x))
@@ -539,15 +539,15 @@ $$
 
 :::
 
-A common trick in statistical mechanics is to characterize the same equilibrium in many different perspectives. For example, the canonical ensemble has at least 4 characterizations at least. "Muscle memory" in statistical mechanics would allow you to nimbly applying the most suitable one for any occasion.
+A common trick in statistical mechanics is to characterize the same equilibrium in many different perspectives. For example, the canonical ensemble has at least 4 characterizations. "Muscle memory" in statistical mechanics would allow you to nimbly applying the most suitable one for any occasion.
 
 ::: {#thm-canonical-characterization}
 
 ## 4 characterizations of the canonical ensemble
 
-1. (total entropy under fixed energy constraint) The canonical ensemble maximizes total entropy when the system is in contact with an energy bath that satisfies $\partial_E S_{\text{bath}} = \beta$, and the total energy is fixed.
-2. (entropy under mean energy constraint) A system maximizes its entropy under constraint $\braket{E} = E_0$ when it assumes the canonical ensemble with $\beta$ that is the unique solution to $\int dx \; e^{-\beta E(x)} = E_0$.
-3. (thermodynamic limit): Take $N$ copies of a system, and connect them by energy-contacts. Inject the system with total energy $NE_0$, and let the system reach its microcanonical ensemble. Then at the thermodynamic limit of $N\to \infty$, the distribution of a single system is the canonical distribution with $\beta$ that is the unique solution to $\int dx \; e^{-\beta E(x)} = E_0$.
+1. (total entropy under fixed energy constraint) The canonical ensemble maximizes total entropy when the system is in energy-contact with an energy bath that satisfies $\partial_E S_{\text{bath}} = \beta$, under the constraint that $E + E_{\text{bath}}$ is fixed.
+2. (entropy under mean energy constraint) Let $E_0$ be a real number, and let $\beta$ be the unique solution to $\int dx \; e^{-\beta E(x)} = E_0$. A system maximizes its entropy under constraint $\braket{E} = E_0$ when it assumes the canonical ensemble with $\beta$.
+3. (Boltzann's thermodynamic limit argument): Take $N$ copies of a system, and connect them by energy-contacts. Inject the system with total energy $NE_0$, and let the system reach its microcanonical ensemble. Then at the thermodynamic limit of $N\to \infty$, the distribution of a single system is the canonical distribution with $\beta$ that is the unique solution to $\int dx \; e^{-\beta E(x)} = E_0$.
 4. (free entropy) A system maximizes its Helmholtz free entropy when it assumes the canonical ensemble. At the optimal distribution $\rho^*$, the maximal Helmholtz free entropy is $f[\rho^*] = \ln Z$, where $Z = \int dx \; e^{-\beta E(x)}$ is the partition function.  
 
 ::::

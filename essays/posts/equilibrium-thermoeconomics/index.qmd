@@ -393,6 +393,13 @@ More accurately: one law and two non-laws.
 
 The second law of thermodynamics is all-important: maximizing entropy is all of classical thermodynamics. All other parts are just tricks for maximizing entropy.
 
+Although, there are actually two aspects of the second law, subtly different. One of them is static, while the other is dynamic:
+
+* Static: A thermodynamic system is described by a function on the state space, called the *entropy* function. Each system can be placed under many different forms of constraints. Under each possible constraint, the only physically observable state is the state that maximizes entropy under constraint.
+* Dynamic: The entropy of a thermodynamic system does not decrease over time.
+
+There is no difficulty with the static statement, but many difficulties with the dynamic statement, since it involves time, which really does not exist in classical thermodynamics. Nevertheless, since time is so important to the rest of physics, physicists, especially physics teachers, have repeatedly tried to hack it back into the theory, resulting in predictable and endless confusions. Since we do not compromise with intuition, in the rest of this essay, we will use the static formulation as much as possible.
+
 ### First law
 
 > As a student, I read with advantage a small book by F. Wald entitled "The Mistress of the World and her Shadow". These meant energy and entropy. In the course of advancing knowledge the two seem to me to have exchanged places. In the huge manufactory of natural processes, the principle of entropy occupies the position of manager, for it dictates the manner and method of the whole business, whilst the principle of energy merely does the book- keeping, balancing credits and debits.
@@ -598,7 +605,7 @@ where $Q = U_{bath} - U_{bath, 0}$ is the amount of energy received by the bath 
 Plugging this back in, the equilibrium condition simplifies to
 
 $$
-\max_U [\beta (U_0 - U) + S(\beta, U, X)]
+\max_U [\beta (U_0 - U) + S(U, X)]
 $$
 
 which is the desired result.
@@ -645,7 +652,7 @@ which simplifies to the result.
 
 :::
 
-This result is typically interpreted as saying that $\Delta F = W$, that is, in a system in constant thermal equilibrium with an energy bath of constant temperature, the decrease in Helmholtz energy of the system is the maximal mechanical work extractable from the system. Incidentally, this explains the odd name of "free energy" -- "free" as in "free to do work" to contrast with the other parts of internal energy, which are chained up and not free to do work.
+This result is typically interpreted as saying that $\Delta F = W$, that is, in a system in constant thermal equilibrium with an energy bath of constant temperature, the decrease in Helmholtz energy of the system is the maximal mechanical work extractable from the system. Incidentally, this explains the odd name of "free energy" -- "free" as in "free to do work" to contrast with the other parts of internal energy, which are chained up and not free to do work. Energy is born free, and eventually everywhere it is in chains.
 
 ::: {#thm-envelope-helmholtz}
 
@@ -798,9 +805,9 @@ If we consider a system, surrounded by gas, inside an adiathermal piston under a
 
 Take-home lessons:
 
-* When a system is in contact with a $Y$-bath, then it is useful to consider the convex dual of the entropy with respect to $Y$, that is, $\max_Y (S(Y, X) - p_Y Y)$, where $p_Y$ is the marginal entropy of $Y$ of the bath.
+* When a system is in contact with a $Y$-bath, then it is useful to consider the convex dual of the entropy with respect to $Y$, that is, $\max_Y (S(Y, X) - p_Y Y)$, where $p_Y$ is the marginal entropy of $Y$ of the bath. That is, the price of entropy on the bath-market.
 * Free entropy is maximized when the system equilibrates with a bath. Free energy is minimized.
-* Change in free energy is the maximal amount of work extractable when the system equilibrates with both a bath and a mechanical system. This work is actually extracted when the process is reversible.
+* Change in free energy is the maximal amount of work extractable when the system equilibrates with both a bath and a mechanical system. This maximal amount of work is extracted precisely when the process is reversible. The process is irreversible precisely when less than maximal amount of work is extracted.
 
 ### Maxwell relations
 
@@ -820,7 +827,7 @@ where $q_i$ is the quantity of commodity $i$, and $p_i$ is its marginal utility.
 
 $$(\partial_{p_j}q_i)_{q_j} = (\partial_{p_i}q_j)_{q_i}$$
 
-This is a symmetry of [cross-price elasticity of demand](https://en.wikipedia.org/wiki/Cross_elasticity_of_demand).[^maxwell-relation-samuelson]
+This is a symmetry of the [cross-price elasticity of demand](https://en.wikipedia.org/wiki/Cross_elasticity_of_demand).[^maxwell-relation-samuelson]
 
 [^maxwell-relation-samuelson]: Samuelson used the Maxwell relations, and other relations, to justify neoclassical economics. His idea is that, while utility functions are unobservable, and we do not have a scientific instrument to measure "economic equilibrium", we can make falsifiable predictions from assuming that the economy is in equilibrium -- such as the symmetry of the cross-price elasticity of demand.
 
@@ -961,7 +968,7 @@ There used to be a debate between "ordinalists" and "cardinalists" of utility th
 
 The debate has been mostly resolved by the work of [Gérard Debreu](https://en.wikipedia.org/wiki/G%C3%A9rard_Debreu), who showed that under fairly reasonable assumptions, cardinal utility is possible [@debreuTheoryValueAxiomatic1971].[^gerard-debreu]
 
-[^gerard-debreu]: Out of all those famous economists I have seen, Gérard Debreu is perhaps the most mathematically austere. Reading his works, I felt like he was another G. H. Hardy, a Bourbaki of economics. He did economics not to improve the world, not to help people, and not to advance a political agenda, but to simply uncover a face of eternity.
+[^gerard-debreu]: Out of all those famous economists I have seen, Gérard Debreu is perhaps the most mathematically austere. Reading his works, I felt like he was another G. H. Hardy, a Bourbaki of economics. He did economics not to improve the world, not to help people, and not to advance a political agenda, but to simply uncover an ꙮmmatidium of eternity.
 
 This theorem, or rather, this *family* of theorems, have several names, as befitting for such a versatile and productive family. In calculus, it's called the [integrability of Pfaffian forms](https://en.wikipedia.org/wiki/Integrability_conditions_for_differential_systems). In differential geometry, it's called [Darboux's theorem](https://en.wikipedia.org/wiki/Darboux%27s_theorem), or [Frobenius theorem](https://en.wikipedia.org/wiki/Frobenius_theorem_(differential_topology)). In economics, it's called the integrability of demand, or the cardinal-ordinal [utility representation theorem](https://en.wikipedia.org/wiki/Utility_representation_theorem).
 
@@ -2179,9 +2186,9 @@ The most common breakdown of extensivity occurs in gravitational systems. We can
 
 To handwave a bit, consider three particles with equal mass $m$, moving under gravitational attraction. It is possible that two particles approach each other so closely that their velocity approaches infinity, then the third particle interjects and gets gravitationally sling-shot away. That is, it is possible for two particles to donate their gravitational energy to the third particle. The two particles would be stuck inside a tiny volume in space, but the third particle would be given a huge momentum *and* can still go anywhere in space. In this way, a three-body system's entropy can grow without bound. I'm pretty sure this can be worked out more rigorously with the $N$-body problem.
 
-In high school, I was studying physics with a standard textbook used in Chinese universities. It had a curious section on the second law of thermodynamics. I could not find it again, but the gist is as follows: *The heat death of the universe is an unjustified implication of the second law, on two grounds. First, gravitational systems allow for unlimited entropy production. Second, it opposes the historical science of dialectical materialism, where every development creates its own contradiction and sublation, endlessly.*
+In high school, I was studying physics with a standard textbook used in Chinese universities. It had a curious section on the second law of thermodynamics. I could not find it again but the gist is as follows: *The heat death of the universe is an unjustified implication of the second law, on two grounds. First, gravitational systems allow for unlimited entropy production. Second, it opposes the historical science of dialectical materialism, where every development creates its own contradiction and sublation, endlessly.*
 
-I will always remember this comment, as the only intrusion of religious sentiment in an otherwise sober textbook.
+I will always remember this comment, as the only intrusion of religious sentiment in an otherwise sober textbook. See [@chengIdeologyCosmologyMaoist2006; @bellamyfosterClassicalMarxismSecond2008] for further details on why Marxists dislike the theory of heat death on ideological grounds.
 
 Actually, since we are on the topic of Marxism and science in China, here is another amusing anecdote: In 1981, there was a sci-fi novel *Dream of Comfort Country* (温柔之乡的梦, by 魏雅华). It was a cautionary story about a robotic wife, who was so obedient as to cause the protagonist to degenerate into a tyrannical person. Yawn. Just a standard pro-human-relationship morality play? During the [campaign against spiritual pollution](https://en.wikipedia.org/wiki/Campaign_against_spiritual_pollution) of 1983, sci-fi novels were denounced, causing a 15-year-long draught in sci-fi. That particular novel was denounced for the following reason: The robotic wives were supposedly reading all kinds of books -- then why didn't they read Marx's and Lenin's books? [@LiuZuiZaoDeYuZhouZuiHaoDeDiQiu2015, page 87]
 
