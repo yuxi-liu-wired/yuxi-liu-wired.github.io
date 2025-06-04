@@ -163,11 +163,21 @@ Room laughed.
 
 "Oh yeah. Why do you think they are not doing continual learning, these big companies? Is it because..."
 
-"Well I don't know, but I have written a draft essay, about the economics of continual learning if it is practiced *right now*. I wanted to answer the question of... Let's say, if OpenAI announces *today*, that ChatGPT can continually learn about you. How much money do you have to pay for it? So I calculated and the answer came out to be ... [vigorous handwaving] between 20 and 100 USD/month, which is surprisingly ... affordable?"
+"Well I don't know, but I have written a draft essay, about the economics of continual learning if it is practiced *right now*. I wanted to answer the question of... Let's say, if OpenAI announces *today*, that ChatGPT can continually learn about you. How much money do you have to pay for it? So I calculated and the answer came out to be ... [vigorous handwaving] between 20 and 100 extra USD/month, which is surprisingly ... affordable?"
 
 "Well even naively, the forward pass costs 2 FLOP per token-parameter, and the backward pass costs 4 FLOP, so multiply 20 USD/month by 3..."
 
 "And you would want to only finetune the parameters in the later half of the layers, so you don't need 4 FLOPs, just 2 FLOPs, so multiply by 2..."
+
+"Actually, there is a way to do it even 'for free', as in there is no extra cost compared to a standard forward pass. Basically you randomly permute one matrix sometimes, and the user votes. If the random permutation gets higher votes, then put the random permutation in place. It's like A/B testing."
+
+"But how... how would that be better than LoRA backprop? Sounds like the sample complexity would be really high..."
+
+"Sounds like evolutionary algorithm, really. Those are very sample-heavy."
+
+The proposer then described something about how this could be done more efficiently, but I didn't understand it. Now I think about it, it, it is more sample-heavy than RL. Consider the toy example: You have $\theta$ the neural network parameters, and $L(\theta)$ the loss function. You want to optimize $L(\theta)$ by randomly jumping $\theta$ by some $\delta \theta$. Then, since $L(\theta + \delta \theta) - L(\theta) \approx \braket{\nabla_\theta L , \delta \theta}$, the probability that this improves $L$ is $\sim 1/2$, assuming that $\delta\theta$ is small. However, how big is this improvement? Counterintuitively, the probability that a random sample on a $d$-dimensional sphere is concentrated in a band of $\pm O(1/\sqrt d)$ around its equator. Therefore, the expected improvement of taking this $\delta \theta$ step is just $O(1/\sqrt d)$.
+
+Is this worthwhile? A single "jitter" comparison requires 2 forward passes, costing 4 FLOP, while a single backprop costs 6 FLOP. This means that if you just want to improve the model, backprop is much more efficient, since $4\sqrt d \gg 6$. Although, as the speaker suggested, this could be mildly useful in the particular case where you are a big LLM provider who needs to serve many customers really fast, but the customers are also willing to make a lot of votes, *and* don't mind slight service degradation on half of the replies. I would say this is a very niche situation, but yeah, in that very niche situation, jittering would be better than backprop.
 
 ----
 
@@ -188,23 +198,35 @@ Room laughed.
 
 "[Looks at Gwern] So what would your next essay be about?"
 
-"The next essay should be about AI timelines. I just want to find out, basically, why now? Why not decades ago? There was Moravec's scaling curve, but it was totally unconvincing. What could have been done so that decades ago, we would have an idea that, now is the time? Why did deep learning took everyone by surprise? Except a few [Moravec, Kurzweil] who didn't have good arguments? What better arguments could have been made?"
+"The next essay should be about AI timelines. I just want to find out, basically, why now? Why not decades ago? There was [Moravec's scaling curve](https://yuxi-liu-wired.github.io/docs/posts/1998-hans-moravec/), but it was totally unconvincing. What could have been done so that decades ago, we would have an idea that, now is the time? Why did deep learning take everyone by surprise? Except a few \[Moravec, Kurzweil\] who didn't have good arguments? What better arguments could have been made?"
 
 "I think the best arguments that could have been made was to have scaling curves. They could scale from like 1 million FLOPs to 1 billion FLOPs, and extrapolate from there. It could have been more convincing. There were some scaling curves all the way back to the 1990s, like if you *really* try to look, but if it is invested with the power of a national laboratory it might be done even earlier."
 
-"So I have been reading old papers from the 1990s, and there was one paper called 'Neural Networks and the Bias/Variance Dilemma' from 1992 [@gemanNeuralNetworksBias1992]. They trained a neural network and showed that it has that bias-variance tradeoff [gestures at a V-shaped curve in air] so they argued that scaling wouldn't work. Then I looked at what neural network they trained. They trained a network with 3 layers, and the middle, hidden, layer contained... \[pause for dramatic effect\] four neurons. FOUR! Certainly, there was a severe failure of imagination there. I mean, the paper wasn't obscure! It was cited over 5000 times, and I think this contributed to the second neural network winter, a history of which I still want to write... before the singularity comes. Better hurry."
+"So I have been reading old papers from the 1990s, and there was one paper called 'Neural Networks and the Bias/Variance Dilemma' from 1992 [@gemanNeuralNetworksBias1992]. They trained a neural network and showed that it has that bias-variance tradeoff \[handwaves a V-shaped curve in air\] so they argued that scaling wouldn't work. Then I looked at what neural network they trained. They trained a network with 3 layers, and the hidden layer contained... \[pause for dramatic effect\] 4 neurons. FOUR! Certainly, there was a severe failure of imagination there. I mean, the paper wasn't obscure! It was cited over 5000 times, and I think this contributed to the second neural network winter, a history of which I still want to write... before the singularity comes. Better hurry."
 
 ![[@gemanNeuralNetworksBias1992, figure 15]](figure/NN%20bias-variance.png)
 
-"Was it because not enough data?"
+"Was it because of not enough data?"
 
 "There was this Highleyman's data. Highleyman was really great. He was in 1960 doing many of the basic things we do now: big dataset; the train-test split; sharing data; k nearest neighbors. You can read more on it. Ben Recht wrote a long blog post about it. Ben R-E-C-H-T."
 
-"The blog post is titled '[The Saga of Highleyman's data](https://archives.argmin.net/2021/10/20/highleyman/)'."
+"The blog post is titled '[The Saga of Highleyman's Data](https://archives.argmin.net/2021/10/20/highleyman/)'."
 
 "And I have kept a [directory of those papers on my website](https://gwern.net/doc/ai/highleyman/)."
 
-"Well I had been looking at old papers in he 1960s. It was the Cold War, and there was not only the Soviet Union, but also China, so there was a lot of funding into machine reading and translation of Chinese documents... So I saw a few datasets where they just scanned thousands of printed Chinese characters, so they certainly could have scaled to, perhaps 100,000 data points, if they had the will to do so. [@caseyRecognitionPrintedChinese1966] MNIST had just 60,000 characters. They could have MNIST in the 1960s. They just didn't think of it."
+"Well I had been looking at old papers in the 1960s. It was the Cold War, and there was not only the Soviet Union, but also China, so there was a lot of funding into machine reading and translation of Chinese documents... So I saw a few datasets where they just scanned thousands of printed Chinese characters, so they certainly could have scaled to, perhaps 100,000 data points, if they had the will to do so. [@caseyRecognitionPrintedChinese1966] MNIST had just 60,000 characters. They could have MNIST in the 1960s. They just didn't think of it."
+
+----
+
+"I mean, why can't deep learning be more like physics? Physicists got their billion-dollar colliders funded purely on theoretical extrapolations. And there was this '[island of stability](https://en.wikipedia.org/wiki/Island_of_stability)', which is the idea that, eventually, the superheavy elements would suddenly become stable again. And nobody call that crazy, even though we still don't see it yet."
+
+"Actually the island of stability theory is not convincing to most of the physics community."
+
+"What? But I believed that!"
+
+"Like it is only a few groups that believe in it."
+
+"Maybe it's those Russians. They seem to love getting those nanosecond new elements that are totally useless, purely to say that they did it first."
 
 ----
 
@@ -297,6 +319,24 @@ Room laughed.
 
 ----
 
+"So the fridge at \[big company\] had those yogurts that contains 200 mg of caffeine in it. One day someone came and was like 'I haven't eaten lunch so I'll eat 2 of these yogurts'."
+
+"Oh no--" "RIP--"
+
+----
+
+Patel looked up the listener statistics for his podcasts on the phone. Turned out that some episodes have ~2% female viewers.
+
+"Weird, that's lower than the [Lizardman's constant](https://slatestarcodex.com/2013/04/12/noisy-poll-results-and-reptilian-muslim-climatologists-from-mars/)...? Are you sure the data source is right?"
+
+"Huh, even [the Sarah Paine episodes](https://www.dwarkesh.com/p/sarah-paine-india) have so few female viewers."
+
+"I mean, military history is very male-coded."
+
+"Well you can just interview an MMA wrestler."
+
+----
+
 "Actually the price of a solar panel is dropping like crazy. People like to tell me that 'You can't be serious. Just because it has decreased exponentially for the past 30 years doesn't mean it will continue for 2 more years--'" Room laughed. "--Well when I put it like that... But yeah. I really would like to know just how many little innovations has gone into each cost reduction..."
 
 "Probably most of it is stuck inside the brains of some Chinese engineers."
@@ -309,11 +349,11 @@ Room laughed.
 
 ----
 
-"... so you could imagine that, since a solar panel is silicon, and a GPU is also a silicon, you can produce both together, with a big solar panel and, in the middle of it, is a GPU. Then you could load a human brain emulation on the GPU and send it into orbit, and --"
+"... so you could imagine that, since a solar panel is silicon, and a GPU is also silicon, you can produce both together, with a big solar panel and, in the middle of it, is a GPU. Then you could load a human brain emulation on the GPU and send it into orbit, and --"
 
 "Heat dissipation is really hard in space."
 
-"And they will die probably in a few years."
+"And [they will die probably in a few years](https://en.wikipedia.org/wiki/Plus_(novel))."
 
 "But for those few years they would experience *centuries* or more of subjective time. Human brains are just *so slow* compared to the GPUs."
 
@@ -327,11 +367,11 @@ Room laughed.
 
 "The fastest possible is [Cerebras](https://www.cerebras.ai/), but that's so specialized--"
 
-"They have monstrous amount of [SRAM](https://en.wikipedia.org/wiki/Static_random-access_memory) and memory bandwidth."
+"They have monstrous amounts of [SRAM](https://en.wikipedia.org/wiki/Static_random-access_memory) and memory bandwidth."
 
-"Well, at the limit, you could imagine etching the logic directly into the hardware so it can only do one thing but as fast as possible. That's in fact the whole selling point of [Etched](https://www.etched.com/) the company. They basically compile your neural network into an ASIC. That's actually why I'm so interested in [differentiable logic gates](https://github.com/Felix-Petersen/difflogic)."
+"Well, at the limit, you could imagine etching the logic directly into the hardware so it can only do one thing but as fast as possible. That's in fact the whole selling point of [Etched](https://www.etched.com/) the company. They basically compile your neural network into an [ASIC](https://en.wikipedia.org/wiki/Application-specific_integrated_circuit). That's actually why I'm so interested in [differentiable logic gates](https://github.com/Felix-Petersen/difflogic)."
 
-A brief confusion ensues about whether the intended use of Etched is large-batch or small-batch inference.
+A brief confusion ensued about whether the intended use of Etched is large-batch or small-batch inference.
 
 "I think it's small-batch inference, because you know, you can only saturate the FLOPs of a GPU if every floating point number that goes in is used for ~200 operations. The intended [arithmetic intensity](https://en.wikipedia.org/wiki/Roofline_model) is like that."
 
@@ -345,7 +385,7 @@ A brief confusion ensues about whether the intended use of Etched is large-batch
 
 ----
 
-"So this morning I got a good Socratic prompt and I got them to first understand a topic deeply, then teach me by Socratic questioning technique. And it worked! I was talking with it about an algorithm I thought I knew but a few questions in I realized I got a basic misunderstanding."
+"So this morning I got a good Socratic prompt and I got them to first understand a topic deeply, then teach me by Socratic questioning technique. And it worked! I was talking with it about an algorithm I thought I knew but a few questions in [I realized I got a basic misunderstanding](https://x.com/dwarkesh_sp/status/1928185476386545756)."
 
 "Oh yeah? What did they teach you?"
 
@@ -355,7 +395,7 @@ A brief confusion ensues about whether the intended use of Etched is large-batch
 
 "So Claude told me that in MLA, instead of one vector per key and value, there is just one big vector for the entire context..."
 
-"Wait no." "No that's not it." "No uh." Several disappointed headshaking. The room fell dirgeful.
+"Wait no." "No that's not it." "No uh." Disappointed headshaking. The room fell dirgeful.
 
 "What! Claude lied to me. I was like 'Wait, so that means MLA is not quadratic?' and Claude was like 'Yeah totally that's how you get subquadratic attention, and that's what MLA is for.' So it's not really subquadratic?"
 
