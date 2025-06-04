@@ -728,10 +728,8 @@ At last, a testable hypothesis! I asked GPT-4 to `Draw a syntax tree for "Can ea
 
 [^gpt-4-eagle-sentence]: The code it gave failed on the first try, due to an environment variable issue on the Linux virtual machine it ran on. We fixed it after two more plies of conversation.
 
-```{python}
-#| code-fold: true
-#|eval: false
-!pip install svgling
+::: {.callout-note title="Code" collapse="true"}
+```python
 import nltk
 from nltk import Tree
 from IPython.display import display
@@ -759,6 +757,7 @@ tree_svg = svgling.draw_tree(tree)
 tree_svg.get_svg().save()
 display(SVG(tree_svg.get_svg()))
 ```
+:::
 
 ![The syntax tree for "Can eagles that fly swim?", drawn by GPT-4.](figure/can_eagles_that_fly_swim_tree.svg)
 

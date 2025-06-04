@@ -222,12 +222,12 @@ window.Quarto = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://bair.berkeley.edu/"> <i class="bi bi-folder-symlink" role="img">
+    <a class="nav-link" href="mailto:yuxi_liu@berkeley.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:yuxi_liu@berkeley.com"> <i class="bi bi-envelope" role="img" aria-label="email">
+    <a class="nav-link" href="../../../feeds.html"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -243,7 +243,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">The Perceptron Controversy</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">The Perceptron Controversy</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
         <div class="description">
           Connectionism died in the 60s from technical limits to scaling, then resurrected in the 80s after backprop allowed scaling. The Minsky–Papert anti-scaling hypothesis explained, psychoanalyzed, and buried.
@@ -942,37 +942,46 @@ Interjection
 <p>Well, this particular example has taken on a life of its own. For one thing, it’s a poverty of stimulus problem, like Descartes’ triangle. There’s been a huge effort to show that it’s not a problem, that if you just do a complex statistical analysis of complex data, you’ll find that that’s what the child will determine from the data. The approaches are odd in several respects. First, every one is not only a failure but a colossal failure. I’m not going to talk about that. I actually have a recent paper about it with a computer scientist at MIT, Bob Berwick, where we run through a lot of the current proposals but it’s easy to show that they’re all just wildly wrong. But they keep coming. Almost every issue of the main cognitive science journals has another proposal of this sort, so that’s one odd fact. There are many efforts to show that there is nothing puzzling about it, they’re all colossal failures. <span class="citation" data-cites="chomskyPovertyStimulusUnfinished2010">(<a href="#ref-chomskyPovertyStimulusUnfinished2010" role="doc-biblioref">Chomsky 2010</a>)</span></p>
 </blockquote>
 <p>At last, a testable hypothesis! I asked GPT-4 to <code>Draw a syntax tree for "Can eagles that fly swim?"</code>, and received this:<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a></p>
-<div class="no-row-height column-margin column-container"><div id="fn24"><p><sup>24</sup>&nbsp;The code it gave failed on the first try, due to an environment variable issue on the Linux virtual machine it ran on. We fixed it after two more plies of conversation.</p></div></div><div id="d4c57f25" class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install svgling</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk <span class="im">import</span> Tree</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'punkt'</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> svgling</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> SVG, display</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> Tree.fromstring(<span class="st">"""</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">    (SQ</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">        (MD Can)</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">        (NP</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">            (NNS eagles)</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">            (SBAR</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">                (WHNP (WDT that))</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">                (S</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">                    (VP (VBP fly))</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">                )</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">            )</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">        )</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">        (VP (VB swim))</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>tree_svg <span class="op">=</span> svgling.draw_tree(tree)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>tree_svg.get_svg().save()</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>display(SVG(tree_svg.get_svg()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="no-row-height column-margin column-container"><div id="fn24"><p><sup>24</sup>&nbsp;The code it gave failed on the first try, due to an environment variable issue on the Linux virtual machine it ran on. We fixed it after two more plies of conversation.</p></div></div><div class="callout callout-style-default callout-note callout-titled" title="Code">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Code
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk <span class="im">import</span> Tree</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'punkt'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> svgling</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> SVG, display</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> Tree.fromstring(<span class="st">"""</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">    (SQ</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">        (MD Can)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">        (NP</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">            (NNS eagles)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">            (SBAR</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">                (WHNP (WDT that))</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">                (S</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">                    (VP (VBP fly))</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">                )</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">            )</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">        )</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">        (VP (VB swim))</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>tree_svg <span class="op">=</span> svgling.draw_tree(tree)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>tree_svg.get_svg().save()</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>display(SVG(tree_svg.get_svg()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 </div>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -2593,105 +2602,103 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-728"><a href="#cb2-728" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-729"><a href="#cb2-729" aria-hidden="true" tabindex="-1"></a><span class="ot">[^gpt-4-eagle-sentence]: </span>The code it gave failed on the first try, due to an environment variable issue on the Linux virtual machine it ran on. We fixed it after two more plies of conversation.</span>
 <span id="cb2-730"><a href="#cb2-730" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-733"><a href="#cb2-733" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb2-734"><a href="#cb2-734" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb2-735"><a href="#cb2-735" aria-hidden="true" tabindex="-1"></a><span class="co">#|eval: false</span></span>
-<span id="cb2-736"><a href="#cb2-736" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install svgling</span>
-<span id="cb2-737"><a href="#cb2-737" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
-<span id="cb2-738"><a href="#cb2-738" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk <span class="im">import</span> Tree</span>
-<span id="cb2-739"><a href="#cb2-739" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
-<span id="cb2-740"><a href="#cb2-740" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'punkt'</span>)</span>
-<span id="cb2-741"><a href="#cb2-741" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> svgling</span>
-<span id="cb2-742"><a href="#cb2-742" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> SVG, display</span>
-<span id="cb2-743"><a href="#cb2-743" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-744"><a href="#cb2-744" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> Tree.fromstring(<span class="st">"""</span></span>
-<span id="cb2-745"><a href="#cb2-745" aria-hidden="true" tabindex="-1"></a><span class="st">    (SQ</span></span>
-<span id="cb2-746"><a href="#cb2-746" aria-hidden="true" tabindex="-1"></a><span class="st">        (MD Can)</span></span>
-<span id="cb2-747"><a href="#cb2-747" aria-hidden="true" tabindex="-1"></a><span class="st">        (NP</span></span>
-<span id="cb2-748"><a href="#cb2-748" aria-hidden="true" tabindex="-1"></a><span class="st">            (NNS eagles)</span></span>
-<span id="cb2-749"><a href="#cb2-749" aria-hidden="true" tabindex="-1"></a><span class="st">            (SBAR</span></span>
-<span id="cb2-750"><a href="#cb2-750" aria-hidden="true" tabindex="-1"></a><span class="st">                (WHNP (WDT that))</span></span>
-<span id="cb2-751"><a href="#cb2-751" aria-hidden="true" tabindex="-1"></a><span class="st">                (S</span></span>
-<span id="cb2-752"><a href="#cb2-752" aria-hidden="true" tabindex="-1"></a><span class="st">                    (VP (VBP fly))</span></span>
-<span id="cb2-753"><a href="#cb2-753" aria-hidden="true" tabindex="-1"></a><span class="st">                )</span></span>
-<span id="cb2-754"><a href="#cb2-754" aria-hidden="true" tabindex="-1"></a><span class="st">            )</span></span>
-<span id="cb2-755"><a href="#cb2-755" aria-hidden="true" tabindex="-1"></a><span class="st">        )</span></span>
-<span id="cb2-756"><a href="#cb2-756" aria-hidden="true" tabindex="-1"></a><span class="st">        (VP (VB swim))</span></span>
-<span id="cb2-757"><a href="#cb2-757" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
-<span id="cb2-758"><a href="#cb2-758" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
-<span id="cb2-759"><a href="#cb2-759" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-760"><a href="#cb2-760" aria-hidden="true" tabindex="-1"></a>tree_svg <span class="op">=</span> svgling.draw_tree(tree)</span>
-<span id="cb2-761"><a href="#cb2-761" aria-hidden="true" tabindex="-1"></a>tree_svg.get_svg().save()</span>
-<span id="cb2-762"><a href="#cb2-762" aria-hidden="true" tabindex="-1"></a>display(SVG(tree_svg.get_svg()))</span>
-<span id="cb2-763"><a href="#cb2-763" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-764"><a href="#cb2-764" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-765"><a href="#cb2-765" aria-hidden="true" tabindex="-1"></a><span class="al">![The syntax tree for "Can eagles that fly swim?", drawn by GPT-4.](figure/can_eagles_that_fly_swim_tree.svg)</span></span>
-<span id="cb2-766"><a href="#cb2-766" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-767"><a href="#cb2-767" aria-hidden="true" tabindex="-1"></a>Chomsky has consistently rejected statistical language learning from the beginning to the end.</span>
-<span id="cb2-768"><a href="#cb2-768" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-769"><a href="#cb2-769" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; But it must be recognized that the notion of "probability of a sentence" is an entirely useless one, under any known interpretation of this term.</span>  </span>
-<span id="cb2-770"><a href="#cb2-770" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb2-771"><a href="#cb2-771" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@chomskyEmpiricalAssumptionsModern1969</span><span class="co">]</span>  </span>
-<span id="cb2-772"><a href="#cb2-772" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-773"><a href="#cb2-773" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; It's true there's been a lot of work on trying to apply statistical models to various linguistic problems. I think there have been some successes, but a lot of failures. There is a notion of success ... which I think is novel in the history of science. It interprets success as approximating unanalyzed data. </span></span>
-<span id="cb2-774"><a href="#cb2-774" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb2-775"><a href="#cb2-775" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Chomsky at the MIT150: Brains, Minds and Machines Symposium (2011), quoted in </span><span class="co">[</span><span class="ot">@norvigChomskyTwoCultures2017</span><span class="co">]</span></span>
-<span id="cb2-776"><a href="#cb2-776" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-777"><a href="#cb2-777" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Well, first we should ask the question whether large language models have achieved anything, anything, in this domain? Answer: No! They've achieved zero... GPT-4 is coming along, which is supposed to going to have a trillion parameters. It will be exactly the same. It'll use even more energy and achieve exactly nothing, for the same reasons. So there's nothing to discuss.</span></span>
-<span id="cb2-778"><a href="#cb2-778" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb2-779"><a href="#cb2-779" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">Machine Learning Street Talk: The Ghost in the Machine and the Limits of Human Understanding (2022)</span><span class="co">](https://whimsical.com/question-1-large-language-models-such-as-gpt-3-DJmQ8R5kD8tqvsXxgCN9vK)</span>  </span>
-<span id="cb2-780"><a href="#cb2-780" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-781"><a href="#cb2-781" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Peter Norvig</span><span class="co">](https://en.wikipedia.org/wiki/Peter_Norvig)</span> gave a detailed analysis and a rebuttal in <span class="co">[</span><span class="ot">@norvigChomskyTwoCultures2017</span><span class="co">]</span>.</span>
-<span id="cb2-782"><a href="#cb2-782" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-783"><a href="#cb2-783" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Chomskyans</span></span>
-<span id="cb2-784"><a href="#cb2-784" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-785"><a href="#cb2-785" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Gold's theorem about language learning in the limit</span><span class="co">](https://en.wikipedia.org/wiki/Language_identification_in_the_limit#Gold's_theorem)</span> is occasionally cited in the same context as a justification for the "poverty of stimulus" argument. It appears Chomsky did not regard it as a relevant argument <span class="co">[</span><span class="ot">@johnsonGoldTheoremCognitive2004</span><span class="co">]</span>, and I agree with Chomsky in this respect, as Gold's theorem is extremely generic.</span>
-<span id="cb2-786"><a href="#cb2-786" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-787"><a href="#cb2-787" aria-hidden="true" tabindex="-1"></a>After the second rise of neural networks, there was a bitter controversy that raged in the 1990s but is now essentially forgotten: the past tense debate. On one side were the connectionists, and on the other were the cognitivists, including Steven Pinker and Gary Marcus <span class="co">[</span><span class="ot">@pinkerFutureTense2002</span><span class="co">]</span>. Tellingly, both Steven Pinker and Gary Marcus sided with the cognitivists. Steven Pinker is best known for his other books such as *The Blank Slate*, which applies Chomskyan linguistics to general psychology.</span>
-<span id="cb2-788"><a href="#cb2-788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-789"><a href="#cb2-789" aria-hidden="true" tabindex="-1"></a>Human language exhibits a distinctly fractal-like structure: for every rule, there are exceptions, and for every exception, there are exceptional exceptions, and so on. This is called "quasi-regularity". Sejnowski in an interview described how quasi-regularity shows up in phonology, and offered a perfect demonstration project for the power of neural networks against the Chomskyans:</span>
-<span id="cb2-790"><a href="#cb2-790" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-791"><a href="#cb2-791" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; I went to the library and found a book on text-to-speech that had probably one thousand rules in it. It was just lists of rules and exceptions. After I went to the library and found a book on text-to-speech that had probably one thousand rules in it. It was just lists of rules and exceptions. After every rule, there were dozens of exceptions. I figured that either they're doing it the wrong way, or this is a really tough problem. We considered finding something that was simpler after consulting the experts in linguistics. They said, "Chomsky worked on the problem, and it is well beyond the capability of anything that you could imagine trying to do." </span><span class="co">[</span><span class="ot">@rosenfeldTalkingNetsOral2000, pages 324-325</span><span class="co">]</span></span>
-<span id="cb2-792"><a href="#cb2-792" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-793"><a href="#cb2-793" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@sejnowskiDeepLearningRevolution2018, pages 75--78</span><span class="co">]</span> recounts an anecdote about <span class="co">[</span><span class="ot">Jerry Fodor</span><span class="co">](https://en.wikipedia.org/wiki/Jerry_Fodor)</span>, another prominent cognitivist. While Fodor is no longer a hot name in AI nowadays, this anecdote illustrates the Chomsky way of thinking.</span>
-<span id="cb2-794"><a href="#cb2-794" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-795"><a href="#cb2-795" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In 1988, I served on a committee for the McDonnell and Pew Foundations that interviewed prominent cognitive scientists and neuroscientists to get their recommendations on how to jump-start a new field called "cognitive neuroscience". ... </span><span class="sc">\[</span><span class="at">Fodor</span><span class="sc">\]</span><span class="at"> started by throwing down the gauntlet, "Cognitive neuroscience is not a science and it never will be." ... Fodor explained why the mind had to be thought of as a modular symbol-processing system running an intelligent computer program. </span><span class="sc">\[</span><span class="at">Patricia Churchland</span><span class="sc">\]</span><span class="at"> asked him whether his theory also applied to cats. "Yes," said Fodor, "cats are running the cat program." But when Mortimer Mishkin, an NIH neuroscientist studying vision and memory, asked him to tell us about discoveries made in his own lab, Fodor mumbled something I couldn't follow about using event-related potentials in a language experiment. Mercifully, at that moment, a fire drill was called and we all filed outside. Standing in the courtyard, I overheard Mishkin say to Fodor: "Those are pretty small potatoes." When the drill was over, Fodor had disappeared.</span></span>
-<span id="cb2-796"><a href="#cb2-796" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-797"><a href="#cb2-797" aria-hidden="true" tabindex="-1"></a>Minsky was himself dismissive of the Chomskyans:</span>
-<span id="cb2-798"><a href="#cb2-798" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-799"><a href="#cb2-799" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ... fairly soon ideas that have been brewing in AI since the 1960's, on making computers understand significant fragments of natural language, will enter and, I'm sure, soon dominate the main stream of Linguistics. (In the era of these memos, it was the students in AI, almost alone, who carried on the quest for meaningful theories of linguistic processes, when most all other language work was stuck in shallow, syntax-oriented, formalisms.)</span></span>
-<span id="cb2-800"><a href="#cb2-800" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb2-801"><a href="#cb2-801" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@minskyIntroductionCOMTEXMicrofiche1983</span><span class="co">]</span></span>
-<span id="cb2-802"><a href="#cb2-802" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-803"><a href="#cb2-803" aria-hidden="true" tabindex="-1"></a>Similarly, Gary Marcus has consistently criticized neural network language models since at least 1992 <span class="co">[</span><span class="ot">@marcusOverregularizationLanguageAcquisition1992</span><span class="co">]</span>. His theory of intelligence is fundamentally Chomskyan: neural networks can exhibit intelligence but only if they implement rules for symbolic manipulation.<span class="ot">[^gary-marcus-algebraic-mind]</span> Moreover, many symbolic rules must be present at birth, by the poverty of stimulus.</span>
-<span id="cb2-804"><a href="#cb2-804" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-805"><a href="#cb2-805" aria-hidden="true" tabindex="-1"></a>For example, here is him saying in 1993:</span>
-<span id="cb2-806"><a href="#cb2-806" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-807"><a href="#cb2-807" aria-hidden="true" tabindex="-1"></a><span class="ot">[^gary-marcus-algebraic-mind]: </span>See <span class="co">[</span><span class="ot">@marcusAlgebraicMindIntegrating2003</span><span class="co">]</span> for a book-length treatment.</span>
-<span id="cb2-808"><a href="#cb2-808" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-809"><a href="#cb2-809" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Whether children require "negative evidence" (i.e., information about which strings of words are not grammatical sentences) to eliminate their ungrammatical utterances is a central question in language acquisition because, lacking negative evidence, a child would require internal mechanisms to unlearn grammatical errors. ... There is no evidence that noisy feedback is required for language learning, or even that noisy feedback exists. Thus internal mechanisms are necessary to account for the unlearning of ungrammatical utterances. </span></span>
-<span id="cb2-810"><a href="#cb2-810" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb2-811"><a href="#cb2-811" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@marcusNegativeEvidenceLanguage1993</span><span class="co">]</span></span>
-<span id="cb2-812"><a href="#cb2-812" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-813"><a href="#cb2-813" aria-hidden="true" tabindex="-1"></a>And here is him in 2012, quoting the old past tense debate to urge caution against the hype of AlexNet:</span>
-<span id="cb2-814"><a href="#cb2-814" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-815"><a href="#cb2-815" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; They learned slowly and inefficiently, and as Steven Pinker and I showed, couldn't master even some of the basic things that children do, like learning the past tense of regular verbs. By the late nineteen-nineties, neural networks had again begun to fall out of favor. ... Realistically, deep learning is only part of the larger challenge of building intelligent machines. Such techniques lack ways of representing causal relationships, and are likely to face challenges in acquiring abstract ideas like "sibling" or "identical to". They have no obvious ways of performing logical inferences, and they are also still a long way from integrating abstract knowledge, such as information about what objects are, what they are for, and how they are typically used. ... Norvig is clearly very interested in seeing what Hinton could come up with. But even Norvig didn't see how you could build a machine that could understand stories using deep learning alone.</span></span>
-<span id="cb2-816"><a href="#cb2-816" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb2-817"><a href="#cb2-817" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@marcusDeepLearningRevolution2012</span><span class="co">]</span></span>
-<span id="cb2-818"><a href="#cb2-818" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-819"><a href="#cb2-819" aria-hidden="true" tabindex="-1"></a>And here is him writing in 2018 dismissing deep learning as not working on the problem of general intelligence, just working on applications:</span>
-<span id="cb2-820"><a href="#cb2-820" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-821"><a href="#cb2-821" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Once upon a time, before the fashionable rise of machine learning and "big data", A.I. researchers tried to understand how complex knowledge could be encoded and processed in computers. This project, known as knowledge engineering... A.I. researchers need to return to that project sooner rather than later, ideally enlisting the help of cognitive psychologists who study the question of how human cognition manages to be endlessly flexible. Today's dominant approach to A.I. has not worked out. Yes, some remarkable applications have been built from it, including Google Translate and Google Duplex. But the limitations of these applications as a form of intelligence should be a wake-up call.</span></span>
-<span id="cb2-822"><a href="#cb2-822" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb2-823"><a href="#cb2-823" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@marcusOpinionAIHarder2018</span><span class="co">]</span></span>
-<span id="cb2-824"><a href="#cb2-824" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-825"><a href="#cb2-825" aria-hidden="true" tabindex="-1"></a>As it happens, 2018 was the year of Transformer revolution in natural language modeling, with BERT and GPT-1. Never one to give up, he continued with the same criticisms as easily as substituting "Transformers" for "recurrent networks". Given the track record, he is conveniently predictable,<span class="ot">[^llm-simulation]</span> and we can expect nothing less than his recent criticisms of deep learning in general <span class="co">[</span><span class="ot">@marcusDeepLearningCritical2018</span><span class="co">]</span> and <span class="co">[</span><span class="ot">large language models in particular</span><span class="co">](https://www.technologyreview.com/2020/08/22/1007539/gpt3-openai-language-generator-artificial-intelligence-ai-opinion/)</span>, <span class="co">[</span><span class="ot">repeatedly</span><span class="co">](https://www.theatlantic.com/technology/archive/2023/03/ai-chatbots-large-language-model-misinformation/673376/)</span>.</span>
-<span id="cb2-826"><a href="#cb2-826" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-827"><a href="#cb2-827" aria-hidden="true" tabindex="-1"></a><span class="ot">[^llm-simulation]</span>:</span>
-<span id="cb2-828"><a href="#cb2-828" aria-hidden="true" tabindex="-1"></a>    It would be funny if someone could train a language model to pass the "Gary Marcus test": impersonate Gary Marcus in a Turing test setup. If such a model were to pass, Marcus would either have to admit that the language model makes sense or accept that what he says is indistinguishable from nonsense.</span>
-<span id="cb2-829"><a href="#cb2-829" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-830"><a href="#cb2-830" aria-hidden="true" tabindex="-1"></a><span class="in">    The same could work for Noam Chomsky -- a statistical language model who can editorialize against every one of GPT-5, Gemini 2, GPT-6, etc, as soon as they come out. A [performative contradiction](https://en.wikipedia.org/wiki/Performative_contradiction).</span></span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb2-731"><a href="#cb2-731" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Code" collapse="true"}</span>
+<span id="cb2-732"><a href="#cb2-732" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb2-733"><a href="#cb2-733" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb2-734"><a href="#cb2-734" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk <span class="im">import</span> Tree</span>
+<span id="cb2-735"><a href="#cb2-735" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb2-736"><a href="#cb2-736" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'punkt'</span>)</span>
+<span id="cb2-737"><a href="#cb2-737" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> svgling</span>
+<span id="cb2-738"><a href="#cb2-738" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> SVG, display</span>
+<span id="cb2-739"><a href="#cb2-739" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-740"><a href="#cb2-740" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> Tree.fromstring(<span class="st">"""</span></span>
+<span id="cb2-741"><a href="#cb2-741" aria-hidden="true" tabindex="-1"></a><span class="st">    (SQ</span></span>
+<span id="cb2-742"><a href="#cb2-742" aria-hidden="true" tabindex="-1"></a><span class="st">        (MD Can)</span></span>
+<span id="cb2-743"><a href="#cb2-743" aria-hidden="true" tabindex="-1"></a><span class="st">        (NP</span></span>
+<span id="cb2-744"><a href="#cb2-744" aria-hidden="true" tabindex="-1"></a><span class="st">            (NNS eagles)</span></span>
+<span id="cb2-745"><a href="#cb2-745" aria-hidden="true" tabindex="-1"></a><span class="st">            (SBAR</span></span>
+<span id="cb2-746"><a href="#cb2-746" aria-hidden="true" tabindex="-1"></a><span class="st">                (WHNP (WDT that))</span></span>
+<span id="cb2-747"><a href="#cb2-747" aria-hidden="true" tabindex="-1"></a><span class="st">                (S</span></span>
+<span id="cb2-748"><a href="#cb2-748" aria-hidden="true" tabindex="-1"></a><span class="st">                    (VP (VBP fly))</span></span>
+<span id="cb2-749"><a href="#cb2-749" aria-hidden="true" tabindex="-1"></a><span class="st">                )</span></span>
+<span id="cb2-750"><a href="#cb2-750" aria-hidden="true" tabindex="-1"></a><span class="st">            )</span></span>
+<span id="cb2-751"><a href="#cb2-751" aria-hidden="true" tabindex="-1"></a><span class="st">        )</span></span>
+<span id="cb2-752"><a href="#cb2-752" aria-hidden="true" tabindex="-1"></a><span class="st">        (VP (VB swim))</span></span>
+<span id="cb2-753"><a href="#cb2-753" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
+<span id="cb2-754"><a href="#cb2-754" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
+<span id="cb2-755"><a href="#cb2-755" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-756"><a href="#cb2-756" aria-hidden="true" tabindex="-1"></a>tree_svg <span class="op">=</span> svgling.draw_tree(tree)</span>
+<span id="cb2-757"><a href="#cb2-757" aria-hidden="true" tabindex="-1"></a>tree_svg.get_svg().save()</span>
+<span id="cb2-758"><a href="#cb2-758" aria-hidden="true" tabindex="-1"></a>display(SVG(tree_svg.get_svg()))</span>
+<span id="cb2-759"><a href="#cb2-759" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-760"><a href="#cb2-760" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-761"><a href="#cb2-761" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-762"><a href="#cb2-762" aria-hidden="true" tabindex="-1"></a><span class="al">![The syntax tree for "Can eagles that fly swim?", drawn by GPT-4.](figure/can_eagles_that_fly_swim_tree.svg)</span></span>
+<span id="cb2-763"><a href="#cb2-763" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-764"><a href="#cb2-764" aria-hidden="true" tabindex="-1"></a>Chomsky has consistently rejected statistical language learning from the beginning to the end.</span>
+<span id="cb2-765"><a href="#cb2-765" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-766"><a href="#cb2-766" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; But it must be recognized that the notion of "probability of a sentence" is an entirely useless one, under any known interpretation of this term.</span>  </span>
+<span id="cb2-767"><a href="#cb2-767" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb2-768"><a href="#cb2-768" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@chomskyEmpiricalAssumptionsModern1969</span><span class="co">]</span>  </span>
+<span id="cb2-769"><a href="#cb2-769" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-770"><a href="#cb2-770" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; It's true there's been a lot of work on trying to apply statistical models to various linguistic problems. I think there have been some successes, but a lot of failures. There is a notion of success ... which I think is novel in the history of science. It interprets success as approximating unanalyzed data. </span></span>
+<span id="cb2-771"><a href="#cb2-771" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb2-772"><a href="#cb2-772" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Chomsky at the MIT150: Brains, Minds and Machines Symposium (2011), quoted in </span><span class="co">[</span><span class="ot">@norvigChomskyTwoCultures2017</span><span class="co">]</span></span>
+<span id="cb2-773"><a href="#cb2-773" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-774"><a href="#cb2-774" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Well, first we should ask the question whether large language models have achieved anything, anything, in this domain? Answer: No! They've achieved zero... GPT-4 is coming along, which is supposed to going to have a trillion parameters. It will be exactly the same. It'll use even more energy and achieve exactly nothing, for the same reasons. So there's nothing to discuss.</span></span>
+<span id="cb2-775"><a href="#cb2-775" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb2-776"><a href="#cb2-776" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">Machine Learning Street Talk: The Ghost in the Machine and the Limits of Human Understanding (2022)</span><span class="co">](https://whimsical.com/question-1-large-language-models-such-as-gpt-3-DJmQ8R5kD8tqvsXxgCN9vK)</span>  </span>
+<span id="cb2-777"><a href="#cb2-777" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-778"><a href="#cb2-778" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Peter Norvig</span><span class="co">](https://en.wikipedia.org/wiki/Peter_Norvig)</span> gave a detailed analysis and a rebuttal in <span class="co">[</span><span class="ot">@norvigChomskyTwoCultures2017</span><span class="co">]</span>.</span>
+<span id="cb2-779"><a href="#cb2-779" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-780"><a href="#cb2-780" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Chomskyans</span></span>
+<span id="cb2-781"><a href="#cb2-781" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-782"><a href="#cb2-782" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Gold's theorem about language learning in the limit</span><span class="co">](https://en.wikipedia.org/wiki/Language_identification_in_the_limit#Gold's_theorem)</span> is occasionally cited in the same context as a justification for the "poverty of stimulus" argument. It appears Chomsky did not regard it as a relevant argument <span class="co">[</span><span class="ot">@johnsonGoldTheoremCognitive2004</span><span class="co">]</span>, and I agree with Chomsky in this respect, as Gold's theorem is extremely generic.</span>
+<span id="cb2-783"><a href="#cb2-783" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-784"><a href="#cb2-784" aria-hidden="true" tabindex="-1"></a>After the second rise of neural networks, there was a bitter controversy that raged in the 1990s but is now essentially forgotten: the past tense debate. On one side were the connectionists, and on the other were the cognitivists, including Steven Pinker and Gary Marcus <span class="co">[</span><span class="ot">@pinkerFutureTense2002</span><span class="co">]</span>. Tellingly, both Steven Pinker and Gary Marcus sided with the cognitivists. Steven Pinker is best known for his other books such as *The Blank Slate*, which applies Chomskyan linguistics to general psychology.</span>
+<span id="cb2-785"><a href="#cb2-785" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-786"><a href="#cb2-786" aria-hidden="true" tabindex="-1"></a>Human language exhibits a distinctly fractal-like structure: for every rule, there are exceptions, and for every exception, there are exceptional exceptions, and so on. This is called "quasi-regularity". Sejnowski in an interview described how quasi-regularity shows up in phonology, and offered a perfect demonstration project for the power of neural networks against the Chomskyans:</span>
+<span id="cb2-787"><a href="#cb2-787" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-788"><a href="#cb2-788" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; I went to the library and found a book on text-to-speech that had probably one thousand rules in it. It was just lists of rules and exceptions. After I went to the library and found a book on text-to-speech that had probably one thousand rules in it. It was just lists of rules and exceptions. After every rule, there were dozens of exceptions. I figured that either they're doing it the wrong way, or this is a really tough problem. We considered finding something that was simpler after consulting the experts in linguistics. They said, "Chomsky worked on the problem, and it is well beyond the capability of anything that you could imagine trying to do." </span><span class="co">[</span><span class="ot">@rosenfeldTalkingNetsOral2000, pages 324-325</span><span class="co">]</span></span>
+<span id="cb2-789"><a href="#cb2-789" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-790"><a href="#cb2-790" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@sejnowskiDeepLearningRevolution2018, pages 75--78</span><span class="co">]</span> recounts an anecdote about <span class="co">[</span><span class="ot">Jerry Fodor</span><span class="co">](https://en.wikipedia.org/wiki/Jerry_Fodor)</span>, another prominent cognitivist. While Fodor is no longer a hot name in AI nowadays, this anecdote illustrates the Chomsky way of thinking.</span>
+<span id="cb2-791"><a href="#cb2-791" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-792"><a href="#cb2-792" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In 1988, I served on a committee for the McDonnell and Pew Foundations that interviewed prominent cognitive scientists and neuroscientists to get their recommendations on how to jump-start a new field called "cognitive neuroscience". ... </span><span class="sc">\[</span><span class="at">Fodor</span><span class="sc">\]</span><span class="at"> started by throwing down the gauntlet, "Cognitive neuroscience is not a science and it never will be." ... Fodor explained why the mind had to be thought of as a modular symbol-processing system running an intelligent computer program. </span><span class="sc">\[</span><span class="at">Patricia Churchland</span><span class="sc">\]</span><span class="at"> asked him whether his theory also applied to cats. "Yes," said Fodor, "cats are running the cat program." But when Mortimer Mishkin, an NIH neuroscientist studying vision and memory, asked him to tell us about discoveries made in his own lab, Fodor mumbled something I couldn't follow about using event-related potentials in a language experiment. Mercifully, at that moment, a fire drill was called and we all filed outside. Standing in the courtyard, I overheard Mishkin say to Fodor: "Those are pretty small potatoes." When the drill was over, Fodor had disappeared.</span></span>
+<span id="cb2-793"><a href="#cb2-793" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-794"><a href="#cb2-794" aria-hidden="true" tabindex="-1"></a>Minsky was himself dismissive of the Chomskyans:</span>
+<span id="cb2-795"><a href="#cb2-795" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-796"><a href="#cb2-796" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ... fairly soon ideas that have been brewing in AI since the 1960's, on making computers understand significant fragments of natural language, will enter and, I'm sure, soon dominate the main stream of Linguistics. (In the era of these memos, it was the students in AI, almost alone, who carried on the quest for meaningful theories of linguistic processes, when most all other language work was stuck in shallow, syntax-oriented, formalisms.)</span></span>
+<span id="cb2-797"><a href="#cb2-797" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb2-798"><a href="#cb2-798" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@minskyIntroductionCOMTEXMicrofiche1983</span><span class="co">]</span></span>
+<span id="cb2-799"><a href="#cb2-799" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-800"><a href="#cb2-800" aria-hidden="true" tabindex="-1"></a>Similarly, Gary Marcus has consistently criticized neural network language models since at least 1992 <span class="co">[</span><span class="ot">@marcusOverregularizationLanguageAcquisition1992</span><span class="co">]</span>. His theory of intelligence is fundamentally Chomskyan: neural networks can exhibit intelligence but only if they implement rules for symbolic manipulation.<span class="ot">[^gary-marcus-algebraic-mind]</span> Moreover, many symbolic rules must be present at birth, by the poverty of stimulus.</span>
+<span id="cb2-801"><a href="#cb2-801" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-802"><a href="#cb2-802" aria-hidden="true" tabindex="-1"></a>For example, here is him saying in 1993:</span>
+<span id="cb2-803"><a href="#cb2-803" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-804"><a href="#cb2-804" aria-hidden="true" tabindex="-1"></a><span class="ot">[^gary-marcus-algebraic-mind]: </span>See <span class="co">[</span><span class="ot">@marcusAlgebraicMindIntegrating2003</span><span class="co">]</span> for a book-length treatment.</span>
+<span id="cb2-805"><a href="#cb2-805" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-806"><a href="#cb2-806" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Whether children require "negative evidence" (i.e., information about which strings of words are not grammatical sentences) to eliminate their ungrammatical utterances is a central question in language acquisition because, lacking negative evidence, a child would require internal mechanisms to unlearn grammatical errors. ... There is no evidence that noisy feedback is required for language learning, or even that noisy feedback exists. Thus internal mechanisms are necessary to account for the unlearning of ungrammatical utterances. </span></span>
+<span id="cb2-807"><a href="#cb2-807" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb2-808"><a href="#cb2-808" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@marcusNegativeEvidenceLanguage1993</span><span class="co">]</span></span>
+<span id="cb2-809"><a href="#cb2-809" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-810"><a href="#cb2-810" aria-hidden="true" tabindex="-1"></a>And here is him in 2012, quoting the old past tense debate to urge caution against the hype of AlexNet:</span>
+<span id="cb2-811"><a href="#cb2-811" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-812"><a href="#cb2-812" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; They learned slowly and inefficiently, and as Steven Pinker and I showed, couldn't master even some of the basic things that children do, like learning the past tense of regular verbs. By the late nineteen-nineties, neural networks had again begun to fall out of favor. ... Realistically, deep learning is only part of the larger challenge of building intelligent machines. Such techniques lack ways of representing causal relationships, and are likely to face challenges in acquiring abstract ideas like "sibling" or "identical to". They have no obvious ways of performing logical inferences, and they are also still a long way from integrating abstract knowledge, such as information about what objects are, what they are for, and how they are typically used. ... Norvig is clearly very interested in seeing what Hinton could come up with. But even Norvig didn't see how you could build a machine that could understand stories using deep learning alone.</span></span>
+<span id="cb2-813"><a href="#cb2-813" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb2-814"><a href="#cb2-814" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@marcusDeepLearningRevolution2012</span><span class="co">]</span></span>
+<span id="cb2-815"><a href="#cb2-815" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-816"><a href="#cb2-816" aria-hidden="true" tabindex="-1"></a>And here is him writing in 2018 dismissing deep learning as not working on the problem of general intelligence, just working on applications:</span>
+<span id="cb2-817"><a href="#cb2-817" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-818"><a href="#cb2-818" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Once upon a time, before the fashionable rise of machine learning and "big data", A.I. researchers tried to understand how complex knowledge could be encoded and processed in computers. This project, known as knowledge engineering... A.I. researchers need to return to that project sooner rather than later, ideally enlisting the help of cognitive psychologists who study the question of how human cognition manages to be endlessly flexible. Today's dominant approach to A.I. has not worked out. Yes, some remarkable applications have been built from it, including Google Translate and Google Duplex. But the limitations of these applications as a form of intelligence should be a wake-up call.</span></span>
+<span id="cb2-819"><a href="#cb2-819" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb2-820"><a href="#cb2-820" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">@marcusOpinionAIHarder2018</span><span class="co">]</span></span>
+<span id="cb2-821"><a href="#cb2-821" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-822"><a href="#cb2-822" aria-hidden="true" tabindex="-1"></a>As it happens, 2018 was the year of Transformer revolution in natural language modeling, with BERT and GPT-1. Never one to give up, he continued with the same criticisms as easily as substituting "Transformers" for "recurrent networks". Given the track record, he is conveniently predictable,<span class="ot">[^llm-simulation]</span> and we can expect nothing less than his recent criticisms of deep learning in general <span class="co">[</span><span class="ot">@marcusDeepLearningCritical2018</span><span class="co">]</span> and <span class="co">[</span><span class="ot">large language models in particular</span><span class="co">](https://www.technologyreview.com/2020/08/22/1007539/gpt3-openai-language-generator-artificial-intelligence-ai-opinion/)</span>, <span class="co">[</span><span class="ot">repeatedly</span><span class="co">](https://www.theatlantic.com/technology/archive/2023/03/ai-chatbots-large-language-model-misinformation/673376/)</span>.</span>
+<span id="cb2-823"><a href="#cb2-823" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-824"><a href="#cb2-824" aria-hidden="true" tabindex="-1"></a><span class="ot">[^llm-simulation]</span>:</span>
+<span id="cb2-825"><a href="#cb2-825" aria-hidden="true" tabindex="-1"></a>    It would be funny if someone could train a language model to pass the "Gary Marcus test": impersonate Gary Marcus in a Turing test setup. If such a model were to pass, Marcus would either have to admit that the language model makes sense or accept that what he says is indistinguishable from nonsense.</span>
+<span id="cb2-826"><a href="#cb2-826" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-827"><a href="#cb2-827" aria-hidden="true" tabindex="-1"></a><span class="in">    The same could work for Noam Chomsky -- a statistical language model who can editorialize against every one of GPT-5, Gemini 2, GPT-6, etc, as soon as they come out. A [performative contradiction](https://en.wikipedia.org/wiki/Performative_contradiction).</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
