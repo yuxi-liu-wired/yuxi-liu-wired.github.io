@@ -125,6 +125,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <meta property="og:title" content="Dwarkesh Patel dinner party – Yuxi on the Wired">
 <meta property="og:description" content="Random recollections from the hectic conversations at a dinner party organized by Dwarkesh Patel.">
@@ -388,9 +417,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>Room laughed.</p>
 <p>“I realized that even for simple things, it’s hard to do reliably. I wanted for example simply cleaning up transcriptions, or writing tweet threads, but it’s really hard to get them do it just right <em>the way I want</em>. It works pretty well in the chat interface, but somehow it is much harder through the API. I tried stuffing more stuff into the system prompt, but… the lack of continual learning <em>really bites</em> in this case.”</p>
 <p>“Oh yeah. Why do you think they are not doing continual learning, these big companies? Is it because…”</p>
-<p>“Well I don’t know, but I have written a draft essay, about the economics of continual learning if it is practiced <em>right now</em>. I wanted to answer the question of… Let’s say, if OpenAI announces <em>today</em>, that ChatGPT can continually learn about you. How much money do you have to pay for it? So I calculated and the answer came out to be … [vigorous handwaving] between 20 and 100 USD/month, which is surprisingly … affordable?”</p>
+<p>“Well I don’t know, but I have written a draft essay, about the economics of continual learning if it is practiced <em>right now</em>. I wanted to answer the question of… Let’s say, if OpenAI announces <em>today</em>, that ChatGPT can continually learn about you. How much money do you have to pay for it? So I calculated and the answer came out to be … [vigorous handwaving] between 20 and 100 extra USD/month, which is surprisingly … affordable?”</p>
 <p>“Well even naively, the forward pass costs 2 FLOP per token-parameter, and the backward pass costs 4 FLOP, so multiply 20 USD/month by 3…”</p>
 <p>“And you would want to only finetune the parameters in the later half of the layers, so you don’t need 4 FLOPs, just 2 FLOPs, so multiply by 2…”</p>
+<p>“Actually, there is a way to do it even ‘for free’, as in there is no extra cost compared to a standard forward pass. Basically you randomly permute one matrix sometimes, and the user votes. If the random permutation gets higher votes, then put the random permutation in place. It’s like A/B testing.”</p>
+<p>“But how… how would that be better than LoRA backprop? Sounds like the sample complexity would be really high…”</p>
+<p>“Sounds like evolutionary algorithm, really. Those are very sample-heavy.”</p>
+<p>The proposer then described something about how this could be done more efficiently, but I didn’t understand it. Now I think about it, it, it is more sample-heavy than RL. Consider the toy example: You have <span class="math inline">\(\theta\)</span> the neural network parameters, and <span class="math inline">\(L(\theta)\)</span> the loss function. You want to optimize <span class="math inline">\(L(\theta)\)</span> by randomly jumping <span class="math inline">\(\theta\)</span> by some <span class="math inline">\(\delta \theta\)</span>. Then, since <span class="math inline">\(L(\theta + \delta \theta) - L(\theta) \approx \braket{\nabla_\theta L , \delta \theta}\)</span>, the probability that this improves <span class="math inline">\(L\)</span> is <span class="math inline">\(\sim 1/2\)</span>, assuming that <span class="math inline">\(\delta\theta\)</span> is small. However, how big is this improvement? Counterintuitively, the probability that a random sample on a <span class="math inline">\(d\)</span>-dimensional sphere is concentrated in a band of <span class="math inline">\(\pm O(1/\sqrt d)\)</span> around its equator. Therefore, the expected improvement of taking this <span class="math inline">\(\delta \theta\)</span> step is just <span class="math inline">\(O(1/\sqrt d)\)</span>.</p>
+<p>Is this worthwhile? A single “jitter” comparison requires 2 forward passes, costing 4 FLOP, while a single backprop costs 6 FLOP. This means that if you just want to improve the model, backprop is much more efficient, since <span class="math inline">\(4\sqrt d \gg 6\)</span>. Although, as the speaker suggested, this could be mildly useful in the particular case where you are a big LLM provider who needs to serve many customers really fast, but the customers are also willing to make a lot of votes, <em>and</em> don’t mind slight service degradation on half of the replies. I would say this is a very niche situation, but yeah, in that very niche situation, jittering would be better than backprop.</p>
 <hr>
 <p>“Well, I just published an <a href="https://gwern.net/blog/2025/pinball-hacking">essay about hacking pinball machines</a>, and of course, it is still about AI. Reward hacking. You could hack the leaderboard, or pay someone to say that they totally saw you get a high score. Etc.”</p>
 <p>“I mean, the speedrunning community has such high epistemic standards. So there was this speedrun, and someone actually exhaustively enumerated every single possible button press to formally prove that the speedrun record was impossible.”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
@@ -402,20 +436,26 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul>
 </div><div id="fn2"><p><sup>2</sup>&nbsp;Not confirmed. Although there was at least <em>one</em> reported bug that depends on the temperature of the machine: <a href="https://kotaku.com/dragon-quest-speedrunners-are-roasting-their-classic-co-1845958614"><em>Dragon Quest III</em> on the Japanese Famicon</a>.</p></div></div><p>“So there was also the thing that those old NES machines, <a href="https://arstechnica.com/gaming/2025/03/this-small-snes-timing-issue-is-causing-big-speedrun-problems/">their CPU clocks get faster over the years</a>. So now they have to put the NES in the fridge for a while to restore them to their previous clockrate! And the machine is only good for a few hours of speedrun afterwards.”<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>“[Looks at Gwern] So what would your next essay be about?”</p>
-<p>“The next essay should be about AI timelines. I just want to find out, basically, why now? Why not decades ago? There was Moravec’s scaling curve, but it was totally unconvincing. What could have been done so that decades ago, we would have an idea that, now is the time? Why did deep learning took everyone by surprise? Except a few [Moravec, Kurzweil] who didn’t have good arguments? What better arguments could have been made?”</p>
+<p>“The next essay should be about AI timelines. I just want to find out, basically, why now? Why not decades ago? There was <a href="https://yuxi-liu-wired.github.io/docs/posts/1998-hans-moravec/">Moravec’s scaling curve</a>, but it was totally unconvincing. What could have been done so that decades ago, we would have an idea that, now is the time? Why did deep learning take everyone by surprise? Except a few [Moravec, Kurzweil] who didn’t have good arguments? What better arguments could have been made?”</p>
 <p>“I think the best arguments that could have been made was to have scaling curves. They could scale from like 1 million FLOPs to 1 billion FLOPs, and extrapolate from there. It could have been more convincing. There were some scaling curves all the way back to the 1990s, like if you <em>really</em> try to look, but if it is invested with the power of a national laboratory it might be done even earlier.”</p>
-<p>“So I have been reading old papers from the 1990s, and there was one paper called ‘Neural Networks and the Bias/Variance Dilemma’ from 1992 <span class="citation" data-cites="gemanNeuralNetworksBias1992">(<a href="#ref-gemanNeuralNetworksBias1992" role="doc-biblioref">Geman, Bienenstock, and Doursat 1992</a>)</span>. They trained a neural network and showed that it has that bias-variance tradeoff [gestures at a V-shaped curve in air] so they argued that scaling wouldn’t work. Then I looked at what neural network they trained. They trained a network with 3 layers, and the middle, hidden, layer contained… [pause for dramatic effect] four neurons. FOUR! Certainly, there was a severe failure of imagination there. I mean, the paper wasn’t obscure! It was cited over 5000 times, and I think this contributed to the second neural network winter, a history of which I still want to write… before the singularity comes. Better hurry.”</p>
+<p>“So I have been reading old papers from the 1990s, and there was one paper called ‘Neural Networks and the Bias/Variance Dilemma’ from 1992 <span class="citation" data-cites="gemanNeuralNetworksBias1992">(<a href="#ref-gemanNeuralNetworksBias1992" role="doc-biblioref">Geman, Bienenstock, and Doursat 1992</a>)</span>. They trained a neural network and showed that it has that bias-variance tradeoff [handwaves a V-shaped curve in air] so they argued that scaling wouldn’t work. Then I looked at what neural network they trained. They trained a network with 3 layers, and the hidden layer contained… [pause for dramatic effect] 4 neurons. FOUR! Certainly, there was a severe failure of imagination there. I mean, the paper wasn’t obscure! It was cited over 5000 times, and I think this contributed to the second neural network winter, a history of which I still want to write… before the singularity comes. Better hurry.”</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="figure/NN bias-variance.png" class="img-fluid figure-img"></p>
 <figcaption class="margin-caption"><span class="citation" data-cites="gemanNeuralNetworksBias1992">(<a href="#ref-gemanNeuralNetworksBias1992" role="doc-biblioref">Geman, Bienenstock, and Doursat 1992, fig. 15</a>)</span></figcaption>
 </figure>
 </div>
-<p>“Was it because not enough data?”</p>
+<p>“Was it because of not enough data?”</p>
 <p>“There was this Highleyman’s data. Highleyman was really great. He was in 1960 doing many of the basic things we do now: big dataset; the train-test split; sharing data; k nearest neighbors. You can read more on it. Ben Recht wrote a long blog post about it. Ben R-E-C-H-T.”</p>
-<p>“The blog post is titled ‘<a href="https://archives.argmin.net/2021/10/20/highleyman/">The Saga of Highleyman’s data</a>’.”</p>
+<p>“The blog post is titled ‘<a href="https://archives.argmin.net/2021/10/20/highleyman/">The Saga of Highleyman’s Data</a>’.”</p>
 <p>“And I have kept a <a href="https://gwern.net/doc/ai/highleyman/">directory of those papers on my website</a>.”</p>
-<p>“Well I had been looking at old papers in he 1960s. It was the Cold War, and there was not only the Soviet Union, but also China, so there was a lot of funding into machine reading and translation of Chinese documents… So I saw a few datasets where they just scanned thousands of printed Chinese characters, so they certainly could have scaled to, perhaps 100,000 data points, if they had the will to do so. <span class="citation" data-cites="caseyRecognitionPrintedChinese1966">(<a href="#ref-caseyRecognitionPrintedChinese1966" role="doc-biblioref">Casey and Nagy 1966</a>)</span> MNIST had just 60,000 characters. They could have MNIST in the 1960s. They just didn’t think of it.”</p>
+<p>“Well I had been looking at old papers in the 1960s. It was the Cold War, and there was not only the Soviet Union, but also China, so there was a lot of funding into machine reading and translation of Chinese documents… So I saw a few datasets where they just scanned thousands of printed Chinese characters, so they certainly could have scaled to, perhaps 100,000 data points, if they had the will to do so. <span class="citation" data-cites="caseyRecognitionPrintedChinese1966">(<a href="#ref-caseyRecognitionPrintedChinese1966" role="doc-biblioref">Casey and Nagy 1966</a>)</span> MNIST had just 60,000 characters. They could have MNIST in the 1960s. They just didn’t think of it.”</p>
+<hr>
+<p>“I mean, why can’t deep learning be more like physics? Physicists got their billion-dollar colliders funded purely on theoretical extrapolations. And there was this ‘<a href="https://en.wikipedia.org/wiki/Island_of_stability">island of stability</a>’, which is the idea that, eventually, the superheavy elements would suddenly become stable again. And nobody call that crazy, even though we still don’t see it yet.”</p>
+<p>“Actually the island of stability theory is not convincing to most of the physics community.”</p>
+<p>“What? But I believed that!”</p>
+<p>“Like it is only a few groups that believe in it.”</p>
+<p>“Maybe it’s those Russians. They seem to love getting those nanosecond new elements that are totally useless, purely to say that they did it first.”</p>
 <hr>
 <p>“I feel like we really need LLM psychologists. Like I noticed that Claude Opus 4 is really… woo.”</p>
 <p>“–And that’s why I <em>hate</em> Claude so much!”</p>
@@ -463,6 +503,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>“Well, I <em>could</em>, but … nothing interesting happens [gestures in a great circle] out there?”</p>
 <p>“Oh that’s not true. I was in New York in September and it was the most beautiful place to visit.”</p>
 <hr>
+<p>“So the fridge at [big company] had those yogurts that contains 200 mg of caffeine in it. One day someone came and was like ‘I haven’t eaten lunch so I’ll eat 2 of these yogurts’.”</p>
+<p>“Oh no–” “RIP–”</p>
+<hr>
+<p>Patel looked up the listener statistics for his podcasts on the phone. Turned out that some episodes have ~2% female viewers.</p>
+<p>“Weird, that’s lower than the <a href="https://slatestarcodex.com/2013/04/12/noisy-poll-results-and-reptilian-muslim-climatologists-from-mars/">Lizardman’s constant</a>…? Are you sure the data source is right?”</p>
+<p>“Huh, even <a href="https://www.dwarkesh.com/p/sarah-paine-india">the Sarah Paine episodes</a> have so few female viewers.”</p>
+<p>“I mean, military history is very male-coded.”</p>
+<p>“Well you can just interview an MMA wrestler.”</p>
+<hr>
 <p>“Actually the price of a solar panel is dropping like crazy. People like to tell me that ‘You can’t be serious. Just because it has decreased exponentially for the past 30 years doesn’t mean it will continue for 2 more years–’” Room laughed. “–Well when I put it like that… But yeah. I really would like to know just how many little innovations has gone into each cost reduction…”</p>
 <p>“Probably most of it is stuck inside the brains of some Chinese engineers.”</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
@@ -474,30 +523,30 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>“What is the cheapest you can get those things? [points at a glass door] This perfect piece of glass shouldn’t be that much more expensive than solar chips…”</p>
 <p>“Well, I don’t know about the solar panels, but I do know that those silicon wafers for chips [gestures a big circle in front of the chest] costs 100 USD before they enter the factory, and after they are etched full of chips, worth 100,000 USD, so that’s an upper bound.”</p>
 <hr>
-<p>“… so you could imagine that, since a solar panel is silicon, and a GPU is also a silicon, you can produce both together, with a big solar panel and, in the middle of it, is a GPU. Then you could load a human brain emulation on the GPU and send it into orbit, and –”</p>
+<p>“… so you could imagine that, since a solar panel is silicon, and a GPU is also silicon, you can produce both together, with a big solar panel and, in the middle of it, is a GPU. Then you could load a human brain emulation on the GPU and send it into orbit, and –”</p>
 <p>“Heat dissipation is really hard in space.”</p>
-<p>“And they will die probably in a few years.”</p>
+<p>“And <a href="https://en.wikipedia.org/wiki/Plus_(novel)">they will die probably in a few years</a>.”</p>
 <p>“But for those few years they would experience <em>centuries</em> or more of subjective time. Human brains are just <em>so slow</em> compared to the GPUs.”</p>
 <p>“I would disagree with that. I mean, what is a reasonable comparison standard between LLMs and humans? Sure, a very dumb LLM can totally be faster than you at babbling nonsense. We have to compare things that are actually performing the same tasks.”</p>
 <p>“Legend says that when Watt had to figure out how to sell his engines, he had to sell it to people who only knew of horses, so he had to find what a Horsepower is, and <a href="https://en.wikipedia.org/wiki/Horsepower#History">one customer picked the strongest horse he had</a>. So what if we measure LLMs according to units of Gwernpower–”</p>
 <p>“Even though they don’t yet do quality writing at human levels, at least LLMs can already read at superhuman levels.”</p>
 <p>“It’s interesting that the biggest models like Claude or Gemini can only output like 10 token/sec.&nbsp;Like that is actually close to human levels.”</p>
 <p>“The fastest possible is <a href="https://www.cerebras.ai/">Cerebras</a>, but that’s so specialized–”</p>
-<p>“They have monstrous amount of <a href="https://en.wikipedia.org/wiki/Static_random-access_memory">SRAM</a> and memory bandwidth.”</p>
-<p>“Well, at the limit, you could imagine etching the logic directly into the hardware so it can only do one thing but as fast as possible. That’s in fact the whole selling point of <a href="https://www.etched.com/">Etched</a> the company. They basically compile your neural network into an ASIC. That’s actually why I’m so interested in <a href="https://github.com/Felix-Petersen/difflogic">differentiable logic gates</a>.”</p>
-<p>A brief confusion ensues about whether the intended use of Etched is large-batch or small-batch inference.</p>
+<p>“They have monstrous amounts of <a href="https://en.wikipedia.org/wiki/Static_random-access_memory">SRAM</a> and memory bandwidth.”</p>
+<p>“Well, at the limit, you could imagine etching the logic directly into the hardware so it can only do one thing but as fast as possible. That’s in fact the whole selling point of <a href="https://www.etched.com/">Etched</a> the company. They basically compile your neural network into an <a href="https://en.wikipedia.org/wiki/Application-specific_integrated_circuit">ASIC</a>. That’s actually why I’m so interested in <a href="https://github.com/Felix-Petersen/difflogic">differentiable logic gates</a>.”</p>
+<p>A brief confusion ensued about whether the intended use of Etched is large-batch or small-batch inference.</p>
 <p>“I think it’s small-batch inference, because you know, you can only saturate the FLOPs of a GPU if every floating point number that goes in is used for ~200 operations. The intended <a href="https://en.wikipedia.org/wiki/Roofline_model">arithmetic intensity</a> is like that.”</p>
 <p>“This is because the FLOP count of a GPU is like 1000 TFLOP/sec, but the memory bandwidth is like 5 TB/sec.”</p>
 <p>“And so if you have that problem of bandwidth then you really don’t want to use a small batch. Every time your parameters go into the GPU you should use it a lot, thus big batches. With Etched there is no parameter movement so you can afford something like 2 operations per floating point number.”</p>
 <p>“Huh, so I was confused about it then? But I did remember them marketing it as ‘thousands of customer queries going in in parallel’…”</p>
 <p>“Yeah I remember that from their talks too.”</p>
 <hr>
-<p>“So this morning I got a good Socratic prompt and I got them to first understand a topic deeply, then teach me by Socratic questioning technique. And it worked! I was talking with it about an algorithm I thought I knew but a few questions in I realized I got a basic misunderstanding.”</p>
+<p>“So this morning I got a good Socratic prompt and I got them to first understand a topic deeply, then teach me by Socratic questioning technique. And it worked! I was talking with it about an algorithm I thought I knew but a few questions in <a href="https://x.com/dwarkesh_sp/status/1928185476386545756">I realized I got a basic misunderstanding</a>.”</p>
 <p>“Oh yeah? What did they teach you?”</p>
 <p>“Well so it was about <a href="https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)#MLA">multi-latent attention</a>, and–”</p>
 <p>“Mmh right that definitely can be a bit easy to misunderstand, especially if you don’t already have some understanding of the variants of attention mechanisms… Your preconceptions of what attention is, if you think it is all just multiheaded attention, could make you misunderstand.”</p>
 <p>“So Claude told me that in MLA, instead of one vector per key and value, there is just one big vector for the entire context…”</p>
-<p>“Wait no.” “No that’s not it.” “No uh.” Several disappointed headshaking. The room fell dirgeful.</p>
+<p>“Wait no.” “No that’s not it.” “No uh.” Disappointed headshaking. The room fell dirgeful.</p>
 <p>“What! Claude lied to me. I was like ‘Wait, so that means MLA is not quadratic?’ and Claude was like ‘Yeah totally that’s how you get subquadratic attention, and that’s what MLA is for.’ So it’s not really subquadratic?”</p>
 <p>“No, MLA still gives you one vector per KV-token. The main surprise is not the fact that it uses one vector for the entire KV context – it’s not. The main difficulty is just that the position embedding is inserted somewhere … [vigorous handwaving] … in the middle of it. I still don’t understand it.”</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
@@ -1301,211 +1350,251 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>"Oh yeah. Why do you think they are not doing continual learning, these big companies? Is it because..."</span>
 <span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>"Well I don't know, but I have written a draft essay, about the economics of continual learning if it is practiced *right now*. I wanted to answer the question of... Let's say, if OpenAI announces *today*, that ChatGPT can continually learn about you. How much money do you have to pay for it? So I calculated and the answer came out to be ... <span class="co">[</span><span class="ot">vigorous handwaving</span><span class="co">]</span> between 20 and 100 USD/month, which is surprisingly ... affordable?"</span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>"Well I don't know, but I have written a draft essay, about the economics of continual learning if it is practiced *right now*. I wanted to answer the question of... Let's say, if OpenAI announces *today*, that ChatGPT can continually learn about you. How much money do you have to pay for it? So I calculated and the answer came out to be ... <span class="co">[</span><span class="ot">vigorous handwaving</span><span class="co">]</span> between 20 and 100 extra USD/month, which is surprisingly ... affordable?"</span>
 <span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>"Well even naively, the forward pass costs 2 FLOP per token-parameter, and the backward pass costs 4 FLOP, so multiply 20 USD/month by 3..."</span>
 <span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>"And you would want to only finetune the parameters in the later half of the layers, so you don't need 4 FLOPs, just 2 FLOPs, so multiply by 2..."</span>
 <span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>"Actually, there is a way to do it even 'for free', as in there is no extra cost compared to a standard forward pass. Basically you randomly permute one matrix sometimes, and the user votes. If the random permutation gets higher votes, then put the random permutation in place. It's like A/B testing."</span>
 <span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>"Well, I just published an <span class="co">[</span><span class="ot">essay about hacking pinball machines</span><span class="co">](https://gwern.net/blog/2025/pinball-hacking)</span>, and of course, it is still about AI. Reward hacking. You could hack the leaderboard, or pay someone to say that they totally saw you get a high score. Etc."</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>"But how... how would that be better than LoRA backprop? Sounds like the sample complexity would be really high..."</span>
 <span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>"I mean, the speedrunning community has such high epistemic standards. So there was this speedrun, and someone actually exhaustively enumerated every single possible button press to formally prove that the speedrun record was impossible."<span class="ot">[^speedrun-records]</span></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>"Sounds like evolutionary algorithm, really. Those are very sample-heavy."</span>
 <span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="ot">[^speedrun-records]</span>: </span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>    Not sure what that refers to, but similar examples include:</span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a><span class="in">    * Eric "Omnigamer" Koziel theoretically proving that 5.57 seconds in [*Dragster* (Atari 2600)](https://en.wikipedia.org/wiki/Dragster_%28video_game%29)  was the fastest possible, and so Todd Rogers' record of 5.51 seconds was fake.</span></span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a><span class="in">    * Some ways to beat some levels in *Arkanoid* had been [proven optimal by Chef\_Stef](https://tasvideos.org/6347S) who built an exact [simulator in C++](https://github.com/sbroger/arkbot) to bruteforce it as fast as possible.</span></span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="in">    * A controversy over whether Billy Mitchell's record in *Donkey Kong* was done on an emulator, rather than a physical console. The [evidence hinged on one particular frame in the video recording](https://perfectpacman.com/2022/09/06/new-technical-analysis/), which seems to show a transition frame that is impossible on a physical console, but expected on an emulator.</span></span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>"So there was also the thing that those old NES machines, <span class="co">[</span><span class="ot">their CPU clocks get faster over the years</span><span class="co">](https://arstechnica.com/gaming/2025/03/this-small-snes-timing-issue-is-causing-big-speedrun-problems/)</span>. So now they have to put the NES in the fridge for a while to restore them to their previous clockrate! And the machine is only good for a few hours of speedrun afterwards."<span class="ot">[^speedrun-clockrate]</span></span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a><span class="ot">[^speedrun-clockrate]: </span>Not confirmed. Although there was at least *one* reported bug that depends on the temperature of the machine: [*Dragon Quest III* on the Japanese Famicon](https://kotaku.com/dragon-quest-speedrunners-are-roasting-their-classic-co-1845958614).</span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>"<span class="co">[</span><span class="ot">Looks at Gwern</span><span class="co">]</span> So what would your next essay be about?"</span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>"The next essay should be about AI timelines. I just want to find out, basically, why now? Why not decades ago? There was Moravec's scaling curve, but it was totally unconvincing. What could have been done so that decades ago, we would have an idea that, now is the time? Why did deep learning took everyone by surprise? Except a few <span class="co">[</span><span class="ot">Moravec, Kurzweil</span><span class="co">]</span> who didn't have good arguments? What better arguments could have been made?"</span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>"I think the best arguments that could have been made was to have scaling curves. They could scale from like 1 million FLOPs to 1 billion FLOPs, and extrapolate from there. It could have been more convincing. There were some scaling curves all the way back to the 1990s, like if you *really* try to look, but if it is invested with the power of a national laboratory it might be done even earlier."</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>The proposer then described something about how this could be done more efficiently, but I didn't understand it. Now I think about it, it, it is more sample-heavy than RL. Consider the toy example: You have $\theta$ the neural network parameters, and $L(\theta)$ the loss function. You want to optimize $L(\theta)$ by randomly jumping $\theta$ by some $\delta \theta$. Then, since $L(\theta + \delta \theta) - L(\theta) \approx \braket{\nabla_\theta L , \delta \theta}$, the probability that this improves $L$ is $\sim 1/2$, assuming that $\delta\theta$ is small. However, how big is this improvement? Counterintuitively, the probability that a random sample on a $d$-dimensional sphere is concentrated in a band of $\pm O(1/\sqrt d)$ around its equator. Therefore, the expected improvement of taking this $\delta \theta$ step is just $O(1/\sqrt d)$.</span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>Is this worthwhile? A single "jitter" comparison requires 2 forward passes, costing 4 FLOP, while a single backprop costs 6 FLOP. This means that if you just want to improve the model, backprop is much more efficient, since $4\sqrt d \gg 6$. Although, as the speaker suggested, this could be mildly useful in the particular case where you are a big LLM provider who needs to serve many customers really fast, but the customers are also willing to make a lot of votes, *and* don't mind slight service degradation on half of the replies. I would say this is a very niche situation, but yeah, in that very niche situation, jittering would be better than backprop.</span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>"Well, I just published an <span class="co">[</span><span class="ot">essay about hacking pinball machines</span><span class="co">](https://gwern.net/blog/2025/pinball-hacking)</span>, and of course, it is still about AI. Reward hacking. You could hack the leaderboard, or pay someone to say that they totally saw you get a high score. Etc."</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>"I mean, the speedrunning community has such high epistemic standards. So there was this speedrun, and someone actually exhaustively enumerated every single possible button press to formally prove that the speedrun record was impossible."<span class="ot">[^speedrun-records]</span></span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a><span class="ot">[^speedrun-records]</span>: </span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>    Not sure what that refers to, but similar examples include:</span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a><span class="in">    * Eric "Omnigamer" Koziel theoretically proving that 5.57 seconds in [*Dragster* (Atari 2600)](https://en.wikipedia.org/wiki/Dragster_%28video_game%29)  was the fastest possible, and so Todd Rogers' record of 5.51 seconds was fake.</span></span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a><span class="in">    * Some ways to beat some levels in *Arkanoid* had been [proven optimal by Chef\_Stef](https://tasvideos.org/6347S) who built an exact [simulator in C++](https://github.com/sbroger/arkbot) to bruteforce it as fast as possible.</span></span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a><span class="in">    * A controversy over whether Billy Mitchell's record in *Donkey Kong* was done on an emulator, rather than a physical console. The [evidence hinged on one particular frame in the video recording](https://perfectpacman.com/2022/09/06/new-technical-analysis/), which seems to show a transition frame that is impossible on a physical console, but expected on an emulator.</span></span>
 <span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>"So I have been reading old papers from the 1990s, and there was one paper called 'Neural Networks and the Bias/Variance Dilemma' from 1992 <span class="co">[</span><span class="ot">@gemanNeuralNetworksBias1992</span><span class="co">]</span>. They trained a neural network and showed that it has that bias-variance tradeoff <span class="co">[</span><span class="ot">gestures at a V-shaped curve in air</span><span class="co">]</span> so they argued that scaling wouldn't work. Then I looked at what neural network they trained. They trained a network with 3 layers, and the middle, hidden, layer contained... <span class="sc">\[</span>pause for dramatic effect<span class="sc">\]</span> four neurons. FOUR! Certainly, there was a severe failure of imagination there. I mean, the paper wasn't obscure! It was cited over 5000 times, and I think this contributed to the second neural network winter, a history of which I still want to write... before the singularity comes. Better hurry."</span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>"So there was also the thing that those old NES machines, <span class="co">[</span><span class="ot">their CPU clocks get faster over the years</span><span class="co">](https://arstechnica.com/gaming/2025/03/this-small-snes-timing-issue-is-causing-big-speedrun-problems/)</span>. So now they have to put the NES in the fridge for a while to restore them to their previous clockrate! And the machine is only good for a few hours of speedrun afterwards."<span class="ot">[^speedrun-clockrate]</span></span>
 <span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">@gemanNeuralNetworksBias1992, figure 15</span><span class="co">]</span>](figure/NN%20bias-variance.png)</span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a><span class="ot">[^speedrun-clockrate]: </span>Not confirmed. Although there was at least *one* reported bug that depends on the temperature of the machine: [*Dragon Quest III* on the Japanese Famicon](https://kotaku.com/dragon-quest-speedrunners-are-roasting-their-classic-co-1845958614).</span>
 <span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>"Was it because not enough data?"</span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>"<span class="co">[</span><span class="ot">Looks at Gwern</span><span class="co">]</span> So what would your next essay be about?"</span>
 <span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>"There was this Highleyman's data. Highleyman was really great. He was in 1960 doing many of the basic things we do now: big dataset; the train-test split; sharing data; k nearest neighbors. You can read more on it. Ben Recht wrote a long blog post about it. Ben R-E-C-H-T."</span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>"The next essay should be about AI timelines. I just want to find out, basically, why now? Why not decades ago? There was <span class="co">[</span><span class="ot">Moravec's scaling curve</span><span class="co">](https://yuxi-liu-wired.github.io/docs/posts/1998-hans-moravec/)</span>, but it was totally unconvincing. What could have been done so that decades ago, we would have an idea that, now is the time? Why did deep learning take everyone by surprise? Except a few <span class="sc">\[</span>Moravec, Kurzweil<span class="sc">\]</span> who didn't have good arguments? What better arguments could have been made?"</span>
 <span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>"The blog post is titled '<span class="co">[</span><span class="ot">The Saga of Highleyman's data</span><span class="co">](https://archives.argmin.net/2021/10/20/highleyman/)</span>'."</span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>"I think the best arguments that could have been made was to have scaling curves. They could scale from like 1 million FLOPs to 1 billion FLOPs, and extrapolate from there. It could have been more convincing. There were some scaling curves all the way back to the 1990s, like if you *really* try to look, but if it is invested with the power of a national laboratory it might be done even earlier."</span>
 <span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>"And I have kept a <span class="co">[</span><span class="ot">directory of those papers on my website</span><span class="co">](https://gwern.net/doc/ai/highleyman/)</span>."</span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>"So I have been reading old papers from the 1990s, and there was one paper called 'Neural Networks and the Bias/Variance Dilemma' from 1992 <span class="co">[</span><span class="ot">@gemanNeuralNetworksBias1992</span><span class="co">]</span>. They trained a neural network and showed that it has that bias-variance tradeoff <span class="sc">\[</span>handwaves a V-shaped curve in air<span class="sc">\]</span> so they argued that scaling wouldn't work. Then I looked at what neural network they trained. They trained a network with 3 layers, and the hidden layer contained... <span class="sc">\[</span>pause for dramatic effect<span class="sc">\]</span> 4 neurons. FOUR! Certainly, there was a severe failure of imagination there. I mean, the paper wasn't obscure! It was cited over 5000 times, and I think this contributed to the second neural network winter, a history of which I still want to write... before the singularity comes. Better hurry."</span>
 <span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>"Well I had been looking at old papers in he 1960s. It was the Cold War, and there was not only the Soviet Union, but also China, so there was a lot of funding into machine reading and translation of Chinese documents... So I saw a few datasets where they just scanned thousands of printed Chinese characters, so they certainly could have scaled to, perhaps 100,000 data points, if they had the will to do so. <span class="co">[</span><span class="ot">@caseyRecognitionPrintedChinese1966</span><span class="co">]</span> MNIST had just 60,000 characters. They could have MNIST in the 1960s. They just didn't think of it."</span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>![<span class="co">[</span><span class="ot">@gemanNeuralNetworksBias1992, figure 15</span><span class="co">]</span>](figure/NN%20bias-variance.png)</span>
 <span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>"Was it because of not enough data?"</span>
 <span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>"I feel like we really need LLM psychologists. Like I noticed that Claude Opus 4 is really... woo." </span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>"There was this Highleyman's data. Highleyman was really great. He was in 1960 doing many of the basic things we do now: big dataset; the train-test split; sharing data; k nearest neighbors. You can read more on it. Ben Recht wrote a long blog post about it. Ben R-E-C-H-T."</span>
 <span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a>"--And that's why I *hate* Claude so much!"</span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a>"The blog post is titled '<span class="co">[</span><span class="ot">The Saga of Highleyman's Data</span><span class="co">](https://archives.argmin.net/2021/10/20/highleyman/)</span>'."</span>
 <span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a>Room laughed.</span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a>"And I have kept a <span class="co">[</span><span class="ot">directory of those papers on my website</span><span class="co">](https://gwern.net/doc/ai/highleyman/)</span>."</span>
 <span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>"Well I had been looking at old papers in the 1960s. It was the Cold War, and there was not only the Soviet Union, but also China, so there was a lot of funding into machine reading and translation of Chinese documents... So I saw a few datasets where they just scanned thousands of printed Chinese characters, so they certainly could have scaled to, perhaps 100,000 data points, if they had the will to do so. <span class="co">[</span><span class="ot">@caseyRecognitionPrintedChinese1966</span><span class="co">]</span> MNIST had just 60,000 characters. They could have MNIST in the 1960s. They just didn't think of it."</span>
 <span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>"So right now I'm 20% through reading *Anna Karenina*, and I don't get why Anna is suddenly infatuated after one dance and one weekend..."</span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>----</span>
 <span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>"Well, sometimes love or lust is like that. It's certainly not what the author intends to be an ideal of love. There is another couple (Levin and Kitty) that is an ideal. One of them (Levin) is the author's self-insert. But actually you should not focus too much on the romance because there are so many subplots that are interesting..."</span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>"I mean, why can't deep learning be more like physics? Physicists got their billion-dollar colliders funded purely on theoretical extrapolations. And there was this '<span class="co">[</span><span class="ot">island of stability</span><span class="co">](https://en.wikipedia.org/wiki/Island_of_stability)</span>', which is the idea that, eventually, the superheavy elements would suddenly become stable again. And nobody call that crazy, even though we still don't see it yet."</span>
 <span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>"You can read *Madame Bovary*. It's a French novel. The romance plot is basically the same as *Anna Karenina*. And better, there are no subplots because it's French."</span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>"Actually the island of stability theory is not convincing to most of the physics community."</span>
 <span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a>"It's like the distilled version of Anna. Just the romance."</span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a>"What? But I believed that!"</span>
 <span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>"What if it is a framing device?" </span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>"Like it is only a few groups that believe in it."</span>
 <span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>"Hmh?"</span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>"Maybe it's those Russians. They seem to love getting those nanosecond new elements that are totally useless, purely to say that they did it first."</span>
 <span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>"Like, maybe Tolstoy really didn't care for romance, but really about everything else. History, society, philosophy, religion. But he knew he had to put one romance subplot about the main character, else the reviewers would go like 'Ugh, no romance? 0/10.'. So the author puts in it to satiate the reviewers. Like, I often find myself opening a novel and felt like, 'Ugh, another romance plot?' and throws it <span class="sc">\[</span>right hand flung backward over the shoulder<span class="sc">\]</span> into the trash! So I would say that the compulsion to put useless romance plots into novels is a long tradition."</span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>----</span>
 <span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>"Actually..." What followed was a very long interpretation of *Anna Karenina*, which I completely forgot about.</span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>"I feel like we really need LLM psychologists. Like I noticed that Claude Opus 4 is really... woo." </span>
 <span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>"You know, the interpretation of *Anna Karenina* is a neglected field among technologists. This could be your niche. You know, '3 years left to build generational wealth'?"</span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>"--And that's why I *hate* Claude so much!"</span>
 <span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a>Room laughed.</span>
 <span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a>"I've been trying to calculate the energetic efficiency of AI vs humans. Humans run on 20 W but H200 runs on like 400 W. And they still don't do nearly as well as humans in like playing games and long-horizon tasks..."</span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a>----</span>
 <span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a>"I think the watt-for-intelligence idea is kind of flawed because there is also the question of intelligence ceiling, right? I would be totally okay to have another Einstein, even if that Einstein needs a nuclear reactor to power."</span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a>"So right now I'm 20% through reading *Anna Karenina*, and I don't get why Anna is suddenly infatuated after one dance and one weekend..."</span>
 <span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>"So the reason I'm calculating it is because if energy efficiency of AI becomes much higher than humans, then the economy will move towards that. Like, nice farmland you've got there, it could be better used by covering it with solar panels."</span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>"Well, sometimes love or lust is like that. It's certainly not what the author intends to be an ideal of love. There is another couple (Levin and Kitty) that is an ideal. One of them (Levin) is the author's self-insert. But actually you should not focus too much on the romance because there are so many subplots that are interesting..."</span>
 <span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a>"I guess that's one possible way for humans to survive after AGI. To have such good property laws that we live on retirement benefits forever."</span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a>"You can read *Madame Bovary*. It's a French novel. The romance plot is basically the same as *Anna Karenina*. And better, there are no subplots because it's French."</span>
 <span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>"That's Robin Hanson's hope. <span class="co">[</span><span class="ot">His entire hope is stacked on top of that.</span><span class="co">](https://www.youtube.com/watch?v=N4I2If3x_9g)</span>"</span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>"It's like the distilled version of Anna. Just the romance."</span>
 <span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a>"Only on the very medium-term. For a few years, before the <span class="co">[</span><span class="ot">em economy</span><span class="co">](https://en.wikipedia.org/wiki/The_Age_of_Em)</span> shifts again."</span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a>"What if it is a framing device?" </span>
 <span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>"In the UK there was the 'Triple Lock'<span class="ot">[^triple-lock]</span> and it is bankrupting the country. And the retirees have such an iron grip on the politics that it just couldn't be removed. So the latest attempt is something like, 'maybe... 2.1-ple Lock?'."</span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>"Hmh?"</span>
 <span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a><span class="ot">[^triple-lock]</span>:</span>
-<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>    Under the triple lock system, the state pension increases each April by the maximum of: </span>
-<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a><span class="in">    1. CPI inflation in the September of the previous year.</span></span>
-<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a><span class="in">    2. The average increase in total wages across the UK for May to June of the previous year.</span></span>
-<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a><span class="in">    3. 2.5%.</span></span>
-<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a><span class="in">    The system was put in place sometime in 2010 as part of the [coalition agreement in the UK](https://en.wikipedia.org/wiki/Conservative%E2%80%93Liberal_Democrat_coalition_agreement), as a compromise between the conservative and liberal democrat parties. </span></span>
-<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a>"Do we want to be like the retirees? Like why should I pay more to some rich retiree in America when the money is better spent in Africa?"</span>
-<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>"<span class="sc">\[</span>in a moralistic narrator voice<span class="sc">\]</span> 'Donate now so that an AI in Africa can be run again.'."</span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a>"'Turn off your lamp now so that a poor AI can stay conscious for one more second.'."</span>
-<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a>"They should go to Australia. The solar is much better. There's that giant empty quarter of desert."</span>
-<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>"Everyone will go to Australia someday. That's the plot of (the 3th book of) the <span class="co">[</span><span class="ot">*Three Body Problem*</span><span class="co">](https://en.wikipedia.org/wiki/Remembrance_of_Earth%27s_Past)</span>."</span>
-<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>----</span>
-<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>"What is '<span class="co">[</span><span class="ot">at-will employment</span><span class="co">](https://en.wikipedia.org/wiki/At-will_employment)</span>'?"</span>
-<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>"It means you can fire employees whenever you want without giving advance notice, or reasonable cause. And employees can quit in the same way."</span>
-<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>"I thought it means 'You can do whatever you want.'."</span>
-<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a>"Yeah sure, but 'There will be consequences.'."</span>
-<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a>"It's strange that America is unique in this. Even very capitalistic countries like Singapore has a 2-week advance notice. And France... you need to have a valid reason to fire people. And you need a valid reason to quit your job."</span>
+<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>"Like, maybe Tolstoy really didn't care for romance, but really about everything else. History, society, philosophy, religion. But he knew he had to put one romance subplot about the main character, else the reviewers would go like 'Ugh, no romance? 0/10.'. So the author puts in it to satiate the reviewers. Like, I often find myself opening a novel and felt like, 'Ugh, another romance plot?' and throws it <span class="sc">\[</span>right hand flung backward over the shoulder<span class="sc">\]</span> into the trash! So I would say that the compulsion to put useless romance plots into novels is a long tradition."</span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>"Actually..." What followed was a very long interpretation of *Anna Karenina*, which I completely forgot about.</span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>"You know, the interpretation of *Anna Karenina* is a neglected field among technologists. This could be your niche. You know, '3 years left to build generational wealth'?"</span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>"I've been trying to calculate the energetic efficiency of AI vs humans. Humans run on 20 W but H200 runs on like 400 W. And they still don't do nearly as well as humans in like playing games and long-horizon tasks..."</span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a>"I think the watt-for-intelligence idea is kind of flawed because there is also the question of intelligence ceiling, right? I would be totally okay to have another Einstein, even if that Einstein needs a nuclear reactor to power."</span>
+<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>"So the reason I'm calculating it is because if energy efficiency of AI becomes much higher than humans, then the economy will move towards that. Like, nice farmland you've got there, it could be better used by covering it with solar panels."</span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>"I guess that's one possible way for humans to survive after AGI. To have such good property laws that we live on retirement benefits forever."</span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a>"That's Robin Hanson's hope. <span class="co">[</span><span class="ot">His entire hope is stacked on top of that.</span><span class="co">](https://www.youtube.com/watch?v=N4I2If3x_9g)</span>"</span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a>"Only on the very medium-term. For a few years, before the <span class="co">[</span><span class="ot">em economy</span><span class="co">](https://en.wikipedia.org/wiki/The_Age_of_Em)</span> shifts again."</span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a>"In the UK there was the 'Triple Lock'<span class="ot">[^triple-lock]</span> and it is bankrupting the country. And the retirees have such an iron grip on the politics that it just couldn't be removed. So the latest attempt is something like, 'maybe... 2.1-ple Lock?'."</span>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a><span class="ot">[^triple-lock]</span>:</span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>    Under the triple lock system, the state pension increases each April by the maximum of: </span>
+<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a><span class="in">    1. CPI inflation in the September of the previous year.</span></span>
+<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a><span class="in">    2. The average increase in total wages across the UK for May to June of the previous year.</span></span>
+<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a><span class="in">    3. 2.5%.</span></span>
+<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a><span class="in">    The system was put in place sometime in 2010 as part of the [coalition agreement in the UK](https://en.wikipedia.org/wiki/Conservative%E2%80%93Liberal_Democrat_coalition_agreement), as a compromise between the conservative and liberal democrat parties. </span></span>
 <span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>"<span class="co">[</span><span class="ot">In Japan it's not symmetric.</span><span class="co">](https://www.kalzumeus.com/2014/11/07/doing-business-in-japan/)</span> Firing people is very hard, but quitting a job is not."</span>
+<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>"Do we want to be like the retirees? Like why should I pay more to some rich retiree in America when the money is better spent in Africa?"</span>
 <span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a>"It's called employee protection."</span>
+<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a>"<span class="sc">\[</span>in a moralistic narrator voice<span class="sc">\]</span> 'Donate now so that an AI in Africa can be run again.'."</span>
 <span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>"'Turn off your lamp now so that a poor AI can stay conscious for one more second.'."</span>
 <span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>"Well I haven't left the Bay Area for 4 years, because the China--US relationship has been going worse every year. So I worry about visa."</span>
+<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>"They should go to Australia. The solar is much better. There's that giant empty quarter of desert."</span>
 <span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a>"But you could still visit the rest of America?"</span>
+<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a>"Everyone will go to Australia someday. That's the plot of (the 3th book of) the <span class="co">[</span><span class="ot">*Three Body Problem*</span><span class="co">](https://en.wikipedia.org/wiki/Remembrance_of_Earth%27s_Past)</span>."</span>
 <span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a>"Well, I *could*, but ... nothing interesting happens <span class="sc">\[</span>gestures in a great circle<span class="sc">\]</span> out there?"</span>
+<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a>----</span>
 <span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a>"Oh that's not true. I was in New York in September and it was the most beautiful place to visit."</span>
+<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a>"What is '<span class="co">[</span><span class="ot">at-will employment</span><span class="co">](https://en.wikipedia.org/wiki/At-will_employment)</span>'?"</span>
 <span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a>"It means you can fire employees whenever you want without giving advance notice, or reasonable cause. And employees can quit in the same way."</span>
 <span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a>"Actually the price of a solar panel is dropping like crazy. People like to tell me that 'You can't be serious. Just because it has decreased exponentially for the past 30 years doesn't mean it will continue for 2 more years--'" Room laughed. "--Well when I put it like that... But yeah. I really would like to know just how many little innovations has gone into each cost reduction..."</span>
+<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a>"I thought it means 'You can do whatever you want.'."</span>
 <span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a>"Probably most of it is stuck inside the brains of some Chinese engineers."</span>
+<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a>"Yeah sure, but 'There will be consequences.'."</span>
 <span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">Source: [Our World in Data](https://ourworldindata.org/cheap-renewables-growth)</span><span class="co">](figure/solar-pv-prices-vs-cumulative-capacity.png)</span></span>
+<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a>"It's strange that America is unique in this. Even very capitalistic countries like Singapore has a 2-week advance notice. And France... you need to have a valid reason to fire people. And you need a valid reason to quit your job."</span>
 <span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a>"What is the cheapest you can get those things? <span class="sc">\[</span>points at a glass door<span class="sc">\]</span> This perfect piece of glass shouldn't be that much more expensive than solar chips..."</span>
+<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a>"<span class="co">[</span><span class="ot">In Japan it's not symmetric.</span><span class="co">](https://www.kalzumeus.com/2014/11/07/doing-business-in-japan/)</span> Firing people is very hard, but quitting a job is not."</span>
 <span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a>"Well, I don't know about the solar panels, but I do know that those silicon wafers for chips <span class="sc">\[</span>gestures a big circle in front of the chest<span class="sc">\]</span> costs 100 USD before they enter the factory, and after they are etched full of chips, worth 100,000 USD, so that's an upper bound."</span>
+<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a>"It's called employee protection."</span>
 <span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a>----</span>
 <span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a>"... so you could imagine that, since a solar panel is silicon, and a GPU is also a silicon, you can produce both together, with a big solar panel and, in the middle of it, is a GPU. Then you could load a human brain emulation on the GPU and send it into orbit, and --"</span>
+<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a>"Well I haven't left the Bay Area for 4 years, because the China--US relationship has been going worse every year. So I worry about visa."</span>
 <span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a>"Heat dissipation is really hard in space."</span>
+<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a>"But you could still visit the rest of America?"</span>
 <span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a>"And they will die probably in a few years."</span>
+<span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a>"Well, I *could*, but ... nothing interesting happens <span class="sc">\[</span>gestures in a great circle<span class="sc">\]</span> out there?"</span>
 <span id="cb1-317"><a href="#cb1-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a>"But for those few years they would experience *centuries* or more of subjective time. Human brains are just *so slow* compared to the GPUs."</span>
+<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a>"Oh that's not true. I was in New York in September and it was the most beautiful place to visit."</span>
 <span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a>"I would disagree with that. I mean, what is a reasonable comparison standard between LLMs and humans? Sure, a very dumb LLM can totally be faster than you at babbling nonsense. We have to compare things that are actually performing the same tasks."</span>
+<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a>----</span>
 <span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a>"Legend says that when Watt had to figure out how to sell his engines, he had to sell it to people who only knew of horses, so he had to find what a Horsepower is, and <span class="co">[</span><span class="ot">one customer picked the strongest horse he had</span><span class="co">](https://en.wikipedia.org/wiki/Horsepower#History)</span>. So what if we measure LLMs according to units of Gwernpower--"</span>
+<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a>"So the fridge at <span class="sc">\[</span>big company<span class="sc">\]</span> had those yogurts that contains 200 mg of caffeine in it. One day someone came and was like 'I haven't eaten lunch so I'll eat 2 of these yogurts'."</span>
 <span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a>"Even though they don't yet do quality writing at human levels, at least LLMs can already read at superhuman levels."</span>
+<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a>"Oh no--" "RIP--"</span>
 <span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a>"It's interesting that the biggest models like Claude or Gemini can only output like 10 token/sec. Like that is actually close to human levels."</span>
+<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a>----</span>
 <span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a>"The fastest possible is <span class="co">[</span><span class="ot">Cerebras</span><span class="co">](https://www.cerebras.ai/)</span>, but that's so specialized--"</span>
+<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a>Patel looked up the listener statistics for his podcasts on the phone. Turned out that some episodes have ~2% female viewers.</span>
 <span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a>"They have monstrous amount of <span class="co">[</span><span class="ot">SRAM</span><span class="co">](https://en.wikipedia.org/wiki/Static_random-access_memory)</span> and memory bandwidth."</span>
+<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a>"Weird, that's lower than the <span class="co">[</span><span class="ot">Lizardman's constant</span><span class="co">](https://slatestarcodex.com/2013/04/12/noisy-poll-results-and-reptilian-muslim-climatologists-from-mars/)</span>...? Are you sure the data source is right?"</span>
 <span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a>"Well, at the limit, you could imagine etching the logic directly into the hardware so it can only do one thing but as fast as possible. That's in fact the whole selling point of <span class="co">[</span><span class="ot">Etched</span><span class="co">](https://www.etched.com/)</span> the company. They basically compile your neural network into an ASIC. That's actually why I'm so interested in <span class="co">[</span><span class="ot">differentiable logic gates</span><span class="co">](https://github.com/Felix-Petersen/difflogic)</span>."</span>
+<span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a>"Huh, even <span class="co">[</span><span class="ot">the Sarah Paine episodes</span><span class="co">](https://www.dwarkesh.com/p/sarah-paine-india)</span> have so few female viewers."</span>
 <span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a>A brief confusion ensues about whether the intended use of Etched is large-batch or small-batch inference.</span>
+<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a>"I mean, military history is very male-coded."</span>
 <span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a>"I think it's small-batch inference, because you know, you can only saturate the FLOPs of a GPU if every floating point number that goes in is used for ~200 operations. The intended <span class="co">[</span><span class="ot">arithmetic intensity</span><span class="co">](https://en.wikipedia.org/wiki/Roofline_model)</span> is like that."</span>
+<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a>"Well you can just interview an MMA wrestler."</span>
 <span id="cb1-337"><a href="#cb1-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-338"><a href="#cb1-338" aria-hidden="true" tabindex="-1"></a>"This is because the FLOP count of a GPU is like 1000 TFLOP/sec, but the memory bandwidth is like 5 TB/sec."</span>
+<span id="cb1-338"><a href="#cb1-338" aria-hidden="true" tabindex="-1"></a>----</span>
 <span id="cb1-339"><a href="#cb1-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-340"><a href="#cb1-340" aria-hidden="true" tabindex="-1"></a>"And so if you have that problem of bandwidth then you really don't want to use a small batch. Every time your parameters go into the GPU you should use it a lot, thus big batches. With Etched there is no parameter movement so you can afford something like 2 operations per floating point number."</span>
+<span id="cb1-340"><a href="#cb1-340" aria-hidden="true" tabindex="-1"></a>"Actually the price of a solar panel is dropping like crazy. People like to tell me that 'You can't be serious. Just because it has decreased exponentially for the past 30 years doesn't mean it will continue for 2 more years--'" Room laughed. "--Well when I put it like that... But yeah. I really would like to know just how many little innovations has gone into each cost reduction..."</span>
 <span id="cb1-341"><a href="#cb1-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a>"Huh, so I was confused about it then? But I did remember them marketing it as 'thousands of customer queries going in in parallel'..."</span>
+<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a>"Probably most of it is stuck inside the brains of some Chinese engineers."</span>
 <span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a>"Yeah I remember that from their talks too."</span>
+<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">Source: [Our World in Data](https://ourworldindata.org/cheap-renewables-growth)</span><span class="co">](figure/solar-pv-prices-vs-cumulative-capacity.png)</span></span>
 <span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a>"What is the cheapest you can get those things? <span class="sc">\[</span>points at a glass door<span class="sc">\]</span> This perfect piece of glass shouldn't be that much more expensive than solar chips..."</span>
 <span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a>"So this morning I got a good Socratic prompt and I got them to first understand a topic deeply, then teach me by Socratic questioning technique. And it worked! I was talking with it about an algorithm I thought I knew but a few questions in I realized I got a basic misunderstanding."</span>
+<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a>"Well, I don't know about the solar panels, but I do know that those silicon wafers for chips <span class="sc">\[</span>gestures a big circle in front of the chest<span class="sc">\]</span> costs 100 USD before they enter the factory, and after they are etched full of chips, worth 100,000 USD, so that's an upper bound."</span>
 <span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a>"Oh yeah? What did they teach you?"</span>
+<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a>----</span>
 <span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>"Well so it was about <span class="co">[</span><span class="ot">multi-latent attention</span><span class="co">]</span>(https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)#MLA), and--"</span>
+<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>"... so you could imagine that, since a solar panel is silicon, and a GPU is also silicon, you can produce both together, with a big solar panel and, in the middle of it, is a GPU. Then you could load a human brain emulation on the GPU and send it into orbit, and --"</span>
 <span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a>"Mmh right that definitely can be a bit easy to misunderstand, especially if you don't already have some understanding of the variants of attention mechanisms... Your preconceptions of what attention is, if you think it is all just multiheaded attention, could make you misunderstand."</span>
+<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a>"Heat dissipation is really hard in space."</span>
 <span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>"So Claude told me that in MLA, instead of one vector per key and value, there is just one big vector for the entire context..."</span>
+<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>"And <span class="co">[</span><span class="ot">they will die probably in a few years</span><span class="co">]</span>(https://en.wikipedia.org/wiki/Plus_(novel))."</span>
 <span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a>"Wait no." "No that's not it." "No uh." Several disappointed headshaking. The room fell dirgeful.</span>
+<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a>"But for those few years they would experience *centuries* or more of subjective time. Human brains are just *so slow* compared to the GPUs."</span>
 <span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a>"What! Claude lied to me. I was like 'Wait, so that means MLA is not quadratic?' and Claude was like 'Yeah totally that's how you get subquadratic attention, and that's what MLA is for.' So it's not really subquadratic?"</span>
+<span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a>"I would disagree with that. I mean, what is a reasonable comparison standard between LLMs and humans? Sure, a very dumb LLM can totally be faster than you at babbling nonsense. We have to compare things that are actually performing the same tasks."</span>
 <span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a>"No, MLA still gives you one vector per KV-token. The main surprise is not the fact that it uses one vector for the entire KV context -- it's not. The main difficulty is just that the position embedding is inserted somewhere ... <span class="sc">\[</span>vigorous handwaving] ... in the middle of it. I still don't understand it."</span>
+<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a>"Legend says that when Watt had to figure out how to sell his engines, he had to sell it to people who only knew of horses, so he had to find what a Horsepower is, and <span class="co">[</span><span class="ot">one customer picked the strongest horse he had</span><span class="co">](https://en.wikipedia.org/wiki/Horsepower#History)</span>. So what if we measure LLMs according to units of Gwernpower--"</span>
 <span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">"The position embedding is inserted somewhere in the middle." In [this diagram](https://en.wikipedia.org/wiki/File:DeepSeek_MoE_and_MLA_(DeepSeek-V2).svg), it is shown as the "apply RoPE". It is really weird. I read through [Jianlin Su's explanation](https://yuxi-liu-wired.github.io/docs/posts/2024-05-13-multi-latent-attention/) several times, but still did not understand.</span><span class="co">]</span>(figure/DeepSeek_MoE_and_MLA_(DeepSeek-V2).svg)</span>
+<span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a>"Even though they don't yet do quality writing at human levels, at least LLMs can already read at superhuman levels."</span>
 <span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a>"Yeah the position embedding is the weirdest part of it, for sure."</span>
+<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a>"It's interesting that the biggest models like Claude or Gemini can only output like 10 token/sec. Like that is actually close to human levels."</span>
 <span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a>"The main selling point of this is that it saves a lot of memory. For example, the DeepSeek-R1 has... <span class="sc">\[</span>hand held high, indicating <span class="co">[</span><span class="ot">retrieval augmentation</span><span class="co">](https://en.wikipedia.org/wiki/Retrieval-augmented_generation)</span> in progress<span class="sc">\]</span> just 70 KB per key-value token. In contrast, GPT-3 <span class="sc">\[</span>retrieving...<span class="sc">\]</span> has 5 MB per key-value token. So you could just stuff like, 1 million tokens of context into 70 GB. That's the main selling point of MLA."</span>
+<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a>"The fastest possible is <span class="co">[</span><span class="ot">Cerebras</span><span class="co">](https://www.cerebras.ai/)</span>, but that's so specialized--"</span>
 <span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a>"The Socratic method in ruins. LLMs will only get more convincing from now on."</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a>"They have monstrous amounts of <span class="co">[</span><span class="ot">SRAM</span><span class="co">](https://en.wikipedia.org/wiki/Static_random-access_memory)</span> and memory bandwidth."</span>
+<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a>"Well, at the limit, you could imagine etching the logic directly into the hardware so it can only do one thing but as fast as possible. That's in fact the whole selling point of <span class="co">[</span><span class="ot">Etched</span><span class="co">](https://www.etched.com/)</span> the company. They basically compile your neural network into an <span class="co">[</span><span class="ot">ASIC</span><span class="co">](https://en.wikipedia.org/wiki/Application-specific_integrated_circuit)</span>. That's actually why I'm so interested in <span class="co">[</span><span class="ot">differentiable logic gates</span><span class="co">](https://github.com/Felix-Petersen/difflogic)</span>."</span>
+<span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a>A brief confusion ensued about whether the intended use of Etched is large-batch or small-batch inference.</span>
+<span id="cb1-375"><a href="#cb1-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-376"><a href="#cb1-376" aria-hidden="true" tabindex="-1"></a>"I think it's small-batch inference, because you know, you can only saturate the FLOPs of a GPU if every floating point number that goes in is used for ~200 operations. The intended <span class="co">[</span><span class="ot">arithmetic intensity</span><span class="co">](https://en.wikipedia.org/wiki/Roofline_model)</span> is like that."</span>
+<span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-378"><a href="#cb1-378" aria-hidden="true" tabindex="-1"></a>"This is because the FLOP count of a GPU is like 1000 TFLOP/sec, but the memory bandwidth is like 5 TB/sec."</span>
+<span id="cb1-379"><a href="#cb1-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a>"And so if you have that problem of bandwidth then you really don't want to use a small batch. Every time your parameters go into the GPU you should use it a lot, thus big batches. With Etched there is no parameter movement so you can afford something like 2 operations per floating point number."</span>
+<span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a>"Huh, so I was confused about it then? But I did remember them marketing it as 'thousands of customer queries going in in parallel'..."</span>
+<span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a>"Yeah I remember that from their talks too."</span>
+<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-388"><a href="#cb1-388" aria-hidden="true" tabindex="-1"></a>"So this morning I got a good Socratic prompt and I got them to first understand a topic deeply, then teach me by Socratic questioning technique. And it worked! I was talking with it about an algorithm I thought I knew but a few questions in <span class="co">[</span><span class="ot">I realized I got a basic misunderstanding</span><span class="co">](https://x.com/dwarkesh_sp/status/1928185476386545756)</span>."</span>
+<span id="cb1-389"><a href="#cb1-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-390"><a href="#cb1-390" aria-hidden="true" tabindex="-1"></a>"Oh yeah? What did they teach you?"</span>
+<span id="cb1-391"><a href="#cb1-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-392"><a href="#cb1-392" aria-hidden="true" tabindex="-1"></a>"Well so it was about <span class="co">[</span><span class="ot">multi-latent attention</span><span class="co">]</span>(https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)#MLA), and--"</span>
+<span id="cb1-393"><a href="#cb1-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-394"><a href="#cb1-394" aria-hidden="true" tabindex="-1"></a>"Mmh right that definitely can be a bit easy to misunderstand, especially if you don't already have some understanding of the variants of attention mechanisms... Your preconceptions of what attention is, if you think it is all just multiheaded attention, could make you misunderstand."</span>
+<span id="cb1-395"><a href="#cb1-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-396"><a href="#cb1-396" aria-hidden="true" tabindex="-1"></a>"So Claude told me that in MLA, instead of one vector per key and value, there is just one big vector for the entire context..."</span>
+<span id="cb1-397"><a href="#cb1-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-398"><a href="#cb1-398" aria-hidden="true" tabindex="-1"></a>"Wait no." "No that's not it." "No uh." Disappointed headshaking. The room fell dirgeful.</span>
+<span id="cb1-399"><a href="#cb1-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-400"><a href="#cb1-400" aria-hidden="true" tabindex="-1"></a>"What! Claude lied to me. I was like 'Wait, so that means MLA is not quadratic?' and Claude was like 'Yeah totally that's how you get subquadratic attention, and that's what MLA is for.' So it's not really subquadratic?"</span>
+<span id="cb1-401"><a href="#cb1-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-402"><a href="#cb1-402" aria-hidden="true" tabindex="-1"></a>"No, MLA still gives you one vector per KV-token. The main surprise is not the fact that it uses one vector for the entire KV context -- it's not. The main difficulty is just that the position embedding is inserted somewhere ... <span class="sc">\[</span>vigorous handwaving] ... in the middle of it. I still don't understand it."</span>
+<span id="cb1-403"><a href="#cb1-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-404"><a href="#cb1-404" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">"The position embedding is inserted somewhere in the middle." In [this diagram](https://en.wikipedia.org/wiki/File:DeepSeek_MoE_and_MLA_(DeepSeek-V2).svg), it is shown as the "apply RoPE". It is really weird. I read through [Jianlin Su's explanation](https://yuxi-liu-wired.github.io/docs/posts/2024-05-13-multi-latent-attention/) several times, but still did not understand.</span><span class="co">]</span>(figure/DeepSeek_MoE_and_MLA_(DeepSeek-V2).svg)</span>
+<span id="cb1-405"><a href="#cb1-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-406"><a href="#cb1-406" aria-hidden="true" tabindex="-1"></a>"Yeah the position embedding is the weirdest part of it, for sure."</span>
+<span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a>"The main selling point of this is that it saves a lot of memory. For example, the DeepSeek-R1 has... <span class="sc">\[</span>hand held high, indicating <span class="co">[</span><span class="ot">retrieval augmentation</span><span class="co">](https://en.wikipedia.org/wiki/Retrieval-augmented_generation)</span> in progress<span class="sc">\]</span> just 70 KB per key-value token. In contrast, GPT-3 <span class="sc">\[</span>retrieving...<span class="sc">\]</span> has 5 MB per key-value token. So you could just stuff like, 1 million tokens of context into 70 GB. That's the main selling point of MLA."</span>
+<span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a>"The Socratic method in ruins. LLMs will only get more convincing from now on."</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
