@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Feeds – Yuxi on the Wired</title>
+<title>Site-wide feed – Yuxi on the Wired</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./img/favicon.ico" rel="icon">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -67,20 +69,85 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
 
-<meta property="og:title" content="Feeds – Yuxi on the Wired">
-<meta property="og:image" content="https://yuxi-liu-wired.github.io/img/blog icon.jpg">
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      page: 25,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="alternate" type="application/rss+xml" title="Yuxi on the Wired" href="Feeds.xml" data-external="1"><meta property="og:title" content="Site-wide feed – Yuxi on the Wired">
+<meta property="og:image" content="https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/figure/banner/banner_1.png">
 <meta property="og:site_name" content="Yuxi on the Wired">
-<meta name="twitter:title" content="Feeds – Yuxi on the Wired">
-<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/img/blog icon.jpg">
+<meta property="og:image:alt" content="A brutalist representation of the particle-wave duality of the Hamiltonian--Jacobi equation. The stacked platforms represent the Hamilton principal function according to the field-theoretic wave interpretation, and the steel rebars are the characteristic rays, with balls rolling along them representing the particle interpretation. Made in Ideogram V1 with the following prompt: &amp;#039;A brutalist terraced mountain made of concrete and steel rebar. There are ripples parallel to the ground. The steel rebars go downhill, and many marbles are rolling down along the steel rebars. White background. High contrast, grayscale, black-and-white minimalistic, in the flat style of vector svg art, conceptual art'">
+<meta property="og:image:height" content="768">
+<meta property="og:image:width" content="1232">
+<meta name="twitter:title" content="Site-wide feed – Yuxi on the Wired">
+<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/essays/posts/analytical-mechanics/figure/banner/banner_1.png">
+<meta name="twitter:image:alt" content="A brutalist representation of the particle-wave duality of the Hamiltonian--Jacobi equation. The stacked platforms represent the Hamilton principal function according to the field-theoretic wave interpretation, and the steel rebars are the characteristic rays, with balls rolling along them representing the particle interpretation. Made in Ideogram V1 with the following prompt: &amp;#039;A brutalist terraced mountain made of concrete and steel rebar. There are ripples parallel to the ground. The steel rebars go downhill, and many marbles are rolling down along the steel rebars. White background. High contrast, grayscale, black-and-white minimalistic, in the flat style of vector svg art, conceptual art'">
+<meta name="twitter:image-height" content="768">
+<meta name="twitter:image-width" content="1232">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -133,7 +200,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./feeds.html"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="./feeds.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -146,46 +213,1032 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
-      <h1 class="title">Feeds</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    
+</nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Site-wide feed</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
 
 
 
 
 
-<ul>
-<li><a href="essays/index.xml">Essays feed</a></li>
-<li><a href="logs/index.xml">Logs feed</a></li>
-<li><a href="sketches/index.xml">Sketches feed</a></li>
-<li><a href="docs/index.xml">Docs feed</a></li>
-</ul>
 
-
-
-</main> <!-- /main -->
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="QUklMkNzY2FsaW5nJTJDTk4=" data-listing-date-sort="1705564800000" data-listing-file-modified-sort="1739695004363" data-listing-date-modified-sort="1739520000000" data-listing-reading-time-sort="20" data-listing-word-count-sort="3912">
+<div class="thumbnail">
+<p><a href="./sketches/posts/neural-network-scrapbook/index.html" class="no-external"></a></p><a href="./sketches/posts/neural-network-scrapbook/index.html" class="no-external">
+<p class="card-img-top"><img src="sketches\posts\neural-network-scrapbook\figure\kanal_1964_fig_tank_nontank_mosaic.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./sketches/posts/neural-network-scrapbook/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./sketches/posts/neural-network-scrapbook/index.html" class="no-external">A Scrapbook of Neural Network Lores</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./sketches/posts/neural-network-scrapbook/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./sketches/posts/neural-network-scrapbook/index.html" class="no-external">Lightly curated list of stories, anecdotes, and other various bits from neural network research.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./sketches/posts/neural-network-scrapbook/index.html" class="no-external">
+<div class="listing-date">
+Jan 18, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="bWF0aCUyQ3BoeXNpY3MlMkNwaGlsb3NvcGh5" data-listing-date-sort="1714806000000" data-listing-file-modified-sort="1746593340899" data-listing-date-modified-sort="1714806000000" data-listing-reading-time-sort="111" data-listing-word-count-sort="22126">
+<div class="thumbnail">
+<p><a href="./essays/posts/analytical-mechanics/index.html" class="no-external"></a></p><a href="./essays/posts/analytical-mechanics/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/analytical-mechanics/figure/banner/banner_1.png" class="thumbnail-image" alt="A brutalist representation of the particle-wave duality of the Hamiltonian--Jacobi equation. The stacked platforms represent the Hamilton principal function according to the field-theoretic wave interpretation, and the steel rebars are the characteristic rays, with balls rolling along them representing the particle interpretation. Made in Ideogram V1 with the following prompt: &amp;#039;A brutalist terraced mountain made of concrete and steel rebar. There are ripples parallel to the ground. The steel rebars go downhill, and many marbles are rolling down along the steel rebars. White background. High contrast, grayscale, black-and-white minimalistic, in the flat style of vector svg art, conceptual art'"></p>
+</a><p><a href="./essays/posts/analytical-mechanics/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/analytical-mechanics/index.html" class="no-external">Analytical Mechanics</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/analytical-mechanics/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/analytical-mechanics/index.html" class="no-external">What every graduate student should know about analytical mechanics, delivered with economic style and many illustrations. Particular focus on particle-wave duality and old quantum theory. Prerequisites: multivariate calculus and mathematical maturity.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/analytical-mechanics/index.html" class="no-external">
+<div class="listing-date">
+May 4, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="ZmluYW5jZSUyQ3BoeXNpY3M=" data-listing-date-sort="1746082800000" data-listing-file-modified-sort="1746226982651" data-listing-date-modified-sort="1746082800000" data-listing-reading-time-sort="3" data-listing-word-count-sort="443">
+<div class="thumbnail">
+<p><a href="./logs/posts/2025-char-time/index.html" class="no-external"></a></p><a href="./logs/posts/2025-char-time/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./logs/posts/2025-char-time/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./logs/posts/2025-char-time/index.html" class="no-external">Characteristic time in finance</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./logs/posts/2025-char-time/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./logs/posts/2025-char-time/index.html" class="no-external">Application of a simple concept from physics to personal finance.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./logs/posts/2025-char-time/index.html" class="no-external">
+<div class="listing-date">
+May 1, 2025
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="bWF0aCUyQ3BoeXNpY3MlMkNwaGlsb3NvcGh5JTJDZWNvbm9taWNz" data-listing-date-sort="1715238000000" data-listing-file-modified-sort="1748467977370" data-listing-date-modified-sort="1739433600000" data-listing-reading-time-sort="127" data-listing-word-count-sort="25306">
+<div class="thumbnail">
+<p><a href="./essays/posts/equilibrium-thermoeconomics/index.html" class="no-external"></a></p><a href="./essays/posts/equilibrium-thermoeconomics/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/equilibrium-thermoeconomics/figure/banner/banner_1.png" class="thumbnail-image" alt="A brutalist sculpture representing classical thermodynamics/neoclassical economics: nonlinear (curved surface) constraint (steel cables tying it down) optimization (the surface struggling to fly towards the sun, touching the solar rays at the closest points). Made in Ideogram V1, with prompt &amp;#039;A stunning conceptual artwork featuring a white sun casting intense white rays of sunlight, piercing through a curved hyperboloid structure made of concrete. The structure is adorned with straight lines of tight steel cables, creating a strong geometric pattern. The white background and high contrast accentuate the minimalistic vector art style. The piece is reminiscent of Chiaroscuro painting in the style of Piranesi, with a monochrome palette that enhances the drama and depth of the scene., illustration'."></p>
+</a><p><a href="./essays/posts/equilibrium-thermoeconomics/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/equilibrium-thermoeconomics/index.html" class="no-external">Classical Thermodynamics and Economics</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/equilibrium-thermoeconomics/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/equilibrium-thermoeconomics/index.html" class="no-external">How to think like a classical thermodynamic-economist, delivered with many illustrations and some sci-fi metaphors. Particular emphasis on what traditional pedagogy gets wrong. Prerequisites: multivariate calculus and mathematical maturity.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/equilibrium-thermoeconomics/index.html" class="no-external">
+<div class="listing-date">
+May 9, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="QUklMkNjeWJlcm5ldGljcyUyQ21hdGglMkNoaXN0b3J5" data-listing-date-sort="1703318400000" data-listing-file-modified-sort="1722059499829" data-listing-date-modified-sort="1703318400000" data-listing-reading-time-sort="16" data-listing-word-count-sort="3137">
+<div class="thumbnail">
+<p><a href="./essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external"></a></p><a href="./essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/cybernetic-artificial-intelligence/figure/cybernetic_meadow.png" class="thumbnail-image" alt="A grid of electromechanical spider-like robots on a concrete surface, with small cracks and many rounded-headed copper spires like tallgrass. It might be called poetically &amp;#039;a cybernetic meadow'. Realistic sci-fi illustration."></p>
+</a><p><a href="./essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external">Cybernetic Artificial Intelligence</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external">Machine learning and self-reproduction according to Norbert Wiener.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/cybernetic-artificial-intelligence/index.html" class="no-external">
+<div class="listing-date">
+Dec 23, 2023
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="QUklMkNzY2FsaW5nJTJDaGlzdG9yeQ==" data-listing-date-sort="1743490800000" data-listing-file-modified-sort="1748671013155" data-listing-date-modified-sort="1748588400000" data-listing-reading-time-sort="148" data-listing-word-count-sort="29537">
+<div class="thumbnail">
+<p><a href="./essays/posts/cyc/index.html" class="no-external"></a></p><a href="./essays/posts/cyc/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/cyc/figure/banner/banner_3.png" class="thumbnail-image" alt="A symbolic representation of the Cyc project. The vanishing point covered by mist represents the project that keeps growing without ever reaching completion, a destination that is a mirage. The rows of pyramids make up a larger pyramid, due to perspective. This creates the sense of a recursive pyramid, a hierarchy of hierarchies, representing the hierarchy of microtheories in Cyc&amp;#039;s ontology. The pyramid is also a monument to the dead, of vast ambitions that failed to secure their design purposes. For Egyptian pyramids, the purpose was a good afterlife. For Cyc, the purpose was AGI.
+A one-point perspective image of a path towards infinity, banked by two rows of pyramids. The pyramids are stepped pyramids made of concrete. The path fades into a distant mist. The point of view is above the tops of the pyramids. Monochromatic photo. Created by GPT-4o."></p>
+</a><p><a href="./essays/posts/cyc/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/cyc/index.html" class="no-external">Cyc</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/cyc/index.html" class="no-external">Obituary for the greatest monument to logical AGI</a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/cyc/index.html" class="no-external">After 40 years, 30 million rules, 200 million dollars, 2000 person-years, and many promises, Cyc has failed to reach intellectual maturity, and may never will. Exacerbated by the secrecy and insularity of Cycorp, there remains no evidence of its general intelligence.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/cyc/index.html" class="no-external">
+<div class="listing-date">
+Apr 1, 2025
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-categories="c2xpY2Utb2YtbGlmZSUyQ0FJJTJDZWNvbm9taWNz" data-listing-date-sort="1748588400000" data-listing-file-modified-sort="1749019694851" data-listing-date-modified-sort="1748588400000" data-listing-reading-time-sort="22" data-listing-word-count-sort="4240">
+<div class="thumbnail">
+<p><a href="./logs/posts/2025-patel-dinner/index.html" class="no-external"></a></p><a href="./logs/posts/2025-patel-dinner/index.html" class="no-external">
+<p class="card-img-top"><img src="logs\posts\2025-patel-dinner\figure\NN bias-variance.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./logs/posts/2025-patel-dinner/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./logs/posts/2025-patel-dinner/index.html" class="no-external">Dwarkesh Patel dinner party</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./logs/posts/2025-patel-dinner/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./logs/posts/2025-patel-dinner/index.html" class="no-external">Random recollections from the hectic conversations at a dinner party organized by Dwarkesh Patel.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./logs/posts/2025-patel-dinner/index.html" class="no-external">
+<div class="listing-date">
+May 30, 2025
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-categories="QUklMkNlY29ub21pY3M=" data-listing-date-sort="1701763200000" data-listing-file-modified-sort="1738034540002" data-listing-date-modified-sort="1701763200000" data-listing-reading-time-sort="30" data-listing-word-count-sort="5860">
+<div class="thumbnail">
+<p><a href="./essays/posts/neural-scaling-laws/index.html" class="no-external"></a></p><a href="./essays/posts/neural-scaling-laws/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/neural-scaling-laws/figure/banner_5_adjusted.png" class="thumbnail-image" alt="Brutalist architecture representing a neural network. A vaguely hexagonal 3D array of concrete blocks connected by thin &amp;#039;walkways', small thin steel 'lampposts' topped with balls, and balls rolling around."></p>
+</a><p><a href="./essays/posts/neural-scaling-laws/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/neural-scaling-laws/index.html" class="no-external">Fermi Estimation for Neural Networks</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/neural-scaling-laws/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/neural-scaling-laws/index.html" class="no-external">The bitter lesson in bite-sized packets.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/neural-scaling-laws/index.html" class="no-external">
+<div class="listing-date">
+Dec 5, 2023
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-categories="ZnVuJTJDZmljdGlvbg==" data-listing-date-sort="1718089200000" data-listing-file-modified-sort="1733994464915" data-listing-date-modified-sort="1718089200000" data-listing-reading-time-sort="11" data-listing-word-count-sort="2188">
+<div class="thumbnail">
+<p><a href="./sketches/posts/fictional-ideas/index.html" class="no-external"></a></p><a href="./sketches/posts/fictional-ideas/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./sketches/posts/fictional-ideas/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./sketches/posts/fictional-ideas/index.html" class="no-external">Fictional ideas</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./sketches/posts/fictional-ideas/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./sketches/posts/fictional-ideas/index.html" class="no-external">Ideas for stories, fictions, etc.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./sketches/posts/fictional-ideas/index.html" class="no-external">
+<div class="listing-date">
+Jun 11, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-categories="QUklMkNpbnRlcnByZXRhdGlvbg==" data-listing-date-sort="1693551600000" data-listing-file-modified-sort="1735892299390" data-listing-date-modified-sort="1709625600000" data-listing-reading-time-sort="8" data-listing-word-count-sort="1526">
+<div class="thumbnail">
+<p><a href="./essays/posts/grokking-modular-arithmetics/index.html" class="no-external"></a></p><a href="./essays/posts/grokking-modular-arithmetics/index.html" class="no-external">
+<p class="card-img-top"><img src="essays\posts\grokking-modular-arithmetics\figure\network.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./essays/posts/grokking-modular-arithmetics/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/grokking-modular-arithmetics/index.html" class="no-external">Grokking Modular Arithmetics</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/grokking-modular-arithmetics/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/grokking-modular-arithmetics/index.html" class="no-external">Toy model of grokking: tiny neural networks learn modular arithmetics after it has already reached full correctness on the training set.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/grokking-modular-arithmetics/index.html" class="no-external">
+<div class="listing-date">
+Sep 1, 2023
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="10" data-categories="ZnVuJTJDcGhpbG9zb3BoeSUyQ21hdGglMkNwaHlzaWNzJTJDYmlvbG9neQ==" data-listing-date-sort="1718694000000" data-listing-file-modified-sort="1747069162363" data-listing-date-modified-sort="1739174400000" data-listing-reading-time-sort="69" data-listing-word-count-sort="13624">
+<div class="thumbnail">
+<p><a href="./essays/posts/hole-argument-inverted-qualia/index.html" class="no-external"></a></p><a href="./essays/posts/hole-argument-inverted-qualia/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/hole-argument-inverted-qualia/figure/banner/banner.png" class="thumbnail-image"></p>
+</a><p><a href="./essays/posts/hole-argument-inverted-qualia/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/hole-argument-inverted-qualia/index.html" class="no-external">Hole Argument and Inverted Qualia</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/hole-argument-inverted-qualia/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/hole-argument-inverted-qualia/index.html" class="no-external">The hole argument in general relativity is formally analogous to the inverted qualia problem in philosophy. Like how spacetime points have no existence beyond gauge freedom, qualias have no existence beyond their geometric-functional roles, thus dissolving the hard problem of consciousness.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/hole-argument-inverted-qualia/index.html" class="no-external">
+<div class="listing-date">
+Jun 18, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="11" data-categories="bWF0aCUyQ3BoeXNpY3MlMkNzY2FsaW5n" data-listing-date-sort="1712818800000" data-listing-file-modified-sort="1743649576039" data-listing-date-modified-sort="1721372400000" data-listing-reading-time-sort="80" data-listing-word-count-sort="15870">
+<div class="thumbnail">
+<p><a href="./essays/posts/renormalization-how-to/index.html" class="no-external"></a></p><a href="./essays/posts/renormalization-how-to/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/renormalization-how-to/figure/banner/banner_2.png" class="thumbnail-image" alt="A metaphor for real-space renormalization, where the building on the left is coarse-grained to the building on right. The facade of a wide brutalist architecture. On the left, the windows are small and the floors are close together. On the right, the windows are large and the floors are wide apart. High contrast, monochromatic, minimalistic, in the flat style of vector svg art., illustration, conceptual art."></p>
+</a><p><a href="./essays/posts/renormalization-how-to/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/renormalization-how-to/index.html" class="no-external">How to do Renormalization</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/renormalization-how-to/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/renormalization-how-to/index.html" class="no-external">Survival guide for renormalization (RN) theory. How to do it in real space and frequency space. What it all means. Should have something for everyone, from mathematicians to physicists to outsiders, from serious series to pretty pictures. Intended audience: those with two years of undergrad mathematics.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/renormalization-how-to/index.html" class="no-external">
+<div class="listing-date">
+Apr 11, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="12" data-categories="bWF0aCUyQ3BoeXNpY3MlMkNzY2FsaW5n" data-listing-date-sort="1712818800000" data-listing-file-modified-sort="1739694971388" data-listing-date-modified-sort="1739692800000" data-listing-reading-time-sort="25" data-listing-word-count-sort="4929">
+<div class="thumbnail">
+<p><a href="./sketches/posts/field-theory-how-to/index.html" class="no-external"></a></p><a href="./sketches/posts/field-theory-how-to/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./sketches/posts/field-theory-how-to/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./sketches/posts/field-theory-how-to/index.html" class="no-external">How to do field-theoretic calculations</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./sketches/posts/field-theory-how-to/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./sketches/posts/field-theory-how-to/index.html" class="no-external">I teach you how to do probability calculations and gigantic integrals in the ‘field-theoretic style’, done in exhaustive details. I aim for clarity, pointing out every pitfall that I have fallen into so that you don’t have to.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./sketches/posts/field-theory-how-to/index.html" class="no-external">
+<div class="listing-date">
+Apr 11, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="13" data-categories="ZnVuJTJDZXZvbHV0aW9uJTJDc29jaW9sb2d5" data-listing-date-sort="1702713600000" data-listing-file-modified-sort="1737157727972" data-listing-date-modified-sort="1705478400000" data-listing-reading-time-sort="45" data-listing-word-count-sort="8825">
+<div class="thumbnail">
+<p><a href="./sketches/posts/info-warfare/index.html" class="no-external"></a></p><a href="./sketches/posts/info-warfare/index.html" class="no-external">
+<p><img loading="lazy" src="./sketches/posts/info-warfare/figure/banner_2.png" class="thumbnail-image" alt="A swarm of mechanical insects moving to the right. Moving along with the insects are arrows with shafts made of barbed wires. It invokes the feeling of swarm warfare. High contrast, monochromatic, minimalistic, in the style of vector svg art."></p>
+</a><p><a href="./sketches/posts/info-warfare/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./sketches/posts/info-warfare/index.html" class="no-external">Information Warfare</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./sketches/posts/info-warfare/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./sketches/posts/info-warfare/index.html" class="no-external">A mosaic view of the info-battleground: information for anti-informative goals. Intentionally useless errors, diplomatic speech, Chinese censorship, spam campaign, stock market arbitrage, continental philosophy, etc.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./sketches/posts/info-warfare/index.html" class="no-external">
+<div class="listing-date">
+Dec 16, 2023
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="14" data-categories="QUklMkNzY2FsaW5n" data-listing-date-sort="1705996800000" data-listing-file-modified-sort="1738463453238" data-listing-date-modified-sort="1705996800000" data-listing-reading-time-sort="14" data-listing-word-count-sort="2775">
+<div class="thumbnail">
+<p><a href="./essays/posts/mixture-of-experts/index.html" class="no-external"></a></p><a href="./essays/posts/mixture-of-experts/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/mixture-of-experts/figure/sparsified_moe_various_levels.png" class="thumbnail-image"></p>
+</a><p><a href="./essays/posts/mixture-of-experts/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/mixture-of-experts/index.html" class="no-external">Mixture of Experts</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/mixture-of-experts/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/mixture-of-experts/index.html" class="no-external">How MoE works, its history, and what it is good for.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/mixture-of-experts/index.html" class="no-external">
+<div class="listing-date">
+Jan 23, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="15" data-categories="QUklMkNzY2FsaW5n" data-listing-date-sort="1698822000000" data-listing-file-modified-sort="1718827951020" data-listing-date-modified-sort="1705737600000" data-listing-reading-time-sort="8" data-listing-word-count-sort="1586">
+<div class="thumbnail">
+<p><a href="./essays/posts/scaling-law-by-data-manifold/index.html" class="no-external"></a></p><a href="./essays/posts/scaling-law-by-data-manifold/index.html" class="no-external">
+<p class="card-img-top"><img src="essays\posts\scaling-law-by-data-manifold\figure\cvae_latent_space.jpg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./essays/posts/scaling-law-by-data-manifold/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/scaling-law-by-data-manifold/index.html" class="no-external">Neural Scaling Laws by Data Manifold Dimensions</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/scaling-law-by-data-manifold/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/scaling-law-by-data-manifold/index.html" class="no-external">Neural networks scale they way they do, purely because of data.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/scaling-law-by-data-manifold/index.html" class="no-external">
+<div class="listing-date">
+Nov 1, 2023
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="16" data-categories="aGlzdG9yeSUyQ0FJJTJDY3liZXJuZXRpY3M=" data-listing-date-sort="1722495600000" data-listing-file-modified-sort="1746225734741" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="45" data-listing-word-count-sort="8811">
+<div class="thumbnail">
+<p><a href="./sketches/posts/history-neural-networks-talk-notes/index.html" class="no-external"></a></p><a href="./sketches/posts/history-neural-networks-talk-notes/index.html" class="no-external">
+<p class="card-img-top"><img src="sketches\posts\history-neural-networks-talk-notes\figure\Cajal_RNN_original.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./sketches/posts/history-neural-networks-talk-notes/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./sketches/posts/history-neural-networks-talk-notes/index.html" class="no-external">Notes for a talk on the history of neural networks</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./sketches/posts/history-neural-networks-talk-notes/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./sketches/posts/history-neural-networks-talk-notes/index.html" class="no-external">Notes for a talk on the history of neural networks.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./sketches/posts/history-neural-networks-talk-notes/index.html" class="no-external">
+<div class="listing-date">
+Aug 1, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="17" data-categories="cHJvZ3JhbW1pbmc=" data-listing-date-sort="1670659200000" data-listing-file-modified-sort="1705541662623" data-listing-date-modified-sort="1702281600000" data-listing-reading-time-sort="10" data-listing-word-count-sort="1965">
+<div class="thumbnail">
+<p><a href="./sketches/posts/linux-notes/index.html" class="no-external"></a></p><a href="./sketches/posts/linux-notes/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./sketches/posts/linux-notes/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./sketches/posts/linux-notes/index.html" class="no-external">Notes on Using Linux</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./sketches/posts/linux-notes/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./sketches/posts/linux-notes/index.html" class="no-external">My quick reference for using Linux for doing things.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./sketches/posts/linux-notes/index.html" class="no-external">
+<div class="listing-date">
+Dec 10, 2022
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="18" data-categories="cHJvZ3JhbW1pbmc=" data-listing-date-sort="1702195200000" data-listing-file-modified-sort="1705541662826" data-listing-date-modified-sort="1702195200000" data-listing-reading-time-sort="9" data-listing-word-count-sort="1688">
+<div class="thumbnail">
+<p><a href="./sketches/posts/web-design-notes/index.html" class="no-external"></a></p><a href="./sketches/posts/web-design-notes/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./sketches/posts/web-design-notes/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./sketches/posts/web-design-notes/index.html" class="no-external">Notes on Web Design</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./sketches/posts/web-design-notes/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./sketches/posts/web-design-notes/index.html" class="no-external">My quick reference for designing content for the Internet.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./sketches/posts/web-design-notes/index.html" class="no-external">
+<div class="listing-date">
+Dec 10, 2023
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="19" data-categories="bWF0aCUyQ2Z1bg==" data-listing-date-sort="1744873200000" data-listing-file-modified-sort="1745803723978" data-listing-date-modified-sort="1744873200000" data-listing-reading-time-sort="33" data-listing-word-count-sort="6460">
+<div class="thumbnail">
+<p><a href="./essays/posts/perfect-diffusion-tc0-bad-diffusion-tc/index.html" class="no-external"></a></p><a href="./essays/posts/perfect-diffusion-tc0-bad-diffusion-tc/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/perfect-diffusion-tc0-bad-diffusion-tc/figure/banner.png" class="thumbnail-image"></p>
+</a><p><a href="./essays/posts/perfect-diffusion-tc0-bad-diffusion-tc/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/perfect-diffusion-tc0-bad-diffusion-tc/index.html" class="no-external">Perfect diffusion is TC<sup>0</sup> – Bad diffusion is Turing-complete</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/perfect-diffusion-tc0-bad-diffusion-tc/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/perfect-diffusion-tc0-bad-diffusion-tc/index.html" class="no-external">An application of computational complexity theory to diffusion language models. Unlikely to be useful for anything, but it is cute!</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/perfect-diffusion-tc0-bad-diffusion-tc/index.html" class="no-external">
+<div class="listing-date">
+Apr 17, 2025
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="20" data-categories="bWF0aCUyQ3BoeXNpY3M=" data-listing-date-sort="1725174000000" data-listing-file-modified-sort="1727748668489" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="51" data-listing-word-count-sort="10099">
+<div class="thumbnail">
+<p><a href="./sketches/posts/phase-space-quantum-mechanics/index.html" class="no-external"></a></p><a href="./sketches/posts/phase-space-quantum-mechanics/index.html" class="no-external">
+<p class="card-img-top"><img src="sketches\posts\phase-space-quantum-mechanics\figure\shear_wigner.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./sketches/posts/phase-space-quantum-mechanics/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./sketches/posts/phase-space-quantum-mechanics/index.html" class="no-external">Phase-space quantum mechanics</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./sketches/posts/phase-space-quantum-mechanics/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./sketches/posts/phase-space-quantum-mechanics/index.html" class="no-external">Notes on phase-space quantum mechanics.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./sketches/posts/phase-space-quantum-mechanics/index.html" class="no-external">
+<div class="listing-date">
+Sep 1, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="21" data-categories="ZnVuJTJDcGhpbG9zb3BoeQ==" data-listing-date-sort="1718521200000" data-listing-file-modified-sort="1748983701059" data-listing-date-modified-sort="1718521200000" data-listing-reading-time-sort="32" data-listing-word-count-sort="6276">
+<div class="thumbnail">
+<p><a href="./sketches/posts/philosophical-sketches/index.html" class="no-external"></a></p><a href="./sketches/posts/philosophical-sketches/index.html" class="no-external">
+<p><img loading="lazy" src="./sketches/posts/philosophical-sketches/figure/banner.png" class="thumbnail-image"></p>
+</a><p><a href="./sketches/posts/philosophical-sketches/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./sketches/posts/philosophical-sketches/index.html" class="no-external">Philosophical Sketches</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./sketches/posts/philosophical-sketches/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./sketches/posts/philosophical-sketches/index.html" class="no-external">Short philosophical writings, often poking fun at philosophers.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./sketches/posts/philosophical-sketches/index.html" class="no-external">
+<div class="listing-date">
+Jun 16, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="22" data-categories="QUklMkNzY2FsaW5nJTJDbWF0aA==" data-listing-date-sort="1705737600000" data-listing-file-modified-sort="1740546224247" data-listing-date-modified-sort="1740470400000" data-listing-reading-time-sort="30" data-listing-word-count-sort="5881">
+<div class="thumbnail">
+<p><a href="./essays/posts/perplexity-turing-test/index.html" class="no-external"></a></p><a href="./essays/posts/perplexity-turing-test/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/perplexity-turing-test/figure/banner_4_edit.png" class="thumbnail-image" alt="An abstract representation of the Turing test. On the left is a dark city of obelisks over a bright background, and on the right is the same thing, mirrored and inverted, but with subtle differences due to the randomness of the art generator. It represents the abstract idea of the Turing test: duality, subtle differences, same contours, and complex object made of simple parts. High contrast, monochromatic, minimalistic, in the style of vector svg art."></p>
+</a><p><a href="./essays/posts/perplexity-turing-test/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/perplexity-turing-test/index.html" class="no-external">Predicting AGI by the Turing Test</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/perplexity-turing-test/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/perplexity-turing-test/index.html" class="no-external">Minimizing log-perplexity loss is equivalent to maximizing survival length in a Turing test. Assuming compute-loss scaling law, a scaled-up GPT that produces human-like science papers would cost ~200 years of global GDP.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/perplexity-turing-test/index.html" class="no-external">
+<div class="listing-date">
+Jan 20, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="23" data-categories="QUklMkNtYXRo" data-listing-date-sort="1703145600000" data-listing-file-modified-sort="1739479809382" data-listing-date-modified-sort="1703836800000" data-listing-reading-time-sort="25" data-listing-word-count-sort="4950">
+<div class="thumbnail">
+<p><a href="./essays/posts/reading-perceptron-book/index.html" class="no-external"></a></p><a href="./essays/posts/reading-perceptron-book/index.html" class="no-external">
+<p><img loading="lazy" src="./essays/posts/reading-perceptron-book/figure/banner_2.png" class="thumbnail-image" alt="The cover of &amp;#039;Project SOGO: Principles of Hypnotic Bionics'. It is a combination of 'Project PARA: Principles of Neurodynamics' and 'Shoggoth' from Lovecraft's cosmology. The idea is that the book is mythical like the Necronomicon (see Minsky's quote). In the style of a cold-war era RAND corporation report."></p>
+</a><p><a href="./essays/posts/reading-perceptron-book/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/reading-perceptron-book/index.html" class="no-external">Reading <em>Perceptrons</em></a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/reading-perceptron-book/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/reading-perceptron-book/index.html" class="no-external">A long, hard stare into the math of <em>Perceptrons</em>, the mythical neural network killer.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/reading-perceptron-book/index.html" class="no-external">
+<div class="listing-date">
+Dec 21, 2023
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="24" data-categories="ZnVu" data-listing-date-sort="1718089200000" data-listing-file-modified-sort="1746428163453" data-listing-date-modified-sort="1718089200000" data-listing-reading-time-sort="6" data-listing-word-count-sort="1070">
+<div class="thumbnail">
+<p><a href="./sketches/posts/research-ideas/index.html" class="no-external"></a></p><a href="./sketches/posts/research-ideas/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./sketches/posts/research-ideas/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./sketches/posts/research-ideas/index.html" class="no-external">Research ideas</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./sketches/posts/research-ideas/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./sketches/posts/research-ideas/index.html" class="no-external">Ideas for research. Free for a good home.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./sketches/posts/research-ideas/index.html" class="no-external">
+<div class="listing-date">
+Jun 11, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="25" data-categories="YW5pbWUlMkNmdW4=" data-listing-date-sort="1667286000000" data-listing-file-modified-sort="1705895247731" data-listing-date-modified-sort="1701417600000" data-listing-reading-time-sort="13" data-listing-word-count-sort="2557">
+<div class="thumbnail">
+<p><a href="./essays/posts/serial-experiments-lain/index.html" class="no-external"></a></p><a href="./essays/posts/serial-experiments-lain/index.html" class="no-external">
+<p><img loading="lazy" data-src="./essays/posts/serial-experiments-lain/figure/sel_title_illustration.png" class="thumbnail-image" alt="A girl facing away from the viewer, sitting in a datacenter, connected by wires to the server racks. In the middle-top is an ethereal tree-shaped network of light, representing the neural network of Lain. Cyberpunk-style anime art."></p>
+</a><p><a href="./essays/posts/serial-experiments-lain/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/serial-experiments-lain/index.html" class="no-external">Serial Experiments Lain</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/serial-experiments-lain/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/serial-experiments-lain/index.html" class="no-external">Lain is the collective subconscious as a neural network.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/serial-experiments-lain/index.html" class="no-external">
+<div class="listing-date">
+Nov 1, 2022
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="26" data-categories="bWF0aCUyQ3BoeXNpY3MlMkNwcm9iYWJpbGl0eSUyQ3N0YXRpc3RpY3MlMkNiaW9sb2d5" data-listing-date-sort="1720076400000" data-listing-file-modified-sort="1748472367106" data-listing-date-modified-sort="1741075200000" data-listing-reading-time-sort="118" data-listing-word-count-sort="23444">
+<div class="thumbnail">
+<p><a href="./essays/posts/statistical-mechanics/index.html" class="no-external"></a></p><a href="./essays/posts/statistical-mechanics/index.html" class="no-external">
+<p><img loading="lazy" data-src="./essays/posts/statistical-mechanics/figure/banner/banner.png" class="thumbnail-image" alt="A bricolage representing modern statistical mechanics in all its multifaceted chaotic order. Containing numbers (information), particles in a box, Jupiter&amp;#039;s great red eye, RNA hairpins, bacteria with wavy flagella. Made in Ideogram V1, with prompt 'An abstract conceptual illustration of a brutalist structure, with sharp angles and a minimalistic design, made of concrete, steel balls, and rebars. The structure appears to be made up of particles in a box, jamming together, creating bits and numbers in the realm of 0-1. The design also features an RNA hairpin, with eddies upon eddies upon eddies, evoking the image of Jupiter's red spot. The random walk of swimming bacteria with wavy flagella is depicted, adding to the complexity of the design. The illustration is presented on a white background, with high contrast and a monochromatic color scheme, reminiscent of a flat style vector SVG art., illustration, conceptual art'."></p>
+</a><p><a href="./essays/posts/statistical-mechanics/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/statistical-mechanics/index.html" class="no-external">Statistical Mechanics</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/statistical-mechanics/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/statistical-mechanics/index.html" class="no-external">How to think like a classical statistical-mechanic, with many examples from gas theory, biology, probability, and information theory. Prerequisites: thermodynamics, calculus, probability, and mathematical maturity.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/statistical-mechanics/index.html" class="no-external">
+<div class="listing-date">
+Jul 4, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="27" data-categories="Q2hpbmElMkNlY29ub21pY3MlMkNwb2xpdGljcyUyQ2hpc3Rvcnk=" data-listing-date-sort="1748934000000" data-listing-file-modified-sort="1749117683412" data-listing-date-modified-sort="1748934000000" data-listing-reading-time-sort="51" data-listing-word-count-sort="10200">
+<div class="thumbnail">
+<p><a href="./essays/posts/structure-interpretation-chinese-economy/index.html" class="no-external"></a></p><a href="./essays/posts/structure-interpretation-chinese-economy/index.html" class="no-external">
+<p><img loading="lazy" data-src="./essays/posts/structure-interpretation-chinese-economy/figure/banner/banner_3.png" class="thumbnail-image" alt="Made by GPT, with prompt: &amp;#039;A shining red five-pointed star on the top left, sending out multiple light rays. It is in the similar style as socialist iconography. In the rest of the image, four candlestick charts overlapping and growing exponentially from the bottom left to the top right. No vignetting. Widest aspect ratio.'."></p>
+</a><p><a href="./essays/posts/structure-interpretation-chinese-economy/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/structure-interpretation-chinese-economy/index.html" class="no-external">Structure and Interpretation of the Chinese Economy</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/structure-interpretation-chinese-economy/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/structure-interpretation-chinese-economy/index.html" class="no-external">My basic framework for understanding the modern Chinese economy and its growth. Includes brief histories of Chinese, Soviet, and Japanese economy. Framework applied to two case studies on the stock market and the housing market.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/structure-interpretation-chinese-economy/index.html" class="no-external">
+<div class="listing-date">
+Jun 3, 2025
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="28" data-categories="aGlzdG9yeSUyQ3dhcg==" data-listing-date-sort="1746169200000" data-listing-file-modified-sort="1746312872728" data-listing-date-modified-sort="1746255600000" data-listing-reading-time-sort="19" data-listing-word-count-sort="3783">
+<div class="thumbnail">
+<p><a href="./logs/posts/2025-survivorship-bias/index.html" class="no-external"></a></p><a href="./logs/posts/2025-survivorship-bias/index.html" class="no-external">
+<p><img loading="lazy" data-src="./logs/posts/2025-survivorship-bias/figure/B-24_poster.png" class="thumbnail-image"></p>
+</a><p><a href="./logs/posts/2025-survivorship-bias/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./logs/posts/2025-survivorship-bias/index.html" class="no-external">That Survivorship Bias Plane</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./logs/posts/2025-survivorship-bias/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./logs/posts/2025-survivorship-bias/index.html" class="no-external">The exact backstory to that picture of an airplane with red dots on top of it.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./logs/posts/2025-survivorship-bias/index.html" class="no-external">
+<div class="listing-date">
+May 2, 2025
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="29" data-categories="QUklMkNtYXRoJTJDcGh5c2ljcyUyQ2hpc3Rvcnk=" data-listing-date-sort="1703577600000" data-listing-file-modified-sort="1748372259587" data-listing-date-modified-sort="1732262400000" data-listing-reading-time-sort="64" data-listing-word-count-sort="12699">
+<div class="thumbnail">
+<p><a href="./essays/posts/backstory-of-backpropagation/index.html" class="no-external"></a></p><a href="./essays/posts/backstory-of-backpropagation/index.html" class="no-external">
+<p><img loading="lazy" data-src="./essays/posts/backstory-of-backpropagation/figure/banner_cropped.png" class="thumbnail-image" alt="Stylized illustration of a computational graph, with gibberish text that resemble vector calculus, thick and thin lines representing the flow of numbers in the graph. In the center of the vaguely octagonal graph is a letter D, D for derivative. High contrast, monochromatic, minimalistic, in the style of vector svg art."></p>
+</a><p><a href="./essays/posts/backstory-of-backpropagation/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/backstory-of-backpropagation/index.html" class="no-external">The Backstory of Backpropagation</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/backstory-of-backpropagation/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/backstory-of-backpropagation/index.html" class="no-external">Why backprop was resisted for 20 years: assumption of discretely spiking neurons, goal of synthesizing Boolean logic, fear of local optima, and bad luck. Werbos has the best claim for invention.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/backstory-of-backpropagation/index.html" class="no-external">
+<div class="listing-date">
+Dec 26, 2023
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="30" data-categories="QUklMkNoaXN0b3J5" data-listing-date-sort="1704096000000" data-listing-file-modified-sort="1749012903131" data-listing-date-modified-sort="1726988400000" data-listing-reading-time-sort="114" data-listing-word-count-sort="22634">
+<div class="thumbnail">
+<p><a href="./essays/posts/perceptron-controversy/index.html" class="no-external"></a></p><a href="./essays/posts/perceptron-controversy/index.html" class="no-external">
+<p><img loading="lazy" data-src="./essays/posts/perceptron-controversy/figure/banner_2_cropped.png" class="thumbnail-image" alt="Brutalist architecture representing a single perceptron. A hexagonal building in the center representing the unit itself, with multiple arc legs representing the input weights, and antennas projecting off the top representing the output. High contrast, monochromatic, minimalistic, in the style of vector svg art."></p>
+</a><p><a href="./essays/posts/perceptron-controversy/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/perceptron-controversy/index.html" class="no-external">The Perceptron Controversy</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/perceptron-controversy/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/perceptron-controversy/index.html" class="no-external">Connectionism died in the 60s from technical limits to scaling, then resurrected in the 80s after backprop allowed scaling. The Minsky–Papert anti-scaling hypothesis explained, psychoanalyzed, and buried.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/perceptron-controversy/index.html" class="no-external">
+<div class="listing-date">
+Jan 1, 2024
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="31" data-categories="cHJvYmFiaWxpdHklMkNzdGF0aXN0aWNz" data-listing-date-sort="1563001200000" data-listing-file-modified-sort="1705541662718" data-listing-date-modified-sort="1704873600000" data-listing-reading-time-sort="14" data-listing-word-count-sort="2649">
+<div class="thumbnail">
+<p><a href="./essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external"></a></p><a href="./essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external">
+<p><img loading="lazy" data-src="./essays/posts/no-nonsense-algorithmic-bias/figure/square_with_4_blocks.png" class="thumbnail-image"></p>
+</a><p><a href="./essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external">The Racial Algorithmic Bias Controversy</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external">The racial algorithmic bias controversy, as seen by a mathematician.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/no-nonsense-algorithmic-bias/index.html" class="no-external">
+<div class="listing-date">
+Jul 13, 2019
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="32" data-categories="cGh5c2ljcyUyQ21hdGglMkNmdW4=" data-listing-date-sort="1525158000000" data-listing-file-modified-sort="1749013563694" data-listing-date-modified-sort="1702540800000" data-listing-reading-time-sort="54" data-listing-word-count-sort="10721">
+<div class="thumbnail">
+<p><a href="./essays/posts/wigner-rotation/index.html" class="no-external"></a></p><a href="./essays/posts/wigner-rotation/index.html" class="no-external">
+<p><img loading="lazy" data-src="./essays/posts/wigner-rotation/figure/discrete_lorentz_rapidity_0.1_boosts_17.png" class="thumbnail-image" alt="A picture of iterating the same Lorentz boost for many times on a plus-sign with unit-length arms, creating the outlines of a hyperbola."></p>
+</a><p><a href="./essays/posts/wigner-rotation/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./essays/posts/wigner-rotation/index.html" class="no-external">The Wigner Rotation in Special Relativity via Hyperbolic Geometry</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./essays/posts/wigner-rotation/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./essays/posts/wigner-rotation/index.html" class="no-external">The <em>other</em> special relativity paradox that you have never heard of.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./essays/posts/wigner-rotation/index.html" class="no-external">
+<div class="listing-date">
+May 1, 2018
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="33" data-categories="ZnVuJTJDc2NpZmklMkNlY29ub21pY3M=" data-listing-date-sort="1744959600000" data-listing-file-modified-sort="1745035414915" data-listing-date-modified-sort="1744959600000" data-listing-reading-time-sort="11" data-listing-word-count-sort="2127">
+<div class="thumbnail">
+<p><a href="./logs/posts/2025-oneil-cylinder/index.html" class="no-external"></a></p><a href="./logs/posts/2025-oneil-cylinder/index.html" class="no-external">
+<p class="card-img-top"><img data-src="logs\posts\2025-oneil-cylinder\figure\O'Neil cylinder.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./logs/posts/2025-oneil-cylinder/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./logs/posts/2025-oneil-cylinder/index.html" class="no-external">The cost of O’Neil habitation</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./logs/posts/2025-oneil-cylinder/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./logs/posts/2025-oneil-cylinder/index.html" class="no-external">To win (?) a twitter argument, we calculated the energetic cost of O’Neil habitat per person. Oddly, it is just affordable by modern standards. About 0.6 million dollars per person. Let it be known that the SF housing crisis is cheaper to solve by building O’Neil cylinders.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./logs/posts/2025-oneil-cylinder/index.html" class="no-external">
+<div class="listing-date">
+Apr 18, 2025
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="34" data-categories="QUklMkNlY29ub21pY3M=" data-listing-date-sort="1738137600000" data-listing-file-modified-sort="1745024954617" data-listing-date-modified-sort="1738137600000" data-listing-reading-time-sort="26" data-listing-word-count-sort="5155">
+<div class="thumbnail">
+<p><a href="./logs/posts/2025-whalefall/index.html" class="no-external"></a></p><a href="./logs/posts/2025-whalefall/index.html" class="no-external">
+<p class="card-img-top"><img data-src="logs\posts\2025-whalefall\figure\stock_lines.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./logs/posts/2025-whalefall/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./logs/posts/2025-whalefall/index.html" class="no-external">Whalefall</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./logs/posts/2025-whalefall/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./logs/posts/2025-whalefall/index.html" class="no-external">Thoughts on the recent ‘DeepSeek shock’ of the stock market. The market is being even <em>less</em> efficient than usual, and much of the ‘professional’ commentators are idiots or bullshitters. I wrote this post to prevent my Gell-Mann amnesia.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./logs/posts/2025-whalefall/index.html" class="no-external">
+<div class="listing-date">
+Jan 29, 2025
+</div>
+<div class="listing-author">
+Yuxi Liu
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
