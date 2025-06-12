@@ -288,7 +288,7 @@ $$
 D_{KL}(\rho' \| \rho) = -S[\rho'] + \sum_i a_i \braket{A_i}_{\rho'} + \ln Z(a_1, \dots, a_n)
 $$
 
-If $\rho'$ satisfies the given constraints, then $D_{KL}(\rho' \| \rho) = -S[\rho'] + Const$ where the constant does not depend on $\rho'$, as long as it satisfies the constraints. Therefore, $S[\rho']$ is maximized when $D_{KL}(\rho' \| \rho)$ is minimized, which is exactly $\rho$.
+If $\rho'$ satisfies the given constraints, then $D_{KL}(\rho' \| \rho) = -S[\rho'] + \Const$ where the constant does not depend on $\rho'$, as long as it satisfies the constraints. Therefore, $S[\rho']$ is maximized when $D_{KL}(\rho' \| \rho)$ is minimized, which is exactly $\rho$.
 
 ::: 
 
@@ -366,11 +366,13 @@ If we want to specify the number of particles for each chemical species, then th
 
 ### Canonical ensembles
 
-If we have a small system connected to a large system, then we typically don't care about the large system, and only want to study the ensemble of the small system. In this case, we would first find the microcanonical ensemble for the total system, then integrate out of the large system, resulting in an ensemble over just the small system, as in
+Consider a small cup of liquid in a giant tank of chemical fluids, or a small lump of air in the whole atmosphere. These are all examples of "a small system in contact with a giant system". In general, if we have a small system connected to a large system, then we typically don't care about the large system, and only want to study the small system's ensemble. How do we do that? Rigorously, we would need to first find the microcanonical ensemble for the total compound small--large system, then take an integral over all states of the large system, resulting in an ensemble over just the small system, as in
 
 $$\rho_{\text{small}}(x) = \int \rho_{\text{total}}(x, y) dy$$
 
-where $x$ ranges over the states of the small system, and $y$ of the large system.  
+where $x$ ranges over the states of the small system, and $y$ of the large system.
+
+However, this is difficult to perform in general, because the large system, having so many particles, has a huge state space. We cannot do it in general. However, there is an easy way out. Whenever we have a big system changing only a little bit, we can assume linearity. Whenever we have a function $f(x)$ where $x$ changes only a little bit around $x_0$, we can assume $f(x) \approx f(x_0) + f'(x_0) (x - x_0)$. This is the trick that will allow us to solve the problem.
 
 Assuming that the energy of the compound system is extensive, we obtain the canonical ensemble. Assuming that the energy and volume are both extensive, we obtain the grand canonical ensemble, etc. The following table would be very useful
 
@@ -412,7 +414,7 @@ In the following theorem, we assume that the total system is extensive, and is a
 
 ::: {#thm-canonical-ensembles}
 
-If the two systems are in energy-contact, and energy is conserved, and energy is extensive, and the compound system is in a microcanonical ensemble, the small system is in a **canonical ensemble**
+If the two systems are in energy-contact, and energy is conserved, and energy is extensive, and the compound system is in a microcanonical ensemble, then the small system is in the **canonical ensemble**
 
 $$
 \rho(x) \propto e^{-\beta H(x)}
@@ -422,7 +424,7 @@ where $\beta$ is the marginal entropy of energy of the large system:
 
 $$\beta := \partial_E S[\rho_{bath, E}]$$
 
-Similarly, if the two systems are in energy-and-particle-contact, then the small system has the **grand canonical ensemble**
+Similarly, if the two systems are in energy-and-particle-contact, then the small system is in the **grand canonical ensemble**
 
 $$
 \rho(x) \propto e^{-(\beta H(x) + (-\beta \mu) N(x))}
@@ -466,7 +468,7 @@ and we apply Lagrange multipliers to finish the proof.
 
 :::
 
-::: {.callout-note title="extensivity"}
+::: {.callout-note title="Extensivity, again"}
 
 Extensivitiy in statistical mechanics yields extensivity in thermodynamics. Specifically, writing $S_{\text{bath}}(E)$, instead of $S_{\text{bath}}(E, E_{\text{system}})$, requires the assumption of extensivity. Precisely because the bath and the system do not affect each other, we are allowed to calculate the entropy of the bath without knowing anything about the energy of the system.
 
@@ -488,20 +490,20 @@ which is related to of Sanov's theorem and large deviation theory, though I don'
 
 What if we have a system in volume-contact, but not thermal-contact? This might happen when the system is a flexible bag of gas held in an atmosphere, but the bag is thermally insulating. Notice that in this case, the small system still exchanges energy with the large system via $d\braket{E} = -Pd\braket{V}$. We don't have $E = -PdV$, because the small system might get unlucky. During a moment of weakness, all its particles has abandoned their frontier posts, and the bath has taken advantage of this by encroaching on its land. The system loses volume by $\delta V$, without earning a compensating $\delta E = P \delta V$. In short, the thermodynamic equality $E = -PdV$ is inexact in statistical mechanics, and only holds true on the ensemble average.
 
-In this case, because pressure is a constant, we have $d(E + PV) = 0$, and so we have the enthalpic ensemble $\rho \propto e^{-\beta H}$, where $H := E + PV$ is the [enthalpy](https://en.wikipedia.org/wiki/Enthalpy),[^enthalpy-confusion].
+In this case, because pressure is a constant, we have $d(E + PV) = 0$, and so we have the enthalpic ensemble $\rho \propto e^{-\beta H}$, where $H := E + PV$ is the [enthalpy](https://en.wikipedia.org/wiki/Enthalpy)[^enthalpy-confusion].
 
 Specifically, if you work through the same argument, you would end up with the following constrained maximization problem:
 
 $$
 \begin{cases}
 \max_{\rho_{\text{system}}} (S_{\text{system}} - \beta \braket{E_{\text{system}}}_{\rho_{\text{system}}} - \beta P \braket{V}) \\
-\braket{E_{\text{system}}} + P\braket{V_{\text{system}}} = Const
+\braket{E_{\text{system}}} + P\braket{V_{\text{system}}} = \Const
 \end{cases}
 $$
 
 yielding the enthalpic ensemble (or the [isoenthalpic-isobaric ensemble](https://en.wikipedia.org/wiki/Isoenthalpic%E2%80%93isobaric_ensemble)).
 
-[^enthalpy-confusion]: Sorry, I know this is not Hamiltonian, but we are running out of letters.
+[^enthalpy-confusion]: Sorry, I know this is not the Hamiltonian, but we are running out of letters to use.
 
 :::
 
@@ -1779,7 +1781,7 @@ The argument given above for the Arrhenius equation is quite generic. It only as
 
 ### Common applications
 
-In practice, the Arrhenius equation is used in the form of $\ln r = - a T^{-1} + Const$, where $r = 1/T$ is the "reaction rate", and $a = \frac{\Delta E}{k_B}$ is the slope of the $T^{-1} - \ln f$ plot ("the Arrhenius plot"). Such plots are extensively used in chemistry, but they are not exclusively found in chemistry.
+In practice, the Arrhenius equation is used in the form of $\ln r = - a T^{-1} + \Const$, where $r = 1/T$ is the "reaction rate", and $a = \frac{\Delta E}{k_B}$ is the slope of the $T^{-1} - \ln f$ plot ("the Arrhenius plot"). Such plots are extensively used in chemistry, but they are not exclusively found in chemistry.
 
 In a glass of water held at constant temperature $300 \ut{K}$, each water molecule might occasionally reach enough energy to escape into open air. This is evaporation. By this argument, the rate of evaporation follows the Arrhenius law, and indeed it does.
 
