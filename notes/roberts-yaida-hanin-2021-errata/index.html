@@ -895,6 +895,40 @@ X_{II} = \eta \left(I^{\otimes 2} - (I - \eta \tilde H)^{\otimes 2}\right)^{-1}
 </section>
 
 </main> <!-- /main -->
+<!-- file: copy‑anchors-js.html -->
+<script type="module">
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. All little ¶ icons Quarto/AnchorJS adds
+  document.querySelectorAll("a.anchorjs-link").forEach(anchor => {
+    anchor.addEventListener("click", async (evt) => {
+      // Keep normal scroll behaviour but stop full page reload
+      evt.preventDefault();
+
+      // Build absolute URL: origin + path + #hash
+      const url = `${location.origin}${location.pathname}${anchor.getAttribute("href")}`;
+
+      // 2. Try modern Clipboard API first
+      try {
+        await navigator.clipboard.writeText(url);
+      } catch {
+        // 3. Fallback for legacy browsers
+        const helper = Object.assign(document.createElement("input"), { value: url });
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+      }
+
+      // 4. Brief visual confirmation (optional)
+      anchor.dataset.tooltip = "Copied!";
+      setTimeout(() => delete anchor.dataset.tooltip, 1500);
+
+      // 5. Still jump to the heading
+      history.pushState(null, "", anchor.getAttribute("href"));
+    }, false);
+  });
+});
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

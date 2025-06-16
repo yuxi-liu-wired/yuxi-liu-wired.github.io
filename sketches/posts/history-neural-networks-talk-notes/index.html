@@ -1240,6 +1240,40 @@ Winograd, Terry. 1984. <span>“Computer <span>Software</span> for <span>Working
 Yeang, Chen-Pang. 2023. <span>“Filtering <span>Noise</span> for <span>Antiaircraft Gunfire Control</span>.”</span> In <em>Transforming <span>Noise</span>: <span>A History</span> of <span>Its Science</span> and <span>Technology</span> from <span>Disturbing Sounds</span> to <span>Informational Errors</span>, 1900-1955</em>, edited by Chen-Pang Yeang, 0. Oxford University Press. <a href="https://doi.org/10.1093/oso/9780198887768.003.0011">https://doi.org/10.1093/oso/9780198887768.003.0011</a>.
 </div>
 </div></section></div></main> <!-- /main -->
+<!-- file: copy‑anchors-js.html -->
+<script type="module">
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. All little ¶ icons Quarto/AnchorJS adds
+  document.querySelectorAll("a.anchorjs-link").forEach(anchor => {
+    anchor.addEventListener("click", async (evt) => {
+      // Keep normal scroll behaviour but stop full page reload
+      evt.preventDefault();
+
+      // Build absolute URL: origin + path + #hash
+      const url = `${location.origin}${location.pathname}${anchor.getAttribute("href")}`;
+
+      // 2. Try modern Clipboard API first
+      try {
+        await navigator.clipboard.writeText(url);
+      } catch {
+        // 3. Fallback for legacy browsers
+        const helper = Object.assign(document.createElement("input"), { value: url });
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+      }
+
+      // 4. Brief visual confirmation (optional)
+      anchor.dataset.tooltip = "Copied!";
+      setTimeout(() => delete anchor.dataset.tooltip, 1500);
+
+      // 5. Still jump to the heading
+      history.pushState(null, "", anchor.getAttribute("href"));
+    }, false);
+  });
+});
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

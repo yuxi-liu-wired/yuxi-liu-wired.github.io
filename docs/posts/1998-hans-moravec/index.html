@@ -1852,6 +1852,40 @@ Goldhaber-Gordon, David, Michael S. Montemerlo, J. Christopher Love, Gregory J. 
 Moravec, Hans P. 1999. <em>Robot: Mere Machine to Transcendent Mind</em>. Oxford University Press. <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=fduW6KHhWtQC&amp;oi=fnd&amp;pg=PP9&amp;dq=Moravec,+H.+(1998)+Robot,+Being++mere+machine+to+transcendent+mind.+(forthcoming)+Oxford+University+Press.%0A%0A&amp;ots=SzlArn1c8m&amp;sig=tgVMeQwNA5mlQ0nogP2-CwvWv4Q">https://books.google.com/books?hl=en&amp;lr=&amp;id=fduW6KHhWtQC&amp;oi=fnd&amp;pg=PP9&amp;dq=Moravec,+H.+(1998)+Robot,+Being++mere+machine+to+transcendent+mind.+(forthcoming)+Oxford+University+Press.%0A%0A&amp;ots=SzlArn1c8m&amp;sig=tgVMeQwNA5mlQ0nogP2-CwvWv4Q</a>.
 </div>
 </div></section></div></main> <!-- /main -->
+<!-- file: copy‑anchors-js.html -->
+<script type="module">
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. All little ¶ icons Quarto/AnchorJS adds
+  document.querySelectorAll("a.anchorjs-link").forEach(anchor => {
+    anchor.addEventListener("click", async (evt) => {
+      // Keep normal scroll behaviour but stop full page reload
+      evt.preventDefault();
+
+      // Build absolute URL: origin + path + #hash
+      const url = `${location.origin}${location.pathname}${anchor.getAttribute("href")}`;
+
+      // 2. Try modern Clipboard API first
+      try {
+        await navigator.clipboard.writeText(url);
+      } catch {
+        // 3. Fallback for legacy browsers
+        const helper = Object.assign(document.createElement("input"), { value: url });
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+      }
+
+      // 4. Brief visual confirmation (optional)
+      anchor.dataset.tooltip = "Copied!";
+      setTimeout(() => delete anchor.dataset.tooltip, 1500);
+
+      // 5. Still jump to the heading
+      history.pushState(null, "", anchor.getAttribute("href"));
+    }, false);
+  });
+});
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
