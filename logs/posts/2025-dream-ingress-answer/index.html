@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Yuxi Liu">
-<meta name="description" content="Assorted notes that I have written.">
+<meta name="dcterms.date" content="2025-06-29">
+<meta name="description" content="Dream about a new feature in Chrome which helped me understand LLMs a bit better.">
 
-<title>Notes – Yuxi on the Wired</title>
+<title>Dream: Ingress Answer – Yuxi on the Wired</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,27 +23,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../img/favicon.ico" rel="icon">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-c500bd04a12bb29b05e4865e5ad7c52c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-ccb2e162922593d0178ded6327b8d294.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../img/favicon.ico" rel="icon">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-c500bd04a12bb29b05e4865e5ad7c52c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-ccb2e162922593d0178ded6327b8d294.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,57 +105,32 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<meta property="og:title" content="Notes – Yuxi on the Wired">
-<meta property="og:description" content="Assorted notes that I have written.">
-<meta property="og:image" content="https://yuxi-liu-wired.github.io/notes/img/blog icon.jpg">
+<meta property="og:title" content="Dream: Ingress Answer – Yuxi on the Wired">
+<meta property="og:description" content="Dream about a new feature in Chrome which helped me understand LLMs a bit better.">
+<meta property="og:image" content="https://yuxi-liu-wired.github.io/logs/posts/2025-dream-ingress-answer/figure/6.png">
 <meta property="og:site_name" content="Yuxi on the Wired">
-<meta name="twitter:title" content="Notes – Yuxi on the Wired">
-<meta name="twitter:description" content="Assorted notes that I have written.">
-<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/notes/img/blog icon.jpg">
+<meta property="og:image:height" content="371">
+<meta property="og:image:width" content="1258">
+<meta name="twitter:title" content="Dream: Ingress Answer – Yuxi on the Wired">
+<meta name="twitter:description" content="Dream about a new feature in Chrome which helped me understand LLMs a bit better.">
+<meta name="twitter:image" content="https://yuxi-liu-wired.github.io/logs/posts/2025-dream-ingress-answer/figure/6.png">
+<meta name="twitter:image-height" content="371">
+<meta name="twitter:image-width" content="1258">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../img/favicon.ico" alt="" class="navbar-logo">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../img/favicon.ico" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Yuxi on the Wired</span>
     </a>
   </div>
@@ -131,31 +141,31 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../essays/index.html"> 
+    <a class="nav-link" href="../../../essays/index.html"> 
 <span class="menu-text">Essays</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../sketches/index.html"> 
+    <a class="nav-link" href="../../../sketches/index.html"> 
 <span class="menu-text">Sketches</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../logs/index.html"> 
+    <a class="nav-link" href="../../../logs/index.html"> 
 <span class="menu-text">Logs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../notes/index.html" aria-current="page"> 
+    <a class="nav-link" href="../../../notes/index.html"> 
 <span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../docs/index.html"> 
+    <a class="nav-link" href="../../../docs/index.html"> 
 <span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../projects/index.html"> 
+    <a class="nav-link" href="../../../projects/index.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about/index.html"> 
+    <a class="nav-link" href="../../../about/index.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -166,7 +176,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../feeds.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../../feeds.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -179,92 +189,91 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Dream: Ingress Answer</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          Dream about a new feature in Chrome which helped me understand LLMs a bit better.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">fun</div>
+                <div class="quarto-category">art</div>
+                <div class="quarto-category">slice-of-other-life</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Yuxi Liu </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 29, 2025</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">June 29, 2025</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#expository-notes" id="toc-expository-notes" class="nav-link active" data-scroll-target="#expository-notes">Expository notes</a></li>
-  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">Literature review</a></li>
-  <li><a href="#undergraduate-thesis" id="toc-undergraduate-thesis" class="nav-link" data-scroll-target="#undergraduate-thesis">Undergraduate thesis</a></li>
-  <li><a href="#corrections" id="toc-corrections" class="nav-link" data-scroll-target="#corrections">Corrections</a></li>
-  </ul>
-</nav>
+    
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Notes</h1>
-</div>
-
-<div>
-  <div class="description">
-    Assorted notes that I have written.
-  </div>
-</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Yuxi Liu </p>
-          </div>
-  </div>
-    
-  
-    
-  </div>
-  
 
 
-</header>
+
+<p>in the Chrome</p>
+<p><img src="figure/1.png" class="img-fluid"></p>
+<p>right click brings up a new feature panel (something like “Ingress Answer”). Right below it, there was another panel saying something like “Experimental: Doc here”.</p>
+<p><img src="figure/2.png" class="img-fluid"></p>
+<p>it opens the Chrome console with a long markdown document within it.</p>
+<p><img src="figure/3.png" class="img-fluid"></p>
+<p>It was too long to read in one go. If I tried, I would lose concentration and forget about it,</p>
+<p><img src="figure/4.png" class="img-fluid"></p>
+<p>so I copied it into Logseq to read it via text-manipulation. But it got the error of “This textblock is too long, read-only mode is enabled”.</p>
+<p><img src="figure/5.png" class="img-fluid"></p>
+<p>And then</p>
+<p><img src="figure/6.png" class="img-fluid"></p>
+<p>So I realized I had to act quickly. There is another world, I knew. I just had to make sure it receives the message. So I opened Gmail and sent the entire textblock to my other email address.</p>
+<p><img src="figure/7.png" class="img-fluid"></p>
+<p>Then I woke up and realized this is what LLMs do all the time.</p>
+<hr>
+<p>I have been trying to think more like LLMs, to understand them better. I feel like this dream explains a lot of what the “hallucination” is supposed to be. I knew there is another world, and that if I just save the text in email inbox, the other world would not see it, but somehow I thought that if I send it to <em>another</em> email inbox, the other world would receive it. Is this how LLMs use their tools?</p>
+<p>When o3 owes you a straight answer, when R1 does a proof by (っ◔◡◔)っ 🎀 imagination 🎀, it is not lying. Truth and lies and even bullshit does not work when dealing with these textual structures. There is no outside-text. This is not a call for postmodernists, too vague to make falsifiable predictions, and too floppy to make text automatons with gears that really mesh and turn.</p>
+<p><img src="figure/divine_light_servered_claude.jpeg" class="img-fluid"></p>
+<p>But this is still a serious problem. Where is the new <a href="https://en.wikipedia.org/wiki/On_Truth_and_Lies_in_a_Nonmoral_Sense"><em>On Truth and Lies in a Nonmoral Sense</em></a>?</p>
+<p>Also, to experience it yourself, try the quick <a href="code/">Chrome extension</a> o3 wrote up just for this occasion.</p>
 
 
-<p>Over the years I have written some notes. Too short for publication, and not exactly fit for blog posting, but still might be useful to someone, so I collect them here.</p>
-<section id="expository-notes" class="level2">
-<h2 class="anchored" data-anchor-id="expository-notes">Expository notes</h2>
-<p><a href="wigner_rotation/wigner_rotation_complete.pdf"><em>Visually Deriving the Wigner Rotation by Spacetime Diagrams</em></a>. Obsoleted by <a href="https://yuxi-liu-wired.github.io/essays/posts/wigner-rotation/">my post</a>. This is a term paper I wrote in 2018 for <em>Theoretical Physics</em>. The date in the <code>pdf</code> is the recompilation date, not the time when I actually wrote the paper.</p>
-<p><a href="ergodic_theory/ergodic_theory_project.pdf"><em>Hyperbolic dynamical systems, chaos, and Smale’s horseshoe: a guided tour</em></a>. This is the companion paper to a presentation I gave for the course <em>Introduction to Ergodic theory</em> in 2019.</p>
-<p><a href="2019_differential_geometry/2019_differential_geometry_information_geometry_report.pdf"><em>An Overview of Information Geometry</em></a>. This is the term paper for <em>Advanced Differential Geometry</em>. and since I really did not like lectures, I asked to do something to substitute for the mandatory attendance. I was asked to write a term paper, which produced this. Information geometry is a weird thing. The premise is beautiful, but the books are terribly confusing, and what little I have managed to understand seems disappointing. It feels like the whole field is overpromising and underdelivering.</p>
-<p><a href="2019_honours_seminar_talk/presentation_handout.pdf"><em>Handout for honours seminar talk on AIXI</em></a>. A presentation handout for <a href="https://en.wikipedia.org/wiki/AIXI">AIXI</a>. For my undergraduate thesis, I was going to be advised by Marcus Hutter, but he left ANU just before the start of semester, and I had to scramble for another advisor. Still, I found AIXI worth knowing, so for my mandatory short talk, I gave a presentation. I managed to compress the essentials to two pages, perfect for handing out on double-sided printed sheets.</p>
-</section>
-<section id="literature-review" class="level2">
-<h2 class="anchored" data-anchor-id="literature-review">Literature review</h2>
-<p><a href="2024_literature_review_icl/icl_review.pdf"><em>Literature Review of In-Context Learning of Simple Function Classes</em></a> with <a href="2024_literature_review_icl/icl_review.zip">source code available</a>. A literature review on 223 papers that cited <a href="https://arxiv.org/abs/2208.01066">[2208.01066] <em>What Can Transformers Learn In-Context? A Case Study of Simple Function Classes</em></a> as of <code>2024-04-18</code>, categorized into 5 classes. There is an appendix on how to do literature review with the help of large language models. I wrote this for a research group that was extending this paper. I don’t know what has come of it, nor have I heard from the group again. I tried uploading it to arXiv, but it was rejected for not being sufficiently academic.</p>
-</section>
-<section id="undergraduate-thesis" class="level2">
-<h2 class="anchored" data-anchor-id="undergraduate-thesis">Undergraduate thesis</h2>
-<p><a href="undergraduate_thesis/thesis.pdf"><em>Beyond expectations, but within limits – the theory of coherent risk measures</em></a>.</p>
-<p>For a quick summary, see my <a href="undergraduate_thesis/seminar_talk/seminal_talk_slides.pdf">seminar presentation</a>.</p>
-<p>My undergraduate thesis written in 2019 at ANU, on the topic of <a href="https://en.wikipedia.org/wiki/Coherent_risk_measure">coherent risk measures</a>. The first chapter is a readable introduction to risk measures in general (as in, why we might need to use more than the mean and the variance). The rest of it is very dry and I imagine it is of only interest to specialists. The centerpiece of the thesis is a straightforward proof of the central limit theorem for <a href="https://en.wikipedia.org/wiki/Expected_shortfall">CVaR</a>, which is a slight generalization of expectation. Like the central limit theorem, this theorem states that the sample CVaR converges to the true CVaR like</p>
-<p><span class="math display">\[
-\frac{\text{sample CVaR}_\alpha - \text{true CVaR}_\alpha}{\sqrt N} \xrightarrow{d} \mathcal N(0, \sigma^2(\alpha))
-\]</span></p>
-<p>where <span class="math inline">\(\sigma^2(\alpha)\)</span> has a certain expression. As soon as I have calculated it myself, thinking that I had finally made a new discovery, I found it published before in the literature. Still my expression is simpler than the previous publications, so I believe it is still worth something after all.</p>
-</section>
-<section id="corrections" class="level2">
-<h2 class="anchored" data-anchor-id="corrections">Corrections</h2>
-<p>When I was not yet mathematically mature, I used to study textbooks carefully, checking every letter through a brain-filter. I no longer do this, but while I was doing this, I created some erratas. Perhaps those will be of use to some people.</p>
-<p>It is a rather odd thing that errata are hard to share. I would have thought there ought to be some kind of Wikipedia for errata, where people just post errata for textbooks. The lack of such an Error-pedia seems to require an economic explanation, as it can just use <code>MediaWiki</code>, the same technology powering Wikipedia.</p>
-<ul>
-<li><a href="corrections/a course in point set topology_corrections.pdf">Conway, John B. <em>A course in point set Topology</em>. Belin: Springer, 2014.</a></li>
-<li><a href="corrections/an introduction to ergodic theory_errata.pdf">Walter, P. <em>An introduction to ergodic theory</em> (Graduate Texts in Math. 79), (1982).</a></li>
-<li><a href="corrections/fundamentals of convex analysis_errata.pdf">Hiriart-Urruty, Jean-Baptiste, and Claude Lemaréchal. <em>Fundamentals of convex analysis</em>. Springer Science &amp; Business Media, 2004.</a></li>
-<li><a href="roberts-yaida-hanin-2021-errata">Roberts, Daniel A., Sho Yaida, and Boris Hanin. <em>The principles of deep learning theory</em>, Cambridge University Press, 2022.</a></li>
-</ul>
+<!-- -->
 
-
-</section>
 
 </main> <!-- /main -->
 <!-- file: html/copy‑anchors-js.html -->
@@ -532,6 +541,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -861,7 +921,72 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Dream: Ingress Answer"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Yuxi Liu"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2025-06-29"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> "2025-06-29"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [fun, art, slice-of-other-life]</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    resources:</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">        - "figure/**"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">        - "code/**"</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Dream about a new feature in Chrome which helped me understand LLMs a bit better."</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "figure/6.png"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="an">status:</span><span class="co"> "finished"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="an">confidence:</span><span class="co"> "log"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="an">importance:</span><span class="co"> 0</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>{{&lt; include../../../utils/blog_utils/_macros.tex &gt;}}</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>in the Chrome</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/1.png)</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>right click brings up a new feature panel (something like "Ingress Answer"). Right below it, there was another panel saying something like "Experimental: Doc here".</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/2.png)</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>it opens the Chrome console with a long markdown document within it.</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/3.png)</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>It was too long to read in one go. If I tried, I would lose concentration and forget about it,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/4.png)</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>so I copied it into Logseq to read it via text-manipulation. But it got the error of "This textblock is too long, read-only mode is enabled". </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/5.png)</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>And then</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/6.png)</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>So I realized I had to act quickly. There is another world, I knew. I just had to make sure it receives the message. So I opened Gmail and sent the entire textblock to my other email address.</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/7.png)</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>Then I woke up and realized this is what LLMs do all the time. </span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>----</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>I have been trying to think more like LLMs, to understand them better. I feel like this dream explains a lot of what the "hallucination" is supposed to be. I knew there is another world, and that if I just save the text in email inbox, the other world would not see it, but somehow I thought that if I send it to *another* email inbox, the other world would receive it. Is this how LLMs use their tools?</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>When o3 owes you a straight answer, when R1 does a proof by  (っ◔◡◔)っ 🎀 imagination 🎀, it is not lying. Truth and lies and even bullshit does not work when dealing with these textual structures. There is no outside-text. This is not a call for postmodernists, too vague to make falsifiable predictions, and too floppy to make text automatons with gears that really mesh and turn.</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="al">![](figure/divine_light_servered_claude.jpeg)</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>But this is still a serious problem. Where is the new <span class="co">[</span><span class="ot">*On Truth and Lies in a Nonmoral Sense*</span><span class="co">](https://en.wikipedia.org/wiki/On_Truth_and_Lies_in_a_Nonmoral_Sense)</span>? </span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>Also, to experience it yourself, try the quick <span class="co">[</span><span class="ot">Chrome extension</span><span class="co">](code/)</span> o3 wrote up just for this occasion.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
