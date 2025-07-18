@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,8 +24,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -36,7 +37,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -67,17 +68,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
 <link href="../../../img/favicon.ico" rel="icon">
-<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-c500bd04a12bb29b05e4865e5ad7c52c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-ccb2e162922593d0178ded6327b8d294.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-c590cb3103796f9f406a17afdd3881b8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-493ec8732bc442be923a7677f0a4f8b4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-c590cb3103796f9f406a17afdd3881b8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -105,9 +109,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js" integrity="sha512-EKW5YvKU3hpyyOcN6jQnAxO/L8gts+YdYV6Yymtl8pk9YlYFtqJgihORuRoBXK8/cOIlappdU6Ms8KdK6yBCgA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
     </script>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css">
+
 <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js">
+
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -150,7 +158,169 @@ window.Quarto = {
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="floating nav-fixed slimcontent">
+<body class="floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -344,6 +514,7 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -824,7 +995,7 @@ window.Quarto = {
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    of minimizing steps, it turns out to be empirically effective to keep increasing the slope at</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">    zero even beyond the point where the iteration no longer converges all the way to one everywhere</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    on the interval. This iteration therefore does not produce UV^T but rather something like US'V^T</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">    where S' is diagonal with S_{ii}' \sim Uniform(0.5, 1.5), which turns out not to hurt model</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">    where S' is diagonal with S_{ii}' </span><span class="er">\</span><span class="co">sim Uniform(0.5, 1.5), which turns out not to hurt model</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">    performance at all relative to UV^T, where USV^T = G is the SVD.</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(G.shape) <span class="op">==</span> <span class="dv">2</span></span>
@@ -1545,469 +1716,380 @@ Code for generating the table above
 <!-- -->
 
 </div></section></div></main> <!-- /main -->
-<!-- file: copy‑anchors-js.html -->
+<!-- file: html/copy‑anchors-js.html -->
+
 <script type="module">
+
 document.addEventListener("DOMContentLoaded", () => {
+
   // 1. All little ¶ icons Quarto/AnchorJS adds
+
   document.querySelectorAll("a.anchorjs-link").forEach(anchor => {
+
     anchor.addEventListener("click", async (evt) => {
+
       // Keep normal scroll behaviour but stop full page reload
+
       evt.preventDefault();
 
+
+
       // Build absolute URL: origin + path + #hash
+
       const url = `${location.origin}${location.pathname}${anchor.getAttribute("href")}`;
 
+
+
       // 2. Try modern Clipboard API first
+
       try {
+
         await navigator.clipboard.writeText(url);
+
       } catch {
+
         // 3. Fallback for legacy browsers
+
         const helper = Object.assign(document.createElement("input"), { value: url });
+
         document.body.appendChild(helper);
+
         helper.select();
+
         document.execCommand("copy");
+
         helper.remove();
+
       }
+
+      // TODO: The following two doesn't work yet
 
       // 4. Brief visual confirmation (optional)
+
       anchor.dataset.tooltip = "Copied!";
+
       setTimeout(() => delete anchor.dataset.tooltip, 1500);
 
+
+
       // 5. Still jump to the heading
+
       history.pushState(null, "", anchor.getAttribute("href"));
+
     }, false);
+
   });
+
 });
+
 </script>
+
 <script>
+
     pseudocode.renderClass("pseudocode");
+
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
     }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
     }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
     }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
     }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
       }
     }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
     }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
       });
     }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
-        }
-      }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
-      return false;
-    }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/yuxi-liu-wired\.github\.io\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
         }
-        return container.innerHTML
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -2015,185 +2097,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "The Muon Anthology"</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Jianlin Su"</span></span>
@@ -2212,7 +2270,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="an">importance:</span><span class="co"> 3</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../../../utils/blog_utils/_macros.tex &gt;}}</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../../../static/_macros.tex &gt;}}</span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu"># How should the learning rate change as batch size increase? {#sec-learning-rate-batch-size}</span></span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
@@ -2271,9 +2329,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>\begin{equation}d\boldsymbol{\theta} = - \boldsymbol{g}_t dt - \sqrt{\frac{\eta\boldsymbol{\Sigma}_t}{B}}d\boldsymbol{w}\end{equation}</span>
 <span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>Therefore, to ensure the running results don't change significantly when $B$ changes, the form of the above SDE should remain unchanged, which gives us linear scaling $\eta\propto B$. The most crucial step in this process is that &lt;u&gt;the step size of the noise term in SDE is the square root of the non-noise term&lt;/u&gt;, thus separating out a term $\sqrt{\eta}$. We've also commented on this in <span class="co">[</span><span class="ot">*A Casual Discussion of Generative Diffusion Models (Part 5): General Framework SDE Chapter*</span><span class="co">](https://kexue.fm/archives/9209)</span>. Simply put, zero-mean Gaussian noise has a certain cancellation effect over the long term, so the step size must be increased to manifest the noise effect.</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>Therefore, to ensure the running results don't change significantly when $B$ changes, the form of the above SDE should remain unchanged, which gives us linear scaling $\eta\propto B$. The most crucial step in this process is that <span class="dt">&lt;</span><span class="kw">u</span><span class="dt">&gt;</span>the step size of the noise term in SDE is the square root of the non-noise term<span class="dt">&lt;/</span><span class="kw">u</span><span class="dt">&gt;</span>, thus separating out a term $\sqrt{\eta}$. We've also commented on this in <span class="co">[</span><span class="ot">*A Casual Discussion of Generative Diffusion Models (Part 5): General Framework SDE Chapter*</span><span class="co">](https://kexue.fm/archives/9209)</span>. Simply put, zero-mean Gaussian noise has a certain cancellation effect over the long term, so the step size must be increased to manifest the noise effect.</span>
 <span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>The above conclusions are all based on the SGD optimizer. The paper <span class="co">[</span><span class="ot">*On the SDEs and Scaling Rules for Adaptive Gradient Algorithms*</span><span class="co">](https://arxiv.org/abs/2205.10287)</span> extended it to optimizers like RMSprop and Adam, resulting in &lt;u&gt;square root scaling&lt;/u&gt;. Similarly, the slightly earlier <span class="co">[</span><span class="ot">*Large Batch Optimization for Deep Learning: Training BERT in 76 minutes*</span><span class="co">](https://arxiv.org/abs/1904.00962)</span> also applied square root scaling when testing Adam and its variant LAMB. More content can be found in the blogpost <span class="co">[</span><span class="ot">*How to Scale Hyperparameters as Batch Size Increases*</span><span class="co">](https://www.cs.princeton.edu/~smalladi/blog/2024/01/22/SDEs-ScalingRules/)</span>.</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>The above conclusions are all based on the SGD optimizer. The paper <span class="co">[</span><span class="ot">*On the SDEs and Scaling Rules for Adaptive Gradient Algorithms*</span><span class="co">](https://arxiv.org/abs/2205.10287)</span> extended it to optimizers like RMSprop and Adam, resulting in <span class="dt">&lt;</span><span class="kw">u</span><span class="dt">&gt;</span>square root scaling<span class="dt">&lt;/</span><span class="kw">u</span><span class="dt">&gt;</span>. Similarly, the slightly earlier <span class="co">[</span><span class="ot">*Large Batch Optimization for Deep Learning: Training BERT in 76 minutes*</span><span class="co">](https://arxiv.org/abs/1904.00962)</span> also applied square root scaling when testing Adam and its variant LAMB. More content can be found in the blogpost <span class="co">[</span><span class="ot">*How to Scale Hyperparameters as Batch Size Increases*</span><span class="co">](https://www.cs.princeton.edu/~smalladi/blog/2024/01/22/SDEs-ScalingRules/)</span>.</span>
 <span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="fu">## Facing losses head on</span></span>
 <span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
@@ -2289,7 +2347,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>\begin{equation}\eta^* = \mathop{\text{argmin}}_{\eta} \mathbb{E}<span class="co">[</span><span class="ot">\mathcal{L}(\boldsymbol{\theta} - \eta\tilde{\boldsymbol{g}}_B)</span><span class="co">]</span>\end{equation}</span>
 <span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>This objective is obviously intuitive -- choose the learning rate to make the training efficiency the highest (the loss function decreases the fastest) &lt;u&gt;on average&lt;/u&gt;. To solve this problem, we approximately expand the loss function to the second order:</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>This objective is obviously intuitive -- choose the learning rate to make the training efficiency the highest (the loss function decreases the fastest) <span class="dt">&lt;</span><span class="kw">u</span><span class="dt">&gt;</span>on average<span class="dt">&lt;/</span><span class="kw">u</span><span class="dt">&gt;</span>. To solve this problem, we approximately expand the loss function to the second order:</span>
 <span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>\begin{equation}\mathcal{L}(\boldsymbol{\theta} - \eta\tilde{\boldsymbol{g}}_B) \approx \mathcal{L}(\boldsymbol{\theta}) - \eta\tilde{\boldsymbol{g}}_B^{\top}\underbrace{\frac{\partial \mathcal{L}(\boldsymbol{\theta})}{\partial\boldsymbol{\theta}}}_{= \boldsymbol{g}} + \frac{1}{2}\eta^2 \tilde{\boldsymbol{g}}_B^{\top}\underbrace{\frac{\partial^2 \mathcal{L}(\boldsymbol{\theta})}{\partial\boldsymbol{\theta}^2}}_{\triangleq \boldsymbol{H}}\tilde{\boldsymbol{g}}_B = \mathcal{L}(\boldsymbol{\theta}) - \eta\tilde{\boldsymbol{g}}_B^{\top}\boldsymbol{g} + \frac{1}{2}\eta^2 \tilde{\boldsymbol{g}}_B^{\top}\boldsymbol{H}\tilde{\boldsymbol{g}}_B\end{equation}</span>
@@ -2712,7 +2770,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-516"><a href="#cb4-516" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithm}</span></span>
 <span id="cb4-517"><a href="#cb4-517" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb4-518"><a href="#cb4-518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-519"><a href="#cb4-519" aria-hidden="true" tabindex="-1"></a>Muon stands for "&lt;font color=red&gt;M&lt;/font&gt;oment&lt;font color=red&gt;u&lt;/font&gt;m &lt;font color=red&gt;O&lt;/font&gt;rthogonalized by &lt;font color=red&gt;N&lt;/font&gt;ewton--Schulz". Unlike typical gradient descent, which applies to any kind of parameter, whether it be scalar, vector, or matrix, Muon applies to only matrix parameters.</span>
+<span id="cb4-519"><a href="#cb4-519" aria-hidden="true" tabindex="-1"></a>Muon stands for "<span class="dt">&lt;</span><span class="kw">font</span><span class="ot"> color</span><span class="op">=</span><span class="st">red</span><span class="dt">&gt;</span>M<span class="dt">&lt;/</span><span class="kw">font</span><span class="dt">&gt;</span>oment<span class="dt">&lt;</span><span class="kw">font</span><span class="ot"> color</span><span class="op">=</span><span class="st">red</span><span class="dt">&gt;</span>u<span class="dt">&lt;/</span><span class="kw">font</span><span class="dt">&gt;</span>m <span class="dt">&lt;</span><span class="kw">font</span><span class="ot"> color</span><span class="op">=</span><span class="st">red</span><span class="dt">&gt;</span>O<span class="dt">&lt;/</span><span class="kw">font</span><span class="dt">&gt;</span>rthogonalized by <span class="dt">&lt;</span><span class="kw">font</span><span class="ot"> color</span><span class="op">=</span><span class="st">red</span><span class="dt">&gt;</span>N<span class="dt">&lt;/</span><span class="kw">font</span><span class="dt">&gt;</span>ewton--Schulz". Unlike typical gradient descent, which applies to any kind of parameter, whether it be scalar, vector, or matrix, Muon applies to only matrix parameters.</span>
 <span id="cb4-520"><a href="#cb4-520" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-521"><a href="#cb4-521" aria-hidden="true" tabindex="-1"></a>Let $\boldsymbol{W}\in\mathbb{R}^{n\times m}$ be such a matrix parameter, then the Muon update rule states that:</span>
 <span id="cb4-522"><a href="#cb4-522" aria-hidden="true" tabindex="-1"></a></span>
@@ -2742,7 +2800,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-546"><a href="#cb4-546" aria-hidden="true" tabindex="-1"></a>Muon reproduces the two essential properties for matrices, even though it does not keep track of $\sqrt{\overline{(\nabla \mathcal L)^2}}$:</span>
 <span id="cb4-547"><a href="#cb4-547" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-548"><a href="#cb4-548" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>If the loss function $\mathcal L$ is multiplied by some constant $c$, $\boldsymbol{M}$ will also be multiplied by $c$, but $\text{msign}(\boldsymbol{M})$ remains unchanged.</span>
-<span id="cb4-549"><a href="#cb4-549" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>When $\boldsymbol{M}$ is decomposed by SVD into $\boldsymbol{U}\boldsymbol{\Sigma}\boldsymbol{V}^{\top}$, the different singular values of $\boldsymbol{\Sigma}$ reflect the "anisotropy" of $\boldsymbol{M}$, and setting them all to &lt;u&gt;one&lt;/u&gt; makes it more isotropic, which also serves to synchronize update magnitudes.</span>
+<span id="cb4-549"><a href="#cb4-549" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>When $\boldsymbol{M}$ is decomposed by SVD into $\boldsymbol{U}\boldsymbol{\Sigma}\boldsymbol{V}^{\top}$, the different singular values of $\boldsymbol{\Sigma}$ reflect the "anisotropy" of $\boldsymbol{M}$, and setting them all to <span class="dt">&lt;</span><span class="kw">u</span><span class="dt">&gt;</span>one<span class="dt">&lt;/</span><span class="kw">u</span><span class="dt">&gt;</span> makes it more isotropic, which also serves to synchronize update magnitudes.</span>
 <span id="cb4-550"><a href="#cb4-550" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-551"><a href="#cb4-551" aria-hidden="true" tabindex="-1"></a>(By the way, did point 2 remind anyone of <span class="co">[</span><span class="ot">BERT-whitening</span><span class="co">](https://kexue.fm/archives/8069)</span>?)</span>
 <span id="cb4-552"><a href="#cb4-552" aria-hidden="true" tabindex="-1"></a></span>
@@ -2818,7 +2876,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-622"><a href="#cb4-622" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-623"><a href="#cb4-623" aria-hidden="true" tabindex="-1"></a>Whether it's $\boldsymbol{O}^{\top}\boldsymbol{O} = \boldsymbol{I}$ or $\boldsymbol{O}\in<span class="sc">\{</span>-1,1<span class="sc">\}</span>^{n\times m}$, we can view both as a kind of regularization constraint on the update amount. So Muon and Signum/Tiger can be seen as optimizers under the same approach: they all start from momentum $\boldsymbol{M}$ to construct the update amount, but choose different regularization methods for the update.</span>
 <span id="cb4-624"><a href="#cb4-624" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-625"><a href="#cb4-625" aria-hidden="true" tabindex="-1"></a>To prove @eq-nearest-orth, note that the Frobenius norm is preserved by left and right multiplication of orthogonal matrices. That is, $\|\boldsymbol{V}\boldsymbol{A}\|_F = \|\boldsymbol{A}\|_F = |\boldsymbol{A}\boldsymbol{U}\|_F$ for any orthogonal matrices $\boldsymbol{U}, \boldsymbol{V}$ of the suitable shapes. Thus it reduces to the special case where $\boldsymbol{M} = \boldsymbol{\Sigma}$. Now, use the fact that $\|\boldsymbol{A}\|_F^2$ is the sum of its column vectors' norm-squared.</span>
+<span id="cb4-625"><a href="#cb4-625" aria-hidden="true" tabindex="-1"></a>To prove @eq-nearest-orth, note that the Frobenius norm is preserved by left and right multiplication of orthogonal matrices. That is, $<span class="sc">\|</span>\boldsymbol{V}\boldsymbol{A}<span class="sc">\|</span>_F = <span class="sc">\|</span>\boldsymbol{A}<span class="sc">\|</span>_F = |\boldsymbol{A}\boldsymbol{U}<span class="sc">\|</span>_F$ for any orthogonal matrices $\boldsymbol{U}, \boldsymbol{V}$ of the suitable shapes. Thus it reduces to the special case where $\boldsymbol{M} = \boldsymbol{\Sigma}$. Now, use the fact that $<span class="sc">\|</span>\boldsymbol{A}<span class="sc">\|</span>_F^2$ is the sum of its column vectors' norm-squared.</span>
 <span id="cb4-626"><a href="#cb4-626" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-627"><a href="#cb4-627" aria-hidden="true" tabindex="-1"></a><span class="fu">## Iterative solution</span></span>
 <span id="cb4-628"><a href="#cb4-628" aria-hidden="true" tabindex="-1"></a></span>
@@ -2853,7 +2911,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-657"><a href="#cb4-657" aria-hidden="true" tabindex="-1"></a><span class="co">    of minimizing steps, it turns out to be empirically effective to keep increasing the slope at</span></span>
 <span id="cb4-658"><a href="#cb4-658" aria-hidden="true" tabindex="-1"></a><span class="co">    zero even beyond the point where the iteration no longer converges all the way to one everywhere</span></span>
 <span id="cb4-659"><a href="#cb4-659" aria-hidden="true" tabindex="-1"></a><span class="co">    on the interval. This iteration therefore does not produce UV^T but rather something like US'V^T</span></span>
-<span id="cb4-660"><a href="#cb4-660" aria-hidden="true" tabindex="-1"></a><span class="co">    where S' is diagonal with S_{ii}' \sim Uniform(0.5, 1.5), which turns out not to hurt model</span></span>
+<span id="cb4-660"><a href="#cb4-660" aria-hidden="true" tabindex="-1"></a><span class="co">    where S' is diagonal with S_{ii}' </span><span class="er">\</span><span class="co">sim Uniform(0.5, 1.5), which turns out not to hurt model</span></span>
 <span id="cb4-661"><a href="#cb4-661" aria-hidden="true" tabindex="-1"></a><span class="co">    performance at all relative to UV^T, where USV^T = G is the SVD.</span></span>
 <span id="cb4-662"><a href="#cb4-662" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
 <span id="cb4-663"><a href="#cb4-663" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(G.shape) <span class="op">==</span> <span class="dv">2</span></span>
@@ -2926,8 +2984,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-730"><a href="#cb4-730" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-731"><a href="#cb4-731" aria-hidden="true" tabindex="-1"></a>For a fixed number of iterations $T$, the result depends on the size of the matrix, which essentially depends on the distribution of singular values. One result worth mentioning about this distribution is that for any fixed "aspect ratio" $r \in (0, \infty)$, if at the $n \to \infty$ limit, $\frac{m}{n} \to r$, then the singular values of the matrix converges to a <span class="co">[</span><span class="ot">Marchenko–Pastur distribution</span><span class="co">](https://en.wikipedia.org/wiki/Marchenko%E2%80%93Pastur_distribution)</span>.</span>
 <span id="cb4-732"><a href="#cb4-732" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-733"><a href="#cb4-733" aria-hidden="true" tabindex="-1"></a>&lt;details&gt; </span>
-<span id="cb4-734"><a href="#cb4-734" aria-hidden="true" tabindex="-1"></a>&lt;summary&gt;Code for generating the table above&lt;/summary&gt;</span>
+<span id="cb4-733"><a href="#cb4-733" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span> </span>
+<span id="cb4-734"><a href="#cb4-734" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Code for generating the table above<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
 <span id="cb4-735"><a href="#cb4-735" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
 <span id="cb4-736"><a href="#cb4-736" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
 <span id="cb4-737"><a href="#cb4-737" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
@@ -2958,7 +3016,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-762"><a href="#cb4-762" aria-hidden="true" tabindex="-1"></a>a, b, c <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> k <span class="op">*</span> x1<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> x2<span class="op">**</span><span class="dv">2</span>, <span class="op">-</span>k <span class="op">*</span> (x1<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> x2<span class="op">**</span><span class="dv">2</span>), k</span>
 <span id="cb4-763"><a href="#cb4-763" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> &amp; </span><span class="sc">{</span>m<span class="sc">}</span><span class="ss"> &amp; </span><span class="sc">{</span>T<span class="sc">}</span><span class="ss"> &amp; </span><span class="sc">{</span>k<span class="sc">:.3f}</span><span class="ss"> &amp; </span><span class="sc">{</span>x1<span class="sc">:.3f}</span><span class="ss"> &amp; </span><span class="sc">{</span>x2<span class="sc">:.3f}</span><span class="ss"> &amp; </span><span class="sc">{</span>a<span class="sc">:.3f}</span><span class="ss"> &amp; </span><span class="sc">{</span>b<span class="sc">:.3f}</span><span class="ss"> &amp; </span><span class="sc">{</span>c<span class="sc">:.3f}</span><span class="ss"> &amp; </span><span class="sc">{</span>f(w, data)<span class="sc">:.5f}</span><span class="ss">'</span>)</span>
 <span id="cb4-764"><a href="#cb4-764" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-765"><a href="#cb4-765" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt; </span>
+<span id="cb4-765"><a href="#cb4-765" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span> </span>
 <span id="cb4-766"><a href="#cb4-766" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-767"><a href="#cb4-767" aria-hidden="true" tabindex="-1"></a><span class="fu">## Some thoughts</span></span>
 <span id="cb4-768"><a href="#cb4-768" aria-hidden="true" tabindex="-1"></a></span>
@@ -3032,7 +3090,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-836"><a href="#cb4-836" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-837"><a href="#cb4-837" aria-hidden="true" tabindex="-1"></a>at which point, $\max_{\Vert\boldsymbol{\phi}\Vert_p=1}\boldsymbol{g}^{\top}\boldsymbol{\phi} = \Vert \boldsymbol{g}\Vert_q$.</span>
 <span id="cb4-838"><a href="#cb4-838" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-839"><a href="#cb4-839" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">pbSGD</span><span class="co">](https://www.ijcai.org/proceedings/2020/451)</span> optimizer uses this as the direction vector. In particular, when $p\to\infty$, we have $q\to 1$ and $|g_i|^{q/p}\to 1$, which degenerates to SignSGD, meaning that we can interpret SignSGD as SGD regularized by $\|\cdot \|_\infty$.</span>
+<span id="cb4-839"><a href="#cb4-839" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">pbSGD</span><span class="co">](https://www.ijcai.org/proceedings/2020/451)</span> optimizer uses this as the direction vector. In particular, when $p\to\infty$, we have $q\to 1$ and $|g_i|^{q/p}\to 1$, which degenerates to SignSGD, meaning that we can interpret SignSGD as SGD regularized by $<span class="sc">\|</span>\cdot <span class="sc">\|</span>_\infty$.</span>
 <span id="cb4-840"><a href="#cb4-840" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-841"><a href="#cb4-841" aria-hidden="true" tabindex="-1"></a><span class="fu">## Matrix norms</span></span>
 <span id="cb4-842"><a href="#cb4-842" aria-hidden="true" tabindex="-1"></a></span>
@@ -3118,13 +3176,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-922"><a href="#cb4-922" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-923"><a href="#cb4-923" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">从谱范数梯度到新式权重衰减的思考 - 科学空间|Scientific Spaces</span><span class="co">](https://kexue.fm/archives/10648)</span> (2024-12-25)</span>
 <span id="cb4-924"><a href="#cb4-924" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-925"><a href="#cb4-925" aria-hidden="true" tabindex="-1"></a>In <span class="co">[</span><span class="ot">*Muon Appreciation*</span><span class="co">](#sec-muon-appreciation)</span>, we introduced a new optimizer called "Muon", which can be viewed as gradient descent under spectral norm regularization, which seems a more geometrically meaningful approach for optimizing matrix parameters. As is well known, we often add weight decay for matrix parameters, which can be understood as $\nabla_M \|M\|_F^2$, the gradient of the squared Frobenius norm. From Muon's perspective, would constructing a new weight decay through the gradient of the squared spectral norm produce better results?</span>
+<span id="cb4-925"><a href="#cb4-925" aria-hidden="true" tabindex="-1"></a>In <span class="co">[</span><span class="ot">*Muon Appreciation*</span><span class="co">](#sec-muon-appreciation)</span>, we introduced a new optimizer called "Muon", which can be viewed as gradient descent under spectral norm regularization, which seems a more geometrically meaningful approach for optimizing matrix parameters. As is well known, we often add weight decay for matrix parameters, which can be understood as $\nabla_M <span class="sc">\|</span>M<span class="sc">\|</span>_F^2$, the gradient of the squared Frobenius norm. From Muon's perspective, would constructing a new weight decay through the gradient of the squared spectral norm produce better results?</span>
 <span id="cb4-926"><a href="#cb4-926" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-927"><a href="#cb4-927" aria-hidden="true" tabindex="-1"></a>So the question arises: what does the gradient or derivative of the spectral norm look like? And what would a new weight decay designed with it look like? We'll explore these questions below.</span>
 <span id="cb4-928"><a href="#cb4-928" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-929"><a href="#cb4-929" aria-hidden="true" tabindex="-1"></a><span class="fu">## Basic review</span></span>
 <span id="cb4-930"><a href="#cb4-930" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-931"><a href="#cb4-931" aria-hidden="true" tabindex="-1"></a>The spectral norm $\|\cdot\|_2$ (also known as the 2-norm) is one of the most commonly used matrix norms. Compared to the simpler Frobenius norm $\|\cdot\|_F$, it often reveals more essential signals related to matrix multiplication, because its definition is directly related to matrix multiplication: for a matrix parameter $\boldsymbol{W}\in\mathbb{R}^{n\times m}$, its spectral norm is defined as</span>
+<span id="cb4-931"><a href="#cb4-931" aria-hidden="true" tabindex="-1"></a>The spectral norm $<span class="sc">\|</span>\cdot<span class="sc">\|</span>_2$ (also known as the 2-norm) is one of the most commonly used matrix norms. Compared to the simpler Frobenius norm $<span class="sc">\|</span>\cdot<span class="sc">\|</span>_F$, it often reveals more essential signals related to matrix multiplication, because its definition is directly related to matrix multiplication: for a matrix parameter $\boldsymbol{W}\in\mathbb{R}^{n\times m}$, its spectral norm is defined as</span>
 <span id="cb4-932"><a href="#cb4-932" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-933"><a href="#cb4-933" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb4-934"><a href="#cb4-934" aria-hidden="true" tabindex="-1"></a>\begin{equation}\Vert\boldsymbol{W}\Vert_2 \triangleq \max_{\Vert\boldsymbol{x}\Vert=1} \Vert\boldsymbol{W}\boldsymbol{x}\Vert\end{equation}</span>
@@ -3579,7 +3637,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-1383"><a href="#cb4-1383" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/table&gt;</span></span>
 <span id="cb4-1384"><a href="#cb4-1384" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb4-1385"><a href="#cb4-1385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-1386"><a href="#cb4-1386" aria-hidden="true" tabindex="-1"></a>&lt;small&gt;&lt;sup&gt;†&lt;/sup&gt;The reported parameter counts exclude the embedding parameters.&lt;/small&gt;</span>
+<span id="cb4-1386"><a href="#cb4-1386" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">small</span><span class="dt">&gt;&lt;</span><span class="kw">sup</span><span class="dt">&gt;</span>†<span class="dt">&lt;/</span><span class="kw">sup</span><span class="dt">&gt;</span>The reported parameter counts exclude the embedding parameters.<span class="dt">&lt;/</span><span class="kw">small</span><span class="dt">&gt;</span></span>
 <span id="cb4-1387"><a href="#cb4-1387" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-1388"><a href="#cb4-1388" aria-hidden="true" tabindex="-1"></a>What's different about models trained with Muon? Since we said earlier that Muon is steepest descent under the spectral norm, and the spectral norm is the largest singular value, we thought of monitoring and analyzing singular values. Indeed, we found some interesting signals: parameters trained by Muon have a more uniform distribution of singular values. We use singular value entropy to quantitatively describe this phenomenon:</span>
 <span id="cb4-1389"><a href="#cb4-1389" aria-hidden="true" tabindex="-1"></a></span>
